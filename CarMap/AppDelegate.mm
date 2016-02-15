@@ -188,6 +188,7 @@
 //    ln.alertBody = @"category";
 //    [[UIApplication sharedApplication] scheduleLocalNotification:ln];
 //    NSLog(@"方法运行了");
+    
 }
 
 /** SDK启动成功返回cid */
