@@ -158,7 +158,6 @@
     if (userInfo) {
         NSLog(@"\n>---->>[Launching RemoteNotification]:%@", userInfo);
     }
-    
 }
 
 /** 远程通知注册成功委托 */
@@ -168,7 +167,6 @@
     [GeTuiSdk registerDeviceToken:myToken];    /// 向个推服务器注册deviceToken
     NSLog(@"\n>>>[DeviceToken Success]:%@\n\n",myToken);
 }
-
 
 /** 远程通知注册失败委托 */
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
