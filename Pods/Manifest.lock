@@ -1,0 +1,16 @@
+PODS:
+  - BaiduMapKit (2.9.1)
+  - GTSDK (1.3.2)
+  - UMengSocial (4.4)
+
+DEPENDENCIES:
+  - BaiduMapKit (~> 2.9.1)
+  - GTSDK (~> 1.3.2)
+  - UMengSocial (~> 4.4)
+
+SPEC CHECKSUMS:
+  BaiduMapKit: 97d2d44b41a876de2371fb91ddf78cdf84dafa05
+  GTSDK: 9ea284237331495fd76a71088bfd2da30981d510
+  UMengSocial: aba7296602310385114d82c255539a7bef3b7ab0
+
+COCOAPODS: 0.39.0
