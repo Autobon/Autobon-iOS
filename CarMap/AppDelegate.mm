@@ -190,7 +190,6 @@
 //    NSLog(@"方法运行了");
 }
 
-
 /** SDK启动成功返回cid */
 - (void)GeTuiSdkDidRegisterClient:(NSString *)clientId {
     // [4-EXT-1]: 个推SDK已注册，返回clientId
