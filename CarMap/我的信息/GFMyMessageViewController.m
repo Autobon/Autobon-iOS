@@ -65,8 +65,9 @@
     msgView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:msgView];
     
-
     
+    
+
     // 钱包
     CGFloat moneyViewW = msgViewW;
     CGFloat moneyViewH = kHeight * (0.078 + 0.104);
@@ -75,6 +76,8 @@
     UIView *moneyView = [[UIView alloc] initWithFrame:CGRectMake(moneyViewX, moneyViewY, moneyViewW, moneyViewH)];
     moneyView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:moneyView];
+    
+    
 
     
     // 我的订单
@@ -83,10 +86,36 @@
     CGFloat indentViewX = msgViewX;
     CGFloat indentViewY = CGRectGetMaxY(moneyView.frame) + jiange1;
     UIView *indentView = [[UIView alloc] initWithFrame:CGRectMake(indentViewX, indentViewY, indentViewW, indentViewH)];
-
+    indentView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:indentView];
+    
+    
+    
     
     // 修改密码
+    CGFloat changePwdViewW = msgViewW;
+    CGFloat changePwdViewH = indentViewH;
+    CGFloat changePwdViewX = msgViewX;
+    CGFloat changePwdViewY = CGRectGetMaxY(indentView.frame) + jiange1;
+    UIView *changePwdView = [[UIView alloc] initWithFrame:CGRectMake(changePwdViewX, changePwdViewY, changePwdViewW, changePwdViewH)];
+    changePwdView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:changePwdView];
+    
+    
+    
+    
+    // 退出登录
+    CGFloat exitButW = msgViewW;
+    CGFloat exitButH = indentViewH;
+    CGFloat exitButX = msgViewX;
+    CGFloat exitButY = kHeight - exitButH;
+    UIButton *exitBut = [UIButton buttonWithType:UIButtonTypeCustom];
+    exitBut.frame = CGRectMake(exitButX, exitButY, exitButW, exitButH);
+    [exitBut setBackgroundColor:[UIColor whiteColor]];
+    [self.view addSubview:exitBut];
+    
 
+    
     
 }
 

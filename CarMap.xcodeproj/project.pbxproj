@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		368FB3069A8AB11C0125708F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4D41BE1C67690080F4127E9 /* libPods.a */; };
+		862CFB601C73419F0095F114 /* GFTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 862CFB5F1C73419F0095F114 /* GFTextField.m */; };
 		86B890F41C73355B0068B95D /* GFForgetPwdViewController_1.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890E61C73355B0068B95D /* GFForgetPwdViewController_1.m */; };
 		86B890F51C73355B0068B95D /* GFForgetPwdViewController_2.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890E81C73355B0068B95D /* GFForgetPwdViewController_2.m */; };
 		86B890F61C73355B0068B95D /* GFNavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890EA1C73355B0068B95D /* GFNavigationView.m */; };
 		86B890F71C73355B0068B95D /* GFSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890EC1C73355B0068B95D /* GFSignInViewController.m */; };
 		86B890F81C73355B0068B95D /* GFSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890EE1C73355B0068B95D /* GFSignUpViewController.m */; };
-		86B890F91C73355B0068B95D /* GFTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890F01C73355B0068B95D /* GFTextField.m */; };
 		86B890FA1C73355B0068B95D /* GFMyMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890F31C73355B0068B95D /* GFMyMessageViewController.m */; };
 		9B7301571C5F2CDF00FB2DEB /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7301561C5F2CDF00FB2DEB /* SecondViewController.m */; };
 		9B9515391C60501B00445F93 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9515381C60501B00445F93 /* TestViewController.m */; };
@@ -31,7 +31,6 @@
 		9BA9CBD51C5B02220059F145 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA9CBD41C5B02220059F145 /* FirstViewController.m */; };
 		9BE53AE41C72ADED00BBB424 /* CLAutobonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE53AE31C72ADED00BBB424 /* CLAutobonViewController.m */; };
 		9BE53AEA1C7301A200BBB424 /* CLCertifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE53AE91C7301A200BBB424 /* CLCertifyViewController.m */; };
-		9BE53AF01C731E7700BBB424 /* GFTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE53AEF1C731E7700BBB424 /* GFTextField.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		862CFB5E1C73419F0095F114 /* GFTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFTextField.h; sourceTree = "<group>"; };
+		862CFB5F1C73419F0095F114 /* GFTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFTextField.m; sourceTree = "<group>"; };
 		86B890E51C73355B0068B95D /* GFForgetPwdViewController_1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFForgetPwdViewController_1.h; sourceTree = "<group>"; };
 		86B890E61C73355B0068B95D /* GFForgetPwdViewController_1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFForgetPwdViewController_1.m; sourceTree = "<group>"; };
 		86B890E71C73355B0068B95D /* GFForgetPwdViewController_2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFForgetPwdViewController_2.h; sourceTree = "<group>"; };
@@ -55,8 +56,6 @@
 		86B890EC1C73355B0068B95D /* GFSignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFSignInViewController.m; sourceTree = "<group>"; };
 		86B890ED1C73355B0068B95D /* GFSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFSignUpViewController.h; sourceTree = "<group>"; };
 		86B890EE1C73355B0068B95D /* GFSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFSignUpViewController.m; sourceTree = "<group>"; };
-		86B890EF1C73355B0068B95D /* GFTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFTextField.h; sourceTree = "<group>"; };
-		86B890F01C73355B0068B95D /* GFTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFTextField.m; sourceTree = "<group>"; };
 		86B890F21C73355B0068B95D /* GFMyMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFMyMessageViewController.h; sourceTree = "<group>"; };
 		86B890F31C73355B0068B95D /* GFMyMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFMyMessageViewController.m; sourceTree = "<group>"; };
 		9B02AF661C5A22CB0044FB71 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -151,8 +150,8 @@
 				86B890EC1C73355B0068B95D /* GFSignInViewController.m */,
 				86B890ED1C73355B0068B95D /* GFSignUpViewController.h */,
 				86B890EE1C73355B0068B95D /* GFSignUpViewController.m */,
-				86B890EF1C73355B0068B95D /* GFTextField.h */,
-				86B890F01C73355B0068B95D /* GFTextField.m */,
+				862CFB5E1C73419F0095F114 /* GFTextField.h */,
+				862CFB5F1C73419F0095F114 /* GFTextField.m */,
 			);
 			path = "登录注册";
 			sourceTree = "<group>";
@@ -472,8 +471,7 @@
 				86B890F41C73355B0068B95D /* GFForgetPwdViewController_1.m in Sources */,
 				9B9515421C60503800445F93 /* GFAnnotationView.m in Sources */,
 				9B9754411C5765B3004BDC7C /* AppDelegate.mm in Sources */,
-				9BE53AF01C731E7700BBB424 /* GFTextField.m in Sources */,
-				86B890F91C73355B0068B95D /* GFTextField.m in Sources */,
+				862CFB601C73419F0095F114 /* GFTextField.m in Sources */,
 				9B97543E1C5765B3004BDC7C /* main.m in Sources */,
 				9B9515431C60503800445F93 /* GFMapViewController.mm in Sources */,
 				86B890F81C73355B0068B95D /* GFSignUpViewController.m in Sources */,
@@ -619,6 +617,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = CarMap/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = CarNeighbor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -636,6 +635,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = CarMap/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = CarNeighbor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
