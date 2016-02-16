@@ -7,7 +7,7 @@
 //
 
 #import "CLCertifyViewController.h"
-#import "GFTextField.h"
+//#import "GFTextField.h"
 
 
 @interface CLCertifyViewController ()
@@ -37,10 +37,10 @@
 //    headImage.backgroundColor = [UIColor redColor];
     [scrollView addSubview:headImage];
     
-    GFTextField *textField = [[GFTextField alloc]initWithLeftStr:@"用户名"];
-    textField.frame = CGRectMake(80, 10, 200, 40);
-//    textField.backgroundColor = [UIColor redColor];
-    [scrollView addSubview:textField];
+//    GFTextField *textField = [[GFTextField alloc]initWithLeftStr:@"用户名"];
+//    textField.frame = CGRectMake(80, 10, 200, 40);
+////    textField.backgroundColor = [UIColor redColor];
+//    [scrollView addSubview:textField];
     
     
     
