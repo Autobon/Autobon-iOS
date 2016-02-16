@@ -12,7 +12,12 @@
 #import <BaiduMapAPI_Map/BMKMapComponent.h>
 #import "GFAnnotation.h"
 
+// 距离店铺Block
+typedef void (^DistanceBlock)(double distance);
+
 @interface GFMapViewController : UIViewController
+
+@property (nonatomic ,copy) DistanceBlock distanceBlock;
 
 @property (nonatomic ,strong) FirstViewController *first;
 // 地图

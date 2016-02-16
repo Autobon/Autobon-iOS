@@ -31,6 +31,10 @@
 - (void)addMap{
     GFMapViewController *mapVC = [[GFMapViewController alloc] init];
     mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30.4,114.4);
+    mapVC.distanceBlock = ^(double distance) {
+        NSLog(@"距离－－%f--",distance);
+    };
+    
     [self.view addSubview:mapVC.view];
     [self addChildViewController:mapVC];
     [mapVC didMoveToParentViewController:self];

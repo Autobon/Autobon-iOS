@@ -237,6 +237,9 @@
     double a = [self calculatorWithCoordinate1:self.workerPointAnno.coordinate withCoordinate2:self.bossPointAnno.coordinate];
     NSLog(@"---技师和客户的距离－－%@--",@(a));
     _distanceLabel.text = [NSString stringWithFormat:@"距离工作地点%0.1fkm",a/1000];
+    if (_distanceBlock) {
+        _distanceBlock(a);
+    }
     _timeLabel.text = [NSString stringWithFormat:@"时间：%@",dateString];
     if(num == 0) {
         self.mapView.centerCoordinate = userLocation.location.coordinate;
