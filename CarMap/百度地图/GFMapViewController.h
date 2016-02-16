@@ -10,10 +10,14 @@
 #import "FirstViewController.h"
 #import <BaiduMapAPI_Search/BMKSearchComponent.h>
 #import <BaiduMapAPI_Map/BMKMapComponent.h>
+#import "GFAnnotation.h"
 
 @interface GFMapViewController : UIViewController
 
 @property (nonatomic ,strong) FirstViewController *first;
+// 地图
+@property(nonatomic, strong) BMKMapView *mapView;
 
+@property(nonatomic, strong) GFAnnotation *bossPointAnno;
 
 @end

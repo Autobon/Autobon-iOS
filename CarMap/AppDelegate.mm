@@ -19,7 +19,9 @@
 #import "SecondViewController.h"
 #import "TestViewController.h"
 #import "GFMapViewController.h"
-#import "ViewController.h"
+//#import "ViewController.h"
+#import "CLAutobonViewController.h"
+
 
 // 个推开发者网站中申请App时，注册的AppId、AppKey、AppSecret
 #define kGtAppId      @"bA8VREs20O83tJSR23Q2w4"
@@ -30,7 +32,7 @@
 {
     NSDictionary *_launchDict;
     BMKMapManager *_mapManager;
-    ViewController *_firstView;
+//    ViewController *_firstView;
     UINavigationController *_navigation;
 }
 @end
@@ -69,8 +71,9 @@
     
     _window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     _window.backgroundColor = [UIColor whiteColor];
-    _firstView = [[ViewController alloc]init];
-    _navigation = [[UINavigationController alloc]initWithRootViewController:_firstView];
+//    _firstView = [[ViewController alloc]init];
+    CLAutobonViewController *firstView = [[CLAutobonViewController alloc]init];
+    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
     _navigation.navigationBarHidden = YES;
     _window.rootViewController = _navigation;
     [_window makeKeyAndVisible];
