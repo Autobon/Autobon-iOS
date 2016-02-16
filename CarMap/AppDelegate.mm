@@ -21,6 +21,7 @@
 #import "GFMapViewController.h"
 //#import "ViewController.h"
 #import "CLAutobonViewController.h"
+#import "CLCertifyViewController.h"
 
 
 // 个推开发者网站中申请App时，注册的AppId、AppKey、AppSecret
@@ -72,7 +73,8 @@
     _window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     _window.backgroundColor = [UIColor whiteColor];
 //    _firstView = [[ViewController alloc]init];
-    CLAutobonViewController *firstView = [[CLAutobonViewController alloc]init];
+//    CLAutobonViewController *firstView = [[CLAutobonViewController alloc]init];
+    CLCertifyViewController *firstView = [[CLCertifyViewController alloc]init];
     _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
     _navigation.navigationBarHidden = YES;
     _window.rootViewController = _navigation;

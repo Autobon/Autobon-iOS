@@ -23,6 +23,8 @@
 		9BA526CC1C63115700A2298F /* PoiSearchDemoViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9BA526CB1C63115700A2298F /* PoiSearchDemoViewController.mm */; };
 		9BA9CBD51C5B02220059F145 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA9CBD41C5B02220059F145 /* FirstViewController.m */; };
 		9BE53AE41C72ADED00BBB424 /* CLAutobonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE53AE31C72ADED00BBB424 /* CLAutobonViewController.m */; };
+		9BE53AEA1C7301A200BBB424 /* CLCertifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE53AE91C7301A200BBB424 /* CLCertifyViewController.m */; };
+		9BE53AF01C731E7700BBB424 /* GFTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE53AEF1C731E7700BBB424 /* GFTextField.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,10 @@
 		9BA9CBD41C5B02220059F145 /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 		9BE53AE21C72ADED00BBB424 /* CLAutobonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAutobonViewController.h; sourceTree = "<group>"; };
 		9BE53AE31C72ADED00BBB424 /* CLAutobonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAutobonViewController.m; sourceTree = "<group>"; };
+		9BE53AE81C7301A200BBB424 /* CLCertifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCertifyViewController.h; sourceTree = "<group>"; };
+		9BE53AE91C7301A200BBB424 /* CLCertifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLCertifyViewController.m; sourceTree = "<group>"; };
+		9BE53AEE1C731E7700BBB424 /* GFTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFTextField.h; sourceTree = "<group>"; };
+		9BE53AEF1C731E7700BBB424 /* GFTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFTextField.m; sourceTree = "<group>"; };
 		9BFA805A1C5F4009001651C3 /* BaiduMapAPI_Base.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Base.framework; path = "../../Downloads/BaiduMap_IOSSDK_v2.10-2.0/BaiduMap_IOSSDK_v2.10.0_Sample/BMKOCDemo/BaiduMapAPI/BaiduMapAPI_Base.framework"; sourceTree = "<group>"; };
 		9BFA805B1C5F4009001651C3 /* BaiduMapAPI_Cloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Cloud.framework; path = "../../Downloads/BaiduMap_IOSSDK_v2.10-2.0/BaiduMap_IOSSDK_v2.10.0_Sample/BMKOCDemo/BaiduMapAPI/BaiduMapAPI_Cloud.framework"; sourceTree = "<group>"; };
 		9BFA805C1C5F4009001651C3 /* BaiduMapAPI_Location.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Location.framework; path = "../../Downloads/BaiduMap_IOSSDK_v2.10-2.0/BaiduMap_IOSSDK_v2.10.0_Sample/BMKOCDemo/BaiduMapAPI/BaiduMapAPI_Location.framework"; sourceTree = "<group>"; };
@@ -231,6 +237,10 @@
 			children = (
 				9BE53AE21C72ADED00BBB424 /* CLAutobonViewController.h */,
 				9BE53AE31C72ADED00BBB424 /* CLAutobonViewController.m */,
+				9BE53AE81C7301A200BBB424 /* CLCertifyViewController.h */,
+				9BE53AE91C7301A200BBB424 /* CLCertifyViewController.m */,
+				9BE53AEE1C731E7700BBB424 /* GFTextField.h */,
+				9BE53AEF1C731E7700BBB424 /* GFTextField.m */,
 			);
 			path = "车邻邦认证";
 			sourceTree = "<group>";
@@ -402,9 +412,11 @@
 				9B7301571C5F2CDF00FB2DEB /* SecondViewController.m in Sources */,
 				9BE53AE41C72ADED00BBB424 /* CLAutobonViewController.m in Sources */,
 				9B9515391C60501B00445F93 /* TestViewController.m in Sources */,
+				9BE53AEA1C7301A200BBB424 /* CLCertifyViewController.m in Sources */,
 				9B9754441C5765B3004BDC7C /* ViewController.m in Sources */,
 				9B9515421C60503800445F93 /* GFAnnotationView.m in Sources */,
 				9B9754411C5765B3004BDC7C /* AppDelegate.mm in Sources */,
+				9BE53AF01C731E7700BBB424 /* GFTextField.m in Sources */,
 				9B97543E1C5765B3004BDC7C /* main.m in Sources */,
 				9B9515431C60503800445F93 /* GFMapViewController.mm in Sources */,
 				9BA526CC1C63115700A2298F /* PoiSearchDemoViewController.mm in Sources */,

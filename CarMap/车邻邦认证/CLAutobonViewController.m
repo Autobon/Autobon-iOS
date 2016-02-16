@@ -8,6 +8,7 @@
 
 #import "CLAutobonViewController.h"
 #import "GFMapViewController.h"
+#import "CLCertifyViewController.h"
 
 
 @interface CLAutobonViewController ()
@@ -108,9 +109,13 @@
     
 }
 
-// 认证按钮的响应方法
+
 - (void)certifyBtnClick{
     NSLog(@"认证按钮的响应方法");
+    CLCertifyViewController *certify = [[CLCertifyViewController alloc]init];
+    [self.navigationController pushViewController:certify animated:YES];
+    
+    
 }
 
 
@@ -130,8 +135,10 @@
     [view addSubview:label];
     
     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width-70, 20, 60, 40)];
-    button.backgroundColor = [UIColor cyanColor];
+//    button.backgroundColor = [UIColor cyanColor];
     [button addTarget:self action:@selector(moreBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [button setImage:[UIImage imageNamed:@"moreList"] forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:@"moreListClick"] forState:UIControlStateHighlighted];
     [view addSubview:button];
 }
 // 更多按钮的响应方法
