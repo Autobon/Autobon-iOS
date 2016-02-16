@@ -10,10 +10,19 @@
 #import "FirstViewController.h"
 #import <BaiduMapAPI_Search/BMKSearchComponent.h>
 #import <BaiduMapAPI_Map/BMKMapComponent.h>
+#import "GFAnnotation.h"
+
+// 距离店铺Block
+typedef void (^DistanceBlock)(double distance);
 
 @interface GFMapViewController : UIViewController
 
-@property (nonatomic ,strong) FirstViewController *first;
+@property (nonatomic ,copy) DistanceBlock distanceBlock;
 
+@property (nonatomic ,strong) FirstViewController *first;
+// 地图
+@property(nonatomic, strong) BMKMapView *mapView;
+
+@property(nonatomic, strong) GFAnnotation *bossPointAnno;
 
 @end

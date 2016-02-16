@@ -13,7 +13,6 @@
 #import "BMKMapManager.h"
 #import "BMKLocationService.h"
 #import "BMKMapView.h"
-#import "GFAnnotation.h"
 #import "BMKPoiSearch.h"
 #import "GFAnnotationView.h"
 #import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
@@ -53,30 +52,37 @@
 // 定位
 @property(nonatomic, strong) BMKLocationService *locationService;
 
-// 地图
-@property(nonatomic, strong) BMKMapView *mapView;
+
 
 // 大头针
 @property(nonatomic, strong) GFAnnotation *workerPointAnno;
-@property(nonatomic, strong) GFAnnotation *bossPointAnno;
+
 
 
 @end
 
 @implementation GFMapViewController
 
+- (GFAnnotation *)bossPointAnno{
+    if (_bossPointAnno == nil) {
+        self.bossPointAnno = [[GFAnnotation alloc] init];
+    }
+    return _bossPointAnno;
+}
+
 - (void)viewDidLoad {
     
 //    FirstViewController *first = [[FirstViewController alloc]init];
 //    [self presentViewController:first animated:YES completion:nil];
     
-    
+    self.view.backgroundColor = [UIColor cyanColor];
     [super viewDidLoad];
+    
 //    self.view.backgroundColor = [UIColor redColor];
     
-    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 410, self.view.frame.size.width-40, 40)];
+//    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 410, self.view.frame.size.width-40, 40)];
     [self.view addSubview:_distanceLabel];
-    _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 450, self.view.frame.size.width-40, 40)];
+//    _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 450, self.view.frame.size.width-40, 40)];
     [self.view addSubview:_timeLabel];
     // 基础设置
     [self _setBase];
@@ -104,7 +110,7 @@
     [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
     [button addTarget:_first action:@selector(firstBackClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
+//    [self.view addSubview:button];
     
 //    button = [[UIButton alloc]init];
 //    button.frame = CGRectMake(100, 50, 120, 40);
@@ -146,7 +152,9 @@
 
 #pragma mark - ***** 地图 *****
 - (void)_setMapView {
-    self.mapView = [[BMKMapView alloc] initWithFrame:CGRectMake(10, 50, [UIScreen mainScreen].bounds.size.width - 20, 350)];
+//    self.mapView = [[BMKMapView alloc] initWithFrame:CGRectMake(10, 50, [UIScreen mainScreen].bounds.size.width - 20, 350)];
+    self.mapView = [[BMKMapView alloc]init];
+    
     /* 设定代理 */
     self.mapView.delegate = self;
     [self.view addSubview:self.mapView];
@@ -170,12 +178,14 @@
     
     
     // 老板大头针
-    self.bossPointAnno = [[GFAnnotation alloc] init];
+    
     self.bossPointAnno.title = @"我是老板";
     self.bossPointAnno.subtitle = @"派活啦，赶紧抢吧";
-    self.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30.4,114.4);
+//    self.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30.4,114.4);
     self.bossPointAnno.iconImgName = @"ca";
     [self.mapView addAnnotation:self.bossPointAnno];
+    NSLog(@"加载地图");
+    
     
 //#pragma mark - 路径
 //    
@@ -227,6 +237,9 @@
     double a = [self calculatorWithCoordinate1:self.workerPointAnno.coordinate withCoordinate2:self.bossPointAnno.coordinate];
     NSLog(@"---技师和客户的距离－－%@--",@(a));
     _distanceLabel.text = [NSString stringWithFormat:@"距离工作地点%0.1fkm",a/1000];
+    if (_distanceBlock) {
+        _distanceBlock(a);
+    }
     _timeLabel.text = [NSString stringWithFormat:@"时间：%@",dateString];
     if(num == 0) {
         self.mapView.centerCoordinate = userLocation.location.coordinate;
