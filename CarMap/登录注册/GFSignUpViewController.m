@@ -63,7 +63,7 @@
 - (void)_setView {
 
     // 导航栏
-    self.navView = [[GFNavigationView alloc] initWithLeftImgName:@"返回.png" withLeftImgHightName:@"点击返回.png" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"注册" withFrame:CGRectMake(0, 0, kWidth, 64)];
+    self.navView = [[GFNavigationView alloc] initWithLeftImgName:@"back.png" withLeftImgHightName:@"backClick.png" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"注册" withFrame:CGRectMake(0, 0, kWidth, 64)];
     [self.navView.leftBut addTarget:self action:@selector(leftButClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.navView];
     
@@ -73,7 +73,7 @@
     CGFloat userNameTxtH = kHeight * 0.0625;
     CGFloat userNameTxtX = (kWidth - userNameTxtW) / 2.0 - 3 / 320.0 * kWidth;
     CGFloat userNameTxtY = jiange1 + 64;
-    self.userNameTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"手机.png"] withFrame:CGRectMake(userNameTxtX, userNameTxtY, userNameTxtW, userNameTxtH)];
+    self.userNameTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"phone.png"] withFrame:CGRectMake(userNameTxtX, userNameTxtY, userNameTxtW, userNameTxtH)];
     self.userNameTxt.centerTxt.placeholder = @"请输入手机号";
     [self.userNameTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
     [self.view addSubview:self.userNameTxt];
@@ -93,7 +93,7 @@
     CGFloat verifyTxtH = userNameTxtH;
     CGFloat verifyTxtX = userNameTxtX;
     CGFloat verifyTxtY = CGRectGetMaxY(self.userNameTxt.frame) + jiange2;
-    self.verifyTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"验证.png"] withRightButton:verifyBut withFrame:CGRectMake(verifyTxtX, verifyTxtY, verifyTxtW, verifyTxtH)];
+    self.verifyTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"code.png"] withRightButton:verifyBut withFrame:CGRectMake(verifyTxtX, verifyTxtY, verifyTxtW, verifyTxtH)];
     self.verifyTxt.centerTxt.placeholder = @"请输入验证码";
     [self.verifyTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
     [self.view addSubview:self.verifyTxt];
@@ -111,7 +111,7 @@
     CGFloat passWordTxtH = userNameTxtH;
     CGFloat passWordTxtX = userNameTxtX;
     CGFloat passWordTxtY = CGRectGetMaxY(self.verifyTxt.frame) + jiange2;
-    self.passWordTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"确认密码.png"] withRightButton:passwordBut withFrame:CGRectMake(passWordTxtX, passWordTxtY, passWordTxtW, passWordTxtH)];
+    self.passWordTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"passwordAgain.png"] withRightButton:passwordBut withFrame:CGRectMake(passWordTxtX, passWordTxtY, passWordTxtW, passWordTxtH)];
     self.passWordTxt.centerTxt.placeholder = @"请输入密码";
     [self.passWordTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
     self.passWordTxt.centerTxt.secureTextEntry = YES;
@@ -125,8 +125,8 @@
     CGFloat submitButY = CGRectGetMaxY(self.passWordTxt.frame) + jiange3;
     UIButton *submitBut = [UIButton buttonWithType:UIButtonTypeCustom];
     submitBut.frame = CGRectMake(submitButX, submitButY, submitButW, submitButH);
-    [submitBut setBackgroundImage:[UIImage imageNamed:@"默认按钮.png"] forState:UIControlStateNormal];
-    [submitBut setBackgroundImage:[UIImage imageNamed:@"点击按钮.png"] forState:UIControlStateHighlighted];
+    [submitBut setBackgroundImage:[UIImage imageNamed:@"button.png"] forState:UIControlStateNormal];
+    [submitBut setBackgroundImage:[UIImage imageNamed:@"buttonClick.png"] forState:UIControlStateHighlighted];
     [submitBut setTitle:@"提交" forState:UIControlStateNormal];
     [submitBut setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     submitBut.titleLabel.font = [UIFont systemFontOfSize:19 / 320.0 * kWidth];

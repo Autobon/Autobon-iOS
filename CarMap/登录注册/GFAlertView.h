@@ -10,4 +10,9 @@
 
 @interface GFAlertView : UIView
 
+//@property (nonatomic, strong) UIView *baseView;
+
+- (instancetype)initWithTipName:(NSString *)tipName withTipMessage:(NSString *)tipMessageStr withButtonNameArray:(NSArray *)buttonArray;
+
+
 @end

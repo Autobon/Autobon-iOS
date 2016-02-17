@@ -70,7 +70,7 @@
 - (void)_setView {
 
     // 导航栏
-    self.navView = [[GFNavigationView alloc] initWithLeftImgName:@"返回.png" withLeftImgHightName:@"点击返回.png" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"找回密码" withFrame:CGRectMake(0, 0, kWidth, 64)];
+    self.navView = [[GFNavigationView alloc] initWithLeftImgName:@"back.png" withLeftImgHightName:@"backClick.png" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"找回密码" withFrame:CGRectMake(0, 0, kWidth, 64)];
     [self.navView.leftBut addTarget:self action:@selector(leftButClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.navView];
     
@@ -80,7 +80,7 @@
     CGFloat userNameTxtH = kHeight * 0.0625;
     CGFloat userNameTxtX = (kWidth - userNameTxtW) / 2.0 - 3 / 320.0 * kWidth;
     CGFloat userNameTxtY = jiange1 + 64;
-    self.userNameTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"手机.png"] withFrame:CGRectMake(userNameTxtX, userNameTxtY, userNameTxtW, userNameTxtH)];
+    self.userNameTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"phone.png"] withFrame:CGRectMake(userNameTxtX, userNameTxtY, userNameTxtW, userNameTxtH)];
     self.userNameTxt.centerTxt.clearButtonMode = UITextFieldViewModeAlways;
     self.userNameTxt.centerTxt.placeholder = @"+86 13868886888";
     [self.userNameTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
@@ -105,7 +105,7 @@
     CGFloat verifyTxtH = userNameTxtH;
     CGFloat verifyTxtX = userNameTxtX;
     CGFloat verifyTxtY = CGRectGetMaxY(self.userNameTxt.frame) + jiange2;
-    self.verifyTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"验证.png"] withRightButton:self.verifyBut withFrame:CGRectMake(verifyTxtX, verifyTxtY, verifyTxtW, verifyTxtH)];
+    self.verifyTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"code.png"] withRightButton:self.verifyBut withFrame:CGRectMake(verifyTxtX, verifyTxtY, verifyTxtW, verifyTxtH)];
     self.verifyTxt.centerTxt.placeholder = @"请输入验证码";
     [self.verifyTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
     [self.view addSubview:self.verifyTxt];
@@ -145,8 +145,8 @@
     CGFloat nextButY = CGRectGetMaxY(showLab.frame) + 10;
     UIButton *nextBut = [UIButton buttonWithType:UIButtonTypeCustom];
     nextBut.frame = CGRectMake(nextButX, nextButY, nextButW, nextButH);
-    [nextBut setBackgroundImage:[UIImage imageNamed:@"默认按钮.png"] forState:UIControlStateNormal];
-    [nextBut setBackgroundImage:[UIImage imageNamed:@"点击按钮.png"] forState:UIControlStateHighlighted];
+    [nextBut setBackgroundImage:[UIImage imageNamed:@"button.png"] forState:UIControlStateNormal];
+    [nextBut setBackgroundImage:[UIImage imageNamed:@"buttonClick.png"] forState:UIControlStateHighlighted];
     [nextBut setTitle:@"下一步" forState:UIControlStateNormal];
     [nextBut setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     nextBut.titleLabel.font = [UIFont systemFontOfSize:19 / 320.0 * kWidth];

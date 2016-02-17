@@ -24,6 +24,7 @@
 #import "CLCertifyViewController.h"
 
 #import "GFMyMessageViewController.h"
+#import "GFSignInViewController.h"
 
 
 // 个推开发者网站中申请App时，注册的AppId、AppKey、AppSecret
@@ -80,6 +81,7 @@
     
     //********************* 光法页面 **********************
     GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
+    GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
     
     _navigation = [[UINavigationController alloc]initWithRootViewController:messageVC];
     _navigation.navigationBarHidden = YES;
