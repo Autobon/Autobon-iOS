@@ -9,6 +9,7 @@
 #import "CLAutobonViewController.h"
 #import "GFMapViewController.h"
 #import "CLCertifyViewController.h"
+#import "GFNavigationView.h"
 
 
 @interface CLAutobonViewController ()
@@ -122,24 +123,13 @@
 
 // 添加导航
 - (void)setNavigation{
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
-    view.backgroundColor = [[UIColor alloc]initWithRed:235/255.0 green:96/255.0 blue:1/255.0 alpha:1.0];
-    [self.view addSubview:view];
     
-// title
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(100, 20, self.view.frame.size.width-200, 40)];
-    label.text = @"车邻邦";
-    label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:20 weight:3];
-    [view addSubview:label];
+    GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:nil withLeftImgHightName:nil withRightImgName:@"moreList" withRightImgHightName:@"moreListClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+    [navView.rightBut addTarget:self action:@selector(moreBtnClick) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width-70, 20, 60, 40)];
-//    button.backgroundColor = [UIColor cyanColor];
-    [button addTarget:self action:@selector(moreBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [button setImage:[UIImage imageNamed:@"moreList"] forState:UIControlStateNormal];
-    [button setImage:[UIImage imageNamed:@"moreListClick"] forState:UIControlStateHighlighted];
-    [view addSubview:button];
+    [self.view addSubview:navView];
+    
+
 }
 // 更多按钮的响应方法
 - (void)moreBtnClick{

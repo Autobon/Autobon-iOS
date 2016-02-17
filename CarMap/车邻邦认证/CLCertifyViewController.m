@@ -7,11 +7,18 @@
 //
 
 #import "CLCertifyViewController.h"
-//#import "GFTextField.h"
+#import "GFTextField.h"
+#import "GFNavigationView.h"
+#import "CLTitleView.h"
+#import "CLTouchScrollView.h"
 
 
-@interface CLCertifyViewController ()
-
+@interface CLCertifyViewController ()<UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+{
+    UIView *_chooseView;
+    CLTouchScrollView *_scrollView;
+    UIImageView *_headImage;
+}
 @end
 
 @implementation CLCertifyViewController
@@ -26,58 +33,236 @@
 }
 
 - (void)setViewForCertify{
-    UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64)];
+    _scrollView = [[CLTouchScrollView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64)];
 //    scrollView.backgroundColor = [UIColor cyanColor];
-    scrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height*1.25);
-    [self.view addSubview:scrollView];
+    
+    [self.view addSubview:_scrollView];
     
 //头像
-    UIImageView *headImage = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 60, 60)];
-    headImage.image = [UIImage imageNamed:@"userHeadImage"];
+    _headImage = [[UIImageView alloc]initWithFrame:CGRectMake(10, 20, 80, 80)];
+    _headImage.image = [UIImage imageNamed:@"userHeadImage"];
+    _headImage.layer.cornerRadius = 40;
+    _headImage.clipsToBounds = YES;
 //    headImage.backgroundColor = [UIColor redColor];
-    [scrollView addSubview:headImage];
+    [_scrollView addSubview:_headImage];
     
-//    GFTextField *textField = [[GFTextField alloc]initWithLeftStr:@"用户名"];
-//    textField.frame = CGRectMake(80, 10, 200, 40);
-////    textField.backgroundColor = [UIColor redColor];
-//    [scrollView addSubview:textField];
+    UIButton *cameraHeadBtn = [[UIButton alloc]initWithFrame:CGRectMake(70, 80, 20, 20)];
+    [cameraHeadBtn setImage:[UIImage imageNamed:@"cameraHead"] forState:UIControlStateNormal];
+    [cameraHeadBtn addTarget:self action:@selector(cameraHeadBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:cameraHeadBtn];
     
+    GFTextField *userNameTextField = [[GFTextField alloc]initWithPlaceholder:@"姓名" withFrame:CGRectMake(110, 20, self.view.frame.size.width - 140, 50)];
+    [_scrollView addSubview:userNameTextField];
+    
+    GFTextField *identityTextField = [[GFTextField alloc]initWithPlaceholder:@"身份证号" withFrame:CGRectMake(110, 80, self.view.frame.size.width - 140, 50)];
+    identityTextField.centerTxt.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    [_scrollView addSubview:identityTextField];
+    
+// 技能项目
+    CLTitleView *skillView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 145, self.view.frame.size.width, 45) Title:@"技能项目"];
+    [_scrollView addSubview:skillView];
+    
+    UIButton *carButton = [[UIButton alloc]initWithFrame:CGRectMake(50, 200, self.view.frame.size.width/2-60, 40)];
+    [carButton setTitle:@"汽车贴膜" forState:UIControlStateNormal];
+    carButton.backgroundColor = [[UIColor alloc]initWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    carButton.layer.cornerRadius = 15;
+    [carButton setTitleColor:[[UIColor alloc]initWithRed:156/255.0 green:156/255.0 blue:156/255.0 alpha:1.0] forState:UIControlStateNormal];
+    carButton.tag = 1;
+    [carButton addTarget:self action:@selector(skillBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:carButton];
+    
+    UIButton *cleanButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2+10, 200, self.view.frame.size.width/2-60, 40)];
+    [cleanButton setTitle:@"美容清洁" forState:UIControlStateNormal];
+    cleanButton.backgroundColor = [[UIColor alloc]initWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    cleanButton.layer.cornerRadius = 15;
+    [cleanButton setTitleColor:[[UIColor alloc]initWithRed:156/255.0 green:156/255.0 blue:156/255.0 alpha:1.0] forState:UIControlStateNormal];
+    cleanButton.tag = 1;
+    [cleanButton addTarget:self action:@selector(skillBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:cleanButton];
+    
+// 证件照
+    CLTitleView *identityView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 250, self.view.frame.size.width, 45) Title:@"手持身份证正面照"];
+    [_scrollView addSubview:identityView];
+    
+    UIImageView *identityImageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/5, 310, self.view.frame.size.width*3/5, self.view.frame.size.width*27/70)];
+    identityImageView.image = [UIImage imageNamed:@"userImage"];
+    [_scrollView addSubview:identityImageView];
+    
+    UIButton *cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*4/5-15, 310+self.view.frame.size.width*27/70-25, 30, 30)];
+    [cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
+    [cameraBtn addTarget:self action:@selector(cameraHeadBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:cameraBtn];
+    
+// 银行卡信息
+    
+    CLTitleView *bankView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 310+self.view.frame.size.width*27/70 + 10, self.view.frame.size.width, 45) Title:@"银行卡信息"];
+    [_scrollView addSubview:bankView];
+    
+    UIButton *bankButton = [[UIButton alloc]initWithFrame:CGRectMake(10, bankView.frame.origin.y+45+10, self.view.frame.size.width/2-15, 40)];
+    
+    [bankButton setBackgroundImage:[UIImage imageNamed:@"choose"] forState:UIControlStateNormal];
+    [bankButton setTitle:@"农业银行" forState:UIControlStateNormal];
+    [bankButton setTitleColor:[UIColor colorWithRed:163 / 255.0 green:163 / 255.0 blue:163 / 255.0 alpha:1] forState:UIControlStateNormal];
+//    bankButton.titleLabel.textAlignment = NSTextAlignmentLeft;
+    bankButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    bankButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+    [bankButton addTarget:self action:@selector(bankBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:bankButton];
+    
+    UIButton *whereButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2+5, bankView.frame.origin.y+45+10, self.view.frame.size.width/2-15, 40)];
+    
+    [whereButton setBackgroundImage:[UIImage imageNamed:@"choose"] forState:UIControlStateNormal];
+    [whereButton setTitle:@"开户地点" forState:UIControlStateNormal];
+    [whereButton setTitleColor:[UIColor colorWithRed:163 / 255.0 green:163 / 255.0 blue:163 / 255.0 alpha:1] forState:UIControlStateNormal];
+//    whereButton.titleLabel.textAlignment = NSTextAlignmentLeft;
+    whereButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    whereButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+    [whereButton addTarget:self action:@selector(whereBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:whereButton];
+    
+// 银行卡号
+    GFTextField *bankNumberTextField = [[GFTextField alloc]initWithPlaceholder:@"银行卡号" withFrame:CGRectMake(60, bankView.frame.origin.y+45+15+60, self.view.frame.size.width-120, 40)];
+    bankNumberTextField.centerTxt.keyboardType = UIKeyboardTypeNumberPad;
+    bankNumberTextField.centerTxt.delegate = self;
+    [_scrollView addSubview:bankNumberTextField];
+    
+    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, bankNumberTextField.frame.origin.y+40+40, self.view.frame.size.width, 2)];
+    lineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
+    [_scrollView addSubview:lineView];
+    
+// 提交按钮
+    UIButton *submitButton = [[UIButton alloc]initWithFrame:CGRectMake(30, lineView.frame.origin.y+2+10, self.view.frame.size.width-60, 40)];
+    [submitButton setTitle:@"提交" forState:UIControlStateNormal];
+    [submitButton setBackgroundImage:[UIImage imageNamed:@"button"] forState:UIControlStateNormal];
+    [submitButton addTarget:self action:@selector(submitBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:submitButton];
+    
+    UILabel *submitLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-156, lineView.frame.origin.y+2+50, 180, 30)];
+    submitLabel.text = @"点击\"提交\"代表本人已阅读并同意";
+//    submitLabel.backgroundColor = [UIColor cyanColor];
+    submitLabel.font = [UIFont systemFontOfSize:12];
+    [_scrollView addSubview:submitLabel];
+    
+    UIButton *delegateButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-156+180, lineView.frame.origin.y+2+50, 132, 30)];
+//    delegateButton.backgroundColor = [UIColor cyanColor];
+    [delegateButton setTitle:@"《车邻邦技师认证协议》" forState:UIControlStateNormal];
+    delegateButton.titleLabel.font = [UIFont systemFontOfSize:12];
+    [delegateButton setTitleColor:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] forState:UIControlStateNormal];
+    [delegateButton addTarget:self action:@selector(delegateBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:delegateButton];
+    _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, delegateButton.frame.origin.y + 30 + 60);
     
     
     
 }
 
+#pragma mark - 认证协议
+- (void)delegateBtnClick{
+    NSLog(@"是时候看看协议了");
+}
+
+#pragma mark - 提交按钮事件
+- (void)submitBtnClick{
+    NSLog(@"提交按钮事件");
+}
+
+#pragma mark - 银行类型按钮事件
+- (void)bankBtnClick{
+    NSLog(@"选择银行");
+}
 
 
+#pragma mark - 开户地点按钮事件
+-(void)whereBtnClick{
+    NSLog(@"选择开户地点");
+}
+
+
+#pragma mark - 银行卡号对话框协议
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, _scrollView.contentSize.height+200);
+    _scrollView.contentOffset = CGPointMake(0, _scrollView.contentSize.height-self.view.frame.size.height);
+   
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, _scrollView.contentSize.height-200);
+    
+}
+#pragma mark - 技能按钮
+- (void)skillBtnClick:(UIButton *)button{
+    [self.view endEditing:YES];
+    if (button.tag == 1) {
+        button.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        button.tag = 2;
+    }else{
+        button.backgroundColor = [[UIColor alloc]initWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+        [button setTitleColor:[[UIColor alloc]initWithRed:156/255.0 green:156/255.0 blue:156/255.0 alpha:1.0] forState:UIControlStateNormal];
+        button.tag = 1;
+    }
+}
+
+#pragma mark - 相机按钮的实现方法
+- (void)cameraHeadBtnClick{
+    [self.view endEditing:YES];
+    _chooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-100, 80)];
+    _chooseView.center = self.view.center;
+    _chooseView.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+    _chooseView.layer.cornerRadius = 15;
+    _chooseView.clipsToBounds = YES;
+    [self.view addSubview:_chooseView];
+    
+// 相机和相册按钮
+    UIButton *cameraButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-100, 40)];
+    [cameraButton setTitle:@"相册" forState:UIControlStateNormal];
+    [cameraButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
+    cameraButton.tag = 1;
+    [_chooseView addSubview:cameraButton];
+    
+    UIButton *photoButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 40, self.view.frame.size.width-100, 40)];
+    [photoButton setTitle:@"相机" forState:UIControlStateNormal];
+    [photoButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
+    cameraButton.tag = 2;
+    [_chooseView addSubview:photoButton];
+    
+    
+}
+
+
+#pragma mark - 选择照片
+- (void)userHeadChoose:(UIButton *)button{
+    [_chooseView removeFromSuperview];
+    
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    imagePickerController.allowsEditing = YES;
+    imagePickerController.delegate =self;
+    [self presentViewController:imagePickerController animated:YES completion:nil];
+
+    
+    
+}
+
+#pragma mark - 图片协议方法
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    _headImage.image = image;
+    
+}
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 // 添加导航
 - (void)setNavigation{
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
-    view.backgroundColor = [[UIColor alloc]initWithRed:235/255.0 green:96/255.0 blue:1/255.0 alpha:1.0];
-    [self.view addSubview:view];
     
-    // title
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(100, 20, self.view.frame.size.width-200, 40)];
-    label.text = @"我要认证";
-    label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:20 weight:3];
-    [view addSubview:label];
     
-    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width-70, 20, 60, 40)];
-//    button.backgroundColor = [UIColor cyanColor];
-    [button addTarget:self action:@selector(moreBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [button setImage:[UIImage imageNamed:@"moreList"] forState:UIControlStateNormal];
-    [button setImage:[UIImage imageNamed:@"moreListClick"] forState:UIControlStateHighlighted];
-    [view addSubview:button];
+    GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:@"moreList" withRightImgHightName:@"moreListClick" withCenterTitle:@"我要认证" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+    [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [navView.rightBut addTarget:self action:@selector(moreBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:navView];
     
-// 返回按钮
-    UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 20, 60, 40)];
-//    backButton.backgroundColor = [UIColor cyanColor];
-    [backButton addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [backButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-    [backButton setImage:[UIImage imageNamed:@"backClick"] forState:UIControlStateHighlighted];
-    [view addSubview:backButton];
+    
     
 }
 -(void)backBtnClick{
@@ -88,6 +273,131 @@
     NSLog(@"更多");
 }
 
+#pragma mark - 身份证号正则表达式
++ (BOOL) validateIdentityCard: (NSString *)identityCard
+{
+    BOOL flag;
+    if (identityCard.length <= 0) {
+        flag = NO;
+        return flag;
+    }
+    NSString *regex2 = @"^(\\d{14}|\\d{17})(\\d|[xX])$";
+    NSPredicate *identityCardPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex2];
+    return [identityCardPredicate evaluateWithObject:identityCard];
+}
+
+
+#pragma mark - 判断是否是有效的银行卡号
+//+ (BOOL) isValidCreditNumber:(NSString*)value {
+//    BOOL result = NO;
+//    NSInteger length = [value length];
+//    if (length >= 13) {
+//        result = [WTCreditCard isValidNumber:value];
+//        if (result)
+//        {
+//            NSInteger twoDigitBeginValue = [[value substringWithRange:NSMakeRange(0, 2)] integerValue];
+//            //VISA
+//            if([WTCreditCard isStartWith:value Str:@"4"]) {
+//                if (13 == length||16 == length) {
+//                    result = TRUE;
+//                }else {
+//                    result = NO;
+//                }
+//            }
+//            //MasterCard
+//            else if(twoDigitBeginValue >= 51 && twoDigitBeginValue <= 55 && length == 16) {
+//                result = TRUE;
+//            }
+//            //American Express
+//            else if(([WTCreditCard isStartWith:value Str:@"34"]||[WTCreditCard isStartWith:value Str:@"37"]) && length == 15){
+//                result = TRUE;
+//            }
+//            //Discover
+//            else if([WTCreditCard isStartWith:value Str:@"6011"] && length == 16) {
+//                result = TRUE;
+//            }else {
+//                result = FALSE;
+//            }
+//        }
+//        if (result)
+//        {
+//            NSInteger digitValue;
+//            NSInteger checkSum = 0;
+//            NSInteger index = 0;
+//            NSInteger leftIndex;
+//            //even length, odd index
+//            if (0 == length%2) {
+//                index = 0;
+//                leftIndex = 1;
+//            }
+//            //odd length, even index
+//            else {
+//                index = 1;
+//                leftIndex = 0;
+//            }
+//            while (index < length) {
+//                digitValue = [[value substringWithRange:NSMakeRange(index, 1)] integerValue];
+//                digitValue = digitValue*2;
+//                if (digitValue >= 10)
+//                {
+//                    checkSum += digitValue/10 + digitValue%10;
+//                }
+//                else
+//                {
+//                    checkSum += digitValue;
+//                }
+//                digitValue = [[value substringWithRange:NSMakeRange(leftIndex, 1)] integerValue];
+//                checkSum += digitValue;
+//                index += 2;
+//                leftIndex += 2;
+//            }
+//            result = (0 == checkSum%10) ? TRUE:FALSE;
+//        }
+//    }else {
+//        result = NO;
+//    }
+//    return result;
+//}
+
+- (BOOL) checkCardNo:(NSString*) cardNo{
+    int oddsum = 0;     //奇数求和
+    int evensum = 0;    //偶数求和
+    int allsum = 0;
+    int cardNoLength = (int)[cardNo length];
+    int lastNum = [[cardNo substringFromIndex:cardNoLength-1] intValue];
+    
+    cardNo = [cardNo substringToIndex:cardNoLength - 1];
+    for (int i = cardNoLength -1 ; i>=1;i--) {
+        NSString *tmpString = [cardNo substringWithRange:NSMakeRange(i-1, 1)];
+        int tmpVal = [tmpString intValue];
+        if (cardNoLength % 2 ==1 ) {
+            if((i % 2) == 0){
+                tmpVal *= 2;
+                if(tmpVal>=10)
+                    tmpVal -= 9;
+                evensum += tmpVal;
+            }else{
+                oddsum += tmpVal;
+            }
+        }else{
+            if((i % 2) == 1){
+                tmpVal *= 2;
+                if(tmpVal>=10)
+                    tmpVal -= 9;
+                evensum += tmpVal;
+            }else{
+                oddsum += tmpVal;
+            }
+        }
+    }
+    
+    allsum = oddsum + evensum;
+    allsum += lastNum;
+    if((allsum % 10) == 0)
+        return YES;
+    else
+        return NO;
+}
 
 
 - (void)didReceiveMemoryWarning {

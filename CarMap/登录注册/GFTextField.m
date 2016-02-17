@@ -159,8 +159,8 @@
         CGFloat lineViewH = 1;
         CGFloat lineViewX = centerTxtX;
         //        CGFloat lineViewY = baseViewH - lineViewH;
-        CGFloat lineViewY = baseViewH;
-        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(lineViewX, lineViewY, lineViewW, lineViewH)];
+//        CGFloat lineViewY = baseViewH;
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(lineViewX, centerTxtY+centerTxtH+5, lineViewW, lineViewH)];
         lineView.backgroundColor = [UIColor colorWithRed:163 / 255.0 green:163 / 255.0 blue:163 / 255.0 alpha:1];
         [baseView addSubview:lineView];
 
