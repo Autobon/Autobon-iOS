@@ -22,12 +22,13 @@
 		9B9515431C60503800445F93 /* GFMapViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9B9515401C60503800445F93 /* GFMapViewController.mm */; };
 		9B97543E1C5765B3004BDC7C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B97543D1C5765B3004BDC7C /* main.m */; };
 		9B9754411C5765B3004BDC7C /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9B9754401C5765B3004BDC7C /* AppDelegate.mm */; };
-		9B9754441C5765B3004BDC7C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9754431C5765B3004BDC7C /* ViewController.m */; };
 		9B9754471C5765B3004BDC7C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B9754451C5765B3004BDC7C /* Main.storyboard */; };
 		9B9754491C5765B3004BDC7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B9754481C5765B3004BDC7C /* Assets.xcassets */; };
 		9B97544C1C5765B3004BDC7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B97544A1C5765B3004BDC7C /* LaunchScreen.storyboard */; };
 		9B9754571C5765B3004BDC7C /* CarMapUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9754561C5765B3004BDC7C /* CarMapUITests.m */; };
 		9BA3C5BC1C75621B007F730D /* GFAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA3C5BB1C75621B007F730D /* GFAlertView.m */; };
+		9BA3C8D41C7598CE007F730D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA3C8D31C7598CE007F730D /* ViewController.m */; };
+		9BA3C8D71C7598FD007F730D /* CLHomeOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA3C8D61C7598FD007F730D /* CLHomeOrderViewController.m */; };
 		9BA526CC1C63115700A2298F /* PoiSearchDemoViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9BA526CB1C63115700A2298F /* PoiSearchDemoViewController.mm */; };
 		9BA9CBD51C5B02220059F145 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA9CBD41C5B02220059F145 /* FirstViewController.m */; };
 		9BE53AE41C72ADED00BBB424 /* CLAutobonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE53AE31C72ADED00BBB424 /* CLAutobonViewController.m */; };
@@ -77,8 +78,6 @@
 		9B97543D1C5765B3004BDC7C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9B97543F1C5765B3004BDC7C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9B9754401C5765B3004BDC7C /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
-		9B9754421C5765B3004BDC7C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		9B9754431C5765B3004BDC7C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		9B9754461C5765B3004BDC7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9B9754481C5765B3004BDC7C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9B97544B1C5765B3004BDC7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -88,6 +87,10 @@
 		9B9754581C5765B3004BDC7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9BA3C5BA1C75621B007F730D /* GFAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFAlertView.h; sourceTree = "<group>"; };
 		9BA3C5BB1C75621B007F730D /* GFAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFAlertView.m; sourceTree = "<group>"; };
+		9BA3C8D21C7598CE007F730D /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		9BA3C8D31C7598CE007F730D /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		9BA3C8D51C7598FD007F730D /* CLHomeOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLHomeOrderViewController.h; path = "CarMap/主界面/CLHomeOrderViewController.h"; sourceTree = SOURCE_ROOT; };
+		9BA3C8D61C7598FD007F730D /* CLHomeOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLHomeOrderViewController.m; path = "CarMap/主界面/CLHomeOrderViewController.m"; sourceTree = SOURCE_ROOT; };
 		9BA526CA1C63115700A2298F /* PoiSearchDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiSearchDemoViewController.h; sourceTree = "<group>"; };
 		9BA526CB1C63115700A2298F /* PoiSearchDemoViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PoiSearchDemoViewController.mm; sourceTree = "<group>"; };
 		9BA9CBD31C5B02220059F145 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
@@ -253,8 +256,9 @@
 				86B890E41C73355B0068B95D /* 登录注册 */,
 				86B890F11C73355B0068B95D /* 我的信息 */,
 				9BE53AE11C72ADB800BBB424 /* 车邻邦认证 */,
-				9B9754421C5765B3004BDC7C /* ViewController.h */,
-				9B9754431C5765B3004BDC7C /* ViewController.m */,
+				9BA3C8C51C759723007F730D /* 主界面 */,
+				9BA3C8D21C7598CE007F730D /* ViewController.h */,
+				9BA3C8D31C7598CE007F730D /* ViewController.m */,
 				9B7301551C5F2CDF00FB2DEB /* SecondViewController.h */,
 				9B7301561C5F2CDF00FB2DEB /* SecondViewController.m */,
 				9BA9CBD31C5B02220059F145 /* FirstViewController.h */,
@@ -289,6 +293,15 @@
 				9B9754581C5765B3004BDC7C /* Info.plist */,
 			);
 			path = CarMapUITests;
+			sourceTree = "<group>";
+		};
+		9BA3C8C51C759723007F730D /* 主界面 */ = {
+			isa = PBXGroup;
+			children = (
+				9BA3C8D51C7598FD007F730D /* CLHomeOrderViewController.h */,
+				9BA3C8D61C7598FD007F730D /* CLHomeOrderViewController.m */,
+			);
+			path = "主界面";
 			sourceTree = "<group>";
 		};
 		9BE53AE11C72ADB800BBB424 /* 车邻邦认证 */ = {
@@ -478,7 +491,6 @@
 				9BE53AEA1C7301A200BBB424 /* CLCertifyViewController.m in Sources */,
 				86B890F61C73355B0068B95D /* GFNavigationView.m in Sources */,
 				9B7AEEC71C740992003B1126 /* CLTitleView.m in Sources */,
-				9B9754441C5765B3004BDC7C /* ViewController.m in Sources */,
 				86B890F51C73355B0068B95D /* GFForgetPwdViewController_2.m in Sources */,
 				86B890F41C73355B0068B95D /* GFForgetPwdViewController_1.m in Sources */,
 				9B9515421C60503800445F93 /* GFAnnotationView.m in Sources */,
@@ -486,8 +498,10 @@
 				9BE665401C743E0800976E7D /* CLTouchScrollView.m in Sources */,
 				9BE53AF31C73406800BBB424 /* GFTextField.m in Sources */,
 				9B97543E1C5765B3004BDC7C /* main.m in Sources */,
+				9BA3C8D41C7598CE007F730D /* ViewController.m in Sources */,
 				9B9515431C60503800445F93 /* GFMapViewController.mm in Sources */,
 				9BA3C5BC1C75621B007F730D /* GFAlertView.m in Sources */,
+				9BA3C8D71C7598FD007F730D /* CLHomeOrderViewController.m in Sources */,
 				86B890F81C73355B0068B95D /* GFSignUpViewController.m in Sources */,
 				9BA526CC1C63115700A2298F /* PoiSearchDemoViewController.mm in Sources */,
 				9BA9CBD51C5B02220059F145 /* FirstViewController.m in Sources */,

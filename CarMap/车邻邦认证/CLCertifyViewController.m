@@ -11,6 +11,10 @@
 #import "GFNavigationView.h"
 #import "CLTitleView.h"
 #import "CLTouchScrollView.h"
+#import "GFAlertView.h"
+//#import "CLHomeViewController.h"
+//#import "CLOrderViewController.h"
+#import "CLHomeOrderViewController.h"
 
 
 @interface CLCertifyViewController ()<UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITableViewDelegate,UITableViewDataSource>
@@ -170,8 +174,20 @@
 #pragma mark - 提交按钮事件
 - (void)submitBtnClick{
     NSLog(@"提交按钮事件");
+    GFAlertView *alertView = [[GFAlertView alloc]initWithTipName:@"提交成功" withTipMessage:@"恭喜您资料提交成功，我们将会在一个工作日内审核信息并以短信的形式告知结果，请注意查收！" withButtonNameArray:@[@"OK"]];
+    [alertView.okBut addTarget:self action:@selector(alertBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:alertView];
 }
 
+#pragma mark - 警告框 OK
+- (void)alertBtnClick{
+    CLHomeOrderViewController *homeView = [[CLHomeOrderViewController alloc]init];
+    [self.navigationController pushViewController:homeView animated:YES];
+//    UIWindow *window = [UIApplication sharedApplication].delegate.window;
+//    window.rootViewController = homeView;
+//    NSLog(@"----shuohsuokanal--");
+    
+}
 #pragma mark - 银行类型按钮事件
 - (void)bankBtnClick:(UIButton *)button{
     NSLog(@"选择银行");
