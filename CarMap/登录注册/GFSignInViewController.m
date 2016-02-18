@@ -10,6 +10,7 @@
 #import "GFTextField.h"
 #import "GFSignUpViewController.h"
 #import "GFForgetPwdViewController_1.h"
+#import "GFHttpTool.h"
 
 @interface GFSignInViewController () {
     
@@ -184,6 +185,8 @@
     [self.signInBut setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.signInBut.titleLabel.font = [UIFont systemFontOfSize:19 / 320.0 * kWidth];
     [self.view addSubview:self.signInBut];
+    [self.signInBut addTarget:self action:@selector(signInButClick) forControlEvents:UIControlEventTouchUpInside];
+    
     
     
     // 忘记密码按钮
@@ -237,13 +240,32 @@
     [signUpBut setTitleColor:[UIColor colorWithRed:249 / 255.0 green:103 / 255.0 blue:33 / 255.0 alpha:1] forState:UIControlStateHighlighted];
     signUpBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [backView addSubview:signUpBut];
-    [signUpBut addTarget:self action:@selector(signInButClick) forControlEvents:UIControlEventTouchUpInside];
+    [signUpBut addTarget:self action:@selector(signUpButClick) forControlEvents:UIControlEventTouchUpInside];
     
 
 }
 
-
 - (void)signInButClick {
+    
+    NSString *url = @"http://121.40.157.200:51234/api/mobile/technician/login";
+    NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
+    parDic[@"phone"] = self.userNameTxt.centerTxt.text;
+    parDic[@"password"] = self.passWordTxt.centerTxt.text;
+
+    [GFHttpTool signInPost:url parameters:parDic success:^(id responseObject) {
+        
+        NSLog(@"请求成功==========%@", responseObject);
+        
+    } failure:^(NSError *error) {
+        
+        
+        NSLog(@"请求失败==========%@", error);
+        
+    }];
+    
+}
+
+- (void)signUpButClick {
     
     GFSignUpViewController *signUpVC = [[GFSignUpViewController alloc] init];
     [self.navigationController pushViewController:signUpVC animated:YES];
