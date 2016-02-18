@@ -79,8 +79,8 @@
     _window.backgroundColor = [UIColor whiteColor];
 //    _firstView = [[ViewController alloc]init];
 //    CLAutobonViewController *firstView = [[CLAutobonViewController alloc]init];
-//    CLCertifyViewController *firstView = [[CLCertifyViewController alloc]init];
-    CLHomeOrderViewController *firstView = [[CLHomeOrderViewController alloc]init];
+    CLCertifyViewController *firstView = [[CLCertifyViewController alloc]init];
+//    CLHomeOrderViewController *firstView = [[CLHomeOrderViewController alloc]init];
     //********************* 光法页面 **********************
     GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
     GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
