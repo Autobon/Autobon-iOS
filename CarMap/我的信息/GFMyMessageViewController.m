@@ -398,7 +398,7 @@
 
 - (void)exitButClick {
 
-    GFAlertView *vv = [[GFAlertView alloc] initWithTipName:@"提示" withTipMessage:@"地方哈说了就看过哈市的高科技啊哈SD卡感觉哈看见帅哥hi就是刚开局把时间可更换" withButtonNameArray:nil];
+    GFAlertView *vv = [[GFAlertView alloc] initWithTipName:@"提示" withTipMessage:@"地方哈说了jlgkbhclhklgjhkljkglhjlcvjchklhckljvlhmn;cklvhncjcklvgh;jmvcklhnjklcghkjlkhjmncklvgk" withButtonNameArray:@[@"ok"]];
     
     [self.view addSubview:vv];
 }
