@@ -37,6 +37,42 @@
 
 @implementation GFSignInViewController
 
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    if (textField.tag == 10 ||textField.tag == 11) {
+        // 判断用户名有无注册 以及是否符合 “手机号格式”
+        /* 去掉空格和换行 */
+        textField.text =  [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
+        NSString *CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
+        NSString *CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
+        NSString *CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
+        NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];  // 小灵通
+        NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];  // 移动
+        NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];  // 灵通
+        NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];  // 电信
+        /* 把上面封装的格式与字符串进行比较 */
+        if (([regextestmobile evaluateWithObject:textField.text] == YES)
+            || ([regextestcm evaluateWithObject:textField.text] == YES)
+            || ([regextestct evaluateWithObject:textField.text] == YES)
+            || ([regextestcu evaluateWithObject:textField.text] == YES)) {
+
+        }else {
+            textField.text = nil;
+//            [self showMessage:@"用户名格式不正确,请重新输入"];
+            
+        }
+    }else if (textField.tag == 2){
+        // 判断密码是否符合 “由字母和数字组合,8—18位”
+        NSString * regex = @"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,18}$";
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+        BOOL isMatch = [pred evaluateWithObject:textField.text];
+        if (!isMatch) {
+//            [self showMessage:@"密码由字母和数字组合,8—18位"];
+        }
+    }
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -108,7 +144,7 @@
     CGFloat userNameH = kHeight * 0.0625;
     CGFloat userNameX = (kWidth - userNameW) / 2.0 - 3 / 320.0 * kWidth;
     CGFloat userNameY = CGRectGetMaxY(enLab.frame) + kHeight * 0.167;
-    self.userNameTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"帐号.png"] withFrame:CGRectMake(userNameX, userNameY, userNameW, userNameH)];
+    self.userNameTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"user.png"] withFrame:CGRectMake(userNameX, userNameY, userNameW, userNameH)];
     self.userNameTxt.centerTxt.placeholder = @"请输入账号";
     [self.userNameTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
     self.userNameTxt.centerTxt.clearButtonMode = UITextFieldViewModeAlways;
@@ -127,7 +163,7 @@
     CGFloat passWordTxtH = userNameH;
     CGFloat passWordTxtX = userNameX;
     CGFloat passWordTxtY = CGRectGetMaxY(self.userNameTxt.frame) + jianjv2;
-    self.passWordTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"密码.png"] withRightButton:passwordBut withFrame:CGRectMake(passWordTxtX, passWordTxtY, passWordTxtW, passWordTxtH)];
+    self.passWordTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"password.png"] withRightButton:passwordBut withFrame:CGRectMake(passWordTxtX, passWordTxtY, passWordTxtW, passWordTxtH)];
     self.passWordTxt.centerTxt.placeholder = @"请输入密码";
     [self.passWordTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
     self.passWordTxt.centerTxt.secureTextEntry = YES;
@@ -142,8 +178,8 @@
     CGFloat signInButY = CGRectGetMaxY(self.passWordTxt.frame) + jianjv2;
     self.signInBut = [UIButton buttonWithType:UIButtonTypeCustom];
     self.signInBut.frame = CGRectMake(signInButX, signInButY, signInButW, signInButH);
-    [self.signInBut setBackgroundImage:[UIImage imageNamed:@"默认按钮.png"] forState:UIControlStateNormal];
-    [self.signInBut setBackgroundImage:[UIImage imageNamed:@"点击按钮.png"] forState:UIControlStateHighlighted];
+    [self.signInBut setBackgroundImage:[UIImage imageNamed:@"button.png"] forState:UIControlStateNormal];
+    [self.signInBut setBackgroundImage:[UIImage imageNamed:@"buttonClick.png"] forState:UIControlStateHighlighted];
     [self.signInBut setTitle:@"登录" forState:UIControlStateNormal];
     [self.signInBut setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.signInBut.titleLabel.font = [UIFont systemFontOfSize:19 / 320.0 * kWidth];
