@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		368FB3069A8AB11C0125708F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4D41BE1C67690080F4127E9 /* libPods.a */; };
+<<<<<<< HEAD
 		862CFB601C73419F0095F114 /* GFTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 862CFB5F1C73419F0095F114 /* GFTextField.m */; };
 		866CCEBC1C755BC800E50C67 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 866CCEAE1C755BC800E50C67 /* AFHTTPSessionManager.m */; };
 		866CCEBD1C755BC800E50C67 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 866CCEB11C755BC800E50C67 /* AFNetworkReachabilityManager.m */; };
@@ -17,6 +18,8 @@
 		866CCEC11C755BC800E50C67 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 866CCEB91C755BC800E50C67 /* AFURLSessionManager.m */; };
 		866CCEC21C755BC800E50C67 /* GFHttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 866CCEBB1C755BC800E50C67 /* GFHttpTool.m */; };
 		8685B34D1C748A510008A64C /* GFAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8685B34C1C748A510008A64C /* GFAlertView.m */; };
+=======
+>>>>>>> CLmaster
 		86B890F41C73355B0068B95D /* GFForgetPwdViewController_1.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890E61C73355B0068B95D /* GFForgetPwdViewController_1.m */; };
 		86B890F51C73355B0068B95D /* GFForgetPwdViewController_2.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890E81C73355B0068B95D /* GFForgetPwdViewController_2.m */; };
 		86B890F61C73355B0068B95D /* GFNavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890EA1C73355B0068B95D /* GFNavigationView.m */; };
@@ -24,6 +27,7 @@
 		86B890F81C73355B0068B95D /* GFSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890EE1C73355B0068B95D /* GFSignUpViewController.m */; };
 		86B890FA1C73355B0068B95D /* GFMyMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890F31C73355B0068B95D /* GFMyMessageViewController.m */; };
 		9B7301571C5F2CDF00FB2DEB /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7301561C5F2CDF00FB2DEB /* SecondViewController.m */; };
+		9B7AEEC71C740992003B1126 /* CLTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7AEEC61C740992003B1126 /* CLTitleView.m */; };
 		9B9515391C60501B00445F93 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9515381C60501B00445F93 /* TestViewController.m */; };
 		9B9515411C60503800445F93 /* GFAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95153C1C60503800445F93 /* GFAnnotation.m */; };
 		9B9515421C60503800445F93 /* GFAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95153E1C60503800445F93 /* GFAnnotationView.m */; };
@@ -35,10 +39,13 @@
 		9B9754491C5765B3004BDC7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B9754481C5765B3004BDC7C /* Assets.xcassets */; };
 		9B97544C1C5765B3004BDC7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B97544A1C5765B3004BDC7C /* LaunchScreen.storyboard */; };
 		9B9754571C5765B3004BDC7C /* CarMapUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9754561C5765B3004BDC7C /* CarMapUITests.m */; };
+		9BA3C5BC1C75621B007F730D /* GFAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA3C5BB1C75621B007F730D /* GFAlertView.m */; };
 		9BA526CC1C63115700A2298F /* PoiSearchDemoViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9BA526CB1C63115700A2298F /* PoiSearchDemoViewController.mm */; };
 		9BA9CBD51C5B02220059F145 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA9CBD41C5B02220059F145 /* FirstViewController.m */; };
 		9BE53AE41C72ADED00BBB424 /* CLAutobonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE53AE31C72ADED00BBB424 /* CLAutobonViewController.m */; };
 		9BE53AEA1C7301A200BBB424 /* CLCertifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE53AE91C7301A200BBB424 /* CLCertifyViewController.m */; };
+		9BE53AF31C73406800BBB424 /* GFTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE53AF21C73406800BBB424 /* GFTextField.m */; };
+		9BE665401C743E0800976E7D /* CLTouchScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE6653F1C743E0800976E7D /* CLTouchScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +59,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+<<<<<<< HEAD
 		862CFB5E1C73419F0095F114 /* GFTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFTextField.h; sourceTree = "<group>"; };
 		862CFB5F1C73419F0095F114 /* GFTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFTextField.m; sourceTree = "<group>"; };
 		866CCEAD1C755BC800E50C67 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
@@ -71,6 +79,8 @@
 		866CCEBB1C755BC800E50C67 /* GFHttpTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFHttpTool.m; sourceTree = "<group>"; };
 		8685B34B1C748A500008A64C /* GFAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFAlertView.h; sourceTree = "<group>"; };
 		8685B34C1C748A510008A64C /* GFAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFAlertView.m; sourceTree = "<group>"; };
+=======
+>>>>>>> CLmaster
 		86B890E51C73355B0068B95D /* GFForgetPwdViewController_1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFForgetPwdViewController_1.h; sourceTree = "<group>"; };
 		86B890E61C73355B0068B95D /* GFForgetPwdViewController_1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFForgetPwdViewController_1.m; sourceTree = "<group>"; };
 		86B890E71C73355B0068B95D /* GFForgetPwdViewController_2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFForgetPwdViewController_2.h; sourceTree = "<group>"; };
@@ -86,6 +96,8 @@
 		9B02AF661C5A22CB0044FB71 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		9B7301551C5F2CDF00FB2DEB /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
 		9B7301561C5F2CDF00FB2DEB /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		9B7AEEC51C740992003B1126 /* CLTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLTitleView.h; sourceTree = "<group>"; };
+		9B7AEEC61C740992003B1126 /* CLTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLTitleView.m; sourceTree = "<group>"; };
 		9B9515371C60501B00445F93 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		9B9515381C60501B00445F93 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		9B95153B1C60503800445F93 /* GFAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFAnnotation.h; sourceTree = "<group>"; };
@@ -108,6 +120,8 @@
 		9B9754521C5765B3004BDC7C /* CarMapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarMapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B9754561C5765B3004BDC7C /* CarMapUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CarMapUITests.m; sourceTree = "<group>"; };
 		9B9754581C5765B3004BDC7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9BA3C5BA1C75621B007F730D /* GFAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFAlertView.h; sourceTree = "<group>"; };
+		9BA3C5BB1C75621B007F730D /* GFAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFAlertView.m; sourceTree = "<group>"; };
 		9BA526CA1C63115700A2298F /* PoiSearchDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiSearchDemoViewController.h; sourceTree = "<group>"; };
 		9BA526CB1C63115700A2298F /* PoiSearchDemoViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PoiSearchDemoViewController.mm; sourceTree = "<group>"; };
 		9BA9CBD31C5B02220059F145 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
@@ -116,8 +130,10 @@
 		9BE53AE31C72ADED00BBB424 /* CLAutobonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAutobonViewController.m; sourceTree = "<group>"; };
 		9BE53AE81C7301A200BBB424 /* CLCertifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCertifyViewController.h; sourceTree = "<group>"; };
 		9BE53AE91C7301A200BBB424 /* CLCertifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLCertifyViewController.m; sourceTree = "<group>"; };
-		9BE53AEE1C731E7700BBB424 /* GFTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFTextField.h; sourceTree = "<group>"; };
-		9BE53AEF1C731E7700BBB424 /* GFTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFTextField.m; sourceTree = "<group>"; };
+		9BE53AF11C73406800BBB424 /* GFTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFTextField.h; sourceTree = "<group>"; };
+		9BE53AF21C73406800BBB424 /* GFTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFTextField.m; sourceTree = "<group>"; };
+		9BE6653E1C743E0800976E7D /* CLTouchScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLTouchScrollView.h; sourceTree = "<group>"; };
+		9BE6653F1C743E0800976E7D /* CLTouchScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLTouchScrollView.m; sourceTree = "<group>"; };
 		9BFA805A1C5F4009001651C3 /* BaiduMapAPI_Base.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Base.framework; path = "../../Downloads/BaiduMap_IOSSDK_v2.10-2.0/BaiduMap_IOSSDK_v2.10.0_Sample/BMKOCDemo/BaiduMapAPI/BaiduMapAPI_Base.framework"; sourceTree = "<group>"; };
 		9BFA805B1C5F4009001651C3 /* BaiduMapAPI_Cloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Cloud.framework; path = "../../Downloads/BaiduMap_IOSSDK_v2.10-2.0/BaiduMap_IOSSDK_v2.10.0_Sample/BMKOCDemo/BaiduMapAPI/BaiduMapAPI_Cloud.framework"; sourceTree = "<group>"; };
 		9BFA805C1C5F4009001651C3 /* BaiduMapAPI_Location.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Location.framework; path = "../../Downloads/BaiduMap_IOSSDK_v2.10-2.0/BaiduMap_IOSSDK_v2.10.0_Sample/BMKOCDemo/BaiduMapAPI/BaiduMapAPI_Location.framework"; sourceTree = "<group>"; };
@@ -195,20 +211,20 @@
 		86B890E41C73355B0068B95D /* 登录注册 */ = {
 			isa = PBXGroup;
 			children = (
-				86B890EB1C73355B0068B95D /* GFSignInViewController.h */,
-				86B890EC1C73355B0068B95D /* GFSignInViewController.m */,
-				86B890ED1C73355B0068B95D /* GFSignUpViewController.h */,
-				86B890EE1C73355B0068B95D /* GFSignUpViewController.m */,
 				86B890E51C73355B0068B95D /* GFForgetPwdViewController_1.h */,
 				86B890E61C73355B0068B95D /* GFForgetPwdViewController_1.m */,
 				86B890E71C73355B0068B95D /* GFForgetPwdViewController_2.h */,
 				86B890E81C73355B0068B95D /* GFForgetPwdViewController_2.m */,
 				86B890E91C73355B0068B95D /* GFNavigationView.h */,
 				86B890EA1C73355B0068B95D /* GFNavigationView.m */,
-				862CFB5E1C73419F0095F114 /* GFTextField.h */,
-				862CFB5F1C73419F0095F114 /* GFTextField.m */,
-				8685B34B1C748A500008A64C /* GFAlertView.h */,
-				8685B34C1C748A510008A64C /* GFAlertView.m */,
+				86B890EB1C73355B0068B95D /* GFSignInViewController.h */,
+				86B890EC1C73355B0068B95D /* GFSignInViewController.m */,
+				86B890ED1C73355B0068B95D /* GFSignUpViewController.h */,
+				86B890EE1C73355B0068B95D /* GFSignUpViewController.m */,
+				9BE53AF11C73406800BBB424 /* GFTextField.h */,
+				9BE53AF21C73406800BBB424 /* GFTextField.m */,
+				9BA3C5BA1C75621B007F730D /* GFAlertView.h */,
+				9BA3C5BB1C75621B007F730D /* GFAlertView.m */,
 			);
 			path = "登录注册";
 			sourceTree = "<group>";
@@ -347,8 +363,10 @@
 				9BE53AE31C72ADED00BBB424 /* CLAutobonViewController.m */,
 				9BE53AE81C7301A200BBB424 /* CLCertifyViewController.h */,
 				9BE53AE91C7301A200BBB424 /* CLCertifyViewController.m */,
-				9BE53AEE1C731E7700BBB424 /* GFTextField.h */,
-				9BE53AEF1C731E7700BBB424 /* GFTextField.m */,
+				9B7AEEC51C740992003B1126 /* CLTitleView.h */,
+				9B7AEEC61C740992003B1126 /* CLTitleView.m */,
+				9BE6653E1C743E0800976E7D /* CLTouchScrollView.h */,
+				9BE6653F1C743E0800976E7D /* CLTouchScrollView.m */,
 			);
 			path = "车邻邦认证";
 			sourceTree = "<group>";
@@ -525,7 +543,7 @@
 				9B9515391C60501B00445F93 /* TestViewController.m in Sources */,
 				9BE53AEA1C7301A200BBB424 /* CLCertifyViewController.m in Sources */,
 				86B890F61C73355B0068B95D /* GFNavigationView.m in Sources */,
-				8685B34D1C748A510008A64C /* GFAlertView.m in Sources */,
+				9B7AEEC71C740992003B1126 /* CLTitleView.m in Sources */,
 				9B9754441C5765B3004BDC7C /* ViewController.m in Sources */,
 				866CCEC11C755BC800E50C67 /* AFURLSessionManager.m in Sources */,
 				86B890F51C73355B0068B95D /* GFForgetPwdViewController_2.m in Sources */,
@@ -535,10 +553,12 @@
 				9B9515421C60503800445F93 /* GFAnnotationView.m in Sources */,
 				866CCEBF1C755BC800E50C67 /* AFURLRequestSerialization.m in Sources */,
 				9B9754411C5765B3004BDC7C /* AppDelegate.mm in Sources */,
-				862CFB601C73419F0095F114 /* GFTextField.m in Sources */,
+				9BE665401C743E0800976E7D /* CLTouchScrollView.m in Sources */,
+				9BE53AF31C73406800BBB424 /* GFTextField.m in Sources */,
 				9B97543E1C5765B3004BDC7C /* main.m in Sources */,
 				866CCEC21C755BC800E50C67 /* GFHttpTool.m in Sources */,
 				9B9515431C60503800445F93 /* GFMapViewController.mm in Sources */,
+				9BA3C5BC1C75621B007F730D /* GFAlertView.m in Sources */,
 				86B890F81C73355B0068B95D /* GFSignUpViewController.m in Sources */,
 				9BA526CC1C63115700A2298F /* PoiSearchDemoViewController.mm in Sources */,
 				866CCEBD1C755BC800E50C67 /* AFNetworkReachabilityManager.m in Sources */,
