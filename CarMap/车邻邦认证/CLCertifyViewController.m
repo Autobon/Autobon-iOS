@@ -13,11 +13,13 @@
 #import "CLTouchScrollView.h"
 
 
-@interface CLCertifyViewController ()<UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface CLCertifyViewController ()<UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITableViewDelegate,UITableViewDataSource>
 {
     UIView *_chooseView;
     CLTouchScrollView *_scrollView;
     UIImageView *_headImage;
+    UIImageView *_identityImageView;
+    BOOL _isHeadImage;
 }
 @end
 
@@ -48,7 +50,8 @@
     
     UIButton *cameraHeadBtn = [[UIButton alloc]initWithFrame:CGRectMake(70, 80, 20, 20)];
     [cameraHeadBtn setImage:[UIImage imageNamed:@"cameraHead"] forState:UIControlStateNormal];
-    [cameraHeadBtn addTarget:self action:@selector(cameraHeadBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    cameraHeadBtn.tag = 1;
+    [cameraHeadBtn addTarget:self action:@selector(cameraHeadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:cameraHeadBtn];
     
     GFTextField *userNameTextField = [[GFTextField alloc]initWithPlaceholder:@"姓名" withFrame:CGRectMake(110, 20, self.view.frame.size.width - 140, 50)];
@@ -56,6 +59,8 @@
     
     GFTextField *identityTextField = [[GFTextField alloc]initWithPlaceholder:@"身份证号" withFrame:CGRectMake(110, 80, self.view.frame.size.width - 140, 50)];
     identityTextField.centerTxt.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    identityTextField.centerTxt.delegate = self;
+    identityTextField.centerTxt.tag = 2;
     [_scrollView addSubview:identityTextField];
     
 // 技能项目
@@ -84,13 +89,13 @@
     CLTitleView *identityView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 250, self.view.frame.size.width, 45) Title:@"手持身份证正面照"];
     [_scrollView addSubview:identityView];
     
-    UIImageView *identityImageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/5, 310, self.view.frame.size.width*3/5, self.view.frame.size.width*27/70)];
-    identityImageView.image = [UIImage imageNamed:@"userImage"];
-    [_scrollView addSubview:identityImageView];
+    _identityImageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/5, 310, self.view.frame.size.width*3/5, self.view.frame.size.width*27/70)];
+    _identityImageView.image = [UIImage imageNamed:@"userImage"];
+    [_scrollView addSubview:_identityImageView];
     
     UIButton *cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*4/5-15, 310+self.view.frame.size.width*27/70-25, 30, 30)];
     [cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
-    [cameraBtn addTarget:self action:@selector(cameraHeadBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [cameraBtn addTarget:self action:@selector(cameraHeadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:cameraBtn];
     
 // 银行卡信息
@@ -106,7 +111,7 @@
 //    bankButton.titleLabel.textAlignment = NSTextAlignmentLeft;
     bankButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     bankButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
-    [bankButton addTarget:self action:@selector(bankBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [bankButton addTarget:self action:@selector(bankBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:bankButton];
     
     UIButton *whereButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2+5, bankView.frame.origin.y+45+10, self.view.frame.size.width/2-15, 40)];
@@ -117,13 +122,14 @@
 //    whereButton.titleLabel.textAlignment = NSTextAlignmentLeft;
     whereButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     whereButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
-    [whereButton addTarget:self action:@selector(whereBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [whereButton addTarget:self action:@selector(whereBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:whereButton];
     
 // 银行卡号
     GFTextField *bankNumberTextField = [[GFTextField alloc]initWithPlaceholder:@"银行卡号" withFrame:CGRectMake(60, bankView.frame.origin.y+45+15+60, self.view.frame.size.width-120, 40)];
     bankNumberTextField.centerTxt.keyboardType = UIKeyboardTypeNumberPad;
     bankNumberTextField.centerTxt.delegate = self;
+    bankNumberTextField.centerTxt.tag = 5;
     [_scrollView addSubview:bankNumberTextField];
     
     UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, bankNumberTextField.frame.origin.y+40+40, self.view.frame.size.width, 2)];
@@ -167,27 +173,89 @@
 }
 
 #pragma mark - 银行类型按钮事件
-- (void)bankBtnClick{
+- (void)bankBtnClick:(UIButton *)button{
     NSLog(@"选择银行");
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(10, button.frame.origin.y + 40, button.frame.size.width , 100) style:UITableViewStylePlain];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    tableView.backgroundColor = [UIColor cyanColor];
+    [_scrollView addSubview:tableView];
+    
+    
+}
+#pragma mark - tableView协议方法
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView removeFromSuperview];
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    return 5;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (!cell) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    }
+    cell.textLabel.text = @"银行卡操作";
+    
+    return cell;
+}
 
 #pragma mark - 开户地点按钮事件
--(void)whereBtnClick{
+-(void)whereBtnClick:(UIButton *)button{
     NSLog(@"选择开户地点");
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2+5, button.frame.origin.y + 40, button.frame.size.width , 100) style:UITableViewStylePlain];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    tableView.backgroundColor = [UIColor cyanColor];
+    [_scrollView addSubview:tableView];
 }
 
 
 #pragma mark - 银行卡号对话框协议
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
-    _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, _scrollView.contentSize.height+200);
-    _scrollView.contentOffset = CGPointMake(0, _scrollView.contentSize.height-self.view.frame.size.height);
+    if (textField.tag == 5) {
+        _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, _scrollView.contentSize.height+200);
+        _scrollView.contentOffset = CGPointMake(0, _scrollView.contentSize.height-self.view.frame.size.height);
+    }
+    
    
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, _scrollView.contentSize.height-200);
+    if (textField.tag == 5) {
+        _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, _scrollView.contentSize.height-200);
+        if ([self checkCardNo:textField.text]) {
+            NSLog(@"银行卡号正确");
+        }else{
+            NSLog(@"银行卡号码格式错误");
+        }
+    }else{
+        
+        if ([self validateIdentityCard:textField.text]) {
+            NSLog(@"身份证号正确");
+        }else{
+            NSLog(@"身份证号码格式错误");
+        }
+    }
+    
     
 }
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if (textField.tag == 5) {
+        NSLog(@"---range--%@----%@---string--%@--",@(range.location),@(range.length),string);
+        if (range.length == 0) {
+            if (range.location%5 == 4) {
+                textField.text = [NSString stringWithFormat:@"%@ ",textField.text];
+            }
+        }
+    }
+    
+    return YES;
+}
+
+
 #pragma mark - 技能按钮
 - (void)skillBtnClick:(UIButton *)button{
     [self.view endEditing:YES];
@@ -203,8 +271,14 @@
 }
 
 #pragma mark - 相机按钮的实现方法
-- (void)cameraHeadBtnClick{
+- (void)cameraHeadBtnClick:(UIButton *)button{
     [self.view endEditing:YES];
+    _scrollView.userInteractionEnabled = NO;
+    if (button.tag == 1) {
+        _isHeadImage = YES;
+    }else{
+        _isHeadImage = NO;
+    }
     _chooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-100, 80)];
     _chooseView.center = self.view.center;
     _chooseView.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
@@ -222,7 +296,7 @@
     UIButton *photoButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 40, self.view.frame.size.width-100, 40)];
     [photoButton setTitle:@"相机" forState:UIControlStateNormal];
     [photoButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
-    cameraButton.tag = 2;
+    photoButton.tag = 2;
     [_chooseView addSubview:photoButton];
     
     
@@ -232,13 +306,30 @@
 #pragma mark - 选择照片
 - (void)userHeadChoose:(UIButton *)button{
     [_chooseView removeFromSuperview];
-    
-    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
-    imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-    imagePickerController.allowsEditing = YES;
-    imagePickerController.delegate =self;
-    [self presentViewController:imagePickerController animated:YES completion:nil];
-
+    _scrollView.userInteractionEnabled = YES;
+    if (button.tag == 1) {
+        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
+        imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+        imagePickerController.allowsEditing = YES;
+        imagePickerController.delegate =self;
+        [self presentViewController:imagePickerController animated:YES completion:nil];
+    }else{
+        NSLog(@"打开相机");
+        BOOL result = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
+        if (result) {
+            NSLog(@"---支持使用相机---");
+            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            imagePicker.delegate = self;
+            // 编辑模式
+//            imagePicker.allowsEditing = YES;
+            [self  presentViewController:imagePicker animated:YES completion:^{
+            }];
+        }else{
+            NSLog(@"----不支持使用相机----");
+        }
+        
+    }
     
     
 }
@@ -246,7 +337,12 @@
 #pragma mark - 图片协议方法
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo{
     [self dismissViewControllerAnimated:YES completion:nil];
-    _headImage.image = image;
+    if (_isHeadImage) {
+        _headImage.image = image;
+    }else{
+        _identityImageView.image = image;
+        _identityImageView.contentMode = UIViewContentModeScaleAspectFit;
+    }
     
 }
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
@@ -274,7 +370,7 @@
 }
 
 #pragma mark - 身份证号正则表达式
-+ (BOOL) validateIdentityCard: (NSString *)identityCard
+- (BOOL) validateIdentityCard: (NSString *)identityCard
 {
     BOOL flag;
     if (identityCard.length <= 0) {
@@ -360,12 +456,12 @@
 //}
 
 - (BOOL) checkCardNo:(NSString*) cardNo{
+    cardNo = [cardNo stringByReplacingOccurrencesOfString:@" " withString:@""];
     int oddsum = 0;     //奇数求和
     int evensum = 0;    //偶数求和
     int allsum = 0;
     int cardNoLength = (int)[cardNo length];
     int lastNum = [[cardNo substringFromIndex:cardNoLength-1] intValue];
-    
     cardNo = [cardNo substringToIndex:cardNoLength - 1];
     for (int i = cardNoLength -1 ; i>=1;i--) {
         NSString *tmpString = [cardNo substringWithRange:NSMakeRange(i-1, 1)];
