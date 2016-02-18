@@ -62,7 +62,7 @@
         fenDic[NSForegroundColorAttributeName] = [UIColor blackColor];
         CGRect fenRect = [fenStr boundingRectWithSize:CGSizeMake(baseViewW - 50, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:fenDic context:nil];
         CGFloat msgLabW = baseViewW - 40;
-        CGFloat msgLabH = fenRect.size.height + 4;
+        CGFloat msgLabH = fenRect.size.height + 6;
         CGFloat msgLabX = 20;
         CGFloat msgLabY = CGRectGetMaxY(tipLab.frame) + 20;
         UILabel *msgLab = [[UILabel alloc] initWithFrame:CGRectMake(msgLabX, msgLabY, msgLabW, msgLabH)];
@@ -83,9 +83,9 @@
         CGFloat okButH = tipLabH;
         CGFloat okButX = 0;
         CGFloat okButY= CGRectGetMaxY(msgLab.frame) + 20;
-        UIButton *okBut = [UIButton buttonWithType:UIButtonTypeCustom];
-        okBut.frame = CGRectMake(okButX, okButY, okButW, okButH);
-        [baseView addSubview:okBut];
+        _okBut = [UIButton buttonWithType:UIButtonTypeCustom];
+        _okBut.frame = CGRectMake(okButX, okButY, okButW, okButH);
+        [baseView addSubview:_okBut];
         CGFloat okLabW = 60;
         CGFloat okLabH = 30;
         CGFloat okLabX = (baseViewW - okLabW) / 2.0;
@@ -95,17 +95,12 @@
         okLab.textColor = [UIColor whiteColor];
         okLab.text = buttonArray[0];
         okLab.textAlignment = NSTextAlignmentCenter;
-        [okBut addSubview:okLab];
+        [_okBut addSubview:okLab];
     
-        [okBut addTarget:self action:@selector(okButClick) forControlEvents:UIControlEventTouchUpInside];
+        [_okBut addTarget:self action:@selector(okButClick) forControlEvents:UIControlEventTouchUpInside];
         
-        
-        CGFloat baseViewH2 = CGRectGetMaxY(okBut.frame);
+        CGFloat baseViewH2 = CGRectGetMaxY(_okBut.frame);
         baseView.frame = CGRectMake(baseViewX, baseViewY, baseViewW, baseViewH2);
-        
-        
-        
-        
         
     }
 

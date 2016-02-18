@@ -22,6 +22,8 @@
 //#import "ViewController.h"
 #import "CLAutobonViewController.h"
 #import "CLCertifyViewController.h"
+#import "CLHomeOrderViewController.h"
+
 
 #import "GFMyMessageViewController.h"
 #import "GFSignInViewController.h"
@@ -77,13 +79,17 @@
     _window.backgroundColor = [UIColor whiteColor];
 //    _firstView = [[ViewController alloc]init];
 //    CLAutobonViewController *firstView = [[CLAutobonViewController alloc]init];
-    CLCertifyViewController *firstView = [[CLCertifyViewController alloc]init];
-    
+//    CLCertifyViewController *firstView = [[CLCertifyViewController alloc]init];
+    CLHomeOrderViewController *firstView = [[CLHomeOrderViewController alloc]init];
     //********************* 光法页面 **********************
     GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
     GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
     
+<<<<<<< HEAD
     _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
+=======
+    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
+>>>>>>> CLmaster
     _navigation.navigationBarHidden = YES;
     _window.rootViewController = _navigation;
     [_window makeKeyAndVisible];

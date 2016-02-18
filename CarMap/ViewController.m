@@ -27,9 +27,14 @@
 
 @implementation ViewController
 
-- (void)viewDidLoad {
+
+- (void)viewDidLoad{
+    NSLog(@"这是什么情况");
+}
+- (void)viewDidLoad2 {
     [super viewDidLoad];
     
+    NSLog(@"这边也走了");
     
     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(100, 100, 120, 40)];
     button.backgroundColor = [UIColor cyanColor];
