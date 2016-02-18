@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		368FB3069A8AB11C0125708F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4D41BE1C67690080F4127E9 /* libPods.a */; };
-<<<<<<< HEAD
+
 		862CFB601C73419F0095F114 /* GFTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 862CFB5F1C73419F0095F114 /* GFTextField.m */; };
 		866CCEBC1C755BC800E50C67 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 866CCEAE1C755BC800E50C67 /* AFHTTPSessionManager.m */; };
 		866CCEBD1C755BC800E50C67 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 866CCEB11C755BC800E50C67 /* AFNetworkReachabilityManager.m */; };
@@ -18,8 +18,7 @@
 		866CCEC11C755BC800E50C67 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 866CCEB91C755BC800E50C67 /* AFURLSessionManager.m */; };
 		866CCEC21C755BC800E50C67 /* GFHttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 866CCEBB1C755BC800E50C67 /* GFHttpTool.m */; };
 		8685B34D1C748A510008A64C /* GFAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8685B34C1C748A510008A64C /* GFAlertView.m */; };
-=======
->>>>>>> CLmaster
+
 		86B890F41C73355B0068B95D /* GFForgetPwdViewController_1.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890E61C73355B0068B95D /* GFForgetPwdViewController_1.m */; };
 		86B890F51C73355B0068B95D /* GFForgetPwdViewController_2.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890E81C73355B0068B95D /* GFForgetPwdViewController_2.m */; };
 		86B890F61C73355B0068B95D /* GFNavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890EA1C73355B0068B95D /* GFNavigationView.m */; };
@@ -59,7 +58,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-<<<<<<< HEAD
+
 		862CFB5E1C73419F0095F114 /* GFTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFTextField.h; sourceTree = "<group>"; };
 		862CFB5F1C73419F0095F114 /* GFTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFTextField.m; sourceTree = "<group>"; };
 		866CCEAD1C755BC800E50C67 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
@@ -79,8 +78,7 @@
 		866CCEBB1C755BC800E50C67 /* GFHttpTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFHttpTool.m; sourceTree = "<group>"; };
 		8685B34B1C748A500008A64C /* GFAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFAlertView.h; sourceTree = "<group>"; };
 		8685B34C1C748A510008A64C /* GFAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFAlertView.m; sourceTree = "<group>"; };
-=======
->>>>>>> CLmaster
+
 		86B890E51C73355B0068B95D /* GFForgetPwdViewController_1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFForgetPwdViewController_1.h; sourceTree = "<group>"; };
 		86B890E61C73355B0068B95D /* GFForgetPwdViewController_1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFForgetPwdViewController_1.m; sourceTree = "<group>"; };
 		86B890E71C73355B0068B95D /* GFForgetPwdViewController_2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFForgetPwdViewController_2.h; sourceTree = "<group>"; };
