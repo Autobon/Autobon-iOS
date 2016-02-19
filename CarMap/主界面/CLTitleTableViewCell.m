@@ -15,17 +15,22 @@
 //    if (self = [super init]) {
 //        self.backgroundColor = [UIColor redColor];
 //标题label
-        UILabel *titleLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, self.frame.size.width, 40)];
-        titleLable.text = @"抢单2单，在线5小时";
-        titleLable.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:titleLable];
+    _titleLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 5, [UIScreen mainScreen].bounds.size.width-20, 40)];
+    _titleLable.text = @"抢单2单，在线5小时";
+    _titleLable.font = [UIFont systemFontOfSize:19];
+    _titleLable.textAlignment = NSTextAlignmentCenter;
+    [self addSubview:_titleLable];
         
 //详情标题
-        UILabel *detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 60, self.frame.size.width, 30)];
-        detailLabel.text = @"今日流水：600.00  成功率50%";
-        detailLabel.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:detailLabel];
-        
+    _detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 45, [UIScreen mainScreen].bounds.size.width, 30)];
+    _detailLabel.text = @"今日流水：600.00  成功率50%";
+    _detailLabel.textColor = [UIColor colorWithRed:157/255.0 green:157/255.0 blue:157/255.0 alpha:1.0];
+    _detailLabel.textAlignment = NSTextAlignmentCenter;
+    [self addSubview:_detailLabel];
+    
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 83, [UIScreen mainScreen].bounds.size.width, 2)];
+    view.backgroundColor = [UIColor colorWithRed:157/255.0 green:157/255.0 blue:157/255.0 alpha:1.0];
+    [self addSubview:view];
         
 //    }
 //    return self;

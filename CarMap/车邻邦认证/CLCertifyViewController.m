@@ -71,17 +71,43 @@
     CLTitleView *skillView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 145, self.view.frame.size.width, 45) Title:@"技能项目"];
     [_scrollView addSubview:skillView];
     
-    UIButton *carButton = [[UIButton alloc]initWithFrame:CGRectMake(50, 200, self.view.frame.size.width/2-60, 40)];
-    [carButton setTitle:@"汽车贴膜" forState:UIControlStateNormal];
-    carButton.backgroundColor = [[UIColor alloc]initWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
-    carButton.layer.cornerRadius = 15;
-    [carButton setTitleColor:[[UIColor alloc]initWithRed:156/255.0 green:156/255.0 blue:156/255.0 alpha:1.0] forState:UIControlStateNormal];
-    carButton.tag = 1;
-    [carButton addTarget:self action:@selector(skillBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [_scrollView addSubview:carButton];
+// 隔热层
+    UIButton *insulatingButton = [[UIButton alloc]initWithFrame:CGRectMake(8, 200, self.view.frame.size.width/4-10, 40)];
+    [insulatingButton setTitle:@"隔热膜" forState:UIControlStateNormal];
+    insulatingButton.titleLabel.font = [UIFont systemFontOfSize:16];
+    insulatingButton.backgroundColor = [[UIColor alloc]initWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    insulatingButton.layer.cornerRadius = 15;
+    [insulatingButton setTitleColor:[[UIColor alloc]initWithRed:156/255.0 green:156/255.0 blue:156/255.0 alpha:1.0] forState:UIControlStateNormal];
+    insulatingButton.tag = 1;
+    [insulatingButton addTarget:self action:@selector(skillBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:insulatingButton];
     
-    UIButton *cleanButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2+10, 200, self.view.frame.size.width/2-60, 40)];
+// 隐形车衣
+    UIButton *stealthButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/4+6, 200,self.view.frame.size.width/4-10, 40)];
+    [stealthButton setTitle:@"隐形车衣" forState:UIControlStateNormal];
+    stealthButton.titleLabel.font = [UIFont systemFontOfSize:16];
+    stealthButton.backgroundColor = [[UIColor alloc]initWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    stealthButton.layer.cornerRadius = 15;
+    [stealthButton setTitleColor:[[UIColor alloc]initWithRed:156/255.0 green:156/255.0 blue:156/255.0 alpha:1.0] forState:UIControlStateNormal];
+    stealthButton.tag = 1;
+    [stealthButton addTarget:self action:@selector(skillBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:stealthButton];
+    
+    
+    
+    UIButton *colorButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2+4, 200,self.view.frame.size.width/4-10, 40)];
+    [colorButton setTitle:@"车身改色" forState:UIControlStateNormal];
+    colorButton.titleLabel.font = [UIFont systemFontOfSize:16];
+    colorButton.backgroundColor = [[UIColor alloc]initWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    colorButton.layer.cornerRadius = 15;
+    [colorButton setTitleColor:[[UIColor alloc]initWithRed:156/255.0 green:156/255.0 blue:156/255.0 alpha:1.0] forState:UIControlStateNormal];
+    colorButton.tag = 1;
+    [colorButton addTarget:self action:@selector(skillBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:colorButton];
+    
+    UIButton *cleanButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*3/4+2, 200,self.view.frame.size.width/4-10, 40)];
     [cleanButton setTitle:@"美容清洁" forState:UIControlStateNormal];
+    cleanButton.titleLabel.font = [UIFont systemFontOfSize:16];
     cleanButton.backgroundColor = [[UIColor alloc]initWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
     cleanButton.layer.cornerRadius = 15;
     [cleanButton setTitleColor:[[UIColor alloc]initWithRed:156/255.0 green:156/255.0 blue:156/255.0 alpha:1.0] forState:UIControlStateNormal];

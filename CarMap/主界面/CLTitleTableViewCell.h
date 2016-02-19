@@ -10,6 +10,9 @@
 
 @interface CLTitleTableViewCell : UITableViewCell
 
+@property (nonatomic ,strong) UILabel *titleLable;
+@property (nonatomic ,strong) UILabel *detailLabel;
+
 
 - (void)initWithTitle;
 

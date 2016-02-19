@@ -10,6 +10,12 @@
 
 @interface CLHomeTableViewCell : UITableViewCell
 
+@property (nonatomic ,strong) UILabel *orderNumberLabel;
+@property (nonatomic ,strong) UILabel *timeLabel;
+@property (nonatomic ,strong) UIButton *orderButton;
+@property (nonatomic ,strong) UIImageView *orderImageView;
+
+
 - (void)initWithOrder;
 
 

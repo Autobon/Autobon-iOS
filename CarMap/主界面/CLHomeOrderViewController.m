@@ -10,6 +10,8 @@
 #import "GFNavigationView.h"
 #import "CLTitleTableViewCell.h"
 #import "CLHomeTableViewCell.h"
+#import "SVPullToRefresh.h"
+#import "CLOrderDetailViewController.h"
 
 
 @interface CLHomeOrderViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -32,9 +34,17 @@
     
     
     
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-102)];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64)];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [_tableView addInfiniteScrollingWithActionHandler:^{
+        NSLog(@"下拉");
+    }];
+    
+    [_tableView addPullToRefreshWithActionHandler:^{
+        NSLog(@"上拉");
+    }];
     
     [self.view addSubview:_tableView];
     
@@ -47,8 +57,10 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 38)];
+    headerView.backgroundColor = [UIColor whiteColor];
+    
     UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 8, 200, 20)];
-    timeLabel.text = @"2015-01-05 星期二";
+    timeLabel.text = [self weekdayString];
     timeLabel.font = [UIFont systemFontOfSize:14];
     [headerView addSubview:timeLabel];
     
@@ -59,7 +71,7 @@
     [headerView addSubview:stateLabel];
     
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 36, self.view.frame.size.width, 2)];
-    view.backgroundColor = [UIColor blackColor];
+    view.backgroundColor = [UIColor colorWithRed:157/255.0 green:157/255.0 blue:157/255.0 alpha:1.0];
     [headerView addSubview:view];
     
 //    NSLog(@"当前星期几－－%@--",[self weekdayString]);
@@ -75,12 +87,16 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
-        return 100;
+        return 85;
     }else{
-        return 230;
+        return 80 + [UIScreen mainScreen].bounds.size.width*5/12;
     }
     
     return 0;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -98,11 +114,27 @@
             cell = [[CLHomeTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"order"];
             [cell initWithOrder];
         }
+        [cell.orderButton addTarget:self action:@selector(orderBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        
         return cell;
     }
     
     
     return nil;
+}
+
+#pragma mark - 订单详情的按钮点击方法
+- (void)orderBtnClick{
+    NSLog(@"点击订单");
+    
+    CLOrderDetailViewController *orderDetail = [[CLOrderDetailViewController alloc]init];
+    [self.navigationController pushViewController:orderDetail animated:YES];
+    
+    
+    
+    
+    
+    
 }
 
 #pragma mark - 获取周几
@@ -122,8 +154,8 @@
     NSString *dateString = [formatter stringFromDate:[NSDate date]];
     NSLog(@"---dateString--%@---",dateString);
     
-    
-    return [weekdays objectAtIndex:theComponents.weekday];
+    NSString *timeString = [NSString stringWithFormat:@"%@  %@",dateString,[weekdays objectAtIndex:theComponents.weekday]];
+    return timeString;
     
     
     
