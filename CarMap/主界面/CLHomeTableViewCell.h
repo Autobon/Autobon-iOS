@@ -10,4 +10,8 @@
 
 @interface CLHomeTableViewCell : UITableViewCell
 
+- (void)initWithOrder;
+
+
+
 @end

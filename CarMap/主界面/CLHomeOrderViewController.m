@@ -8,10 +8,14 @@
 
 #import "CLHomeOrderViewController.h"
 #import "GFNavigationView.h"
+#import "CLTitleTableViewCell.h"
+#import "CLHomeTableViewCell.h"
 
 
 @interface CLHomeOrderViewController ()<UITableViewDelegate,UITableViewDataSource>
-
+{
+    UITableView *_tableView;
+}
 @end
 
 @implementation CLHomeOrderViewController
@@ -25,29 +29,14 @@
 
 #pragma mark - 订单表格
 - (void)setTableView{
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 72, 200, 20)];
-    timeLabel.text = @"2015-01-05 星期二";
-    timeLabel.font = [UIFont systemFontOfSize:14];
-    [self.view addSubview:timeLabel];
-    
-    UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(270, 72, 80, 20)];
-    stateLabel.text = @"接单模式";
-    stateLabel.font = [UIFont systemFontOfSize:14];
-    [self.view addSubview:stateLabel];
-    
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 100, self.view.frame.size.width, 2)];
-    view.backgroundColor = [UIColor blackColor];
-    [self.view addSubview:view];
-    
-    NSLog(@"当前星期几－－%@--",[self weekdayString]);
     
     
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 102, self.view.frame.size.width, self.view.frame.size.height-102)];
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    [self.view addSubview:tableView];
     
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-102)];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
     
+    [self.view addSubview:_tableView];
     
     
 }
@@ -55,15 +44,65 @@
     
     return 5;
 }
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-        
-    }
-    cell.textLabel.text = @"123546";
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-    return cell;
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 38)];
+    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 8, 200, 20)];
+    timeLabel.text = @"2015-01-05 星期二";
+    timeLabel.font = [UIFont systemFontOfSize:14];
+    [headerView addSubview:timeLabel];
+    
+    UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width-100, 8, 80, 20)];
+    stateLabel.text = @"接单模式";
+    stateLabel.textAlignment = NSTextAlignmentRight;
+    stateLabel.font = [UIFont systemFontOfSize:14];
+    [headerView addSubview:stateLabel];
+    
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 36, self.view.frame.size.width, 2)];
+    view.backgroundColor = [UIColor blackColor];
+    [headerView addSubview:view];
+    
+//    NSLog(@"当前星期几－－%@--",[self weekdayString]);
+    
+    return headerView;
+    
+    return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 38;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == 0) {
+        return 100;
+    }else{
+        return 230;
+    }
+    
+    return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+   
+    if (indexPath.row == 0) {
+        CLTitleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"title"];
+        if (cell == nil) {
+            cell = [[CLTitleTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"title"];
+            [cell initWithTitle];
+        }
+        return cell;
+    }else{
+        CLHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"order"];
+        if (cell == nil) {
+            cell = [[CLHomeTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"order"];
+            [cell initWithOrder];
+        }
+        return cell;
+    }
+    
+    
+    return nil;
 }
 
 #pragma mark - 获取周几

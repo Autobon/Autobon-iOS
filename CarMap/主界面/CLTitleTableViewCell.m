@@ -11,9 +11,9 @@
 @implementation CLTitleTableViewCell
 
 
-- (instancetype)initWithTitle{
-    if (self = [super init]) {
-        
+- (void)initWithTitle{
+//    if (self = [super init]) {
+//        self.backgroundColor = [UIColor redColor];
 //标题label
         UILabel *titleLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, self.frame.size.width, 40)];
         titleLable.text = @"抢单2单，在线5小时";
@@ -27,8 +27,8 @@
         [self addSubview:detailLabel];
         
         
-    }
-    return self;
+//    }
+//    return self;
 }
 
 

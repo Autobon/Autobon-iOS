@@ -11,7 +11,7 @@
 @interface CLTitleTableViewCell : UITableViewCell
 
 
-- (instancetype)initWithTitle;
+- (void)initWithTitle;
 
 
 
