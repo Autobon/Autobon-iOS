@@ -23,6 +23,7 @@
 		9B9515411C60503800445F93 /* GFAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95153C1C60503800445F93 /* GFAnnotation.m */; };
 		9B9515421C60503800445F93 /* GFAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95153E1C60503800445F93 /* GFAnnotationView.m */; };
 		9B9515431C60503800445F93 /* GFMapViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9B9515401C60503800445F93 /* GFMapViewController.mm */; };
+		9B96BA2D1C7AA70200C6DDCC /* NetWorking.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B96BA2C1C7AA70200C6DDCC /* NetWorking.m */; };
 		9B97543E1C5765B3004BDC7C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B97543D1C5765B3004BDC7C /* main.m */; };
 		9B9754411C5765B3004BDC7C /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9B9754401C5765B3004BDC7C /* AppDelegate.mm */; };
 		9B9754471C5765B3004BDC7C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B9754451C5765B3004BDC7C /* Main.storyboard */; };
@@ -86,6 +87,8 @@
 		9B95153F1C60503800445F93 /* GFMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFMapViewController.h; sourceTree = "<group>"; };
 		9B9515401C60503800445F93 /* GFMapViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GFMapViewController.mm; sourceTree = "<group>"; };
 		9B9515441C6089A200445F93 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		9B96BA2B1C7AA70200C6DDCC /* NetWorking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetWorking.h; sourceTree = "<group>"; };
+		9B96BA2C1C7AA70200C6DDCC /* NetWorking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetWorking.m; sourceTree = "<group>"; };
 		9B9754391C5765B3004BDC7C /* CarMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B97543D1C5765B3004BDC7C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9B97543F1C5765B3004BDC7C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -256,6 +259,16 @@
 			path = "百度地图";
 			sourceTree = "<group>";
 		};
+		9B96BA2A1C7AA6DB00C6DDCC /* NetWorking */ = {
+			isa = PBXGroup;
+			children = (
+				9B96BA2B1C7AA70200C6DDCC /* NetWorking.h */,
+				9B96BA2C1C7AA70200C6DDCC /* NetWorking.m */,
+			);
+			name = NetWorking;
+			path = "工作界面/NetWorking";
+			sourceTree = "<group>";
+		};
 		9B9754301C5765B3004BDC7C = {
 			isa = PBXGroup;
 			children = (
@@ -286,6 +299,7 @@
 				9BE53AE11C72ADB800BBB424 /* 车邻邦认证 */,
 				9BA3C8C51C759723007F730D /* 主界面 */,
 				9B7C3FCF1C770F3200E3F53F /* 工作界面 */,
+				9B96BA2A1C7AA6DB00C6DDCC /* NetWorking */,
 				9BA3C8D21C7598CE007F730D /* ViewController.h */,
 				9BA3C8D31C7598CE007F730D /* ViewController.m */,
 				9B7301551C5F2CDF00FB2DEB /* SecondViewController.h */,
@@ -544,6 +558,7 @@
 				9BA3C8D71C7598FD007F730D /* CLHomeOrderViewController.m in Sources */,
 				86B890F81C73355B0068B95D /* GFSignUpViewController.m in Sources */,
 				9BA526CC1C63115700A2298F /* PoiSearchDemoViewController.mm in Sources */,
+				9B96BA2D1C7AA70200C6DDCC /* NetWorking.m in Sources */,
 				9BA9CBD51C5B02220059F145 /* FirstViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

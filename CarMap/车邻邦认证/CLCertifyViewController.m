@@ -133,8 +133,8 @@
     CLTitleView *bankView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 310+self.view.frame.size.width*27/70 + 10, self.view.frame.size.width, 45) Title:@"银行卡信息"];
     [_scrollView addSubview:bankView];
     
-    UIButton *bankButton = [[UIButton alloc]initWithFrame:CGRectMake(10, bankView.frame.origin.y+45+10, self.view.frame.size.width/2-15, 40)];
-    
+    UIButton *bankButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width/2-15, 40)];
+    bankButton.center = CGPointMake(self.view.center.x, bankView.frame.origin.y+45+10+20);
     [bankButton setBackgroundImage:[UIImage imageNamed:@"choose"] forState:UIControlStateNormal];
     [bankButton setTitle:@"农业银行" forState:UIControlStateNormal];
     [bankButton setTitleColor:[UIColor colorWithRed:163 / 255.0 green:163 / 255.0 blue:163 / 255.0 alpha:1] forState:UIControlStateNormal];
@@ -144,16 +144,16 @@
     [bankButton addTarget:self action:@selector(bankBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:bankButton];
     
-    UIButton *whereButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2+5, bankView.frame.origin.y+45+10, self.view.frame.size.width/2-15, 40)];
+//    UIButton *whereButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2+5, bankView.frame.origin.y+45+10, self.view.frame.size.width/2-15, 40)];
     
-    [whereButton setBackgroundImage:[UIImage imageNamed:@"choose"] forState:UIControlStateNormal];
-    [whereButton setTitle:@"开户地点" forState:UIControlStateNormal];
-    [whereButton setTitleColor:[UIColor colorWithRed:163 / 255.0 green:163 / 255.0 blue:163 / 255.0 alpha:1] forState:UIControlStateNormal];
-//    whereButton.titleLabel.textAlignment = NSTextAlignmentLeft;
-    whereButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    whereButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
-    [whereButton addTarget:self action:@selector(whereBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [_scrollView addSubview:whereButton];
+//    [whereButton setBackgroundImage:[UIImage imageNamed:@"choose"] forState:UIControlStateNormal];
+//    [whereButton setTitle:@"开户地点" forState:UIControlStateNormal];
+//    [whereButton setTitleColor:[UIColor colorWithRed:163 / 255.0 green:163 / 255.0 blue:163 / 255.0 alpha:1] forState:UIControlStateNormal];
+////    whereButton.titleLabel.textAlignment = NSTextAlignmentLeft;
+//    whereButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+//    whereButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+//    [whereButton addTarget:self action:@selector(whereBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    [_scrollView addSubview:whereButton];
     
 // 银行卡号
     GFTextField *bankNumberTextField = [[GFTextField alloc]initWithPlaceholder:@"银行卡号" withFrame:CGRectMake(60, bankView.frame.origin.y+45+15+60, self.view.frame.size.width-120, 40)];
