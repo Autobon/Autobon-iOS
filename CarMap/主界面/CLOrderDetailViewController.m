@@ -8,8 +8,8 @@
 
 #import "CLOrderDetailViewController.h"
 #import "GFMapViewController.h"
-#import "CLCertifyViewController.h"
 #import "GFNavigationView.h"
+#import "SigninViewController.h"
 
 
 @interface CLOrderDetailViewController ()
@@ -116,12 +116,14 @@
 #pragma mark - 添加合作小伙伴的响应方法
 - (void)addBtnClick{
     NSLog(@"是时候添加一个小伙伴啦");
+    
 }
 
 #pragma mark - 开始工作按钮的响应方法
 - (void)workBtnClick{
     NSLog(@"开始工作按钮");
-    
+    SigninViewController *signinView = [[SigninViewController alloc]init];
+    [self.navigationController pushViewController:signinView animated:YES];
     
     
 }

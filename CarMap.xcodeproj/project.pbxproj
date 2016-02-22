@@ -17,6 +17,8 @@
 		9B7301571C5F2CDF00FB2DEB /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7301561C5F2CDF00FB2DEB /* SecondViewController.m */; };
 		9B7AEEC71C740992003B1126 /* CLTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7AEEC61C740992003B1126 /* CLTitleView.m */; };
 		9B7C3FCE1C7706D800E3F53F /* CLOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7C3FCD1C7706D800E3F53F /* CLOrderDetailViewController.m */; };
+		9B7C3FD21C770F7100E3F53F /* SigninViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7C3FD11C770F7100E3F53F /* SigninViewController.m */; };
+		9B7C3FD51C77179100E3F53F /* WorkBeforeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7C3FD41C77179100E3F53F /* WorkBeforeViewController.m */; };
 		9B9515391C60501B00445F93 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9515381C60501B00445F93 /* TestViewController.m */; };
 		9B9515411C60503800445F93 /* GFAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95153C1C60503800445F93 /* GFAnnotation.m */; };
 		9B9515421C60503800445F93 /* GFAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95153E1C60503800445F93 /* GFAnnotationView.m */; };
@@ -71,6 +73,10 @@
 		9B7AEEC61C740992003B1126 /* CLTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLTitleView.m; sourceTree = "<group>"; };
 		9B7C3FCC1C7706D800E3F53F /* CLOrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLOrderDetailViewController.h; sourceTree = "<group>"; };
 		9B7C3FCD1C7706D800E3F53F /* CLOrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLOrderDetailViewController.m; sourceTree = "<group>"; };
+		9B7C3FD01C770F7100E3F53F /* SigninViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SigninViewController.h; sourceTree = "<group>"; };
+		9B7C3FD11C770F7100E3F53F /* SigninViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SigninViewController.m; sourceTree = "<group>"; };
+		9B7C3FD31C77179100E3F53F /* WorkBeforeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkBeforeViewController.h; sourceTree = "<group>"; };
+		9B7C3FD41C77179100E3F53F /* WorkBeforeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkBeforeViewController.m; sourceTree = "<group>"; };
 		9B9515371C60501B00445F93 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		9B9515381C60501B00445F93 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		9B95153B1C60503800445F93 /* GFAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFAnnotation.h; sourceTree = "<group>"; };
@@ -226,6 +232,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9B7C3FCF1C770F3200E3F53F /* 工作界面 */ = {
+			isa = PBXGroup;
+			children = (
+				9B7C3FD01C770F7100E3F53F /* SigninViewController.h */,
+				9B7C3FD11C770F7100E3F53F /* SigninViewController.m */,
+				9B7C3FD31C77179100E3F53F /* WorkBeforeViewController.h */,
+				9B7C3FD41C77179100E3F53F /* WorkBeforeViewController.m */,
+			);
+			path = "工作界面";
+			sourceTree = "<group>";
+		};
 		9B95153A1C60503800445F93 /* 百度地图 */ = {
 			isa = PBXGroup;
 			children = (
@@ -268,6 +285,7 @@
 				86B890F11C73355B0068B95D /* 我的信息 */,
 				9BE53AE11C72ADB800BBB424 /* 车邻邦认证 */,
 				9BA3C8C51C759723007F730D /* 主界面 */,
+				9B7C3FCF1C770F3200E3F53F /* 工作界面 */,
 				9BA3C8D21C7598CE007F730D /* ViewController.h */,
 				9BA3C8D31C7598CE007F730D /* ViewController.m */,
 				9B7301551C5F2CDF00FB2DEB /* SecondViewController.h */,
@@ -510,6 +528,7 @@
 				86B890F61C73355B0068B95D /* GFNavigationView.m in Sources */,
 				9B7AEEC71C740992003B1126 /* CLTitleView.m in Sources */,
 				86B890F51C73355B0068B95D /* GFForgetPwdViewController_2.m in Sources */,
+				9B7C3FD21C770F7100E3F53F /* SigninViewController.m in Sources */,
 				86B890F41C73355B0068B95D /* GFForgetPwdViewController_1.m in Sources */,
 				9B9515421C60503800445F93 /* GFAnnotationView.m in Sources */,
 				9B9754411C5765B3004BDC7C /* AppDelegate.mm in Sources */,
@@ -520,6 +539,7 @@
 				9B97543E1C5765B3004BDC7C /* main.m in Sources */,
 				9BA3C8D41C7598CE007F730D /* ViewController.m in Sources */,
 				9B9515431C60503800445F93 /* GFMapViewController.mm in Sources */,
+				9B7C3FD51C77179100E3F53F /* WorkBeforeViewController.m in Sources */,
 				9BA3C5BC1C75621B007F730D /* GFAlertView.m in Sources */,
 				9BA3C8D71C7598FD007F730D /* CLHomeOrderViewController.m in Sources */,
 				86B890F81C73355B0068B95D /* GFSignUpViewController.m in Sources */,
