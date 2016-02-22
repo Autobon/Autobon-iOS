@@ -4,13 +4,16 @@
 //
 //  Created by 陈光法 on 16/2/15.
 //  Copyright © 2016年 陈光法. All rights reserved.
-//
+//autoken="technician:1LqHwEYUIKA840yKThS7lg=="
 
 #import "GFSignInViewController.h"
 #import "GFTextField.h"
 #import "GFSignUpViewController.h"
 #import "GFForgetPwdViewController_1.h"
 #import "GFHttpTool.h"
+#import "GFAlertView.h"
+
+#import "CLHomeOrderViewController.h"
 
 @interface GFSignInViewController () {
     
@@ -38,41 +41,41 @@
 
 @implementation GFSignInViewController
 
-- (void)textFieldDidEndEditing:(UITextField *)textField{
-    if (textField.tag == 10 ||textField.tag == 11) {
-        // 判断用户名有无注册 以及是否符合 “手机号格式”
-        /* 去掉空格和换行 */
-        textField.text =  [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
-        NSString *CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
-        NSString *CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
-        NSString *CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
-        NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];  // 小灵通
-        NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];  // 移动
-        NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];  // 灵通
-        NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];  // 电信
-        /* 把上面封装的格式与字符串进行比较 */
-        if (([regextestmobile evaluateWithObject:textField.text] == YES)
-            || ([regextestcm evaluateWithObject:textField.text] == YES)
-            || ([regextestct evaluateWithObject:textField.text] == YES)
-            || ([regextestcu evaluateWithObject:textField.text] == YES)) {
-
-        }else {
-            textField.text = nil;
-//            [self showMessage:@"用户名格式不正确,请重新输入"];
-            
-        }
-    }else if (textField.tag == 2){
-        // 判断密码是否符合 “由字母和数字组合,8—18位”
-        NSString * regex = @"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,18}$";
-        NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-        BOOL isMatch = [pred evaluateWithObject:textField.text];
-        if (!isMatch) {
-//            [self showMessage:@"密码由字母和数字组合,8—18位"];
-        }
-    }
-    
-}
+//- (void)textFieldDidEndEditing:(UITextField *)textField{
+//    if (textField.tag == 10 ||textField.tag == 11) {
+//        // 判断用户名有无注册 以及是否符合 “手机号格式”
+//        /* 去掉空格和换行 */
+//        textField.text =  [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//        NSString *MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
+//        NSString *CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
+//        NSString *CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
+//        NSString *CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
+//        NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];  // 小灵通
+//        NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];  // 移动
+//        NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];  // 灵通
+//        NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];  // 电信
+//        /* 把上面封装的格式与字符串进行比较 */
+//        if (([regextestmobile evaluateWithObject:textField.text] == YES)
+//            || ([regextestcm evaluateWithObject:textField.text] == YES)
+//            || ([regextestct evaluateWithObject:textField.text] == YES)
+//            || ([regextestcu evaluateWithObject:textField.text] == YES)) {
+//
+//        }else {
+//            textField.text = nil;
+////            [self showMessage:@"用户名格式不正确,请重新输入"];
+//            
+//        }
+//    }else if (textField.tag == 2){
+//        // 判断密码是否符合 “由字母和数字组合,8—18位”
+//        NSString * regex = @"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,18}$";
+//        NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+//        BOOL isMatch = [pred evaluateWithObject:textField.text];
+//        if (!isMatch) {
+////            [self showMessage:@"密码由字母和数字组合,8—18位"];
+//        }
+//    }
+//    
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -111,7 +114,7 @@
     [self.languageBut setTitleColor:[UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1] forState:UIControlStateNormal];
     self.languageBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     self.languageBut.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
-    [self.view addSubview:self.languageBut];
+//    [self.view addSubview:self.languageBut];
     
     
     // 中间标题“车邻邦”
@@ -150,13 +153,16 @@
     [self.userNameTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
     self.userNameTxt.centerTxt.clearButtonMode = UITextFieldViewModeAlways;
     [self.view addSubview:self.userNameTxt];
+    self.userNameTxt.centerTxt.delegate = self;
+    self.userNameTxt.centerTxt.tag = 100;
+    self.userNameTxt.centerTxt.keyboardType = UIKeyboardTypeNumberPad;
     
     
     // 密码输入框
     UIButton *passwordBut = [UIButton buttonWithType:UIButtonTypeCustom];
     passwordBut.frame = CGRectMake(0, 0, kWidth * 0.139, kHeight * 0.037);
-    [passwordBut setImage:[UIImage imageNamed:@"eye-隐藏.png"] forState:UIControlStateNormal];
-    [passwordBut setImage:[UIImage imageNamed:@"eye-open.png"] forState:UIControlStateSelected];
+    [passwordBut setImage:[UIImage imageNamed:@"eyeClose.png"] forState:UIControlStateNormal];
+    [passwordBut setImage:[UIImage imageNamed:@"eyeOpen.png"] forState:UIControlStateSelected];
     passwordBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [passwordBut addTarget:self action:@selector(passwordButClick:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -170,6 +176,9 @@
     self.passWordTxt.centerTxt.secureTextEntry = YES;
 //    self.passWordTxt.centerTxt.clearButtonMode = UITextFieldViewModeAlways;
     [self.view addSubview:self.passWordTxt];
+    self.passWordTxt.centerTxt.delegate = self;
+    self.passWordTxt.centerTxt.tag = 200;
+    self.passWordTxt.centerTxt.keyboardType = UIKeyboardTypeDefault;
     
     
     // 登录按钮
@@ -242,7 +251,15 @@
     [backView addSubview:signUpBut];
     [signUpBut addTarget:self action:@selector(signUpButClick) forControlEvents:UIControlEventTouchUpInside];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+}
 
+- (void)keyboardWillBeHidden:(NSNotification *)aNotification {
+
+    self.view.frame = CGRectMake(0, 0, kWidth, kHeight);
 }
 
 - (void)signInButClick {
@@ -254,12 +271,45 @@
 
     [GFHttpTool signInPost:url parameters:parDic success:^(id responseObject) {
         
-        NSLog(@"请求成功==========%@", responseObject);
+        // 判断是否登录成功
+        if([responseObject[@"result"] isEqual:@1]) {
+            NSLog(@"登录成功==========%@", responseObject);
+            
+            // 获取token 针对个人的操作要加
+            NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage]; // 获得响应头
+            NSLog(@"####################################\n---%@--",[cookieJar cookies]); // 获取响应头的数组
+            NSUserDefaults *autokenValue = [NSUserDefaults standardUserDefaults];
+            for (int i = 0; i < [cookieJar cookies].count; i++) {
+                NSHTTPCookie *cookie = [cookieJar cookies][i]; // 实例化响应头数组对象
+                
+                if ([cookie.name isEqualToString:@"autoken"]) { // 获取响应头数组对象里地名字为autoken的对象
+                    
+                    NSLog(@"############%@", [NSString stringWithFormat:@"%@=%@",[cookie name],[cookie value]]); //获取响应头数组对象里地名字为autoken的对象的数据，这个数据是用来验证用户身份相当于“key”
+                    
+                    [autokenValue setObject:[NSString stringWithFormat:@"%@=%@", cookie.name, cookie.value] forKey:@"autoken"];
+                    break;
+                }
+            }
+            
+            CLHomeOrderViewController *homeVC = [[CLHomeOrderViewController alloc] init];
+            [self.navigationController pushViewController:homeVC animated:YES];
+            
+        }else if([responseObject[@"result"] isEqual:@0]) {
+            
+            NSLog(@"登录失败==========%@", responseObject);
+            
+            GFAlertView *tipView = [[GFAlertView alloc] initWithTipName:@"提示" withTipMessage:responseObject[@"message"] withButtonNameArray:@[@"OK"]];
+            [self.view addSubview:tipView];
+        }
+        
+        
         
     } failure:^(NSError *error) {
         
         
         NSLog(@"请求失败==========%@", error);
+        
+        
         
     }];
     
@@ -277,6 +327,8 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
     [self.view endEditing:YES];
+    
+    self.view.frame = CGRectMake(0, 0, kWidth, kHeight);
 }
 
 - (void)passwordButClick:(UIButton *)sender {
@@ -289,12 +341,41 @@
 
 - (void)forgetButClick {
     
+    
+    
+    
     GFForgetPwdViewController_1 *forgetPwdVC_1 = [[GFForgetPwdViewController_1 alloc] init];
     [self.navigationController pushViewController:forgetPwdVC_1 animated:YES];
 }
 
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
 
+    self.view.frame = CGRectMake(0, -80, kWidth, kHeight);
+
+    return YES;
+}
+//- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+//    
+//    if(textField.tag == 200) {
+//        self.view.frame = CGRectMake(0, 0, kWidth, kHeight);
+//    }
+//    return YES;
+//}
+//- (void)textFieldDidEndEditing:(UITextField *)textField {
+//    
+//    if(textField.tag == 200) {
+//        self.view.frame = CGRectMake(0, 0, kWidth, kHeight);
+//    }
+//    
+//}
+
+//- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+//
+//    self.view.frame = CGRectMake(0, 0, kWidth, kHeight);
+//    
+//    return YES;
+//}
 
 
 

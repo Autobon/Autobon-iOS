@@ -8,6 +8,7 @@
 
 #import "CLHomeOrderViewController.h"
 #import "GFNavigationView.h"
+#import "GFMyMessageViewController.h"
 
 
 @interface CLHomeOrderViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -107,11 +108,15 @@
     
     
     
+    
+    
 }
 -(void)backBtnClick{
 //    [self.navigationController popViewControllerAnimated:YES];
     NSLog(@"个人信息界面");
     
+    GFMyMessageViewController *myMsgVC = [[GFMyMessageViewController alloc] init];
+    [self.navigationController pushViewController:myMsgVC animated:YES];
     
 }
 

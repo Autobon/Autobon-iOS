@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GFForgetPwdViewController_1 : UIViewController
+@interface GFForgetPwdViewController_1 : UIViewController <UITextFieldDelegate>
 
 @end
