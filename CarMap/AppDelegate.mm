@@ -85,11 +85,11 @@
     GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
     GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
     
-<<<<<<< HEAD
-    _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
-=======
+//<<<<<<< HEAD
+//    _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
+//=======
     _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
->>>>>>> CLmaster
+//>>>>>>> CLmaster
     _navigation.navigationBarHidden = YES;
     _window.rootViewController = _navigation;
     [_window makeKeyAndVisible];
