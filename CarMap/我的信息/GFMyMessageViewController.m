@@ -9,6 +9,11 @@
 #import "GFMyMessageViewController.h"
 #import "GFNavigationView.h"
 #import "GFAlertView.h"
+#import "GFHttpTool.h"
+#import "GFChangePwdViewController.h"
+#import "GFBalanceViewController.h"
+#import "GFBillViewController.h"
+#import "GFSignInViewController.h"
 
 
 @interface GFMyMessageViewController () {
@@ -199,6 +204,15 @@
     proLab.font = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
     proLab.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
     [msgView addSubview:proLab];
+    // 页面按钮
+    CGFloat msgButW = msgViewW;
+    CGFloat msgButH = msgViewH;
+    CGFloat msgButX = 0;
+    CGFloat msgButY = 0;
+    UIButton *msgBut = [UIButton buttonWithType:UIButtonTypeCustom];
+    msgBut.frame = CGRectMake(msgButX, msgButY, msgButW, msgButH);
+    [msgView addSubview:msgBut];
+    [msgBut addTarget:self action:@selector(msgButClick) forControlEvents:UIControlEventTouchUpInside];
 
     
     
@@ -261,6 +275,15 @@
     balanceLabDown.font = [UIFont systemFontOfSize:10 / 320.0 * kWidth];
     balanceLabDown.text = @"余额(￥)";
     [moneyView addSubview:balanceLabDown];
+    // 余额栏按钮
+    CGFloat balButW = balanceLabUpW;
+    CGFloat balButH = moneyViewH - moneyImgViewH;
+    CGFloat balButX = 0;
+    CGFloat balButY = moneyImgViewH;
+    UIButton *balBut = [UIButton buttonWithType:UIButtonTypeCustom];
+    balBut.frame = CGRectMake(balButX, balButY, balButW, balButH);
+    [moneyView addSubview:balBut];
+    [balBut addTarget:self action:@selector(balButClick) forControlEvents:UIControlEventTouchUpInside];
     // 账单栏界面
     CGFloat billLabUpW = (kWidth - 1) / 2.0;
     CGFloat billLabUpH = moneyLineShu.frame.size.height / 2.0;
@@ -281,6 +304,15 @@
     billLabDown.font = [UIFont systemFontOfSize:10 / 320.0 * kWidth];
     billLabDown.text = @"账单(条)";
     [moneyView addSubview:billLabDown];
+    // 账单栏按钮
+    CGFloat billButW = balButW;
+    CGFloat billButH = balButH;
+    CGFloat billButX = CGRectGetMaxX(balBut.frame);
+    CGFloat billButY = balButY;
+    UIButton *billBut = [UIButton buttonWithType:UIButtonTypeCustom];
+    billBut.frame = CGRectMake(billButX, billButY, billButW, billButH);
+    [moneyView addSubview:billBut];
+    [billBut addTarget:self action:@selector(billBut) forControlEvents:UIControlEventTouchUpInside];
 
     
     
@@ -326,7 +358,15 @@
     [indentRightBut setImage:[UIImage imageNamed:@"right"] forState:UIControlStateNormal];
     indentRightBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [indentView addSubview:indentRightBut];
-    
+    // 订单界面按钮
+    CGFloat indentButW = indentViewW;
+    CGFloat indentButH = indentViewH;
+    CGFloat indentButX = 0;
+    CGFloat indentButY = 0;
+    UIButton *indentBut = [UIButton buttonWithType:UIButtonTypeCustom];
+    indentBut.frame = CGRectMake(indentButX, indentButY, indentButW, indentButH);
+    [indentView addSubview:indentBut];
+    [indentBut addTarget:self action:@selector(indentButClick) forControlEvents:UIControlEventTouchUpInside];
     
     
     
@@ -371,6 +411,15 @@
     [changePwdRightBut setImage:[UIImage imageNamed:@"right"] forState:UIControlStateNormal];
     changePwdRightBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [changePwdView addSubview:changePwdRightBut];
+    // 修改密码界面按钮
+    CGFloat changePwdButW = changePwdViewW;
+    CGFloat changePwdButH = changePwdViewH;
+    CGFloat changePwdButX = 0;
+    CGFloat changePwdButY = 0;
+    UIButton *changePwdBut = [UIButton buttonWithType:UIButtonTypeCustom];
+    changePwdBut.frame = CGRectMake(changePwdButX, changePwdButY, changePwdButW, changePwdButH);
+    [changePwdView addSubview:changePwdBut];
+    [changePwdBut addTarget:self action:@selector(changePwdButClick) forControlEvents:UIControlEventTouchUpInside];
     
     
     
@@ -396,11 +445,55 @@
     
 }
 
-- (void)exitButClick {
+// 信息界面按钮跳转
+- (void)msgButClick {
 
-    GFAlertView *vv = [[GFAlertView alloc] initWithTipName:@"提示" withTipMessage:@"地方哈说了" withButtonNameArray:@[@"ok"]];
+    NSLog(@"个人信息界面");
+}
+// 余额界面跳转
+- (void)balButClick {
+
+    NSLog(@"余额栏界面");
+    GFBalanceViewController *balVC = [[GFBalanceViewController alloc] init];
+    [self.navigationController pushViewController:balVC animated:YES];
+}
+// 账单界面跳转
+- (void)billBut {
+
+    NSLog(@"账单栏界面");
+    GFBillViewController *billVC = [[GFBillViewController alloc] init];
+    [self.navigationController pushViewController:billVC animated:YES];
+}
+// 我的订单界面跳转
+- (void)indentButClick {
     
-    [self.view addSubview:vv];
+    NSLog(@"我的订单界面");
+}
+// 修改密码界面跳转
+- (void)changePwdButClick {
+    
+    NSLog(@"修改密码界面");
+    
+    GFChangePwdViewController *chagePwdVC = [[GFChangePwdViewController alloc] init];
+    [self.navigationController pushViewController:chagePwdVC animated:YES];
+    
+
+    
+    
+}
+
+- (void)exitButClick {
+    
+//    UIImage *btnNorImg = [UIImage imageNamed:@"delete"];
+//    UIImage *btnHigImg = [UIImage imageNamed:@"deleteOrder"];
+//    GFAlertView *vv = [[GFAlertView alloc] initWithTipName:@"提示" withTipMessage:@"地方哈说了" withButtonNameArray:@[@"ok"]];
+//    GFAlertView *vv = [[GFAlertView alloc] initWithTipName:@"技师：李孟龙" withTipMessage:@"非常厉害的技师，专业贴膜十年，使用的保鲜膜可绕地球三周" withButtonNameArray:@[@"查看订单"] withRightUpButtonImage:btnImg];
+//    GFAlertView *vv = [[GFAlertView alloc] initWithTipName:@"技师：李孟龙" withTipMessage:@"非常厉害的技师，专业贴膜十年，使用的保鲜膜可绕地球三周" withButtonNameArray:@[@"查看订单"] withRightUpButtonNormalImage:btnNorImg withRightUpButtonHightImage:btnHigImg];
+//    [self.view addSubview:vv];
+    
+    [self.navigationController pushViewController:[[GFSignInViewController alloc] init] animated:YES];
+    
+    
 }
 
 
