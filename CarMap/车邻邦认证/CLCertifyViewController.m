@@ -217,7 +217,8 @@
 #pragma mark - 银行类型按钮事件
 - (void)bankBtnClick:(UIButton *)button{
     NSLog(@"选择银行");
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(10, button.frame.origin.y + 40, button.frame.size.width , 100) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, button.frame.size.width , 100) style:UITableViewStylePlain];
+    tableView.center = CGPointMake(self.view.center.x, button.frame.origin.y + 40+50);
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.backgroundColor = [UIColor cyanColor];

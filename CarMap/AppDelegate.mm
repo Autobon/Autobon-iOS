@@ -97,7 +97,7 @@
 //>>>>>>> CLmaster
 
 
-    _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
+//    _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
 
 
     _navigation.navigationBarHidden = YES;
