@@ -10,6 +10,7 @@
 #import "GFNavigationView.h"
 #import "GFTextField.h"
 #import "GFForgetPwdViewController_2.h"
+#import "GFHttpTool.h"
 
 
 @interface GFForgetPwdViewController_1 () {
