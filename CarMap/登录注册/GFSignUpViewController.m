@@ -10,6 +10,7 @@
 #import "GFNavigationView.h"
 #import "GFTextField.h"
 #import "GFHttpTool.h"
+#import "GFAlertView.h"
 
 @interface GFSignUpViewController () {
     
@@ -34,6 +35,7 @@
 @property (nonatomic, strong) GFTextField *userNameTxt;
 @property (nonatomic, strong) GFTextField *verifyTxt;
 @property (nonatomic, strong) GFTextField *passWordTxt;
+@property (nonatomic, strong) UIButton *passwordBut;
 
 @property (nonatomic, strong) UIButton *verifyBut;
 
@@ -94,6 +96,10 @@
     self.userNameTxt.centerTxt.placeholder = @"请输入手机号";
     [self.userNameTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
     [self.view addSubview:self.userNameTxt];
+    self.userNameTxt.centerTxt.keyboardType = UIKeyboardTypeNumberPad;
+    self.userNameTxt.centerTxt.delegate = self;
+    self.userNameTxt.centerTxt.tag = 100;
+    self.userNameTxt.centerTxt.clearButtonMode = UITextFieldViewModeAlways;
     
     
     // 验证码输入框
@@ -103,16 +109,17 @@
     attDic[NSForegroundColorAttributeName] = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
     CGRect strRect = [nameStr boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attDic context:nil];
     self.verifyBut = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.verifyBut.frame = CGRectMake(0, 0, strRect.size.width + 20, kHeight * 0.037);
-    self.verifyBut.layer.borderColor = [[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] CGColor];
+    self.verifyBut.frame = CGRectMake(0, 0, strRect.size.width + 20 / 320.0 * kWidth, kHeight * 0.037);
+    self.verifyBut.layer.borderColor = [[UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1] CGColor];
     self.verifyBut.layer.borderWidth = 1;
     self.verifyBut.layer.cornerRadius = 5;
     [self.verifyBut setTitle:nameStr forState:UIControlStateNormal];
-    [self.verifyBut setTitleColor:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] forState:UIControlStateNormal];
     self.verifyBut.titleLabel.font = [UIFont systemFontOfSize:12 / 320.0 * kWidth];
+    self.verifyBut.userInteractionEnabled = NO;
+    [self.verifyBut setTitleColor:[UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1] forState:UIControlStateNormal];
     [self.verifyBut addTarget:self action:@selector(verifyButClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    verifyButOriW = strRect.size.width + 20;
+    verifyButOriW = strRect.size.width + 20 / 320.0 * kWidth;
     
     CGFloat verifyTxtW = userNameTxtW;
     CGFloat verifyTxtH = userNameTxtH;
@@ -122,25 +129,30 @@
     self.verifyTxt.centerTxt.placeholder = @"请输入验证码";
     [self.verifyTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
     [self.view addSubview:self.verifyTxt];
+    self.verifyTxt.centerTxt.keyboardType = UIKeyboardTypeNumberPad;
     
     
     // 密码输入框
-    UIButton *passwordBut = [UIButton buttonWithType:UIButtonTypeCustom];
-    passwordBut.frame = CGRectMake(0, 0, kWidth * 0.139, kHeight * 0.037);
-    [passwordBut setImage:[UIImage imageNamed:@"eye-隐藏.png"] forState:UIControlStateNormal];
-    [passwordBut setImage:[UIImage imageNamed:@"eye-open.png"] forState:UIControlStateSelected];
-    passwordBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    [passwordBut addTarget:self action:@selector(passwordButClick:) forControlEvents:UIControlEventTouchUpInside];
+    self.passwordBut = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.passwordBut.frame = CGRectMake(0, 0, kWidth * 0.139, kHeight * 0.037);
+    [self.passwordBut setImage:[UIImage imageNamed:@"eyeClose.png"] forState:UIControlStateNormal];
+    [self.passwordBut setImage:[UIImage imageNamed:@"eyeOpen.png"] forState:UIControlStateSelected];
+    self.passwordBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    [self.passwordBut addTarget:self action:@selector(passwordButClick:) forControlEvents:UIControlEventTouchUpInside];
+
     
     CGFloat passWordTxtW = userNameTxtW;
     CGFloat passWordTxtH = userNameTxtH;
     CGFloat passWordTxtX = userNameTxtX;
     CGFloat passWordTxtY = CGRectGetMaxY(self.verifyTxt.frame) + jiange2;
-    self.passWordTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"passwordAgain.png"] withRightButton:passwordBut withFrame:CGRectMake(passWordTxtX, passWordTxtY, passWordTxtW, passWordTxtH)];
+    self.passWordTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"passwordAgain.png"] withRightButton:self.passwordBut withFrame:CGRectMake(passWordTxtX, passWordTxtY, passWordTxtW, passWordTxtH)];
     self.passWordTxt.centerTxt.placeholder = @"请输入密码";
     [self.passWordTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
     self.passWordTxt.centerTxt.secureTextEntry = YES;
     [self.view addSubview:self.passWordTxt];
+    self.passWordTxt.centerTxt.keyboardType = UIKeyboardTypeDefault;
+    self.passWordTxt.centerTxt.delegate = self;
+    self.passWordTxt.centerTxt.tag = 200;
     
     
     // 提交按钮
@@ -183,15 +195,94 @@
     rightBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [self.view addSubview:rightBut];
 
-//    // 获取验证码
-//    [self getCode];
+
+    
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+
+    if(textField.tag == 100) {
+    
+//        if(s.length == 11) {
+//            statements
+//        }
+        if(textField.text.length == 10 && range.length == 0) {
+            
+            textField.text = [NSString stringWithFormat:@"%@%@", textField.text, string];
+            
+            [self.view endEditing:YES];
+            
+        }else if(textField.text.length < 12) {
+            
+            self.verifyBut.userInteractionEnabled = NO;
+            [self.verifyBut setTitleColor:[UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1] forState:UIControlStateNormal];
+            self.verifyBut.layer.borderColor = [[UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1] CGColor];
+        }
+        
+    }
+    
+    return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+
+    
+
+    if(textField.tag == 100) {
+        self.userNameTxt.centerTxt.text =  [self.userNameTxt.centerTxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
+        NSString *CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
+        NSString *CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
+        NSString *CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
+        NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];  // 小灵通
+        NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];  // 移动
+        NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];  // 灵通
+        NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];  // 电信
+        
+        if (([regextestmobile evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
+            || ([regextestcm evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
+            || ([regextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
+            || ([regextestcu evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)) {
+            
+            NSLog(@"是手机号");
+            
+            self.verifyBut.layer.borderColor = [[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] CGColor];
+            self.verifyBut.userInteractionEnabled = YES;
+            [self.verifyBut setTitleColor:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] forState:UIControlStateNormal];
+        }else {
+        
+            GFAlertView *tipView = [[GFAlertView alloc] initWithTipName:@"提示" withTipMessage:@"手机号格式有误,请重新输入" withButtonNameArray:@[@"OK"]];
+            [self.view addSubview:tipView];
+            [self.view endEditing:YES];
+        }
+    }
+    
+    if(textField.tag == 200) {
+        
+        NSString * pwdStr = @"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,18}$";
+        NSPredicate *regextestPwdStr = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", pwdStr];
+        if([regextestPwdStr evaluateWithObject:self.passWordTxt.centerTxt.text]) {
+        
+            NSLog(@"密码格式输入正确");
+        }else {
+        
+            GFAlertView *tipView = [[GFAlertView alloc] initWithTipName:@"提示" withTipMessage:@"请输入8~18位由“字母、数字组合”的密码" withButtonNameArray:@[@"OK"]];
+            [self.view addSubview:tipView];
+            [self.view endEditing:YES];
+        }
+        
+    }
     
 }
 
 // 获取验证码
 - (void)verifyButClick:(UIButton *)sender {
     
+    
+    
     NSLog(@"fasdgasdgasgsagasgsf %@", self.userNameTxt.centerTxt.text);
+    
+    time = 60;
     
     // 倒计时
     NSString *nameStr = @"(60)秒";
@@ -200,9 +291,9 @@
     attDic[NSForegroundColorAttributeName] = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
     CGRect strRect = [nameStr boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attDic context:nil];
     
-    verifyButNewW = strRect.size.width + 20;
+    verifyButNewW = strRect.size.width + 20 / 320.0 * kWidth;
     
-    sender.frame = CGRectMake(verifyButOriW - verifyButNewW, 0, strRect.size.width + 20, kHeight * 0.037);
+    sender.frame = CGRectMake(verifyButOriW - verifyButNewW, 0, strRect.size.width + 20 / 320.0 * kWidth, kHeight * 0.037);
     [sender setTitle:nameStr forState:UIControlStateNormal];
     sender.userInteractionEnabled = NO;
     // 计时器
@@ -210,42 +301,44 @@
     
     
     
-//    self.userNameTxt.centerTxt.text =  [self.userNameTxt.centerTxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//    NSString *MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
-//    NSString *CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
-//    NSString *CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
-//    NSString *CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
-//    NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];  // 小灵通
-//    NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];  // 移动
-//    NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];  // 灵通
-//    NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];  // 电信
-//    
-//    if (([regextestmobile evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
-//        || ([regextestcm evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
-//        || ([regextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
-//        || ([regextestcu evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)) {
-//        
-//        NSLog(@"是手机号");
-//        
-//    }
-
-    if(self.userNameTxt.centerTxt.text != nil) {
+    self.userNameTxt.centerTxt.text =  [self.userNameTxt.centerTxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
+    NSString *CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
+    NSString *CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
+    NSString *CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
+    NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];  // 小灵通
+    NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];  // 移动
+    NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];  // 灵通
+    NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];  // 电信
+    
+    if (([regextestmobile evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
+        || ([regextestcm evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
+        || ([regextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
+        || ([regextestcu evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)) {
         
-        NSString *url = @"http://121.40.157.200:51234/api/mobile/verifySms";
-        NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
-        parDic[@"phone"] = self.userNameTxt.centerTxt.text;
+        NSLog(@"是手机号");
         
-        [GFHttpTool codeGet:url parameters:parDic success:^(id responseObject) {
+        if(self.userNameTxt.centerTxt.text != nil) {
             
-            NSLog(@"请求成功======\n%@", responseObject);
+            NSString *url = @"http://121.40.157.200:51234/api/mobile/verifySms";
+            NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
+            parDic[@"phone"] = self.userNameTxt.centerTxt.text;
             
-        } failure:^(NSError *error) {
+            [GFHttpTool codeGet:url parameters:parDic success:^(id responseObject) {
+                
+                NSLog(@"获取验证码成功======\n%@", responseObject);
+                
+            } failure:^(NSError *error) {
+                
+                NSLog(@"获取验证码失败  %@", error);
+                
+            }];
             
-             NSLog(@"请求失败  %@", error);
-            
-        }];
+        }
         
     }
+
+    
     
 }
 
@@ -259,6 +352,8 @@
     
         [self.verifyBut setTitle:@"再次获取" forState:UIControlStateNormal];
         self.verifyBut.userInteractionEnabled = YES;
+        [self.timer invalidate];
+        self.timer = nil;
     }
     
     
@@ -267,22 +362,43 @@
 // 注册
 - (void)submitBut {
 
-    NSString *url = @"http://121.40.157.200:51234/api/mobile/technician/register";
-    NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
-    parDic[@"phone"] = self.userNameTxt.centerTxt.text;
-    parDic[@"password"] = self.passWordTxt.centerTxt.text;
-    parDic[@"verifySms"] = @"123456";
-    [GFHttpTool verifyPost:url parameters:parDic success:^(id responseObject) {
-        
-        NSLog(@"请求成功======\n%@", responseObject);
-        
-        // 返回登录界面
-        [self.navigationController popToRootViewControllerAnimated:YES];
-        
-        
-    } failure:^(NSError *error) {
-        NSLog(@"请求失败=======%@", error);
-    }];
+    [self.view endEditing:YES];
+    
+    
+    if(self.userNameTxt.centerTxt.text.length == 0) {
+        GFAlertView *tipView = [[GFAlertView alloc] initWithTipName:@"提示" withTipMessage:@"手机号不能为空" withButtonNameArray:@[@"OK"]];
+        [self.view addSubview:tipView];
+    }else if(self.verifyTxt.centerTxt.text.length == 0) {
+        GFAlertView *tipView = [[GFAlertView alloc] initWithTipName:@"提示" withTipMessage:@"请输入验证码" withButtonNameArray:@[@"OK"]];
+        [self.view addSubview:tipView];
+    }else if(self.passWordTxt.centerTxt.text.length == 0) {
+        GFAlertView *tipView = [[GFAlertView alloc] initWithTipName:@"提示" withTipMessage:@"密码不能为空" withButtonNameArray:@[@"OK"]];
+        [self.view addSubview:tipView];
+//    if(self.userNameTxt.centerTxt.text.length == 0 || self.verifyTxt.centerTxt.text.length == 0 || self.passWordTxt.centerTxt.text.length == 0) {
+//        
+//        GFAlertView *tipView = [[GFAlertView alloc] initWithTipName:@"提示" withTipMessage:@"请输入注册相关信息" withButtonNameArray:@[@"OK"]];
+//        [self.view addSubview:tipView];
+    
+    }else {
+    
+        NSString *url = @"http://121.40.157.200:51234/api/mobile/technician/register";
+        NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
+        parDic[@"phone"] = self.userNameTxt.centerTxt.text;
+        parDic[@"password"] = self.passWordTxt.centerTxt.text;
+        parDic[@"verifySms"] = @"123456";
+        [GFHttpTool verifyPost:url parameters:parDic success:^(id responseObject) {
+            
+            NSLog(@"注册提交成功======\n%@", responseObject);
+            
+            // 返回登录界面
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            
+            
+        } failure:^(NSError *error) {
+            NSLog(@"注册提交失败=======%@", error);
+        }];
+    
+    }
 }
 
 - (void)leftButClick {
@@ -298,6 +414,10 @@
     
 }
 
+- (void)endEitd {
+
+    [self.view endEditing:YES];
+}
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
