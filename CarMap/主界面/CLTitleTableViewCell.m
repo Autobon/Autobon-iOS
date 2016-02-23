@@ -28,8 +28,8 @@
     _detailLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_detailLabel];
     
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 83, [UIScreen mainScreen].bounds.size.width, 2)];
-    view.backgroundColor = [UIColor colorWithRed:157/255.0 green:157/255.0 blue:157/255.0 alpha:1.0];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(10, 83, [UIScreen mainScreen].bounds.size.width-20, 2)];
+    view.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0];
     [self addSubview:view];
         
 //    }

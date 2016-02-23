@@ -15,6 +15,7 @@
 //#import "CLHomeViewController.h"
 //#import "CLOrderViewController.h"
 #import "CLHomeOrderViewController.h"
+#import "GFHttpTool.h"
 
 
 @interface CLCertifyViewController ()<UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITableViewDelegate,UITableViewDataSource>
@@ -24,6 +25,19 @@
     UIImageView *_headImage;
     UIImageView *_identityImageView;
     BOOL _isHeadImage;
+    BOOL _isTableView;
+    BOOL _isBank;
+    BOOL _haveHeadImage;
+    BOOL _haveIdentityImage;
+    GFTextField *_userNameTextField;
+    GFTextField *_identityTextField;
+    NSMutableArray *_skillArray;
+    CLTitleView *_identityView;
+    NSArray *_bankArray;
+    UIButton *_bankButton;
+    GFTextField *_bankNumberTextField;
+    
+    
 }
 @end
 
@@ -31,6 +45,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _skillArray = [[NSMutableArray alloc]init];
+    _bankArray = @[@"人民银行",@"建设银行",@"招商银行",@"邮政银行",@"农业银行",@"中国银行",@"工商银行",@"光大银行"];
     // Do any additional setup after loading the view.
 //    self.view.backgroundColor = [UIColor cyanColor];
     [self setNavigation];
@@ -58,14 +74,14 @@
     [cameraHeadBtn addTarget:self action:@selector(cameraHeadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:cameraHeadBtn];
     
-    GFTextField *userNameTextField = [[GFTextField alloc]initWithPlaceholder:@"姓名" withFrame:CGRectMake(110, 20, self.view.frame.size.width - 140, 50)];
-    [_scrollView addSubview:userNameTextField];
+    _userNameTextField = [[GFTextField alloc]initWithPlaceholder:@"姓名" withFrame:CGRectMake(110, 20, self.view.frame.size.width - 140, 50)];
+    [_scrollView addSubview:_userNameTextField];
     
-    GFTextField *identityTextField = [[GFTextField alloc]initWithPlaceholder:@"身份证号" withFrame:CGRectMake(110, 80, self.view.frame.size.width - 140, 50)];
-    identityTextField.centerTxt.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-    identityTextField.centerTxt.delegate = self;
-    identityTextField.centerTxt.tag = 2;
-    [_scrollView addSubview:identityTextField];
+    _identityTextField = [[GFTextField alloc]initWithPlaceholder:@"身份证号" withFrame:CGRectMake(110, 80, self.view.frame.size.width - 140, 50)];
+    _identityTextField.centerTxt.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    _identityTextField.centerTxt.delegate = self;
+    _identityTextField.centerTxt.tag = 2;
+    [_scrollView addSubview:_identityTextField];
     
 // 技能项目
     CLTitleView *skillView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 145, self.view.frame.size.width, 45) Title:@"技能项目"];
@@ -78,7 +94,7 @@
     insulatingButton.backgroundColor = [[UIColor alloc]initWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
     insulatingButton.layer.cornerRadius = 15;
     [insulatingButton setTitleColor:[[UIColor alloc]initWithRed:156/255.0 green:156/255.0 blue:156/255.0 alpha:1.0] forState:UIControlStateNormal];
-    insulatingButton.tag = 1;
+    insulatingButton.tag = 0;
     [insulatingButton addTarget:self action:@selector(skillBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:insulatingButton];
     
@@ -101,7 +117,7 @@
     colorButton.backgroundColor = [[UIColor alloc]initWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
     colorButton.layer.cornerRadius = 15;
     [colorButton setTitleColor:[[UIColor alloc]initWithRed:156/255.0 green:156/255.0 blue:156/255.0 alpha:1.0] forState:UIControlStateNormal];
-    colorButton.tag = 1;
+    colorButton.tag = 2;
     [colorButton addTarget:self action:@selector(skillBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:colorButton];
     
@@ -111,13 +127,13 @@
     cleanButton.backgroundColor = [[UIColor alloc]initWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
     cleanButton.layer.cornerRadius = 15;
     [cleanButton setTitleColor:[[UIColor alloc]initWithRed:156/255.0 green:156/255.0 blue:156/255.0 alpha:1.0] forState:UIControlStateNormal];
-    cleanButton.tag = 1;
+    cleanButton.tag = 3;
     [cleanButton addTarget:self action:@selector(skillBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:cleanButton];
     
 // 证件照
-    CLTitleView *identityView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 250, self.view.frame.size.width, 45) Title:@"手持身份证正面照"];
-    [_scrollView addSubview:identityView];
+    _identityView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 250, self.view.frame.size.width, 45) Title:@"手持身份证正面照"];
+    [_scrollView addSubview:_identityView];
     
     _identityImageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/5, 310, self.view.frame.size.width*3/5, self.view.frame.size.width*27/70)];
     _identityImageView.image = [UIImage imageNamed:@"userImage"];
@@ -133,16 +149,16 @@
     CLTitleView *bankView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 310+self.view.frame.size.width*27/70 + 10, self.view.frame.size.width, 45) Title:@"银行卡信息"];
     [_scrollView addSubview:bankView];
     
-    UIButton *bankButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width/2-15, 40)];
-    bankButton.center = CGPointMake(self.view.center.x, bankView.frame.origin.y+45+10+20);
-    [bankButton setBackgroundImage:[UIImage imageNamed:@"choose"] forState:UIControlStateNormal];
-    [bankButton setTitle:@"农业银行" forState:UIControlStateNormal];
-    [bankButton setTitleColor:[UIColor colorWithRed:163 / 255.0 green:163 / 255.0 blue:163 / 255.0 alpha:1] forState:UIControlStateNormal];
+    _bankButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width/2-15, 40)];
+    _bankButton.center = CGPointMake(self.view.center.x, bankView.frame.origin.y+45+10+20);
+    [_bankButton setBackgroundImage:[UIImage imageNamed:@"choose"] forState:UIControlStateNormal];
+    [_bankButton setTitle:@"农业银行" forState:UIControlStateNormal];
+    [_bankButton setTitleColor:[UIColor colorWithRed:163 / 255.0 green:163 / 255.0 blue:163 / 255.0 alpha:1] forState:UIControlStateNormal];
 //    bankButton.titleLabel.textAlignment = NSTextAlignmentLeft;
-    bankButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    bankButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
-    [bankButton addTarget:self action:@selector(bankBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [_scrollView addSubview:bankButton];
+    _bankButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    _bankButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+    [_bankButton addTarget:self action:@selector(bankBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:_bankButton];
     
 //    UIButton *whereButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2+5, bankView.frame.origin.y+45+10, self.view.frame.size.width/2-15, 40)];
     
@@ -156,13 +172,13 @@
 //    [_scrollView addSubview:whereButton];
     
 // 银行卡号
-    GFTextField *bankNumberTextField = [[GFTextField alloc]initWithPlaceholder:@"银行卡号" withFrame:CGRectMake(60, bankView.frame.origin.y+45+15+60, self.view.frame.size.width-120, 40)];
-    bankNumberTextField.centerTxt.keyboardType = UIKeyboardTypeNumberPad;
-    bankNumberTextField.centerTxt.delegate = self;
-    bankNumberTextField.centerTxt.tag = 5;
-    [_scrollView addSubview:bankNumberTextField];
+    _bankNumberTextField = [[GFTextField alloc]initWithPlaceholder:@"银行卡号" withFrame:CGRectMake(60, bankView.frame.origin.y+45+15+60, self.view.frame.size.width-120, 40)];
+    _bankNumberTextField.centerTxt.keyboardType = UIKeyboardTypeNumberPad;
+    _bankNumberTextField.centerTxt.delegate = self;
+    _bankNumberTextField.centerTxt.tag = 5;
+    [_scrollView addSubview:_bankNumberTextField];
     
-    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, bankNumberTextField.frame.origin.y+40+40, self.view.frame.size.width, 2)];
+    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, _bankNumberTextField.frame.origin.y+40+40, self.view.frame.size.width, 2)];
     lineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [_scrollView addSubview:lineView];
     
@@ -200,9 +216,116 @@
 #pragma mark - 提交按钮事件
 - (void)submitBtnClick{
     NSLog(@"提交按钮事件");
-    GFAlertView *alertView = [[GFAlertView alloc]initWithTipName:@"提交成功" withTipMessage:@"恭喜您资料提交成功，我们将会在一个工作日内审核信息并以短信的形式告知结果，请注意查收！" withButtonNameArray:@[@"OK"]];
-    [alertView.okBut addTarget:self action:@selector(alertBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:alertView];
+//    GFAlertView *alertView = [[GFAlertView alloc]initWithTipName:@"提交成功" withTipMessage:@"恭喜您资料提交成功，我们将会在一个工作日内审核信息并以短信的形式告知结果，请注意查收！" withButtonNameArray:@[@"OK"]];
+//    [alertView.okBut addTarget:self action:@selector(alertBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:alertView];
+    
+//    [GFHttpTool certifyPostParameters:nil success:^(id responseObject){
+//        
+//    }failure:^(NSError *error) {
+//        
+//    }];
+    
+    
+// 判断头像
+    if (!_haveHeadImage) {
+        NSLog(@"请选择头像");
+        [self alertViewTitle:@"请选择头像"];
+    }else{
+    // 判断姓名
+        if (_userNameTextField.centerTxt.text.length == 0) {
+            NSLog(@"请输入姓名");
+            [self alertViewTitle:@"请输入姓名"];
+        }else{
+        // 判断身份证号
+            if (_identityTextField.centerTxt.text.length == 0) {
+                NSLog(@"请输入身份证号");
+                [self alertViewTitle:@"请输入身份证号"];
+            }else{
+            // 判断至少一个技能
+                if (_skillArray.count == 0) {
+                    NSLog(@"请至少选择一个技能");
+                    [self alertViewTitle:@"请至少选择一个技能"];
+                }else{
+                // 证件照
+                    if (!_haveIdentityImage) {
+                        NSLog(@"请选择证件照");
+                        [self alertViewTitle:@"请选择证件照"];
+                    }else{
+                    // 银行类型
+                        if (!_isBank) {
+                            NSLog(@"请选择银行类型");
+                            [self alertViewTitle:@"请选择银行类型"];
+                        }else{
+                        // 银行卡号
+                            if (_bankNumberTextField.centerTxt.text.length == 0) {
+                                NSLog(@"请输入银行卡号");
+                                [self alertViewTitle:@"请输入银行卡号"];
+                            }else{
+                                NSLog(@"提交信息－－");
+                                NSData *headData = UIImageJPEGRepresentation(_headImage.image, 0.5);
+                                NSData *idData = UIImageJPEGRepresentation(_identityImageView.image, 0.5);
+                                NSLog(@"---%@----id--%@--",headData,idData);
+                                NSDictionary *dic= @{@"avatar":headData,@"name":@"tom",@"idNo":@"41272319930706161X",@"skillArray":@(1),@"bank":@"027",@"bankAddress":@"光谷",@"bankCardNo":@"88888888878",@"idPhoto":idData};
+                                [GFHttpTool certifyPostParameters:dic success:^(NSDictionary *responseObject) {
+                                    NSLog(@"------respon--%@---",responseObject);
+                                    if ([responseObject[@"result"] intValue] == 1) {
+                                        NSLog(@"提交成功");
+                                    }else{
+                                        NSLog(@"请填写正确信息");
+                                    }
+                                    
+                                } failure:^(NSError *error) {
+                                    NSLog(@"应该不会");
+                                }];
+                            }
+                        }
+                     }
+                }
+            }
+        }
+    }
+    
+    
+    
+//    NSData *headData = UIImageJPEGRepresentation(_headImage.image, 0.5);
+//    NSData *idData = UIImageJPEGRepresentation(_identityImageView.image, 0.5);
+//    NSLog(@"---%@----id--%@--",headData,idData);
+    
+    NSDictionary *dic= @{@"name":@"tom",@"idNo":@"41272319930706161X",@"skillArray":@"1,2",@"bank":@"027",@"bankAddress":@"光谷",@"bankCardNo":@"88888888878",@"idPhoto":@"qwe"};
+    
+    
+    [GFHttpTool certifyPostParameters:dic success:^(NSDictionary *responseObject) {
+        NSLog(@"------respon--%@---",responseObject);
+        if ([responseObject[@"result"] intValue] == 1) {
+            NSLog(@"提交成功");
+        }else{
+            NSLog(@"请填写正确信息");
+        }
+        
+    } failure:^(NSError *error) {
+        NSLog(@"应该不会");
+    }];
+    
+    
+    
+    
+//    NSDictionary *dic= @{@"avatar":@"/h/a.jpg",@"name":@"tom",@"idNo":@"41272319930706161X",@"skillArray":@(1),@"bank":@"027",@"bankAddress":@"光谷",@"bankCardNo":@"88888888878",@"idPhoto":@"/a/a.jpg"};
+//
+//
+//    [GFHttpTool certifyPostParameters:dic success:^(NSDictionary *responseObject) {
+//        NSLog(@"------respon--%@---",responseObject);
+//        if ([responseObject[@"result"] intValue] == 1) {
+//            NSLog(@"提交成功");
+//        }else{
+//            NSLog(@"请填写正确信息");
+//        }
+//        
+//    } failure:^(NSError *error) {
+//        NSLog(@"应该不会");
+//    }];
+    
+    
 }
 
 #pragma mark - 警告框 OK
@@ -217,23 +340,31 @@
 #pragma mark - 银行类型按钮事件
 - (void)bankBtnClick:(UIButton *)button{
     NSLog(@"选择银行");
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, button.frame.size.width , 100) style:UITableViewStylePlain];
-    tableView.center = CGPointMake(self.view.center.x, button.frame.origin.y + 40+50);
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    tableView.backgroundColor = [UIColor cyanColor];
-    [_scrollView addSubview:tableView];
+    if (!_isTableView) {
+        UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, button.frame.size.width , 100) style:UITableViewStylePlain];
+        tableView.center = CGPointMake(self.view.center.x, button.frame.origin.y + 40+50);
+        tableView.delegate = self;
+        tableView.dataSource = self;
+        tableView.backgroundColor = [UIColor cyanColor];
+        [_scrollView addSubview:tableView];
+        _isTableView = YES;
+    }
+    
     
     
 }
 #pragma mark - tableView协议方法
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView removeFromSuperview];
+    [_bankButton setTitle:_bankArray[indexPath.row] forState:UIControlStateNormal];
+    [_bankButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _isTableView = NO;
+    _isBank = YES;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 5;
+    return _bankArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -241,7 +372,7 @@
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
-    cell.textLabel.text = @"银行卡操作";
+    cell.textLabel.text = _bankArray[indexPath.row];
     
     return cell;
 }
@@ -272,14 +403,13 @@
         if ([self checkCardNo:textField.text]) {
             NSLog(@"银行卡号正确");
         }else{
-            NSLog(@"银行卡号码格式错误");
+            [self alertViewTitle:@"银行卡号码格式错误"];
         }
     }else{
-        
         if ([self validateIdentityCard:textField.text]) {
             NSLog(@"身份证号正确");
         }else{
-            NSLog(@"身份证号码格式错误");
+            [self alertViewTitle:@"身份证号码格式错误"];
         }
     }
     
@@ -302,14 +432,15 @@
 #pragma mark - 技能按钮
 - (void)skillBtnClick:(UIButton *)button{
     [self.view endEditing:YES];
-    if (button.tag == 1) {
-        button.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        button.tag = 2;
-    }else{
+    if ([_skillArray containsObject:@(button.tag)]) {
+        [_skillArray removeObject:@(button.tag)];
         button.backgroundColor = [[UIColor alloc]initWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
         [button setTitleColor:[[UIColor alloc]initWithRed:156/255.0 green:156/255.0 blue:156/255.0 alpha:1.0] forState:UIControlStateNormal];
-        button.tag = 1;
+    }else{
+        [_skillArray addObject:@(button.tag)];
+        
+        button.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     }
 }
 
@@ -382,8 +513,10 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     if (_isHeadImage) {
         _headImage.image = image;
+        _haveHeadImage = YES;
     }else{
         _identityImageView.image = image;
+        _haveIdentityImage = YES;
         _identityImageView.contentMode = UIViewContentModeScaleAspectFit;
     }
     
@@ -411,6 +544,14 @@
 - (void)moreBtnClick{
     NSLog(@"更多");
 }
+
+#pragma mark - AlertView
+- (void)alertViewTitle:(NSString *)title{
+    GFAlertView *alertView = [[GFAlertView alloc]initWithTipName:@"提示" withTipMessage:title withButtonNameArray:@[@"OK"]];
+    [self.view addSubview:alertView];
+
+}
+
 
 #pragma mark - 身份证号正则表达式
 - (BOOL) validateIdentityCard: (NSString *)identityCard

@@ -47,8 +47,8 @@
 //    orderImageView.backgroundColor = [[UIColor alloc]initWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
     [self addSubview:_orderImageView];
         
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 78 + [UIScreen mainScreen].bounds.size.width*5/12, [UIScreen mainScreen].bounds.size.width, 2)];
-    view.backgroundColor = [UIColor colorWithRed:157/255.0 green:157/255.0 blue:157/255.0 alpha:1.0];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(10, 78 + [UIScreen mainScreen].bounds.size.width*5/12, [UIScreen mainScreen].bounds.size.width-20, 2)];
+    view.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0];
     [self addSubview:view];
 
     

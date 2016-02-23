@@ -9,6 +9,9 @@
 #import "GFHttpTool.h"
 #import "AFNetworking.h"
 
+NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
+
+
 @implementation GFHttpTool
 
 
@@ -17,11 +20,28 @@
 
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-    [manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id responseObject) {
+        
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+        NSLog(@"---%@--",[cookieJar cookies]);
+        for (int i = 0; i < [cookieJar cookies].count; i++) {
+            NSHTTPCookie *cookie = [cookieJar cookies][i];
+            if ([[cookie name]isEqualToString:@"autoken"]) {
+                
+                [userDefaults setObject:[NSString stringWithFormat:@"%@=%@",[cookie name],[cookie value]] forKey:@"autoken"];
+                
+                NSLog(@"---%@---",[userDefaults objectForKey:@"autoken"]);
+                break;
+            }
+          
+        }
+        
         if(success) {
             success(responseObject);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"失败了－－%@",error);
         if(failure) {
             failure(error);
         }
@@ -135,5 +155,34 @@
     }];
 
 }
+
+// 认证
++ (void)certifyPostParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *token = [userDefaultes objectForKey:@"autoken"];
+   [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/commitCertificate",HOST];
+    [manager POST:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * task, NSDictionary *responseObject) {
+        if(success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"----%@---",error);
+        if(failure) {
+            failure(error);
+        } 
+    }];
+    
+    
+}
+
+
+
+
+
+
+
 
 @end

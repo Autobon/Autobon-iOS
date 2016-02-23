@@ -71,8 +71,8 @@
     stateLabel.font = [UIFont systemFontOfSize:14];
     [headerView addSubview:stateLabel];
     
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 36, self.view.frame.size.width, 2)];
-    view.backgroundColor = [UIColor colorWithRed:157/255.0 green:157/255.0 blue:157/255.0 alpha:1.0];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 37, self.view.frame.size.width, 1)];
+    view.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0];
     [headerView addSubview:view];
     
 //    NSLog(@"当前星期几－－%@--",[self weekdayString]);

@@ -25,4 +25,19 @@
 // 更改密码
 + (void)changePwdPost:(NSString *)url parameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
+// 我要认证
++ (void)certifyPostParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+
+
+
+
+
+
+
+
+
+
+
+
+
 @end

@@ -33,6 +33,8 @@
 		9B9515411C60503800445F93 /* GFAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95153C1C60503800445F93 /* GFAnnotation.m */; };
 		9B9515421C60503800445F93 /* GFAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95153E1C60503800445F93 /* GFAnnotationView.m */; };
 		9B9515431C60503800445F93 /* GFMapViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9B9515401C60503800445F93 /* GFMapViewController.mm */; };
+		9B95A79D1C7C46140041C7BA /* CLCertifyingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95A79C1C7C46140041C7BA /* CLCertifyingViewController.m */; };
+		9B95A7A01C7C46430041C7BA /* CLCertifyFailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95A79F1C7C46430041C7BA /* CLCertifyFailViewController.m */; };
 		9B96BA2D1C7AA70200C6DDCC /* NetWorking.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B96BA2C1C7AA70200C6DDCC /* NetWorking.m */; };
 		9B96BA311C7B181900C6DDCC /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B96BA301C7B181900C6DDCC /* icon.png */; };
 		9B97543E1C5765B3004BDC7C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B97543D1C5765B3004BDC7C /* main.m */; };
@@ -119,6 +121,10 @@
 		9B95153F1C60503800445F93 /* GFMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFMapViewController.h; sourceTree = "<group>"; };
 		9B9515401C60503800445F93 /* GFMapViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GFMapViewController.mm; sourceTree = "<group>"; };
 		9B9515441C6089A200445F93 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		9B95A79B1C7C46140041C7BA /* CLCertifyingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCertifyingViewController.h; sourceTree = "<group>"; };
+		9B95A79C1C7C46140041C7BA /* CLCertifyingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLCertifyingViewController.m; sourceTree = "<group>"; };
+		9B95A79E1C7C46430041C7BA /* CLCertifyFailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCertifyFailViewController.h; sourceTree = "<group>"; };
+		9B95A79F1C7C46430041C7BA /* CLCertifyFailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLCertifyFailViewController.m; sourceTree = "<group>"; };
 		9B96BA2B1C7AA70200C6DDCC /* NetWorking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetWorking.h; sourceTree = "<group>"; };
 		9B96BA2C1C7AA70200C6DDCC /* NetWorking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetWorking.m; sourceTree = "<group>"; };
 		9B96BA301C7B181900C6DDCC /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
@@ -435,6 +441,10 @@
 				9B7AEEC61C740992003B1126 /* CLTitleView.m */,
 				9BE6653E1C743E0800976E7D /* CLTouchScrollView.h */,
 				9BE6653F1C743E0800976E7D /* CLTouchScrollView.m */,
+				9B95A79B1C7C46140041C7BA /* CLCertifyingViewController.h */,
+				9B95A79C1C7C46140041C7BA /* CLCertifyingViewController.m */,
+				9B95A79E1C7C46430041C7BA /* CLCertifyFailViewController.h */,
+				9B95A79F1C7C46430041C7BA /* CLCertifyFailViewController.m */,
 			);
 			path = "车邻邦认证";
 			sourceTree = "<group>";
@@ -625,6 +635,7 @@
 				9B9515421C60503800445F93 /* GFAnnotationView.m in Sources */,
 				866CCEBF1C755BC800E50C67 /* AFURLRequestSerialization.m in Sources */,
 				9B9754411C5765B3004BDC7C /* AppDelegate.mm in Sources */,
+				9B95A7A01C7C46430041C7BA /* CLCertifyFailViewController.m in Sources */,
 				9B9C259E1C75BF9C009A69D6 /* CLTitleTableViewCell.m in Sources */,
 				9BE665401C743E0800976E7D /* CLTouchScrollView.m in Sources */,
 				9BE53AF31C73406800BBB424 /* GFTextField.m in Sources */,
@@ -635,6 +646,7 @@
 				8655B0EB1C77025200D9FCB4 /* GFBillViewController.m in Sources */,
 				9B9515431C60503800445F93 /* GFMapViewController.mm in Sources */,
 				9B7C3FD51C77179100E3F53F /* WorkBeforeViewController.m in Sources */,
+				9B95A79D1C7C46140041C7BA /* CLCertifyingViewController.m in Sources */,
 				9BA3C5BC1C75621B007F730D /* GFAlertView.m in Sources */,
 				9BA3C8D71C7598FD007F730D /* CLHomeOrderViewController.m in Sources */,
 				86B890F81C73355B0068B95D /* GFSignUpViewController.m in Sources */,
