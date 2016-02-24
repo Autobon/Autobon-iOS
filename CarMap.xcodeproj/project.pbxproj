@@ -34,7 +34,11 @@
 		9B9515411C60503800445F93 /* GFAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95153C1C60503800445F93 /* GFAnnotation.m */; };
 		9B9515421C60503800445F93 /* GFAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95153E1C60503800445F93 /* GFAnnotationView.m */; };
 		9B9515431C60503800445F93 /* GFMapViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9B9515401C60503800445F93 /* GFMapViewController.mm */; };
+		9B95A79D1C7C46140041C7BA /* CLCertifyingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95A79C1C7C46140041C7BA /* CLCertifyingViewController.m */; };
+		9B95A7A01C7C46430041C7BA /* CLCertifyFailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95A79F1C7C46430041C7BA /* CLCertifyFailViewController.m */; };
+		9B95A7A41C7C5EBD0041C7BA /* CLMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95A7A31C7C5EBD0041C7BA /* CLMoreViewController.m */; };
 		9B96BA2D1C7AA70200C6DDCC /* NetWorking.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B96BA2C1C7AA70200C6DDCC /* NetWorking.m */; };
+		9B96BA311C7B181900C6DDCC /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B96BA301C7B181900C6DDCC /* icon.png */; };
 		9B97543E1C5765B3004BDC7C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B97543D1C5765B3004BDC7C /* main.m */; };
 		9B9754411C5765B3004BDC7C /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9B9754401C5765B3004BDC7C /* AppDelegate.mm */; };
 		9B9754471C5765B3004BDC7C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B9754451C5765B3004BDC7C /* Main.storyboard */; };
@@ -48,6 +52,7 @@
 		9BA3C8D71C7598FD007F730D /* CLHomeOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA3C8D61C7598FD007F730D /* CLHomeOrderViewController.m */; };
 		9BA526CC1C63115700A2298F /* PoiSearchDemoViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9BA526CB1C63115700A2298F /* PoiSearchDemoViewController.mm */; };
 		9BA74D251C75CDF100AF7B26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BA74D241C75CDF100AF7B26 /* LaunchScreen.storyboard */; };
+		9BA9C8141C7D4F13005CE1C0 /* CLKnockOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA9C8131C7D4F13005CE1C0 /* CLKnockOrderViewController.m */; };
 		9BA9CBD51C5B02220059F145 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA9CBD41C5B02220059F145 /* FirstViewController.m */; };
 		9BE53AE41C72ADED00BBB424 /* CLAutobonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE53AE31C72ADED00BBB424 /* CLAutobonViewController.m */; };
 		9BE53AEA1C7301A200BBB424 /* CLCertifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE53AE91C7301A200BBB424 /* CLCertifyViewController.m */; };
@@ -121,8 +126,15 @@
 		9B95153F1C60503800445F93 /* GFMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFMapViewController.h; sourceTree = "<group>"; };
 		9B9515401C60503800445F93 /* GFMapViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GFMapViewController.mm; sourceTree = "<group>"; };
 		9B9515441C6089A200445F93 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		9B95A79B1C7C46140041C7BA /* CLCertifyingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCertifyingViewController.h; sourceTree = "<group>"; };
+		9B95A79C1C7C46140041C7BA /* CLCertifyingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLCertifyingViewController.m; sourceTree = "<group>"; };
+		9B95A79E1C7C46430041C7BA /* CLCertifyFailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCertifyFailViewController.h; sourceTree = "<group>"; };
+		9B95A79F1C7C46430041C7BA /* CLCertifyFailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLCertifyFailViewController.m; sourceTree = "<group>"; };
+		9B95A7A21C7C5EBD0041C7BA /* CLMoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLMoreViewController.h; sourceTree = "<group>"; };
+		9B95A7A31C7C5EBD0041C7BA /* CLMoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLMoreViewController.m; sourceTree = "<group>"; };
 		9B96BA2B1C7AA70200C6DDCC /* NetWorking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetWorking.h; sourceTree = "<group>"; };
 		9B96BA2C1C7AA70200C6DDCC /* NetWorking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetWorking.m; sourceTree = "<group>"; };
+		9B96BA301C7B181900C6DDCC /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		9B9754391C5765B3004BDC7C /* CarMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B97543D1C5765B3004BDC7C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9B97543F1C5765B3004BDC7C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -146,6 +158,8 @@
 		9BA526CA1C63115700A2298F /* PoiSearchDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiSearchDemoViewController.h; sourceTree = "<group>"; };
 		9BA526CB1C63115700A2298F /* PoiSearchDemoViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PoiSearchDemoViewController.mm; sourceTree = "<group>"; };
 		9BA74D241C75CDF100AF7B26 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9BA9C8121C7D4F13005CE1C0 /* CLKnockOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLKnockOrderViewController.h; sourceTree = "<group>"; };
+		9BA9C8131C7D4F13005CE1C0 /* CLKnockOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLKnockOrderViewController.m; sourceTree = "<group>"; };
 		9BA9CBD31C5B02220059F145 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
 		9BA9CBD41C5B02220059F145 /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 		9BE53AE21C72ADED00BBB424 /* CLAutobonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAutobonViewController.h; sourceTree = "<group>"; };
@@ -331,6 +345,15 @@
 			path = "百度地图";
 			sourceTree = "<group>";
 		};
+		9B95A7A11C7C5E9E0041C7BA /* 更多 */ = {
+			isa = PBXGroup;
+			children = (
+				9B95A7A21C7C5EBD0041C7BA /* CLMoreViewController.h */,
+				9B95A7A31C7C5EBD0041C7BA /* CLMoreViewController.m */,
+			);
+			path = "更多";
+			sourceTree = "<group>";
+		};
 		9B96BA2A1C7AA6DB00C6DDCC /* NetWorking */ = {
 			isa = PBXGroup;
 			children = (
@@ -372,7 +395,9 @@
 				9BE53AE11C72ADB800BBB424 /* 车邻邦认证 */,
 				9BA3C8C51C759723007F730D /* 主界面 */,
 				9B7C3FCF1C770F3200E3F53F /* 工作界面 */,
+				9BA9C8111C7D4ECC005CE1C0 /* 抢单 */,
 				9B96BA2A1C7AA6DB00C6DDCC /* NetWorking */,
+				9B95A7A11C7C5E9E0041C7BA /* 更多 */,
 				9BA3C8D21C7598CE007F730D /* ViewController.h */,
 				9BA3C8D31C7598CE007F730D /* ViewController.m */,
 				9B7301551C5F2CDF00FB2DEB /* SecondViewController.h */,
@@ -386,6 +411,7 @@
 				9B95153A1C60503800445F93 /* 百度地图 */,
 				9B9754451C5765B3004BDC7C /* Main.storyboard */,
 				9BA74D241C75CDF100AF7B26 /* LaunchScreen.storyboard */,
+				9B96BA301C7B181900C6DDCC /* icon.png */,
 				9B9515441C6089A200445F93 /* PrefixHeader.pch */,
 				9B9754481C5765B3004BDC7C /* Assets.xcassets */,
 				9B97544D1C5765B3004BDC7C /* Info.plist */,
@@ -426,6 +452,15 @@
 			path = "主界面";
 			sourceTree = "<group>";
 		};
+		9BA9C8111C7D4ECC005CE1C0 /* 抢单 */ = {
+			isa = PBXGroup;
+			children = (
+				9BA9C8121C7D4F13005CE1C0 /* CLKnockOrderViewController.h */,
+				9BA9C8131C7D4F13005CE1C0 /* CLKnockOrderViewController.m */,
+			);
+			path = "抢单";
+			sourceTree = "<group>";
+		};
 		9BE53AE11C72ADB800BBB424 /* 车邻邦认证 */ = {
 			isa = PBXGroup;
 			children = (
@@ -437,6 +472,10 @@
 				9B7AEEC61C740992003B1126 /* CLTitleView.m */,
 				9BE6653E1C743E0800976E7D /* CLTouchScrollView.h */,
 				9BE6653F1C743E0800976E7D /* CLTouchScrollView.m */,
+				9B95A79B1C7C46140041C7BA /* CLCertifyingViewController.h */,
+				9B95A79C1C7C46140041C7BA /* CLCertifyingViewController.m */,
+				9B95A79E1C7C46430041C7BA /* CLCertifyFailViewController.h */,
+				9B95A79F1C7C46430041C7BA /* CLCertifyFailViewController.m */,
 			);
 			path = "车邻邦认证";
 			sourceTree = "<group>";
@@ -537,6 +576,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BA74D251C75CDF100AF7B26 /* LaunchScreen.storyboard in Resources */,
+				9B96BA311C7B181900C6DDCC /* icon.png in Resources */,
 				9B9754491C5765B3004BDC7C /* Assets.xcassets in Resources */,
 				9B9754471C5765B3004BDC7C /* Main.storyboard in Resources */,
 			);
@@ -620,12 +660,14 @@
 				866CCEC11C755BC800E50C67 /* AFURLSessionManager.m in Sources */,
 				86B890F51C73355B0068B95D /* GFForgetPwdViewController_2.m in Sources */,
 				9B7C3FD21C770F7100E3F53F /* SigninViewController.m in Sources */,
+				9B95A7A41C7C5EBD0041C7BA /* CLMoreViewController.m in Sources */,
 				86B890F41C73355B0068B95D /* GFForgetPwdViewController_1.m in Sources */,
 				866CCEBC1C755BC800E50C67 /* AFHTTPSessionManager.m in Sources */,
 				866CCEC01C755BC800E50C67 /* AFURLResponseSerialization.m in Sources */,
 				9B9515421C60503800445F93 /* GFAnnotationView.m in Sources */,
 				866CCEBF1C755BC800E50C67 /* AFURLRequestSerialization.m in Sources */,
 				9B9754411C5765B3004BDC7C /* AppDelegate.mm in Sources */,
+				9B95A7A01C7C46430041C7BA /* CLCertifyFailViewController.m in Sources */,
 				9B9C259E1C75BF9C009A69D6 /* CLTitleTableViewCell.m in Sources */,
 				9BE665401C743E0800976E7D /* CLTouchScrollView.m in Sources */,
 				9BE53AF31C73406800BBB424 /* GFTextField.m in Sources */,
@@ -633,9 +675,11 @@
 				9B97543E1C5765B3004BDC7C /* main.m in Sources */,
 				866CCEC21C755BC800E50C67 /* GFHttpTool.m in Sources */,
 				9BA3C8D41C7598CE007F730D /* ViewController.m in Sources */,
+				9BA9C8141C7D4F13005CE1C0 /* CLKnockOrderViewController.m in Sources */,
 				8655B0EB1C77025200D9FCB4 /* GFBillViewController.m in Sources */,
 				9B9515431C60503800445F93 /* GFMapViewController.mm in Sources */,
 				9B7C3FD51C77179100E3F53F /* WorkBeforeViewController.m in Sources */,
+				9B95A79D1C7C46140041C7BA /* CLCertifyingViewController.m in Sources */,
 				9BA3C5BC1C75621B007F730D /* GFAlertView.m in Sources */,
 				9BA3C8D71C7598FD007F730D /* CLHomeOrderViewController.m in Sources */,
 				86B890F81C73355B0068B95D /* GFSignUpViewController.m in Sources */,
@@ -771,7 +815,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F99A50507FF60FC41E844D9D /* Pods.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -790,7 +833,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C95997697E5E85C90BAF73FD /* Pods.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

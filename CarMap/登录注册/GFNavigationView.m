@@ -7,6 +7,9 @@
 //
 
 #import "GFNavigationView.h"
+#import "CLMoreViewController.h"
+
+
 
 @implementation GFNavigationView
 
@@ -62,6 +65,7 @@
     
     return self;
 }
+
 
 
 /*

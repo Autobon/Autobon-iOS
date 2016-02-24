@@ -70,7 +70,7 @@
 // 施工时间
     UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView2.frame.origin.y+4, self.view.frame.size.width, self.view.frame.size.height/18)];
 //    timeLabel.backgroundColor = [UIColor cyanColor];
-    timeLabel.text = @"施工时间： 今天14:30";
+    timeLabel.text = @"工作时间： 今天14:30";
     timeLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [self.view addSubview:timeLabel];
     
@@ -82,7 +82,7 @@
 // 备注
     UILabel *otherLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView3.frame.origin.y+4, self.view.frame.size.width, self.view.frame.size.height/18)];
 //    otherLabel.backgroundColor = [UIColor cyanColor];
-    otherLabel.text = @"备注： 今天天气不错，适合工作";
+    otherLabel.text = @"工作备注：今天天气不错，适合工作";
     otherLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [self.view addSubview:otherLabel];
     

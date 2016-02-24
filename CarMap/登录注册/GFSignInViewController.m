@@ -14,6 +14,7 @@
 #import "GFAlertView.h"
 
 #import "CLHomeOrderViewController.h"
+#import "CLCertifyViewController.h"
 
 @interface GFSignInViewController () {
     
@@ -335,6 +336,10 @@
                 
             }
             
+//            CLCertifyViewController *certify = [[CLCertifyViewController alloc] init];
+//            CLHomeOrderViewController *homeVC = [[CLHomeOrderViewController alloc] init];
+//            [self.navigationController pushViewController:certify animated:YES];
+
             
             
         } failure:^(NSError *error) {
@@ -447,7 +452,6 @@
     GFForgetPwdViewController_1 *forgetPwdVC_1 = [[GFForgetPwdViewController_1 alloc] init];
     [self.navigationController pushViewController:forgetPwdVC_1 animated:YES];
 }
-
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
 
