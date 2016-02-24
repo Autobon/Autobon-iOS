@@ -288,11 +288,11 @@
     
     
     
-//    NSData *headData = UIImageJPEGRepresentation(_headImage.image, 0.5);
-//    NSData *idData = UIImageJPEGRepresentation(_identityImageView.image, 0.5);
-//    NSLog(@"---%@----id--%@--",headData,idData);
+    NSData *headData = UIImageJPEGRepresentation(_headImage.image, 0.5);
+    NSData *idData = UIImageJPEGRepresentation(_identityImageView.image, 0.5);
+    NSLog(@"---%@----id--%@--",headData,idData);
     
-    NSDictionary *dic= @{@"name":@"tom",@"idNo":@"41272319930706161X",@"skillArray":@"1,2",@"bank":@"027",@"bankAddress":@"光谷",@"bankCardNo":@"88888888878",@"idPhoto":@"qwe"};
+    NSDictionary *dic= @{@"name":@"tom",@"idNo":@"41272319930706161X",@"skillArray":@"1,2",@"bank":@"027",@"bankAddress":@"光谷",@"bankCardNo":@"88888888878",@"idPhoto":idData};
     
     
     [GFHttpTool certifyPostParameters:dic success:^(NSDictionary *responseObject) {
@@ -371,6 +371,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        cell.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
     }
     cell.textLabel.text = _bankArray[indexPath.row];
     
@@ -513,6 +514,12 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     if (_isHeadImage) {
         _headImage.image = image;
+        NSData *headData = UIImageJPEGRepresentation(image, 0.3);
+        [GFHttpTool headImage:nil success:^(id responseObject) {
+            
+        } failure:^(NSError *error) {
+            
+        }];
         _haveHeadImage = YES;
     }else{
         _identityImageView.image = image;
@@ -521,6 +528,9 @@
     }
     
 }
+
+
+
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
     [self dismissViewControllerAnimated:YES completion:nil];
 }

@@ -13,6 +13,7 @@
 #import "SVPullToRefresh.h"
 #import "CLOrderDetailViewController.h"
 #import "GFMyMessageViewController.h"
+#import "CLMoreViewController.h"
 
 
 @interface CLHomeOrderViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -35,7 +36,7 @@
     
     
     
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64)];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64-30)];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -192,7 +193,7 @@
 }
 
 - (void)moreBtnClick{
-    NSLog(@"更多");
+    NSLog(@"更多--%p--",self.view);
 }
 
 

@@ -25,6 +25,8 @@
 #import "CLHomeOrderViewController.h"
 #import "CLCertifyingViewController.h"
 #import "CLCertifyFailViewController.h"
+#import "CLMoreViewController.h"
+#import "CLKnockOrderViewController.h"
 
 
 
@@ -82,25 +84,27 @@
     _window.backgroundColor = [UIColor whiteColor];
 //    _firstView = [[ViewController alloc]init];
 //    CLAutobonViewController *firstView = [[CLAutobonViewController alloc]init];
-//    CLCertifyViewController *firstView = [[CLCertifyViewController alloc]init];
+    CLCertifyViewController *firstView = [[CLCertifyViewController alloc]init];
 //    CLHomeOrderViewController *firstView = [[CLHomeOrderViewController alloc]init];
 //    CLCertifyFailViewController *firstView = [[CLCertifyFailViewController alloc]init];
-    CLCertifyingViewController *firstView = [[CLCertifyingViewController alloc]init];
+//    CLCertifyingViewController *firstView = [[CLCertifyingViewController alloc]init];
+//    CLMoreViewController *firstView = [[CLMoreViewController alloc]init];
+//    CLKnockOrderViewController *firstView = [[CLKnockOrderViewController alloc]init];
     
     
     //********************* 光法页面 **********************
 //    GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
-//    GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
+    GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
     
 
 //    _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
 
-   
+    
 
 //<<<<<<< HEAD
-//    _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
+    _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
 //=======
-    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
+//    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
 //>>>>>>> CLmaster
 
 
