@@ -19,6 +19,7 @@
 
 @property (nonatomic, strong) GFNavigationView *navView;
 
+
 @end
 
 @implementation GFBillViewController

@@ -24,6 +24,7 @@
 		86B890F71C73355B0068B95D /* GFSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890EC1C73355B0068B95D /* GFSignInViewController.m */; };
 		86B890F81C73355B0068B95D /* GFSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890EE1C73355B0068B95D /* GFSignUpViewController.m */; };
 		86B890FA1C73355B0068B95D /* GFMyMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890F31C73355B0068B95D /* GFMyMessageViewController.m */; };
+		86BAED0A1C7AE26A006F06CE /* GFBankCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86BAED091C7AE26A006F06CE /* GFBankCardViewController.m */; };
 		9B7301571C5F2CDF00FB2DEB /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7301561C5F2CDF00FB2DEB /* SecondViewController.m */; };
 		9B7AEEC71C740992003B1126 /* CLTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7AEEC61C740992003B1126 /* CLTitleView.m */; };
 		9B7C3FCE1C7706D800E3F53F /* CLOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7C3FCD1C7706D800E3F53F /* CLOrderDetailViewController.m */; };
@@ -103,6 +104,8 @@
 		86B890EE1C73355B0068B95D /* GFSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFSignUpViewController.m; sourceTree = "<group>"; };
 		86B890F21C73355B0068B95D /* GFMyMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFMyMessageViewController.h; sourceTree = "<group>"; };
 		86B890F31C73355B0068B95D /* GFMyMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFMyMessageViewController.m; sourceTree = "<group>"; };
+		86BAED081C7AE26A006F06CE /* GFBankCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFBankCardViewController.h; sourceTree = "<group>"; };
+		86BAED091C7AE26A006F06CE /* GFBankCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFBankCardViewController.m; sourceTree = "<group>"; };
 		9B02AF661C5A22CB0044FB71 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		9B7301551C5F2CDF00FB2DEB /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
 		9B7301561C5F2CDF00FB2DEB /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
@@ -270,6 +273,8 @@
 				86B890F31C73355B0068B95D /* GFMyMessageViewController.m */,
 				8655B0E61C77014400D9FCB4 /* GFBalanceViewController.h */,
 				8655B0E71C77014400D9FCB4 /* GFBalanceViewController.m */,
+				86BAED081C7AE26A006F06CE /* GFBankCardViewController.h */,
+				86BAED091C7AE26A006F06CE /* GFBankCardViewController.m */,
 				8655B0E91C77025200D9FCB4 /* GFBillViewController.h */,
 				8655B0EA1C77025200D9FCB4 /* GFBillViewController.m */,
 				8655B0E31C76F15800D9FCB4 /* GFChangePwdViewController.h */,
@@ -682,6 +687,7 @@
 				9B96BA2D1C7AA70200C6DDCC /* NetWorking.m in Sources */,
 				866CCEBD1C755BC800E50C67 /* AFNetworkReachabilityManager.m in Sources */,
 				9BA9CBD51C5B02220059F145 /* FirstViewController.m in Sources */,
+				86BAED0A1C7AE26A006F06CE /* GFBankCardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

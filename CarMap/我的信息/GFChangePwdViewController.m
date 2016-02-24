@@ -22,6 +22,8 @@
 @property (nonatomic, strong) GFTextField *passWordTxt;
 @property (nonatomic, strong) GFTextField *passwordTxt;
 
+@property (nonatomic, strong) UIView *tipView;
+
 @end
 
 @implementation GFChangePwdViewController
@@ -71,7 +73,8 @@
     [self.view addSubview:self.passWordTxt];
     self.passWordTxt.centerTxt.keyboardType = UIKeyboardTypeDefault;
     self.passWordTxt.centerTxt.delegate = self;
-    self.passWordTxt.centerTxt.tag = 100;
+    self.passWordTxt.centerTxt.tag = 1000;
+
 
     // 重置密码输入框
     UIButton *passwordBut1 = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -79,7 +82,7 @@
     [passwordBut1 setImage:[UIImage imageNamed:@"eyeClose.png"] forState:UIControlStateNormal];
     [passwordBut1 setImage:[UIImage imageNamed:@"eyeOpen.png"] forState:UIControlStateSelected];
     passwordBut1.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    [passwordBut1 addTarget:self action:@selector(passwordButClick:) forControlEvents:UIControlEventTouchUpInside];
+    [passwordBut1 addTarget:self action:@selector(passwordBut1Click:) forControlEvents:UIControlEventTouchUpInside];
     
     CGFloat passwordTxtW = passWordTxtW;
     CGFloat passwordTxtH = passWordTxtH;
@@ -91,8 +94,9 @@
     self.passwordTxt.centerTxt.secureTextEntry = YES;
     [self.view addSubview:self.passwordTxt];
     self.passwordTxt.centerTxt.keyboardType = UIKeyboardTypeDefault;
-    self.passWordTxt.centerTxt.delegate = self;
-    self.passWordTxt.centerTxt.tag = 200;
+    self.passwordTxt.centerTxt.delegate = self;
+    self.passwordTxt.centerTxt.tag = 2000;
+
     
     // 提交按钮
     CGFloat submitButW = kWidth - kWidth * 0.116 * 2 + 8;
@@ -113,63 +117,125 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
 
+    [self.tipView removeFromSuperview];
+    
     NSString * pwdStr = @"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,18}$";
     NSPredicate *regextestPwdStr = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", pwdStr];
-    if([regextestPwdStr evaluateWithObject:self.passWordTxt.centerTxt.text]) {
+    if([regextestPwdStr evaluateWithObject:textField.text]) {
         
         NSLog(@"密码格式输入正确");
     }else {
         
-        GFAlertView *tipView = [[GFAlertView alloc] initWithTipName:@"提示" withTipMessage:@"请输入8~18位由“字母、数字组合”的密码" withButtonNameArray:@[@"OK"]];
-        [self.view addSubview:tipView];
-        [self.view endEditing:YES];
-        tipView.okBut.tag = textField.tag;
-        [tipView.okBut addTarget:self action:@selector(okButClick:) forControlEvents:UIControlEventTouchUpInside];
+        NSLog(@"密码格式不正确");
+        if(textField.tag == 1000) {
+            
+//            [textField becomeFirstResponder];
+            
+            [UIView animateWithDuration:1.5 animations:^{
+                [self tipView:CGRectGetMaxY(self.passWordTxt.frame) withTipmessage:@"密码由“8~18字母、数字组成”"];
+            } completion:^(BOOL finished) {
+                [self.tipView removeFromSuperview];
+            }];
+            
+        
+            
+        }else {
+            
+//            [textField becomeFirstResponder];
+        
+            [UIView animateWithDuration:1.8 animations:^{
+                [self tipView:CGRectGetMaxY(self.passwordTxt.frame) withTipmessage:@"密码由“8~18字母、数字组成”"];
+            } completion:^(BOOL finished) {
+                [self.tipView removeFromSuperview];
+            }];
+        }
+        
 
         
     }
 
 }
 
-- (void)okButClick:(UIButton *)sender {
 
-    if(sender.tag == 100) {
-        
-        self.passWordTxt.centerTxt.text = nil;
-        
-        [self.passwordTxt.centerTxt resignFirstResponder];
-        [self.passWordTxt.centerTxt becomeFirstResponder];
-    
-    }else {
-    
-        
-        self.passwordTxt.centerTxt.text = nil;
-    }
-    
-    
-}
 
 
 - (void)submitBut {
     
+    NSString * pwdStr = @"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,18}$";
+    NSPredicate *regextestPwdStr = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", pwdStr];
+    BOOL flage1 = [regextestPwdStr evaluateWithObject:self.passWordTxt.centerTxt.text];
     
-    NSLog(@"修改密码提交界面");
-
-    NSString *url = @"http://121.40.157.200:51234/api/mobile/technician/changePassword";
-    NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
-    parDic[@"autoken"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"autoken"];
-    parDic[@"password"] = self.passwordTxt.centerTxt.text;
-
-    [GFHttpTool changePwdPost:url parameters:parDic success:^(id responseObject) {
-        
-        NSLog(@"修改成功+++++++++++ \n %@", responseObject);
-        
-        [self.navigationController popViewControllerAnimated:YES];
-        
-    } failure:^(NSError *error) {
-        NSLog(@"修改失败");
-    }];
+    BOOL flage2 = [regextestPwdStr evaluateWithObject:self.passwordTxt.centerTxt.text];
     
+    NSLog(@"修改密码提交按钮");
+    
+    [self.tipView removeFromSuperview];
+    [self.tipView removeFromSuperview];
+    [self.view endEditing:YES];
+    
+    if(self.passWordTxt.centerTxt.text.length == 0) {
+        
+        [self tipShow:@"请输入旧密码"];
+    
+    }else if(!flage1) {
+        
+        [UIView animateWithDuration:1.5 animations:^{
+            [self tipView:CGRectGetMaxY(self.passWordTxt.frame) withTipmessage:@"密码由“8~18字母、数字组成”"];
+        } completion:^(BOOL finished) {
+            [self.tipView removeFromSuperview];
+        }];
+        
+    }else if(self.passwordTxt.centerTxt.text.length == 0) {
+        
+        [self tipShow:@"请输入新密码"];
+    
+    }else if(!flage2) {
+    
+        [UIView animateWithDuration:1.8 animations:^{
+            [self tipView:CGRectGetMaxY(self.passwordTxt.frame) withTipmessage:@"密码由“8~18字母、数字组成”"];
+        } completion:^(BOOL finished) {
+            [self.tipView removeFromSuperview];
+        }];
+    
+    }else {
+        
+        NSString *url = @"http://121.40.157.200:51234/api/mobile/technician/changePassword";
+        NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
+        parDic[@"autoken"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"autoken"];
+        parDic[@"oldPassword"] = self.passWordTxt.centerTxt.text;
+        parDic[@"newPassword"] = self.passwordTxt.centerTxt.text;
+        
+//        NSLog(@"\n%@", parDic);
+        
+        [GFHttpTool changePwdPost:url parameters:parDic success:^(id responseObject) {
+            
+            NSLog(@"修改密码提交成功+++++++++++ \n %@", responseObject);
+            
+            NSLog(@"#####%@  \n####%@", responseObject[@"result"], responseObject[@"message"]);
+            
+            NSInteger result = [responseObject[@"result"] integerValue];
+            
+            if(result == 1) {
+            
+                [UIView animateWithDuration:2 animations:^{
+                    [self tipView:kHeight * 0.8 withTipmessage:@"修改成功"];
+                } completion:^(BOOL finished) {
+                    [self.tipView removeFromSuperview];
+                    [self.navigationController popViewControllerAnimated:YES];
+                }];
+            }else {
+                
+                [self tipShow:responseObject[@"message"]];
+            
+            }
+
+            
+        } failure:^(NSError *error) {
+            NSLog(@"修改密码提交失败");
+        }];
+    
+    }
+
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -180,16 +246,76 @@
 - (void)passwordButClick:(UIButton *)sender {
     
     sender.selected = !sender.selected;
-    self.passwordTxt.centerTxt.secureTextEntry = !self.passwordTxt.centerTxt.secureTextEntry;
+    
+    self.passWordTxt.centerTxt.secureTextEntry = !self.passWordTxt.centerTxt.secureTextEntry;
+    
     
     
 }
+- (void)passwordBut1Click:(UIButton *)sender {
 
+    sender.selected = !sender.selected;
+    self.passwordTxt.centerTxt.secureTextEntry = !self.passwordTxt.centerTxt.secureTextEntry;
+    
+}
 
 - (void)leftButClick {
     
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+
+
+/**
+ *  提示框
+ */
+- (void)tipShow:(NSString *)str {
+    
+    [self.tipView removeFromSuperview];
+    
+    [UIView animateWithDuration:2 animations:^{
+        
+        [self tipView:kHeight * 0.8 withTipmessage:str];
+        
+    } completion:^(BOOL finished) {
+        
+        [self.tipView removeFromSuperview];
+        
+    }];
+}
+
+- (void)tipView:(CGFloat)tipviewY withTipmessage:(NSString *)messageStr {
+    
+    [self.tipView removeFromSuperview];
+    
+    NSString *str = messageStr;
+    NSMutableDictionary *attDic = [[NSMutableDictionary alloc] init];
+    attDic[NSFontAttributeName] = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
+    attDic[NSForegroundColorAttributeName] = [UIColor whiteColor];
+    CGRect strRect = [str boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attDic context:nil];
+    
+    CGFloat tipViewW = strRect.size.width + 30;
+    CGFloat tipViewH = kHeight * 0.0625;
+    CGFloat tipViewX = (kWidth - tipViewW) / 2.0;
+    CGFloat tipViewY = tipviewY;
+    self.tipView = [[UIView alloc] initWithFrame:CGRectMake(tipViewX, tipViewY, tipViewW, tipViewH)];
+    self.tipView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    self.tipView.layer.cornerRadius = 7.5;
+    [self.view addSubview:self.tipView];
+    
+    CGFloat msgLabW = tipViewW;
+    CGFloat msgLabH = tipViewH;
+    CGFloat msgLabX = 0;
+    CGFloat msgLabY = 0;
+    UILabel *msgLab = [[UILabel alloc] initWithFrame:CGRectMake(msgLabX, msgLabY, msgLabW, msgLabH)];
+    msgLab.text = messageStr;
+    [self.tipView addSubview:msgLab];
+    msgLab.textAlignment = NSTextAlignmentCenter;
+    msgLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
+    msgLab.textColor = [UIColor whiteColor];
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

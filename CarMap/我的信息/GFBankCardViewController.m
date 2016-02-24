@@ -1,0 +1,287 @@
+//
+//  GFBankCardViewController.m
+//  CarMap
+//
+//  Created by 陈光法 on 16/2/22.
+//  Copyright © 2016年 mll. All rights reserved.
+//
+
+#import "GFBankCardViewController.h"
+#import "GFNavigationView.h"
+#import "GFHttpTool.h"
+#import "GFTextField.h"
+
+@interface GFBankCardViewController () {
+    
+    CGFloat kWidth;
+    CGFloat kHeight;
+    
+    CGFloat jianjv1;
+    CGFloat jiange1;
+}
+
+@property (nonatomic, strong) GFNavigationView *navView;
+
+@property (nonatomic, strong) UIButton *bankBut;
+@property (nonatomic, strong) UIView *jvtiView;
+@property (nonatomic, strong) UITableView *tableView;
+
+
+
+
+@end
+
+@implementation GFBankCardViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    
+    // 基础设置
+    [self _setBase];
+    
+    // 界面搭建
+    [self _setView];
+}
+
+- (void)_setBase {
+    
+    kWidth = [UIScreen mainScreen].bounds.size.width;
+    kHeight = [UIScreen mainScreen].bounds.size.height;
+    
+    jianjv1 = kHeight * 0.021;
+    jiange1 = kWidth * 0.056;
+    
+    self.bankStr = @"光法银行";
+    
+    self.view.backgroundColor = [UIColor colorWithRed:252 / 255.0 green:252 / 255.0 blue:252 / 255.0 alpha:1];
+    
+    // 导航栏
+    self.navView = [[GFNavigationView alloc] initWithLeftImgName:@"back.png" withLeftImgHightName:@"backClick.png" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"银行卡" withFrame:CGRectMake(0, 0, kWidth, 64)];
+    [self.navView.leftBut addTarget:self action:@selector(leftButClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.navView];
+}
+
+- (void)_setView {
+    
+    // 银行卡信息
+    CGFloat baseViewW = kWidth;
+    CGFloat baseViewH = kHeight * 0.0521;
+    CGFloat baseViewX = 0;
+    CGFloat baseViewY = jianjv1 + 64;
+    UIView *baseView = [[UIView alloc] initWithFrame:CGRectMake(baseViewX, baseViewY, baseViewW, baseViewH)];
+    baseView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:baseView];
+    // 竖条
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5 / 320.0 * kWidth, baseViewH)];
+    lineView.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+    [baseView addSubview:lineView];
+    // 银行卡信息Lab
+    UILabel *msgLab = [[UILabel alloc] initWithFrame:CGRectMake(jiange1, 0, 200, baseViewH)];
+    msgLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
+    msgLab.text = @"银行卡信息";
+    [baseView addSubview:msgLab];
+    // 边线
+    UIView *line1 = [[UIView alloc] initWithFrame:CGRectMake(0, baseViewH - 1, kWidth, 1)];
+    line1.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+    [baseView addSubview:line1];
+    
+    // 姓名
+    CGFloat nameViewW = kWidth;
+    CGFloat nameViewH = kHeight * 0.083;
+    CGFloat nameViewX = 0;
+    CGFloat nameViewY = CGRectGetMaxY(baseView.frame);
+    UIView *nameView = [[UIView alloc] initWithFrame:CGRectMake(nameViewX, nameViewY, nameViewW, nameViewH)];
+    nameView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:nameView];
+    // 姓名Lab
+    UILabel *nameLab = [[UILabel alloc] initWithFrame:CGRectMake(jiange1, 0, 200, nameViewH)];
+    nameLab.text = @"陈光法";
+    nameLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
+    nameLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
+    [nameView addSubview:nameLab];
+    // 边线
+    UIView *line2 = [[UIView alloc] initWithFrame:CGRectMake(0, nameViewH - 1, kWidth, 1)];
+    line2.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+    [nameView addSubview:line2];
+    
+    
+    // 具体信息与更改
+    CGFloat jvtiViewW = kWidth;
+    CGFloat jvtiViewH = kHeight * 0.248;
+    CGFloat jvtiViewX = 0;
+    CGFloat jvtiViewY = CGRectGetMaxY(nameView.frame);
+    self.jvtiView = [[UIView alloc] initWithFrame:CGRectMake(jvtiViewX, jvtiViewY, jvtiViewW, jvtiViewH)];
+    [self.view addSubview:self.jvtiView];
+    // 银行按钮
+    CGFloat bankButW = (kWidth - 3 * jiange1 - 10) / 2.0;
+    CGFloat bankButH = kHeight * 0.052;
+    CGFloat bankButX = jiange1;
+    CGFloat bankButY = jiange1;
+    self.bankBut = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.bankBut.frame = CGRectMake(bankButX, bankButY, bankButW, bankButH);
+    [self.bankBut setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateNormal];
+    self.bankBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    self.bankBut.contentEdgeInsets = UIEdgeInsetsMake(0, 5 / 320.0 * kWidth, 0, 0);
+    [self.bankBut setTitle:self.bankStr forState:UIControlStateNormal];
+    [self.bankBut setTitleColor:[UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1] forState:UIControlStateNormal];
+    self.bankBut.titleLabel.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
+    [self.jvtiView addSubview:self.bankBut];
+    [self.bankBut addTarget:self action:@selector(bankButClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+//    // 开户地点
+//    CGFloat placeButW = (kWidth - 3 * jiange1 - 10) / 2.0;
+//    CGFloat placeButH = kHeight * 0.052;
+//    CGFloat placeButX = CGRectGetMaxX(bankBut.frame) + 10;
+//    CGFloat placeButY = jiange1;
+//    UIButton *placeBut = [UIButton buttonWithType:UIButtonTypeCustom];
+//    placeBut.frame = CGRectMake(placeButX, placeButY, placeButW, placeButH);
+//    [placeBut setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateNormal];
+//    placeBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+//    placeBut.contentEdgeInsets = UIEdgeInsetsMake(0, 5 / 320.0 * kWidth, 0, 0);
+//    [placeBut setTitle:@"开户地点" forState:UIControlStateNormal];
+//    [placeBut setTitleColor:[UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1] forState:UIControlStateNormal];
+//    placeBut.titleLabel.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
+//    [jvtiView addSubview:placeBut];
+//    [placeBut addTarget:self action:@selector(placeButClick) forControlEvents:UIControlEventTouchDragInside];
+    
+    // 银行卡号
+    CGFloat cardTxtW = kWidth - 0.185 * kWidth * 2;
+    CGFloat cardTxtH = kHeight * 0.0625;
+    CGFloat cardTxtX = kWidth * 0.185;
+    CGFloat cardTxtY = CGRectGetMaxY(self.bankBut.frame) + jiange1 + 10;
+    self.cardTxt = [[GFTextField alloc] initWithPlaceholder:@"8888 8888 8888 8888 888" withFrame:CGRectMake(cardTxtX, cardTxtY, cardTxtW, cardTxtH)];
+    [self.jvtiView addSubview:self.cardTxt];
+    self.cardTxt.centerTxt.tag = 5;
+    self.cardTxt.centerTxt.delegate = self;
+    self.cardTxt.centerTxt.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
+    // 边线
+    UIView *line3 = [[UIView alloc] initWithFrame:CGRectMake(0, jvtiViewH - 1, kWidth, 1)];
+    line3.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+    [self.jvtiView addSubview:line3];
+    
+    
+    // 银行tableView
+    CGFloat tableViewW = self.bankBut.frame.size.width;
+    CGFloat tableViewH = 100;
+    CGFloat tableViewX = self.bankBut.frame.origin.x;
+    CGFloat tableViewY = CGRectGetMaxY(self.bankBut.frame);
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(tableViewX, tableViewY, tableViewW, tableViewH) style:UITableViewStylePlain];
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.jvtiView addSubview:self.tableView];
+    self.tableView.hidden = YES;
+    self.tableView.layer.borderWidth = 1;
+    self.tableView.layer.borderColor = [[UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1] CGColor];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
+    // 提交按钮
+    UIButton *submitBut = [UIButton buttonWithType:UIButtonTypeCustom];
+    submitBut.frame = CGRectMake(kWidth * 0.116 - 4, CGRectGetMaxY(self.jvtiView.frame) + 25, kWidth - (kWidth * 0.116 - 4) * 2.0, kHeight * 0.073);
+    [submitBut setBackgroundImage:[UIImage imageNamed:@"button.png"] forState:UIControlStateNormal];
+    [submitBut setBackgroundImage:[UIImage imageNamed:@"buttonClick.png"] forState:UIControlStateHighlighted];
+    [submitBut setTitle:@"提交" forState:UIControlStateNormal];
+    [submitBut setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    submitBut.titleLabel.font = [UIFont systemFontOfSize:19 / 320.0 * kWidth];
+    [self.view addSubview:submitBut];
+    [submitBut addTarget:self action:@selector(submitClick) forControlEvents:UIControlEventTouchUpInside];
+}
+- (void)submitClick {
+
+    [self.delegate changeBankCardViewController:self];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if (textField.tag == 5) {
+        NSLog(@"---range--%@----%@---string--%@--",@(range.location),@(range.length),string);
+        if (range.length == 0) {
+            if (range.location%5 == 4) {
+                textField.text = [NSString stringWithFormat:@"%@ ",textField.text];
+            }
+        }
+    }
+    
+    return YES;
+}
+
+//- (void)placeButClick {
+//
+//    NSLog(@"请选择开户地点");
+//}
+
+- (void)bankButClick {
+
+    NSLog(@"请选择开户银行");
+    
+    self.tableView.hidden = !self.tableView.hidden;
+    
+
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+
+
+    return 5;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    static NSString *ID = @"cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    if(cell == nil) {
+    
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+    }
+    
+    cell.textLabel.text = @"光法银行";
+    cell.textLabel.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
+    cell.textLabel.font = [UIFont systemFontOfSize:14 / 320.0 * kWidth];
+    
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    self.bankStr = @"光发银行";
+    
+    [self.bankBut setTitle:self.bankStr forState:UIControlStateNormal];
+    
+    self.tableView.hidden = YES;
+    
+    
+
+}
+
+- (void)leftButClick {
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+
+    [self.view endEditing:YES];
+    self.tableView.hidden = YES;
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

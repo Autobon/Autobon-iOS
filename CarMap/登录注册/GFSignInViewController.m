@@ -38,45 +38,14 @@
 @property (nonatomic, strong) UIButton *forgetBut;
 
 
+@property (nonatomic, strong) UIView *tipView;
+@property (nonatomic, strong) UIView *jiazaiBaseView;
+@property (nonatomic, strong) UIImageView *imgView;
+
 @end
 
 @implementation GFSignInViewController
 
-//- (void)textFieldDidEndEditing:(UITextField *)textField{
-//    if (textField.tag == 10 ||textField.tag == 11) {
-//        // 判断用户名有无注册 以及是否符合 “手机号格式”
-//        /* 去掉空格和换行 */
-//        textField.text =  [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//        NSString *MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
-//        NSString *CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
-//        NSString *CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
-//        NSString *CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
-//        NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];  // 小灵通
-//        NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];  // 移动
-//        NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];  // 灵通
-//        NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];  // 电信
-//        /* 把上面封装的格式与字符串进行比较 */
-//        if (([regextestmobile evaluateWithObject:textField.text] == YES)
-//            || ([regextestcm evaluateWithObject:textField.text] == YES)
-//            || ([regextestct evaluateWithObject:textField.text] == YES)
-//            || ([regextestcu evaluateWithObject:textField.text] == YES)) {
-//
-//        }else {
-//            textField.text = nil;
-////            [self showMessage:@"用户名格式不正确,请重新输入"];
-//            
-//        }
-//    }else if (textField.tag == 2){
-//        // 判断密码是否符合 “由字母和数字组合,8—18位”
-//        NSString * regex = @"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,18}$";
-//        NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-//        BOOL isMatch = [pred evaluateWithObject:textField.text];
-//        if (!isMatch) {
-////            [self showMessage:@"密码由字母和数字组合,8—18位"];
-//        }
-//    }
-//    
-//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -118,37 +87,45 @@
 //    [self.view addSubview:self.languageBut];
     
     
-    // 中间标题“车邻邦”
-    CGFloat centerLabW = kWidth;
-    CGFloat centerLabH = kHeight * 0.042;
-    CGFloat centerLabX = 0;
-    CGFloat centerLabY = kHeight * 0.172;
-    self.centerLab = [[UILabel alloc] initWithFrame:CGRectMake(centerLabX, centerLabY, centerLabW, centerLabH)];
-    self.centerLab.font = [UIFont boldSystemFontOfSize:(25 / 320.0 * kWidth)];
-    self.centerLab.textAlignment = NSTextAlignmentCenter;
-    self.centerLab.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-    self.centerLab.text = @"车邻邦";
-    [self.view addSubview:self.centerLab];
+//    // 中间标题“车邻邦”
+//    CGFloat centerLabW = kWidth;
+//    CGFloat centerLabH = kHeight * 0.042;
+//    CGFloat centerLabX = 0;
+//    CGFloat centerLabY = kHeight * 0.172;
+//    self.centerLab = [[UILabel alloc] initWithFrame:CGRectMake(centerLabX, centerLabY, centerLabW, centerLabH)];
+//    self.centerLab.font = [UIFont boldSystemFontOfSize:(25 / 320.0 * kWidth)];
+//    self.centerLab.textAlignment = NSTextAlignmentCenter;
+//    self.centerLab.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+//    self.centerLab.text = @"车邻邦";
+//    [self.view addSubview:self.centerLab];
+//    
+//    
+//    // 英文lab
+//    CGFloat enLabW = centerLabW;
+//    CGFloat enLabH = kHeight * 0.022;
+//    CGFloat enLabX = centerLabX;
+//    CGFloat enLabY = CGRectGetMaxY(self.centerLab.frame) + 3;
+//    UILabel *enLab = [[UILabel alloc] initWithFrame:CGRectMake(enLabX, enLabY, enLabW, enLabH)];
+//    enLab.text = @"AUTOBON";
+//    enLab.textAlignment = NSTextAlignmentCenter;
+//    enLab.textColor = [UIColor blackColor];
+//    enLab.font = [UIFont systemFontOfSize:(14 / 320.0 * kWidth)];
+//    [self.view addSubview:enLab];
     
-    
-    // 英文lab
-    CGFloat enLabW = centerLabW;
-    CGFloat enLabH = kHeight * 0.022;
-    CGFloat enLabX = centerLabX;
-    CGFloat enLabY = CGRectGetMaxY(self.centerLab.frame) + 3;
-    UILabel *enLab = [[UILabel alloc] initWithFrame:CGRectMake(enLabX, enLabY, enLabW, enLabH)];
-    enLab.text = @"AUTOBON";
-    enLab.textAlignment = NSTextAlignmentCenter;
-    enLab.textColor = [UIColor blackColor];
-    enLab.font = [UIFont systemFontOfSize:(14 / 320.0 * kWidth)];
-    [self.view addSubview:enLab];
+    CGFloat logoImgViewW = kWidth * 0.23;
+    CGFloat logoImgViewH = kHeight * 0.068;
+    CGFloat logoImgViewX = (kWidth - logoImgViewW) * 0.5;
+    CGFloat logoImgViewY = kHeight * 0.172;
+    UIImageView *logoImgView = [[UIImageView alloc] initWithFrame:CGRectMake(logoImgViewX, logoImgViewY, logoImgViewW, logoImgViewH)];
+    [self.view addSubview:logoImgView];
+    logoImgView.image = [UIImage imageNamed:@"LOGO"];
     
     
     // 账号输入框
     CGFloat userNameW = kWidth * 0.768;
     CGFloat userNameH = kHeight * 0.0625;
     CGFloat userNameX = (kWidth - userNameW) / 2.0 - 3 / 320.0 * kWidth;
-    CGFloat userNameY = CGRectGetMaxY(enLab.frame) + kHeight * 0.167;
+    CGFloat userNameY = CGRectGetMaxY(logoImgView.frame) + kHeight * 0.167 * 2 / 3.0;
     self.userNameTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"user.png"] withFrame:CGRectMake(userNameX, userNameY, userNameW, userNameH)];
     self.userNameTxt.centerTxt.placeholder = @"请输入账号";
     [self.userNameTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
@@ -252,68 +229,197 @@
     [backView addSubview:signUpBut];
     [signUpBut addTarget:self action:@selector(signUpButClick) forControlEvents:UIControlEventTouchUpInside];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillBeHidden:)
-                                                 name:UIKeyboardWillHideNotification object:nil];
+    // 监听键盘
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(keyboardWillBeHidden:)
+//                                                 name:UIKeyboardWillHideNotification object:nil];
     
 }
 
-- (void)keyboardWillBeHidden:(NSNotification *)aNotification {
-
-    self.view.frame = CGRectMake(0, 0, kWidth, kHeight);
-}
 
 - (void)signInButClick {
     
-    NSString *url = @"http://121.40.157.200:51234/api/mobile/technician/login";
-    NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
-    parDic[@"phone"] = self.userNameTxt.centerTxt.text;
-    parDic[@"password"] = self.passWordTxt.centerTxt.text;
-
-    [GFHttpTool signInPost:url parameters:parDic success:^(id responseObject) {
+    [self.view endEditing:YES];
+    [self.tipView removeFromSuperview];
+    
+    self.userNameTxt.centerTxt.text =  [self.userNameTxt.centerTxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
+    NSString *CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
+    NSString *CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
+    NSString *CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
+    NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];  // 小灵通
+    NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];  // 移动
+    NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];  // 灵通
+    NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];  // 电信
+    
+    if(self.userNameTxt.centerTxt.text.length == 0) {
         
-        // 判断是否登录成功
-        if([responseObject[@"result"] isEqual:@1]) {
-            NSLog(@"登录成功==========%@", responseObject);
+        [self tipShow:@"手机号不能为空"];
+        
+    }else if(([regextestmobile evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)
+             && ([regextestcm evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)
+             && ([regextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)
+             && ([regextestcu evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)) {
+        
+        [self tipShow:@"请输入正确的手机号"];
+        
+    }else if(self.passWordTxt.centerTxt.text.length == 0) {
+        
+        [self tipShow:@"密码不能为空"];
+        
+    }else {
+        NSString *url = @"http://121.40.157.200:51234/api/mobile/technician/login";
+        NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
+        parDic[@"phone"] = self.userNameTxt.centerTxt.text;
+        parDic[@"password"] = self.passWordTxt.centerTxt.text;
+        
+        [GFHttpTool signInPost:url parameters:parDic success:^(id responseObject) {
             
-            // 获取token 针对个人的操作要加
-            NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage]; // 获得响应头
-            NSLog(@"####################################\n---%@--",[cookieJar cookies]); // 获取响应头的数组
-            NSUserDefaults *autokenValue = [NSUserDefaults standardUserDefaults];
-            for (int i = 0; i < [cookieJar cookies].count; i++) {
-                NSHTTPCookie *cookie = [cookieJar cookies][i]; // 实例化响应头数组对象
+            // 判断是否登录成功
+            if([responseObject[@"result"] isEqual:@1]) {
+                NSLog(@"登录成功==========%@", responseObject);
                 
-                if ([cookie.name isEqualToString:@"autoken"]) { // 获取响应头数组对象里地名字为autoken的对象
+                // 获取token 针对个人的操作要加
+                NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage]; // 获得响应头
+                NSLog(@"####################################\n---%@--",[cookieJar cookies]); // 获取响应头的数组
+                NSUserDefaults *autokenValue = [NSUserDefaults standardUserDefaults];
+                for (int i = 0; i < [cookieJar cookies].count; i++) {
+                    NSHTTPCookie *cookie = [cookieJar cookies][i]; // 实例化响应头数组对象
                     
-                    NSLog(@"############%@", [NSString stringWithFormat:@"%@=%@",[cookie name],[cookie value]]); //获取响应头数组对象里地名字为autoken的对象的数据，这个数据是用来验证用户身份相当于“key”
-                    
-                    [autokenValue setObject:[NSString stringWithFormat:@"%@=%@", cookie.name, cookie.value] forKey:@"autoken"];
-                    break;
+                    if ([cookie.name isEqualToString:@"autoken"]) { // 获取响应头数组对象里地名字为autoken的对象
+                        
+                        // 提示语
+                        [UIView animateWithDuration:1.2 animations:^{
+                            
+                            [self tipView:CGRectGetMinY(self.userNameTxt.frame) + kHeight * 0.4 withTipmessage:responseObject[@"message"]];
+                            self.signInBut.userInteractionEnabled = NO;
+                            
+                        } completion:^(BOOL finished) {
+                            
+                            [self.tipView removeFromSuperview];
+                            self.signInBut.userInteractionEnabled = YES;
+                            
+                        }];
+                        
+                        
+                        
+                        
+                        NSLog(@"############%@", [NSString stringWithFormat:@"%@=%@",[cookie name],[cookie value]]); //获取响应头数组对象里地名字为autoken的对象的数据，这个数据是用来验证用户身份相当于“key”
+                        
+                        
+                        
+                        
+                        [autokenValue setObject:[NSString stringWithFormat:@"%@=%@", cookie.name, cookie.value] forKey:@"autoken"];
+                        break;
+                    }
                 }
+                
+                CLHomeOrderViewController *homeVC = [[CLHomeOrderViewController alloc] init];
+                [self.navigationController pushViewController:homeVC animated:YES];
+                
+            }else if([responseObject[@"result"] isEqual:@0]) {
+                
+                NSLog(@"登录失败==========%@", responseObject);
+                
+                [UIView animateWithDuration:1.2 animations:^{
+                    
+                    [self tipView:CGRectGetMinY(self.userNameTxt.frame) + kHeight * 0.4 withTipmessage:responseObject[@"message"]];
+                    self.signInBut.userInteractionEnabled = NO;
+                    
+                } completion:^(BOOL finished) {
+                    
+                    [self.tipView removeFromSuperview];
+                    
+                    self.signInBut.userInteractionEnabled = YES;
+                    
+                }];
+                
             }
             
             CLCertifyViewController *certify = [[CLCertifyViewController alloc] init];
             CLHomeOrderViewController *homeVC = [[CLHomeOrderViewController alloc] init];
             [self.navigationController pushViewController:certify animated:YES];
+
             
-        }else if([responseObject[@"result"] isEqual:@0]) {
             
-            NSLog(@"登录失败==========%@", responseObject);
+        } failure:^(NSError *error) {
             
-            GFAlertView *tipView = [[GFAlertView alloc] initWithTipName:@"提示" withTipMessage:responseObject[@"message"] withButtonNameArray:@[@"OK"]];
-            [self.view addSubview:tipView];
-        }
+            
+            NSLog(@"请求失败==========%@", error);
+            
+            
+            
+        }];
+    
+    }
+    
+    
+    
+}
+
+- (void)jiazaiWithStr:(NSString *)strText {
+    
+    
+    NSString *str = strText;
+    NSMutableDictionary *attDic = [[NSMutableDictionary alloc] init];
+    attDic[NSFontAttributeName] = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
+    attDic[NSForegroundColorAttributeName] = [UIColor whiteColor];
+    CGRect strRect = [str boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attDic context:nil];
+
+    self.jiazaiBaseView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    [self.view addSubview:self.jiazaiBaseView];
+    self.jiazaiBaseView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+    
+    
+
+    
+    
+    
+    
+    CGFloat strLabW = strRect.size.width + 20;
+    CGFloat strLabH = 40 / 320.0 * kWidth;
+    CGFloat strLabX = 45;
+    CGFloat strLabY = 5;
+    UILabel *strLab = [[UILabel alloc] initWithFrame:CGRectMake(strLabX, strLabY, strLabW, strLabH)];
+    strLab.text = strText;
+    strLab.textAlignment = NSTextAlignmentCenter;
+    
+    
+    CGFloat imgViewW = 40 / 320.0 * kWidth;
+    CGFloat imgViewH = imgViewW;
+    CGFloat imgViewX = 5;
+    CGFloat imgViewY = 5;
+    self.imgView = [[UIImageView alloc] initWithFrame:CGRectMake(imgViewX, imgViewY, imgViewW, imgViewH)];
+    
+    
+    NSMutableArray *imgArr = [[NSMutableArray alloc] init];
+    for(int i=1; i<=8; i++) {
+    
+        UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"%d", i]];
         
-        
-        
-    } failure:^(NSError *error) {
-        
-        
-        NSLog(@"请求失败==========%@", error);
-        
-        
-        
-    }];
+        [imgArr addObject:img];
+    }
+    
+    self.imgView.animationImages = imgArr;
+    self.imgView.animationDuration = 0.8;
+    
+    [self.imgView startAnimating];
+//    [self.imgView stopAnimating];
+    
+    
+    
+    CGFloat baseViewW = imgViewW + strLabW + 10;
+    CGFloat baseViewH = imgViewH + 10;
+    CGFloat baseViewX = (kWidth - baseViewW) / 2.0;
+    CGFloat baseViewY = kHeight * 2 / 5.0;
+    UIView *baseView = [[UIView alloc] initWithFrame:CGRectMake(baseViewX, baseViewY, baseViewW, baseViewH)];
+    [self.jiazaiBaseView addSubview:baseView];
+    baseView.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.7];
+    baseView.layer.cornerRadius = 5;
+    
+    [baseView addSubview:self.imgView];
+    [baseView addSubview:strLab];
+    
     
 }
 
@@ -330,21 +436,18 @@
     
     [self.view endEditing:YES];
     
-    self.view.frame = CGRectMake(0, 0, kWidth, kHeight);
+//    self.view.frame = CGRectMake(0, 0, kWidth, kHeight);
 }
 
 - (void)passwordButClick:(UIButton *)sender {
     
     sender.selected = !sender.selected;
     self.passWordTxt.centerTxt.secureTextEntry = !self.passWordTxt.centerTxt.secureTextEntry;
-    
+    self.passWordTxt.centerTxt.keyboardType = UIKeyboardTypeDefault;
     
 }
 
 - (void)forgetButClick {
-    
-    
-    
     
     GFForgetPwdViewController_1 *forgetPwdVC_1 = [[GFForgetPwdViewController_1 alloc] init];
     [self.navigationController pushViewController:forgetPwdVC_1 animated:YES];
@@ -352,7 +455,7 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
 
-    self.view.frame = CGRectMake(0, -80, kWidth, kHeight);
+//    self.view.frame = CGRectMake(0, -80, kWidth, kHeight);
 
     return YES;
 }
@@ -385,11 +488,54 @@
 
 
 
+//kWidth * 0.768;
+//kHeight * 0.0625;
+//(kWidth - userNameW) / 2.0 - 3 / 320.0 * kWidth;
+//CGRectGetMaxY(enLab.frame) + kHeight * 0.167 * 2 / 3.0;
 
+- (void)tipShow:(NSString *)str {
+    
+    
+    [UIView animateWithDuration:2 animations:^{
+        
+        [self tipView:kHeight * 0.8 withTipmessage:str];
+        
+    } completion:^(BOOL finished) {
+        
+        [self.tipView removeFromSuperview];
+        
+    }];
+}
 
+- (void)tipView:(CGFloat)tipviewY withTipmessage:(NSString *)messageStr {
+    
+    NSString *str = messageStr;
+    NSMutableDictionary *attDic = [[NSMutableDictionary alloc] init];
+    attDic[NSFontAttributeName] = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
+    attDic[NSForegroundColorAttributeName] = [UIColor whiteColor];
+    CGRect strRect = [str boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attDic context:nil];
 
-
-
+    CGFloat tipViewW = strRect.size.width + 30;
+    CGFloat tipViewH = kHeight * 0.0625;
+    CGFloat tipViewX = (kWidth - tipViewW) / 2.0;
+    CGFloat tipViewY = tipviewY;
+    self.tipView = [[UIView alloc] initWithFrame:CGRectMake(tipViewX, tipViewY, tipViewW, tipViewH)];
+    self.tipView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    self.tipView.layer.cornerRadius = 7.5;
+    [self.view addSubview:self.tipView];
+    
+    CGFloat msgLabW = tipViewW;
+    CGFloat msgLabH = tipViewH;
+    CGFloat msgLabX = 0;
+    CGFloat msgLabY = 0;
+    UILabel *msgLab = [[UILabel alloc] initWithFrame:CGRectMake(msgLabX, msgLabY, msgLabW, msgLabH)];
+    msgLab.text = messageStr;
+    [self.tipView addSubview:msgLab];
+    msgLab.textAlignment = NSTextAlignmentCenter;
+    msgLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
+    msgLab.textColor = [UIColor whiteColor];
+    
+}
 
 
 
@@ -402,6 +548,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+//- (void)keyboardWillBeHidden:(NSNotification *)aNotification {
+//
+//    self.view.frame = CGRectMake(0, 0, kWidth, kHeight);
+//}
 /*
 #pragma mark - Navigation
 

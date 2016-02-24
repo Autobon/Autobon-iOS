@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+//@class GFBankCardViewController;
 @interface GFBalanceViewController : UIViewController
 
 @end
