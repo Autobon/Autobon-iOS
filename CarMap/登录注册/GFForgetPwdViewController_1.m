@@ -37,6 +37,8 @@
 @property (nonatomic, strong) GFTextField *verifyTxt;
 @property (nonatomic, strong) GFTextField *passWordTxt;
 
+@property (nonatomic, strong) UIView *tipView;
+
 
 @end
 
@@ -105,10 +107,7 @@
     [self.verifyBut setTitleColor:[UIColor colorWithRed:249 / 255.0 green:103 / 255.0 blue:33 / 255.0 alpha:1] forState:UIControlStateHighlighted];
     self.verifyBut.titleLabel.font = [UIFont systemFontOfSize:12 / 320.0 * kWidth];
     [self.verifyBut addTarget:self action:@selector(verifyButClick:) forControlEvents:UIControlEventTouchUpInside];
-//    self.verifyBut.userInteractionEnabled = NO;
-    self.verifyBut.userInteractionEnabled = NO;
-    [self.verifyBut setTitleColor:[UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1] forState:UIControlStateNormal];
-    self.verifyBut.layer.borderColor = [[UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1] CGColor];
+    
     
     CGFloat verifyTxtW = userNameTxtW;
     CGFloat verifyTxtH = userNameTxtH;
@@ -163,11 +162,11 @@
     CGFloat passWordTxtX = userNameTxtX;
     CGFloat passWordTxtY = CGRectGetMaxY(self.verifyTxt.frame) + jiange2 + 10;
     self.passWordTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"passwordAgain.png"] withRightButton:passwordBut withFrame:CGRectMake(passWordTxtX, passWordTxtY, passWordTxtW, passWordTxtH)];
+    self.passWordTxt.centerTxt.keyboardType = UIKeyboardTypeDefault;
     self.passWordTxt.centerTxt.placeholder = @"需要数字 字母或符号";
     [self.passWordTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
     self.passWordTxt.centerTxt.secureTextEntry = YES;
     [self.view addSubview:self.passWordTxt];
-    self.passWordTxt.centerTxt.keyboardType = UIKeyboardTypeDefault;
     self.passWordTxt.centerTxt.delegate = self;
     self.passWordTxt.centerTxt.tag = 200;
     
@@ -190,81 +189,88 @@
     
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    
-    if(textField.tag == 100) {
-        
-        //        if(s.length == 11) {
-        //            statements
-        //        }
-        if(textField.text.length == 10 && range.length == 0) {
-            
-            textField.text = [NSString stringWithFormat:@"%@%@", textField.text, string];
-            
-            [self.view endEditing:YES];
-            
-        }else if(textField.text.length < 12) {
-            
-            self.verifyBut.userInteractionEnabled = NO;
-            [self.verifyBut setTitleColor:[UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1] forState:UIControlStateNormal];
-            self.verifyBut.layer.borderColor = [[UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1] CGColor];
-        }
-        
-    }
-    
-    return YES;
-}
+//- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+//    
+//    if(textField.tag == 100) {
+//        
+//        //        if(s.length == 11) {
+//        //            statements
+//        //        }
+//        if(textField.text.length == 10 && range.length == 0) {
+//            
+//            /************/
+//            textField.text = [NSString stringWithFormat:@"%@%@", textField.text, string];
+//            
+//            [self.view endEditing:YES];
+//            
+//        }else if(textField.text.length < 12) {
+//            
+//            self.verifyBut.userInteractionEnabled = NO;
+//            [self.verifyBut setTitleColor:[UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1] forState:UIControlStateNormal];
+//            self.verifyBut.layer.borderColor = [[UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1] CGColor];
+//            self.timeLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
+//            self.timeLab.layer.borderColor = [[UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1] CGColor];
+//        }
+//        
+//    }
+//    
+//    return YES;
+//}
 
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-    
-    
-    
-    if(textField.tag == 100) {
-        self.userNameTxt.centerTxt.text =  [self.userNameTxt.centerTxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
-        NSString *CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
-        NSString *CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
-        NSString *CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
-        NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];  // 小灵通
-        NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];  // 移动
-        NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];  // 灵通
-        NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];  // 电信
-        
-        if (([regextestmobile evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
-            || ([regextestcm evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
-            || ([regextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
-            || ([regextestcu evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)) {
-            
-            NSLog(@"是手机号");
-            
-            self.verifyBut.layer.borderColor = [[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] CGColor];
-            self.verifyBut.userInteractionEnabled = YES;
-            [self.verifyBut setTitleColor:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] forState:UIControlStateNormal];
-        }else {
-            
-            GFAlertView *tipView = [[GFAlertView alloc] initWithTipName:@"提示" withTipMessage:@"手机号格式有误,请重新输入" withButtonNameArray:@[@"OK"]];
-            [self.view addSubview:tipView];
-            [self.view endEditing:YES];
-        }
-    }
-    
-    if(textField.tag == 200) {
-        
-        NSString * pwdStr = @"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,18}$";
-        NSPredicate *regextestPwdStr = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", pwdStr];
-        if([regextestPwdStr evaluateWithObject:self.passWordTxt.centerTxt.text]) {
-            
-            NSLog(@"密码格式输入正确");
-        }else {
-            
-            GFAlertView *tipView = [[GFAlertView alloc] initWithTipName:@"提示" withTipMessage:@"请输入8~18位由“字母、数字组合”的密码" withButtonNameArray:@[@"OK"]];
-            [self.view addSubview:tipView];
-            [self.view endEditing:YES];
-        }
-        
-    }
-    
-}
+//- (void)textFieldDidEndEditing:(UITextField *)textField {
+//    
+//    
+//    
+//    if(textField.tag == 100) {
+//        self.userNameTxt.centerTxt.text =  [self.userNameTxt.centerTxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//        NSString *MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
+//        NSString *CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
+//        NSString *CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
+//        NSString *CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
+//        NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];  // 小灵通
+//        NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];  // 移动
+//        NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];  // 灵通
+//        NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];  // 电信
+//        
+//        if (([regextestmobile evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
+//            || ([regextestcm evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
+//            || ([regextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
+//            || ([regextestcu evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)) {
+//            
+//            NSLog(@"是手机号");
+//            
+//            self.verifyBut.layer.borderColor = [[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] CGColor];
+//            self.verifyBut.userInteractionEnabled = YES;
+//            [self.verifyBut setTitleColor:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] forState:UIControlStateNormal];
+//        }else {
+//            
+//            /**
+//             *  提示框
+//             */
+//            [self tipShow:@"手机号格式有误,请重新输入"];
+//            [self.view endEditing:YES];
+//        }
+//    }
+//    
+//    if(textField.tag == 200) {
+//        
+//        NSString * pwdStr = @"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,18}$";
+//        NSPredicate *regextestPwdStr = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", pwdStr];
+//        if([regextestPwdStr evaluateWithObject:self.passWordTxt.centerTxt.text]) {
+//            
+//            NSLog(@"密码格式输入正确");
+//        }else {
+//
+//            /**
+//             *  提示框
+//             */
+//            [self tipShow:@"密码格式错误，请输入8~18位由“字母、数字组合"];
+//            [self.view endEditing:YES];
+//        }
+//        
+//    }
+//    
+//}
 
 
 - (void)leftButClick {
@@ -274,47 +280,90 @@
 
 - (void)verifyButClick:(UIButton *)sender {
     
+    [self.tipView removeFromSuperview];
+    
+    [self.view endEditing:YES];
+    
+    self.userNameTxt.centerTxt.text =  [self.userNameTxt.centerTxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
+    NSString *CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
+    NSString *CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
+    NSString *CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
+    NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];  // 小灵通
+    NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];  // 移动
+    NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];  // 灵通
+    NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];  // 电信
     
     
-    
-    // 获取验证码
-    NSString *url = @"http://121.40.157.200:51234/api/mobile/verifySms";
-    NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
-    parDic[@"phone"] = self.userNameTxt.centerTxt.text;
-    
-    [GFHttpTool codeGet:url parameters:parDic success:^(id responseObject) {
+    if(self.userNameTxt.centerTxt.text.length == 0) {
         
-        NSLog(@"获取验证码成功======\n%@", responseObject);
+        [self tipShow:@"手机号不能为空"];
         
-    } failure:^(NSError *error) {
+    }else if (([regextestmobile evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
+        || ([regextestcm evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
+        || ([regextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
+        || ([regextestcu evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)) {
         
-        NSLog(@"获取验证码失败  %@", error);
+        self.timeLab.hidden = NO;
+        time = 5;
+        self.timeLab.text = [NSString stringWithFormat:@"(%ld)秒", time];
+        self.timeLab.hidden = NO;
+        sender.userInteractionEnabled = NO;
         
-    }];
+        // 计时器
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(showTime) userInfo:nil repeats:YES];
+        
+        // 获取验证码
+        NSString *url = @"http://121.40.157.200:51234/api/mobile/verifySms";
+        NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
+        parDic[@"phone"] = self.userNameTxt.centerTxt.text;
+        
+        [GFHttpTool codeGet:url parameters:parDic success:^(id responseObject) {
+            
+            NSLog(@"获取验证码成功======\n%@", responseObject);
+            
+            NSInteger flage = [responseObject[@"result"] integerValue];
+            
+            if(flage == 1) {
+                
+                [self tipShow:@"验证码已发送到您手机"];
+            }else {
+            
+                [self tipShow:@"获取验证码失败"];
+            }
+            
+            
+        } failure:^(NSError *error) {
+            
+            NSLog(@"获取验证码失败  %@", error);
+            
+        }];
+        
+
+        
+    }else {
     
-    time = 60;
-    self.timeLab.text = [NSString stringWithFormat:@"(%ld)秒", time];
-    self.timeLab.hidden = NO;
-    sender.userInteractionEnabled = NO;
+        [self tipShow:@"请输入正确的手机号"];
+        
+    }
     
-    // 计时器
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(showTime) userInfo:nil repeats:YES];
-    
-    self.timeLab.hidden = NO;
+
 }
 
 - (void)showTime {
-    if(time != 0) {
+    if(time != 0 && self.userNameTxt.centerTxt.text.length == 11) {
+        
         time--;
         self.timeLab.text = [NSString stringWithFormat:@"(%ld)秒", time];
+        
     }else {
         
-
-        self.timeLab.hidden = YES;
         self.verifyBut.userInteractionEnabled = YES;
-        
+        [self.verifyBut setTitle:@"再次获取" forState:UIControlStateNormal];
+        self.timeLab.hidden = YES;
         [self.timer invalidate];
         self.timer = nil;
+    
     }
     
     
@@ -322,38 +371,119 @@
 
 - (void)nextButClick {
     
+    [self.view endEditing:YES];
+    [self.tipView removeFromSuperview];
+    
+    self.userNameTxt.centerTxt.text =  [self.userNameTxt.centerTxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
+    NSString *CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
+    NSString *CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
+    NSString *CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
+    NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];  // 小灵通
+    NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];  // 移动
+    NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];  // 灵通
+    NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];  // 电信
+    
     if(self.userNameTxt.centerTxt.text.length == 0) {
         
-        GFAlertView *tipView = [[GFAlertView alloc] initWithTipName:@"提示" withTipMessage:@"手机号不能为空" withButtonNameArray:@[@"OK"]];
-        [self.view addSubview:tipView];
+        [self tipShow:@"手机号不能为空"];
+    }else if(([regextestmobile evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)
+             && ([regextestcm evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)
+             && ([regextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)
+             && ([regextestcu evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)) {
+        
+        [self tipShow:@"请输入正确的手机号"];
+        
     }else if(self.verifyTxt.centerTxt.text.length == 0) {
         
-        GFAlertView *tipView = [[GFAlertView alloc] initWithTipName:@"提示" withTipMessage:@"请输入验证码" withButtonNameArray:@[@"OK"]];
-        [self.view addSubview:tipView];
+        [self tipShow:@"验证码不能为空"];
+    }else if(self.self.verifyTxt.centerTxt.text.length < 6) {
+        
+        [self tipShow:@"请输入正确的验证码"];
+        
     }else if(self.passWordTxt.centerTxt.text.length == 0) {
         
-        GFAlertView *tipView = [[GFAlertView alloc] initWithTipName:@"提示" withTipMessage:@"密码不能为空" withButtonNameArray:@[@"OK"]];
-        [self.view addSubview:tipView];
+        [self tipShow:@"密码不能为空"];
     }else {
-    
-        NSString *url = @"http://121.40.157.200:51234/api/mobile/technician/resetPassword";
-        NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
-        parDic[@"phone"] = self.userNameTxt.centerTxt.text;
-        parDic[@"verifySms"] = self.verifyTxt.centerTxt.text;
-        parDic[@"password"] = self.passWordTxt.centerTxt.text;
+        
+        
 
-        [GFHttpTool forgetPwdPost:url parameters:parDic success:^(id responseObject) {
+        if (([regextestmobile evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
+            || ([regextestcm evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
+            || ([regextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
+            || ([regextestcu evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)) {
+
+            if(self.verifyTxt.centerTxt.text.length == 6) {
+                
+                NSString * pwdStr = @"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,18}$";
+                NSPredicate *regextestPwdStr = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", pwdStr];
+                if([regextestPwdStr evaluateWithObject:self.passWordTxt.centerTxt.text]) {
+        
+                    
+                            NSString *url = @"http://121.40.157.200:51234/api/mobile/technician/resetPassword";
+                            NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
+                            parDic[@"phone"] = self.userNameTxt.centerTxt.text;
+                            parDic[@"verifySms"] = self.verifyTxt.centerTxt.text;
+                            parDic[@"password"] = self.passWordTxt.centerTxt.text;
+                            
+                            [GFHttpTool forgetPwdPost:url parameters:parDic success:^(id responseObject) {
+                                
+                                NSLog(@"找回密码成功++++++++++%@", responseObject);
+                                
+                                NSInteger flage = [responseObject[@"result"] integerValue];
+                                
+                                if(flage == 1) {
+                                    [UIView animateWithDuration:2 animations:^{
+                                        
+                                        [self tipView:kHeight * 0.8 withTipmessage:@"密码修改成功"];
+                                        
+                                        
+                                    } completion:^(BOOL finished) {
+                                        
+                                        [self.navigationController popViewControllerAnimated:YES];
+                                        
+                                    }];
+                                }else {
+                                
+                                    [self tipShow:responseObject[@"message"]];
+                                
+                                }
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                            } failure:^(NSError *error) {
+                                
+                                NSLog(@"找回密码失败————————————————%@", error);
+                                
+                                
+                            }];
+
+                    
+                }else {
+
+                    [UIView animateWithDuration:2 animations:^{
+                        [self tipView:CGRectGetMaxY(self.passWordTxt.frame) withTipmessage:@"密码由“8~18位字母、数字组合”"];
+                    } completion:^(BOOL finished) {
+                        [self.tipView removeFromSuperview];
+                    }];
+                }
+                
+                
+            }else {
             
-            NSLog(@"找回密码成功++++++++++%@", responseObject);
-            
-            [self.navigationController popViewControllerAnimated:YES];
-            
-            
-        } failure:^(NSError *error) {
-            
-            NSLog(@"找回密码失败————————————————%@", error);
-            
-        }];
+                [self tipShow:@"请输入正确地验证码"];
+            }
+
+        }else {
+
+            [self tipShow:@"请输入正确的手机号"];
+        }
+        
+    
     }
     
 }
@@ -362,7 +492,7 @@
     
     sender.selected = !sender.selected;
     self.passWordTxt.centerTxt.secureTextEntry = !self.passWordTxt.centerTxt.secureTextEntry;
-    
+    self.passWordTxt.centerTxt.keyboardType = UIKeyboardTypeDefault;
     
 }
 
@@ -374,6 +504,49 @@
 
 
 
+- (void)tipShow:(NSString *)str {
+    
+    
+    [UIView animateWithDuration:2 animations:^{
+        
+        [self tipView:kHeight * 0.8 withTipmessage:str];
+        
+    } completion:^(BOOL finished) {
+        
+        [self.tipView removeFromSuperview];
+        
+    }];
+}
+
+- (void)tipView:(CGFloat)tipviewY withTipmessage:(NSString *)messageStr {
+    
+    NSString *str = messageStr;
+    NSMutableDictionary *attDic = [[NSMutableDictionary alloc] init];
+    attDic[NSFontAttributeName] = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
+    attDic[NSForegroundColorAttributeName] = [UIColor whiteColor];
+    CGRect strRect = [str boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attDic context:nil];
+    
+    CGFloat tipViewW = strRect.size.width + 30;
+    CGFloat tipViewH = kHeight * 0.0625;
+    CGFloat tipViewX = (kWidth - tipViewW) / 2.0;
+    CGFloat tipViewY = tipviewY;
+    self.tipView = [[UIView alloc] initWithFrame:CGRectMake(tipViewX, tipViewY, tipViewW, tipViewH)];
+    self.tipView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    self.tipView.layer.cornerRadius = 7.5;
+    [self.view addSubview:self.tipView];
+    
+    CGFloat msgLabW = tipViewW;
+    CGFloat msgLabH = tipViewH;
+    CGFloat msgLabX = 0;
+    CGFloat msgLabY = 0;
+    UILabel *msgLab = [[UILabel alloc] initWithFrame:CGRectMake(msgLabX, msgLabY, msgLabW, msgLabH)];
+    msgLab.text = messageStr;
+    [self.tipView addSubview:msgLab];
+    msgLab.textAlignment = NSTextAlignmentCenter;
+    msgLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
+    msgLab.textColor = [UIColor whiteColor];
+    
+}
 
 
 
