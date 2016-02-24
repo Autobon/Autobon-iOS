@@ -6,18 +6,18 @@
 //  Copyright © 2016年 mll. All rights reserved.
 //
 
-#import "SigninViewController.h"
+#import "CLSigninViewController.h"
 #import "GFNavigationView.h"
 #import "GFMapViewController.h"
-#import "WorkBeforeViewController.h"
+#import "CLWorkBeforeViewController.h"
 
 
 
-@interface SigninViewController ()
+@interface CLSigninViewController ()
 
 @end
 
-@implementation SigninViewController
+@implementation CLSigninViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -109,7 +109,7 @@
 
 // 签到按钮的响应方法
 - (void)signinBtnClick{
-    WorkBeforeViewController *workBefore = [[WorkBeforeViewController alloc]init];
+    CLWorkBeforeViewController *workBefore = [[CLWorkBeforeViewController alloc]init];
     [self.navigationController pushViewController:workBefore animated:YES];
 }
 

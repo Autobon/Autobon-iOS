@@ -99,15 +99,6 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
 }
 
 
-
-
-
-
-
-
-
-
-
 + (void)get:(NSString *)url parameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
 
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -172,38 +163,71 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
     NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *token = [userDefaultes objectForKey:@"autoken"];
+    
     [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+    
+    
+    
     NSString *URLString = [NSString stringWithFormat:@"%@/technician/avatar",HOST];
     
-    NSLog(@"－Cookie－%@--",token);
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager POST:URLString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        
+        
+        [formData appendPartWithFileData:image name:@"file" fileName:@"1235.jpg" mimeType:@"JPEG"];
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, NSData *responseObject) {
+        
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        NSLog(@"成功－%@--%@",dictionary,dictionary[@"message"]);
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"----%@---",error);
+    }];
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//    NSLog(@"－Cookie－%@--",token);
     
 //    NSDictionary *dictionary = @{@"file":image};
 //    manager.requestSerializer = [AFJSONRequestSerializer serializer];
 //    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
 //    NSLog(@"--URLString--%@---headData--%@--",URLString,image);
 //    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-//    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    [manager POST:URLString parameters:nil progress:nil success:^(NSURLSessionDataTask * task, NSDictionary *responseObject) {
-        NSLog(@"成功－3333333333－%@",responseObject);
-        if(success) {
-            success(responseObject);
-        }
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"---4444444444444-%@---",error);
-        if(failure) {
-            failure(error);
-        }
-    }];
+   
+    
+    
+//    UIImage *imageName = [UIImage imageNamed:@"icon.png"];
+//    NSData *imageData = UIImageJPEGRepresentation(imageName, 0.3);
+//     NSDictionary *dictionary = @{@"file":imageData};
+//    [manager.requestSerializer setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
+    
+//    UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"icon.png"]];
+//    [manager POST:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask * task, NSDictionary *responseObject) {
+//        NSLog(@"成功－3333333333－%@",responseObject[@"message"]);
+//        if(success) {
+//            success(responseObject);
+//        }
+//    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+//        NSLog(@"---4444444444444-%@---",error);
+//        if(failure) {
+//            failure(error);
+//        }
+//    }];
     
     
 
-//    [manager POST:URLString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-//       [formData appendPartWithFileData:image name:@"file" fileName:@"head.png" mimeType:@"png"];
-//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NSLog(@"成功－1111111111111－%@",responseObject);
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        NSLog(@"--2222222222222--%@---",error);
-//    }];
+    
     
     
     

@@ -345,7 +345,8 @@
         tableView.center = CGPointMake(self.view.center.x, button.frame.origin.y + 40+50);
         tableView.delegate = self;
         tableView.dataSource = self;
-        tableView.backgroundColor = [UIColor cyanColor];
+//        tableView.backgroundColor = [UIColor cyanColor];
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [_scrollView addSubview:tableView];
         _isTableView = YES;
     }
@@ -372,6 +373,7 @@
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         cell.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+        cell.textLabel.textColor = [UIColor whiteColor];
     }
     cell.textLabel.text = _bankArray[indexPath.row];
     
@@ -515,7 +517,7 @@
     if (_isHeadImage) {
         _headImage.image = image;
         NSData *headData = UIImageJPEGRepresentation(image, 0.3);
-        [GFHttpTool headImage:nil success:^(id responseObject) {
+        [GFHttpTool headImage:headData success:^(id responseObject) {
             
         } failure:^(NSError *error) {
             

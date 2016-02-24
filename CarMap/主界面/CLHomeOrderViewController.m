@@ -18,14 +18,20 @@
 
 @interface CLHomeOrderViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
-    UITableView *_tableView;
+//    UITableView *_tableView;
+    NSInteger _rowNumber;
+    
 }
+
+@property (nonatomic ,strong) UITableView *tableView;
+@property (nonatomic) NSInteger rowNumber;
+
 @end
 
 @implementation CLHomeOrderViewController
 
 - (void)viewDidLoad {
-
+    _rowNumber = 30;
     [self setNavigation];
     
     [self setTableView];
@@ -40,18 +46,29 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+     __weak CLHomeOrderViewController *weakSelf = self;
     [_tableView addInfiniteScrollingWithActionHandler:^{
         NSLog(@"下拉");
+        weakSelf.rowNumber = 0;
+        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:4 inSection:0];
+        [weakSelf.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }];
     
+   
     [_tableView addPullToRefreshWithActionHandler:^{
         NSLog(@"上拉");
+//        _rowNumber = 4;
+//        [_tableView reloadData];
+        
     }];
     
     [self.view addSubview:_tableView];
     
     
 }
+
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     return 5;
@@ -83,13 +100,12 @@
     return nil;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 38;
-}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
         return 85;
+    }else if(indexPath.row == 4){
+        return _rowNumber;
     }else{
         return 80 + [UIScreen mainScreen].bounds.size.width*5/12;
     }
@@ -108,6 +124,14 @@
         if (cell == nil) {
             cell = [[CLTitleTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"title"];
             [cell initWithTitle];
+        }
+        return cell;
+    }else if(indexPath.row == 4){
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+            cell.textLabel.text = @"加载更多";
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
         }
         return cell;
     }else{

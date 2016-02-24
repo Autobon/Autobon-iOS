@@ -9,7 +9,7 @@
 #import "CLOrderDetailViewController.h"
 #import "GFMapViewController.h"
 #import "GFNavigationView.h"
-#import "SigninViewController.h"
+#import "CLSigninViewController.h"
 
 
 @interface CLOrderDetailViewController ()
@@ -122,7 +122,7 @@
 #pragma mark - 开始工作按钮的响应方法
 - (void)workBtnClick{
     NSLog(@"开始工作按钮");
-    SigninViewController *signinView = [[SigninViewController alloc]init];
+    CLSigninViewController *signinView = [[CLSigninViewController alloc]init];
     [self.navigationController pushViewController:signinView animated:YES];
     
     
