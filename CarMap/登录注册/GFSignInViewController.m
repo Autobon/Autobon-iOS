@@ -336,9 +336,9 @@
                 
             }
             
-            CLCertifyViewController *certify = [[CLCertifyViewController alloc] init];
-            CLHomeOrderViewController *homeVC = [[CLHomeOrderViewController alloc] init];
-            [self.navigationController pushViewController:certify animated:YES];
+//            CLCertifyViewController *certify = [[CLCertifyViewController alloc] init];
+//            CLHomeOrderViewController *homeVC = [[CLHomeOrderViewController alloc] init];
+//            [self.navigationController pushViewController:certify animated:YES];
 
             
             
