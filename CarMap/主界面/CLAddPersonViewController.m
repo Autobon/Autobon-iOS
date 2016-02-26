@@ -23,7 +23,7 @@
     
     [self setViewForAdd];
     
-    self.view.backgroundColor = [UIColor cyanColor];
+//    self.view.backgroundColor = [UIColor cyanColor];
 }
 
 
@@ -34,7 +34,7 @@
 //    searchbar.barStyle = UIBarStyleDefault;
     searchbar.layer.cornerRadius = 20;
     searchbar.layer.borderWidth = 1.0;
-    searchbar.layer.borderColor = [[UIColor blackColor]CGColor];
+    searchbar.layer.borderColor = [[UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0]CGColor];
     
     [self.view addSubview:searchbar];
     searchbar.clipsToBounds = YES;
