@@ -10,10 +10,13 @@
 #import "GFMapViewController.h"
 #import "GFNavigationView.h"
 #import "CLSigninViewController.h"
-
+#import "CLAddPersonViewController.h"
 
 @interface CLOrderDetailViewController ()
-
+{
+    UILabel *_distanceLabel;
+    
+}
 @end
 
 @implementation CLOrderDetailViewController
@@ -32,7 +35,7 @@
 // 添加地图
 - (void)addMap{
     GFMapViewController *mapVC = [[GFMapViewController alloc] init];
-    mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30.4,114.4);
+    mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([self.customerLat floatValue],[self.customerLon floatValue]);
     mapVC.distanceBlock = ^(double distance) {
         NSLog(@"距离－－%f--",distance);
     };
@@ -47,13 +50,13 @@
 - (void)setViewForAutobon{
     
     // 距离label
-    UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, self.view.frame.size.height/3+2+64, self.view.frame.size.width, self.view.frame.size.height/18)];
+    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, self.view.frame.size.height/3+2+64, self.view.frame.size.width, self.view.frame.size.height/18)];
     //    distanceLabel.backgroundColor = [UIColor cyanColor];
-    distanceLabel.text = @"距离：  1.3km";
-    distanceLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
-    [self.view addSubview:distanceLabel];
+    _distanceLabel.text = @"距离：  1.3km";
+    _distanceLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
+    [self.view addSubview:_distanceLabel];
     
-    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, distanceLabel.frame.origin.y+self.view.frame.size.height/18, self.view.frame.size.width, 2)];
+    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, _distanceLabel.frame.origin.y+self.view.frame.size.height/18, self.view.frame.size.width, 2)];
     lineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [self.view addSubview:lineView];
     
@@ -70,7 +73,7 @@
     // 施工时间
     UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView2.frame.origin.y+4, self.view.frame.size.width, self.view.frame.size.height/18)];
     //    timeLabel.backgroundColor = [UIColor cyanColor];
-    timeLabel.text = @"施工时间： 今天14:30";
+    timeLabel.text = [NSString stringWithFormat:@"施工时间：%@",self.orderTime];
     timeLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [self.view addSubview:timeLabel];
     
@@ -82,7 +85,7 @@
     // 备注
     UILabel *otherLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView3.frame.origin.y+4, self.view.frame.size.width, self.view.frame.size.height/18)];
     //    otherLabel.backgroundColor = [UIColor cyanColor];
-    otherLabel.text = @"备注： 今天天气不错，适合工作";
+    otherLabel.text = [NSString stringWithFormat:@"备注：%@",self.remark];
     otherLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [self.view addSubview:otherLabel];
     
@@ -116,13 +119,18 @@
 #pragma mark - 添加合作小伙伴的响应方法
 - (void)addBtnClick{
     NSLog(@"是时候添加一个小伙伴啦");
-    
+    CLAddPersonViewController *addPerson = [[CLAddPersonViewController alloc]init];
+    [self.navigationController pushViewController:addPerson animated:YES];
 }
 
 #pragma mark - 开始工作按钮的响应方法
 - (void)workBtnClick{
     NSLog(@"开始工作按钮");
     CLSigninViewController *signinView = [[CLSigninViewController alloc]init];
+    signinView.customerLat = self.customerLat;
+    signinView.customerLon = self.customerLon;
+    signinView.orderId = self.orderId;
+    
     [self.navigationController pushViewController:signinView animated:YES];
     
     

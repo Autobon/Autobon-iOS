@@ -14,7 +14,9 @@
 #import "CLOrderDetailViewController.h"
 #import "GFMyMessageViewController.h"
 #import "CLMoreViewController.h"
-
+#import "GFHttpTool.h"
+#import "CLHomeOrderCellModel.h"
+#import "CLWorkBeforeViewController.h"
 
 @interface CLHomeOrderViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -22,7 +24,7 @@
     NSInteger _rowNumber;
     
 }
-
+@property (nonatomic ,strong) NSMutableArray *cellModelArray;
 @property (nonatomic ,strong) UITableView *tableView;
 @property (nonatomic) NSInteger rowNumber;
 
@@ -32,6 +34,42 @@
 
 - (void)viewDidLoad {
     _rowNumber = 30;
+    _cellModelArray = [[NSMutableArray alloc]init];
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
+    
+    [GFHttpTool getOrderListSuccess:^(NSDictionary *responseObject) {
+        if ([responseObject[@"result"] integerValue] == 1) {
+            NSArray *dataArray = responseObject[@"data"];
+            [dataArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
+                NSLog(@"---obj---%@--",obj);
+                CLHomeOrderCellModel *cellModel = [[CLHomeOrderCellModel alloc]init];
+                cellModel.orderId = obj[@"id"];
+                cellModel.orderNumber = obj[@"orderNum"];
+//                cellModel.orderTime = [obj[@"orderTime"] integerValue];
+                cellModel.orderType = obj[@"orderType"];
+                cellModel.orderPhotoURL = obj[@"a.jpg"];
+                cellModel.customerLat = obj[@"customerLat"];
+                cellModel.customerLon = obj[@"customerLon"];
+                cellModel.remark = obj[@"remark"];
+                [_cellModelArray addObject:cellModel];
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:1456398610];
+                cellModel.orderTime = [formatter stringFromDate:date];
+                NSLog(@"date1:%@",cellModel.orderTime);
+                
+                
+            }];
+            [_tableView reloadData];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+    
+    
+    
+    
+    
     [self setNavigation];
     
     [self setTableView];
@@ -50,13 +88,15 @@
     [_tableView addInfiniteScrollingWithActionHandler:^{
         NSLog(@"下拉");
         weakSelf.rowNumber = 0;
-        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:4 inSection:0];
+        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:weakSelf.cellModelArray.count+1 inSection:0];
         [weakSelf.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        [weakSelf performSelector:@selector(after) withObject:nil afterDelay:5.0];
     }];
     
    
     [_tableView addPullToRefreshWithActionHandler:^{
         NSLog(@"上拉");
+        [weakSelf performSelector:@selector(after) withObject:nil afterDelay:3.0];
 //        _rowNumber = 4;
 //        [_tableView reloadData];
         
@@ -67,11 +107,17 @@
     
 }
 
-
+- (void)after{
+    [_tableView.infiniteScrollingView stopAnimating];
+    [_tableView.pullToRefreshView stopAnimating];
+    _rowNumber = 30;
+    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:_cellModelArray.count+1 inSection:0];
+    [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 5;
+    return _cellModelArray.count+2;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
@@ -99,12 +145,14 @@
     
     return nil;
 }
-
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 38;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
         return 85;
-    }else if(indexPath.row == 4){
+    }else if(indexPath.row == _cellModelArray.count+1){
         return _rowNumber;
     }else{
         return 80 + [UIScreen mainScreen].bounds.size.width*5/12;
@@ -126,7 +174,7 @@
             [cell initWithTitle];
         }
         return cell;
-    }else if(indexPath.row == 4){
+    }else if(indexPath.row == _cellModelArray.count+1){
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
         if (cell == nil) {
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
@@ -140,20 +188,48 @@
             cell = [[CLHomeTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"order"];
             [cell initWithOrder];
         }
-        [cell.orderButton addTarget:self action:@selector(orderBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        
+        CLHomeOrderCellModel *cellModer = _cellModelArray[indexPath.row-1];
+        cell.orderButton.tag = indexPath.row + 1;
+        cell.orderNumberLabel.text = [NSString stringWithFormat:@"订单编号%@",cellModer.orderNumber];
+        cell.timeLabel.text = [NSString stringWithFormat:@"预约时间%@",cellModer.orderTime];
+        if ([cellModer.orderType integerValue] == 1) {
+            [cell.orderButton setTitle:@"开始工作" forState:UIControlStateNormal];
+            
+            [cell.orderButton addTarget:self action:@selector(workBegin:) forControlEvents:UIControlEventTouchUpInside];
+        }else{
+            [cell.orderButton setTitle:@"进入订单" forState:UIControlStateNormal];
+            [cell.orderButton addTarget:self action:@selector(orderBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        }
         
         return cell;
     }
-    
+     
     
     return nil;
 }
 
-#pragma mark - 订单详情的按钮点击方法
-- (void)orderBtnClick{
+#pragma mark - 进入订单的按钮点击方法
+- (void)orderBtnClick:(UIButton *)button{
+    
+    CLWorkBeforeViewController *workBefore = [[CLWorkBeforeViewController alloc]init];
+    [self.navigationController pushViewController:workBefore animated:YES];
+    
+}
+
+
+#pragma mark - 开始工作的按钮点击方法
+- (void)workBegin:(UIButton *)button{
     NSLog(@"点击订单");
     
+     CLHomeOrderCellModel *cellModel = _cellModelArray[button.tag-2];
     CLOrderDetailViewController *orderDetail = [[CLOrderDetailViewController alloc]init];
+    orderDetail.orderId = cellModel.orderId;
+    orderDetail.customerLat = cellModel.customerLat;
+    orderDetail.customerLon = cellModel.customerLon;
+    orderDetail.orderPhotoURL = cellModel.orderPhotoURL;
+    orderDetail.orderTime = cellModel.orderTime;
+    orderDetail.remark = cellModel.remark;
     [self.navigationController pushViewController:orderDetail animated:YES];
     
     

@@ -18,6 +18,8 @@
     UIButton *_cameraBtn;
     NSMutableArray *_imageArray;
     NSMutableArray *_buttonArray;
+    NSArray *_workItemarray;
+    NSMutableArray *_workItemBtnArray;
 }
 
 
@@ -47,7 +49,7 @@
     timeLabel.font = [UIFont systemFontOfSize:14];
     [headerView addSubview:timeLabel];
     
-    UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width-100, 8, 80, 20)];
+    UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width-120, 8, 100, 20)];
     stateLabel.text = @"即将完成模式";
     stateLabel.textAlignment = NSTextAlignmentRight;
     stateLabel.font = [UIFont systemFontOfSize:14];
@@ -87,27 +89,12 @@
 
 - (void)titleView{
     
-    
-    
-    
-    
     UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 101, self.view.frame.size.width, 40)];
     distanceLabel.text = @"已用时：15分28秒";
     distanceLabel.backgroundColor = [UIColor whiteColor];
     distanceLabel.font = [UIFont systemFontOfSize:15];
     distanceLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:distanceLabel];
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     _carImageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/7, 155, self.view.frame.size.width*5/7, self.view.frame.size.width*27/70)];
     _carImageView.image = [UIImage imageNamed:@"carImage"];
@@ -126,13 +113,23 @@
     
 
     UIButton *fiveButton = [[UIButton alloc]initWithFrame:CGRectMake(10, titleView.frame.origin.y+50, 100, 30)];
+//    fiveButton.backgroundColor = [UIColor cyanColor];
     [fiveButton setTitle:@"五座车" forState:UIControlStateNormal];
     [fiveButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    fiveButton.imageEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
+    [fiveButton setImage:[UIImage imageNamed:@"over"] forState:UIControlStateNormal];
+    [fiveButton addTarget:self action:@selector(workItemBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    fiveButton.tag = 5;
     [self.view addSubview:fiveButton];
     
     UIButton *sevenButton = [[UIButton alloc]initWithFrame:CGRectMake(130, titleView.frame.origin.y+50, 100, 30)];
+//    sevenButton.backgroundColor = [UIColor cyanColor];
     [sevenButton setTitle:@"七座车" forState:UIControlStateNormal];
+    [sevenButton setImage:[UIImage imageNamed:@"over"] forState:UIControlStateNormal];
+    sevenButton.imageEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
     [sevenButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [sevenButton addTarget:self action:@selector(workItemBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    sevenButton.tag = 7;
     [self.view addSubview:sevenButton];
     
     
@@ -142,10 +139,11 @@
     [self.view addSubview:lineView];
     
     
-    NSArray *array = @[@"前风挡",@"左前门",@"右前门",@"左后门",@"右后门",@"左中门",@"右中门",@"左大角",@"右大角",@"后风挡"];
-    for (int i = 0; i < array.count; i++) {
+    _workItemBtnArray = [[NSMutableArray alloc]init];
+    _workItemarray = @[@"前风挡",@"左前门",@"右前门",@"左后门",@"右后门",@"左中门",@"右中门",@"左大角",@"右大角",@"后风挡"];
+    for (int i = 0; i < _workItemarray.count; i++) {
         UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(10+(10+(self.view.frame.size.width-50)/4)*(i%4), lineView.frame.origin.y+10+35*(i/4), (self.view.frame.size.width-50)/4, 30)];
-        [button setTitle:array[i] forState:UIControlStateNormal];
+        [button setTitle:_workItemarray[i] forState:UIControlStateNormal];
         button.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
         button.layer.cornerRadius = 10;
         button.layer.borderWidth = 1.0;
@@ -153,6 +151,7 @@
         [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
         [button setTitleColor:[UIColor colorWithRed:167/255.0 green:167/255.0 blue:167/255.0 alpha:1.0] forState:UIControlStateNormal];
         [self.view addSubview:button];
+        [_workItemBtnArray addObject:button];
     }
     
     
@@ -168,9 +167,57 @@
     
     [workOverButton addTarget:self action:@selector(workOverBtnClick) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.view addSubview:workOverButton];
+//    [self.view addSubview:workOverButton];
     
     
+}
+
+#pragma mark - 五座车七座车按钮
+- (void)workItemBtnClick:(UIButton *)button{
+    if (button.tag == 5) {
+        [button setImage:[UIImage imageNamed:@"overClick"] forState:UIControlStateNormal];
+        UIButton *severBtn = (UIButton *)[self.view viewWithTag:7];
+        [severBtn setImage:[UIImage imageNamed:@"over"] forState:UIControlStateNormal];
+        UIButton *leftCentre = _workItemBtnArray[5];
+        if (!leftCentre.hidden) {
+            leftCentre.hidden = YES;
+            UIButton *rightCentre = _workItemBtnArray[6];
+            rightCentre.hidden = YES;
+            [_buttonArray removeAllObjects];
+            for (int i = 0; i < _workItemBtnArray.count; i++) {
+                UIButton *moveBtn = _workItemBtnArray[i];
+                moveBtn.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+                [moveBtn setTitleColor:[UIColor colorWithRed:167/255.0 green:167/255.0 blue:167/255.0 alpha:1.0] forState:UIControlStateNormal];
+                if (i>6) {
+                    moveBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-50)/4)*((i-2)%4), button.frame.origin.y+40+35*((i-2)/4), (self.view.frame.size.width-50)/4, 30);
+                }
+            }
+        }
+        
+        
+        
+    }else{
+        [button setImage:[UIImage imageNamed:@"overClick"] forState:UIControlStateNormal];
+        UIButton *fiveBtn = (UIButton *)[self.view viewWithTag:5];
+        [fiveBtn setImage:[UIImage imageNamed:@"over"] forState:UIControlStateNormal];
+        UIButton *leftCentre = _workItemBtnArray[5];
+        if (leftCentre.hidden) {
+            leftCentre.hidden = NO;
+            UIButton *rightCentre = _workItemBtnArray[6];
+            rightCentre.hidden = NO;
+            [_buttonArray removeAllObjects];
+            for (int i = 0; i < _workItemBtnArray.count; i++) {
+                UIButton *moveBtn = _workItemBtnArray[i];
+                moveBtn.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+                [moveBtn setTitleColor:[UIColor colorWithRed:167/255.0 green:167/255.0 blue:167/255.0 alpha:1.0] forState:UIControlStateNormal];
+                if (i>6) {
+                    moveBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-50)/4)*(i%4), button.frame.origin.y+40+35*(i/4), (self.view.frame.size.width-50)/4, 30);
+                }
+            }
+        }
+        
+        
+    }
 }
 
 - (void)buttonClick:(UIButton *)button{
@@ -192,8 +239,6 @@
 #pragma mark - 相机按钮的实现方法
 - (void)cameraHeadBtnClick:(UIButton *)button{
     [self.view endEditing:YES];
-    
-    
     _chooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-100, 80)];
     _chooseView.center = self.view.center;
     _chooseView.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
@@ -298,7 +343,7 @@
     
 }
 - (void)backBtnClick{
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
     
 }
 // 更多按钮的响应方法

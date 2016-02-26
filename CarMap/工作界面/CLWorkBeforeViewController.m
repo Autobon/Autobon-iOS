@@ -9,7 +9,7 @@
 #import "CLWorkBeforeViewController.h"
 #import "GFNavigationView.h"
 #import "CLTitleView.h"
-
+#import "CLWorkOverViewController.h"
 
 @interface CLWorkBeforeViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
@@ -53,7 +53,7 @@
     [headerView addSubview:stateLabel];
     
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 36, self.view.frame.size.width, 1)];
-    view.backgroundColor = [UIColor colorWithRed:157/255.0 green:157/255.0 blue:157/255.0 alpha:1.0];
+    view.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
     [headerView addSubview:view];
     
     NSLog(@"设置日期和时间");
@@ -115,7 +115,7 @@
     
     _cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*6/7-15, 200+self.view.frame.size.width*27/70-25, 30, 30)];
     [_cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
-    [_cameraBtn addTarget:self action:@selector(cameraHeadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_cameraBtn addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_cameraBtn];
     
     
@@ -127,7 +127,7 @@
     signinButton.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
     signinButton.layer.cornerRadius = 10;
     
-    [signinButton addTarget:self action:@selector(signinBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [signinButton addTarget:self action:@selector(nextBtnClick) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:signinButton];
     
@@ -163,15 +163,15 @@
 }
 #pragma mark - 选择照片
 - (void)userHeadChoose:(UIButton *)button{
-    [_chooseView removeFromSuperview];
-    
-    if (button.tag == 1) {
-        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
-        imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-        imagePickerController.allowsEditing = YES;
-        imagePickerController.delegate =self;
-        [self presentViewController:imagePickerController animated:YES completion:nil];
-    }else{
+//    [_chooseView removeFromSuperview];
+//    
+//    if (button.tag == 1) {
+//        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
+//        imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+//        imagePickerController.allowsEditing = YES;
+//        imagePickerController.delegate =self;
+//        [self presentViewController:imagePickerController animated:YES completion:nil];
+//    }else{
         NSLog(@"打开相机");
         BOOL result = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
         if (result) {
@@ -181,13 +181,13 @@
             imagePicker.delegate = self;
             // 编辑模式
             //            imagePicker.allowsEditing = YES;
-            [self  presentViewController:imagePicker animated:YES completion:^{
+            [self presentViewController:imagePicker animated:YES completion:^{
             }];
         }else{
             NSLog(@"----不支持使用相机----");
         }
         
-    }
+//    }
     
     
 }
@@ -220,14 +220,16 @@
     
 }
 
-
-
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-// 签到按钮的响应方法
-- (void)signinBtnClick{
+// 继续按钮的响应方法
+- (void)nextBtnClick{
+    CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
+    [self.navigationController pushViewController:workOver animated:YES];
+    
+    
     
 }
 
@@ -243,7 +245,7 @@
     
 }
 - (void)backBtnClick{
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
     
 }
 // 更多按钮的响应方法

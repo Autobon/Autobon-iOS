@@ -22,7 +22,7 @@
     [self addSubview:_orderNumberLabel];
         
 // 预约时间
-    _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 35, 200, 30)];
+    _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 35, 250, 30)];
     _timeLabel.text = @"预约时间 今天 12:00";
     _timeLabel.textColor = [UIColor colorWithRed:157/255.0 green:157/255.0 blue:157/255.0 alpha:1.0];
     _timeLabel.font = [UIFont systemFontOfSize:16.0];

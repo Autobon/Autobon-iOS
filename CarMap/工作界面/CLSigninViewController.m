@@ -10,6 +10,7 @@
 #import "GFNavigationView.h"
 #import "GFMapViewController.h"
 #import "CLWorkBeforeViewController.h"
+#import "GFHttpTool.h"
 
 
 
@@ -77,7 +78,7 @@
 // 添加地图
 - (void)addMap{
     GFMapViewController *mapVC = [[GFMapViewController alloc] init];
-    mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30.4,114.4);
+    mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([self.customerLat floatValue],[self.customerLon floatValue]);
     mapVC.distanceBlock = ^(double distance) {
         NSLog(@"距离－－%f--",distance);
     };
@@ -109,8 +110,17 @@
 
 // 签到按钮的响应方法
 - (void)signinBtnClick{
-    CLWorkBeforeViewController *workBefore = [[CLWorkBeforeViewController alloc]init];
-    [self.navigationController pushViewController:workBefore animated:YES];
+    
+    NSDictionary *dic = @{@"rtpositionLon":@"101.11",@"rtpositionLat":@"33.5643",@"technicianId":@"1",@"orderId":@"1"};
+    [GFHttpTool signinParameters:dic Success:^(NSDictionary *responseObject) {
+        if ([responseObject[@"result"]integerValue] == 1) {
+            CLWorkBeforeViewController *workBefore = [[CLWorkBeforeViewController alloc]init];
+            [self.navigationController pushViewController:workBefore animated:YES];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+    
 }
 
 // 添加导航
@@ -125,7 +135,7 @@
     
 }
 - (void)backBtnClick{
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
     
 }
 // 更多按钮的响应方法

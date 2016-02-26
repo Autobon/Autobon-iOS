@@ -171,18 +171,18 @@
     
     // 技师大头针
     self.workerPointAnno = [[GFAnnotation alloc] init];
-    self.workerPointAnno.title = @"我是技师";
-    self.workerPointAnno.subtitle = @"天赐我一个单吧";
-    self.workerPointAnno.iconImgName = @"11";
+//    self.workerPointAnno.title = @"我是技师";
+//    self.workerPointAnno.subtitle = @"天赐我一个单吧";
+    self.workerPointAnno.iconImgName = @"me-1";
     [self.mapView addAnnotation:self.workerPointAnno];
     
     
     // 老板大头针
     
-    self.bossPointAnno.title = @"我是老板";
-    self.bossPointAnno.subtitle = @"派活啦，赶紧抢吧";
+//    self.bossPointAnno.title = @"我是老板";
+//    self.bossPointAnno.subtitle = @"派活啦，赶紧抢吧";
 //    self.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30.4,114.4);
-    self.bossPointAnno.iconImgName = @"ca";
+    self.bossPointAnno.iconImgName = @"location";
     [self.mapView addAnnotation:self.bossPointAnno];
     NSLog(@"加载地图");
     

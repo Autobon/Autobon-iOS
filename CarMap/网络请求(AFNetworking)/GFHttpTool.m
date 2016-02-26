@@ -25,6 +25,24 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
         if(success) {
             success(responseObject);
         }
+        
+        
+        
+        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        AFHTTPSessionManager *manager2 = [AFHTTPSessionManager manager];
+        NSString *token = [userDefaultes objectForKey:@"autoken"];
+        [manager2.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/pushId",HOST];
+        NSString *pushId = [userDefaultes objectForKey:@"clientId"];
+        [manager2 POST:URLString parameters:@{@"pushId":pushId} success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            NSLog(@"个推ID更新成功－－%@",responseObject);
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            NSLog(@"---更新失败了－－%@",error);
+        }];
+        
+        
+        
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"失败了－－%@",error);
         if(failure) {
@@ -225,14 +243,47 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
 //        }
 //    }];
     
-    
+}
 
++ (void)getOrderListSuccess:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *token = [userDefaultes objectForKey:@"autoken"];
+    [manager.requestSerializer setValue:@"autoken=\"technician:cYgNgn1l95u5ZleThJagfA==\"" forHTTPHeaderField:@"Cookie"];
+    NSString *URLString = [NSString stringWithFormat:@"%@/order/orderList",HOST];
     
-    
-    
+    [manager GET:URLString parameters:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
     
 }
 
+
++ (void)signinParameters:(NSDictionary *)parameters Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *token = [userDefaultes objectForKey:@"autoken"];
+    [manager.requestSerializer setValue:@"autoken=\"technician:cYgNgn1l95u5ZleThJagfA==\"" forHTTPHeaderField:@"Cookie"];
+    NSString *URLString = [NSString stringWithFormat:@"%@/order/signIn",HOST];
+    
+    [manager POST:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * task, NSDictionary *responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
 
 
 

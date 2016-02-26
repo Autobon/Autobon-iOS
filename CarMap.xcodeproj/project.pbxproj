@@ -38,12 +38,14 @@
 		9B95A7A01C7C46430041C7BA /* CLCertifyFailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95A79F1C7C46430041C7BA /* CLCertifyFailViewController.m */; };
 		9B95A7A41C7C5EBD0041C7BA /* CLMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95A7A31C7C5EBD0041C7BA /* CLMoreViewController.m */; };
 		9B96BA2D1C7AA70200C6DDCC /* NetWorking.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B96BA2C1C7AA70200C6DDCC /* NetWorking.m */; };
-		9B96BA311C7B181900C6DDCC /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B96BA301C7B181900C6DDCC /* icon.png */; };
 		9B97543E1C5765B3004BDC7C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B97543D1C5765B3004BDC7C /* main.m */; };
 		9B9754411C5765B3004BDC7C /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9B9754401C5765B3004BDC7C /* AppDelegate.mm */; };
 		9B9754471C5765B3004BDC7C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B9754451C5765B3004BDC7C /* Main.storyboard */; };
 		9B9754491C5765B3004BDC7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B9754481C5765B3004BDC7C /* Assets.xcassets */; };
 		9B9754571C5765B3004BDC7C /* CarMapUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9754561C5765B3004BDC7C /* CarMapUITests.m */; };
+		9B9B5E6C1C7EACBC000D617E /* CLHomeOrderCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9B5E6B1C7EACBC000D617E /* CLHomeOrderCellModel.m */; };
+		9B9B5E781C7ED90A000D617E /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B9B5E771C7ED90A000D617E /* icon.png */; };
+		9B9B5E7B1C7F07BD000D617E /* CLAddPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9B5E7A1C7F07BD000D617E /* CLAddPersonViewController.m */; };
 		9B9C259E1C75BF9C009A69D6 /* CLTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9C259D1C75BF9C009A69D6 /* CLTitleTableViewCell.m */; };
 		9B9C25A11C75BFD6009A69D6 /* CLHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9C25A01C75BFD6009A69D6 /* CLHomeTableViewCell.m */; };
 		9B9C25A61C75CC05009A69D6 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B02AF661C5A22CB0044FB71 /* StoreKit.framework */; };
@@ -135,7 +137,6 @@
 		9B95A7A31C7C5EBD0041C7BA /* CLMoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLMoreViewController.m; sourceTree = "<group>"; };
 		9B96BA2B1C7AA70200C6DDCC /* NetWorking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetWorking.h; sourceTree = "<group>"; };
 		9B96BA2C1C7AA70200C6DDCC /* NetWorking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetWorking.m; sourceTree = "<group>"; };
-		9B96BA301C7B181900C6DDCC /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		9B9754391C5765B3004BDC7C /* CarMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B97543D1C5765B3004BDC7C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9B97543F1C5765B3004BDC7C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -146,6 +147,11 @@
 		9B9754521C5765B3004BDC7C /* CarMapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarMapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B9754561C5765B3004BDC7C /* CarMapUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CarMapUITests.m; sourceTree = "<group>"; };
 		9B9754581C5765B3004BDC7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9B9B5E6A1C7EACBC000D617E /* CLHomeOrderCellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLHomeOrderCellModel.h; sourceTree = "<group>"; };
+		9B9B5E6B1C7EACBC000D617E /* CLHomeOrderCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLHomeOrderCellModel.m; sourceTree = "<group>"; };
+		9B9B5E771C7ED90A000D617E /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		9B9B5E791C7F07BD000D617E /* CLAddPersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAddPersonViewController.h; sourceTree = "<group>"; };
+		9B9B5E7A1C7F07BD000D617E /* CLAddPersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAddPersonViewController.m; sourceTree = "<group>"; };
 		9B9C259C1C75BF9C009A69D6 /* CLTitleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLTitleTableViewCell.h; sourceTree = "<group>"; };
 		9B9C259D1C75BF9C009A69D6 /* CLTitleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLTitleTableViewCell.m; sourceTree = "<group>"; };
 		9B9C259F1C75BFD6009A69D6 /* CLHomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLHomeTableViewCell.h; sourceTree = "<group>"; };
@@ -415,8 +421,8 @@
 				9BA526CB1C63115700A2298F /* PoiSearchDemoViewController.mm */,
 				9B95153A1C60503800445F93 /* 百度地图 */,
 				9B9754451C5765B3004BDC7C /* Main.storyboard */,
+				9B9B5E771C7ED90A000D617E /* icon.png */,
 				9BA74D241C75CDF100AF7B26 /* LaunchScreen.storyboard */,
-				9B96BA301C7B181900C6DDCC /* icon.png */,
 				9B9515441C6089A200445F93 /* PrefixHeader.pch */,
 				9B9754481C5765B3004BDC7C /* Assets.xcassets */,
 				9B97544D1C5765B3004BDC7C /* Info.plist */,
@@ -447,12 +453,16 @@
 			children = (
 				9BA3C8D51C7598FD007F730D /* CLHomeOrderViewController.h */,
 				9BA3C8D61C7598FD007F730D /* CLHomeOrderViewController.m */,
+				9B9B5E6A1C7EACBC000D617E /* CLHomeOrderCellModel.h */,
+				9B9B5E6B1C7EACBC000D617E /* CLHomeOrderCellModel.m */,
 				9B9C259C1C75BF9C009A69D6 /* CLTitleTableViewCell.h */,
 				9B9C259D1C75BF9C009A69D6 /* CLTitleTableViewCell.m */,
 				9B9C259F1C75BFD6009A69D6 /* CLHomeTableViewCell.h */,
 				9B9C25A01C75BFD6009A69D6 /* CLHomeTableViewCell.m */,
 				9B7C3FCC1C7706D800E3F53F /* CLOrderDetailViewController.h */,
 				9B7C3FCD1C7706D800E3F53F /* CLOrderDetailViewController.m */,
+				9B9B5E791C7F07BD000D617E /* CLAddPersonViewController.h */,
+				9B9B5E7A1C7F07BD000D617E /* CLAddPersonViewController.m */,
 			);
 			path = "主界面";
 			sourceTree = "<group>";
@@ -581,7 +591,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BA74D251C75CDF100AF7B26 /* LaunchScreen.storyboard in Resources */,
-				9B96BA311C7B181900C6DDCC /* icon.png in Resources */,
+				9B9B5E781C7ED90A000D617E /* icon.png in Resources */,
 				9B9754491C5765B3004BDC7C /* Assets.xcassets in Resources */,
 				9B9754471C5765B3004BDC7C /* Main.storyboard in Resources */,
 			);
@@ -667,6 +677,7 @@
 				9BA9C8171C7DB3CC005CE1C0 /* CLWorkOverViewController.m in Sources */,
 				9B7C3FD21C770F7100E3F53F /* CLSigninViewController.m in Sources */,
 				9B95A7A41C7C5EBD0041C7BA /* CLMoreViewController.m in Sources */,
+				9B9B5E6C1C7EACBC000D617E /* CLHomeOrderCellModel.m in Sources */,
 				86B890F41C73355B0068B95D /* GFForgetPwdViewController_1.m in Sources */,
 				866CCEBC1C755BC800E50C67 /* AFHTTPSessionManager.m in Sources */,
 				866CCEC01C755BC800E50C67 /* AFURLResponseSerialization.m in Sources */,
@@ -674,6 +685,7 @@
 				866CCEBF1C755BC800E50C67 /* AFURLRequestSerialization.m in Sources */,
 				9B9754411C5765B3004BDC7C /* AppDelegate.mm in Sources */,
 				9B95A7A01C7C46430041C7BA /* CLCertifyFailViewController.m in Sources */,
+				9B9B5E7B1C7F07BD000D617E /* CLAddPersonViewController.m in Sources */,
 				9B9C259E1C75BF9C009A69D6 /* CLTitleTableViewCell.m in Sources */,
 				9BE665401C743E0800976E7D /* CLTouchScrollView.m in Sources */,
 				9BE53AF31C73406800BBB424 /* GFTextField.m in Sources */,

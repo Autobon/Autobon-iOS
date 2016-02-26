@@ -31,10 +31,12 @@
 // 上传头像
 + (void)headImage:(NSData *)image success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
+// 获取订单列表
++ (void)getOrderListSuccess:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
 
-
-
+// 获取订单列表
++ (void)signinParameters:(NSDictionary *)parameters Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
 
 
