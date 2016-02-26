@@ -14,6 +14,7 @@
 #import "GFBalanceViewController.h"
 #import "GFBillViewController.h"
 #import "GFSignInViewController.h"
+#import "GFIndentViewController.h"
 
 
 @interface GFMyMessageViewController () {
@@ -468,6 +469,9 @@
 - (void)indentButClick {
     
     NSLog(@"我的订单界面");
+    GFIndentViewController *indentVC = [[GFIndentViewController alloc] init];
+    
+    [self.navigationController pushViewController:indentVC animated:YES];
 }
 // 修改密码界面跳转
 - (void)changePwdButClick {
@@ -491,8 +495,14 @@
 //    GFAlertView *vv = [[GFAlertView alloc] initWithTipName:@"技师：李孟龙" withTipMessage:@"非常厉害的技师，专业贴膜十年，使用的保鲜膜可绕地球三周" withButtonNameArray:@[@"查看订单"] withRightUpButtonNormalImage:btnNorImg withRightUpButtonHightImage:btnHigImg];
 //    [self.view addSubview:vv];
     
-    [self.navigationController pushViewController:[[GFSignInViewController alloc] init] animated:YES];
+//    [self.navigationController pushViewController:[[GFSignInViewController alloc] init] animated:YES];
     
+    UIWindow *window = [UIApplication sharedApplication].delegate.window;
+    UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:[[GFSignInViewController alloc] init]];
+    navVC.navigationBarHidden = YES;
+    window.backgroundColor = [UIColor colorWithRed:252 / 255.0 green:252 / 255.0 blue:252 / 255.0 alpha:1];
+    window.rootViewController = navVC;
+    [window makeKeyAndVisible];
     
 }
 

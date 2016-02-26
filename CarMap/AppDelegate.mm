@@ -101,7 +101,7 @@
     
     
     //********************* 光法页面 **********************
-//    GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
+    GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
     GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
     
 
@@ -111,6 +111,7 @@
 
 //<<<<<<< HEAD
 //    _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
+
 //=======
     _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
 //>>>>>>> CLmaster

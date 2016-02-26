@@ -87,7 +87,7 @@
     
     // 银行卡栏
     CGFloat bankViewW = upMoneyLabW;
-    CGFloat bankViewH = kHeight * 0.09;
+    CGFloat bankViewH = kHeight * 0.09 + 6;
     CGFloat bankViewX = 0;
     CGFloat bankViewY = CGRectGetMaxY(self.upMoneyLab.frame) + kHeight * 0.018;
     UIView *bankView = [[UIView alloc] initWithFrame:CGRectMake(bankViewX, bankViewY, bankViewW, bankViewH)];
@@ -95,9 +95,9 @@
     [self.view addSubview:bankView];
     // 银行Lab
     CGFloat bankLabW = bankViewW - jianjv1;
-    CGFloat bankLabH = bankViewH / 2.0;
+    CGFloat bankLabH = (bankViewH - 6) / 2.0;
     CGFloat bankLabX = jianjv1;
-    CGFloat bankLabY = 0;
+    CGFloat bankLabY = 3;
     self.bankLab = [[UILabel alloc] initWithFrame:CGRectMake(bankLabX, bankLabY, bankLabW, bankLabH)];
     self.bankLab.text = @"农业银行";
     self.bankLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
@@ -169,6 +169,9 @@
 
     [self.baseView removeFromSuperview];
     
+    self.bankCardVC.bankStr = self.bankLab.text;
+    self.bankCardVC.bankCard = self.cardLab.text;
+    
     [self.navigationController pushViewController:self.bankCardVC animated:YES];
 
 }
@@ -176,7 +179,7 @@
 - (void)changeBankCardViewController:(GFBankCardViewController *)bankCardVC {
 
     self.bankLab.text = bankCardVC.bankStr;
-    self.cardLab.text = bankCardVC.cardTxt.centerTxt.text;
+    self.cardLab.text = bankCardVC.bankCard;
     
 }
 

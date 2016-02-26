@@ -147,7 +147,7 @@
     CGFloat passWordTxtX = userNameTxtX;
     CGFloat passWordTxtY = CGRectGetMaxY(self.verifyTxt.frame) + jiange2;
     self.passWordTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"passwordAgain.png"] withRightButton:self.passwordBut withFrame:CGRectMake(passWordTxtX, passWordTxtY, passWordTxtW, passWordTxtH)];
-    self.passWordTxt.centerTxt.keyboardType = UIKeyboardTypeDefault;
+    self.passWordTxt.centerTxt.keyboardType = UIKeyboardTypeNamePhonePad;
     self.passWordTxt.centerTxt.placeholder = @"字母 数字8~18位";
     [self.passWordTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
     self.passWordTxt.centerTxt.secureTextEntry = YES;
@@ -564,7 +564,7 @@
     
     sender.selected = !sender.selected;
     self.passWordTxt.centerTxt.secureTextEntry = !self.passWordTxt.centerTxt.secureTextEntry;
-    self.passWordTxt.centerTxt.keyboardType = UIKeyboardTypeDefault;
+    self.passWordTxt.centerTxt.keyboardType = UIKeyboardTypeNamePhonePad;
     
 }
 

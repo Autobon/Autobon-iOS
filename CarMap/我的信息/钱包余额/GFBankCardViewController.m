@@ -18,6 +18,9 @@
     
     CGFloat jianjv1;
     CGFloat jiange1;
+    
+    
+    NSInteger index;
 }
 
 @property (nonatomic, strong) GFNavigationView *navView;
@@ -26,6 +29,8 @@
 @property (nonatomic, strong) UIView *jvtiView;
 @property (nonatomic, strong) UITableView *tableView;
 
+@property (nonatomic, copy) NSString *bankName;
+@property (nonatomic, strong) NSArray *bankArr;
 
 
 
@@ -52,7 +57,6 @@
     jianjv1 = kHeight * 0.021;
     jiange1 = kWidth * 0.056;
     
-    self.bankStr = @"光法银行";
     
     self.view.backgroundColor = [UIColor colorWithRed:252 / 255.0 green:252 / 255.0 blue:252 / 255.0 alpha:1];
     
@@ -63,6 +67,9 @@
 }
 
 - (void)_setView {
+    //银行数组
+    self.bankArr = @[@"工商银行", @"招商银行", @"光法银行", @"农业银行", @"建设银行"];
+    
     
     // 银行卡信息
     CGFloat baseViewW = kWidth;
@@ -151,7 +158,7 @@
     CGFloat cardTxtH = kHeight * 0.0625;
     CGFloat cardTxtX = kWidth * 0.185;
     CGFloat cardTxtY = CGRectGetMaxY(self.bankBut.frame) + jiange1 + 10;
-    self.cardTxt = [[GFTextField alloc] initWithPlaceholder:@"8888 8888 8888 8888 888" withFrame:CGRectMake(cardTxtX, cardTxtY, cardTxtW, cardTxtH)];
+    self.cardTxt = [[GFTextField alloc] initWithPlaceholder:self.bankCard withFrame:CGRectMake(cardTxtX, cardTxtY, cardTxtW, cardTxtH)];
     [self.jvtiView addSubview:self.cardTxt];
     self.cardTxt.centerTxt.tag = 5;
     self.cardTxt.centerTxt.delegate = self;
@@ -189,6 +196,11 @@
     [submitBut addTarget:self action:@selector(submitClick) forControlEvents:UIControlEventTouchUpInside];
 }
 - (void)submitClick {
+    
+    
+    self.bankStr = self.bankArr[index];
+    self.bankCard = self.cardTxt.centerTxt.text;
+    
 
     [self.delegate changeBankCardViewController:self];
     
@@ -208,6 +220,7 @@
     
     return YES;
 }
+
 
 //- (void)placeButClick {
 //
@@ -238,7 +251,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
     
-    cell.textLabel.text = @"光法银行";
+    cell.textLabel.text = self.bankArr[indexPath.row];
     cell.textLabel.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
     cell.textLabel.font = [UIFont systemFontOfSize:14 / 320.0 * kWidth];
     
@@ -248,9 +261,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    self.bankStr = @"光发银行";
     
-    [self.bankBut setTitle:self.bankStr forState:UIControlStateNormal];
+    index = indexPath.row;
+    
+    self.bankName = self.bankArr[index];
+    
+    [self.bankBut setTitle:self.bankName forState:UIControlStateNormal];
     
     self.tableView.hidden = YES;
     
