@@ -113,7 +113,7 @@
 //    _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
 
 //=======
-    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
+    _navigation = [[UINavigationController alloc]initWithRootViewController:messageVC];
 //>>>>>>> CLmaster
 
 

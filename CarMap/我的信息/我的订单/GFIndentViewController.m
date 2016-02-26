@@ -15,6 +15,7 @@
 #import "GFIndentDetailsViewController.h"
 
 #import "MJRefresh.h"
+//#import "GFTipView.h"
 
 @interface GFIndentViewController () {
     
@@ -187,6 +188,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+//    [GFTipView tipViewWithHeight:2 withTipViewMessage:@"gsag"];
 
     GFIndentDetailsViewController *indentDeVC = [[GFIndentDetailsViewController alloc] init];
     [self.navigationController pushViewController:indentDeVC animated:YES];

@@ -16,6 +16,8 @@
 #import "CLHomeOrderViewController.h"
 #import "CLCertifyViewController.h"
 
+#import "GFTipView.h"
+
 @interface GFSignInViewController () {
     
     CGFloat kWidth;
@@ -69,6 +71,14 @@
     
 }
 
+- (void)languageButClick {
+
+    GFTipView *tipView = [[GFTipView alloc] initWithNormalHeightWithMessage:@"好东西" withViewController:self withShowTimw:2];
+    [tipView tipViewShow];
+    
+    NSLog(@"提示框");
+    
+}
 
 - (void)_setView {
     
@@ -84,7 +94,8 @@
     [self.languageBut setTitleColor:[UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1] forState:UIControlStateNormal];
     self.languageBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     self.languageBut.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
-//    [self.view addSubview:self.languageBut];
+    [self.view addSubview:self.languageBut];
+    [self.languageBut addTarget:self action:@selector(languageButClick) forControlEvents:UIControlEventTouchUpInside];
     
     
 //    // 中间标题“车邻邦”
