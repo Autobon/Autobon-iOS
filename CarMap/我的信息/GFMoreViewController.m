@@ -1,17 +1,17 @@
 //
-//  GFBillViewController.m
+//  GFMoreViewController.m
 //  CarMap
 //
-//  Created by 陈光法 on 16/2/19.
+//  Created by 陈光法 on 16/2/24.
 //  Copyright © 2016年 mll. All rights reserved.
 //
 
-#import "GFBillViewController.h"
+#import "GFMoreViewController.h"
 #import "GFNavigationView.h"
 #import "GFTextField.h"
 #import "GFHttpTool.h"
 
-@interface GFBillViewController () {
+@interface GFMoreViewController () {
     
     CGFloat kWidth;
     CGFloat kHeight;
@@ -19,10 +19,9 @@
 
 @property (nonatomic, strong) GFNavigationView *navView;
 
-
 @end
 
-@implementation GFBillViewController
+@implementation GFMoreViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -55,6 +54,7 @@
     
     [self.navigationController popViewControllerAnimated:YES];
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

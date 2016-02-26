@@ -26,7 +26,8 @@
 
 @property (nonatomic, assign) id<GFBankCardViewControllerDelegate> delegate;
 
-@property (nonatomic, assign) NSString *bankStr;
+@property (nonatomic, copy) NSString *bankStr;
+@property (nonatomic, copy) NSString *bankCard;
 @property (nonatomic, strong) GFTextField *cardTxt;
 
 

@@ -156,7 +156,7 @@
     [self.view addSubview:self.passWordTxt];
     self.passWordTxt.centerTxt.delegate = self;
     self.passWordTxt.centerTxt.tag = 200;
-    self.passWordTxt.centerTxt.keyboardType = UIKeyboardTypeDefault;
+    self.passWordTxt.centerTxt.keyboardType = UIKeyboardTypeNamePhonePad;
     
     
     // 登录按钮
@@ -443,7 +443,7 @@
     
     sender.selected = !sender.selected;
     self.passWordTxt.centerTxt.secureTextEntry = !self.passWordTxt.centerTxt.secureTextEntry;
-    self.passWordTxt.centerTxt.keyboardType = UIKeyboardTypeDefault;
+    self.passWordTxt.centerTxt.keyboardType = UIKeyboardTypeNamePhonePad;
     
 }
 

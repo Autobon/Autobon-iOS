@@ -169,8 +169,8 @@
     
     NSLog(@"修改密码提交按钮");
     
-    [self.tipView removeFromSuperview];
-    [self.tipView removeFromSuperview];
+//    [self.tipView removeFromSuperview];
+//    [self.tipView removeFromSuperview];
     [self.view endEditing:YES];
     
     if(self.passWordTxt.centerTxt.text.length == 0) {

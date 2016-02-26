@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GFBillViewController : UIViewController
+@interface GFBillViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @end
