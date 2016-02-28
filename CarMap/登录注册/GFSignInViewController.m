@@ -15,6 +15,9 @@
 
 #import "CLHomeOrderViewController.h"
 #import "CLCertifyViewController.h"
+#import "CLAutobonViewController.h"
+
+
 
 @interface GFSignInViewController () {
     
@@ -314,9 +317,17 @@
                     }
                 }
                 
-                CLHomeOrderViewController *homeVC = [[CLHomeOrderViewController alloc] init];
-                [self.navigationController pushViewController:homeVC animated:YES];
                 
+                NSDictionary *dataDic = responseObject[@"data"];
+// 判断 responseObject[@"status"] 的状态进行相应的页面跳转
+                if ([dataDic[@"name"] isKindOfClass:[NSNull class]]) {
+#warning ######这里应该重新建立导航
+                    CLAutobonViewController *autobonView = [[CLAutobonViewController alloc]init];
+                    [self.navigationController pushViewController:autobonView animated:YES];
+                }else{
+                    CLHomeOrderViewController *homeVC = [[CLHomeOrderViewController alloc] init];
+                    [self.navigationController pushViewController:homeVC animated:YES];
+                }
             }else if([responseObject[@"result"] isEqual:@0]) {
                 
                 NSLog(@"登录失败==========%@", responseObject);

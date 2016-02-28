@@ -18,7 +18,7 @@
 #import "GFHttpTool.h"
 
 
-@interface CLCertifyViewController ()<UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface CLCertifyViewController ()<UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITableViewDataSource>
 {
     UIView *_chooseView;
     CLTouchScrollView *_scrollView;
@@ -36,8 +36,7 @@
     NSArray *_bankArray;
     UIButton *_bankButton;
     GFTextField *_bankNumberTextField;
-    
-    
+    UITableView *_tableView;
 }
 @end
 
@@ -52,6 +51,20 @@
     [self setNavigation];
     
     [self setViewForCertify];
+    
+    
+    
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(100, 100, 120, 200)];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    [_scrollView addSubview:_tableView];
+    _tableView.hidden = YES;
+//    _tableView.allowsSelection = YES;
+//    _tableView.userInteractionEnabled = YES;
+    
+    
+    
+    
 }
 
 - (void)setViewForCertify{
@@ -160,6 +173,24 @@
     [_bankButton addTarget:self action:@selector(bankBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:_bankButton];
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 //    UIButton *whereButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2+5, bankView.frame.origin.y+45+10, self.view.frame.size.width/2-15, 40)];
     
 //    [whereButton setBackgroundImage:[UIImage imageNamed:@"choose"] forState:UIControlStateNormal];
@@ -181,6 +212,17 @@
     UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, _bankNumberTextField.frame.origin.y+40+40, self.view.frame.size.width, 2)];
     lineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [_scrollView addSubview:lineView];
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 // 提交按钮
     UIButton *submitButton = [[UIButton alloc]initWithFrame:CGRectMake(30, lineView.frame.origin.y+2+10, self.view.frame.size.width-60, 40)];
@@ -266,18 +308,31 @@
                                 NSData *headData = UIImageJPEGRepresentation(_headImage.image, 0.5);
                                 NSData *idData = UIImageJPEGRepresentation(_identityImageView.image, 0.5);
                                 NSLog(@"---%@----id--%@--",headData,idData);
-                                NSDictionary *dic= @{@"avatar":headData,@"name":@"tom",@"idNo":@"41272319930706161X",@"skillArray":@(1),@"bank":@"027",@"bankAddress":@"光谷",@"bankCardNo":@"88888888878",@"idPhoto":idData};
-                                [GFHttpTool certifyPostParameters:dic success:^(NSDictionary *responseObject) {
-                                    NSLog(@"------respon--%@---",responseObject);
-                                    if ([responseObject[@"result"] intValue] == 1) {
-                                        NSLog(@"提交成功");
+                                NSString *cardNo = [_bankNumberTextField.centerTxt.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+                                NSString *skillString = nil;
+                                
+                                for (int i = 0; i < _skillArray.count; i++ ) {
+                                    if (i == 0) {
+                                        skillString = [NSString stringWithFormat:@"%@",_skillArray[i]];
                                     }else{
-                                        NSLog(@"请填写正确信息");
+                                       skillString = [NSString stringWithFormat:@"%@,%@",skillString,_skillArray[i]];
                                     }
-                                    
-                                } failure:^(NSError *error) {
-                                    NSLog(@"应该不会");
-                                }];
+                                }
+                                
+                                
+                                NSDictionary *dic= @{@"avatar":@"还没有",@"name":_userNameTextField.centerTxt.text,@"idNo":_identityTextField.centerTxt.text,@"skillArray":skillString,@"bank":_bankButton.titleLabel.text,@"bankAddress":@"光谷",@"bankCardNo":cardNo,@"idPhoto":@"还没有"};
+                                NSLog(@"-----dic---%@--",dic);
+//                                [GFHttpTool certifyPostParameters:dic success:^(NSDictionary *responseObject) {
+//                                    NSLog(@"------respon--%@---",responseObject);
+//                                    if ([responseObject[@"result"] intValue] == 1) {
+//                                        NSLog(@"提交成功");
+//                                    }else{
+//                                        NSLog(@"请填写正确信息");
+//                                    }
+//                                    
+//                                } failure:^(NSError *error) {
+//                                    NSLog(@"应该不会");
+//                                }];
                             }
                         }
                      }
@@ -288,24 +343,24 @@
     
     
     
-    NSData *headData = UIImageJPEGRepresentation(_headImage.image, 0.5);
-    NSData *idData = UIImageJPEGRepresentation(_identityImageView.image, 0.5);
-    NSLog(@"---%@----id--%@--",headData,idData);
-    
-    NSDictionary *dic= @{@"name":@"tom",@"idNo":@"41272319930706161X",@"skillArray":@"1,2",@"bank":@"027",@"bankAddress":@"光谷",@"bankCardNo":@"88888888878",@"idPhoto":idData};
-    
-    
-    [GFHttpTool certifyPostParameters:dic success:^(NSDictionary *responseObject) {
-        NSLog(@"------respon--%@---",responseObject);
-        if ([responseObject[@"result"] intValue] == 1) {
-            NSLog(@"提交成功");
-        }else{
-            NSLog(@"请填写正确信息");
-        }
-        
-    } failure:^(NSError *error) {
-        NSLog(@"应该不会");
-    }];
+//    NSData *headData = UIImageJPEGRepresentation(_headImage.image, 0.5);
+//    NSData *idData = UIImageJPEGRepresentation(_identityImageView.image, 0.5);
+//    NSLog(@"---%@----id--%@--",headData,idData);
+//    
+//    NSDictionary *dic= @{@"name":@"tom",@"idNo":@"41272319930706161X",@"skillArray":@"1,2",@"bank":@"027",@"bankAddress":@"光谷",@"bankCardNo":@"88888888878",@"idPhoto":idData};
+//    
+//    
+//    [GFHttpTool certifyPostParameters:dic success:^(NSDictionary *responseObject) {
+//        NSLog(@"------respon--%@---",responseObject);
+//        if ([responseObject[@"result"] intValue] == 1) {
+//            NSLog(@"提交成功");
+//        }else{
+//            NSLog(@"请填写正确信息");
+//        }
+//        
+//    } failure:^(NSError *error) {
+//        NSLog(@"应该不会");
+//    }];
     
     
     
@@ -339,29 +394,21 @@
 }
 #pragma mark - 银行类型按钮事件
 - (void)bankBtnClick:(UIButton *)button{
-    NSLog(@"选择银行");
-    if (!_isTableView) {
-        UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, button.frame.size.width , 100) style:UITableViewStylePlain];
-        tableView.center = CGPointMake(self.view.center.x, button.frame.origin.y + 40+50);
-        tableView.delegate = self;
-        tableView.dataSource = self;
-//        tableView.backgroundColor = [UIColor cyanColor];
-        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [_scrollView addSubview:tableView];
-        _isTableView = YES;
-    }
-    
-    
-    
+    _tableView.hidden = NO;
+    _tableView.allowsSelection = YES;
+    _tableView.frame = CGRectMake(0, 0, button.frame.size.width , 100);
+    _tableView.center = CGPointMake(self.view.center.x, button.frame.origin.y + 40+50);
 }
 #pragma mark - tableView协议方法
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [tableView removeFromSuperview];
+    NSLog(@"dianjifangfa");
     [_bankButton setTitle:_bankArray[indexPath.row] forState:UIControlStateNormal];
     [_bankButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     _isTableView = NO;
     _isBank = YES;
+    [tableView removeFromSuperview];
 }
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
@@ -374,12 +421,19 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         cell.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
         cell.textLabel.textColor = [UIColor whiteColor];
+        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 120, 40)];
+        [button addTarget:self action:@selector(btn:) forControlEvents:UIControlEventTouchUpInside];
+        [cell addSubview:button];
+//        [button setTitle:@"农业银行" forState:UIControlStateNormal];
     }
     cell.textLabel.text = _bankArray[indexPath.row];
-    
     return cell;
 }
-
+- (void)btn:(UIButton *)button{
+    NSLog(@"btntbn");
+    _isBank = YES;
+    _tableView.hidden = YES;
+}
 #pragma mark - 开户地点按钮事件
 -(void)whereBtnClick:(UIButton *)button{
     NSLog(@"选择开户地点");
@@ -403,11 +457,16 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     if (textField.tag == 5) {
         _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, _scrollView.contentSize.height-200);
-        if ([self checkCardNo:textField.text]) {
-            NSLog(@"银行卡号正确");
+        if (textField.text.length>0) {
+            if ([self checkCardNo:textField.text]) {
+                NSLog(@"银行卡号正确");
+            }else{
+                [self alertViewTitle:@"银行卡号码格式错误"];
+            }
         }else{
             [self alertViewTitle:@"银行卡号码格式错误"];
         }
+        
     }else{
         if ([self validateIdentityCard:textField.text]) {
             NSLog(@"身份证号正确");

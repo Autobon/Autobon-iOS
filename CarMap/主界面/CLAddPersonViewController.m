@@ -8,10 +8,27 @@
 
 #import "CLAddPersonViewController.h"
 #import "GFNavigationView.h"
+#import "CLPersonTableViewCell.h"
 
 
-@interface CLAddPersonViewController ()
 
+@interface UITableView (touch)
+
+@end
+
+@implementation UITableView (touch)
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [[self superview] endEditing:YES];
+}
+
+@end
+
+
+@interface CLAddPersonViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
+{
+    UISearchBar *_searchbar;
+}
 @end
 
 @implementation CLAddPersonViewController
@@ -23,22 +40,62 @@
     
     [self setViewForAdd];
     
-//    self.view.backgroundColor = [UIColor cyanColor];
+    self.view.backgroundColor = [UIColor colorWithRed:253/255.0 green:253/255.0 blue:253/255.0 alpha:1.0];
 }
 
 
 - (void)setViewForAdd{
-    UISearchBar *searchbar = [[UISearchBar alloc]initWithFrame:CGRectMake(20, 74, self.view.frame.size.width-80, 40)];
+    _searchbar = [[UISearchBar alloc]initWithFrame:CGRectMake(20, 84, self.view.frame.size.width-100, 40)];
 //    searchbar.backgroundColor = [UIColor whiteColor];
-    searchbar.barTintColor = [UIColor whiteColor];
+    _searchbar.barTintColor = [UIColor whiteColor];
 //    searchbar.barStyle = UIBarStyleDefault;
-    searchbar.layer.cornerRadius = 20;
-    searchbar.layer.borderWidth = 1.0;
-    searchbar.layer.borderColor = [[UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0]CGColor];
+    _searchbar.layer.cornerRadius = 20;
+    _searchbar.layer.borderWidth = 1.0;
+    _searchbar.layer.borderColor = [[UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0]CGColor];
     
-    [self.view addSubview:searchbar];
-    searchbar.clipsToBounds = YES;
+    [self.view addSubview:_searchbar];
+    _searchbar.delegate = self;
+    _searchbar.clipsToBounds = YES;
     
+    
+    UIButton *searchButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width-80, 84, 60, 40)];
+    [searchButton setTitle:@"搜索" forState:UIControlStateNormal];
+    [searchButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [searchButton setTitleColor:[UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0] forState:UIControlStateHighlighted];
+    [self.view addSubview:searchButton];
+    
+    UITableView *tableView = [[UITableView alloc]init];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    tableView.frame = CGRectMake(0, 124, self.view.frame.size.width, self.view.frame.size.height-124);
+    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:tableView];
+    tableView.backgroundColor = [UIColor cyanColor];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    return 1;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return 100;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    CLPersonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (cell == nil) {
+        cell = [[CLPersonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+//        cell.backgroundColor = [UIColor cyanColor];
+        [cell setCell];
+    }
+    
+    
+    return cell;
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [self.view endEditing:YES];
 }
 
 // 添加导航
@@ -52,7 +109,7 @@
     
 }
 - (void)backBtnClick{
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 // 更多按钮的响应方法

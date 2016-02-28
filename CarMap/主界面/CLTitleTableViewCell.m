@@ -15,20 +15,21 @@
 //    if (self = [super init]) {
 //        self.backgroundColor = [UIColor redColor];
 //标题label
-    _titleLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 5, [UIScreen mainScreen].bounds.size.width-20, 40)];
-    _titleLable.text = @"抢单2单，在线5小时";
-    _titleLable.font = [UIFont systemFontOfSize:19];
-    _titleLable.textAlignment = NSTextAlignmentCenter;
+    _titleLable = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, [UIScreen mainScreen].bounds.size.width-20, 40)];
+    _titleLable.text = @"未完成的订单数：3";
+//    _titleLable.textColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:20/255.0 alpha:1.0];
+//    _titleLable.font = [UIFont systemFontOfSize:19];
+//    _titleLable.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_titleLable];
         
 //详情标题
-    _detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 45, [UIScreen mainScreen].bounds.size.width, 30)];
-    _detailLabel.text = @"今日流水：600.00  成功率50%";
-    _detailLabel.textColor = [UIColor colorWithRed:157/255.0 green:157/255.0 blue:157/255.0 alpha:1.0];
-    _detailLabel.textAlignment = NSTextAlignmentCenter;
+    _detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 45, [UIScreen mainScreen].bounds.size.width, 30)];
+    _detailLabel.text = @"今日完成订单数：1    共计金额：567";
+//    _detailLabel.textColor = [UIColor colorWithRed:157/255.0 green:157/255.0 blue:157/255.0 alpha:1.0];
+//    _detailLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_detailLabel];
     
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(10, 83, [UIScreen mainScreen].bounds.size.width-20, 2)];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(10, 83, [UIScreen mainScreen].bounds.size.width-20, 1)];
     view.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0];
     [self addSubview:view];
         

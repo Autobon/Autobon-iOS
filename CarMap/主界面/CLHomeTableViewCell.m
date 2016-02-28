@@ -22,7 +22,7 @@
     [self addSubview:_orderNumberLabel];
         
 // 预约时间
-    _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 35, 250, 30)];
+    _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, 250, 30)];
     _timeLabel.text = @"预约时间 今天 12:00";
     _timeLabel.textColor = [UIColor colorWithRed:157/255.0 green:157/255.0 blue:157/255.0 alpha:1.0];
     _timeLabel.font = [UIFont systemFontOfSize:16.0];
@@ -31,23 +31,23 @@
         
 // 进入订单按钮
     _orderButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    _orderButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-100, 20, 80, 40);
+    _orderButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-80, 15, 70, 30);
     [_orderButton setTitle:@"进入订单" forState:UIControlStateNormal];
     
 //    orderButton.backgroundColor = [UIColor greenColor];
     _orderButton.layer.borderColor = [[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] CGColor];
     _orderButton.layer.borderWidth = 1.0f;
-    _orderButton.layer.cornerRadius = 10;
+    _orderButton.layer.cornerRadius = 5;
     [_orderButton setTitleColor:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] forState:UIControlStateNormal];
     [self addSubview:_orderButton];
         
 // 订单图片
-    _orderImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 70, [UIScreen mainScreen].bounds.size.width-20, [UIScreen mainScreen].bounds.size.width*5/12)];
+    _orderImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 60, [UIScreen mainScreen].bounds.size.width-20, [UIScreen mainScreen].bounds.size.width*5/12)];
     _orderImageView.image = [UIImage imageNamed:@"orderImage"];
 //    orderImageView.backgroundColor = [[UIColor alloc]initWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
     [self addSubview:_orderImageView];
         
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(10, 78 + [UIScreen mainScreen].bounds.size.width*5/12, [UIScreen mainScreen].bounds.size.width-20, 2)];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(10, 73 + [UIScreen mainScreen].bounds.size.width*5/12, [UIScreen mainScreen].bounds.size.width-20, 1)];
     view.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0];
     [self addSubview:view];
 

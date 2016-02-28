@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CLCertifyViewController : UIViewController
+@interface CLCertifyViewController : UIViewController<UITableViewDelegate>
 
 @end

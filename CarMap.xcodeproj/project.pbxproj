@@ -56,6 +56,8 @@
 		9B7C3FCE1C7706D800E3F53F /* CLOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7C3FCD1C7706D800E3F53F /* CLOrderDetailViewController.m */; };
 		9B7C3FD21C770F7100E3F53F /* CLSigninViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7C3FD11C770F7100E3F53F /* CLSigninViewController.m */; };
 		9B7C3FD51C77179100E3F53F /* CLWorkBeforeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7C3FD41C77179100E3F53F /* CLWorkBeforeViewController.m */; };
+		9B8BA6DE1C7FF66000E90CB0 /* CLPersonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8BA6DD1C7FF66000E90CB0 /* CLPersonTableViewCell.m */; };
+		9B8BA6E01C7FF7F000E90CB0 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B8BA6DF1C7FF7F000E90CB0 /* icon.png */; };
 		9B9515391C60501B00445F93 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9515381C60501B00445F93 /* TestViewController.m */; };
 		9B9515411C60503800445F93 /* GFAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95153C1C60503800445F93 /* GFAnnotation.m */; };
 		9B9515421C60503800445F93 /* GFAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95153E1C60503800445F93 /* GFAnnotationView.m */; };
@@ -70,7 +72,6 @@
 		9B9754491C5765B3004BDC7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B9754481C5765B3004BDC7C /* Assets.xcassets */; };
 		9B9754571C5765B3004BDC7C /* CarMapUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9754561C5765B3004BDC7C /* CarMapUITests.m */; };
 		9B9B5E6C1C7EACBC000D617E /* CLHomeOrderCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9B5E6B1C7EACBC000D617E /* CLHomeOrderCellModel.m */; };
-		9B9B5E781C7ED90A000D617E /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B9B5E771C7ED90A000D617E /* icon.png */; };
 		9B9B5E7B1C7F07BD000D617E /* CLAddPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9B5E7A1C7F07BD000D617E /* CLAddPersonViewController.m */; };
 		9B9C259E1C75BF9C009A69D6 /* CLTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9C259D1C75BF9C009A69D6 /* CLTitleTableViewCell.m */; };
 		9B9C25A11C75BFD6009A69D6 /* CLHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9C25A01C75BFD6009A69D6 /* CLHomeTableViewCell.m */; };
@@ -198,6 +199,9 @@
 		9B7C3FD11C770F7100E3F53F /* CLSigninViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLSigninViewController.m; sourceTree = "<group>"; };
 		9B7C3FD31C77179100E3F53F /* CLWorkBeforeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLWorkBeforeViewController.h; sourceTree = "<group>"; };
 		9B7C3FD41C77179100E3F53F /* CLWorkBeforeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLWorkBeforeViewController.m; sourceTree = "<group>"; };
+		9B8BA6DC1C7FF66000E90CB0 /* CLPersonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLPersonTableViewCell.h; sourceTree = "<group>"; };
+		9B8BA6DD1C7FF66000E90CB0 /* CLPersonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLPersonTableViewCell.m; sourceTree = "<group>"; };
+		9B8BA6DF1C7FF7F000E90CB0 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		9B9515371C60501B00445F93 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		9B9515381C60501B00445F93 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		9B95153B1C60503800445F93 /* GFAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFAnnotation.h; sourceTree = "<group>"; };
@@ -227,7 +231,6 @@
 		9B9754581C5765B3004BDC7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9B9B5E6A1C7EACBC000D617E /* CLHomeOrderCellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLHomeOrderCellModel.h; sourceTree = "<group>"; };
 		9B9B5E6B1C7EACBC000D617E /* CLHomeOrderCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLHomeOrderCellModel.m; sourceTree = "<group>"; };
-		9B9B5E771C7ED90A000D617E /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		9B9B5E791C7F07BD000D617E /* CLAddPersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAddPersonViewController.h; sourceTree = "<group>"; };
 		9B9B5E7A1C7F07BD000D617E /* CLAddPersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAddPersonViewController.m; sourceTree = "<group>"; };
 		9B9C259C1C75BF9C009A69D6 /* CLTitleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLTitleTableViewCell.h; sourceTree = "<group>"; };
@@ -631,7 +634,7 @@
 				9BA526CB1C63115700A2298F /* PoiSearchDemoViewController.mm */,
 				9B95153A1C60503800445F93 /* 百度地图 */,
 				9B9754451C5765B3004BDC7C /* Main.storyboard */,
-				9B9B5E771C7ED90A000D617E /* icon.png */,
+				9B8BA6DF1C7FF7F000E90CB0 /* icon.png */,
 				9BA74D241C75CDF100AF7B26 /* LaunchScreen.storyboard */,
 				9B9515441C6089A200445F93 /* PrefixHeader.pch */,
 				9B9754481C5765B3004BDC7C /* Assets.xcassets */,
@@ -673,6 +676,8 @@
 				9B7C3FCD1C7706D800E3F53F /* CLOrderDetailViewController.m */,
 				9B9B5E791C7F07BD000D617E /* CLAddPersonViewController.h */,
 				9B9B5E7A1C7F07BD000D617E /* CLAddPersonViewController.m */,
+				9B8BA6DC1C7FF66000E90CB0 /* CLPersonTableViewCell.h */,
+				9B8BA6DD1C7FF66000E90CB0 /* CLPersonTableViewCell.m */,
 			);
 			path = "主界面";
 			sourceTree = "<group>";
@@ -800,8 +805,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B8BA6E01C7FF7F000E90CB0 /* icon.png in Resources */,
 				9BA74D251C75CDF100AF7B26 /* LaunchScreen.storyboard in Resources */,
-				9B9B5E781C7ED90A000D617E /* icon.png in Resources */,
 				9B9754491C5765B3004BDC7C /* Assets.xcassets in Resources */,
 				860A4CC01C7ED9780067FB70 /* MJRefresh.bundle in Resources */,
 				9B9754471C5765B3004BDC7C /* Main.storyboard in Resources */,
@@ -902,11 +907,9 @@
 				860A4CBC1C7ED9780067FB70 /* MJRefreshBackStateFooter.m in Sources */,
 				868B0F131C7EA5AE00938665 /* GFBillTableViewCell.m in Sources */,
 				860A4CB41C7ED9780067FB70 /* MJRefreshComponent.m in Sources */,
-
 				860A4CB31C7ED9780067FB70 /* MJRefreshBackFooter.m in Sources */,
 				860A4CB51C7ED9780067FB70 /* MJRefreshFooter.m in Sources */,
 				860A4CC21C7ED9780067FB70 /* UIScrollView+MJExtension.m in Sources */,
-
 				86B890F41C73355B0068B95D /* GFForgetPwdViewController_1.m in Sources */,
 				860A4CC41C7ED9780067FB70 /* UIView+MJExtension.m in Sources */,
 				866CCEBC1C755BC800E50C67 /* AFHTTPSessionManager.m in Sources */,
@@ -929,7 +932,7 @@
 				9BA9C8141C7D4F13005CE1C0 /* CLKnockOrderViewController.m in Sources */,
 				9B9515431C60503800445F93 /* GFMapViewController.mm in Sources */,
 				860A4CB91C7ED9780067FB70 /* MJRefreshAutoStateFooter.m in Sources */,
-				9B7C3FD51C77179100E3F53F /* WorkBeforeViewController.m in Sources */,
+				9B7C3FD51C77179100E3F53F /* CLWorkBeforeViewController.m in Sources */,
 				860A4CBD1C7ED9780067FB70 /* MJRefreshGifHeader.m in Sources */,
 				9B95A79D1C7C46140041C7BA /* CLCertifyingViewController.m in Sources */,
 				868B0F121C7EA5AE00938665 /* GFBankCardViewController.m in Sources */,
@@ -944,6 +947,7 @@
 				868B0F111C7EA5AE00938665 /* GFBalanceViewController.m in Sources */,
 				9BA9CBD51C5B02220059F145 /* FirstViewController.m in Sources */,
 				860A4CBF1C7ED9780067FB70 /* MJRefreshStateHeader.m in Sources */,
+				9B8BA6DE1C7FF66000E90CB0 /* CLPersonTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

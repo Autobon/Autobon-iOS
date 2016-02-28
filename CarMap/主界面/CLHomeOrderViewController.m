@@ -122,8 +122,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 38)];
-    headerView.backgroundColor = [UIColor whiteColor];
-    
+    headerView.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 8, 200, 20)];
     timeLabel.text = [self weekdayString];
     timeLabel.font = [UIFont systemFontOfSize:14];
@@ -155,13 +154,14 @@
     }else if(indexPath.row == _cellModelArray.count+1){
         return _rowNumber;
     }else{
-        return 80 + [UIScreen mainScreen].bounds.size.width*5/12;
+        return 75 + [UIScreen mainScreen].bounds.size.width*5/12;
     }
     
     return 0;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

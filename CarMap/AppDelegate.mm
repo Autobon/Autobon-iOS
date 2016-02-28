@@ -39,9 +39,13 @@
 
 
 // 个推开发者网站中申请App时，注册的AppId、AppKey、AppSecret
-#define kGtAppId      @"bA8VREs20O83tJSR23Q2w4"
-#define kGtAppKey     @"J7erlQojfG6L4Fli5I3kz1"
-#define kGtAppSecret  @"9CI81CHleC6R4KyDvQYK35"
+#define kGtAppId      @"zoCAUGD4Hi55CS6iW1OI77"
+#define kGtAppKey     @"ESlofHVour7DmT7xy7cnJ9"
+#define kGtAppSecret  @"1VX09PPTcz7fdHBNYZVeB2"
+
+//#define kGtAppId      @"bA8VREs20O83tJSR23Q2w4"
+//#define kGtAppKey     @"J7erlQojfG6L4Fli5I3kz1"
+//#define kGtAppSecret  @"9CI81CHleC6R4KyDvQYK35"
 
 @interface AppDelegate ()<GeTuiSdkDelegate,BMKGeneralDelegate>
 {
@@ -56,6 +60,8 @@
 
 //如果应用程序没有存活，点击推送打开程序，那么会在 launchOptions 中加入一对 key-value，value 就是当前激活的推送对象。
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+//    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    
     _launchDict = [[NSDictionary alloc]initWithDictionary:launchOptions];
     // 通过个推平台分配的appId、 appKey 、appSecret 启动SDK，注：该方法需要在主线程中调用
     [GeTuiSdk startSdkWithAppId:kGtAppId appKey:kGtAppKey appSecret:kGtAppSecret delegate:self];
@@ -88,7 +94,7 @@
     _window.backgroundColor = [UIColor whiteColor];
 //    _firstView = [[ViewController alloc]init];
 //    CLAutobonViewController *firstView = [[CLAutobonViewController alloc]init];
-//    CLCertifyViewController *firstView = [[CLCertifyViewController alloc]init];
+    CLCertifyViewController *firstView = [[CLCertifyViewController alloc]init];
 //    CLHomeOrderViewController *firstView = [[CLHomeOrderViewController alloc]init];
 //    CLCertifyFailViewController *firstView = [[CLCertifyFailViewController alloc]init];
 //    CLCertifyingViewController *firstView = [[CLCertifyingViewController alloc]init];
@@ -96,12 +102,12 @@
 //    CLKnockOrderViewController *firstView = [[CLKnockOrderViewController alloc]init];
 //    CLWorkBeforeViewController *firstView = [[CLWorkBeforeViewController alloc]init];
 //    CLWorkOverViewController *firstView = [[CLWorkOverViewController alloc]init];
-    CLAddPersonViewController *firstView = [[CLAddPersonViewController alloc]init];
+//    CLAddPersonViewController *firstView = [[CLAddPersonViewController alloc]init];
     
     
     
     //********************* 光法页面 **********************
-    GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
+//    GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
     GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
     
 
@@ -176,7 +182,7 @@
         [UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
         NSLog(@"zounaqule--");
         // 定义用户通知类型(Remote.远程 - Badge.标记 Alert.提示 Sound.声音)
-        UIUserNotificationType types = UIUserNotificationTypeAlert;
+        UIUserNotificationType types = UIUserNotificationTypeAlert|UIUserNotificationTypeSound|UIUserNotificationTypeBadge;
         // 定义用户通知设置
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
         // 注册用户通知 - 根据用户通知设置
@@ -281,12 +287,12 @@
 //    first.labelTitle = @"地图";
 //    UIWindow *window = [UIApplication sharedApplication].delegate.window;
 //    [window addSubview:first.view];
-//    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-    
-    FirstViewController *first = [[FirstViewController alloc]init];
-    [_navigation pushViewController:first animated:NO];
-    [UIApplication sharedApplication].applicationIconBadgeNumber = 1;
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    
+//    FirstViewController *first = [[FirstViewController alloc]init];
+//    [_navigation pushViewController:first animated:NO];
+//    [UIApplication sharedApplication].applicationIconBadgeNumber = 1;
+//    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
     
 // 收到的推送消息还是要存储起来的，用来查看历史订单不用存储到数据库中吧

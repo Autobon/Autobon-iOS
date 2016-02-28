@@ -20,6 +20,7 @@
     NSMutableArray *_buttonArray;
     NSArray *_workItemarray;
     NSMutableArray *_workItemBtnArray;
+    UIScrollView *_scrollView;
 }
 
 
@@ -31,6 +32,17 @@
     [super viewDidLoad];
     _imageArray = [[NSMutableArray alloc]init];
     _buttonArray = [[NSMutableArray alloc]init];
+    
+    _scrollView = [[UIScrollView alloc]init];
+    _scrollView.frame = CGRectMake(0, 64+36, self.view.frame.size.width, self.view.frame.size.height-64-38);
+    
+    [self.view addSubview:_scrollView];
+    
+    
+    
+    
+    
+    
     [self setDate];
     
     [self setNavigation];
@@ -39,10 +51,10 @@
     
 }
 
-// 设置日期和状态
+#pragma mark - 设置日期和状态
 - (void)setDate{
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 36)];
-    headerView.backgroundColor = [UIColor whiteColor];
+   headerView.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     
     UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 8, 200, 20)];
     timeLabel.text = [self weekdayString];
@@ -89,27 +101,27 @@
 
 - (void)titleView{
     
-    UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 101, self.view.frame.size.width, 40)];
+    UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 1, self.view.frame.size.width, 40)];
     distanceLabel.text = @"已用时：15分28秒";
     distanceLabel.backgroundColor = [UIColor whiteColor];
     distanceLabel.font = [UIFont systemFontOfSize:15];
     distanceLabel.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:distanceLabel];
+    [_scrollView addSubview:distanceLabel];
     
-    _carImageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/7, 155, self.view.frame.size.width*5/7, self.view.frame.size.width*27/70)];
+    _carImageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/7, 55, self.view.frame.size.width*5/7, self.view.frame.size.width*27/70)];
     _carImageView.image = [UIImage imageNamed:@"carImage"];
-    [self.view addSubview:_carImageView];
+    [_scrollView addSubview:_carImageView];
     
-    _cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*6/7-15, 155+self.view.frame.size.width*27/70-25, 30, 30)];
+    _cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*6/7-15, 55+self.view.frame.size.width*27/70-25, 30, 30)];
     [_cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
     [_cameraBtn addTarget:self action:@selector(cameraHeadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_cameraBtn];
+    [_scrollView addSubview:_cameraBtn];
     
     
     
     
     CLTitleView *titleView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 64+36+40 + self.view.frame.size.width/3*2+10, self.view.frame.size.width, 45) Title:@"选择本次负责的工作项"];
-    [self.view addSubview:titleView];
+    [_scrollView addSubview:titleView];
     
 
     UIButton *fiveButton = [[UIButton alloc]initWithFrame:CGRectMake(10, titleView.frame.origin.y+50, 100, 30)];
@@ -120,7 +132,7 @@
     [fiveButton setImage:[UIImage imageNamed:@"over"] forState:UIControlStateNormal];
     [fiveButton addTarget:self action:@selector(workItemBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     fiveButton.tag = 5;
-    [self.view addSubview:fiveButton];
+    [_scrollView addSubview:fiveButton];
     
     UIButton *sevenButton = [[UIButton alloc]initWithFrame:CGRectMake(130, titleView.frame.origin.y+50, 100, 30)];
 //    sevenButton.backgroundColor = [UIColor cyanColor];
@@ -130,13 +142,13 @@
     [sevenButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [sevenButton addTarget:self action:@selector(workItemBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     sevenButton.tag = 7;
-    [self.view addSubview:sevenButton];
+    [_scrollView addSubview:sevenButton];
     
     
     
-    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, titleView.frame.origin.y+80, self.view.frame.size.width, 2)];
+    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(10, titleView.frame.origin.y+80, self.view.frame.size.width-20, 1)];
     lineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
-    [self.view addSubview:lineView];
+    [_scrollView addSubview:lineView];
     
     
     _workItemBtnArray = [[NSMutableArray alloc]init];
@@ -150,14 +162,14 @@
         button.layer.borderColor = [[UIColor colorWithRed:219/255.0 green:219/255.0 blue:219/255.0 alpha:1.0]CGColor];
         [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
         [button setTitleColor:[UIColor colorWithRed:167/255.0 green:167/255.0 blue:167/255.0 alpha:1.0] forState:UIControlStateNormal];
-        [self.view addSubview:button];
+        [_scrollView addSubview:button];
         [_workItemBtnArray addObject:button];
     }
     
     
-    UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(0, titleView.frame.origin.y+80+120, self.view.frame.size.width, 2)];
+    UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(10, titleView.frame.origin.y+80+120, self.view.frame.size.width-20, 2)];
     lineView2.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
-    [self.view addSubview:lineView2];
+    [_scrollView addSubview:lineView2];
     
     UIButton *workOverButton = [[UIButton alloc]initWithFrame:CGRectMake(30, self.view.frame.size.height-60, self.view.frame.size.width-60, 50)];
 //    workOverButton.center = CGPointMake(self.view.center.x, self.view.center.y+50+36+50);
@@ -167,7 +179,7 @@
     
     [workOverButton addTarget:self action:@selector(workOverBtnClick) forControlEvents:UIControlEventTouchUpInside];
     
-//    [self.view addSubview:workOverButton];
+    [_scrollView addSubview:workOverButton];
     
     
 }

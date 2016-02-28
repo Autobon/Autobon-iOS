@@ -34,7 +34,7 @@
 // 设置日期和状态
 - (void)setDate{
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 36)];
-    headerView.backgroundColor = [UIColor whiteColor];
+    headerView.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     
     UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 8, 200, 20)];
     timeLabel.text = [self weekdayString];
@@ -111,6 +111,8 @@
 // 签到按钮的响应方法
 - (void)signinBtnClick{
     
+    NSLog(@"---签到按钮-----");
+    
     NSDictionary *dic = @{@"rtpositionLon":@"101.11",@"rtpositionLat":@"33.5643",@"technicianId":@"1",@"orderId":@"1"};
     [GFHttpTool signinParameters:dic Success:^(NSDictionary *responseObject) {
         if ([responseObject[@"result"]integerValue] == 1) {
@@ -118,7 +120,7 @@
             [self.navigationController pushViewController:workBefore animated:YES];
         }
     } failure:^(NSError *error) {
-        
+        NSLog(@"--qiandao---%@--",error);
     }];
     
 }

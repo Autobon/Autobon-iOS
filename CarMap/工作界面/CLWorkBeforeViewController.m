@@ -39,7 +39,7 @@
 // 设置日期和状态
 - (void)setDate{
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 36)];
-    headerView.backgroundColor = [UIColor whiteColor];
+    headerView.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     
     UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 8, 200, 20)];
     timeLabel.text = [self weekdayString];
@@ -207,7 +207,7 @@
         imageView.image = image;
         [self.view addSubview:imageView];
         
-        if (_imageArray.count == 5) {
+        if (_imageArray.count == 2) {
             [_cameraBtn removeFromSuperview];
         }else{
             _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)%3),  _carImageView.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);

@@ -17,6 +17,10 @@
         UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 2)];
         lineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
         [self addSubview:lineView];
+// 浅色条
+        UIView *colorView = [[UIView alloc]initWithFrame:CGRectMake(0, 2, self.frame.size.width, 5)];
+        colorView.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
+        [self addSubview:colorView];
 // 尾线
         UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(0, self.frame.size.height-2, self.frame.size.width, 2)];
         lineView2.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];

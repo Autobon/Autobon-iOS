@@ -210,7 +210,9 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
     
     
     
-    
+//    [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+//    manager.requestSerializer.timeoutInterval = 15.f;
+//    [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
     
     
     
@@ -272,7 +274,7 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *token = [userDefaultes objectForKey:@"autoken"];
     [manager.requestSerializer setValue:@"autoken=\"technician:cYgNgn1l95u5ZleThJagfA==\"" forHTTPHeaderField:@"Cookie"];
-    NSString *URLString = [NSString stringWithFormat:@"%@/order/signIn",HOST];
+    NSString *URLString = [NSString stringWithFormat:@"%@/construction/signIn",HOST];
     
     [manager POST:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * task, NSDictionary *responseObject) {
         if (success) {
