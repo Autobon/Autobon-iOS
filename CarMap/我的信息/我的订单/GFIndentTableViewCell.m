@@ -50,7 +50,7 @@
         CGFloat moneyLabW = 200;
         CGFloat moneyLabH = numberLabH / 2.0;
         CGFloat moneyLabX = kWidth - jiange - moneyLabW;
-        CGFloat moneyLabY = numberLabY;
+        CGFloat moneyLabY = numberLabY + 3   / 568.0 * kHeight;
         self.moneyLab = [[UILabel alloc] initWithFrame:CGRectMake(moneyLabX, moneyLabY, moneyLabW, moneyLabH)];
         self.moneyLab.text = @"￥200";
         self.moneyLab.textAlignment = NSTextAlignmentRight;
@@ -62,7 +62,7 @@
         CGFloat tipButW = moneyLabW;
         CGFloat tipButH = moneyLabH;
         CGFloat tipButX = moneyLabX;
-        CGFloat tipButY = CGRectGetMaxY(self.moneyLab.frame);
+        CGFloat tipButY = CGRectGetMaxY(self.moneyLab.frame) - 6 / 568.0 * kHeight;
         self.tipBut = [UIButton buttonWithType:UIButtonTypeCustom];
         self.tipBut.frame = CGRectMake(tipButX, tipButY, tipButW, tipButH);
         [self.tipBut setTitle:@"未结算" forState:UIControlStateNormal];
