@@ -32,6 +32,13 @@
 		860A4CCE1C7EF9580067FB70 /* GFIndentDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 860A4CCD1C7EF9580067FB70 /* GFIndentDetailsViewController.m */; };
 		8655B0E51C76F15800D9FCB4 /* GFChangePwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8655B0E41C76F15800D9FCB4 /* GFChangePwdViewController.m */; };
 		8655C5C61C7D8E1000E5C69C /* GFMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8655C5C51C7D8E1000E5C69C /* GFMoreViewController.m */; };
+		865637DB1C8419A000BE7D8D /* GFServeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 865637DA1C8419A000BE7D8D /* GFServeViewController.m */; };
+		865637DE1C8423A800BE7D8D /* GFQualifieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 865637DD1C8423A800BE7D8D /* GFQualifieViewController.m */; };
+		865637E11C8424F100BE7D8D /* GFTrainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 865637E01C8424F100BE7D8D /* GFTrainViewController.m */; };
+		865637E41C8425A100BE7D8D /* GFTransformViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 865637E31C8425A100BE7D8D /* GFTransformViewController.m */; };
+		865637E71C84261F00BE7D8D /* GFQualifieTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 865637E61C84261F00BE7D8D /* GFQualifieTableViewCell.m */; };
+		865637EA1C84264000BE7D8D /* GFTrainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 865637E91C84264000BE7D8D /* GFTrainTableViewCell.m */; };
+		865637ED1C84265E00BE7D8D /* GFTransformTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 865637EC1C84265E00BE7D8D /* GFTransformTableViewCell.m */; };
 		866CCEBC1C755BC800E50C67 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 866CCEAE1C755BC800E50C67 /* AFHTTPSessionManager.m */; };
 		866CCEBD1C755BC800E50C67 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 866CCEB11C755BC800E50C67 /* AFNetworkReachabilityManager.m */; };
 		866CCEBE1C755BC800E50C67 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 866CCEB31C755BC800E50C67 /* AFSecurityPolicy.m */; };
@@ -151,6 +158,20 @@
 		8655B0E41C76F15800D9FCB4 /* GFChangePwdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFChangePwdViewController.m; sourceTree = "<group>"; };
 		8655C5C41C7D8E1000E5C69C /* GFMoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFMoreViewController.h; sourceTree = "<group>"; };
 		8655C5C51C7D8E1000E5C69C /* GFMoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFMoreViewController.m; sourceTree = "<group>"; };
+		865637D91C8419A000BE7D8D /* GFServeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFServeViewController.h; sourceTree = "<group>"; };
+		865637DA1C8419A000BE7D8D /* GFServeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFServeViewController.m; sourceTree = "<group>"; };
+		865637DC1C8423A800BE7D8D /* GFQualifieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFQualifieViewController.h; sourceTree = "<group>"; };
+		865637DD1C8423A800BE7D8D /* GFQualifieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFQualifieViewController.m; sourceTree = "<group>"; };
+		865637DF1C8424F100BE7D8D /* GFTrainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFTrainViewController.h; sourceTree = "<group>"; };
+		865637E01C8424F100BE7D8D /* GFTrainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFTrainViewController.m; sourceTree = "<group>"; };
+		865637E21C8425A100BE7D8D /* GFTransformViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFTransformViewController.h; sourceTree = "<group>"; };
+		865637E31C8425A100BE7D8D /* GFTransformViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFTransformViewController.m; sourceTree = "<group>"; };
+		865637E51C84261F00BE7D8D /* GFQualifieTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFQualifieTableViewCell.h; sourceTree = "<group>"; };
+		865637E61C84261F00BE7D8D /* GFQualifieTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFQualifieTableViewCell.m; sourceTree = "<group>"; };
+		865637E81C84264000BE7D8D /* GFTrainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFTrainTableViewCell.h; sourceTree = "<group>"; };
+		865637E91C84264000BE7D8D /* GFTrainTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFTrainTableViewCell.m; sourceTree = "<group>"; };
+		865637EB1C84265E00BE7D8D /* GFTransformTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFTransformTableViewCell.h; sourceTree = "<group>"; };
+		865637EC1C84265E00BE7D8D /* GFTransformTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFTransformTableViewCell.m; sourceTree = "<group>"; };
 		866CCEAD1C755BC800E50C67 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		866CCEAE1C755BC800E50C67 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
 		866CCEAF1C755BC800E50C67 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
@@ -581,6 +602,20 @@
 			children = (
 				9B95A7A21C7C5EBD0041C7BA /* CLMoreViewController.h */,
 				9B95A7A31C7C5EBD0041C7BA /* CLMoreViewController.m */,
+				865637DC1C8423A800BE7D8D /* GFQualifieViewController.h */,
+				865637DD1C8423A800BE7D8D /* GFQualifieViewController.m */,
+				865637E51C84261F00BE7D8D /* GFQualifieTableViewCell.h */,
+				865637E61C84261F00BE7D8D /* GFQualifieTableViewCell.m */,
+				865637DF1C8424F100BE7D8D /* GFTrainViewController.h */,
+				865637E01C8424F100BE7D8D /* GFTrainViewController.m */,
+				865637E81C84264000BE7D8D /* GFTrainTableViewCell.h */,
+				865637E91C84264000BE7D8D /* GFTrainTableViewCell.m */,
+				865637D91C8419A000BE7D8D /* GFServeViewController.h */,
+				865637DA1C8419A000BE7D8D /* GFServeViewController.m */,
+				865637E21C8425A100BE7D8D /* GFTransformViewController.h */,
+				865637E31C8425A100BE7D8D /* GFTransformViewController.m */,
+				865637EB1C84265E00BE7D8D /* GFTransformTableViewCell.h */,
+				865637EC1C84265E00BE7D8D /* GFTransformTableViewCell.m */,
 			);
 			path = "更多";
 			sourceTree = "<group>";
@@ -897,9 +932,12 @@
 				860A4CBE1C7ED9780067FB70 /* MJRefreshNormalHeader.m in Sources */,
 				9BE53AE41C72ADED00BBB424 /* CLAutobonViewController.m in Sources */,
 				860A4CC81C7EE2DB0067FB70 /* GFIndentViewController.m in Sources */,
+				865637DE1C8423A800BE7D8D /* GFQualifieViewController.m in Sources */,
 				860A4CC31C7ED9780067FB70 /* UIScrollView+MJRefresh.m in Sources */,
+				865637EA1C84264000BE7D8D /* GFTrainTableViewCell.m in Sources */,
 				86B890F71C73355B0068B95D /* GFSignInViewController.m in Sources */,
 				9B9C25A11C75BFD6009A69D6 /* CLHomeTableViewCell.m in Sources */,
+				865637ED1C84265E00BE7D8D /* GFTransformTableViewCell.m in Sources */,
 				860A4CB61C7ED9780067FB70 /* MJRefreshHeader.m in Sources */,
 				8655C5C61C7D8E1000E5C69C /* GFMoreViewController.m in Sources */,
 				860A4CB81C7ED9780067FB70 /* MJRefreshAutoNormalFooter.m in Sources */,
@@ -907,6 +945,7 @@
 				868B0F141C7EA5AE00938665 /* GFBillViewController.m in Sources */,
 				9BE53AEA1C7301A200BBB424 /* CLCertifyViewController.m in Sources */,
 				86B890F61C73355B0068B95D /* GFNavigationView.m in Sources */,
+				865637E41C8425A100BE7D8D /* GFTransformViewController.m in Sources */,
 				9B7AEEC71C740992003B1126 /* CLTitleView.m in Sources */,
 				860A4CBB1C7ED9780067FB70 /* MJRefreshBackNormalFooter.m in Sources */,
 				866CCEC11C755BC800E50C67 /* AFURLSessionManager.m in Sources */,
@@ -916,6 +955,7 @@
 				9B95A7A41C7C5EBD0041C7BA /* CLMoreViewController.m in Sources */,
 				9B9B5E6C1C7EACBC000D617E /* CLHomeOrderCellModel.m in Sources */,
 				860A4CBC1C7ED9780067FB70 /* MJRefreshBackStateFooter.m in Sources */,
+				865637DB1C8419A000BE7D8D /* GFServeViewController.m in Sources */,
 				868B0F131C7EA5AE00938665 /* GFBillTableViewCell.m in Sources */,
 				860A4CB41C7ED9780067FB70 /* MJRefreshComponent.m in Sources */,
 				860A4CB31C7ED9780067FB70 /* MJRefreshBackFooter.m in Sources */,
@@ -931,6 +971,7 @@
 				9B9754411C5765B3004BDC7C /* AppDelegate.mm in Sources */,
 				868B0F171C7EA63A00938665 /* GFBillDetailsViewController.m in Sources */,
 				9B95A7A01C7C46430041C7BA /* CLCertifyFailViewController.m in Sources */,
+				865637E11C8424F100BE7D8D /* GFTrainViewController.m in Sources */,
 				9B9B5E7B1C7F07BD000D617E /* CLAddPersonViewController.m in Sources */,
 				9B9C259E1C75BF9C009A69D6 /* CLTitleTableViewCell.m in Sources */,
 				9BE665401C743E0800976E7D /* CLTouchScrollView.m in Sources */,
@@ -939,6 +980,7 @@
 				9B97543E1C5765B3004BDC7C /* main.m in Sources */,
 				868B0F1A1C7EA6FA00938665 /* GFBillDetailsTableViewCell.m in Sources */,
 				866CCEC21C755BC800E50C67 /* GFHttpTool.m in Sources */,
+				865637E71C84261F00BE7D8D /* GFQualifieTableViewCell.m in Sources */,
 				9BA3C8D41C7598CE007F730D /* ViewController.m in Sources */,
 				9BA9C8141C7D4F13005CE1C0 /* CLKnockOrderViewController.m in Sources */,
 				9B9515431C60503800445F93 /* GFMapViewController.mm in Sources */,

@@ -30,6 +30,7 @@
 #import "CLWorkBeforeViewController.h"
 #import "CLWorkOverViewController.h"
 #import "CLAddPersonViewController.h"
+#import "CLMoreViewController.h"
 
 
 
@@ -106,7 +107,7 @@
     //********************* 光法页面 **********************
 //    GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
     GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
-    
+    CLMoreViewController *moreVC = [[CLMoreViewController alloc] init];
 
 //    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
 
@@ -115,9 +116,12 @@
 //<<<<<<< HEAD
     _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
 
-//=======
+
+
 //    _navigation = [[UINavigationController alloc]initWithRootViewController:messageVC];
-//>>>>>>> CLmaster
+
+//    _navigation = [[UINavigationController alloc]initWithRootViewController:moreVC];
+
 
 
 //    _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];

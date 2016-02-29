@@ -1,27 +1,31 @@
 //
-//  GFMoreViewController.m
+//  GFTrainViewController.m
 //  CarMap
 //
-//  Created by 陈光法 on 16/2/24.
+//  Created by 陈光法 on 16/2/29.
 //  Copyright © 2016年 mll. All rights reserved.
 //
 
-#import "GFMoreViewController.h"
+#import "GFTrainViewController.h"
 #import "GFNavigationView.h"
-#import "GFTextField.h"
 #import "GFHttpTool.h"
 
-@interface GFMoreViewController () {
+#import "GFTrainTableViewCell.h"
+
+@interface GFTrainViewController () {
     
     CGFloat kWidth;
     CGFloat kHeight;
+    
+    CGFloat cellHeight;
 }
 
 @property (nonatomic, strong) GFNavigationView *navView;
+@property (nonatomic, strong) UITableView *tableView;
 
 @end
 
-@implementation GFMoreViewController
+@implementation GFTrainViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -49,13 +53,50 @@
 - (void)_setView {
     
     
-    
-    
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kWidth, kHeight - 64) style:UITableViewStylePlain];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.view addSubview:self.tableView];
     
     
     
     
 }
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    
+    return 2;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *ID = @"cell";
+    
+    GFTrainTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    
+    if(cell == nil) {
+        
+        cell = [[GFTrainTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+    }
+    
+    cellHeight = cell.cellHeight;
+    
+    
+    return cell;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return cellHeight;
+}
+
+
+
+
 
 - (void)leftButClick {
     
