@@ -8,6 +8,10 @@
 
 #import "CLMoreViewController.h"
 #import "GFNavigationView.h"
+#import "GFServeViewController.h"
+#import "GFQualifieViewController.h"
+#import "GFTrainViewController.h"
+#import "GFTransformViewController.h"
 
 
 @interface CLMoreViewController ()
@@ -56,6 +60,27 @@
 
 - (void)btnClick:(UIButton *)button{
     NSLog(@"-------%ld---",(long)button.tag);
+    
+    if(button.tag == 1) {
+    
+        [self.navigationController pushViewController:[[GFQualifieViewController alloc] init] animated:YES];
+    }
+    
+    if(button.tag == 2) {
+        
+        [self.navigationController pushViewController:[[GFTrainViewController alloc] init] animated:YES];
+    }
+    
+    if(button.tag == 3) {
+        
+        [self.navigationController pushViewController:[[GFServeViewController alloc] init] animated:YES];
+    }
+    
+    if(button.tag == 4) {
+        
+        [self.navigationController pushViewController:[[GFTransformViewController alloc] init] animated:YES];
+    }
+    
 }
 
 
