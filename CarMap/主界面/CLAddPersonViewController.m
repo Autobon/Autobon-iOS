@@ -9,8 +9,10 @@
 #import "CLAddPersonViewController.h"
 #import "GFNavigationView.h"
 #import "CLPersonTableViewCell.h"
-
-
+#import "GFHttpTool.h"
+#import "CLAddPersonModel.h"
+#import "UIImageView+WebCache.h"
+#import "GFTipView.h"
 
 @interface UITableView (touch)
 
@@ -28,6 +30,10 @@
 @interface CLAddPersonViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
 {
     UISearchBar *_searchbar;
+    NSMutableArray *_addPersonArray;
+    UITableView *_tableView;
+    
+    
 }
 @end
 
@@ -36,11 +42,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    _addPersonArray = [[NSMutableArray alloc]init];
+    
     [self setNavigation];
     
     [self setViewForAdd];
     
-    self.view.backgroundColor = [UIColor colorWithRed:253/255.0 green:253/255.0 blue:253/255.0 alpha:1.0];
+    self.view.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
 }
 
 
@@ -62,20 +71,50 @@
     [searchButton setTitle:@"搜索" forState:UIControlStateNormal];
     [searchButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [searchButton setTitleColor:[UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0] forState:UIControlStateHighlighted];
+    [searchButton addTarget:self action:@selector(searchBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:searchButton];
     
-    UITableView *tableView = [[UITableView alloc]init];
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    tableView.frame = CGRectMake(0, 124, self.view.frame.size.width, self.view.frame.size.height-124);
-    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:tableView];
-    tableView.backgroundColor = [UIColor cyanColor];
+    _tableView = [[UITableView alloc]init];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.frame = CGRectMake(0, 124, self.view.frame.size.width, self.view.frame.size.height-124);
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:_tableView];
+//    tableView.backgroundColor = [UIColor cyanColor];
+}
+
+
+- (void)searchBtnClick{
+    NSLog(@"搜索按钮被点击了");
+    [self.view endEditing:YES];
+    [GFHttpTool getSearch:_searchbar.text Success:^(NSDictionary *responseObject) {
+        if ([responseObject[@"result"]integerValue] == 1) {
+            NSDictionary *dataDic = responseObject[@"data"];
+            NSArray *listArray = dataDic[@"list"];
+            [_addPersonArray removeAllObjects];
+            if (listArray.count>0) {
+                [listArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
+                    CLAddPersonModel *person = [[CLAddPersonModel alloc]init];
+                    person.headImageURL = [NSString stringWithFormat:@"http://121.40.157.200:51234/%@",obj[@"avatar"]];
+                    person.nameString = obj[@"name"];
+                    person.phoneString = obj[@"phone"];
+                    person.personId = obj[@"id"];
+                    [_addPersonArray addObject:person];
+                }];
+                
+            }else{
+                [self addAlertView:@"技师不存在"];
+            }
+            [_tableView reloadData];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 1;
+    return _addPersonArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -85,17 +124,35 @@
     CLPersonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (cell == nil) {
         cell = [[CLPersonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-//        cell.backgroundColor = [UIColor cyanColor];
         [cell setCell];
     }
-    
-    
+    CLAddPersonModel *person = _addPersonArray[indexPath.row];
+    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:person.headImageURL]];
+    cell.userNameLabel.text = person.nameString;
+    cell.identityLabel.text = person.phoneString;
+    cell.button.tag = indexPath.row;
+    [cell.button addTarget:self action:@selector(addPersonBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
+}
+
+#pragma mark - 添加合伙人按钮
+- (void)addPersonBtnClick:(UIButton *)button{
+    NSLog(@"添加合伙技师");
+    CLAddPersonModel *person = _addPersonArray[button.tag];
+    NSDictionary *dic = @{@"orderId":_orderId,@"technicianId":person.personId};
+    [GFHttpTool postAddPerson:dic Success:^(NSDictionary *responseObject) {
+        if ([responseObject[@"result"]integerValue]==1) {
+            [self addAlertView:@"邀请已发送，等待对方接受"];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    [self.view endEditing:YES];
+    
+    [self searchBtnClick];
 }
 
 // 添加导航
@@ -117,7 +174,11 @@
     NSLog(@"更多");
 }
 
-
+#pragma mark - AlertView
+- (void)addAlertView:(NSString *)title{
+    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
+    [tipView tipViewShow];
+}
 
 
 

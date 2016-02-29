@@ -16,9 +16,13 @@
 //#import "CLOrderViewController.h"
 #import "CLHomeOrderViewController.h"
 #import "GFHttpTool.h"
+#import "GFTipView.h"
+#import "CLCertifyingViewController.h"
+#import "UIImageView+WebCache.h"
 
 
-@interface CLCertifyViewController ()<UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITableViewDataSource>
+
+@interface CLCertifyViewController ()<UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     UIView *_chooseView;
     CLTouchScrollView *_scrollView;
@@ -29,6 +33,8 @@
     BOOL _isBank;
     BOOL _haveHeadImage;
     BOOL _haveIdentityImage;
+    BOOL _isIdNumber;
+    BOOL _isBankNumber;
     GFTextField *_userNameTextField;
     GFTextField *_identityTextField;
     NSMutableArray *_skillArray;
@@ -37,6 +43,7 @@
     UIButton *_bankButton;
     GFTextField *_bankNumberTextField;
     UITableView *_tableView;
+    NSArray *_skillBtnArray;
 }
 @end
 
@@ -46,24 +53,50 @@
     [super viewDidLoad];
     _skillArray = [[NSMutableArray alloc]init];
     _bankArray = @[@"人民银行",@"建设银行",@"招商银行",@"邮政银行",@"农业银行",@"中国银行",@"工商银行",@"光大银行"];
-    // Do any additional setup after loading the view.
-//    self.view.backgroundColor = [UIColor cyanColor];
     [self setNavigation];
     
     [self setViewForCertify];
-    
-    
-    
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(100, 100, 120, 200)];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [_scrollView addSubview:_tableView];
     _tableView.hidden = YES;
-//    _tableView.allowsSelection = YES;
-//    _tableView.userInteractionEnabled = YES;
     
     
-    
+    if (_isFail) {
+        [GFHttpTool getCertificateSuccess:^(id responseObject) {
+            _haveHeadImage = YES;
+            _isIdNumber = YES;
+            _haveIdentityImage = YES;
+            _isBank = YES;
+            _isBankNumber = YES;
+            if ([responseObject[@"result"]intValue]==1) {
+                NSDictionary *dataDic = responseObject[@"data"];
+                
+                // 0,1,2,3
+                NSArray *array = [dataDic[@"skill"] componentsSeparatedByString:@","];
+                [array enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop) {
+                    UIButton *button = _skillBtnArray[[obj intValue]];
+                    [_skillArray addObject:@(button.tag)];
+                    button.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                }];
+                
+                _userNameTextField.centerTxt.text = dataDic[@"name"];
+                _identityTextField.centerTxt.text = dataDic[@"idNo"];
+                [_bankButton setTitle:dataDic[@"bank"] forState:UIControlStateNormal];
+                [_bankButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                _bankNumberTextField.centerTxt.text = dataDic[@"bankCardNo"];
+                [_headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:51234/%@",dataDic[@"avatar"]]]];
+                [_identityImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:51234/%@",dataDic[@"idPhoto"]]]];
+                
+                
+                
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+    }
     
 }
 
@@ -144,6 +177,7 @@
     [cleanButton addTarget:self action:@selector(skillBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:cleanButton];
     
+    _skillBtnArray = @[insulatingButton,stealthButton,colorButton,cleanButton];
 // 证件照
     _identityView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 250, self.view.frame.size.width, 45) Title:@"手持身份证正面照"];
     [_scrollView addSubview:_identityView];
@@ -255,59 +289,44 @@
     NSLog(@"是时候看看协议了");
 }
 
+#pragma mark - AlertView
+- (void)addAlertView:(NSString *)title{
+    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
+    [tipView tipViewShow];
+}
+
 #pragma mark - 提交按钮事件
 - (void)submitBtnClick{
-    NSLog(@"提交按钮事件");
-//    GFAlertView *alertView = [[GFAlertView alloc]initWithTipName:@"提交成功" withTipMessage:@"恭喜您资料提交成功，我们将会在一个工作日内审核信息并以短信的形式告知结果，请注意查收！" withButtonNameArray:@[@"OK"]];
-//    [alertView.okBut addTarget:self action:@selector(alertBtnClick) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:alertView];
-    
-//    [GFHttpTool certifyPostParameters:nil success:^(id responseObject){
-//        
-//    }failure:^(NSError *error) {
-//        
-//    }];
-    
-    
 // 判断头像
     if (!_haveHeadImage) {
-        NSLog(@"请选择头像");
-        [self alertViewTitle:@"请选择头像"];
+        [self addAlertView:@"请选择头像"];
     }else{
     // 判断姓名
         if (_userNameTextField.centerTxt.text.length == 0) {
-            NSLog(@"请输入姓名");
-            [self alertViewTitle:@"请输入姓名"];
+           [self addAlertView:@"请输入姓名"];
         }else{
         // 判断身份证号
-            if (_identityTextField.centerTxt.text.length == 0) {
-                NSLog(@"请输入身份证号");
-                [self alertViewTitle:@"请输入身份证号"];
+            if (!_isIdNumber) {
+                [self addAlertView:@"请输入合法身份证号"];
             }else{
             // 判断至少一个技能
                 if (_skillArray.count == 0) {
-                    NSLog(@"请至少选择一个技能");
-                    [self alertViewTitle:@"请至少选择一个技能"];
+                    [self addAlertView:@"请至少选择一个技能"];
                 }else{
                 // 证件照
                     if (!_haveIdentityImage) {
-                        NSLog(@"请选择证件照");
-                        [self alertViewTitle:@"请选择证件照"];
+                        [self addAlertView:@"请选择证件照"];
                     }else{
                     // 银行类型
                         if (!_isBank) {
-                            NSLog(@"请选择银行类型");
-                            [self alertViewTitle:@"请选择银行类型"];
+                            [self addAlertView:@"请选择银行卡类型"];
                         }else{
                         // 银行卡号
-                            if (_bankNumberTextField.centerTxt.text.length == 0) {
-                                NSLog(@"请输入银行卡号");
-                                [self alertViewTitle:@"请输入银行卡号"];
+                            if (!_isBankNumber) {
+                                [self addAlertView:@"请输入合法银行卡号"];
                             }else{
-                                NSLog(@"提交信息－－");
-                                NSData *headData = UIImageJPEGRepresentation(_headImage.image, 0.5);
-                                NSData *idData = UIImageJPEGRepresentation(_identityImageView.image, 0.5);
-                                NSLog(@"---%@----id--%@--",headData,idData);
+                               
+//                                NSLog(@"---%@----id--%@--",headData,idData);
                                 NSString *cardNo = [_bankNumberTextField.centerTxt.text stringByReplacingOccurrencesOfString:@" " withString:@""];
                                 NSString *skillString = nil;
                                 
@@ -317,22 +336,22 @@
                                     }else{
                                        skillString = [NSString stringWithFormat:@"%@,%@",skillString,_skillArray[i]];
                                     }
-                                }
-                                
-                                
-                                NSDictionary *dic= @{@"avatar":@"还没有",@"name":_userNameTextField.centerTxt.text,@"idNo":_identityTextField.centerTxt.text,@"skillArray":skillString,@"bank":_bankButton.titleLabel.text,@"bankAddress":@"光谷",@"bankCardNo":cardNo,@"idPhoto":@"还没有"};
+                                } 
+                                NSDictionary *dic= @{@"name":_userNameTextField.centerTxt.text,@"idNo":_identityTextField.centerTxt.text,@"skillArray":skillString,@"bank":_bankButton.titleLabel.text,@"bankCardNo":cardNo};
                                 NSLog(@"-----dic---%@--",dic);
-//                                [GFHttpTool certifyPostParameters:dic success:^(NSDictionary *responseObject) {
-//                                    NSLog(@"------respon--%@---",responseObject);
-//                                    if ([responseObject[@"result"] intValue] == 1) {
-//                                        NSLog(@"提交成功");
-//                                    }else{
-//                                        NSLog(@"请填写正确信息");
-//                                    }
-//                                    
-//                                } failure:^(NSError *error) {
-//                                    NSLog(@"应该不会");
-//                                }];
+                                [GFHttpTool certifyPostParameters:dic success:^(NSDictionary *responseObject) {
+                                    if ([responseObject[@"result"] intValue] == 1) {
+                                        
+                                       [self addAlertView:@"提交成功"];
+                                        [self performSelector:@selector(success) withObject:nil afterDelay:1.5];
+                                        
+                                    }else{
+                                       [self addAlertView:@"提交失败，请填写合法信息"];
+                                    }
+                                    
+                                } failure:^(NSError *error) {
+                                    NSLog(@"应该不会---%@--",error);
+                                }];
                             }
                         }
                      }
@@ -340,47 +359,12 @@
             }
         }
     }
-    
-    
-    
-//    NSData *headData = UIImageJPEGRepresentation(_headImage.image, 0.5);
-//    NSData *idData = UIImageJPEGRepresentation(_identityImageView.image, 0.5);
-//    NSLog(@"---%@----id--%@--",headData,idData);
-//    
-//    NSDictionary *dic= @{@"name":@"tom",@"idNo":@"41272319930706161X",@"skillArray":@"1,2",@"bank":@"027",@"bankAddress":@"光谷",@"bankCardNo":@"88888888878",@"idPhoto":idData};
-//    
-//    
-//    [GFHttpTool certifyPostParameters:dic success:^(NSDictionary *responseObject) {
-//        NSLog(@"------respon--%@---",responseObject);
-//        if ([responseObject[@"result"] intValue] == 1) {
-//            NSLog(@"提交成功");
-//        }else{
-//            NSLog(@"请填写正确信息");
-//        }
-//        
-//    } failure:^(NSError *error) {
-//        NSLog(@"应该不会");
-//    }];
-    
-    
-    
-    
-//    NSDictionary *dic= @{@"avatar":@"/h/a.jpg",@"name":@"tom",@"idNo":@"41272319930706161X",@"skillArray":@(1),@"bank":@"027",@"bankAddress":@"光谷",@"bankCardNo":@"88888888878",@"idPhoto":@"/a/a.jpg"};
-//
-//
-//    [GFHttpTool certifyPostParameters:dic success:^(NSDictionary *responseObject) {
-//        NSLog(@"------respon--%@---",responseObject);
-//        if ([responseObject[@"result"] intValue] == 1) {
-//            NSLog(@"提交成功");
-//        }else{
-//            NSLog(@"请填写正确信息");
-//        }
-//        
-//    } failure:^(NSError *error) {
-//        NSLog(@"应该不会");
-//    }];
-    
-    
+}
+
+#pragma mark - 提交成功页面跳转
+- (void)success{
+    CLCertifyingViewController *certifying = [[CLCertifyingViewController alloc]init];
+    [self.navigationController pushViewController:certifying animated:YES];
 }
 
 #pragma mark - 警告框 OK
@@ -430,7 +414,11 @@
     return cell;
 }
 - (void)btn:(UIButton *)button{
-    NSLog(@"btntbn");
+    UITableViewCell *cell = (UITableViewCell *)[button superview];
+    NSIndexPath *indexPath = [_tableView indexPathForCell:cell];
+    NSLog(@"btntbn--cell--%@",@(indexPath.row));
+    [_bankButton setTitle:_bankArray[indexPath.row] forState:UIControlStateNormal];
+    [_bankButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     _isBank = YES;
     _tableView.hidden = YES;
 }
@@ -459,19 +447,22 @@
         _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, _scrollView.contentSize.height-200);
         if (textField.text.length>0) {
             if ([self checkCardNo:textField.text]) {
-                NSLog(@"银行卡号正确");
+                _isBankNumber = YES;
             }else{
-                [self alertViewTitle:@"银行卡号码格式错误"];
+                [self addAlertView:@"银行卡号码格式错误"];
+                _isBankNumber = NO;
             }
         }else{
-            [self alertViewTitle:@"银行卡号码格式错误"];
+            [self addAlertView:@"银行卡号码格式错误"];
+            _isBankNumber = NO;
         }
         
     }else{
         if ([self validateIdentityCard:textField.text]) {
-            NSLog(@"身份证号正确");
+            _isIdNumber = YES;
         }else{
-            [self alertViewTitle:@"身份证号码格式错误"];
+            [self addAlertView:@"身份证号码格式错误"];
+            _isIdNumber = NO;
         }
     }
     
@@ -546,7 +537,7 @@
     if (button.tag == 1) {
         UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
         imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-        imagePickerController.allowsEditing = YES;
+//        imagePickerController.allowsEditing = YES;
         imagePickerController.delegate =self;
         [self presentViewController:imagePickerController animated:YES completion:nil];
     }else{
@@ -576,16 +567,34 @@
     if (_isHeadImage) {
         _headImage.image = image;
         NSData *headData = UIImageJPEGRepresentation(image, 0.3);
-        [GFHttpTool headImage:headData success:^(id responseObject) {
-            
+        [GFHttpTool headImage:headData success:^(NSDictionary *responseObject) {
+            NSLog(@"-----responseObject---%@--",responseObject);
+            if ([responseObject[@"result"]intValue] == 1) {
+                _haveHeadImage = YES;
+                [self addAlertView:@"头像上传成功"];
+            }else{
+                [self addAlertView:@"头像上传失败"];
+            }
         } failure:^(NSError *error) {
             
         }];
-        _haveHeadImage = YES;
+        
     }else{
         _identityImageView.image = image;
-        _haveIdentityImage = YES;
+//        _haveIdentityImage = YES;
         _identityImageView.contentMode = UIViewContentModeScaleAspectFit;
+        NSData *idPhotoImage = UIImageJPEGRepresentation(image, 0.3);
+        [GFHttpTool idPhotoImage:idPhotoImage success:^(NSDictionary *responseObject) {
+            if ([responseObject[@"result"]intValue] == 1) {
+                _haveIdentityImage = YES;
+                [self addAlertView:@"证件照上传成功"];
+            }else{
+                [self addAlertView:@"证件照上传失败"];
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+        
     }
     
 }
@@ -616,12 +625,7 @@
     NSLog(@"更多");
 }
 
-#pragma mark - AlertView
-- (void)alertViewTitle:(NSString *)title{
-    GFAlertView *alertView = [[GFAlertView alloc]initWithTipName:@"提示" withTipMessage:title withButtonNameArray:@[@"OK"]];
-    [self.view addSubview:alertView];
 
-}
 
 
 #pragma mark - 身份证号正则表达式
@@ -632,7 +636,7 @@
         flag = NO;
         return flag;
     }
-    NSString *regex2 = @"^(\\d{14}|\\d{17})(\\d|[xX])$";
+    NSString *regex2 = @"^(\\d{14}|\\d{17})(\\d|[X])$";
     NSPredicate *identityCardPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex2];
     return [identityCardPredicate evaluateWithObject:identityCard];
 }

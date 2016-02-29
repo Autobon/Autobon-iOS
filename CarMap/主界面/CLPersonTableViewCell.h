@@ -10,6 +10,11 @@
 
 @interface CLPersonTableViewCell : UITableViewCell
 
+@property (nonatomic ,strong) UIImageView *headImage;
+@property (nonatomic ,strong) UILabel *userNameLabel;
+@property (nonatomic ,strong) UILabel *identityLabel;
+@property (nonatomic ,strong) UIButton *button;
+
 
 
 - (void)setCell;

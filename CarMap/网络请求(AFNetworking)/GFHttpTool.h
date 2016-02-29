@@ -39,7 +39,19 @@
 + (void)signinParameters:(NSDictionary *)parameters Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
 
+// 上传证件照
++ (void)idPhotoImage:(NSData *)image success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
+// 获取认证信息
++ (void)getCertificateSuccess:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+
+
+// 查找合伙人
++ (void)getSearch:(NSString *)string Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+
+
+// 添加小伙伴
++ (void)postAddPerson:(NSDictionary *)orderDic Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
 
 

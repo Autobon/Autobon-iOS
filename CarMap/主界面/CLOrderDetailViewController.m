@@ -124,6 +124,7 @@
 - (void)addBtnClick{
     NSLog(@"是时候添加一个小伙伴啦");
     CLAddPersonViewController *addPerson = [[CLAddPersonViewController alloc]init];
+    addPerson.orderId = _orderId;
     [self.navigationController pushViewController:addPerson animated:YES];
 }
 

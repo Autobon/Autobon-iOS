@@ -10,7 +10,7 @@
 #import "GFNavigationView.h"
 #import "CLTitleTableViewCell.h"
 #import "CLHomeTableViewCell.h"
-#import "SVPullToRefresh.h"
+
 #import "CLOrderDetailViewController.h"
 #import "GFMyMessageViewController.h"
 #import "CLMoreViewController.h"
@@ -85,22 +85,22 @@
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
      __weak CLHomeOrderViewController *weakSelf = self;
-    [_tableView addInfiniteScrollingWithActionHandler:^{
-        NSLog(@"下拉");
-        weakSelf.rowNumber = 0;
-        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:weakSelf.cellModelArray.count+1 inSection:0];
-        [weakSelf.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        [weakSelf performSelector:@selector(after) withObject:nil afterDelay:5.0];
-    }];
-    
-   
-    [_tableView addPullToRefreshWithActionHandler:^{
-        NSLog(@"上拉");
-        [weakSelf performSelector:@selector(after) withObject:nil afterDelay:3.0];
-//        _rowNumber = 4;
-//        [_tableView reloadData];
-        
-    }];
+//    [_tableView addInfiniteScrollingWithActionHandler:^{
+//        NSLog(@"下拉");
+//        weakSelf.rowNumber = 0;
+//        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:weakSelf.cellModelArray.count+1 inSection:0];
+//        [weakSelf.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//        [weakSelf performSelector:@selector(after) withObject:nil afterDelay:5.0];
+//    }];
+//    
+//   
+//    [_tableView addPullToRefreshWithActionHandler:^{
+//        NSLog(@"上拉");
+//        [weakSelf performSelector:@selector(after) withObject:nil afterDelay:3.0];
+////        _rowNumber = 4;
+////        [_tableView reloadData];
+//        
+//    }];
     
     [self.view addSubview:_tableView];
     
@@ -108,8 +108,8 @@
 }
 
 - (void)after{
-    [_tableView.infiniteScrollingView stopAnimating];
-    [_tableView.pullToRefreshView stopAnimating];
+//    [_tableView.infiniteScrollingView stopAnimating];
+//    [_tableView.pullToRefreshView stopAnimating];
     _rowNumber = 30;
     NSIndexPath *indexPath=[NSIndexPath indexPathForRow:_cellModelArray.count+1 inSection:0];
     [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];

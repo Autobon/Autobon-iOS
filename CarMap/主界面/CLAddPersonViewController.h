@@ -10,4 +10,6 @@
 
 @interface CLAddPersonViewController : UIViewController
 
+@property (nonatomic ,strong) NSString *orderId;
+
 @end

@@ -10,4 +10,6 @@
 
 @interface CLCertifyViewController : UIViewController<UITableViewDelegate>
 
+@property (nonatomic) BOOL isFail;
+
 @end

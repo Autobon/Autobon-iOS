@@ -8,12 +8,28 @@
 
 #import "CLCertifyFailViewController.h"
 #import "GFNavigationView.h"
-
+#import "GFHttpTool.h"
+#import "UIImageView+WebCache.h"
+#import "CLCertifyViewController.h"
 
 
 
 @interface CLCertifyFailViewController ()
-
+{
+    
+    NSString *_skillString;
+    
+    
+    
+    UIImageView *_headImage;
+    UILabel *_userNameLabel;
+    UILabel *_identityLabel;
+    UILabel *_skillLabel;
+    UILabel *_bankNumberLabel;
+    UILabel *_bankLabel;
+    UIImageView *_identityImageView;
+    UIView *_line;
+}
 @end
 
 @implementation CLCertifyFailViewController
@@ -27,45 +43,83 @@
     [self setViewForCertify];
     
     
+    NSArray *skillArray = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
     
+    [GFHttpTool getCertificateSuccess:^(NSDictionary *responseObject) {
+        NSLog(@"%@",responseObject);
+        if ([responseObject[@"result"]intValue]==1) {
+            NSDictionary *dataDic = responseObject[@"data"];
+            
+            // 0,1,2,3
+            NSArray *array = [dataDic[@"skill"] componentsSeparatedByString:@","];
+            
+            [array enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop) {
+                int a = [obj intValue];
+                if (idx == 0) {
+                    _skillLabel.text = [NSString stringWithFormat:@"%@%@",_skillLabel.text,skillArray[a]];
+                }else{
+                    _skillLabel.text = [NSString stringWithFormat:@"%@，%@",_skillLabel.text,skillArray[a]];
+                }
+            }];
+            
+            
+            
+            _userNameLabel.text = dataDic[@"name"];
+            _bankNumberLabel.text = [NSString stringWithFormat:@"银行卡号：%@",dataDic[@"bankCardNo"]];
+            CGSize titleSize = [_bankNumberLabel.text sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:CGSizeMake(MAXFLOAT, 30)];
+            _bankNumberLabel.frame = CGRectMake(15, 250, titleSize.width, 40);
+            _line.frame = CGRectMake(13+titleSize.width+5, 260, 1, 20);
+            
+            _bankLabel.text = dataDic[@"bank"];
+            _bankLabel.frame = CGRectMake(12+titleSize.width+10, 250, 60, 40);
+            
+            
+            _identityLabel.text = dataDic[@"idNo"];
+            [_headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:51234/%@",dataDic[@"avatar"]]]];
+            [_identityImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:51234/%@",dataDic[@"idPhoto"]]]];
+            
+            
+            
+        }
+    } failure:^(NSError *error) {
+        
+    }];
     
 }
 
-
-
 - (void)setViewForCertify{
     
-    UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 79, 100, 40)];
+    UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 75, 100, 25)];
     stateLabel.text = @"审核状态：";
     stateLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
     stateLabel.font = [UIFont systemFontOfSize:16];
     [self.view addSubview:stateLabel];
     
-    UILabel *failLabel = [[UILabel alloc]initWithFrame:CGRectMake(95, 79, 100, 40)];
+    UILabel *failLabel = [[UILabel alloc]initWithFrame:CGRectMake(95, 75, 100, 25)];
     failLabel.text = @"失败";
     failLabel.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
     failLabel.font = [UIFont systemFontOfSize:16];
     [self.view addSubview:failLabel];
     
-    UILabel *reasonLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 114, 100, 40)];
+    UILabel *reasonLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 100, 100, 25)];
     reasonLabel.text = @"失败原因:";
     reasonLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
     reasonLabel.font = [UIFont systemFontOfSize:16];
     [self.view addSubview:reasonLabel];
     
-    UILabel *detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(95, 114, 200, 40)];
+    UILabel *detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(95, 100, 200, 25)];
     detailLabel.text = @"显示失败原因，原因说明";
     detailLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
     detailLabel.font = [UIFont systemFontOfSize:16];
     [self.view addSubview:detailLabel];
     
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(10, 160, self.view.frame.size.width-20, 1)];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(10, 135, self.view.frame.size.width-20, 1)];
     view.backgroundColor = [UIColor colorWithRed:160/255.0 green:160/255.0 blue:160/255.0 alpha:1.0];
     [self.view addSubview:view];
     
     
     
-    UILabel *certifyLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 40)];
+    UILabel *certifyLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 20)];
     certifyLabel.center = view.center;
     certifyLabel.text = @"认证信息";
     certifyLabel.textAlignment = NSTextAlignmentCenter;
@@ -75,54 +129,56 @@
     [self.view addSubview:certifyLabel];
     
 //头像
-    UIImageView *headImage = [[UIImageView alloc]initWithFrame:CGRectMake(25, 190, 80, 80)];
-    headImage.image = [UIImage imageNamed:@"userHeadImage"];
-    headImage.layer.cornerRadius = 40;
-    headImage.clipsToBounds = YES;
-    [self.view addSubview:headImage];
+    _headImage = [[UIImageView alloc]initWithFrame:CGRectMake(25, 140, 80, 80)];
+    _headImage.image = [UIImage imageNamed:@"userHeadImage"];
+    _headImage.layer.cornerRadius = 40;
+    _headImage.clipsToBounds = YES;
+    [self.view addSubview:_headImage];
     
     
-    UILabel *userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(120, 190, 100, 40)];
-    userNameLabel.text = @"林峰";
-    userNameLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
-    [self.view addSubview:userNameLabel];
+    _userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(120, 150, 100, 40)];
+    _userNameLabel.text = @"林峰";
+    _userNameLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
+    [self.view addSubview:_userNameLabel];
     
-    UILabel *identityLabel = [[UILabel alloc]initWithFrame:CGRectMake(120, 230, self.view.frame.size.width - 140, 40)];
-    identityLabel.text = @"42000000000000231235";
-    identityLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
-    [self.view addSubview:identityLabel];
+    _identityLabel = [[UILabel alloc]initWithFrame:CGRectMake(120, 175, self.view.frame.size.width - 140, 40)];
+    _identityLabel.text = @"4200000000231235";
+    _identityLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
+    [self.view addSubview:_identityLabel];
     
-    UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(10, 280, self.view.frame.size.width-20, 1)];
+    UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(10, 225, self.view.frame.size.width-20, 1)];
     lineView2.backgroundColor = [UIColor colorWithRed:160/255.0 green:160/255.0 blue:160/255.0 alpha:1.0];
     [self.view addSubview:lineView2];
     
 // 技能项目
-    UILabel *skillLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 290, self.view.frame.size.width-30, 40)];
-    skillLabel.text = @"技能项目：隐身车衣，车身改色";
-    skillLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
-    [self.view addSubview:skillLabel];
+    _skillLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 220, self.view.frame.size.width-30, 40)];
+    _skillLabel.text = @"技能项目：";
+    _skillLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
+    _skillLabel.font = [UIFont systemFontOfSize:15];
+    [self.view addSubview:_skillLabel];
     
-    UILabel *bankNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 330, self.view.frame.size.width-115, 40)];
-    bankNumberLabel.text = @"银行卡号：1234 1233 1254 1234";
-    bankNumberLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
-    [self.view addSubview:bankNumberLabel];
+    _bankNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 250, self.view.frame.size.width-115, 40)];
+    _bankNumberLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
+    _bankNumberLabel.font = [UIFont systemFontOfSize:15];
+    [self.view addSubview:_bankNumberLabel];
     
-    UILabel *bankLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width-100, 330, 100, 40)];
-    bankLabel.text = @"农业银行";
-    bankLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
-    [self.view addSubview:bankLabel];
+    _bankLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width-100, 250, 100, 40)];
+    _bankLabel.text = @"农业银行";
+    _bankLabel.font = [UIFont systemFontOfSize:15];
+    _bankLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
+    [self.view addSubview:_bankLabel];
     
-    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width-100, 340, 1, 20)];
-    line.backgroundColor = [UIColor colorWithRed:160/255.0 green:160/255.0 blue:160/255.0 alpha:1.0];
-    [self.view addSubview:line];
+    _line = [[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width-100, 260, 1, 20)];
+    _line.backgroundColor = [UIColor colorWithRed:160/255.0 green:160/255.0 blue:160/255.0 alpha:1.0];
+    [self.view addSubview:_line];
     
     
-    UIView *lineView3 = [[UIView alloc]initWithFrame:CGRectMake(10, 380, self.view.frame.size.width-20, 1)];
+    UIView *lineView3 = [[UIView alloc]initWithFrame:CGRectMake(10, 295, self.view.frame.size.width-20, 1)];
     lineView3.backgroundColor = [UIColor colorWithRed:160/255.0 green:160/255.0 blue:160/255.0 alpha:1.0];
     [self.view addSubview:lineView3];
     
     
-    UILabel *idImageLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 160, 40)];
+    UILabel *idImageLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 160, 20)];
     idImageLabel.center = lineView3.center;
     idImageLabel.text = @"手持身份证正面照";
     idImageLabel.textAlignment = NSTextAlignmentCenter;
@@ -134,13 +190,13 @@
     
 // 证件照
     
-    UIImageView *identityImageView = [[UIImageView alloc]initWithFrame:CGRectMake(60, 400, self.view.frame.size.width-120, 150)];
-    identityImageView.image = [UIImage imageNamed:@"userImage"];
-    [self.view addSubview:identityImageView];
+    _identityImageView = [[UIImageView alloc]initWithFrame:CGRectMake(60, 310, self.view.frame.size.width-120, (self.view.frame.size.width-120)*2/3-20)];
+    _identityImageView.image = [UIImage imageNamed:@"userImage"];
+    [self.view addSubview:_identityImageView];
     
     
 // 更改认证信息按钮
-    UIButton *changeButton = [[UIButton alloc]initWithFrame:CGRectMake(30, 580, self.view.frame.size.width-60, 40)];
+    UIButton *changeButton = [[UIButton alloc]initWithFrame:CGRectMake(30, _identityImageView.frame.origin.y+_identityImageView.frame.size.height+10, self.view.frame.size.width-60, 40)];
     [changeButton setBackgroundImage:[UIImage imageNamed:@"button"] forState:UIControlStateNormal];
     [changeButton setBackgroundImage:[UIImage imageNamed:@"buttonClick"] forState:UIControlStateHighlighted];
     [changeButton setTitle:@"更改认证信息" forState:UIControlStateNormal];
@@ -151,7 +207,11 @@
 }
 
 - (void)changeBtnClick{
-
+    
+    CLCertifyViewController *certifyView = [[CLCertifyViewController alloc]init];
+    certifyView.isFail = YES;
+    [self.navigationController pushViewController:certifyView animated:YES];
+    
 }
 
 // 添加导航

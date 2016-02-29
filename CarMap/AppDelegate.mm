@@ -94,8 +94,8 @@
     _window.backgroundColor = [UIColor whiteColor];
 //    _firstView = [[ViewController alloc]init];
 //    CLAutobonViewController *firstView = [[CLAutobonViewController alloc]init];
-    CLCertifyViewController *firstView = [[CLCertifyViewController alloc]init];
-//    CLHomeOrderViewController *firstView = [[CLHomeOrderViewController alloc]init];
+//    CLCertifyViewController *firstView = [[CLCertifyViewController alloc]init];
+    CLHomeOrderViewController *firstView = [[CLHomeOrderViewController alloc]init];
 //    CLCertifyFailViewController *firstView = [[CLCertifyFailViewController alloc]init];
 //    CLCertifyingViewController *firstView = [[CLCertifyingViewController alloc]init];
 //    CLMoreViewController *firstView = [[CLMoreViewController alloc]init];
@@ -103,15 +103,12 @@
 //    CLWorkBeforeViewController *firstView = [[CLWorkBeforeViewController alloc]init];
 //    CLWorkOverViewController *firstView = [[CLWorkOverViewController alloc]init];
 //    CLAddPersonViewController *firstView = [[CLAddPersonViewController alloc]init];
-    
-    
-    
     //********************* 光法页面 **********************
 //    GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
-    GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
+//    GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
     
 
-//    _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
+    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
 
     
 
@@ -119,7 +116,7 @@
 //    _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
 
 //=======
-    _navigation = [[UINavigationController alloc]initWithRootViewController:messageVC];
+//    _navigation = [[UINavigationController alloc]initWithRootViewController:messageVC];
 //>>>>>>> CLmaster
 
 

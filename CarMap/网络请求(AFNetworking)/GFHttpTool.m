@@ -156,14 +156,13 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
     NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *token = [userDefaultes objectForKey:@"autoken"];
-   [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+   [manager.requestSerializer setValue:@"autoken=\"technician:RhuKuh6uB7TCm6HWSi/D2A==\"" forHTTPHeaderField:@"Cookie"];
     NSString *URLString = [NSString stringWithFormat:@"%@/technician/commitCertificate",HOST];
     [manager POST:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * task, NSDictionary *responseObject) {
         if(success) {
             success(responseObject);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"----%@---",error);
         if(failure) {
             failure(error);
         } 
@@ -200,16 +199,16 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
     } success:^(NSURLSessionDataTask * _Nonnull task, NSData *responseObject) {
         
         NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-        NSLog(@"成功－%@--%@",dictionary,dictionary[@"message"]);
-        
+        if(success) {
+            success(dictionary);
+        }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"----%@---",error);
+        if(failure) {
+            failure(error);
+        }
     }];
     
-    
-    
-    
-    
+   
 //    [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
 //    manager.requestSerializer.timeoutInterval = 15.f;
 //    [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
@@ -247,11 +246,52 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
     
 }
 
+
+
+// 上传证件照
++ (void)idPhotoImage:(NSData *)image success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    //    NSData *headData = UIImageJPEGRepresentation(image, 0.5);
+    
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *token = [userDefaultes objectForKey:@"autoken"];
+    
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/idPhoto",HOST];
+    
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager POST:URLString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        [formData appendPartWithFileData:image name:@"file" fileName:@"1235.jpg" mimeType:@"JPEG"];
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, NSData *responseObject) {
+        
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        if(success) {
+            success(dictionary);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failure) {
+            failure(error);
+        }
+    }];
+    
+    
+   
+    
+}
+
+
+
+
 + (void)getOrderListSuccess:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
     NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *token = [userDefaultes objectForKey:@"autoken"];
-    [manager.requestSerializer setValue:@"autoken=\"technician:cYgNgn1l95u5ZleThJagfA==\"" forHTTPHeaderField:@"Cookie"];
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
     NSString *URLString = [NSString stringWithFormat:@"%@/order/orderList",HOST];
     
     [manager GET:URLString parameters:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
@@ -273,7 +313,7 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
     NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *token = [userDefaultes objectForKey:@"autoken"];
-    [manager.requestSerializer setValue:@"autoken=\"technician:cYgNgn1l95u5ZleThJagfA==\"" forHTTPHeaderField:@"Cookie"];
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
     NSString *URLString = [NSString stringWithFormat:@"%@/construction/signIn",HOST];
     
     [manager POST:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * task, NSDictionary *responseObject) {
@@ -287,7 +327,80 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
     }];
 }
 
+#pragma mark - 获取认证信息
++ (void)getCertificateSuccess:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *token = [userDefaultes objectForKey:@"autoken"];
+    NSLog(@"token--%@--",token);
+    [manager.requestSerializer setValue:@"autoken=\"technician:RhuKuh6uB7TCm6HWSi/D2A==\"" forHTTPHeaderField:@"Cookie"];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/getCertificate",HOST];
+    
+    
+    [manager POST:URLString parameters:nil progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+        if(success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failure) {
+            failure(error);
+        }
+    }];
+    
+    
+    
 
+}
+
+
+
+
+#pragma mark - 查找合伙人
++ (void)getSearch:(NSString *)string Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *token = [userDefaultes objectForKey:@"autoken"];
+    NSLog(@"token--%@--",token);
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/search",HOST];
+    
+    
+    [manager GET:URLString parameters:@{@"query":string} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+        NSLog(@"----responseObject--%@--",responseObject);
+        if(success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failure) {
+            failure(error);
+        }
+    }];
+    
+}
+
+#pragma mark - 添加小伙伴
++ (void)postAddPerson:(NSDictionary *)orderDic Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *token = [userDefaultes objectForKey:@"autoken"];
+    NSLog(@"token--%@--",token);
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+    NSString *URLString = [NSString stringWithFormat:@"%@/order/addSecondTechId",HOST];
+    
+    
+    [manager POST:URLString parameters:orderDic progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+        if(success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failure) {
+            failure(error);
+        }
+    }];
+    
+}
 
 
 @end
