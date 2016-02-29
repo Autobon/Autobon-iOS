@@ -18,6 +18,9 @@
 #import "CLHomeOrderCellModel.h"
 #import "CLWorkBeforeViewController.h"
 
+#import "MJRefresh.h"
+
+
 @interface CLHomeOrderViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
 //    UITableView *_tableView;
@@ -38,6 +41,10 @@
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
+    
+    [self setNavigation];
+    
+    [self setTableView];
     
     [GFHttpTool getOrderListSuccess:^(NSDictionary *responseObject) {
         if ([responseObject[@"result"] integerValue] == 1) {
@@ -67,13 +74,31 @@
     }];
     
     
+    _tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
+    _tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+    
+    [self.tableView.header beginRefreshing];
+    [self.tableView.footer beginRefreshing];
     
     
     
-    [self setNavigation];
-    
-    [self setTableView];
 }
+- (void)headRefresh {
+    
+    NSLog(@"脑袋刷新");
+    
+    [self.tableView.header endRefreshing];
+    
+}
+
+- (void)footRefresh {
+    
+    NSLog(@"大脚刷新");
+    
+    [self.tableView.footer endRefreshing];
+}
+
+
 
 #pragma mark - 订单表格
 - (void)setTableView{
@@ -117,7 +142,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return _cellModelArray.count+2;
+    return _cellModelArray.count+1;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
@@ -275,7 +300,7 @@
     
     GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"person" withLeftImgHightName:@"personClick" withRightImgName:@"moreList" withRightImgHightName:@"moreListClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
     [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [navView.rightBut addTarget:self action:@selector(moreBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [navView.rightBut addTarget:navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:navView];
     
     
@@ -292,9 +317,6 @@
     
 }
 
-- (void)moreBtnClick{
-    NSLog(@"更多--%p--",self.view);
-}
 
 
 - (void)didReceiveMemoryWarning {

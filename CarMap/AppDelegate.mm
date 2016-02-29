@@ -105,15 +105,15 @@
 //    CLAddPersonViewController *firstView = [[CLAddPersonViewController alloc]init];
     //********************* 光法页面 **********************
 //    GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
-//    GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
+    GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
     
 
-    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
+//    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
 
     
 
 //<<<<<<< HEAD
-//    _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
+    _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
 
 //=======
 //    _navigation = [[UINavigationController alloc]initWithRootViewController:messageVC];

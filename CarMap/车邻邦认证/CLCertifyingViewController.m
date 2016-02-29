@@ -10,6 +10,8 @@
 #import "GFNavigationView.h"
 #import "GFHttpTool.h"
 #import "UIImageView+WebCache.h"
+#import "CLHomeOrderViewController.h"
+
 
 @interface CLCertifyingViewController ()
 {
@@ -207,7 +209,12 @@
 }
 
 -(void)backBtnClick{
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
+    
+    CLHomeOrderViewController *home = [[CLHomeOrderViewController alloc]init];
+    [self.navigationController pushViewController:home animated:YES];
+    
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

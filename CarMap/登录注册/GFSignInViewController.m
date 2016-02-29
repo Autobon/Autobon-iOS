@@ -16,6 +16,8 @@
 #import "CLHomeOrderViewController.h"
 #import "CLCertifyViewController.h"
 #import "CLAutobonViewController.h"
+#import "CLCertifyFailViewController.h"
+#import "CLCertifyingViewController.h"
 
 
 
@@ -134,6 +136,8 @@
     [self.view addSubview:logoImgView];
     logoImgView.image = [UIImage imageNamed:@"LOGO"];
     
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
     
     // 账号输入框
     CGFloat userNameW = kWidth * 0.768;
@@ -148,7 +152,7 @@
     self.userNameTxt.centerTxt.delegate = self;
     self.userNameTxt.centerTxt.tag = 100;
     self.userNameTxt.centerTxt.keyboardType = UIKeyboardTypeNumberPad;
-    
+    self.userNameTxt.centerTxt.text = [userDefaults objectForKey:@"userName"];
     
     // 密码输入框
     UIButton *passwordBut = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -171,7 +175,7 @@
     self.passWordTxt.centerTxt.delegate = self;
     self.passWordTxt.centerTxt.tag = 200;
     self.passWordTxt.centerTxt.keyboardType = UIKeyboardTypeNamePhonePad;
-    
+    self.passWordTxt.centerTxt.text = [userDefaults objectForKey:@"userPassword"];
     
     // 登录按钮
     CGFloat signInButW = kWidth - jianjv1 * 2 + 8;
@@ -291,7 +295,10 @@
             
             // 判断是否登录成功
             if([responseObject[@"result"] isEqual:@1]) {
-                NSLog(@"登录成功==========%@", responseObject);
+               
+                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                [userDefaults setObject:self.userNameTxt.centerTxt.text forKey:@"userName"];
+                [userDefaults setObject:self.passWordTxt.centerTxt.text forKey:@"userPassword"];
                 
                 // 获取token 针对个人的操作要加
                 NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage]; // 获得响应头
@@ -331,13 +338,32 @@
                 
                 NSDictionary *dataDic = responseObject[@"data"];
 // 判断 responseObject[@"status"] 的状态进行相应的页面跳转
-                if ([dataDic[@"name"] isKindOfClass:[NSNull class]]) {
-#warning ######这里应该重新建立导航
+                UIWindow *window = [UIApplication sharedApplication].delegate.window;
+                if ([dataDic[@"avatar"] isKindOfClass:[NSNull class]]) {
+                    
                     CLAutobonViewController *autobonView = [[CLAutobonViewController alloc]init];
-                    [self.navigationController pushViewController:autobonView animated:YES];
+                    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:autobonView];
+                    window.rootViewController = navigation;
+                    navigation.navigationBarHidden = YES;
                 }else{
-                    CLHomeOrderViewController *homeVC = [[CLHomeOrderViewController alloc] init];
-                    [self.navigationController pushViewController:homeVC animated:YES];
+                    if ([dataDic[@"status"]isEqualToString:@"VERIFIED"]) {
+                        CLHomeOrderViewController *homeVC = [[CLHomeOrderViewController alloc] init];
+                        UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
+                        window.rootViewController = navigation;
+                        navigation.navigationBarHidden = YES;
+                    }else if([dataDic[@"status"]isEqualToString:@"NOTVERIFIED"]){
+                        CLCertifyingViewController *homeVC = [[CLCertifyingViewController alloc] init];
+                        UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
+                        window.rootViewController = navigation;
+                        navigation.navigationBarHidden = YES;
+                    }else if ([dataDic[@"status"]isEqualToString:@"REJECTED"]){
+                        CLCertifyFailViewController *homeVC = [[CLCertifyFailViewController alloc] init];
+                        UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
+                        window.rootViewController = navigation;
+                        navigation.navigationBarHidden = YES;
+                    }
+                    
+                    
                 }
             }else if([responseObject[@"result"] isEqual:@0]) {
                 

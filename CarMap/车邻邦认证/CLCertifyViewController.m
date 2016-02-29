@@ -19,6 +19,7 @@
 #import "GFTipView.h"
 #import "CLCertifyingViewController.h"
 #import "UIImageView+WebCache.h"
+#import "CLAutobonViewController.h"
 
 
 
@@ -363,8 +364,11 @@
 
 #pragma mark - 提交成功页面跳转
 - (void)success{
-    CLCertifyingViewController *certifying = [[CLCertifyingViewController alloc]init];
-    [self.navigationController pushViewController:certifying animated:YES];
+//    CLCertifyingViewController *certifying = [[CLCertifyingViewController alloc]init];
+//    [self.navigationController pushViewController:certifying animated:YES];
+    CLAutobonViewController *autobon = (CLAutobonViewController *)self.navigationController.viewControllers[0];
+    autobon.certifyButton.userInteractionEnabled = NO;
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark - 警告框 OK
@@ -585,6 +589,7 @@
         _identityImageView.contentMode = UIViewContentModeScaleAspectFit;
         NSData *idPhotoImage = UIImageJPEGRepresentation(image, 0.3);
         [GFHttpTool idPhotoImage:idPhotoImage success:^(NSDictionary *responseObject) {
+            NSLog(@"----%@---",responseObject);
             if ([responseObject[@"result"]intValue] == 1) {
                 _haveIdentityImage = YES;
                 [self addAlertView:@"证件照上传成功"];

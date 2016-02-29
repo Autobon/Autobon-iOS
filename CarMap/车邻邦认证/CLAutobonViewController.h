@@ -10,4 +10,6 @@
 
 @interface CLAutobonViewController : UIViewController
 
+@property (nonatomic ,strong) UIButton *certifyButton;
+
 @end
