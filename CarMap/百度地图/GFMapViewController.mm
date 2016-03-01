@@ -244,8 +244,6 @@
     if(num == 0) {
         self.mapView.centerCoordinate = userLocation.location.coordinate;
         num = 1;
-        
-        
         BMKCoordinateRegion region ;//表示范围的结构体
         region.center = CLLocationCoordinate2DMake((self.workerPointAnno.coordinate.latitude + self.bossPointAnno.coordinate.latitude)/2,(self.workerPointAnno.coordinate.longitude + self.bossPointAnno.coordinate.longitude)/2);//中心点
         region.span.latitudeDelta = (self.workerPointAnno.coordinate.latitude - self.bossPointAnno.coordinate.latitude)*2;//经度范围（设置为0.1表示显示范围为0.2的纬度范围）
@@ -255,14 +253,13 @@
     }
     
     
-    NSLog(@"-----地图比例－－%@--",@(_mapView.zoomLevel));
     
     
     
     
     
 #pragma mark - 路径
-    if(num == 1) {
+//    if(num == 1) {
 //        BMKShareURLSearch *shareurlsearch = [[BMKShareURLSearch alloc]init];
 //        shareurlsearch.delegate = self;
 //        
@@ -330,7 +327,7 @@
 //        
 //         num = 5;
         
-    }
+//    }
 }
 
 
@@ -547,7 +544,7 @@
  */
 - (void)didFailToLocateUserWithError:(NSError *)error {
     
-    NSLog(@"获取当前位置失败，请检查您的网络");
+    NSLog(@"获取当前位置失败，请检查您的网络－－%@",error);
 }
 
 

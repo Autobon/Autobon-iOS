@@ -238,7 +238,7 @@
 //    [_scrollView addSubview:whereButton];
     
 // 银行卡号
-    _bankNumberTextField = [[GFTextField alloc]initWithPlaceholder:@"银行卡号" withFrame:CGRectMake(60, bankView.frame.origin.y+45+15+60, self.view.frame.size.width-120, 40)];
+    _bankNumberTextField = [[GFTextField alloc]initWithPlaceholder:@"银行卡号" withFrame:CGRectMake(40, bankView.frame.origin.y+45+15+60, self.view.frame.size.width-80, 40)];
     _bankNumberTextField.centerTxt.keyboardType = UIKeyboardTypeNumberPad;
     _bankNumberTextField.centerTxt.delegate = self;
     _bankNumberTextField.centerTxt.tag = 5;
@@ -341,13 +341,14 @@
                                 NSDictionary *dic= @{@"name":_userNameTextField.centerTxt.text,@"idNo":_identityTextField.centerTxt.text,@"skillArray":skillString,@"bank":_bankButton.titleLabel.text,@"bankCardNo":cardNo};
                                 NSLog(@"-----dic---%@--",dic);
                                 [GFHttpTool certifyPostParameters:dic success:^(NSDictionary *responseObject) {
+                                    NSLog(@"----responseObject-%@--%@",responseObject,responseObject[@"message"]);
                                     if ([responseObject[@"result"] intValue] == 1) {
                                         
                                        [self addAlertView:@"提交成功"];
                                         [self performSelector:@selector(success) withObject:nil afterDelay:1.5];
                                         
                                     }else{
-                                       [self addAlertView:@"提交失败，请填写合法信息"];
+                                       [self addAlertView:responseObject[@"message"]];
                                     }
                                     
                                 } failure:^(NSError *error) {
@@ -616,7 +617,7 @@
     
     GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:@"moreList" withRightImgHightName:@"moreListClick" withCenterTitle:@"我要认证" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
     [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [navView.rightBut addTarget:self action:@selector(moreBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [navView.rightBut addTarget:navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:navView];
     
     
@@ -626,9 +627,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)moreBtnClick{
-    NSLog(@"更多");
-}
+
 
 
 

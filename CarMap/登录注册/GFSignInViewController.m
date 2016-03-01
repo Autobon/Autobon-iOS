@@ -337,9 +337,10 @@
                 
                 
                 NSDictionary *dataDic = responseObject[@"data"];
+                NSLog(@"---dataDic---%@-",dataDic);
 // 判断 responseObject[@"status"] 的状态进行相应的页面跳转
                 UIWindow *window = [UIApplication sharedApplication].delegate.window;
-                if ([dataDic[@"avatar"] isKindOfClass:[NSNull class]]) {
+                if ([dataDic[@"skill"] isKindOfClass:[NSNull class]]) {
                     
                     CLAutobonViewController *autobonView = [[CLAutobonViewController alloc]init];
                     UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:autobonView];

@@ -185,7 +185,7 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
     NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *token = [userDefaultes objectForKey:@"autoken"];
-   [manager.requestSerializer setValue:@"autoken=\"technician:RhuKuh6uB7TCm6HWSi/D2A==\"" forHTTPHeaderField:@"Cookie"];
+   [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
     NSString *URLString = [NSString stringWithFormat:@"%@/technician/commitCertificate",HOST];
     [manager POST:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * task, NSDictionary *responseObject) {
         if(success) {
@@ -362,7 +362,7 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *token = [userDefaultes objectForKey:@"autoken"];
     NSLog(@"token--%@--",token);
-    [manager.requestSerializer setValue:@"autoken=\"technician:RhuKuh6uB7TCm6HWSi/D2A==\"" forHTTPHeaderField:@"Cookie"];
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
     NSString *URLString = [NSString stringWithFormat:@"%@/technician/getCertificate",HOST];
     
     

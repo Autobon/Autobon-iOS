@@ -126,16 +126,13 @@
 - (void)setNavigation{
     
     GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:nil withLeftImgHightName:nil withRightImgName:@"moreList" withRightImgHightName:@"moreListClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
-    [navView.rightBut addTarget:self action:@selector(moreBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [navView.rightBut addTarget:navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:navView];
     
 
 }
-// 更多按钮的响应方法
-- (void)moreBtnClick{
-    NSLog(@"更多");
-}
+
 
 
 - (void)didReceiveMemoryWarning {
