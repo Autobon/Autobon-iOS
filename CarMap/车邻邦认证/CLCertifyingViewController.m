@@ -51,7 +51,8 @@
 
 // 0,1,2,3
             NSArray *array = [dataDic[@"skill"] componentsSeparatedByString:@","];
-            
+//            NSArray *array = @[@"0",@"1",@"2",@"3"];
+            _skillLabel.numberOfLines = 0;
             [array enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop) {
                 int a = [obj intValue];
                 if (idx == 0) {
@@ -65,12 +66,12 @@
             
             _userNameLabel.text = dataDic[@"name"];
             _bankNumberLabel.text = [NSString stringWithFormat:@"银行卡号：%@",dataDic[@"bankCardNo"]];
-            CGSize titleSize = [_bankNumberLabel.text sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:CGSizeMake(MAXFLOAT, 30)];
-            _bankNumberLabel.frame = CGRectMake(15, 250, titleSize.width, 40);
-            _line.frame = CGRectMake(15+titleSize.width+5, 260, 1, 20);
+            CGSize titleSize = [_bankNumberLabel.text sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(MAXFLOAT, 30)];
+            _bankNumberLabel.frame = CGRectMake(15, 270, titleSize.width, 20);
+            _line.frame = CGRectMake(15+titleSize.width+5, 270, 1, 20);
             
             _bankLabel.text = dataDic[@"bank"];
-            _bankLabel.frame = CGRectMake(15+titleSize.width+10, 250, 60, 40);
+            _bankLabel.frame = CGRectMake(15+titleSize.width+10, 270, 60, 20);
             
             
             _identityLabel.text = dataDic[@"idNo"];
@@ -103,7 +104,7 @@
     failLabel.font = [UIFont systemFontOfSize:16];
     [self.view addSubview:failLabel];
     
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(10, 115, self.view.frame.size.width-20, 1)];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(10, 120, self.view.frame.size.width-20, 1)];
     view.backgroundColor = [UIColor colorWithRed:160/255.0 green:160/255.0 blue:160/255.0 alpha:1.0];
     [self.view addSubview:view];
     
@@ -146,7 +147,7 @@
     [self.view addSubview:lineView2];
     
     // 技能项目
-    _skillLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 220, self.view.frame.size.width-30, 40)];
+    _skillLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 225, self.view.frame.size.width-30, 40)];
     _skillLabel.text = @"技能项目：";
     _skillLabel.font = [UIFont systemFontOfSize:14];
     _skillLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
@@ -154,7 +155,7 @@
     
     _bankNumberLabel = [[UILabel alloc]init];
 //    _bankNumberLabel.text = @"银行卡号：1234 1233 1254 1234";
-    _bankNumberLabel.font = [UIFont systemFontOfSize:15];
+    _bankNumberLabel.font = [UIFont systemFontOfSize:14];
 //    _bankNumberLabel.backgroundColor = [UIColor cyanColor];
     _bankNumberLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
     [self.view addSubview:_bankNumberLabel];
@@ -172,12 +173,12 @@
     
     
     
-    UIView *lineView3 = [[UIView alloc]initWithFrame:CGRectMake(10, 300, self.view.frame.size.width-20, 1)];
+    UIView *lineView3 = [[UIView alloc]initWithFrame:CGRectMake(10, 305, self.view.frame.size.width-20, 1)];
     lineView3.backgroundColor = [UIColor colorWithRed:160/255.0 green:160/255.0 blue:160/255.0 alpha:1.0];
     [self.view addSubview:lineView3];
     
     
-    UILabel *idImageLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 160, 30)];
+    UILabel *idImageLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 160, 20)];
     idImageLabel.center = lineView3.center;
     idImageLabel.text = @"手持身份证正面照";
     idImageLabel.textAlignment = NSTextAlignmentCenter;

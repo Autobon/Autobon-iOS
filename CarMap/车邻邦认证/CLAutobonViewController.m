@@ -53,7 +53,7 @@
     distanceLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [self.view addSubview:distanceLabel];
     
-    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, distanceLabel.frame.origin.y+self.view.frame.size.height/18, self.view.frame.size.width, 2)];
+    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, distanceLabel.frame.origin.y+self.view.frame.size.height/18, self.view.frame.size.width, 1)];
     lineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [self.view addSubview:lineView];
     
@@ -63,7 +63,7 @@
     imageView.image = [UIImage imageNamed:@"orderImage"];
     [self.view addSubview:imageView];
     
-    UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(0, imageView.frame.origin.y+self.view.frame.size.height/4+5, self.view.frame.size.width, 2)];
+    UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(0, imageView.frame.origin.y+self.view.frame.size.height/4+5, self.view.frame.size.width, 1)];
     lineView2.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [self.view addSubview:lineView2];
     
@@ -74,7 +74,7 @@
     timeLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [self.view addSubview:timeLabel];
     
-    UIView *lineView3 = [[UIView alloc]initWithFrame:CGRectMake(0, timeLabel.frame.origin.y+self.view.frame.size.height/18, self.view.frame.size.width, 2)];
+    UIView *lineView3 = [[UIView alloc]initWithFrame:CGRectMake(0, timeLabel.frame.origin.y+self.view.frame.size.height/18, self.view.frame.size.width, 1)];
     lineView3.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [self.view addSubview:lineView3];
     
@@ -86,7 +86,7 @@
     otherLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [self.view addSubview:otherLabel];
     
-    UIView *lineView4 = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-self.view.frame.size.height/18-2, self.view.frame.size.width, 2)];
+    UIView *lineView4 = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-self.view.frame.size.height/18-2, self.view.frame.size.width, 1)];
     lineView4.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [self.view addSubview:lineView4];
 
@@ -105,7 +105,7 @@
     [_certifyButton setTitleColor:[[UIColor alloc]initWithRed:163/255.0 green:163/255.0 blue:163/255.0 alpha:1.0] forState:UIControlStateNormal];
     [self.view addSubview:_certifyButton];
     
-    UIView *lineView5 = [[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-1, self.view.frame.size.height-self.view.frame.size.height/18, 2, self.view.frame.size.height/18)];
+    UIView *lineView5 = [[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-1, self.view.frame.size.height-self.view.frame.size.height/18, 1, self.view.frame.size.height/18)];
     lineView5.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [self.view addSubview:lineView5];
     
@@ -115,7 +115,7 @@
 - (void)certifyBtnClick{
     NSLog(@"认证按钮的响应方法");
     CLCertifyViewController *certify = [[CLCertifyViewController alloc]init];
-    [self.navigationController pushViewController:certify animated:YES];
+    [self.navigationController pushViewController:certify animated:NO];
     
     
 }

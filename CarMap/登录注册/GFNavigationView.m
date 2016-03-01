@@ -74,7 +74,7 @@
         if ([nextResponder isKindOfClass:[UIViewController
                                          class]]) {
             UIViewController *view = (UIViewController *)nextResponder;
-            [view.navigationController pushViewController:[[CLMoreViewController alloc]init] animated:YES];
+            [view.navigationController pushViewController:[[CLMoreViewController alloc]init] animated:NO];
             
         }
     }

@@ -9,6 +9,7 @@
 #import "CLWorkOverViewController.h"
 #import "GFNavigationView.h"
 #import "CLTitleView.h"
+#import "GFMyMessageViewController.h"
 
 
 @interface CLWorkOverViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
@@ -35,7 +36,7 @@
     
     _scrollView = [[UIScrollView alloc]init];
     _scrollView.frame = CGRectMake(0, 64+36, self.view.frame.size.width, self.view.frame.size.height-64-38);
-    
+    _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, 700);
     [self.view addSubview:_scrollView];
     
     
@@ -75,6 +76,8 @@
     //    headerView.backgroundColor = [UIColor cyanColor];
     [self.view addSubview:headerView];
 }
+
+
 #pragma mark - 获取周几
 - (NSString *)weekdayString{
     
@@ -114,13 +117,13 @@
     
     _cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*6/7-15, 55+self.view.frame.size.width*27/70-25, 30, 30)];
     [_cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
-    [_cameraBtn addTarget:self action:@selector(cameraHeadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_cameraBtn addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:_cameraBtn];
     
     
     
     
-    CLTitleView *titleView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 64+36+40 + self.view.frame.size.width/3*2+10, self.view.frame.size.width, 45) Title:@"选择本次负责的工作项"];
+    CLTitleView *titleView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 40 + self.view.frame.size.width/3*2+10, self.view.frame.size.width, 45) Title:@"选择本次负责的工作项"];
     [_scrollView addSubview:titleView];
     
 
@@ -152,10 +155,13 @@
     
     
     _workItemBtnArray = [[NSMutableArray alloc]init];
-    _workItemarray = @[@"前风挡",@"左前门",@"右前门",@"左后门",@"右后门",@"左中门",@"右中门",@"左大角",@"右大角",@"后风挡"];
+//    _workItemarray = @[@"前风挡",@"左前门",@"右前门",@"左后门",@"右后门",@"左中门",@"右中门",@"左大角",@"右大角",@"后风挡"];
+    _workItemarray = @[@"前保险杠",@"左前翼子板",@"右前翼子板",@"左前门",@"右前门",@"左中门",@"右中门",@"左后门",@"右后门",@"左后翼子板",@"右后翼子板",@"左底边",@"右底边",@"引擎盖",@"后背箱盖",@"后保险杠",@"车顶",@"左后视镜",@"右后视镜"];
+    
     for (int i = 0; i < _workItemarray.count; i++) {
         UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(10+(10+(self.view.frame.size.width-50)/4)*(i%4), lineView.frame.origin.y+10+35*(i/4), (self.view.frame.size.width-50)/4, 30)];
         [button setTitle:_workItemarray[i] forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont systemFontOfSize:13];
         button.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
         button.layer.cornerRadius = 10;
         button.layer.borderWidth = 1.0;
@@ -167,11 +173,11 @@
     }
     
     
-    UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(10, titleView.frame.origin.y+80+120, self.view.frame.size.width-20, 2)];
+    UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(10, titleView.frame.origin.y+80+(_workItemarray.count/4+1)*40, self.view.frame.size.width-20, 1)];
     lineView2.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [_scrollView addSubview:lineView2];
     
-    UIButton *workOverButton = [[UIButton alloc]initWithFrame:CGRectMake(30, self.view.frame.size.height-60, self.view.frame.size.width-60, 50)];
+    UIButton *workOverButton = [[UIButton alloc]initWithFrame:CGRectMake(30, lineView2.frame.origin.y+30, self.view.frame.size.width-60, 50)];
 //    workOverButton.center = CGPointMake(self.view.center.x, self.view.center.y+50+36+50);
     [workOverButton setTitle:@"完成工作" forState:UIControlStateNormal];
     workOverButton.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
@@ -237,11 +243,13 @@
     if ([_buttonArray containsObject:button]) {
         button.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
         [button setTitleColor:[UIColor colorWithRed:167/255.0 green:167/255.0 blue:167/255.0 alpha:1.0] forState:UIControlStateNormal];
+        button.layer.borderColor = [[UIColor colorWithRed:219/255.0 green:219/255.0 blue:219/255.0 alpha:1.0]CGColor];
         [_buttonArray removeObject:button];
     }else{
         
         button.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        button.layer.borderColor = [[UIColor clearColor]CGColor];
         [_buttonArray addObject:button];
     }
     
@@ -275,15 +283,15 @@
 }
 #pragma mark - 选择照片
 - (void)userHeadChoose:(UIButton *)button{
-    [_chooseView removeFromSuperview];
-    
-    if (button.tag == 1) {
-        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
-        imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-        imagePickerController.allowsEditing = YES;
-        imagePickerController.delegate =self;
-        [self presentViewController:imagePickerController animated:YES completion:nil];
-    }else{
+//    [_chooseView removeFromSuperview];
+//    
+//    if (button.tag == 1) {
+//        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
+//        imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+//        imagePickerController.allowsEditing = YES;
+//        imagePickerController.delegate =self;
+//        [self presentViewController:imagePickerController animated:YES completion:nil];
+//    }else{
         NSLog(@"打开相机");
         BOOL result = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
         if (result) {
@@ -299,7 +307,7 @@
             NSLog(@"----不支持使用相机----");
         }
         
-    }
+//    }
     
     
 }
@@ -309,36 +317,73 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     
     if (_imageArray.count == 0) {
-        _carImageView.image = image;
-        _carImageView.frame = CGRectMake(10, _carImageView.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+        _carImageView.hidden = YES;
+        UIImageView *imageView = [[UIImageView alloc]init];
+        imageView.image = image;
+        imageView.frame = CGRectMake(10, _carImageView.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
         _cameraBtn.frame = CGRectMake(20+(self.view.frame.size.width-40)/3, _carImageView.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
         [_cameraBtn setImage:[UIImage imageNamed:@"addImage"] forState:UIControlStateNormal];
         _cameraBtn.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+        imageView.userInteractionEnabled = YES;
+        UIButton *deleteBtn = [[UIButton alloc]initWithFrame:CGRectMake(imageView.frame.size.width-30, 0, 30, 30)];
+        [deleteBtn setBackgroundImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
+        [deleteBtn addTarget:self action:@selector(deleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [imageView addSubview:deleteBtn];
+        [_imageArray addObject:imageView];
+        [_scrollView addSubview:imageView];
+        
     }else{
+        NSLog(@"小车不存在---%@--",@(_imageArray.count));
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(_cameraBtn.frame.origin.x, _cameraBtn.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3)];
         imageView.image = image;
-        [self.view addSubview:imageView];
+        [_scrollView addSubview:imageView];
         
         if (_imageArray.count == 5) {
-            [_cameraBtn removeFromSuperview];
+            _cameraBtn.hidden = YES;
         }else{
             _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)%3),  _carImageView.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
         }
         
         
+        imageView.userInteractionEnabled = YES;
+        UIButton *deleteBtn = [[UIButton alloc]initWithFrame:CGRectMake(imageView.frame.size.width-30, 0, 30, 30)];
+        [deleteBtn setBackgroundImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
+        [deleteBtn addTarget:self action:@selector(deleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [imageView addSubview:deleteBtn];
+        [_imageArray addObject:imageView];
     }
-    
-    [_imageArray addObject:image];
+
     
 }
-
+#pragma mark - 删除相片的方法
+- (void)deleteBtnClick:(UIButton *)button{
+    NSLog(@"删除照片");
+    
+    UIImageView *imageView = (UIImageView *)[button superview];
+    [imageView removeFromSuperview];
+    [_imageArray removeObject:[button superview]];
+    imageView = nil;
+    
+    [_imageArray enumerateObjectsUsingBlock:^(UIImageView *obj, NSUInteger idx, BOOL *stop) {
+        
+        obj.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*(idx%3),  _carImageView.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*(idx/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+    }];
+    
+    if (_imageArray.count == 5) {
+        _cameraBtn.hidden = NO;
+    }else{
+        _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)%3),  _carImageView.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+    }
+    
+    
+}
 
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-// 签到按钮的响应方法
+#pragma mark - 工作完成的按钮响应方法
 - (void)workOverBtnClick{
     
 }
@@ -348,7 +393,7 @@
     
     GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"person" withLeftImgHightName:@"personClick" withRightImgName:@"moreList" withRightImgHightName:@"moreListClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
     [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [navView.rightBut addTarget:self action:@selector(moreBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [navView.rightBut addTarget:navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:navView];
     
@@ -356,12 +401,10 @@
 }
 - (void)backBtnClick{
 //    [self.navigationController popViewControllerAnimated:YES];
-    
+    GFMyMessageViewController *myMessage = [[GFMyMessageViewController alloc]init];
+    [self.navigationController pushViewController:myMessage animated:YES];
 }
-// 更多按钮的响应方法
-- (void)moreBtnClick{
-    NSLog(@"更多");
-}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -31,6 +31,7 @@
 #import "CLWorkOverViewController.h"
 #import "CLAddPersonViewController.h"
 #import "CLMoreViewController.h"
+#import "CLCleanWorkViewController.h"
 
 
 
@@ -96,7 +97,7 @@
 //    _firstView = [[ViewController alloc]init];
 //    CLAutobonViewController *firstView = [[CLAutobonViewController alloc]init];
 //    CLCertifyViewController *firstView = [[CLCertifyViewController alloc]init];
-    CLHomeOrderViewController *firstView = [[CLHomeOrderViewController alloc]init];
+//    CLHomeOrderViewController *firstView = [[CLHomeOrderViewController alloc]init];
 //    CLCertifyFailViewController *firstView = [[CLCertifyFailViewController alloc]init];
 //    CLCertifyingViewController *firstView = [[CLCertifyingViewController alloc]init];
 //    CLMoreViewController *firstView = [[CLMoreViewController alloc]init];
@@ -104,17 +105,22 @@
 //    CLWorkBeforeViewController *firstView = [[CLWorkBeforeViewController alloc]init];
 //    CLWorkOverViewController *firstView = [[CLWorkOverViewController alloc]init];
 //    CLAddPersonViewController *firstView = [[CLAddPersonViewController alloc]init];
+    CLCleanWorkViewController *firstView = [[CLCleanWorkViewController alloc]init];
+    
+    
+    
+    
     //********************* 光法页面 **********************
 //    GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
     GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
     CLMoreViewController *moreVC = [[CLMoreViewController alloc] init];
 
-//    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
+    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
 
     
 
 //<<<<<<< HEAD
-    _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
+//    _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
 
 
 

@@ -93,6 +93,7 @@
 		9BA9C8141C7D4F13005CE1C0 /* CLKnockOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA9C8131C7D4F13005CE1C0 /* CLKnockOrderViewController.m */; };
 		9BA9C8171C7DB3CC005CE1C0 /* CLWorkOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA9C8161C7DB3CC005CE1C0 /* CLWorkOverViewController.m */; };
 		9BA9CBD51C5B02220059F145 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA9CBD41C5B02220059F145 /* FirstViewController.m */; };
+		9BCFDC971C859397003A35A8 /* CLCleanWorkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BCFDC961C859397003A35A8 /* CLCleanWorkViewController.m */; };
 		9BE53AE41C72ADED00BBB424 /* CLAutobonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE53AE31C72ADED00BBB424 /* CLAutobonViewController.m */; };
 		9BE53AEA1C7301A200BBB424 /* CLCertifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE53AE91C7301A200BBB424 /* CLCertifyViewController.m */; };
 		9BE53AF31C73406800BBB424 /* GFTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE53AF21C73406800BBB424 /* GFTextField.m */; };
@@ -279,6 +280,8 @@
 		9BA9C8161C7DB3CC005CE1C0 /* CLWorkOverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLWorkOverViewController.m; sourceTree = "<group>"; };
 		9BA9CBD31C5B02220059F145 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
 		9BA9CBD41C5B02220059F145 /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		9BCFDC951C859397003A35A8 /* CLCleanWorkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCleanWorkViewController.h; sourceTree = "<group>"; };
+		9BCFDC961C859397003A35A8 /* CLCleanWorkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLCleanWorkViewController.m; sourceTree = "<group>"; };
 		9BE53AE21C72ADED00BBB424 /* CLAutobonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAutobonViewController.h; sourceTree = "<group>"; };
 		9BE53AE31C72ADED00BBB424 /* CLAutobonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAutobonViewController.m; sourceTree = "<group>"; };
 		9BE53AE81C7301A200BBB424 /* CLCertifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCertifyViewController.h; sourceTree = "<group>"; };
@@ -580,6 +583,8 @@
 				9B7C3FD41C77179100E3F53F /* CLWorkBeforeViewController.m */,
 				9BA9C8151C7DB3CC005CE1C0 /* CLWorkOverViewController.h */,
 				9BA9C8161C7DB3CC005CE1C0 /* CLWorkOverViewController.m */,
+				9BCFDC951C859397003A35A8 /* CLCleanWorkViewController.h */,
+				9BCFDC961C859397003A35A8 /* CLCleanWorkViewController.m */,
 			);
 			path = "工作界面";
 			sourceTree = "<group>";
@@ -974,6 +979,7 @@
 				865637E11C8424F100BE7D8D /* GFTrainViewController.m in Sources */,
 				9B9B5E7B1C7F07BD000D617E /* CLAddPersonViewController.m in Sources */,
 				9B9C259E1C75BF9C009A69D6 /* CLTitleTableViewCell.m in Sources */,
+				9BCFDC971C859397003A35A8 /* CLCleanWorkViewController.m in Sources */,
 				9BE665401C743E0800976E7D /* CLTouchScrollView.m in Sources */,
 				9BE53AF31C73406800BBB424 /* GFTextField.m in Sources */,
 				9B7C3FCE1C7706D800E3F53F /* CLOrderDetailViewController.m in Sources */,

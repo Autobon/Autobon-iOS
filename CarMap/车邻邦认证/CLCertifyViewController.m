@@ -18,7 +18,7 @@
 #import "GFHttpTool.h"
 #import "GFTipView.h"
 #import "CLCertifyingViewController.h"
-#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
 #import "CLAutobonViewController.h"
 
 
@@ -27,8 +27,8 @@
 {
     UIView *_chooseView;
     CLTouchScrollView *_scrollView;
-    UIImageView *_headImage;
-    UIImageView *_identityImageView;
+    UIButton *_headButton;
+    UIButton *_identityButton;
     BOOL _isHeadImage;
     BOOL _isTableView;
     BOOL _isBank;
@@ -88,8 +88,11 @@
                 [_bankButton setTitle:dataDic[@"bank"] forState:UIControlStateNormal];
                 [_bankButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 _bankNumberTextField.centerTxt.text = dataDic[@"bankCardNo"];
-                [_headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:51234/%@",dataDic[@"avatar"]]]];
-                [_identityImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:51234/%@",dataDic[@"idPhoto"]]]];
+                
+                [_headButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:51234/%@",dataDic[@"avatar"]]] forState:UIControlStateNormal];
+                
+                [_identityButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:51234/%@",dataDic[@"avatar"]]] forState:UIControlStateNormal];
+                
                 
                 
                 
@@ -108,13 +111,14 @@
     [self.view addSubview:_scrollView];
     
 //头像
-    _headImage = [[UIImageView alloc]initWithFrame:CGRectMake(10, 20, 80, 80)];
-    _headImage.image = [UIImage imageNamed:@"userHeadImage"];
-    _headImage.layer.cornerRadius = 40;
-    _headImage.clipsToBounds = YES;
+    _headButton = [[UIButton alloc]initWithFrame:CGRectMake(10, 20, 80, 80)];
+    [_headButton setImage:[UIImage imageNamed:@"userHeadImage"] forState:UIControlStateNormal];
+    _headButton.layer.cornerRadius = 40;
+    _headButton.clipsToBounds = YES;
 //    headImage.backgroundColor = [UIColor redColor];
-    [_scrollView addSubview:_headImage];
-    
+    [_scrollView addSubview:_headButton];
+    _headButton.tag = 1;
+    [_headButton addTarget:self action:@selector(cameraHeadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     UIButton *cameraHeadBtn = [[UIButton alloc]initWithFrame:CGRectMake(70, 80, 20, 20)];
     [cameraHeadBtn setImage:[UIImage imageNamed:@"cameraHead"] forState:UIControlStateNormal];
     cameraHeadBtn.tag = 1;
@@ -183,9 +187,10 @@
     _identityView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 250, self.view.frame.size.width, 45) Title:@"手持身份证正面照"];
     [_scrollView addSubview:_identityView];
     
-    _identityImageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/5, 310, self.view.frame.size.width*3/5, self.view.frame.size.width*27/70)];
-    _identityImageView.image = [UIImage imageNamed:@"userImage"];
-    [_scrollView addSubview:_identityImageView];
+    _identityButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/5, 310, self.view.frame.size.width*3/5, self.view.frame.size.width*27/70)];
+    [_identityButton setImage:[UIImage imageNamed:@"userImage"] forState:UIControlStateNormal];
+    [_identityButton addTarget:self action:@selector(cameraHeadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:_identityButton];
     
     UIButton *cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*4/5-15, 310+self.view.frame.size.width*27/70-25, 30, 30)];
     [cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
@@ -244,7 +249,7 @@
     _bankNumberTextField.centerTxt.tag = 5;
     [_scrollView addSubview:_bankNumberTextField];
     
-    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, _bankNumberTextField.frame.origin.y+40+40, self.view.frame.size.width, 2)];
+    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, _bankNumberTextField.frame.origin.y+40+40, self.view.frame.size.width, 1)];
     lineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [_scrollView addSubview:lineView];
     
@@ -408,7 +413,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-        cell.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+//        cell.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
         cell.textLabel.textColor = [UIColor whiteColor];
         UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 120, 40)];
         [button addTarget:self action:@selector(btn:) forControlEvents:UIControlEventTouchUpInside];
@@ -570,7 +575,8 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo{
     [self dismissViewControllerAnimated:YES completion:nil];
     if (_isHeadImage) {
-        _headImage.image = image;
+        
+        [_headButton setImage:image forState:UIControlStateNormal];
         NSData *headData = UIImageJPEGRepresentation(image, 0.3);
         [GFHttpTool headImage:headData success:^(NSDictionary *responseObject) {
             NSLog(@"-----responseObject---%@--",responseObject);
@@ -585,9 +591,9 @@
         }];
         
     }else{
-        _identityImageView.image = image;
+        [_identityButton setImage:image forState:UIControlStateNormal];
 //        _haveIdentityImage = YES;
-        _identityImageView.contentMode = UIViewContentModeScaleAspectFit;
+        _identityButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
         NSData *idPhotoImage = UIImageJPEGRepresentation(image, 0.3);
         [GFHttpTool idPhotoImage:idPhotoImage success:^(NSDictionary *responseObject) {
             NSLog(@"----%@---",responseObject);

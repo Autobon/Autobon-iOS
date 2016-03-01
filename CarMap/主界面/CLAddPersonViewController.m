@@ -125,6 +125,7 @@
     if (cell == nil) {
         cell = [[CLPersonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         [cell setCell];
+        cell.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     }
     CLAddPersonModel *person = _addPersonArray[indexPath.row];
     [cell.headImage sd_setImageWithURL:[NSURL URLWithString:person.headImageURL]];

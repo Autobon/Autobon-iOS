@@ -263,7 +263,7 @@
 - (void)bankButClick {
 
     NSLog(@"请选择开户银行");
-    
+    self.tableView.delegate = self;
     self.tableView.hidden = !self.tableView.hidden;
     
 

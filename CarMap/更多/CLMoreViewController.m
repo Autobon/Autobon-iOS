@@ -39,9 +39,15 @@
 //        button.backgroundColor = [UIColor cyanColor];
         [button setImage:[UIImage imageNamed:imageNameArray[i]] forState:UIControlStateNormal];
         button.imageEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 40);
-        
+//        button.backgroundColor = [UIColor redColor];
         [button setTitle:titleArray[i] forState:UIControlStateNormal];
-        button.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+        
+        if (i>1) {
+            button.titleEdgeInsets = UIEdgeInsetsMake(0, 15, 0, 0);
+        }else{
+            button.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+        }
+//        button.titleLabel.backgroundColor = [UIColor cyanColor];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         button.tag = i+1;
         [button addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -96,7 +102,7 @@
 }
 
 -(void)backBtnClick{
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:NO];
 }
 
 
