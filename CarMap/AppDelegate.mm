@@ -33,7 +33,7 @@
 #import "CLMoreViewController.h"
 
 
-
+#import "GFTestViewController.h"
 
 #import "GFMyMessageViewController.h"
 #import "GFSignInViewController.h"
@@ -111,10 +111,10 @@
 
 //    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
 
-    
+    GFTestViewController *testVC = [[GFTestViewController alloc] init];
 
 //<<<<<<< HEAD
-    _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
+    _navigation = [[UINavigationController alloc]initWithRootViewController:testVC];
 
 
 

@@ -30,6 +30,7 @@
 		860A4CC81C7EE2DB0067FB70 /* GFIndentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 860A4CC71C7EE2DB0067FB70 /* GFIndentViewController.m */; };
 		860A4CCB1C7EE4CB0067FB70 /* GFIndentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 860A4CCA1C7EE4CB0067FB70 /* GFIndentTableViewCell.m */; };
 		860A4CCE1C7EF9580067FB70 /* GFIndentDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 860A4CCD1C7EF9580067FB70 /* GFIndentDetailsViewController.m */; };
+		864C70E81C854637004B06B5 /* GFTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 864C70E71C854637004B06B5 /* GFTestViewController.m */; };
 		8655B0E51C76F15800D9FCB4 /* GFChangePwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8655B0E41C76F15800D9FCB4 /* GFChangePwdViewController.m */; };
 		8655C5C61C7D8E1000E5C69C /* GFMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8655C5C51C7D8E1000E5C69C /* GFMoreViewController.m */; };
 		865637DB1C8419A000BE7D8D /* GFServeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 865637DA1C8419A000BE7D8D /* GFServeViewController.m */; };
@@ -154,6 +155,8 @@
 		860A4CCA1C7EE4CB0067FB70 /* GFIndentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFIndentTableViewCell.m; sourceTree = "<group>"; };
 		860A4CCC1C7EF9580067FB70 /* GFIndentDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFIndentDetailsViewController.h; sourceTree = "<group>"; };
 		860A4CCD1C7EF9580067FB70 /* GFIndentDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFIndentDetailsViewController.m; sourceTree = "<group>"; };
+		864C70E61C854637004B06B5 /* GFTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFTestViewController.h; sourceTree = "<group>"; };
+		864C70E71C854637004B06B5 /* GFTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFTestViewController.m; sourceTree = "<group>"; };
 		8655B0E31C76F15800D9FCB4 /* GFChangePwdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFChangePwdViewController.h; sourceTree = "<group>"; };
 		8655B0E41C76F15800D9FCB4 /* GFChangePwdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFChangePwdViewController.m; sourceTree = "<group>"; };
 		8655C5C41C7D8E1000E5C69C /* GFMoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFMoreViewController.h; sourceTree = "<group>"; };
@@ -655,6 +658,8 @@
 			children = (
 				9B97543F1C5765B3004BDC7C /* AppDelegate.h */,
 				9B9754401C5765B3004BDC7C /* AppDelegate.mm */,
+				864C70E61C854637004B06B5 /* GFTestViewController.h */,
+				864C70E71C854637004B06B5 /* GFTestViewController.m */,
 				860A4C851C7ED9780067FB70 /* MJRefresh */,
 				866CCEAB1C755BC800E50C67 /* 网络请求(AFNetworking) */,
 				86B890E41C73355B0068B95D /* 登录注册 */,
@@ -1002,6 +1007,7 @@
 				9BA9CBD51C5B02220059F145 /* FirstViewController.m in Sources */,
 				860A4CBF1C7ED9780067FB70 /* MJRefreshStateHeader.m in Sources */,
 				9B8BA6DE1C7FF66000E90CB0 /* CLPersonTableViewCell.m in Sources */,
+				864C70E81C854637004B06B5 /* GFTestViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
