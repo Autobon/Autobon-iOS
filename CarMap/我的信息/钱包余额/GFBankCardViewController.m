@@ -10,6 +10,7 @@
 #import "GFNavigationView.h"
 #import "GFHttpTool.h"
 #import "GFTextField.h"
+#import "GFTipView.h"
 
 @interface GFBankCardViewController () {
     
@@ -29,6 +30,7 @@
 @property (nonatomic, strong) UIView *jvtiView;
 @property (nonatomic, strong) UITableView *tableView;
 
+@property (nonatomic, strong) UILabel *nameLab;
 @property (nonatomic, copy) NSString *bankName;
 @property (nonatomic, strong) NSArray *bankArr;
 
@@ -102,11 +104,11 @@
     nameView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:nameView];
     // 姓名Lab
-    UILabel *nameLab = [[UILabel alloc] initWithFrame:CGRectMake(jiange1, 0, 200, nameViewH)];
-    nameLab.text = @"陈光法";
-    nameLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
-    nameLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
-    [nameView addSubview:nameLab];
+    self.nameLab = [[UILabel alloc] initWithFrame:CGRectMake(jiange1, 0, 200, nameViewH)];
+    self.nameLab.text = @"陈光法";
+    self.nameLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
+    self.nameLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
+    [nameView addSubview:self.nameLab];
     // 边线
     UIView *line2 = [[UIView alloc] initWithFrame:CGRectMake(0, nameViewH - 1, kWidth, 1)];
     line2.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
@@ -198,13 +200,44 @@
 - (void)submitClick {
     
     
-    self.bankStr = self.bankArr[index];
-    self.bankCard = self.cardTxt.centerTxt.text;
+    // 提交修改银行卡信息按钮
+    NSString *url = @"http://121.40.157.200:51234/api/mobile/technician/changeBankCard";
+    NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
+    parDic[@"name"] = self.nameLab.text;
+    parDic[@"bank"] = self.bankArr[index];
+    parDic[@"bankCardNo"] = self.cardTxt.centerTxt.text;
     
-
-    [self.delegate changeBankCardViewController:self];
+    [GFHttpTool bankCardPost:url parameters:parDic success:^(id responseObject) {
+        
+        NSLog(@"提交成功++++++++++++++");
+        
+        NSInteger flage = [responseObject[@"result"] integerValue];
+        
+        if(flage == 1) {
+            
+            NSLog(@"修改成功===========\n%@", responseObject);
+        
+        }else {
+        
+            NSLog(@"修改失败===========\n%@", responseObject);
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+        NSLog(@"提交失败++++++++++++++");
+        
+    }];
     
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    
+//    self.bankStr = self.bankArr[index];
+//    self.bankCard = self.cardTxt.centerTxt.text;
+//    
+//
+//    [self.delegate changeBankCardViewController:self];
+//    
+//    [self.navigationController popViewControllerAnimated:YES];
     
 }
 
