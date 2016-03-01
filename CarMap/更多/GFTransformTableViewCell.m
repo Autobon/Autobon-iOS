@@ -37,22 +37,55 @@
         
         NSString *lab1Str = @"发送旅客的法国萨科技的股份发送旅客房价拉萨的叫法阿萨德飞拉萨发生了";
         NSMutableDictionary *lab1Dic = [[NSMutableDictionary alloc] init];
-        lab1Dic[NSFontAttributeName] = [UIFont systemFontOfSize:14 / 320.0 * kWidth];
+        lab1Dic[NSFontAttributeName] = [UIFont systemFontOfSize:16 / 320.0 * kWidth];
         lab1Dic[NSForegroundColorAttributeName] = [UIColor blackColor];
         CGRect fenRect1 = [lab1Str boundingRectWithSize:CGSizeMake(baseViewW - kWidth * 0.023 * 2.0, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:lab1Dic context:nil];
-        CGFloat lab1W = kWidth - kWidth * 0.023 * 2.0;
+        CGFloat lab1W = baseViewW - kWidth * 0.023 * 2.0;
         CGFloat lab1H = fenRect1.size.height;
         CGFloat lab1X = kWidth * 0.023;
         CGFloat lab1Y = kHeight * 0.02864;
         UILabel *lab1 = [[UILabel alloc] initWithFrame:CGRectMake(lab1X, lab1Y, lab1W, lab1H)];
         lab1.numberOfLines = 0;
         lab1.text = lab1Str;
-        lab1.font = [UIFont systemFontOfSize:14 / 320.0 * kWidth];
+        lab1.font = [UIFont systemFontOfSize:16 / 320.0 * kWidth];
         [baseView addSubview:lab1];
+
         
         
+        NSString *lab2Str = @"发送旅客的法国萨科技的股份发送旅客房价拉萨的叫法阿萨德飞拉萨发生了";
+        NSMutableDictionary *lab2Dic = [[NSMutableDictionary alloc] init];
+        lab2Dic[NSFontAttributeName] = [UIFont systemFontOfSize:14 / 320.0 * kWidth];
+        lab2Dic[NSForegroundColorAttributeName] = [UIColor blackColor];
+        CGRect fenRect2 = [lab2Str boundingRectWithSize:CGSizeMake(baseViewW - kWidth * 0.023 * 2.0, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:lab2Dic context:nil];
+        CGFloat lab2W  =lab1W;
+        CGFloat lab2H = fenRect2.size.height;
+        CGFloat lab2X = lab1X;
+        CGFloat lab2Y = CGRectGetMaxY(lab1.frame) + kHeight * 0.0234;
+        UILabel *lab2 = [[UILabel alloc] initWithFrame:CGRectMake(lab2X, lab2Y, lab2W, lab2H)];
+        lab2.numberOfLines = 0;
+        lab2.text = lab1Str;
+        lab2.font = [UIFont systemFontOfSize:14 / 320.0 * kWidth];
+        [baseView addSubview:lab2];
         
         
+        // 虚线
+        CGFloat lineImgViewW = baseViewW;
+        CGFloat lineImgViewH = 1;
+        CGFloat lineImgViewX = 0;
+        CGFloat lineImgViewY = CGRectGetMaxY(lab2.frame) + kHeight * 0.0234;
+        UIImageView *lineImgView = [[UIImageView alloc] initWithFrame:CGRectMake(lineImgViewX, lineImgViewY, lineImgViewW, lineImgViewH)];
+        lineImgView.image = [UIImage imageNamed:@"line.png"];
+        [baseView addSubview:lineImgView];
+        
+        
+        UILabel *timeLab = [[UILabel alloc] initWithFrame:CGRectMake(lab1X, CGRectGetMaxY(lineImgView.frame), lab1W, kHeight * 0.0625)];
+        timeLab.textAlignment = NSTextAlignmentRight;
+        timeLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
+        timeLab.text = @"2016-02-01至2016-02-07";
+        timeLab.font = [UIFont systemFontOfSize:12 / 320.0 * kWidth];
+        [baseView addSubview:timeLab];
+        
+        baseView.frame = CGRectMake(baseViewX, baseViewY, baseViewW, CGRectGetMaxY(timeLab.frame));
         
         
         self.cellHeight = baseView.frame.size.height + kHeight * 0.026;
