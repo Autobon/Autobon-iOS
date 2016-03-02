@@ -19,7 +19,7 @@
 @implementation CLAutobonViewController
 
 - (void)viewDidLoad {
-    
+    [super viewDidLoad];
     self.view.backgroundColor = [[UIColor alloc]initWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     
     [self setNavigation];
@@ -115,6 +115,7 @@
 - (void)certifyBtnClick{
     NSLog(@"认证按钮的响应方法");
     CLCertifyViewController *certify = [[CLCertifyViewController alloc]init];
+    [certify.submitButton setTitle:@"提交" forState:UIControlStateNormal];
     [self.navigationController pushViewController:certify animated:NO];
     
     

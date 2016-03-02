@@ -48,7 +48,19 @@
 }
 @end
 
+
+
+
+
+
 @implementation CLCertifyViewController
+
+- (UIButton *)submitButton{
+    if (_submitButton == nil) {
+        _submitButton = [[UIButton alloc]init];
+    }
+    return _submitButton;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -92,10 +104,6 @@
                 [_headButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:51234/%@",dataDic[@"avatar"]]] forState:UIControlStateNormal];
                 
                 [_identityButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:51234/%@",dataDic[@"avatar"]]] forState:UIControlStateNormal];
-                
-                
-                
-                
             }
         } failure:^(NSError *error) {
             
@@ -112,7 +120,7 @@
     
 //头像
     _headButton = [[UIButton alloc]initWithFrame:CGRectMake(10, 20, 80, 80)];
-    [_headButton setImage:[UIImage imageNamed:@"userHeadImage"] forState:UIControlStateNormal];
+    [_headButton setBackgroundImage:[UIImage imageNamed:@"userHeadImage"] forState:UIControlStateNormal];
     _headButton.layer.cornerRadius = 40;
     _headButton.clipsToBounds = YES;
 //    headImage.backgroundColor = [UIColor redColor];
@@ -188,7 +196,7 @@
     [_scrollView addSubview:_identityView];
     
     _identityButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/5, 310, self.view.frame.size.width*3/5, self.view.frame.size.width*27/70)];
-    [_identityButton setImage:[UIImage imageNamed:@"userImage"] forState:UIControlStateNormal];
+    [_identityButton setBackgroundImage:[UIImage imageNamed:@"userImage"] forState:UIControlStateNormal];
     [_identityButton addTarget:self action:@selector(cameraHeadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:_identityButton];
     
@@ -265,11 +273,11 @@
     
     
 // 提交按钮
-    UIButton *submitButton = [[UIButton alloc]initWithFrame:CGRectMake(30, lineView.frame.origin.y+2+10, self.view.frame.size.width-60, 40)];
-    [submitButton setTitle:@"提交" forState:UIControlStateNormal];
-    [submitButton setBackgroundImage:[UIImage imageNamed:@"button"] forState:UIControlStateNormal];
-    [submitButton addTarget:self action:@selector(submitBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [_scrollView addSubview:submitButton];
+    _submitButton.frame = CGRectMake(30, lineView.frame.origin.y+2+10, self.view.frame.size.width-60, 40);
+//    [_submitButton setTitle:@"提交" forState:UIControlStateNormal];
+    [_submitButton setBackgroundImage:[UIImage imageNamed:@"button"] forState:UIControlStateNormal];
+    [_submitButton addTarget:self action:@selector(submitBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:_submitButton];
     
     UILabel *submitLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-156, lineView.frame.origin.y+2+50, 180, 30)];
     submitLabel.text = @"点击\"提交\"代表本人已阅读并同意";
@@ -372,9 +380,15 @@
 - (void)success{
 //    CLCertifyingViewController *certifying = [[CLCertifyingViewController alloc]init];
 //    [self.navigationController pushViewController:certifying animated:YES];
-    CLAutobonViewController *autobon = (CLAutobonViewController *)self.navigationController.viewControllers[0];
-    autobon.certifyButton.userInteractionEnabled = NO;
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    if ([_submitButton.titleLabel.text isEqualToString:@"提交"]) {
+        CLAutobonViewController *autobon = (CLAutobonViewController *)self.navigationController.viewControllers[0];
+        autobon.certifyButton.userInteractionEnabled = NO;
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
 }
 
 #pragma mark - 警告框 OK

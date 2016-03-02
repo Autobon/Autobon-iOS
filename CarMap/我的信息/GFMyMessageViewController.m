@@ -15,6 +15,7 @@
 #import "GFBillViewController.h"
 #import "GFSignInViewController.h"
 #import "GFIndentViewController.h"
+#import "CLCertifyViewController.h"
 
 
 @interface GFMyMessageViewController () {
@@ -449,7 +450,11 @@
 // 信息界面按钮跳转
 - (void)msgButClick {
 
-    NSLog(@"个人信息界面");
+    CLCertifyViewController *certify = [[CLCertifyViewController alloc]init];
+    certify.isFail = YES;
+    [certify.submitButton setTitle:@"再次认证" forState:UIControlStateNormal];
+    [self.navigationController pushViewController:certify animated:YES];
+    
 }
 // 余额界面跳转
 - (void)balButClick {

@@ -17,6 +17,9 @@
 #import "GFHttpTool.h"
 #import "CLHomeOrderCellModel.h"
 #import "CLWorkBeforeViewController.h"
+#import "GFAlertView.h"
+
+
 
 #import "MJRefresh.h"
 
@@ -36,6 +39,8 @@
 @implementation CLHomeOrderViewController
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
+    
     _rowNumber = 30;
     _cellModelArray = [[NSMutableArray alloc]init];
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
@@ -128,6 +133,7 @@
 //    }];
     
     [self.view addSubview:_tableView];
+    
     
     
 }
@@ -227,6 +233,7 @@
             [cell.orderButton addTarget:self action:@selector(orderBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         }
         
+
         return cell;
     }
      
@@ -247,18 +254,22 @@
 - (void)workBegin:(UIButton *)button{
     NSLog(@"点击订单");
     
-     CLHomeOrderCellModel *cellModel = _cellModelArray[button.tag-2];
-    CLOrderDetailViewController *orderDetail = [[CLOrderDetailViewController alloc]init];
-    orderDetail.orderId = cellModel.orderId;
-    orderDetail.customerLat = cellModel.customerLat;
-    orderDetail.customerLon = cellModel.customerLon;
-    orderDetail.orderPhotoURL = cellModel.orderPhotoURL;
-    orderDetail.orderTime = cellModel.orderTime;
-    orderDetail.remark = cellModel.remark;
-    [self.navigationController pushViewController:orderDetail animated:YES];
+//     CLHomeOrderCellModel *cellModel = _cellModelArray[button.tag-2];
+//    CLOrderDetailViewController *orderDetail = [[CLOrderDetailViewController alloc]init];
+//    orderDetail.orderId = cellModel.orderId;
+//    orderDetail.customerLat = cellModel.customerLat;
+//    orderDetail.customerLon = cellModel.customerLon;
+//    orderDetail.orderPhotoURL = cellModel.orderPhotoURL;
+//    orderDetail.orderTime = cellModel.orderTime;
+//    orderDetail.remark = cellModel.remark;
+//    [self.navigationController pushViewController:orderDetail animated:YES];
     
     
     
+    
+    GFAlertView *alertView = [[GFAlertView alloc]initWithHeadImageURL:nil name:nil mark:1.2 orderNumber:3 goodNumber:1.0 order:nil];
+    
+    [self.view addSubview:alertView];
     
     
     

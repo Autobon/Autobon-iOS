@@ -11,5 +11,6 @@
 @interface CLCertifyViewController : UIViewController<UITableViewDelegate>
 
 @property (nonatomic) BOOL isFail;
+@property (nonatomic ,strong) UIButton *submitButton;
 
 @end

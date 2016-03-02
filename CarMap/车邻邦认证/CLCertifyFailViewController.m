@@ -210,6 +210,7 @@
     
     CLCertifyViewController *certifyView = [[CLCertifyViewController alloc]init];
     certifyView.isFail = YES;
+    [certifyView.submitButton setTitle:@"再次认证" forState:UIControlStateNormal];
     [self.navigationController pushViewController:certifyView animated:YES];
     
 }

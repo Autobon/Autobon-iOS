@@ -21,6 +21,7 @@
 @implementation CLKnockOrderViewController
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
     
     self.view.backgroundColor = [[UIColor alloc]initWithWhite:0.2 alpha:0.2];
     _orderView = [[UIView alloc]initWithFrame:CGRectMake(10, 90, self.view.frame.size.width-20, self.view.frame.size.height-100)];

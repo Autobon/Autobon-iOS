@@ -10,6 +10,7 @@
 #import "GFNavigationView.h"
 #import "CLTitleView.h"
 #import "GFMyMessageViewController.h"
+#import "CLShareViewController.h"
 
 
 @interface CLWorkOverViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
@@ -371,6 +372,11 @@
     
     if (_imageArray.count == 5) {
         _cameraBtn.hidden = NO;
+    }else if (_imageArray.count == 0){
+        _carImageView.hidden = NO;
+        _cameraBtn.frame = CGRectMake(self.view.frame.size.width*6/7-15, 55+self.view.frame.size.width*27/70-25, 30, 30);
+        [_cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
+        _cameraBtn.backgroundColor = [UIColor clearColor];
     }else{
         _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)%3),  _carImageView.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
     }
@@ -385,6 +391,9 @@
 
 #pragma mark - 工作完成的按钮响应方法
 - (void)workOverBtnClick{
+    
+    CLShareViewController *shareView = [[CLShareViewController alloc]init];
+    [self.navigationController pushViewController:shareView animated:YES];
     
 }
 

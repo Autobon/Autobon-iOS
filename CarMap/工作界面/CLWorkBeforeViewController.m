@@ -257,8 +257,13 @@
     
     if (_imageArray.count == 2) {
         _cameraBtn.hidden = NO;
-    }else{
+    }else if(_imageArray.count == 1){
         _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)%3),  _carImageView.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+    }else{
+        _carImageView.hidden = NO;
+        _cameraBtn.frame = CGRectMake(self.view.frame.size.width*6/7-15, 200+self.view.frame.size.width*27/70-25, 30, 30);
+        [_cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
+        _cameraBtn.backgroundColor = [UIColor clearColor];
     }
     
     

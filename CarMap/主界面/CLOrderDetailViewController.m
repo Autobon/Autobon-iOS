@@ -22,7 +22,7 @@
 @implementation CLOrderDetailViewController
 
 - (void)viewDidLoad {
-    
+    [super viewDidLoad];
     self.view.backgroundColor = [[UIColor alloc]initWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     
     [self setNavigation];

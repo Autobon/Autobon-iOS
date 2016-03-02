@@ -29,7 +29,9 @@
 
 
 - (void)viewDidLoad{
-    NSLog(@"这是什么情况");
+    [super viewDidLoad];
+    NSLog(@"呵呵");
+    
 }
 - (void)viewDidLoad2 {
     [super viewDidLoad];
