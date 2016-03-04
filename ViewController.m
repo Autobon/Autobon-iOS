@@ -21,6 +21,9 @@
 #import "GFMapViewController.h"
 
 
+#import "CLHomeOrderViewController.h"
+
+
 @interface ViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 @end
@@ -32,9 +35,17 @@
     [super viewDidLoad];
     NSLog(@"呵呵");
     
+    CLHomeOrderViewController *homeView = [[CLHomeOrderViewController alloc]init];
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:homeView];
+//    self.view.window.rootViewController = nav;
+    nav.navigationBarHidden = YES;
+    UIWindow *window = [UIApplication sharedApplication].delegate.window;
+    window.rootViewController = nav;
+//    [self.navigationController pushViewController:homeView animated:YES];
+    
 }
 - (void)viewDidLoad2 {
-    [super viewDidLoad];
+//    [super viewDidLoad];
     
     NSLog(@"这边也走了");
     

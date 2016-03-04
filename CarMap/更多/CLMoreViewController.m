@@ -27,6 +27,7 @@
     
     [self setViewForMore];
     
+    self.view.backgroundColor = [UIColor whiteColor];
     
 }
 

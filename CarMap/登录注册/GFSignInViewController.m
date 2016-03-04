@@ -340,21 +340,15 @@
                 NSLog(@"---dataDic---%@-",dataDic);
 // 判断 responseObject[@"status"] 的状态进行相应的页面跳转
                 UIWindow *window = [UIApplication sharedApplication].delegate.window;
-                if ([dataDic[@"skill"] isKindOfClass:[NSNull class]]) {
-                    
-                    CLAutobonViewController *autobonView = [[CLAutobonViewController alloc]init];
-                    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:autobonView];
-                    window.rootViewController = navigation;
-                    navigation.navigationBarHidden = YES;
-                }else{
+                
                     if ([dataDic[@"status"]isEqualToString:@"VERIFIED"]) {
                         CLHomeOrderViewController *homeVC = [[CLHomeOrderViewController alloc] init];
                         UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
                         window.rootViewController = navigation;
                         navigation.navigationBarHidden = YES;
                     }else if([dataDic[@"status"]isEqualToString:@"NOTVERIFIED"]){
-                        CLCertifyingViewController *homeVC = [[CLCertifyingViewController alloc] init];
-                        UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
+                        CLAutobonViewController *autobonView = [[CLAutobonViewController alloc]init];
+                        UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:autobonView];
                         window.rootViewController = navigation;
                         navigation.navigationBarHidden = YES;
                     }else if ([dataDic[@"status"]isEqualToString:@"REJECTED"]){
@@ -362,10 +356,14 @@
                         UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
                         window.rootViewController = navigation;
                         navigation.navigationBarHidden = YES;
+                    }else if ([dataDic[@"status"]isEqualToString:@"IN_VERIFICATION"]){
+                        CLCertifyingViewController *homeVC = [[CLCertifyingViewController alloc] init];
+                        UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
+                        window.rootViewController = navigation;
+                        navigation.navigationBarHidden = YES;
                     }
                     
                     
-                }
             }else if([responseObject[@"result"] isEqual:@0]) {
                 
                 NSLog(@"登录失败==========%@", responseObject);

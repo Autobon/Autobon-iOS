@@ -462,7 +462,7 @@
         UILabel *okLab = [[UILabel alloc] initWithFrame:CGRectMake(okLabX, okLabY, okLabW, okLabH)];
         okLab.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
         okLab.textColor = [UIColor whiteColor];
-        okLab.text = nameStr;
+        okLab.text = nameStr2;
         okLab.font = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
         okLab.textAlignment = NSTextAlignmentCenter;
         okLab.layer.cornerRadius = 7.5;

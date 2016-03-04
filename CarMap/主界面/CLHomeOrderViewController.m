@@ -38,8 +38,25 @@
 
 @implementation CLHomeOrderViewController
 
+
+- (void)viewWillAppear:(BOOL)animated{
+    NSUserDefaults *userDefalts = [NSUserDefaults standardUserDefaults];
+    [userDefalts setObject:@"YES" forKey:@"homeOrder"];
+    [userDefalts synchronize];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    NSUserDefaults *userDefalts = [NSUserDefaults standardUserDefaults];
+    [userDefalts setObject:@"NO" forKey:@"homeOrder"];
+    [userDefalts synchronize];
+}
+
+
 - (void)viewDidLoad {
-    [super viewDidLoad];
+    
+//    [super viewDidLoad];
+//    self.view.backgroundColor = [UIColor whiteColor];
+    NSLog(@"到这里了--%@--",NSHomeDirectory());
     
     _rowNumber = 30;
     _cellModelArray = [[NSMutableArray alloc]init];
@@ -53,7 +70,7 @@
     
     [GFHttpTool getOrderListSuccess:^(NSDictionary *responseObject) {
         if ([responseObject[@"result"] integerValue] == 1) {
-            NSArray *dataArray = responseObject[@"data"];
+            NSArray *dataArray = responseObject[@"list"];
             [dataArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
                 NSLog(@"---obj---%@--",obj);
                 CLHomeOrderCellModel *cellModel = [[CLHomeOrderCellModel alloc]init];
@@ -72,13 +89,22 @@
                 
                 
             }];
-            [_tableView reloadData];
+            if (_cellModelArray.count == 0) {
+                _tableView.hidden = YES;
+                UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64)];
+                imageView.image = [UIImage imageNamed:@"nothing.jpg"];
+                imageView.backgroundColor = [UIColor cyanColor];
+                [self.view addSubview:imageView];
+            }else{
+                [_tableView reloadData];
+            }
+            
         }
     } failure:^(NSError *error) {
         
     }];
-    
-    
+//
+//    
     _tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
     _tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     
@@ -148,7 +174,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return _cellModelArray.count+1;
+    return _cellModelArray.count+1+2;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
@@ -182,8 +208,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
         return 85;
-    }else if(indexPath.row == _cellModelArray.count+1){
-        return _rowNumber;
     }else{
         return 75 + [UIScreen mainScreen].bounds.size.width*5/12;
     }
@@ -204,14 +228,7 @@
             cell = [[CLTitleTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"title"];
             [cell initWithTitle];
         }
-        return cell;
-    }else if(indexPath.row == _cellModelArray.count+1){
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-            cell.textLabel.text = @"加载更多";
-            cell.textLabel.textAlignment = NSTextAlignmentCenter;
-        }
+//        cell.contentView.userInteractionEnabled = NO;
         return cell;
     }else{
         CLHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"order"];
@@ -220,22 +237,23 @@
             [cell initWithOrder];
         }
         
-        CLHomeOrderCellModel *cellModer = _cellModelArray[indexPath.row-1];
-        cell.orderButton.tag = indexPath.row + 1;
-        cell.orderNumberLabel.text = [NSString stringWithFormat:@"订单编号%@",cellModer.orderNumber];
-        cell.timeLabel.text = [NSString stringWithFormat:@"预约时间%@",cellModer.orderTime];
-        if ([cellModer.orderType integerValue] == 1) {
-            [cell.orderButton setTitle:@"开始工作" forState:UIControlStateNormal];
-            
-            [cell.orderButton addTarget:self action:@selector(workBegin:) forControlEvents:UIControlEventTouchUpInside];
-        }else{
-            [cell.orderButton setTitle:@"进入订单" forState:UIControlStateNormal];
-            [cell.orderButton addTarget:self action:@selector(orderBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        }
-        
-
+//        CLHomeOrderCellModel *cellModer = _cellModelArray[indexPath.row-1];
+//        cell.orderButton.tag = indexPath.row + 1;
+//        cell.orderNumberLabel.text = [NSString stringWithFormat:@"订单编号%@",cellModer.orderNumber];
+//        cell.timeLabel.text = [NSString stringWithFormat:@"预约时间%@",cellModer.orderTime];
+//        if ([cellModer.orderType integerValue] == 1) {
+//            [cell.orderButton setTitle:@"开始工作" forState:UIControlStateNormal];
+//            
+//            [cell.orderButton addTarget:self action:@selector(workBegin:) forControlEvents:UIControlEventTouchUpInside];
+//        }else{
+//            [cell.orderButton setTitle:@"进入订单" forState:UIControlStateNormal];
+//            [cell.orderButton addTarget:self action:@selector(orderBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//        }
+//        
+//        cell.contentView.userInteractionEnabled = YES;
+        [cell.orderButton addTarget:self action:@selector(workBegin:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
-    }
+    };
      
     
     return nil;

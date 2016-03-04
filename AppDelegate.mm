@@ -34,7 +34,8 @@
 #import "CLMoreViewController.h"
 #import "CLCleanWorkViewController.h"
 #import "CLShareViewController.h"
-
+#import "CLAddOrderSuccessViewController.h"
+#import "PoiSearchDemoViewController.h"
 
 
 
@@ -57,6 +58,7 @@
     BMKMapManager *_mapManager;
 //    ViewController *_firstView;
     UINavigationController *_navigation;
+    NSDate *_pushDate;
 }
 @end
 
@@ -96,7 +98,10 @@
 
     
    
-    CLShareViewController *firstView = [[CLShareViewController alloc]init];
+//    CLShareViewController *firstView = [[CLShareViewController alloc]init];
+//    CLHomeOrderViewController *firstView = [[CLHomeOrderViewController alloc]init];
+//    CLAddOrderSuccessViewController *firstView = [[CLAddOrderSuccessViewController alloc]init];
+    PoiSearchDemoViewController *firstView = [[PoiSearchDemoViewController alloc]init];
     
     
     //********************* 光法页面 **********************
@@ -114,11 +119,6 @@
     _navigation.navigationBarHidden = YES;
     _window.rootViewController = _navigation;
     [_window makeKeyAndVisible];
-    
-    
-    
-    
-    
     
     return YES;
 }
@@ -250,6 +250,7 @@
 }
 
 
+#pragma mark - 个推通知响应方法
 /** SDK收到透传消息回调 */
 - (void)GeTuiSdkDidReceivePayload:(NSString *)payloadId andTaskId:(NSString *)taskId andMessageId:(NSString *)aMsgId andOffLine:(BOOL)offLine fromApplication:(NSString *)appId {
     // [4]: 收到个推消息
@@ -257,61 +258,74 @@
     NSString *payloadMsg = nil;
     if (payload) {
         payloadMsg = [[NSString alloc] initWithBytes:payload.bytes length:payload.length encoding:NSUTF8StringEncoding];
-        
-//        NSData *JSONData = [payloadMsg dataUsingEncoding:NSUTF8StringEncoding];
-//        NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:nil];
-        
-        }
+    }
     NSString *msg = [NSString stringWithFormat:@" payloadId=%@,taskId=%@,messageId:%@,payloadMsg:%@%@",payloadId,taskId,aMsgId,payloadMsg,offLine ? @"<离线消息>" : @""];
     NSLog(@"\n>前台>>[GexinSdk ReceivePayload]:%@\n\n", msg);
-    /**
-     *汇报个推自定义事件
-     *actionId：用户自定义的actionid，int类型，取值90001-90999。
-     *taskId：下发任务的任务ID。
-     
-     *msgId： 下发任务的消息ID。
-     *返回值：BOOL，YES表示该命令已经提交，NO表示该命令未提交成功。注：该结果不代表服务器收到该条命令
-     **/
     [GeTuiSdk sendFeedbackMessage:90001 taskId:taskId msgId:aMsgId];
-//    NSLog(@"接受消息");
-//    UILocalNotification* ln = [[UILocalNotification alloc] init];
-//    ln.fireDate = [NSDate dateWithTimeIntervalSinceNow:1.0];
-//    ln.alertBody = @"category";
-//    [[UIApplication sharedApplication] scheduleLocalNotification:ln];
-
-//    FirstViewController *first = [[FirstViewController alloc]init];
-//    first.labelTitle = @"地图";
-//    UIWindow *window = [UIApplication sharedApplication].delegate.window;
-//    [window addSubview:first.view];
-//    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-//    [[UIApplication sharedApplication] cancelAllLocalNotifications];
-//    FirstViewController *first = [[FirstViewController alloc]init];
-//    [_navigation pushViewController:first animated:NO];
-//    [UIApplication sharedApplication].applicationIconBadgeNumber = 1;
-//    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-    
-    
     NSData *JSONData = [payloadMsg dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:nil];
-
-    UILocalNotification*notification = [[UILocalNotification alloc] init];
-    if (nil != notification)
-    {
-        NSLog(@"--tongzhi--");
-        // 设置弹出通知的时间
-        NSDate *nowDate = [NSDate date];
-        //设置通知弹出的时间
-        notification.fireDate = nowDate;
-        notification.alertTitle = responseJSON[@"title"];
-        notification.alertAction = @"打开";
+    
+    
+    if ([responseJSON[@"action"]isEqualToString:@"NEW_ORDER"]) {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        if ([[userDefaults objectForKey:@"homeOrder"]isEqualToString:@"YES"]) {
+            NSLog(@"弹出订单框");
+            
+            
+            
+            CLKnockOrderViewController *knockOrder = [[CLKnockOrderViewController alloc]init];
+            
+            
+            UIViewController *result;
+            UIWindow *topWindow = [[UIApplication sharedApplication] keyWindow];
+            if (topWindow.windowLevel != UIWindowLevelNormal)
+            {
+                NSArray *windows = [[UIApplication sharedApplication] windows];
+                for(topWindow in windows)
+                {
+                    if (topWindow.windowLevel == UIWindowLevelNormal)
+                        break;
+                }
+            
+            UIView *rootView = [[topWindow subviews] objectAtIndex:0];
+            id nextResponder = [rootView nextResponder];
+            if ([nextResponder isKindOfClass:[UIViewController class]]){
+                result = nextResponder;
+                NSLog(@"这边");
+            }
+            else if([topWindow respondsToSelector:@selector(rootViewController)] && topWindow.rootViewController != nil) {
+                result = topWindow.rootViewController;
+                NSLog(@"那边");
+            }
+            
+            }
         
-        //设置提示消息
-        notification.alertBody = [NSString stringWithFormat:@"%@",responseJSON];
-        // 设置启动通知的声音
-        AudioServicesPlaySystemSound(1307);
-        // 启动通知
-        [[UIApplication sharedApplication]scheduleLocalNotification:notification];
+            NSLog(@"----result--%@----result.navigationController-%@--",result,result.navigationController);
+            [result.navigationController pushViewController:knockOrder animated:YES];
+    
+            
+            
+            
+        }else{
+            UILocalNotification*notification = [[UILocalNotification alloc] init];
+            if (nil != notification)
+            {
+                notification.fireDate = [NSDate date];
+                _pushDate = [NSDate date];
+                NSLog(@"----_pushDate-%@--%@-----",_pushDate,[NSDate date]);
+                notification.alertTitle = @"车邻邦";
+                notification.alertBody = responseJSON[@"title"];
+                notification.userInfo = responseJSON;
+                AudioServicesPlaySystemSound(1307);
+                [[UIApplication sharedApplication]scheduleLocalNotification:notification];
+            }
+        }
     }
+    
+    
+    
+    
+    
     
     
     
@@ -326,6 +340,17 @@
 // 收到的推送消息还是要存储起来的，用来查看历史订单不用存储到数据库中吧
     
 }
+
+
+
+
+
+
+
+
+
+
+
 
 /** APP已经接收到“远程”通知(推送) - 透传推送消息  */
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
@@ -350,27 +375,15 @@
 //如果应用程序没有存活，会产生提示，但是无论通过那种方式启动应用程序，都不会调用这个方法。如果我们需要处理收到的通知消息，我们需要使用上面的方法。
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     //系统提供给我们用来处理收到推送后操作的方法。
-    NSLog(@"消息来了a－－%@",notification.alertBody);
-//    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(100, 300, 120, 120)];
-//    view.backgroundColor = [UIColor cyanColor];
+//    NSLog("-----%@-----%@---",_pushDate,[NSDate date]);
     
-//    first.labelTitle = @"地图";
-//    SecondViewController *second = [[SecondViewController alloc]init];
-//    GFMapViewController *test = [[GFMapViewController alloc]init];
-//    FirstViewController *first = [[FirstViewController alloc]init];
-//    [_navigation pushViewController:first animated:NO];
-//    [UIApplication sharedApplication].applicationIconBadgeNumber = 1;
-//    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
-//    UIWindow *window = [UIApplication sharedApplication].delegate.window;
-//    [window addSubview:test.view];
-//    [_window presentViewController:vc animated:YES completion:nil];
-//    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//    [userDefaults setObject:@"tongzhi" forKey:@"title"];
-//    [window addChildViewController:first];
-//    [first didMoveToParentViewController:window];
-//    [_firstView addMap];
+    long time = (long)[[NSDate date] timeIntervalSince1970] - [_pushDate timeIntervalSince1970];
+    NSLog(@"---time--%ld----",time);
+    
+    if (0 < time) {
+         NSLog(@"消息来了a－－%@",notification.userInfo);
+    }
     
     
 }
