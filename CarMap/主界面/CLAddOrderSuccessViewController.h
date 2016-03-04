@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^addOrderBlock)();
+
 @interface CLAddOrderSuccessViewController : UIViewController
+
+@property (nonatomic ,copy) addOrderBlock addBlock;
 
 @end

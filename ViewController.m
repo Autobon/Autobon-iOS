@@ -32,15 +32,15 @@
 
 
 - (void)viewDidLoad{
-    [super viewDidLoad];
+//    [super viewDidLoad];
     NSLog(@"呵呵");
     
-    CLHomeOrderViewController *homeView = [[CLHomeOrderViewController alloc]init];
-    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:homeView];
+//    CLHomeOrderViewController *homeView = [[CLHomeOrderViewController alloc]init];
+//    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:homeView];
 //    self.view.window.rootViewController = nav;
-    nav.navigationBarHidden = YES;
-    UIWindow *window = [UIApplication sharedApplication].delegate.window;
-    window.rootViewController = nav;
+//    nav.navigationBarHidden = YES;
+//    UIWindow *window = [UIApplication sharedApplication].delegate.window;
+//    window.rootViewController = nav;
 //    [self.navigationController pushViewController:homeView animated:YES];
     
 }

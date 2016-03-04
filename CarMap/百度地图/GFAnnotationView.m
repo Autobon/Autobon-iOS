@@ -39,7 +39,6 @@
     
     // 给大头针自定义图片
     self.image = [UIImage imageNamed:annotation.iconImgName];
-    NSLog(@"自定义图片");
 }
 
 /*

@@ -346,7 +346,7 @@
                         UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
                         window.rootViewController = navigation;
                         navigation.navigationBarHidden = YES;
-                    }else if([dataDic[@"status"]isEqualToString:@"NOTVERIFIED"]){
+                    }else if([dataDic[@"status"]isEqualToString:@"NEWLY_CREATED"]){
                         CLAutobonViewController *autobonView = [[CLAutobonViewController alloc]init];
                         UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:autobonView];
                         window.rootViewController = navigation;

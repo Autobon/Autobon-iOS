@@ -114,8 +114,9 @@
     
     NSLog(@"---签到按钮-----");
     
-    NSDictionary *dic = @{@"rtpositionLon":_customerLon,@"rtpositionLat":_customerLat,@"technicianId":@"1",@"orderId":_orderId};
+    NSDictionary *dic = @{@"positionLon":_customerLon,@"positionLat":_customerLat,@"orderId":_orderId};
     [GFHttpTool signinParameters:dic Success:^(NSDictionary *responseObject) {
+        NSLog(@"－－－－－%@---",responseObject);
         if ([responseObject[@"result"]integerValue] == 1) {
             CLWorkBeforeViewController *workBefore = [[CLWorkBeforeViewController alloc]init];
             [self.navigationController pushViewController:workBefore animated:YES];

@@ -95,15 +95,16 @@
         NSLog(@"manager start failed!");
     }
     
-
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults  removeObjectForKey:@"homeOrder"];
     
    
 //    CLShareViewController *firstView = [[CLShareViewController alloc]init];
-//    CLHomeOrderViewController *firstView = [[CLHomeOrderViewController alloc]init];
+    CLHomeOrderViewController *firstView = [[CLHomeOrderViewController alloc]init];
 //    CLAddOrderSuccessViewController *firstView = [[CLAddOrderSuccessViewController alloc]init];
-    PoiSearchDemoViewController *firstView = [[PoiSearchDemoViewController alloc]init];
+//    PoiSearchDemoViewController *firstView = [[PoiSearchDemoViewController alloc]init];
     
-    
+//    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
     //********************* 光法页面 **********************
 //    GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
     
@@ -269,43 +270,13 @@
     if ([responseJSON[@"action"]isEqualToString:@"NEW_ORDER"]) {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         if ([[userDefaults objectForKey:@"homeOrder"]isEqualToString:@"YES"]) {
-            NSLog(@"弹出订单框");
+            NSLog(@"发出通知吧");
             
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"NEW_ORDER" object:self userInfo:responseJSON];
             
-            
-            CLKnockOrderViewController *knockOrder = [[CLKnockOrderViewController alloc]init];
-            
-            
-            UIViewController *result;
-            UIWindow *topWindow = [[UIApplication sharedApplication] keyWindow];
-            if (topWindow.windowLevel != UIWindowLevelNormal)
-            {
-                NSArray *windows = [[UIApplication sharedApplication] windows];
-                for(topWindow in windows)
-                {
-                    if (topWindow.windowLevel == UIWindowLevelNormal)
-                        break;
-                }
-            
-            UIView *rootView = [[topWindow subviews] objectAtIndex:0];
-            id nextResponder = [rootView nextResponder];
-            if ([nextResponder isKindOfClass:[UIViewController class]]){
-                result = nextResponder;
-                NSLog(@"这边");
-            }
-            else if([topWindow respondsToSelector:@selector(rootViewController)] && topWindow.rootViewController != nil) {
-                result = topWindow.rootViewController;
-                NSLog(@"那边");
-            }
-            
-            }
-        
-            NSLog(@"----result--%@----result.navigationController-%@--",result,result.navigationController);
-            [result.navigationController pushViewController:knockOrder animated:YES];
+//            CLHomeOrderViewController *orderView = [[CLHomeOrderViewController alloc]init];
+//            [self.window.rootViewController presentViewController:orderView animated:YES completion:nil];
     
-            
-            
-            
         }else{
             UILocalNotification*notification = [[UILocalNotification alloc] init];
             if (nil != notification)
@@ -358,13 +329,21 @@
 #pragma mark - 后台运行调用的方法
     NSLog(@"\n>>>[Receive ------ RemoteNotification - Background Fetch]:%@\n\n",userInfo);
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:@"通知消息" forKey:@"title"];
+//    [userDefaults setObject:@"通知消息" forKey:@"title"];
     completionHandler(UIBackgroundFetchResultNewData);
-//    [UIApplication sharedApplication].scheduledLocalNotifications = ln;
-//    UILocalNotification* ln = [[UILocalNotification alloc] init];
-//    ln.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
-//    [[UIApplication sharedApplication] scheduleLocalNotification:ln];
-//    NSLog(@"方法运行了");
+    
+    NSLog(@"走了啊－－－%@---%@---",[userDefaults objectForKey:@"autoken"],[userDefaults objectForKey:@"homeOrder"]);
+        if (![userDefaults objectForKey:@"autoken"]) {
+            if (![[userDefaults objectForKey:@"homeOrder"]isEqualToString:@"YES"]) {
+                UIWindow *window = [UIApplication sharedApplication].delegate.window;
+                CLHomeOrderViewController *homeOrderView = [[CLHomeOrderViewController alloc]init];
+                window.rootViewController = homeOrderView;
+            }
+#warning --发通知
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"NEW_ORDER" object:self userInfo:userInfo];
+            
+        }
+    
 
 }
 
@@ -380,9 +359,19 @@
     
     long time = (long)[[NSDate date] timeIntervalSince1970] - [_pushDate timeIntervalSince1970];
     NSLog(@"---time--%ld----",time);
-    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if (0 < time) {
          NSLog(@"消息来了a－－%@",notification.userInfo);
+        if ([userDefaults objectForKey:@"autoken"]) {
+            if (![[userDefaults objectForKey:@"homeOrder"]isEqualToString:@"YES"]) {
+                UIWindow *window = [UIApplication sharedApplication].delegate.window;
+                CLHomeOrderViewController *homeOrderView = [[CLHomeOrderViewController alloc]init];
+                window.rootViewController = homeOrderView;
+            }
+#warning --发送通知
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"NEW_ORDER" object:self userInfo:notification.userInfo];
+        }
+        
     }
     
     

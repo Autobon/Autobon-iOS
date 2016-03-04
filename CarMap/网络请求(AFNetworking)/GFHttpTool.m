@@ -296,7 +296,7 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
 
 
 
-// 上传证件照
+#pragma mark - 上传证件照
 + (void)idPhotoImage:(NSData *)image success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
     
     //    NSData *headData = UIImageJPEGRepresentation(image, 0.5);
@@ -363,7 +363,7 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *token = [userDefaultes objectForKey:@"autoken"];
     [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-    NSString *URLString = [NSString stringWithFormat:@"%@/construction/signIn",HOST];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/signIn",HOST];
     
     [manager POST:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * task, NSDictionary *responseObject) {
         if (success) {
@@ -451,6 +451,33 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
     }];
     
 }
+
+#pragma mark - 抢单
++ (void)postOrderId:(NSInteger )orderId Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *token = [userDefaultes objectForKey:@"autoken"];
+    NSLog(@"token--%@--",token);
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/takeup",HOST];
+    
+    
+    [manager POST:URLString parameters:@{@"orderId":@(orderId)} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+        if(success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failure) {
+            failure(error);
+        }
+    }];
+    
+}
+
+
+
+
 
 
 

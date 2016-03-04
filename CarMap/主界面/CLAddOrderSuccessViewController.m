@@ -14,7 +14,9 @@
 
 
 @interface CLAddOrderSuccessViewController ()
-
+{
+    UIButton *_submitButton;
+}
 @end
 
 @implementation CLAddOrderSuccessViewController
@@ -31,10 +33,24 @@
     
     
     
+    [self performSelector:@selector(workBegin) withObject:nil afterDelay:1.0f];
     
 }
 
-
+- (void)workBegin{
+    
+    static NSInteger a = 5;
+    a--;
+    [_submitButton setTitle:[NSString stringWithFormat:@"开始工作(%ld)",a] forState:UIControlStateNormal];
+    if (a < 0) {
+        [self.navigationController popViewControllerAnimated:NO];
+        if (_addBlock) {
+            _addBlock();
+        }
+    }else{
+        [self performSelector:@selector(workBegin) withObject:nil afterDelay:1.0f];
+    }
+}
 
 
 // 添加导航
@@ -113,22 +129,27 @@
 #pragma mark - 设置界面
 
 - (void)setViewForSuccess{
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(30, 140, self.view.frame.size.width-60, 80)];
-    label.text = @"抢单成功\n订单编号：CLB000001";
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(30, 140, self.view.frame.size.width-60, 30)];
+    label.text = @"抢单成功";
     label.textAlignment = NSTextAlignmentCenter;
     label.font = [UIFont systemFontOfSize:20];
-    label.numberOfLines = 0;
     [self.view addSubview:label];
     
+    UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 180, self.view.frame.size.width-20, 30)];
+    label2.text = @"订单编号:20160304105202QNGXLA";
+    label2.textColor = [UIColor colorWithRed:155/255.0 green:155/255.0 blue:155/255.0 alpha:1.0];
+    label2.textAlignment = NSTextAlignmentCenter;
+    label2.font = [UIFont systemFontOfSize:16];
+    [self.view addSubview:label2];
     
     // 提交按钮
-    UIButton *submitButton = [[UIButton alloc]init];
-    submitButton.frame = CGRectMake(30, 250, self.view.frame.size.width-60, 40);
-    [submitButton setTitle:@"开始工作(3)" forState:UIControlStateNormal];
-    [submitButton setBackgroundImage:[UIImage imageNamed:@"button"] forState:UIControlStateNormal];
-    [submitButton setBackgroundImage:[UIImage imageNamed:@"buttonClick"] forState:UIControlStateHighlighted];
-    [submitButton addTarget:self action:@selector(submitBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:submitButton];
+    _submitButton = [[UIButton alloc]init];
+    _submitButton.frame = CGRectMake(30, 250, self.view.frame.size.width-60, 40);
+    [_submitButton setTitle:@"开始工作(5)" forState:UIControlStateNormal];
+    [_submitButton setBackgroundImage:[UIImage imageNamed:@"button"] forState:UIControlStateNormal];
+    [_submitButton setBackgroundImage:[UIImage imageNamed:@"buttonClick"] forState:UIControlStateHighlighted];
+    [_submitButton addTarget:self action:@selector(submitBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_submitButton];
     
 }
 

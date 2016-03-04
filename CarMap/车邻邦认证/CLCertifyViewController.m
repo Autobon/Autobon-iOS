@@ -351,7 +351,7 @@
                                        skillString = [NSString stringWithFormat:@"%@,%@",skillString,_skillArray[i]];
                                     }
                                 } 
-                                NSDictionary *dic= @{@"name":_userNameTextField.centerTxt.text,@"idNo":_identityTextField.centerTxt.text,@"skillArray":skillString,@"bank":_bankButton.titleLabel.text,@"bankCardNo":cardNo};
+                                NSDictionary *dic= @{@"name":_userNameTextField.centerTxt.text,@"idNo":_identityTextField.centerTxt.text,@"skills":skillString,@"bank":_bankButton.titleLabel.text,@"bankCardNo":cardNo};
                                 NSLog(@"-----dic---%@--",dic);
                                 [GFHttpTool certifyPostParameters:dic success:^(NSDictionary *responseObject) {
                                     NSLog(@"----responseObject-%@--%@",responseObject,responseObject[@"message"]);
@@ -432,6 +432,7 @@
         UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 120, 40)];
         [button addTarget:self action:@selector(btn:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:button];
+        cell.textLabel.textColor = [UIColor blackColor];
 //        [button setTitle:@"农业银行" forState:UIControlStateNormal];
     }
     cell.textLabel.text = _bankArray[indexPath.row];
@@ -660,7 +661,7 @@
         flag = NO;
         return flag;
     }
-    NSString *regex2 = @"^(\\d{14}|\\d{17})(\\d|[X])$";
+    NSString *regex2 = @"^(\\d{14}|\\d{17})(\\d|[xX])$";
     NSPredicate *identityCardPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex2];
     return [identityCardPredicate evaluateWithObject:identityCard];
 }
