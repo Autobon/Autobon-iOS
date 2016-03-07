@@ -62,4 +62,27 @@
 + (void)postOrderId:(NSInteger )orderId Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
 
+// 抢单
++ (void)postOrderStart:(NSInteger )orderId Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+
+
+
+// 上传工作前照片
++ (void)PostImageWorkBefore:(NSData *)image orderId:(NSInteger )orderId imageNumber:(NSInteger)imageNumber success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @end

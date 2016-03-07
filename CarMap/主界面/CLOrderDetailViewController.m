@@ -11,6 +11,10 @@
 #import "GFNavigationView.h"
 #import "CLSigninViewController.h"
 #import "CLAddPersonViewController.h"
+#import "GFHttpTool.h"
+
+
+
 
 @interface CLOrderDetailViewController ()
 {
@@ -131,12 +135,24 @@
 #pragma mark - 开始工作按钮的响应方法
 - (void)workBtnClick{
     NSLog(@"开始工作按钮");
-    CLSigninViewController *signinView = [[CLSigninViewController alloc]init];
-    signinView.customerLat = self.customerLat;
-    signinView.customerLon = self.customerLon;
-    signinView.orderId = self.orderId;
     
-    [self.navigationController pushViewController:signinView animated:YES];
+    [GFHttpTool postOrderStart:[_orderId integerValue] Success:^(NSDictionary *responseObject) {
+        NSLog(@"----responseObject--%@",responseObject);
+        if ([responseObject[@"result"]integerValue] == 1) {
+            CLSigninViewController *signinView = [[CLSigninViewController alloc]init];
+            signinView.customerLat = self.customerLat;
+            signinView.customerLon = self.customerLon;
+            signinView.orderId = self.orderId;
+            [self.navigationController pushViewController:signinView animated:YES];
+        }else{
+            NSLog(@"-----%@---",responseObject[@"message"]);
+        }
+        
+    } failure:^(NSError *error) {
+        NSLog(@"----失败原因－－%@--",error);
+    }];
+    
+    
     
     
 }

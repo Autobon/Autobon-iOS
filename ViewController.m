@@ -24,7 +24,7 @@
 #import "CLHomeOrderViewController.h"
 
 
-@interface ViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface ViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDelegate,UITableViewDataSource>
 
 @end
 
@@ -32,7 +32,7 @@
 
 
 - (void)viewDidLoad{
-//    [super viewDidLoad];
+    [super viewDidLoad];
     NSLog(@"呵呵");
     
 //    CLHomeOrderViewController *homeView = [[CLHomeOrderViewController alloc]init];
@@ -42,8 +42,34 @@
 //    UIWindow *window = [UIApplication sharedApplication].delegate.window;
 //    window.rootViewController = nav;
 //    [self.navigationController pushViewController:homeView animated:YES];
+    UITableView *tableView = [[UITableView alloc]initWithFrame:self.view.bounds];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    [self.view addSubview:tableView];
+    
     
 }
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    return 10;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (!cell) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        cell.backgroundColor = [UIColor cyanColor];
+    }
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"didSelect--");
+}
+
 - (void)viewDidLoad2 {
 //    [super viewDidLoad];
     

@@ -91,8 +91,9 @@
                 cellModel.customerLat = obj[@"positionLat"];
                 cellModel.customerLon = obj[@"positionLon"];
                 cellModel.remark = obj[@"remark"];
+                cellModel.status = obj[@"status"];
                 [_cellModelArray addObject:cellModel];
-                NSDate *date = [NSDate dateWithTimeIntervalSince1970:1456398610];
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[obj[@"orderTime"] integerValue]/1000];
                 cellModel.orderTime = [formatter stringFromDate:date];
                 NSLog(@"date1:%@",cellModel.orderTime);
                 
@@ -299,7 +300,7 @@
         cell.orderButton.tag = indexPath.row + 1;
         cell.orderNumberLabel.text = [NSString stringWithFormat:@"订单编号%@",cellModer.orderNumber];
         cell.timeLabel.text = [NSString stringWithFormat:@"预约时间%@",cellModer.orderTime];
-        if ([cellModer.orderType integerValue] == 1) {
+        if ([cellModer.status isEqualToString:@"TAKEN_UP"]) {
             [cell.orderButton setTitle:@"开始工作" forState:UIControlStateNormal];
             NSLog(@"开始");
             [cell.orderButton addTarget:self action:@selector(workBegin:) forControlEvents:UIControlEventTouchUpInside];
@@ -397,12 +398,12 @@
 
 -(void)backBtnClick{
     NSLog(@"个人信息界面");
-//    GFMyMessageViewController *myMsgVC = [[GFMyMessageViewController alloc] init];
-//    [self.navigationController pushViewController:myMsgVC animated:YES];
+    GFMyMessageViewController *myMsgVC = [[GFMyMessageViewController alloc] init];
+    [self.navigationController pushViewController:myMsgVC animated:YES];
     
    
     
-    [self receiveNotification:nil];
+//    [self receiveNotification:nil];
 }
 
 

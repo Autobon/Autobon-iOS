@@ -87,7 +87,6 @@
 		9B93BF2C1C89548800397078 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B93BF1A1C89548800397078 /* UIImageView+HighlightedWebCache.m */; };
 		9B93BF2D1C89548800397078 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B93BF1C1C89548800397078 /* UIImageView+WebCache.m */; };
 		9B93BF2E1C89548800397078 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B93BF1E1C89548800397078 /* UIView+WebCacheOperation.m */; };
-		9B93BF311C89A8AC00397078 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B93BF301C89A8AC00397078 /* ViewController.m */; };
 		9B9515391C60501B00445F93 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9515381C60501B00445F93 /* TestViewController.m */; };
 		9B9515411C60503800445F93 /* GFAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95153C1C60503800445F93 /* GFAnnotation.m */; };
 		9B9515421C60503800445F93 /* GFAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95153E1C60503800445F93 /* GFAnnotationView.m */; };
@@ -105,6 +104,7 @@
 		9B9C259E1C75BF9C009A69D6 /* CLTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9C259D1C75BF9C009A69D6 /* CLTitleTableViewCell.m */; };
 		9B9C25A11C75BFD6009A69D6 /* CLHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9C25A01C75BFD6009A69D6 /* CLHomeTableViewCell.m */; };
 		9B9C25A61C75CC05009A69D6 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B02AF661C5A22CB0044FB71 /* StoreKit.framework */; };
+		9B9FCF081C8AA2DB0022F54E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9FCF071C8AA2DB0022F54E /* ViewController.m */; };
 		9BA391721C843564002F30A7 /* CLAddPersonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA391711C843564002F30A7 /* CLAddPersonModel.m */; };
 		9BA3C5BC1C75621B007F730D /* GFAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA3C5BB1C75621B007F730D /* GFAlertView.m */; };
 		9BA3C8D71C7598FD007F730D /* CLHomeOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA3C8D61C7598FD007F730D /* CLHomeOrderViewController.m */; };
@@ -289,8 +289,6 @@
 		9B93BF1C1C89548800397078 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		9B93BF1D1C89548800397078 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		9B93BF1E1C89548800397078 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
-		9B93BF2F1C89A8AC00397078 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		9B93BF301C89A8AC00397078 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		9B9515371C60501B00445F93 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		9B9515381C60501B00445F93 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		9B95153B1C60503800445F93 /* GFAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFAnnotation.h; sourceTree = "<group>"; };
@@ -324,6 +322,8 @@
 		9B9C259D1C75BF9C009A69D6 /* CLTitleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLTitleTableViewCell.m; sourceTree = "<group>"; };
 		9B9C259F1C75BFD6009A69D6 /* CLHomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLHomeTableViewCell.h; sourceTree = "<group>"; };
 		9B9C25A01C75BFD6009A69D6 /* CLHomeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLHomeTableViewCell.m; sourceTree = "<group>"; };
+		9B9FCF061C8AA2DB0022F54E /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		9B9FCF071C8AA2DB0022F54E /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		9BA391701C843564002F30A7 /* CLAddPersonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAddPersonModel.h; sourceTree = "<group>"; };
 		9BA391711C843564002F30A7 /* CLAddPersonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAddPersonModel.m; sourceTree = "<group>"; };
 		9BA3C5BA1C75621B007F730D /* GFAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFAlertView.h; sourceTree = "<group>"; };
@@ -752,8 +752,8 @@
 			children = (
 				9BCFDCA11C85B6CF003A35A8 /* AppDelegate.h */,
 				9BCFDCA21C85B6CF003A35A8 /* AppDelegate.mm */,
-				9B93BF2F1C89A8AC00397078 /* ViewController.h */,
-				9B93BF301C89A8AC00397078 /* ViewController.m */,
+				9B9FCF061C8AA2DB0022F54E /* ViewController.h */,
+				9B9FCF071C8AA2DB0022F54E /* ViewController.m */,
 				9B93BEFE1C89548800397078 /* SDWebImage */,
 				9B97543B1C5765B3004BDC7C /* CarMap */,
 				9B9754551C5765B3004BDC7C /* CarMapUITests */,
@@ -1109,7 +1109,7 @@
 				9B95A7A01C7C46430041C7BA /* CLCertifyFailViewController.m in Sources */,
 				865637E11C8424F100BE7D8D /* GFTrainViewController.m in Sources */,
 				9B9B5E7B1C7F07BD000D617E /* CLAddPersonViewController.m in Sources */,
-				9B93BF311C89A8AC00397078 /* ViewController.m in Sources */,
+				9B9FCF081C8AA2DB0022F54E /* ViewController.m in Sources */,
 				9B9C259E1C75BF9C009A69D6 /* CLTitleTableViewCell.m in Sources */,
 				9BCFDC971C859397003A35A8 /* CLCleanWorkViewController.m in Sources */,
 				9BE665401C743E0800976E7D /* CLTouchScrollView.m in Sources */,

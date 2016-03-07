@@ -49,7 +49,7 @@
         if ([responseObject[@"result"]intValue]==1) {
             NSDictionary *dataDic = responseObject[@"data"];
 
-// 0,1,2,3
+// 1,2,3,4
             NSArray *array = [dataDic[@"skill"] componentsSeparatedByString:@","];
 //            NSArray *array = @[@"0",@"1",@"2",@"3"];
             _skillLabel.numberOfLines = 0;

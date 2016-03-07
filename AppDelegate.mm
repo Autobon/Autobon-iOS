@@ -10,7 +10,7 @@
 #import "AppDelegate.h"
 #import "GeTuiSdk.h"
 #import "FirstViewController.h"
-#import "ViewController.h"
+//#import "ViewController.h"
 #import "UMSocial.h"
 #import "UMSocialWechatHandler.h"
 #import "UMSocialSinaHandler.h"

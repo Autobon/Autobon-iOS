@@ -6,9 +6,9 @@
 //  Copyright © 2016年 mll. All rights reserved.
 //
 
-#import "ViewController.h"
+#import <UIKit/UIKit.h>
 
-@interface CLOrderDetailViewController : ViewController
+@interface CLOrderDetailViewController : UIViewController
 
 @property (nonatomic ,strong) NSString *customerLat;
 @property (nonatomic ,strong) NSString *customerLon;

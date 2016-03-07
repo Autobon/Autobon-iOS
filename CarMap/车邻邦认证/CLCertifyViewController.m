@@ -65,7 +65,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _skillArray = [[NSMutableArray alloc]init];
-    _bankArray = @[@"人民银行",@"建设银行",@"招商银行",@"邮政银行",@"农业银行",@"中国银行",@"工商银行",@"光大银行"];
+    _bankArray = @[@"农业银行",@"招商银行",@"建设银行",@"广发银行",@"中信银行",@"光大银行",@"民生银行",@"普法银行",@"工商银行",@"中国银行",@"交通银行",@"邮政储蓄银行"];
     [self setNavigation];
     
     [self setViewForCertify];
@@ -85,12 +85,12 @@
             _isBankNumber = YES;
             if ([responseObject[@"result"]intValue]==1) {
                 NSDictionary *dataDic = responseObject[@"data"];
-                
-                // 0,1,2,3
+                // 1,2,3,4
                 NSArray *array = [dataDic[@"skill"] componentsSeparatedByString:@","];
+                NSLog(@"---array---%@--",array);
                 [array enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop) {
-                    UIButton *button = _skillBtnArray[[obj intValue]];
-                    [_skillArray addObject:@(button.tag)];
+                    UIButton *button = _skillBtnArray[[obj intValue]-1];
+                    [_skillArray addObject:@(button.tag+1)];
                     button.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
                     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 }];
@@ -510,12 +510,12 @@
 #pragma mark - 技能按钮
 - (void)skillBtnClick:(UIButton *)button{
     [self.view endEditing:YES];
-    if ([_skillArray containsObject:@(button.tag)]) {
-        [_skillArray removeObject:@(button.tag)];
+    if ([_skillArray containsObject:@(button.tag+1)]) {
+        [_skillArray removeObject:@(button.tag+1)];
         button.backgroundColor = [[UIColor alloc]initWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
         [button setTitleColor:[[UIColor alloc]initWithRed:156/255.0 green:156/255.0 blue:156/255.0 alpha:1.0] forState:UIControlStateNormal];
     }else{
-        [_skillArray addObject:@(button.tag)];
+        [_skillArray addObject:@(button.tag+1)];
         
         button.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

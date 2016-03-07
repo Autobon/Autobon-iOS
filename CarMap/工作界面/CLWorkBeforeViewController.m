@@ -11,6 +11,7 @@
 #import "CLTitleView.h"
 #import "CLWorkOverViewController.h"
 #import "GFMyMessageViewController.h"
+#import "GFHttpTool.h"
 
 
 
@@ -237,7 +238,12 @@
         [_imageArray addObject:imageView];
     }
     
-    
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.3);
+    [GFHttpTool PostImageWorkBefore:imageData orderId:20 imageNumber:1 success:^(id responseObject) {
+        NSLog(@"上传成功－%@--－%@",responseObject,responseObject[@"false"]);
+    } failure:^(NSError *error) {
+        NSLog(@"上传失败原因－－%@--",error);
+    }];
     
 }
 

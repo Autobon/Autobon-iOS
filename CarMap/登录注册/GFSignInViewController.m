@@ -337,6 +337,9 @@
                 
                 
                 NSDictionary *dataDic = responseObject[@"data"];
+                
+#pragma mark - 个人信息持久化
+                
                 NSLog(@"---dataDic---%@-",dataDic);
 // 判断 responseObject[@"status"] 的状态进行相应的页面跳转
                 UIWindow *window = [UIApplication sharedApplication].delegate.window;
@@ -346,21 +349,27 @@
                         UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
                         window.rootViewController = navigation;
                         navigation.navigationBarHidden = YES;
-                    }else if([dataDic[@"status"]isEqualToString:@"NEWLY_CREATED"]){
-                        CLAutobonViewController *autobonView = [[CLAutobonViewController alloc]init];
-                        UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:autobonView];
-                        window.rootViewController = navigation;
-                        navigation.navigationBarHidden = YES;
-                    }else if ([dataDic[@"status"]isEqualToString:@"REJECTED"]){
-                        CLCertifyFailViewController *homeVC = [[CLCertifyFailViewController alloc] init];
-                        UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
-                        window.rootViewController = navigation;
-                        navigation.navigationBarHidden = YES;
-                    }else if ([dataDic[@"status"]isEqualToString:@"IN_VERIFICATION"]){
-                        CLCertifyingViewController *homeVC = [[CLCertifyingViewController alloc] init];
-                        UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
-                        window.rootViewController = navigation;
-                        navigation.navigationBarHidden = YES;
+                    }else {
+                        if([dataDic[@"status"]isEqualToString:@"NEWLY_CREATED"]){
+                            CLAutobonViewController *autobonView = [[CLAutobonViewController alloc]init];
+                            UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:autobonView];
+                            window.rootViewController = navigation;
+                            navigation.navigationBarHidden = YES;
+                        }else if ([dataDic[@"status"]isEqualToString:@"REJECTED"]){
+                            CLCertifyFailViewController *homeVC = [[CLCertifyFailViewController alloc] init];
+                            UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
+                            window.rootViewController = navigation;
+                            navigation.navigationBarHidden = YES;
+                        }else if ([dataDic[@"status"]isEqualToString:@"IN_VERIFICATION"]){
+                            CLCertifyingViewController *homeVC = [[CLCertifyingViewController alloc] init];
+                            UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
+                            window.rootViewController = navigation;
+                            navigation.navigationBarHidden = YES;
+                            [userDefaults setObject:dataDic[@"avatar"] forKey:@"userHeadImage"];
+                            [userDefaults setObject:dataDic[@"bank"] forKey:@"userBank"];
+                            [userDefaults setObject:dataDic[@"bankCardNo"] forKey:@"userBankCardNo"];
+
+                        }
                     }
                     
                     

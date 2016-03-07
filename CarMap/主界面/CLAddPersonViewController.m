@@ -14,17 +14,17 @@
 #import "UIImageView+WebCache.h"
 #import "GFTipView.h"
 
-@interface UITableView (touch)
-
-@end
-
-@implementation UITableView (touch)
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    [[self superview] endEditing:YES];
-}
-
-@end
+//@interface UITableView (touch)
+//
+//@end
+//
+//@implementation UITableView (touch)
+//
+//- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+//    [[self superview] endEditing:YES];
+//}
+//
+//@end
 
 
 @interface CLAddPersonViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>

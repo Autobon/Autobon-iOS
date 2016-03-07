@@ -36,7 +36,7 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
         [manager2.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         NSString *URLString = [NSString stringWithFormat:@"%@/technician/pushId",HOST];
         NSString *pushId = [userDefaultes objectForKey:@"clientId"];
-        [manager2 POST:URLString parameters:@{@"pushId":pushId} success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+        [manager2 POST:URLString parameters:@{@"pushId":pushId} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
             NSLog(@"个推ID更新成功－－%@",responseObject);
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             NSLog(@"---更新失败了－－%@",error);
@@ -244,7 +244,7 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
         
         [formData appendPartWithFileData:image name:@"file" fileName:@"1235.jpg" mimeType:@"JPEG"];
         
-    } success:^(NSURLSessionDataTask * _Nonnull task, NSData *responseObject) {
+    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSData *responseObject) {
         
         NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         if(success) {
@@ -315,7 +315,7 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
     [manager POST:URLString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         [formData appendPartWithFileData:image name:@"file" fileName:@"1235.jpg" mimeType:@"JPEG"];
         
-    } success:^(NSURLSessionDataTask * _Nonnull task, NSData *responseObject) {
+    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSData *responseObject) {
         
         NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         if(success) {
@@ -343,7 +343,7 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
     [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
     NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/listUnfinished",HOST];
     
-    [manager GET:URLString parameters:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+    [manager GET:URLString parameters:nil progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
         if (success) {
             success(responseObject);
         }
@@ -472,6 +472,68 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
             failure(error);
         }
     }];
+    
+}
+
+#pragma mark - 工作开始
++ (void)postOrderStart:(NSInteger )orderId Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *token = [userDefaultes objectForKey:@"autoken"];
+    NSLog(@"token--%@--",token);
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/start",HOST];
+    
+    
+    [manager POST:URLString parameters:@{@"orderId":@(orderId)} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+        if(success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failure) {
+            failure(error);
+        }
+    }];
+    
+}
+
+
+#pragma mark - 上传工作前照片
++ (void)PostImageWorkBefore:(NSData *)image orderId:(NSInteger )orderId imageNumber:(NSInteger)imageNumber success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *token = [userDefaultes objectForKey:@"autoken"];
+    
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/uploadPhoto",HOST];
+    
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager POST:URLString parameters:@{@"no":@(imageNumber),@"orderId":@(orderId),@"isBefore":@"true"} constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        [formData appendPartWithFileData:image name:@"file" fileName:@"1235.jpg" mimeType:@"JPEG"];
+        
+    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSData *responseObject) {
+        
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        if(success) {
+            success(dictionary);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failure) {
+            failure(error);
+        }
+    }];
+    
+    
+    
+    
+    
+    
     
 }
 
