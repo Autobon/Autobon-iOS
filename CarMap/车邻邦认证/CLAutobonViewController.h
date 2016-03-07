@@ -11,5 +11,7 @@
 @interface CLAutobonViewController : UIViewController
 
 @property (nonatomic ,strong) UIButton *certifyButton;
+@property (nonatomic ,strong) NSString *status;
+
 
 @end

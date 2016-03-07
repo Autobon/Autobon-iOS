@@ -7,6 +7,9 @@
 //
 
 #import "GFAlertView.h"
+#import "UIImageView+WebCache.h"
+
+
 
 @implementation GFAlertView
 
@@ -285,10 +288,11 @@
         iconImgView.layer.cornerRadius = iconImgViewW / 2.0;
         iconImgView.clipsToBounds = YES;
         iconImgView.contentMode = UIViewContentModeScaleAspectFill;
-        iconImgView.image = [UIImage imageNamed:@"11.png"];
+//        iconImgView.image = [UIImage imageNamed:@"11.png"];
+        [iconImgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:51234%@",imageURL]]];
         [baseView addSubview:iconImgView];
         // 姓名
-        NSString *nameStr = @"陈光法";
+        NSString *nameStr = name;
         NSMutableDictionary *attDic = [[NSMutableDictionary alloc] init];
         attDic[NSFontAttributeName] = [UIFont systemFontOfSize:16 / 320.0 * kWidth];
         attDic[NSForegroundColorAttributeName] = [UIColor blackColor];
@@ -419,7 +423,7 @@
         
         
         // 提示文本
-        NSString *fenStr2 = [NSString stringWithFormat:@"邀请你参与%@的订单，订单123eweq125erqe23154qe213编号%@",@"美容清洁",order];
+        NSString *fenStr2 = order;
         NSMutableDictionary *fenDic2 = [[NSMutableDictionary alloc] init];
         fenDic2[NSFontAttributeName] = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
         fenDic2[NSForegroundColorAttributeName] = [UIColor blackColor];

@@ -437,7 +437,7 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
     NSString *token = [userDefaultes objectForKey:@"autoken"];
     NSLog(@"token--%@--",token);
     [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-    NSString *URLString = [NSString stringWithFormat:@"%@/order/addSecondTechId",HOST];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/%@/invite/%@",HOST,orderDic[@"orderId"],orderDic[@"partnerId"]];
     
     
     [manager POST:URLString parameters:orderDic progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
@@ -529,13 +529,33 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
         }
     }];
     
+}
+
+
+
+#pragma mark - 接受或者拒绝接受邀请的方法
++ (void)PostAcceptOrderId:(NSInteger )orderId accept:(NSString *)accept success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
     
-    
-    
-    
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *token = [userDefaultes objectForKey:@"autoken"];
+    NSLog(@"token--%@--",token);
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/%ld/invitation",HOST,orderId];
+    [manager POST:URLString parameters:@{@"orderId":@(orderId),@"accepted":accept} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+        if(success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failure) {
+            failure(error);
+        }
+    }];
     
     
 }
+
+
 
 
 

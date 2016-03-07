@@ -20,16 +20,17 @@
 #import "GFAlertView.h"
 #import "CLKnockOrderViewController.h"
 #import "CLAddOrderSuccessViewController.h"
-
-
 #import "MJRefresh.h"
+#import "GFTipView.h"
 
 
 @interface CLHomeOrderViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
 //    UITableView *_tableView;
     NSInteger _rowNumber;
-    
+    UILabel *_noOrderlabel;
+    UIImageView *_noOrderImageView;
+    NSDictionary *_inviteDictionary;
 }
 @property (nonatomic ,strong) NSMutableArray *cellModelArray;
 @property (nonatomic ,strong) UITableView *tableView;
@@ -66,14 +67,34 @@
     NSLog(@"到这里了--%@--",NSHomeDirectory());
     
     _rowNumber = 30;
-    _cellModelArray = [[NSMutableArray alloc]init];
-    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-    formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
+    
+    
     
     [self setNavigation];
     
     [self setTableView];
+    
+    [self httpWorkForTableView];
+//
+//    
+    _tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
+//    _tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+    
+    [self.tableView.header beginRefreshing];
+//    [self.tableView.footer beginRefreshing];
+    
+    
+    [self NSNotificationCenter];
+    
+}
+
+
+
+- (void)httpWorkForTableView{
+    _cellModelArray = [[NSMutableArray alloc]init];
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
     
     [GFHttpTool getOrderListSuccess:^(NSDictionary *responseObject) {
         if ([responseObject[@"result"] integerValue] == 1) {
@@ -85,13 +106,14 @@
                 CLHomeOrderCellModel *cellModel = [[CLHomeOrderCellModel alloc]init];
                 cellModel.orderId = obj[@"id"];
                 cellModel.orderNumber = obj[@"orderNum"];
-//                cellModel.orderTime = [obj[@"orderTime"] integerValue];
+                //                cellModel.orderTime = [obj[@"orderTime"] integerValue];
                 cellModel.orderType = obj[@"orderType"];
                 cellModel.orderPhotoURL = obj[@"photo"];
                 cellModel.customerLat = obj[@"positionLat"];
                 cellModel.customerLon = obj[@"positionLon"];
                 cellModel.remark = obj[@"remark"];
                 cellModel.status = obj[@"status"];
+                cellModel.mainTechId = obj[@"mainTechId"];
                 [_cellModelArray addObject:cellModel];
                 NSDate *date = [NSDate dateWithTimeIntervalSince1970:[obj[@"orderTime"] integerValue]/1000];
                 cellModel.orderTime = [formatter stringFromDate:date];
@@ -99,32 +121,36 @@
                 
                 
             }];
+//            [_tableView reloadData];
             if (_cellModelArray.count == 0) {
-//                _tableView.hidden = YES;
-//                UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64)];
-//                imageView.image = [UIImage imageNamed:@"nothing.jpg"];
+//                _tableView.userInteractionEnabled = NO;
+                _noOrderImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 57, 57)];
+                _noOrderImageView.center = _tableView.center;
+                _noOrderImageView.image = [UIImage imageNamed:@"NoOrder"];
 //                imageView.backgroundColor = [UIColor cyanColor];
-//                [self.view addSubview:imageView];
+                [self.view addSubview:_noOrderImageView];
+                
+                _noOrderlabel = [[UILabel alloc]initWithFrame:CGRectMake(100, _noOrderImageView.frame.origin.y + 60, self.view.frame.size.width-200, 30)];
+                _noOrderlabel.text = @"暂无订单";
+                _noOrderlabel.textColor = [UIColor colorWithRed:196/255.0 green:196/255.0 blue:196/255.0 alpha:1.0];
+                _noOrderlabel.font = [UIFont systemFontOfSize:15];
+                _noOrderlabel.textAlignment = NSTextAlignmentCenter;
+                [self.view addSubview:_noOrderlabel];
+                
+                
             }else{
+                NSLog(@"隐藏图标");
+                _noOrderImageView.hidden = YES;
+                _noOrderlabel.hidden = YES;
                 [_tableView reloadData];
             }
-            
+            [self.tableView.header endRefreshing];
         }
     } failure:^(NSError *error) {
         
     }];
-//
-//    
-    _tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
-    _tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
-    
-    [self.tableView.header beginRefreshing];
-    [self.tableView.footer beginRefreshing];
-    
-    
-    [self NSNotificationCenter];
-    
 }
+
 
 #pragma mark - 注册通知中心
 - (void)NSNotificationCenter{
@@ -134,19 +160,61 @@
 -(void)receiveNotification:(NSNotification *)Notification
 {
     NSLog(@"receiveNotification---%@--",Notification.userInfo);
-//     NSDictionary *diction = @{@"action":@"NEW_ORDER",@"title":@"你收到新订单推送消息",@"order":@{@"id":@43,@"orderNum":@"20160304105202QNGXLA",@"orderType":@2,@"photo":@"http://preview.quanjing.com/mf063/mf866-03563419.jpg",@"orderTime":@1488503100000,@"addTime":@1457059922495,@"creatorType":@2,@"creatorId":@1,@"creatorName":@"超级管理员",@"contactPhone":@"13026100200",@"positionLon":@"35.123521",@"positionLat":@"20.214411",@"remark":@"这是测79423769jhjlk试内容",@"mainTechId":@0,@"secondTechId":@0,@"status":@"NEWLY_CREATED"}};
-    CLKnockOrderViewController *knockOrder = [[CLKnockOrderViewController alloc]init];
-    knockOrder.orderDictionary = Notification.userInfo;
-//    [self.navigationController pushViewController:knockOrder animated:YES];
     
-    [self.view addSubview:knockOrder.view];
     
-    [self addChildViewController:knockOrder];
-    [knockOrder didMoveToParentViewController:self];
+    if ([Notification.userInfo[@"action"] isEqualToString:@"NEW_ORDER"]) {
+        CLKnockOrderViewController *knockOrder = [[CLKnockOrderViewController alloc]init];
+        knockOrder.orderDictionary = Notification.userInfo;
+        //    [self.navigationController pushViewController:knockOrder animated:YES];
+        
+        [self.view addSubview:knockOrder.view];
+        
+        [self addChildViewController:knockOrder];
+        [knockOrder didMoveToParentViewController:self];
+        
+        NSDictionary *orderDic = Notification.userInfo[@"order"];
+        knockOrder.certifyButton.tag = [orderDic[@"id"] integerValue];
+        [knockOrder.certifyButton addTarget:self action:@selector(knockBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    }else if ([Notification.userInfo[@"action"] isEqualToString:@"INVITE_PARTNER"]){
+        NSLog(@"有人邀请");
+        NSDictionary *dictionary = Notification.userInfo[@"owner"];
+        NSDictionary *orderDictionary = Notification.userInfo[@"order"];
+        NSArray *skillArray = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
+        NSString *orderDetail = [NSString stringWithFormat:@"邀请你参与%@的订单，订单号%@",skillArray[[orderDictionary[@"orderType"] integerValue] - 1],orderDictionary[@"orderNum"]];
+        
+        GFAlertView *alertView = [[GFAlertView alloc]initWithHeadImageURL:dictionary[@"avatar"] name:dictionary[@"name"] mark:1.2 orderNumber:2 goodNumber:1.0 order:orderDetail];
+        [alertView.okBut addTarget:self action:@selector(OrderDetailBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:alertView];
+        _inviteDictionary = [[NSDictionary alloc]initWithDictionary:Notification.userInfo];
+
+    }
     
-    NSDictionary *orderDic = Notification.userInfo[@"order"];
-    knockOrder.certifyButton.tag = [orderDic[@"id"] integerValue];
-    [knockOrder.certifyButton addTarget:self action:@selector(knockBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+   
+}
+
+
+#pragma mark - 收到推送消息查看邀请订单详情
+- (void)OrderDetailBtnClick{
+
+    CLOrderDetailViewController *orderDetail = [[CLOrderDetailViewController alloc]init];
+    NSDictionary *orderDic = _inviteDictionary[@"order"];
+    orderDetail.orderId = orderDic[@"id"];
+    orderDetail.customerLat = orderDic[@"positionLat"];
+    orderDetail.customerLon = orderDic[@"positionLon"];
+    orderDetail.orderPhotoURL = orderDic[@"photo"];
+    orderDetail.remark = orderDic[@"remark"];
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[orderDic[@"orderTime"] integerValue]/1000];
+    orderDetail.orderTime = [formatter stringFromDate:date];
+    
+    orderDetail.action = _inviteDictionary[@"action"];
+    
+    NSLog(@"---orderDetail.remark%@---%@--",orderDetail.customerLat,orderDetail.customerLon);
+    [self.navigationController pushViewController:orderDetail animated:YES];
 }
 
 
@@ -156,14 +224,18 @@
     [GFHttpTool postOrderId:button.tag Success:^(NSDictionary *responseObject) {
         
         NSLog(@"----抢单结果--%@--",responseObject);
+        if ([responseObject[@"result"]integerValue] == 1) {
+            [[[button superview] superview]removeFromSuperview];
+            
+            CLAddOrderSuccessViewController *addSuccess = [[CLAddOrderSuccessViewController alloc]init];
+            addSuccess.addBlock = ^{
+                [self headRefresh];
+            };
+            [self.navigationController pushViewController:addSuccess animated:NO];
+        }else{
+            [self addAlertView:responseObject[@"message"]];
+        }
         
-        [[[button superview] superview]removeFromSuperview];
-        
-        CLAddOrderSuccessViewController *addSuccess = [[CLAddOrderSuccessViewController alloc]init];
-        addSuccess.addBlock = ^{
-            NSLog(@"刷新表");
-        };
-        [self.navigationController pushViewController:addSuccess animated:NO];
         
         
     } failure:^(NSError *error) {
@@ -174,12 +246,14 @@
     
 }
 
+
+
 - (void)headRefresh {
     
     NSLog(@"脑袋刷新");
     
-    [self.tableView.header endRefreshing];
     
+    [self httpWorkForTableView];
 }
 
 - (void)footRefresh {
@@ -300,14 +374,15 @@
         cell.orderButton.tag = indexPath.row + 1;
         cell.orderNumberLabel.text = [NSString stringWithFormat:@"订单编号%@",cellModer.orderNumber];
         cell.timeLabel.text = [NSString stringWithFormat:@"预约时间%@",cellModer.orderTime];
-        if ([cellModer.status isEqualToString:@"TAKEN_UP"]) {
+        if ([cellModer.status isEqualToString:@"IN_PROGRESS"]) {
+            NSLog(@"订单");
+            [cell.orderButton setTitle:@"进入订单" forState:UIControlStateNormal];
+            [cell.orderButton addTarget:self action:@selector(orderBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        }else{
             [cell.orderButton setTitle:@"开始工作" forState:UIControlStateNormal];
             NSLog(@"开始");
             [cell.orderButton addTarget:self action:@selector(workBegin:) forControlEvents:UIControlEventTouchUpInside];
-        }else{
-             NSLog(@"订单");
-            [cell.orderButton setTitle:@"进入订单" forState:UIControlStateNormal];
-            [cell.orderButton addTarget:self action:@selector(orderBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+
         }
 //
 //        cell.contentView.userInteractionEnabled = YES;
@@ -321,34 +396,35 @@
 
 #pragma mark - 进入订单的按钮点击方法
 - (void)orderBtnClick:(UIButton *)button{
-    
-    CLWorkBeforeViewController *workBefore = [[CLWorkBeforeViewController alloc]init];
-    [self.navigationController pushViewController:workBefore animated:YES];
-    
+//    if ([button.titleLabel.text isEqualToString:@"进入订单"]) {
+        CLWorkBeforeViewController *workBefore = [[CLWorkBeforeViewController alloc]init];
+        [self.navigationController pushViewController:workBefore animated:YES];
+//    }
 }
 
 
 #pragma mark - 开始工作的按钮点击方法
 - (void)workBegin:(UIButton *)button{
-    NSLog(@"点击订单");
+//    NSLog(@"点击订单");
+//    if ([button.titleLabel.text isEqualToString:@"开始工作"]) {
+        CLHomeOrderCellModel *cellModel = _cellModelArray[button.tag-2];
+        CLOrderDetailViewController *orderDetail = [[CLOrderDetailViewController alloc]init];
+        orderDetail.orderId = cellModel.orderId;
+        orderDetail.customerLat = cellModel.customerLat;
+        orderDetail.customerLon = cellModel.customerLon;
+        orderDetail.orderPhotoURL = cellModel.orderPhotoURL;
+        orderDetail.orderTime = cellModel.orderTime;
+        orderDetail.remark = cellModel.remark;
+    orderDetail.action = cellModel.status;
+    orderDetail.mainTechId = cellModel.mainTechId;
+        NSLog(@"---orderDetail.remark%@---%@--",orderDetail.customerLat,orderDetail.customerLon);
+        [self.navigationController pushViewController:orderDetail animated:YES];
+//    }
     
-     CLHomeOrderCellModel *cellModel = _cellModelArray[button.tag-2];
-    CLOrderDetailViewController *orderDetail = [[CLOrderDetailViewController alloc]init];
-    orderDetail.orderId = cellModel.orderId;
-    orderDetail.customerLat = cellModel.customerLat;
-    orderDetail.customerLon = cellModel.customerLon;
-    orderDetail.orderPhotoURL = cellModel.orderPhotoURL;
-    orderDetail.orderTime = cellModel.orderTime;
-    orderDetail.remark = cellModel.remark;
-    NSLog(@"---orderDetail.remark%@---%@--",orderDetail.customerLat,orderDetail.customerLon);
-    [self.navigationController pushViewController:orderDetail animated:YES];
     
     
     
     
-//    GFAlertView *alertView = [[GFAlertView alloc]initWithHeadImageURL:nil name:nil mark:1.2 orderNumber:3 goodNumber:1.0 order:nil];
-//
-//    [self.view addSubview:alertView];
     
     
     
@@ -383,6 +459,11 @@
 }
 
 
+#pragma mark - AlertView
+- (void)addAlertView:(NSString *)title{
+    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
+    [tipView tipViewShow];
+}
 
 #pragma mark - 设置导航条
 - (void)setNavigation{

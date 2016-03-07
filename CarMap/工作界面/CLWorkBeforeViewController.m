@@ -19,7 +19,7 @@
 @interface CLWorkBeforeViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
     UIView *_chooseView;
-    UIImageView *_carImageView;
+    UIButton *_carImageButton;
     UIButton *_cameraBtn;
     NSMutableArray *_imageArray;
 }
@@ -105,18 +105,11 @@
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    _carImageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/7, 200, self.view.frame.size.width*5/7, self.view.frame.size.width*27/70)];
-    _carImageView.image = [UIImage imageNamed:@"carImage"];
-    [self.view addSubview:_carImageView];
+    _carImageButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/7, 200, self.view.frame.size.width*5/7, self.view.frame.size.width*27/70)];
+//    _carImageView.image = [UIImage imageNamed:@"carImage"];
+    [_carImageButton setImage:[UIImage imageNamed:@"carImage"] forState:UIControlStateNormal];
+    [_carImageButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_carImageButton];
     
     _cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*6/7-15, 200+self.view.frame.size.width*27/70-25, 30, 30)];
     [_cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
@@ -202,11 +195,11 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     
     if (_imageArray.count == 0) {
-        _carImageView.hidden = YES;
+        _carImageButton.hidden = YES;
         UIImageView *imageView = [[UIImageView alloc]init];
         imageView.image = image;
-        imageView.frame = CGRectMake(10, _carImageView.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
-        _cameraBtn.frame = CGRectMake(20+(self.view.frame.size.width-40)/3, _carImageView.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+        imageView.frame = CGRectMake(10, _carImageButton.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+        _cameraBtn.frame = CGRectMake(20+(self.view.frame.size.width-40)/3, _carImageButton.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
         [_cameraBtn setImage:[UIImage imageNamed:@"addImage"] forState:UIControlStateNormal];
         _cameraBtn.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
         imageView.userInteractionEnabled = YES;
@@ -226,7 +219,7 @@
         if (_imageArray.count == 2) {
             _cameraBtn.hidden = YES;
         }else{
-            _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)%3),  _carImageView.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+            _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)%3),  _carImageButton.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
         }
         
         
@@ -239,8 +232,8 @@
     }
     
     NSData *imageData = UIImageJPEGRepresentation(image, 0.3);
-    [GFHttpTool PostImageWorkBefore:imageData orderId:20 imageNumber:1 success:^(id responseObject) {
-        NSLog(@"上传成功－%@--－%@",responseObject,responseObject[@"false"]);
+    [GFHttpTool PostImageWorkBefore:imageData orderId:[_orderId integerValue] imageNumber:1 success:^(id responseObject) {
+        NSLog(@"上传成功－%@--－%@",responseObject,responseObject[@"message"]);
     } failure:^(NSError *error) {
         NSLog(@"上传失败原因－－%@--",error);
     }];
@@ -258,15 +251,15 @@
     
     [_imageArray enumerateObjectsUsingBlock:^(UIImageView *obj, NSUInteger idx, BOOL *stop) {
         
-        obj.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*(idx%3),  _carImageView.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*(idx/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+        obj.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*(idx%3),  _carImageButton.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*(idx/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
     }];
     
     if (_imageArray.count == 2) {
         _cameraBtn.hidden = NO;
     }else if(_imageArray.count == 1){
-        _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)%3),  _carImageView.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+        _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)%3),  _carImageButton.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
     }else{
-        _carImageView.hidden = NO;
+        _carImageButton.hidden = NO;
         _cameraBtn.frame = CGRectMake(self.view.frame.size.width*6/7-15, 200+self.view.frame.size.width*27/70-25, 30, 30);
         [_cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
         _cameraBtn.backgroundColor = [UIColor clearColor];

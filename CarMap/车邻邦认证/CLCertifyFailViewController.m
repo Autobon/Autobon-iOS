@@ -55,7 +55,7 @@
             
             // 0,1,2,3
             NSArray *array = [dataDic[@"skill"] componentsSeparatedByString:@","];
-            
+            _skillLabel.numberOfLines = 0;
             [array enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop) {
                 int a = [obj intValue] - 1;
                 if (idx == 0) {
@@ -69,7 +69,7 @@
             
             _userNameLabel.text = dataDic[@"name"];
             _bankNumberLabel.text = [NSString stringWithFormat:@"银行卡号：%@",dataDic[@"bankCardNo"]];
-            CGSize titleSize = [_bankNumberLabel.text sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:CGSizeMake(MAXFLOAT, 30)];
+            CGSize titleSize = [_bankNumberLabel.text sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(MAXFLOAT, 30)];
             _bankNumberLabel.frame = CGRectMake(15, 250, titleSize.width, 40);
             _line.frame = CGRectMake(13+titleSize.width+5, 260, 1, 20);
             
@@ -154,20 +154,20 @@
     [self.view addSubview:lineView2];
     
 // 技能项目
-    _skillLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 220, self.view.frame.size.width-30, 40)];
+    _skillLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 225, self.view.frame.size.width-30, 40)];
     _skillLabel.text = @"技能项目：";
     _skillLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
-    _skillLabel.font = [UIFont systemFontOfSize:15];
+    _skillLabel.font = [UIFont systemFontOfSize:14];
     [self.view addSubview:_skillLabel];
     
     _bankNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 250, self.view.frame.size.width-115, 40)];
     _bankNumberLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
-    _bankNumberLabel.font = [UIFont systemFontOfSize:15];
+    _bankNumberLabel.font = [UIFont systemFontOfSize:14];
     [self.view addSubview:_bankNumberLabel];
     
     _bankLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width-100, 250, 100, 40)];
     _bankLabel.text = @"农业银行";
-    _bankLabel.font = [UIFont systemFontOfSize:15];
+    _bankLabel.font = [UIFont systemFontOfSize:14];
     _bankLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
     [self.view addSubview:_bankLabel];
     

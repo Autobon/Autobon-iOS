@@ -10,6 +10,9 @@
 #import "GFMapViewController.h"
 #import "CLCertifyViewController.h"
 #import "GFNavigationView.h"
+#import "CLCertifyingViewController.h"
+#import "CLCertifyFailViewController.h"
+
 
 
 @interface CLAutobonViewController ()
@@ -17,6 +20,13 @@
 @end
 
 @implementation CLAutobonViewController
+
+- (UIButton *)certifyButton{
+    if (!_certifyButton) {
+        _certifyButton = [[UIButton alloc]init];
+    }
+    return _certifyButton;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -98,10 +108,10 @@
     [self.view addSubview:orderLabel];
     
 // 我要认证
-    _certifyButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2, self.view.frame.size.height-self.view.frame.size.height/18, self.view.frame.size.width/2, self.view.frame.size.height/18)];
+    _certifyButton.frame = CGRectMake(self.view.frame.size.width/2, self.view.frame.size.height-self.view.frame.size.height/18, self.view.frame.size.width/2, self.view.frame.size.height/18);
     
     [_certifyButton addTarget:self action:@selector(certifyBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [_certifyButton setTitle:@"我要认证" forState:UIControlStateNormal];
+//    [_certifyButton setTitle:@"我要认证" forState:UIControlStateNormal];
     [_certifyButton setTitleColor:[[UIColor alloc]initWithRed:163/255.0 green:163/255.0 blue:163/255.0 alpha:1.0] forState:UIControlStateNormal];
     [self.view addSubview:_certifyButton];
     
@@ -114,9 +124,18 @@
 
 - (void)certifyBtnClick{
     NSLog(@"认证按钮的响应方法");
-    CLCertifyViewController *certify = [[CLCertifyViewController alloc]init];
-    [certify.submitButton setTitle:@"提交" forState:UIControlStateNormal];
-    [self.navigationController pushViewController:certify animated:NO];
+    if ([_status isEqualToString:@"NEWLY_CREATED"]) {
+        CLCertifyViewController *certify = [[CLCertifyViewController alloc]init];
+        [certify.submitButton setTitle:@"提交" forState:UIControlStateNormal];
+        [self.navigationController pushViewController:certify animated:NO];
+    }else if ([_status isEqualToString:@"REJECTED"]){
+        CLCertifyFailViewController *homeVC = [[CLCertifyFailViewController alloc] init];
+        [self.navigationController pushViewController:homeVC animated:NO];
+    }else{
+        CLCertifyingViewController *homeVC = [[CLCertifyingViewController alloc] init];
+        [self.navigationController pushViewController:homeVC animated:NO];
+    }
+    
     
     
 }

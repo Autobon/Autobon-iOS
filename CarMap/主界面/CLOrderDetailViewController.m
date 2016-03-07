@@ -39,7 +39,12 @@
 // 添加地图
 - (void)addMap{
     GFMapViewController *mapVC = [[GFMapViewController alloc] init];
-    mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([self.customerLat floatValue],[self.customerLon floatValue]);
+    if ([self.customerLat isKindOfClass:[NSNull class]]) {
+        mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30.4,114.4);
+    }else{
+        mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([self.customerLat floatValue],[self.customerLon floatValue]);
+    }
+    
     mapVC.distanceBlock = ^(double distance) {
         NSLog(@"距离－－%f--",distance);
     };
@@ -84,12 +89,12 @@
     UIView *lineView3 = [[UIView alloc]initWithFrame:CGRectMake(0, timeLabel.frame.origin.y+self.view.frame.size.height/18, self.view.frame.size.width, 1)];
     lineView3.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [self.view addSubview:lineView3];
-    
-    
+
     // 备注
-    UILabel *otherLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView3.frame.origin.y+4, self.view.frame.size.width, self.view.frame.size.height/18)];
+    UILabel *otherLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView3.frame.origin.y+4, self.view.frame.size.width-20, self.view.frame.size.height/9)];
     //    otherLabel.backgroundColor = [UIColor cyanColor];
     otherLabel.text = [NSString stringWithFormat:@"下单备注：%@",self.remark];
+    otherLabel.numberOfLines = 0;
     otherLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [self.view addSubview:otherLabel];
     
@@ -102,25 +107,50 @@
     lineView5.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [self.view addSubview:lineView5];
     
+    
 // 添加小伙伴
     UIButton *addButton = [[UIButton alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-self.view.frame.size.height/18, self.view.frame.size.width/2, self.view.frame.size.height/18)];
-    [addButton setTitle:@"+合作人" forState:UIControlStateNormal];
+    
     [addButton setTitleColor:[[UIColor alloc]initWithRed:163/255.0 green:163/255.0 blue:163/255.0 alpha:1.0] forState:UIControlStateNormal];
-    [addButton addTarget:self action:@selector(addBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.view addSubview:addButton];
     
     
 // 开始工作
     UIButton *workButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2, self.view.frame.size.height-self.view.frame.size.height/18, self.view.frame.size.width/2, self.view.frame.size.height/18)];
     
-    [workButton addTarget:self action:@selector(workBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [workButton setTitle:@"开始工作" forState:UIControlStateNormal];
-//    [workButton setTitleColor:[[UIColor alloc]initWithRed:163/255.0 green:163/255.0 blue:163/255.0 alpha:1.0] forState:UIControlStateNormal];
+    //    [workButton setTitleColor:[[UIColor alloc]initWithRed:163/255.0 green:163/255.0 blue:163/255.0 alpha:1.0] forState:UIControlStateNormal];
     [workButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     workButton.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
     [self.view addSubview:workButton];
     
-    
+    if ([_action isEqualToString:@"INVITE_PARTNER"]) {
+        [addButton setTitle:@"拒绝" forState:UIControlStateNormal];
+        [addButton addTarget:self action:@selector(orderDisagree) forControlEvents:UIControlEventTouchUpInside];
+        [workButton addTarget:self action:@selector(orderAgree) forControlEvents:UIControlEventTouchUpInside];
+        [workButton setTitle:@"接受" forState:UIControlStateNormal];
+    }else if ([_action isEqualToString:@"TAKEN_UP"] || [_action isEqualToString:@"INVITATION_REJECTED"]){
+        [addButton setTitle:@"+合作人" forState:UIControlStateNormal];
+        [addButton addTarget:self action:@selector(addBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        
+        [workButton addTarget:self action:@selector(workBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        [workButton setTitle:@"开始工作" forState:UIControlStateNormal];
+
+    }else if ([_action isEqualToString:@"SEND_INVITATION"]){
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        if ([[userDefaults objectForKey:@"userId"] integerValue] == [_mainTechId integerValue]) {
+            [addButton setTitle:@"+合作人" forState:UIControlStateNormal];
+            [addButton addTarget:self action:@selector(addBtnClick) forControlEvents:UIControlEventTouchUpInside];
+            
+            [workButton addTarget:self action:@selector(workBtnClick) forControlEvents:UIControlEventTouchUpInside];
+            [workButton setTitle:@"开始工作" forState:UIControlStateNormal];
+        }else{
+            [addButton setTitle:@"拒绝" forState:UIControlStateNormal];
+            [addButton addTarget:self action:@selector(orderDisagree) forControlEvents:UIControlEventTouchUpInside];
+            [workButton addTarget:self action:@selector(orderAgree) forControlEvents:UIControlEventTouchUpInside];
+            [workButton setTitle:@"接受" forState:UIControlStateNormal];
+        }
+    }
     
 }
 
@@ -152,12 +182,27 @@
         NSLog(@"----失败原因－－%@--",error);
     }];
     
-    
-    
-    
 }
 
 
+#pragma mark - 接受订单邀请的响应方法
+- (void)orderAgree{
+    [GFHttpTool PostAcceptOrderId:[_orderId integerValue] accept:@"true" success:^(id responseObject) {
+        NSLog(@"----response--%@--",responseObject);
+    } failure:^(NSError *error) {
+        NSLog(@"---error---%@--",error);
+    }];
+}
+
+#pragma mark - 不接受订单邀请的响应方法
+- (void)orderDisagree{
+    [GFHttpTool PostAcceptOrderId:[_orderId integerValue] accept:@"false" success:^(id responseObject) {
+        NSLog(@"----response--%@--",responseObject[@"message"]);
+    } failure:^(NSError *error) {
+        NSLog(@"---error---%@--",error);
+    }];
+
+}
 
 // 添加导航
 - (void)setNavigation{
