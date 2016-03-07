@@ -103,7 +103,7 @@
                 
                 [_headButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:51234/%@",dataDic[@"avatar"]]] forState:UIControlStateNormal];
                 
-                [_identityButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:51234/%@",dataDic[@"avatar"]]] forState:UIControlStateNormal];
+                [_identityButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:51234/%@",dataDic[@"idPhoto"]]] forState:UIControlStateNormal];
             }
         } failure:^(NSError *error) {
             
@@ -493,18 +493,18 @@
     
     
 }
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    if (textField.tag == 5) {
-        NSLog(@"---range--%@----%@---string--%@--",@(range.location),@(range.length),string);
-        if (range.length == 0) {
-            if (range.location%5 == 4) {
-                textField.text = [NSString stringWithFormat:@"%@ ",textField.text];
-            }
-        }
-    }
-    
-    return YES;
-}
+//- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+//    if (textField.tag == 5) {
+//        NSLog(@"---range--%@----%@---string--%@--",@(range.location),@(range.length),string);
+//        if (range.length == 0) {
+//            if (range.location%5 == 4) {
+//                textField.text = [NSString stringWithFormat:@"%@ ",textField.text];
+//            }
+//        }
+//    }
+//    
+//    return YES;
+//}
 
 
 #pragma mark - 技能按钮
