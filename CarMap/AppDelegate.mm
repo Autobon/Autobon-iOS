@@ -105,7 +105,7 @@
 //    CLWorkOverViewController *firstView = [[CLWorkOverViewController alloc]init];
 //    CLAddPersonViewController *firstView = [[CLAddPersonViewController alloc]init];
     //********************* 光法页面 **********************
-//    GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
+    GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
     GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
     CLMoreViewController *moreVC = [[CLMoreViewController alloc] init];
 
@@ -114,7 +114,7 @@
     GFTestViewController *testVC = [[GFTestViewController alloc] init];
 
 //<<<<<<< HEAD
-    _navigation = [[UINavigationController alloc]initWithRootViewController:testVC];
+    _navigation = [[UINavigationController alloc]initWithRootViewController:messageVC];
 
 
 

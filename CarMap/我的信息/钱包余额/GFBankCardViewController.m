@@ -70,7 +70,7 @@
 
 - (void)_setView {
     //银行数组
-    self.bankArr = @[@"工商银行", @"招商银行", @"光法银行", @"农业银行", @"建设银行"];
+    self.bankArr = @[@"农业银行",@"招商银行",@"建设银行",@"广发银行",@"中信银行",@"光大银行",@"民生银行",@"普法银行",@"工商银行",@"中国银行",@"交通银行",@"邮政储蓄银行"];
     
     
     // 银行卡信息
@@ -203,9 +203,13 @@
     // 提交修改银行卡信息按钮
     NSString *url = @"http://121.40.157.200:51234/api/mobile/technician/changeBankCard";
     NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
-    parDic[@"name"] = self.nameLab.text;
-    parDic[@"bank"] = self.bankArr[index];
-    parDic[@"bankCardNo"] = self.cardTxt.centerTxt.text;
+//    parDic[@"name"] = self.nameLab.text;
+//    parDic[@"bank"] = self.bankArr[index];
+//    parDic[@"bankCardNo"] = self.cardTxt.centerTxt.text;
+    parDic[@"name"] = @"陈光法";
+    parDic[@"bank"] = @"建设";
+    parDic[@"bankCardNo"] = @"621700287000250683";
+
     
     [GFHttpTool bankCardPost:url parameters:parDic success:^(id responseObject) {
         
@@ -225,7 +229,7 @@
         
     } failure:^(NSError *error) {
         
-        NSLog(@"提交失败++++++++++++++");
+        NSLog(@"提交失败++++++++++++++%@", error);
         
     }];
     
