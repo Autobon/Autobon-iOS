@@ -100,9 +100,11 @@
     
    
 //    CLShareViewController *firstView = [[CLShareViewController alloc]init];
-    CLHomeOrderViewController *firstView = [[CLHomeOrderViewController alloc]init];
+//    CLHomeOrderViewController *firstView = [[CLHomeOrderViewController alloc]init];
 //    CLAddOrderSuccessViewController *firstView = [[CLAddOrderSuccessViewController alloc]init];
 //    PoiSearchDemoViewController *firstView = [[PoiSearchDemoViewController alloc]init];
+//    CLCertifyFailViewController *firstView = [[CLCertifyFailViewController alloc]init];
+    CLWorkOverViewController *firstView = [[CLWorkOverViewController alloc]init];
     
 //    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
     //********************* 光法页面 **********************

@@ -69,14 +69,31 @@
     _rowNumber = 30;
     
     
+
+    
+    
     
     [self setNavigation];
     
     [self setTableView];
     
+    _noOrderImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 57, 57)];
+    _noOrderImageView.center = _tableView.center;
+    _noOrderImageView.image = [UIImage imageNamed:@"NoOrder"];
+    [self.view addSubview:_noOrderImageView];
+    [self.view bringSubviewToFront:_noOrderImageView];
+    
+    _noOrderlabel = [[UILabel alloc]initWithFrame:CGRectMake(100, _noOrderImageView.frame.origin.y + 60, self.view.frame.size.width-200, 30)];
+    _noOrderlabel.text = @"暂无订单";
+    _noOrderlabel.textColor = [UIColor colorWithRed:196/255.0 green:196/255.0 blue:196/255.0 alpha:1.0];
+    _noOrderlabel.font = [UIFont systemFontOfSize:15];
+    _noOrderlabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:_noOrderlabel];
+    [self.view bringSubviewToFront:_noOrderImageView];
+    
     [self httpWorkForTableView];
 //
-//    
+//
     _tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
 //    _tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     
@@ -121,25 +138,8 @@
                 
                 
             }];
-//            [_tableView reloadData];
-            if (_cellModelArray.count == 0) {
-//                _tableView.userInteractionEnabled = NO;
-                _noOrderImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 57, 57)];
-                _noOrderImageView.center = _tableView.center;
-                _noOrderImageView.image = [UIImage imageNamed:@"NoOrder"];
-//                imageView.backgroundColor = [UIColor cyanColor];
-                [self.view addSubview:_noOrderImageView];
-                
-                _noOrderlabel = [[UILabel alloc]initWithFrame:CGRectMake(100, _noOrderImageView.frame.origin.y + 60, self.view.frame.size.width-200, 30)];
-                _noOrderlabel.text = @"暂无订单";
-                _noOrderlabel.textColor = [UIColor colorWithRed:196/255.0 green:196/255.0 blue:196/255.0 alpha:1.0];
-                _noOrderlabel.font = [UIFont systemFontOfSize:15];
-                _noOrderlabel.textAlignment = NSTextAlignmentCenter;
-                [self.view addSubview:_noOrderlabel];
-                
-                
-            }else{
-                NSLog(@"隐藏图标");
+
+            if (_cellModelArray.count != 0) {
                 _noOrderImageView.hidden = YES;
                 _noOrderlabel.hidden = YES;
                 [_tableView reloadData];
@@ -160,6 +160,20 @@
 -(void)receiveNotification:(NSNotification *)Notification
 {
     NSLog(@"receiveNotification---%@--",Notification.userInfo);
+    
+    
+   
+    CLKnockOrderViewController *knockOrder = [[CLKnockOrderViewController alloc]init];
+    [self.view addSubview:knockOrder.view];
+    [self addChildViewController:knockOrder];
+    [knockOrder didMoveToParentViewController:self];
+    
+
+
+    
+    
+    
+    
     
     
     if ([Notification.userInfo[@"action"] isEqualToString:@"NEW_ORDER"]) {
@@ -221,6 +235,18 @@
 #pragma mark - 立即抢单
 - (void)knockBtnClick:(UIButton *)button{
 
+    
+//    CLAddOrderSuccessViewController *addSuccess = [[CLAddOrderSuccessViewController alloc]init];
+//    addSuccess.addBlock = ^{
+//        _noOrderImageView.hidden = YES;
+//        _noOrderlabel.hidden = YES;
+//        
+//        [self headRefresh];
+//    };
+//    [self.navigationController pushViewController:addSuccess animated:NO];
+
+    
+    
     [GFHttpTool postOrderId:button.tag Success:^(NSDictionary *responseObject) {
         
         NSLog(@"----抢单结果--%@--",responseObject);
@@ -229,15 +255,15 @@
             
             CLAddOrderSuccessViewController *addSuccess = [[CLAddOrderSuccessViewController alloc]init];
             addSuccess.addBlock = ^{
+                _noOrderImageView.hidden = YES;
+                _noOrderlabel.hidden = YES;
+
                 [self headRefresh];
             };
             [self.navigationController pushViewController:addSuccess animated:NO];
         }else{
             [self addAlertView:responseObject[@"message"]];
         }
-        
-        
-        
     } failure:^(NSError *error) {
         NSLog(@"----抢单结果-222-%@--",error);
     }];
@@ -475,16 +501,17 @@
     [self.view addSubview:navView];
     
  
+//    navView.hidden = YES;
 }
 
 -(void)backBtnClick{
     NSLog(@"个人信息界面");
-    GFMyMessageViewController *myMsgVC = [[GFMyMessageViewController alloc] init];
-    [self.navigationController pushViewController:myMsgVC animated:YES];
+//    GFMyMessageViewController *myMsgVC = [[GFMyMessageViewController alloc] init];
+//    [self.navigationController pushViewController:myMsgVC animated:YES];
     
    
     
-//    [self receiveNotification:nil];
+    [self receiveNotification:nil];
 }
 
 

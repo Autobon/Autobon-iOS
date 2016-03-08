@@ -12,6 +12,12 @@
 #import "CLWorkOverViewController.h"
 #import "GFMyMessageViewController.h"
 #import "GFHttpTool.h"
+#import "GFTipView.h"
+#import "MYImageView.h"
+
+
+
+
 
 
 
@@ -196,7 +202,7 @@
     
     if (_imageArray.count == 0) {
         _carImageButton.hidden = YES;
-        UIImageView *imageView = [[UIImageView alloc]init];
+        MYImageView *imageView = [[MYImageView alloc]init];
         imageView.image = image;
         imageView.frame = CGRectMake(10, _carImageButton.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
         _cameraBtn.frame = CGRectMake(20+(self.view.frame.size.width-40)/3, _carImageButton.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
@@ -212,7 +218,7 @@
         
     }else{
         NSLog(@"小车不存在---%@--",@(_imageArray.count));
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(_cameraBtn.frame.origin.x, _cameraBtn.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3)];
+        MYImageView *imageView = [[MYImageView alloc]initWithFrame:CGRectMake(_cameraBtn.frame.origin.x, _cameraBtn.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3)];
         imageView.image = image;
         [self.view addSubview:imageView];
         
@@ -232,8 +238,17 @@
     }
     
     NSData *imageData = UIImageJPEGRepresentation(image, 0.3);
-    [GFHttpTool PostImageWorkBefore:imageData orderId:[_orderId integerValue] imageNumber:1 success:^(id responseObject) {
+    MYImageView *imageView = [_imageArray objectAtIndex:_imageArray.count-1];
+    [GFHttpTool PostImageForWork:imageData success:^(NSDictionary *responseObject) {
         NSLog(@"上传成功－%@--－%@",responseObject,responseObject[@"message"]);
+        if ([responseObject[@"result"] integerValue] == 1) {
+           
+            imageView.resultURL = responseObject[@"data"];
+        }else{
+#warning --图片上传失败，从数组移走图片
+            
+        }
+
     } failure:^(NSError *error) {
         NSLog(@"上传失败原因－－%@--",error);
     }];
@@ -276,11 +291,52 @@
 
 // 继续按钮的响应方法
 - (void)nextBtnClick{
-    CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
-    [self.navigationController pushViewController:workOver animated:YES];
+    
+    if (_imageArray.count > 0) {
+        
+        __block NSString *URLString;
+        [_imageArray enumerateObjectsUsingBlock:^(MYImageView *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSLog(@"imageURL---%@--",obj.resultURL);
+            if (idx == 0) {
+                URLString = obj.resultURL;
+            }else{
+                URLString = [NSString stringWithFormat:@"%@,%@",URLString,obj.resultURL];
+            }
+        }];
+        
+        
+        [GFHttpTool PostPhotoForBeforeOrderId:[_orderId integerValue] URLs:URLString success:^(NSDictionary *responseObject) {
+            if ([responseObject[@"result"] integerValue] == 1) {
+                
+                CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
+                [self.navigationController pushViewController:workOver animated:YES];
+                
+            }
+        } failure:^(NSError *error) {
+            NSLog(@"－－－失败了--%@",error);
+        }];
+        
+        
+        
+        
+        
+        
+        }else{
+        [self addAlertView:@"至少上传一张照片"];
+    }
     
     
     
+    
+    
+}
+
+
+
+#pragma mark - AlertView
+- (void)addAlertView:(NSString *)title{
+    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
+    [tipView tipViewShow];
 }
 
 // 添加导航

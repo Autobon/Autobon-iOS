@@ -199,7 +199,7 @@
     
     }else {
         
-        NSString *url = @"http://121.40.157.200:51234/api/mobile/technician/changePassword";
+        NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/changePassword";
         NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
         parDic[@"autoken"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"autoken"];
         parDic[@"oldPassword"] = self.passWordTxt.centerTxt.text;

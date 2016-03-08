@@ -13,7 +13,7 @@
 
 
 
-NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
+NSString* const HOST = @"http://121.40.157.200:12345/api/mobile";
 
 
 @implementation GFHttpTool
@@ -531,7 +531,35 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
     
 }
 
-
++ (void)PostImageForWork:(NSData *)image success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *token = [userDefaultes objectForKey:@"autoken"];
+    
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/uploadPhoto",HOST];
+    
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager POST:URLString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        [formData appendPartWithFileData:image name:@"file" fileName:@"1235.jpg" mimeType:@"JPEG"];
+        
+    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSData *responseObject) {
+        
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        if(success) {
+            success(dictionary);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failure) {
+            failure(error);
+        }
+    }];
+    
+}
 
 #pragma mark - 接受或者拒绝接受邀请的方法
 + (void)PostAcceptOrderId:(NSInteger )orderId accept:(NSString *)accept success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
@@ -556,10 +584,44 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
 }
 
 
+#pragma mark - 获取订单的工作项目
++ (void)GetWorkItemsOrderTypeId:(NSInteger )TypeId success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+//    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//    NSString *token = [userDefaultes objectForKey:@"autoken"];
+//    NSLog(@"token--%@--",token);
+//    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+    NSString *URLString = [NSString stringWithFormat:@"%@/pub/technician/workItems",HOST];
+    [manager GET:URLString parameters:@{@"orderType":@(TypeId)} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+        if(success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failure) {
+            failure(error);
+        }
+    }];
+}
 
-
-
-
+#pragma mark - 提交工作前照片
++ (void)PostPhotoForBeforeOrderId:(NSInteger )orderId URLs:(NSString *)URLs success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *token = [userDefaultes objectForKey:@"autoken"];
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/beforePhoto",HOST];
+    [manager POST:URLString parameters:@{@"orderId":@(3),@"urls":URLs} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+        NSLog(@"-----%@－－－－",responseObject[@"message"]);
+        if(success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"－－－－%@----",error);
+        if(failure) {
+            failure(error);
+        }
+    }];
+}
 
 
 

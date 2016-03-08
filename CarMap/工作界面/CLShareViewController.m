@@ -119,7 +119,7 @@
 #pragma mark - 工作完成的按钮响应方法
 - (void)workOverBtnClick{
     
-    
+    [self.navigationController popToRootViewControllerAnimated:YES];
     
 }
 

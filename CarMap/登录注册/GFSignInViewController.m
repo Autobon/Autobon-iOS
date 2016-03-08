@@ -286,7 +286,7 @@
         [self tipShow:@"密码不能为空"];
         
     }else {
-        NSString *url = @"http://121.40.157.200:51234/api/mobile/technician/login";
+        NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/login";
         NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
         parDic[@"phone"] = self.userNameTxt.centerTxt.text;
         parDic[@"password"] = self.passWordTxt.centerTxt.text;

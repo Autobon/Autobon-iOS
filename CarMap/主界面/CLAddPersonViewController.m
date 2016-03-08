@@ -96,7 +96,7 @@
                 [listArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
                     CLAddPersonModel *person = [[CLAddPersonModel alloc]init];
                     if (![obj[@"avatar"] isKindOfClass:[NSNull class]] && ![obj[@"name"] isKindOfClass:[NSNull class]]) {
-                        person.headImageURL = [NSString stringWithFormat:@"http://121.40.157.200:51234/%@",obj[@"avatar"]];
+                        person.headImageURL = [NSString stringWithFormat:@"http://121.40.157.200:12345/%@",obj[@"avatar"]];
                         person.nameString = obj[@"name"];
                     }
                     person.phoneString = obj[@"phone"];

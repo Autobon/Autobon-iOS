@@ -75,7 +75,7 @@
     
     time = 60;
     
-    urlStr = @"http://121.40.157.200:51234";
+    urlStr = @"http://121.40.157.200:12345";
     
     self.view.backgroundColor = [UIColor colorWithRed:252 / 255.0 green:252 / 255.0 blue:252 / 255.0 alpha:1];
 
@@ -369,7 +369,7 @@
         self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(showTime) userInfo:nil repeats:YES];
 
         
-        NSString *url = @"http://121.40.157.200:51234/api/mobile/verifySms";
+        NSString *url = @"http://121.40.157.200:12345/api/mobile/verifySms";
         NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
         parDic[@"phone"] = self.userNameTxt.centerTxt.text;
         
@@ -490,7 +490,7 @@
                     /**
                      *  提交注册
                      */
-                    NSString *url = @"http://121.40.157.200:51234/api/mobile/technician/register";
+                    NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/register";
                     NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
                     parDic[@"phone"] = self.userNameTxt.centerTxt.text;
                     parDic[@"password"] = self.passWordTxt.centerTxt.text;

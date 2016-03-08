@@ -201,7 +201,7 @@
     
     
     // 提交修改银行卡信息按钮
-    NSString *url = @"http://121.40.157.200:51234/api/mobile/technician/changeBankCard";
+    NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/changeBankCard";
     NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
     parDic[@"name"] = self.nameLab.text;
     parDic[@"bank"] = self.bankArr[index];
