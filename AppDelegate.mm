@@ -294,7 +294,7 @@
                 [[UIApplication sharedApplication]scheduleLocalNotification:notification];
             }
         }
-    }else if ([responseJSON[@"action"]isEqualToString:@"VERIFICATION_FAILED"] || [responseJSON[@"action"]isEqualToString:@"VERIFICATION_SUCCEED"]){
+    }else if ([responseJSON[@"action"]isEqualToString:@"VERIFICATION_FAILED"] || [responseJSON[@"action"]isEqualToString:@"VERIFICATION_SUCCEED"]||[responseJSON[@"action"]isEqualToString:@"INVITATION_ACCEPTED"]||[responseJSON[@"action"]isEqualToString:@"INVITATION_REJECTED"]){
         UILocalNotification*notification = [[UILocalNotification alloc] init];
         if (nil != notification)
         {

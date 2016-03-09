@@ -569,8 +569,8 @@ NSString* const HOST = @"http://121.40.157.200:12345/api/mobile";
     NSString *token = [userDefaultes objectForKey:@"autoken"];
     NSLog(@"token--%@--",token);
     [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-    NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/%ld/invitation",HOST,orderId];
-    [manager POST:URLString parameters:@{@"orderId":@(orderId),@"accepted":accept} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/%d/invitation",HOST,orderId];
+    [manager POST:URLString parameters:@{@"accepted":accept} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
         if(success) {
             success(responseObject);
         }
@@ -610,7 +610,7 @@ NSString* const HOST = @"http://121.40.157.200:12345/api/mobile";
     NSString *token = [userDefaultes objectForKey:@"autoken"];
     [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
     NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/beforePhoto",HOST];
-    [manager POST:URLString parameters:@{@"orderId":@(3),@"urls":URLs} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+    [manager POST:URLString parameters:@{@"orderId":@(orderId),@"urls":URLs} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
         NSLog(@"-----%@－－－－",responseObject[@"message"]);
         if(success) {
             success(responseObject);
@@ -622,6 +622,30 @@ NSString* const HOST = @"http://121.40.157.200:12345/api/mobile";
         }
     }];
 }
+
+
++ (void)getOrderDetailOrderId:(NSInteger )orderId success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+ 
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *token = [userDefaultes objectForKey:@"autoken"];
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/%d",HOST,orderId];
+    
+    
+    [manager GET:URLString parameters:nil progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+        if(success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failure) {
+            failure(error);
+        }
+    }];
+    
+}
+
+
 
 
 

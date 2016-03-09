@@ -20,7 +20,7 @@
 @property (nonatomic ,strong) NSString *remark;
 @property (nonatomic ,strong) NSString *status;
 @property (nonatomic ,strong) NSString *mainTechId;
-
+@property (nonatomic ,strong) NSString *secondTechId;
 
 
 

@@ -46,13 +46,14 @@
 
 // 添加地图
 - (void)addMap{
-    
+    NSDictionary *orderDic = _orderDictionary[@"order"];
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 5, 150, 20)];
-    titleLabel.text = @"汽车贴膜";
+    NSArray *array = @[@"隔热层",@"隐形车衣",@"车身改色",@"美容清洁"];
+    titleLabel.text = array[[orderDic[@"orderType"] integerValue]-1];
     [_orderView addSubview:titleLabel];
     
     GFMapViewController *mapVC = [[GFMapViewController alloc] init];
-    NSDictionary *orderDic = _orderDictionary[@"order"];
+    
     mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([orderDic[@"positionLat"]floatValue],[orderDic[@"positionLon"]floatValue]);
     mapVC.distanceBlock = ^(double distance) {
         NSLog(@"距离－－%f--",distance);

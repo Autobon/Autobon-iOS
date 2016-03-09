@@ -237,7 +237,11 @@
         [_imageArray addObject:imageView];
     }
     
-    NSData *imageData = UIImageJPEGRepresentation(image, 0.3);
+    CGSize imagesize;
+    imagesize.width = image.size.width/2;
+    imagesize.height = image.size.height/2;
+    UIImage *imageNew = [self imageWithImage:image scaledToSize:imagesize];
+    NSData *imageData = UIImageJPEGRepresentation(imageNew, 0.1);
     MYImageView *imageView = [_imageArray objectAtIndex:_imageArray.count-1];
     [GFHttpTool PostImageForWork:imageData success:^(NSDictionary *responseObject) {
         NSLog(@"上传成功－%@--－%@",responseObject,responseObject[@"message"]);
@@ -254,6 +258,28 @@
     }];
     
 }
+
+#pragma mark - 压缩图片尺寸
+-(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
+{
+    // Create a graphics image context
+    UIGraphicsBeginImageContext(newSize);
+    
+    // Tell the old image to draw in this new context, with the desired
+    // new size
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    
+    // Get the new image from the context
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // End the context
+    UIGraphicsEndImageContext();
+    
+    // Return the new image.
+    return newImage;
+}
+
+
 
 #pragma mark - 删除相片的方法
 - (void)deleteBtnClick:(UIButton *)button{
@@ -309,6 +335,7 @@
             if ([responseObject[@"result"] integerValue] == 1) {
                 
                 CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
+                workOver.orderId = _orderId;
                 [self.navigationController pushViewController:workOver animated:YES];
                 
             }

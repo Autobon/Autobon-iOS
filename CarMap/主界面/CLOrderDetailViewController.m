@@ -12,6 +12,7 @@
 #import "CLSigninViewController.h"
 #import "CLAddPersonViewController.h"
 #import "GFHttpTool.h"
+#import "GFTipView.h"
 
 
 
@@ -30,9 +31,9 @@
     [super viewDidLoad];
     self.view.backgroundColor = [[UIColor alloc]initWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     
-    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, -20, self.view.frame.size.width, self.view.frame.size.height+20)];
+    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, -20, self.view.frame.size.width, self.view.frame.size.height-20)];
     [self.view addSubview:_scrollView];
-    
+//    _scrollView.backgroundColor = [UIColor cyanColor];
     
     [self setNavigation];
     
@@ -111,24 +112,24 @@
     [_scrollView addSubview:lineView4];
     
     
-    UIView *lineView5 = [[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-0.5, lineView4.frame.origin.y+1, 1, self.view.frame.size.height/18)];
+    UIView *lineView5 = [[UIView alloc]initWithFrame:CGRectMake(0,0,0,0)];
     lineView5.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [_scrollView addSubview:lineView5];
     
     
 // 添加小伙伴
-    UIButton *addButton = [[UIButton alloc]initWithFrame:CGRectMake(0, lineView4.frame.origin.y+1 ,self.view.frame.size.width/2, 40)];
+    UIButton *addButton = [[UIButton alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-40 ,self.view.frame.size.width/2, 40)];
     
     [addButton setTitleColor:[[UIColor alloc]initWithRed:163/255.0 green:163/255.0 blue:163/255.0 alpha:1.0] forState:UIControlStateNormal];
     
-    [_scrollView addSubview:addButton];
+    [self.view addSubview:addButton];
     
     
 // 开始工作
-    UIButton *workButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2, lineView4.frame.origin.y+1, self.view.frame.size.width/2, 40)];
+    UIButton *workButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2, self.view.frame.size.height-40, self.view.frame.size.width/2, 40)];
     [workButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     workButton.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-    [_scrollView addSubview:workButton];
+    [self.view addSubview:workButton];
     
     if ([_action isEqualToString:@"INVITE_PARTNER"]) {
         [addButton setTitle:@"拒绝" forState:UIControlStateNormal];
@@ -163,14 +164,34 @@
         label1.text = @"合 作 人 ：";
         [_scrollView addSubview:label1];
         
-        UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(90, lineView4.frame.origin.y + 4, 80, 30)];
-        label2.text = @"林峰";
-        label2.textAlignment = NSTextAlignmentCenter;
-        label2.textColor = [UIColor whiteColor];
-        label2.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-        label2.layer.cornerRadius = 10;
-        label2.clipsToBounds = YES;
-        [_scrollView addSubview:label2];
+        if (_mainTechId) {
+            [GFHttpTool getOrderDetailOrderId:[_orderId integerValue] success:^(id responseObject) {
+                NSDictionary *dataDic = responseObject[@"data"];
+                NSDictionary *secondDic = dataDic[@"secondTech"];
+                UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(90, lineView4.frame.origin.y + 4, 80, 30)];
+                label2.text = secondDic[@"name"];
+                label2.textAlignment = NSTextAlignmentCenter;
+                label2.textColor = [UIColor whiteColor];
+                label2.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+                label2.layer.cornerRadius = 10;
+                label2.clipsToBounds = YES;
+                [_scrollView addSubview:label2];
+            } failure:^(NSError *error) {
+                
+            }];
+        }else{
+            UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(90, lineView4.frame.origin.y + 4, 80, 30)];
+            label2.text = _secondId;
+            label2.textAlignment = NSTextAlignmentCenter;
+            label2.textColor = [UIColor whiteColor];
+            label2.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+            label2.layer.cornerRadius = 10;
+            label2.clipsToBounds = YES;
+            [_scrollView addSubview:label2];
+        }
+        
+        
+        
         
         UILabel *label3 = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width-80, lineView4.frame.origin.y + 4, 70, 30)];
         label3.text = @"已接单";
@@ -178,8 +199,8 @@
         label3.textColor = [UIColor colorWithRed:152/255.0 green:152/255.0 blue:152/255.0 alpha:1.0];
         [_scrollView addSubview:label3];
         
-        lineView5.frame = CGRectMake(0, label1.frame.origin.y + 39, self.view.frame.size.width, 40);
-        workButton.frame = CGRectMake(0, label1.frame.origin.y + 40, self.view.frame.size.width, 40);
+        lineView5.frame = CGRectMake(0, label1.frame.origin.y + 39, self.view.frame.size.width, 1);
+        workButton.frame = CGRectMake(0, self.view.frame.size.height - 40, self.view.frame.size.width, 40);
         
         [workButton addTarget:self action:@selector(workBtnClick) forControlEvents:UIControlEventTouchUpInside];
         [workButton setTitle:@"开始工作" forState:UIControlStateNormal];
@@ -187,9 +208,7 @@
 
     }
     
-    
-    
-    _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, workButton.frame.origin.y+40);
+    _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, lineView5.frame.origin.y+1);
 }
 
 #pragma mark - 添加合作小伙伴的响应方法
@@ -226,7 +245,10 @@
 #pragma mark - 接受订单邀请的响应方法
 - (void)orderAgree{
     [GFHttpTool PostAcceptOrderId:[_orderId integerValue] accept:@"true" success:^(id responseObject) {
-        NSLog(@"----response--%@--",responseObject);
+        
+        [self addAlertView:@"接受邀请成功"];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        
     } failure:^(NSError *error) {
         NSLog(@"---error---%@--",error);
     }];
@@ -235,12 +257,20 @@
 #pragma mark - 不接受订单邀请的响应方法
 - (void)orderDisagree{
     [GFHttpTool PostAcceptOrderId:[_orderId integerValue] accept:@"false" success:^(id responseObject) {
-        NSLog(@"----response--%@--",responseObject[@"message"]);
+        [self addAlertView:@"已拒绝邀请"];
+        [self.navigationController popToRootViewControllerAnimated:YES];
     } failure:^(NSError *error) {
         NSLog(@"---error---%@--",error);
     }];
 
 }
+
+#pragma mark - AlertView
+- (void)addAlertView:(NSString *)title{
+    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
+    [tipView tipViewShow];
+}
+
 
 // 添加导航
 - (void)setNavigation{

@@ -22,6 +22,9 @@
 #import "CLAddOrderSuccessViewController.h"
 #import "MJRefresh.h"
 #import "GFTipView.h"
+#import "CLSigninViewController.h"
+#import "CLWorkOverViewController.h"
+
 
 
 @interface CLHomeOrderViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -131,6 +134,7 @@
                 cellModel.remark = obj[@"remark"];
                 cellModel.status = obj[@"status"];
                 cellModel.mainTechId = obj[@"mainTechId"];
+                cellModel.secondTechId = obj[@"secondTechId"];
                 [_cellModelArray addObject:cellModel];
                 NSDate *date = [NSDate dateWithTimeIntervalSince1970:[obj[@"orderTime"] integerValue]/1000];
                 cellModel.orderTime = [formatter stringFromDate:date];
@@ -163,18 +167,10 @@
     
     
    
-    CLKnockOrderViewController *knockOrder = [[CLKnockOrderViewController alloc]init];
-    [self.view addSubview:knockOrder.view];
-    [self addChildViewController:knockOrder];
-    [knockOrder didMoveToParentViewController:self];
-    
-
-
-    
-    
-    
-    
-    
+//    CLKnockOrderViewController *knockOrder = [[CLKnockOrderViewController alloc]init];
+//    [self.view addSubview:knockOrder.view];
+//    [self addChildViewController:knockOrder];
+//    [knockOrder didMoveToParentViewController:self];
     
     if ([Notification.userInfo[@"action"] isEqualToString:@"NEW_ORDER"]) {
         CLKnockOrderViewController *knockOrder = [[CLKnockOrderViewController alloc]init];
@@ -251,6 +247,7 @@
         
         NSLog(@"----抢单结果--%@--",responseObject);
         if ([responseObject[@"result"]integerValue] == 1) {
+            
             [[[button superview] superview]removeFromSuperview];
             
             CLAddOrderSuccessViewController *addSuccess = [[CLAddOrderSuccessViewController alloc]init];
@@ -422,10 +419,83 @@
 
 #pragma mark - 进入订单的按钮点击方法
 - (void)orderBtnClick:(UIButton *)button{
-//    if ([button.titleLabel.text isEqualToString:@"进入订单"]) {
-        CLWorkBeforeViewController *workBefore = [[CLWorkBeforeViewController alloc]init];
-        [self.navigationController pushViewController:workBefore animated:YES];
-//    }
+
+    CLHomeOrderCellModel *cellModel = _cellModelArray[button.tag-2];
+    CLOrderDetailViewController *orderDetail = [[CLOrderDetailViewController alloc]init];
+    orderDetail.orderId = cellModel.orderId;
+    
+    [GFHttpTool getOrderDetailOrderId:[cellModel.orderId integerValue] success:^(NSDictionary *responseObject) {
+        NSLog(@"responseObject--%@--",responseObject);
+        NSDictionary *dataDictionary = responseObject[@"data"];
+        NSDictionary *constructionDict = dataDictionary[@"construction"];
+        NSLog(@"---constructionDict--%@",constructionDict);
+        if ([constructionDict isKindOfClass:[NSNull class]]) {
+            NSLog(@"小伙伴已开始工作");
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            NSString *userId = [userDefaults objectForKey:@"userId"];
+            NSDictionary *mainTechDictionary = dataDictionary[@"mainTech"];
+            NSDictionary *secondTechDictionary = dataDictionary[@"secondTech"];
+            CLOrderDetailViewController *orderDetail = [[CLOrderDetailViewController alloc]init];
+            orderDetail.orderId = cellModel.orderId;
+            orderDetail.customerLat = cellModel.customerLat;
+            orderDetail.customerLon = cellModel.customerLon;
+            orderDetail.orderPhotoURL = cellModel.orderPhotoURL;
+            orderDetail.orderTime = cellModel.orderTime;
+            orderDetail.remark = cellModel.remark;
+            orderDetail.action = @"INVITATION_ACCEPTED";
+            if ([userId integerValue] == [mainTechDictionary[@"id"] integerValue]) {
+                NSLog(@"我是主技师，小伙伴已开始");
+                orderDetail.secondId = secondTechDictionary[@"name"];
+                
+            }else{
+                NSLog(@"我是副机师，小伙伴已开始");
+                
+                orderDetail.secondId = mainTechDictionary[@"name"];
+            }
+            [self.navigationController pushViewController:orderDetail animated:YES];
+            
+        }else{
+            NSLog(@"已开始工作，签到，上传照片");
+            
+            NSDictionary *orderDictionary = dataDictionary[@"order"];
+            
+            if ([constructionDict[@"signinTime"] isKindOfClass:[NSNull class]]) {
+                NSLog(@"未签到");
+                CLSigninViewController *signinView = [[CLSigninViewController alloc]init];
+                signinView.customerLat = orderDictionary[@"positionLat"];
+                signinView.customerLon = orderDictionary[@"positionLon"];
+                signinView.orderId = orderDictionary[@"id"];
+                [self.navigationController pushViewController:signinView animated:YES];
+                
+                
+                
+            }else if ([constructionDict[@"beforePhotos"] isKindOfClass:[NSNull class]]){
+                CLWorkBeforeViewController *workBefore = [[CLWorkBeforeViewController alloc]init];
+                workBefore.orderId = orderDictionary[@"id"];
+                [self.navigationController pushViewController:workBefore animated:YES];
+                
+                NSLog(@"未上传开始前照片");
+            }else if ([constructionDict[@"afterPhotos"] isKindOfClass:[NSNull class]]){
+                CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
+                workOver.orderId = orderDictionary[@"id"];
+                [self.navigationController pushViewController:workOver animated:YES];
+                
+                
+                NSLog(@"未上传结束时照片");
+            }
+            
+            
+            
+        }
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    
+//        CLWorkBeforeViewController *workBefore = [[CLWorkBeforeViewController alloc]init];
+//        [self.navigationController pushViewController:workBefore animated:YES];
+
+    
 }
 
 
@@ -433,18 +503,19 @@
 - (void)workBegin:(UIButton *)button{
 //    NSLog(@"点击订单");
 //    if ([button.titleLabel.text isEqualToString:@"开始工作"]) {
-        CLHomeOrderCellModel *cellModel = _cellModelArray[button.tag-2];
-        CLOrderDetailViewController *orderDetail = [[CLOrderDetailViewController alloc]init];
-        orderDetail.orderId = cellModel.orderId;
-        orderDetail.customerLat = cellModel.customerLat;
-        orderDetail.customerLon = cellModel.customerLon;
-        orderDetail.orderPhotoURL = cellModel.orderPhotoURL;
-        orderDetail.orderTime = cellModel.orderTime;
-        orderDetail.remark = cellModel.remark;
+    CLHomeOrderCellModel *cellModel = _cellModelArray[button.tag-2];
+    CLOrderDetailViewController *orderDetail = [[CLOrderDetailViewController alloc]init];
+    orderDetail.orderId = cellModel.orderId;
+    orderDetail.customerLat = cellModel.customerLat;
+    orderDetail.customerLon = cellModel.customerLon;
+    orderDetail.orderPhotoURL = cellModel.orderPhotoURL;
+    orderDetail.orderTime = cellModel.orderTime;
+    orderDetail.remark = cellModel.remark;
     orderDetail.action = cellModel.status;
     orderDetail.mainTechId = cellModel.mainTechId;
-        NSLog(@"---orderDetail.remark%@---%@--",orderDetail.customerLat,orderDetail.customerLon);
-        [self.navigationController pushViewController:orderDetail animated:YES];
+    orderDetail.secondId = cellModel.secondTechId;
+    NSLog(@"---orderDetail.remark%@---%@--",orderDetail.customerLat,orderDetail.customerLon);
+    [self.navigationController pushViewController:orderDetail animated:YES];
 //    }
     
     

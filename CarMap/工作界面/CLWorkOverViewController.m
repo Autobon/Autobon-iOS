@@ -13,6 +13,7 @@
 #import "CLShareViewController.h"
 #import "GFHttpTool.h"
 #import "MYImageView.h"
+#import "GFTipView.h"
 
 
 
@@ -380,7 +381,11 @@
         [_imageArray addObject:imageView];
     }
 
-    NSData *imageData = UIImageJPEGRepresentation(image, 0.3);
+    CGSize imagesize;
+    imagesize.width = image.size.width/2;
+    imagesize.height = image.size.height/2;
+    UIImage *imageNew = [self imageWithImage:image scaledToSize:imagesize];
+    NSData *imageData = UIImageJPEGRepresentation(imageNew, 0.1);
     [GFHttpTool PostImageForWork:imageData success:^(NSDictionary *responseObject) {
         NSLog(@"上传成功－%@--－%@",responseObject,responseObject[@"message"]);
         if ([responseObject[@"result"] integerValue] == 1) {
@@ -396,6 +401,30 @@
     }];
     
 }
+
+#pragma mark - 压缩图片尺寸
+-(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
+{
+    // Create a graphics image context
+    UIGraphicsBeginImageContext(newSize);
+    
+    // Tell the old image to draw in this new context, with the desired
+    // new size
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    
+    // Get the new image from the context
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // End the context
+    UIGraphicsEndImageContext();
+    
+    // Return the new image.
+    return newImage;
+}
+
+
+
+
 #pragma mark - 删除相片的方法
 - (void)deleteBtnClick:(UIButton *)button{
     NSLog(@"删除照片");
@@ -458,14 +487,47 @@
 #pragma mark - 工作完成的按钮响应方法
 - (void)workOverBtnClick{
     
-    [_imageArray enumerateObjectsUsingBlock:^(MYImageView *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSLog(@"--imageURL-%@--",obj.resultURL);
-    }];
     
+    
+    
+    if (_imageArray.count > 3) {
+        
+        __block NSString *URLString;
+        [_imageArray enumerateObjectsUsingBlock:^(MYImageView *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSLog(@"imageURL---%@--",obj.resultURL);
+            if (idx == 0) {
+                URLString = obj.resultURL;
+            }else{
+                URLString = [NSString stringWithFormat:@"%@,%@",URLString,obj.resultURL];
+            }
+        }];
+        
+        
+        [GFHttpTool PostPhotoForBeforeOrderId:[_orderId integerValue] URLs:URLString success:^(NSDictionary *responseObject) {
+            if ([responseObject[@"result"] integerValue] == 1) {
+                
+                CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
+                workOver.orderId = _orderId;
+                [self.navigationController pushViewController:workOver animated:YES];
+                
+            }
+        } failure:^(NSError *error) {
+            NSLog(@"－－－失败了--%@",error);
+        }];
+    
+    }else{
+        [self addAlertView:@"至少上传一张照片"];
+    }
     
 //    CLShareViewController *shareView = [[CLShareViewController alloc]init];
 //    [self.navigationController pushViewController:shareView animated:YES];
     
+}
+
+#pragma mark - AlertView
+- (void)addAlertView:(NSString *)title{
+    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
+    [tipView tipViewShow];
 }
 
 // 添加导航

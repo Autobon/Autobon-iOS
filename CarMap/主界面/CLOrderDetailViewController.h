@@ -18,7 +18,7 @@
 @property (nonatomic ,strong) NSString *orderId;
 @property (nonatomic ,strong) NSString *action;
 @property (nonatomic ,strong) NSString *mainTechId;
-
+@property (nonatomic ,strong) NSString *secondId;
 
 
 @end
