@@ -33,7 +33,7 @@
 #import "CLMoreViewController.h"
 
 
-
+#import "GFTestViewController.h"
 
 #import "GFMyMessageViewController.h"
 #import "GFSignInViewController.h"
@@ -105,16 +105,16 @@
 //    CLWorkOverViewController *firstView = [[CLWorkOverViewController alloc]init];
 //    CLAddPersonViewController *firstView = [[CLAddPersonViewController alloc]init];
     //********************* 光法页面 **********************
-//    GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
+    GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
     GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
     CLMoreViewController *moreVC = [[CLMoreViewController alloc] init];
 
 //    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
 
-    
+    GFTestViewController *testVC = [[GFTestViewController alloc] init];
 
 //<<<<<<< HEAD
-    _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
+    _navigation = [[UINavigationController alloc]initWithRootViewController:messageVC];
 
 
 
