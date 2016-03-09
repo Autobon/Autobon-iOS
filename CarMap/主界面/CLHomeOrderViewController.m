@@ -296,7 +296,8 @@
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64)];
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+   
+//    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
      __weak CLHomeOrderViewController *weakSelf = self;
 //    [_tableView addInfiniteScrollingWithActionHandler:^{
 //        NSLog(@"下拉");
@@ -373,7 +374,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    NSLog(@"dianjifangfa");
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

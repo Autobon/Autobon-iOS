@@ -140,7 +140,8 @@ NSString* const HOST = @"http://121.40.157.200:12345/api/mobile";
 + (void)bankCardPost:(NSString *)url parameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
 
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
+    NSString *token = @"autoken=\"technician:j9m1lJsY7kccqOG8nzFudw==\"";
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
     [manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if(success) {
             success(responseObject);
@@ -155,7 +156,11 @@ NSString* const HOST = @"http://121.40.157.200:12345/api/mobile";
 
 
 
-
+//NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+//AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//NSString *token = [userDefaultes objectForKey:@"autoken"];
+//NSLog(@"token--%@--",token);
+//[manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
 
 
 

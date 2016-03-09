@@ -37,7 +37,7 @@
 #import "CLAddOrderSuccessViewController.h"
 #import "PoiSearchDemoViewController.h"
 
-
+#import "GFTestViewController.h"
 
 #import "GFMyMessageViewController.h"
 #import "GFSignInViewController.h"
