@@ -124,6 +124,8 @@
         if ([responseObject[@"result"]integerValue] == 1) {
             CLWorkBeforeViewController *workBefore = [[CLWorkBeforeViewController alloc]init];
             workBefore.orderId = _orderId;
+            workBefore.orderType = _orderType;
+            workBefore.startTime = _startTime;
             [self.navigationController pushViewController:workBefore animated:YES];
         }
     } failure:^(NSError *error) {

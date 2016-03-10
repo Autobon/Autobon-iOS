@@ -16,6 +16,7 @@
 #import "GFSignInViewController.h"
 #import "GFIndentViewController.h"
 #import "CLCertifyViewController.h"
+#import "UIImageView+WebCache.h"
 
 
 @interface GFMyMessageViewController () {
@@ -39,6 +40,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[SDImageCache sharedImageCache] clearDisk];
+    
     // 基础设置
     [self _setBase];
     

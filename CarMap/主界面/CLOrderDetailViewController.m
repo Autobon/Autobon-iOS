@@ -107,14 +107,15 @@
     otherLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [_scrollView addSubview:otherLabel];
     
-    UIView *lineView4 = [[UIView alloc]initWithFrame:CGRectMake(0, otherLabel.frame.origin.y + otherLabel.frame.size.height+3, self.view.frame.size.width, 1)];
+    UIView *lineView4 = [[UIView alloc]initWithFrame:CGRectMake(0, otherLabel.frame.size.height + otherLabel.frame.origin.y, self.view.frame.size.width, 1)];
     lineView4.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
+    lineView4.hidden = YES;
     [_scrollView addSubview:lineView4];
     
     
-    UIView *lineView5 = [[UIView alloc]initWithFrame:CGRectMake(0,0,0,0)];
+    UIView *lineView5 = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 41, self.view.frame.size.width, 1)];
     lineView5.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
-    [_scrollView addSubview:lineView5];
+    [self.view addSubview:lineView5];
     
     
 // 添加小伙伴
@@ -159,7 +160,7 @@
         }
     }else if ([_action isEqualToString:@"INVITATION_ACCEPTED"]){
         addButton.hidden = YES;
-        
+        lineView4.frame = CGRectMake(0, otherLabel.frame.origin.y + otherLabel.frame.size.height+3, self.view.frame.size.width, 1);
         UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView4.frame.origin.y + 4, 85, 30)];
         label1.text = @"合 作 人 ：";
         [_scrollView addSubview:label1];
@@ -199,7 +200,8 @@
         label3.textColor = [UIColor colorWithRed:152/255.0 green:152/255.0 blue:152/255.0 alpha:1.0];
         [_scrollView addSubview:label3];
         
-        lineView5.frame = CGRectMake(0, label1.frame.origin.y + 39, self.view.frame.size.width, 1);
+        lineView4.hidden = NO;
+//        lineView4.frame = CGRectMake(0, label1.frame.origin.y + 39, self.view.frame.size.width, 1);
         workButton.frame = CGRectMake(0, self.view.frame.size.height - 40, self.view.frame.size.width, 40);
         
         [workButton addTarget:self action:@selector(workBtnClick) forControlEvents:UIControlEventTouchUpInside];
@@ -207,8 +209,12 @@
         
 
     }
+    if (lineView4.hidden) {
+        _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, lineView4.frame.origin.y+1);
+    }else{
+        _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, lineView4.frame.origin.y+1+40);
+    }
     
-    _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, lineView5.frame.origin.y+1);
 }
 
 #pragma mark - 添加合作小伙伴的响应方法
@@ -230,6 +236,10 @@
             signinView.customerLat = self.customerLat;
             signinView.customerLon = self.customerLon;
             signinView.orderId = self.orderId;
+            signinView.orderType = self.orderType;
+            NSDictionary *dataDictionary = responseObject[@"data"];
+            signinView.startTime = dataDictionary[@"startTime"];
+            
             [self.navigationController pushViewController:signinView animated:YES];
         }else{
             NSLog(@"-----%@---",responseObject[@"message"]);

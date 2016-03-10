@@ -368,7 +368,7 @@ NSString* const HOST = @"http://121.40.157.200:12345/api/mobile";
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *token = [userDefaultes objectForKey:@"autoken"];
     [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-    NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/signIn",HOST];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/signIn",HOST];
     
     [manager POST:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * task, NSDictionary *responseObject) {
         if (success) {
@@ -489,7 +489,7 @@ NSString* const HOST = @"http://121.40.157.200:12345/api/mobile";
     NSString *token = [userDefaultes objectForKey:@"autoken"];
     NSLog(@"token--%@--",token);
     [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-    NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/start",HOST];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/start",HOST];
     
     
     [manager POST:URLString parameters:@{@"orderId":@(orderId)} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
@@ -650,6 +650,30 @@ NSString* const HOST = @"http://121.40.157.200:12345/api/mobile";
     
 }
 
+
+#pragma mark - 施工完成的请求接口
++ (void)PostOverDictionary:(NSDictionary *)dictionary success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *token = [userDefaultes objectForKey:@"autoken"];
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+//    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/finish",HOST];
+    [manager POST:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+        NSLog(@"-----%@－－－－",responseObject[@"message"]);
+        if(success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"－－－－%@----",error);
+        if(failure) {
+            failure(error);
+        }
+    }];
+    
+    
+}
 
 
 

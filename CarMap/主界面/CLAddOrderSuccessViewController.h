@@ -13,5 +13,7 @@ typedef void (^addOrderBlock)();
 @interface CLAddOrderSuccessViewController : UIViewController
 
 @property (nonatomic ,copy) addOrderBlock addBlock;
+@property (nonatomic ,strong) NSString *orderNum;
+
 
 @end

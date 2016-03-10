@@ -136,7 +136,7 @@
     [self.view addSubview:label];
     
     UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 180, self.view.frame.size.width-20, 30)];
-    label2.text = @"订单编号:20160304105202QNGXLA";
+    label2.text = _orderNum;
     label2.textColor = [UIColor colorWithRed:155/255.0 green:155/255.0 blue:155/255.0 alpha:1.0];
     label2.textAlignment = NSTextAlignmentCenter;
     label2.font = [UIFont systemFontOfSize:16];

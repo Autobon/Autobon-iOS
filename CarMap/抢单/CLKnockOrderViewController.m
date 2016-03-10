@@ -137,8 +137,8 @@
     [_orderView addSubview:otherLabel];
     
     
-    // 我要认证
-    _certifyButton = [[UIButton alloc]initWithFrame:CGRectMake(_orderView.frame.size.width/4, _orderView.frame.size.height-_orderView.frame.size.height/18-7, _orderView.frame.size.width/2, self.view.frame.size.height/18)];
+    // 立即抢单
+    _certifyButton = [[UIButton alloc]initWithFrame:CGRectMake(_orderView.frame.size.width/4, _orderView.frame.size.height-_orderView.frame.size.height/18-10, _orderView.frame.size.width/2, self.view.frame.size.height/18)];
     [_certifyButton setBackgroundImage:[UIImage imageNamed:@"button"] forState:UIControlStateNormal];
     [_certifyButton setBackgroundImage:[UIImage imageNamed:@"buttonClick"] forState:UIControlStateHighlighted];
     [_certifyButton setTitle:@"立即抢单" forState:UIControlStateNormal];

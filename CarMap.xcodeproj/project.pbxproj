@@ -781,12 +781,8 @@
 		9B97543B1C5765B3004BDC7C /* CarMap */ = {
 			isa = PBXGroup;
 			children = (
-
-				9B97543F1C5765B3004BDC7C /* AppDelegate.h */,
-				9B9754401C5765B3004BDC7C /* AppDelegate.mm */,
 				864C70E61C854637004B06B5 /* GFTestViewController.h */,
 				864C70E71C854637004B06B5 /* GFTestViewController.m */,
-
 				860A4C851C7ED9780067FB70 /* MJRefresh */,
 				866CCEAB1C755BC800E50C67 /* 网络请求(AFNetworking) */,
 				86B890E41C73355B0068B95D /* 登录注册 */,
@@ -1156,11 +1152,8 @@
 				9B771FA41C87E34C005E8567 /* CLAddOrderSuccessViewController.m in Sources */,
 				860A4CBF1C7ED9780067FB70 /* MJRefreshStateHeader.m in Sources */,
 				9B8BA6DE1C7FF66000E90CB0 /* CLPersonTableViewCell.m in Sources */,
-
 				9B771FA11C87E16A005E8567 /* Reachability.m in Sources */,
-
 				864C70E81C854637004B06B5 /* GFTestViewController.m in Sources */,
-
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

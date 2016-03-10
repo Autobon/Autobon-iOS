@@ -14,6 +14,7 @@
 #import "GFHttpTool.h"
 #import "GFTipView.h"
 #import "MYImageView.h"
+#import "CLCleanWorkViewController.h"
 
 
 
@@ -113,8 +114,9 @@
     
     _carImageButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/7, 200, self.view.frame.size.width*5/7, self.view.frame.size.width*27/70)];
 //    _carImageView.image = [UIImage imageNamed:@"carImage"];
-    [_carImageButton setImage:[UIImage imageNamed:@"carImage"] forState:UIControlStateNormal];
+    [_carImageButton setBackgroundImage:[UIImage imageNamed:@"carImage"] forState:UIControlStateNormal];
     [_carImageButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
+//    _carImageButton.backgroundColor = [UIColor cyanColor];
     [self.view addSubview:_carImageButton];
     
     _cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*6/7-15, 200+self.view.frame.size.width*27/70-25, 30, 30)];
@@ -334,9 +336,29 @@
         [GFHttpTool PostPhotoForBeforeOrderId:[_orderId integerValue] URLs:URLString success:^(NSDictionary *responseObject) {
             if ([responseObject[@"result"] integerValue] == 1) {
                 
-                CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
-                workOver.orderId = _orderId;
-                [self.navigationController pushViewController:workOver animated:YES];
+//                CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
+//                workOver.orderId = _orderId;
+//                workOver.orderType = _orderType;
+//                [self.navigationController pushViewController:workOver animated:YES];
+                
+                
+                
+                if ([_orderType integerValue] == 4) {
+                    
+                    CLCleanWorkViewController *cleanWork = [[CLCleanWorkViewController alloc]init];
+                    cleanWork.orderId = _orderId;
+                    cleanWork.startTime = _startTime;
+                    [self.navigationController pushViewController:cleanWork animated:YES];
+                    
+                }else{
+                    CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
+                    workOver.orderId = _orderId;
+                    workOver.orderType = _orderType;
+                    workOver.startTime = _startTime;
+                    [self.navigationController pushViewController:workOver animated:YES];
+                }
+                
+                
                 
             }
         } failure:^(NSError *error) {

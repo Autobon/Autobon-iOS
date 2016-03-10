@@ -13,7 +13,8 @@
 @property (nonatomic ,strong) NSString *customerLat;
 @property (nonatomic ,strong) NSString *customerLon;
 @property (nonatomic ,strong) NSString *orderId;
-
+@property (nonatomic ,strong) NSString *orderType;
+@property (nonatomic ,strong) NSString *startTime;
 
 
 @end
