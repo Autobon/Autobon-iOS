@@ -77,13 +77,13 @@
         NSMutableDictionary *attDic = [[NSMutableDictionary alloc] init];
         attDic[NSFontAttributeName] = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
         attDic[NSForegroundColorAttributeName] = [UIColor whiteColor];
-        CGRect strRect = [str boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attDic context:nil];
+        CGRect strRect = [str boundingRectWithSize:CGSizeMake([UIScreen mainScreen].bounds.size.width-30, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attDic context:nil];
         
-        CGFloat tipViewW = strRect.size.width + 30;
-        CGFloat tipViewH = kHeight * 0.0625;
+        CGFloat tipViewW = strRect.size.width;
+        CGFloat tipViewH = strRect.size.height + 5;
         CGFloat tipViewX = (kWidth - tipViewW) / 2.0;
         CGFloat tipViewY = kHeight * 0.8;
-        UIView *tipView = [[UIView alloc] initWithFrame:CGRectMake(tipViewX, tipViewY, tipViewW, tipViewH)];
+        UIView *tipView = [[UIView alloc] initWithFrame:CGRectMake(tipViewX, tipViewY, tipViewW+10, tipViewH)];
         tipView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
         tipView.layer.cornerRadius = 7.5;
         [self addSubview:tipView];
@@ -92,10 +92,11 @@
         CGFloat msgLabH = tipViewH;
         CGFloat msgLabX = 0;
         CGFloat msgLabY = 0;
-        UILabel *msgLab = [[UILabel alloc] initWithFrame:CGRectMake(msgLabX, msgLabY, msgLabW, msgLabH)];
+        UILabel *msgLab = [[UILabel alloc] initWithFrame:CGRectMake(msgLabX, msgLabY, msgLabW+10, msgLabH)];
         msgLab.text = messageStr;
         [tipView addSubview:msgLab];
         msgLab.textAlignment = NSTextAlignmentCenter;
+        msgLab.numberOfLines = 0;
         msgLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
         msgLab.textColor = [UIColor whiteColor];
         

@@ -63,6 +63,10 @@
     [userDefalts synchronize];
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    
+    [self headRefresh];
+}
 
 - (void)viewDidLoad {
     
@@ -112,16 +116,17 @@
 
 
 - (void)httpWorkForTableView{
-    _cellModelArray = [[NSMutableArray alloc]init];
+    
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
-    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [GFHttpTool getOrderListSuccess:^(NSDictionary *responseObject) {
         if ([responseObject[@"result"] integerValue] == 1) {
             NSDictionary *dataDit = responseObject[@"data"];
             NSArray *dataArray = dataDit[@"list"];
             NSLog(@"---%@--",dataArray);
+            _cellModelArray = [[NSMutableArray alloc]init];
             [dataArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
                 NSLog(@"---obj---%@--",obj);
                 CLHomeOrderCellModel *cellModel = [[CLHomeOrderCellModel alloc]init];
@@ -134,8 +139,38 @@
                 cellModel.customerLon = obj[@"positionLon"];
                 cellModel.remark = obj[@"remark"];
                 cellModel.status = obj[@"status"];
-                cellModel.mainTechId = obj[@"mainTechId"];
-                cellModel.secondTechId = obj[@"secondTechId"];
+                NSDictionary *mainTechDictionary = obj[@"mainTech"];
+                cellModel.mainTechId = mainTechDictionary[@"id"];
+                if ([[userDefaults objectForKey:@"userId"] integerValue] == [cellModel.mainTechId integerValue]) {
+                    NSLog(@"我是主技师");
+                    if (![obj[@"mainConstruct"] isKindOfClass:[NSNull class]]) {
+                        NSDictionary *mainDictionary = obj[@"mainConstruct"];
+                        cellModel.startTime = mainDictionary[@"startTime"];
+                        cellModel.signinTime = mainDictionary[@"signinTime"];
+                        cellModel.beforePhotos = mainDictionary[@"beforePhotos"];
+                        cellModel.afterPhotos = mainDictionary[@"afterPhotos"];
+                        
+                    }
+                    if (![obj[@"secondTech"] isKindOfClass:[NSNull class]]) {
+                        NSLog(@"有小伙伴");
+                        NSDictionary *secondDictionary = obj[@"secondTech"];
+                        cellModel.mateName = secondDictionary[@"name"];
+                    }
+                    
+                }else{
+                    NSLog(@"我是次技师");
+                    NSDictionary *secondDictionary = obj[@"mainTech"];
+                    cellModel.mateName = secondDictionary[@"name"];
+                    if (![obj[@"secondConstruct"] isKindOfClass:[NSNull class]]) {
+                        NSDictionary *mainDictionary = obj[@"secondConstruct"];
+                        cellModel.startTime = mainDictionary[@"startTime"];
+                        cellModel.signinTime = mainDictionary[@"signinTime"];
+                        cellModel.beforePhotos = mainDictionary[@"beforePhotos"];
+                        cellModel.afterPhotos = mainDictionary[@"afterPhotos"];
+                    }
+                }
+                
+//                cellModel.secondTechId = obj[@"secondTechId"];
                 [_cellModelArray addObject:cellModel];
                 NSDate *date = [NSDate dateWithTimeIntervalSince1970:[obj[@"orderTime"] integerValue]/1000];
                 cellModel.orderTime = [formatter stringFromDate:date];
@@ -147,8 +182,12 @@
             if (_cellModelArray.count != 0) {
                 _noOrderImageView.hidden = YES;
                 _noOrderlabel.hidden = YES;
-                [_tableView reloadData];
+                
+            }else{
+                _noOrderImageView.hidden = NO;
+                _noOrderlabel.hidden = NO;
             }
+            [_tableView reloadData];
             [self.tableView.header endRefreshing];
         }
     } failure:^(NSError *error) {
@@ -253,12 +292,15 @@
             CLAddOrderSuccessViewController *addSuccess = [[CLAddOrderSuccessViewController alloc]init];
             NSDictionary *dataDictionary = responseObject[@"data"];
             addSuccess.orderNum = dataDictionary[@"orderNum"];
+            addSuccess.dataDictionary = dataDictionary;
+            
+            
             
             addSuccess.addBlock = ^{
                 _noOrderImageView.hidden = YES;
                 _noOrderlabel.hidden = YES;
 
-                [self headRefresh];
+//                [self headRefresh];
             };
             [self.navigationController pushViewController:addSuccess animated:NO];
         }else{
@@ -379,6 +421,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"dianjifangfa");
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -409,7 +453,6 @@
             [cell.orderButton addTarget:self action:@selector(workBegin:) forControlEvents:UIControlEventTouchUpInside];
 
         }
-//
 //        cell.contentView.userInteractionEnabled = YES;
 //        [cell.orderButton addTarget:self action:@selector(workBegin:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
@@ -422,99 +465,181 @@
 #pragma mark - 进入订单的按钮点击方法
 - (void)orderBtnClick:(UIButton *)button{
     if ([button.titleLabel.text isEqualToString:@"进入订单"]) {
-        CLHomeOrderCellModel *cellModel = _cellModelArray[button.tag-2];
-        CLOrderDetailViewController *orderDetail = [[CLOrderDetailViewController alloc]init];
-        orderDetail.orderId = cellModel.orderId;
-        
-        [GFHttpTool getOrderDetailOrderId:[cellModel.orderId integerValue] success:^(NSDictionary *responseObject) {
-            NSLog(@"responseObject--%@--",responseObject);
-            NSDictionary *dataDictionary = responseObject[@"data"];
-            NSDictionary *constructionDict = dataDictionary[@"construction"];
-            NSLog(@"---constructionDict--%@",constructionDict);
-            if ([constructionDict isKindOfClass:[NSNull class]]) {
-                NSLog(@"小伙伴已开始工作");
-                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                NSString *userId = [userDefaults objectForKey:@"userId"];
-                NSDictionary *mainTechDictionary = dataDictionary[@"mainTech"];
-                NSDictionary *secondTechDictionary = dataDictionary[@"secondTech"];
+        if (button.tag - 2 < _cellModelArray.count) {
+            CLHomeOrderCellModel *cellModel = _cellModelArray[button.tag-2];
+            
+            
+            if (cellModel.startTime) {
+                // 已经开始
+                if ([cellModel.signinTime isKindOfClass:[NSNull class]]) {
+                    NSLog(@"未签到");
+                    CLSigninViewController *signinView = [[CLSigninViewController alloc]init];
+                    signinView.customerLat = cellModel.customerLat;
+                    signinView.customerLon = cellModel.customerLon;
+                    signinView.orderId = cellModel.orderId;
+                    signinView.orderType = cellModel.orderType;
+                    signinView.startTime = cellModel.startTime;
+                    [self.navigationController pushViewController:signinView animated:YES];
+                    
+                    
+                    
+                }else if ([cellModel.beforePhotos isKindOfClass:[NSNull class]]){
+                    CLWorkBeforeViewController *workBefore = [[CLWorkBeforeViewController alloc]init];
+                    workBefore.orderId = cellModel.orderId;
+                    workBefore.orderType = cellModel.orderType;
+                    workBefore.startTime = cellModel.startTime;
+                    [self.navigationController pushViewController:workBefore animated:YES];
+                    
+                    NSLog(@"未上传开始前照片");
+                }else if ([cellModel.afterPhotos isKindOfClass:[NSNull class]]){
+                    if ([cellModel.orderType integerValue] == 4) {
+                        
+                        CLCleanWorkViewController *cleanWork = [[CLCleanWorkViewController alloc]init];
+                        cleanWork.orderId = cellModel.orderId;
+                        cleanWork.startTime = cellModel.startTime;
+                        [self.navigationController pushViewController:cleanWork animated:YES];
+                        
+                    }else{
+                        CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
+                        workOver.startTime = cellModel.startTime;
+                        NSLog(@"---workOver---%@--",workOver.startTime);
+                        workOver.orderId = cellModel.orderId;
+                        workOver.orderType = cellModel.orderType;
+                        
+                        [self.navigationController pushViewController:workOver animated:YES];
+                    }
+                    NSLog(@"未上传结束时照片");
+                }else{
+                    [self addAlertView:@"等待小伙伴提交"];
+                }
+                
+            }else{
+                // 未开始，判断有无小伙伴
+                
+                CLOrderDetailViewController *orderDetail = [[CLOrderDetailViewController alloc]init];
+                orderDetail.orderId = cellModel.orderId;
                 orderDetail.customerLat = cellModel.customerLat;
                 orderDetail.customerLon = cellModel.customerLon;
                 orderDetail.orderPhotoURL = cellModel.orderPhotoURL;
                 orderDetail.orderTime = cellModel.orderTime;
                 orderDetail.remark = cellModel.remark;
                 orderDetail.orderType = cellModel.orderType;
-                orderDetail.action = @"INVITATION_ACCEPTED";
-                if ([userId integerValue] == [mainTechDictionary[@"id"] integerValue]) {
-                    NSLog(@"我是主技师，小伙伴已开始");
-                    orderDetail.secondId = secondTechDictionary[@"name"];
-                    
+                
+                NSLog(@"我还没有开始啊--%@--",cellModel.mateName);
+                if (cellModel.mateName) {
+                    // 小伙伴存在
+                    orderDetail.action = @"INVITATION_ACCEPTED";
+                    orderDetail.secondId = cellModel.mateName;
+                    [self.navigationController pushViewController:orderDetail animated:YES];
                     
                 }else{
-                    NSLog(@"我是副机师，小伙伴已开始");
-                    
-                    orderDetail.secondId = mainTechDictionary[@"name"];
+                    // 小伙伴不存在，可以随便邀请
+                    NSLog(@"---xiaohuoban-");
                 }
-                [self.navigationController pushViewController:orderDetail animated:YES];
-                
-            }else{
-                NSLog(@"已开始工作，签到，上传照片");
-                
-                NSDictionary *orderDictionary = dataDictionary[@"order"];
-               
-                
-                if ([constructionDict[@"signinTime"] isKindOfClass:[NSNull class]]) {
-                    NSLog(@"未签到");
-                    CLSigninViewController *signinView = [[CLSigninViewController alloc]init];
-                    signinView.customerLat = orderDictionary[@"positionLat"];
-                    signinView.customerLon = orderDictionary[@"positionLon"];
-                    signinView.orderId = orderDictionary[@"id"];
-                    signinView.orderType = orderDictionary[@"orderType"];
-                    signinView.startTime = constructionDict[@"startTime"];
-                    [self.navigationController pushViewController:signinView animated:YES];
-                    
-                    
-                    
-                }else if ([constructionDict[@"beforePhotos"] isKindOfClass:[NSNull class]]){
-                    CLWorkBeforeViewController *workBefore = [[CLWorkBeforeViewController alloc]init];
-                    workBefore.orderId = orderDictionary[@"id"];
-                    workBefore.orderType = orderDictionary[@"orderType"];
-                    workBefore.startTime = constructionDict[@"startTime"];
-                    [self.navigationController pushViewController:workBefore animated:YES];
-                    
-                    NSLog(@"未上传开始前照片");
-                }else if ([constructionDict[@"afterPhotos"] isKindOfClass:[NSNull class]]){
-                    if ([orderDictionary[@"orderType"] integerValue] == 4) {
-                        
-                        CLCleanWorkViewController *cleanWork = [[CLCleanWorkViewController alloc]init];
-                        cleanWork.orderId = orderDictionary[@"id"];
-                        cleanWork.startTime = constructionDict[@"startTime"];
-                        [self.navigationController pushViewController:cleanWork animated:YES];
-                        
-                    }else{
-                        CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
-                        workOver.startTime = constructionDict[@"startTime"];
-                        NSLog(@"---workOver---%@--",workOver.startTime);
-                        workOver.orderId = orderDictionary[@"id"];
-                        workOver.orderType = orderDictionary[@"orderType"];
-                        
-                        [self.navigationController pushViewController:workOver animated:YES];
-                    }
-                    
-                    
-                    
-                    
-                    
-                    NSLog(@"未上传结束时照片");
-                }
-                
-                
                 
             }
-            
-        } failure:^(NSError *error) {
-            
-        }];
+        }else{
+            [self headRefresh];
+        }
     }
+        
+        
+        
+        
+        
+        
+//        CLOrderDetailViewController *orderDetail = [[CLOrderDetailViewController alloc]init];
+//        orderDetail.orderId = cellModel.orderId;
+//        
+//        [GFHttpTool getOrderDetailOrderId:[cellModel.orderId integerValue] success:^(NSDictionary *responseObject) {
+//            NSLog(@"responseObject--%@--",responseObject);
+//            NSDictionary *dataDictionary = responseObject[@"data"];
+//            NSDictionary *constructionDict = dataDictionary[@"construction"];
+//            NSLog(@"---constructionDict--%@",constructionDict);
+//            if ([constructionDict isKindOfClass:[NSNull class]]) {
+//                NSLog(@"小伙伴已开始工作");
+//                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//                NSString *userId = [userDefaults objectForKey:@"userId"];
+//                NSDictionary *mainTechDictionary = dataDictionary[@"mainTech"];
+//                NSDictionary *secondTechDictionary = dataDictionary[@"secondTech"];
+//                orderDetail.customerLat = cellModel.customerLat;
+//                orderDetail.customerLon = cellModel.customerLon;
+//                orderDetail.orderPhotoURL = cellModel.orderPhotoURL;
+//                orderDetail.orderTime = cellModel.orderTime;
+//                orderDetail.remark = cellModel.remark;
+//                orderDetail.orderType = cellModel.orderType;
+//                orderDetail.action = @"INVITATION_ACCEPTED";
+//                if ([userId integerValue] == [mainTechDictionary[@"id"] integerValue]) {
+//                    NSLog(@"我是主技师，小伙伴已开始");
+//                    orderDetail.secondId = secondTechDictionary[@"name"];
+//                    
+//                    
+//                }else{
+//                    NSLog(@"我是副机师，小伙伴已开始");
+//                    
+//                    orderDetail.secondId = mainTechDictionary[@"name"];
+//                }
+//                [self.navigationController pushViewController:orderDetail animated:YES];
+//                
+//            }else{
+//                NSLog(@"已开始工作，签到，上传照片");
+//                
+//                NSDictionary *orderDictionary = dataDictionary[@"order"];
+//               
+//                
+//                if ([constructionDict[@"signinTime"] isKindOfClass:[NSNull class]]) {
+//                    NSLog(@"未签到");
+//                    CLSigninViewController *signinView = [[CLSigninViewController alloc]init];
+//                    signinView.customerLat = orderDictionary[@"positionLat"];
+//                    signinView.customerLon = orderDictionary[@"positionLon"];
+//                    signinView.orderId = orderDictionary[@"id"];
+//                    signinView.orderType = orderDictionary[@"orderType"];
+//                    signinView.startTime = constructionDict[@"startTime"];
+//                    [self.navigationController pushViewController:signinView animated:YES];
+//                    
+//                    
+//                    
+//                }else if ([constructionDict[@"beforePhotos"] isKindOfClass:[NSNull class]]){
+//                    CLWorkBeforeViewController *workBefore = [[CLWorkBeforeViewController alloc]init];
+//                    workBefore.orderId = orderDictionary[@"id"];
+//                    workBefore.orderType = orderDictionary[@"orderType"];
+//                    workBefore.startTime = constructionDict[@"startTime"];
+//                    [self.navigationController pushViewController:workBefore animated:YES];
+//                    
+//                    NSLog(@"未上传开始前照片");
+//                }else if ([constructionDict[@"afterPhotos"] isKindOfClass:[NSNull class]]){
+//                    if ([orderDictionary[@"orderType"] integerValue] == 4) {
+//                        
+//                        CLCleanWorkViewController *cleanWork = [[CLCleanWorkViewController alloc]init];
+//                        cleanWork.orderId = orderDictionary[@"id"];
+//                        cleanWork.startTime = constructionDict[@"startTime"];
+//                        [self.navigationController pushViewController:cleanWork animated:YES];
+//                        
+//                    }else{
+//                        CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
+//                        workOver.startTime = constructionDict[@"startTime"];
+//                        NSLog(@"---workOver---%@--",workOver.startTime);
+//                        workOver.orderId = orderDictionary[@"id"];
+//                        workOver.orderType = orderDictionary[@"orderType"];
+//                        
+//                        [self.navigationController pushViewController:workOver animated:YES];
+//                    }
+//                    
+//                    
+//                    
+//                    
+//                    
+//                    NSLog(@"未上传结束时照片");
+//                }
+//                
+//                
+//                
+//            }
+//            
+//        } failure:^(NSError *error) {
+//            
+//        }];
+//    }
     
     
 //        CLWorkBeforeViewController *workBefore = [[CLWorkBeforeViewController alloc]init];
@@ -584,6 +709,7 @@
 
 #pragma mark - AlertView
 - (void)addAlertView:(NSString *)title{
+    
     GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
     [tipView tipViewShow];
 }

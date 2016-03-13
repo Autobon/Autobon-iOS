@@ -20,8 +20,13 @@
 @property (nonatomic ,strong) NSString *remark;
 @property (nonatomic ,strong) NSString *status;
 @property (nonatomic ,strong) NSString *mainTechId;
+@property (nonatomic ,strong) NSString *mainName;
 @property (nonatomic ,strong) NSString *secondTechId;
-
+@property (nonatomic ,strong) NSString *mateName;
+@property (nonatomic ,strong) NSString *startTime;
+@property (nonatomic ,strong) NSString *signinTime;
+@property (nonatomic ,strong) NSString *beforePhotos;
+@property (nonatomic ,strong) NSString *afterPhotos;
 
 
 

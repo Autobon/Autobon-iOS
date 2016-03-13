@@ -242,7 +242,14 @@
             
             [self.navigationController pushViewController:signinView animated:YES];
         }else{
-            NSLog(@"-----%@---",responseObject[@"message"]);
+            if ([responseObject[@"error"] isEqualToString:@"INVITATION_NOT_FINISH"]) {
+                GFTipView *tipView = [[GFTipView alloc]initWithHeight:300 WithMessage:@"小伙伴还没答复，确定开始工作吗" withViewController:self withShowTimw:1.0];
+                [tipView tipViewShow];
+            }
+            
+            
+            
+            
         }
         
     } failure:^(NSError *error) {

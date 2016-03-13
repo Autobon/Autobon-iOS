@@ -60,6 +60,12 @@
 		86B890F71C73355B0068B95D /* GFSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890EC1C73355B0068B95D /* GFSignInViewController.m */; };
 		86B890F81C73355B0068B95D /* GFSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890EE1C73355B0068B95D /* GFSignUpViewController.m */; };
 		86B890FA1C73355B0068B95D /* GFMyMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890F31C73355B0068B95D /* GFMyMessageViewController.m */; };
+		9B3FCD071C925E6800E871C7 /* CLCooperateFailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3FCD061C925E6800E871C7 /* CLCooperateFailViewController.m */; };
+		9B3FCD0A1C92707D00E871C7 /* CLCooperatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3FCD091C92707D00E871C7 /* CLCooperatingViewController.m */; };
+		9B3FCD0F1C929FC300E871C7 /* GFNoIndentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3FCD0C1C929FC300E871C7 /* GFNoIndentTableViewCell.m */; };
+		9B3FCD101C929FC300E871C7 /* GFNoIndentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3FCD0E1C929FC300E871C7 /* GFNoIndentViewController.m */; };
+		9B3FCD1F1C92A09500E871C7 /* GFButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3FCD151C92A09500E871C7 /* GFButton.m */; };
+		9B3FCD231C92A09500E871C7 /* GFTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3FCD1D1C92A09500E871C7 /* GFTitleView.m */; };
 		9B7301571C5F2CDF00FB2DEB /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7301561C5F2CDF00FB2DEB /* SecondViewController.m */; };
 		9B771FA11C87E16A005E8567 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B771FA01C87E16A005E8567 /* Reachability.m */; };
 		9B771FA41C87E34C005E8567 /* CLAddOrderSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B771FA31C87E34C005E8567 /* CLAddOrderSuccessViewController.m */; };
@@ -239,6 +245,18 @@
 		86B890F21C73355B0068B95D /* GFMyMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFMyMessageViewController.h; sourceTree = "<group>"; };
 		86B890F31C73355B0068B95D /* GFMyMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFMyMessageViewController.m; sourceTree = "<group>"; };
 		9B02AF661C5A22CB0044FB71 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		9B3FCD051C925E6800E871C7 /* CLCooperateFailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCooperateFailViewController.h; sourceTree = "<group>"; };
+		9B3FCD061C925E6800E871C7 /* CLCooperateFailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLCooperateFailViewController.m; sourceTree = "<group>"; };
+		9B3FCD081C92707D00E871C7 /* CLCooperatingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCooperatingViewController.h; sourceTree = "<group>"; };
+		9B3FCD091C92707D00E871C7 /* CLCooperatingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLCooperatingViewController.m; sourceTree = "<group>"; };
+		9B3FCD0B1C929FC300E871C7 /* GFNoIndentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFNoIndentTableViewCell.h; sourceTree = "<group>"; };
+		9B3FCD0C1C929FC300E871C7 /* GFNoIndentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFNoIndentTableViewCell.m; sourceTree = "<group>"; };
+		9B3FCD0D1C929FC300E871C7 /* GFNoIndentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFNoIndentViewController.h; sourceTree = "<group>"; };
+		9B3FCD0E1C929FC300E871C7 /* GFNoIndentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFNoIndentViewController.m; sourceTree = "<group>"; };
+		9B3FCD141C92A09500E871C7 /* GFButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFButton.h; sourceTree = "<group>"; };
+		9B3FCD151C92A09500E871C7 /* GFButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFButton.m; sourceTree = "<group>"; };
+		9B3FCD1C1C92A09500E871C7 /* GFTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFTitleView.h; sourceTree = "<group>"; };
+		9B3FCD1D1C92A09500E871C7 /* GFTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFTitleView.m; sourceTree = "<group>"; };
 		9B7301551C5F2CDF00FB2DEB /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
 		9B7301561C5F2CDF00FB2DEB /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		9B771F9F1C87E16A005E8567 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
@@ -642,6 +660,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9B3FCD111C92A09500E871C7 /* 自定义控件 */ = {
+			isa = PBXGroup;
+			children = (
+				9B3FCD141C92A09500E871C7 /* GFButton.h */,
+				9B3FCD151C92A09500E871C7 /* GFButton.m */,
+				9B3FCD1C1C92A09500E871C7 /* GFTitleView.h */,
+				9B3FCD1D1C92A09500E871C7 /* GFTitleView.m */,
+			);
+			path = "自定义控件";
+			sourceTree = "<group>";
+		};
 		9B7C3FCF1C770F3200E3F53F /* 工作界面 */ = {
 			isa = PBXGroup;
 			children = (
@@ -795,12 +824,21 @@
 				9B95A7A11C7C5E9E0041C7BA /* 更多 */,
 				9B7301551C5F2CDF00FB2DEB /* SecondViewController.h */,
 				9B7301561C5F2CDF00FB2DEB /* SecondViewController.m */,
+				9B3FCD111C92A09500E871C7 /* 自定义控件 */,
 				9BA9CBD31C5B02220059F145 /* FirstViewController.h */,
 				9BA9CBD41C5B02220059F145 /* FirstViewController.m */,
 				9B9515371C60501B00445F93 /* TestViewController.h */,
 				9B9515381C60501B00445F93 /* TestViewController.m */,
 				9BA526CA1C63115700A2298F /* PoiSearchDemoViewController.h */,
 				9BA526CB1C63115700A2298F /* PoiSearchDemoViewController.mm */,
+				9B3FCD051C925E6800E871C7 /* CLCooperateFailViewController.h */,
+				9B3FCD061C925E6800E871C7 /* CLCooperateFailViewController.m */,
+				9B3FCD081C92707D00E871C7 /* CLCooperatingViewController.h */,
+				9B3FCD091C92707D00E871C7 /* CLCooperatingViewController.m */,
+				9B3FCD0B1C929FC300E871C7 /* GFNoIndentTableViewCell.h */,
+				9B3FCD0C1C929FC300E871C7 /* GFNoIndentTableViewCell.m */,
+				9B3FCD0D1C929FC300E871C7 /* GFNoIndentViewController.h */,
+				9B3FCD0E1C929FC300E871C7 /* GFNoIndentViewController.m */,
 				9B95153A1C60503800445F93 /* 百度地图 */,
 				9B9754451C5765B3004BDC7C /* Main.storyboard */,
 				9B771F9F1C87E16A005E8567 /* Reachability.h */,
@@ -1057,6 +1095,7 @@
 				860A4CCB1C7EE4CB0067FB70 /* GFIndentTableViewCell.m in Sources */,
 				8655B0E51C76F15800D9FCB4 /* GFChangePwdViewController.m in Sources */,
 				860A4CB71C7ED9780067FB70 /* MJRefreshAutoGifFooter.m in Sources */,
+				9B3FCD0A1C92707D00E871C7 /* CLCooperatingViewController.m in Sources */,
 				9B9515411C60503800445F93 /* GFAnnotation.m in Sources */,
 				86B890FA1C73355B0068B95D /* GFMyMessageViewController.m in Sources */,
 				9B93BF221C89548800397078 /* SDImageCache.m in Sources */,
@@ -1105,6 +1144,7 @@
 				9B93BF201C89548800397078 /* README.md in Sources */,
 				860A4CB51C7ED9780067FB70 /* MJRefreshFooter.m in Sources */,
 				860A4CC21C7ED9780067FB70 /* UIScrollView+MJExtension.m in Sources */,
+				9B3FCD0F1C929FC300E871C7 /* GFNoIndentTableViewCell.m in Sources */,
 				86B890F41C73355B0068B95D /* GFForgetPwdViewController_1.m in Sources */,
 				860A4CC41C7ED9780067FB70 /* UIView+MJExtension.m in Sources */,
 				866CCEBC1C755BC800E50C67 /* AFHTTPSessionManager.m in Sources */,
@@ -1121,6 +1161,7 @@
 				9BCFDC971C859397003A35A8 /* CLCleanWorkViewController.m in Sources */,
 				9BE665401C743E0800976E7D /* CLTouchScrollView.m in Sources */,
 				9BE53AF31C73406800BBB424 /* GFTextField.m in Sources */,
+				9B3FCD071C925E6800E871C7 /* CLCooperateFailViewController.m in Sources */,
 				9B7C3FCE1C7706D800E3F53F /* CLOrderDetailViewController.m in Sources */,
 				9B97543E1C5765B3004BDC7C /* main.m in Sources */,
 				868B0F1A1C7EA6FA00938665 /* GFBillDetailsTableViewCell.m in Sources */,
@@ -1133,12 +1174,15 @@
 				9B9515431C60503800445F93 /* GFMapViewController.mm in Sources */,
 				860A4CB91C7ED9780067FB70 /* MJRefreshAutoStateFooter.m in Sources */,
 				9B7C3FD51C77179100E3F53F /* CLWorkBeforeViewController.m in Sources */,
+				9B3FCD1F1C92A09500E871C7 /* GFButton.m in Sources */,
+				9B3FCD101C929FC300E871C7 /* GFNoIndentViewController.m in Sources */,
 				860A4CBD1C7ED9780067FB70 /* MJRefreshGifHeader.m in Sources */,
 				9B93BF2B1C89548800397078 /* UIImage+MultiFormat.m in Sources */,
 				9B93BF2D1C89548800397078 /* UIImageView+WebCache.m in Sources */,
 				9B95A79D1C7C46140041C7BA /* CLCertifyingViewController.m in Sources */,
 				868B0F121C7EA5AE00938665 /* GFBankCardViewController.m in Sources */,
 				9BA3C5BC1C75621B007F730D /* GFAlertView.m in Sources */,
+				9B3FCD231C92A09500E871C7 /* GFTitleView.m in Sources */,
 				860A4CBA1C7ED9780067FB70 /* MJRefreshBackGifFooter.m in Sources */,
 				9BA3C8D71C7598FD007F730D /* CLHomeOrderViewController.m in Sources */,
 				86B890F81C73355B0068B95D /* GFSignUpViewController.m in Sources */,

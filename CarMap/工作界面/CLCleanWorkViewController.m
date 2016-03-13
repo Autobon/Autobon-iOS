@@ -25,12 +25,23 @@
     UIScrollView *_scrollView;
     UITextField *_workTextField;
     
+    NSTimer *_timer;
+    UILabel *_distanceLabel;
+    
 }
 
 @end
 
 @implementation CLCleanWorkViewController
 
+
+- (void)viewDidDisappear:(BOOL)animated{
+    [_timer invalidate];
+    _timer = nil;
+}
+- (void)viewDidAppear:(BOOL)animated{
+    [self startTimeForNows];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     _imageArray = [[NSMutableArray alloc]init];
@@ -52,6 +63,7 @@
     
     [self titleView];
     
+    [self startTimeForNows];
 }
 
 #pragma mark - 设置日期和状态
@@ -106,12 +118,12 @@
 
 - (void)titleView{
     
-    UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 1, self.view.frame.size.width, 40)];
-    distanceLabel.text = @"已用时：15分28秒";
-    distanceLabel.backgroundColor = [UIColor whiteColor];
-    distanceLabel.font = [UIFont systemFontOfSize:15];
-    distanceLabel.textAlignment = NSTextAlignmentCenter;
-    [_scrollView addSubview:distanceLabel];
+    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 1, self.view.frame.size.width, 40)];
+    _distanceLabel.text = @"已用时：15分28秒";
+    _distanceLabel.backgroundColor = [UIColor whiteColor];
+    _distanceLabel.font = [UIFont systemFontOfSize:15];
+    _distanceLabel.textAlignment = NSTextAlignmentCenter;
+    [_scrollView addSubview:_distanceLabel];
     
     _carImageButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/7, 55, self.view.frame.size.width*5/7, self.view.frame.size.width*27/70)];
 //    _carImageView.image = [UIImage imageNamed:@"carImage"];
@@ -175,6 +187,52 @@
     
     
 }
+
+
+
+
+#pragma mark - 获取开始时间计算用时
+- (void)startTimeForNows{
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[_startTime integerValue]/1000];
+    NSLog(@"---date-- %@---",[formatter stringFromDate:date]);
+    
+    NSInteger time = (NSInteger)[[NSDate date] timeIntervalSince1970] - [_startTime integerValue]/1000;
+    
+    
+    NSInteger minute = time/60;
+    if (minute > 60) {
+        _distanceLabel.text = [NSString stringWithFormat:@"已用时：%ld时 %ld分",minute/60,minute%60];
+    }else{
+        NSLog(@"----shezhi时间");
+        _distanceLabel.text = [NSString stringWithFormat:@"已用时： %ld分钟",minute];
+        
+    }
+    
+    
+    if (_timer == nil) {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timeForWork:) userInfo:@{@"time":@(time)} repeats:YES];
+    }
+}
+
+- (void)timeForWork:(NSTimer *)timer{
+    
+    NSString *timeString = timer.userInfo[@"time"];
+    NSInteger time = [timeString integerValue] + 1;
+    NSInteger minute = time/60;
+    if (minute > 60) {
+        _distanceLabel.text = [NSString stringWithFormat:@"已用时：%ld时 %ld分",minute/60,minute%60];
+    }else{
+        NSLog(@"----shezhi时间");
+        _distanceLabel.text = [NSString stringWithFormat:@"已用时： %ld分钟",minute];
+        
+    }
+    
+}
+
+
 
 - (void)workBtnClick:(UIButton *)button{
 //    if (button.tag == 1 && [_workTextField.text integerValue]>=10) {
@@ -370,9 +428,15 @@
     if (_workTextField.text.length > 0) {
         NSString *cleanFloat = [NSString stringWithFormat:@"%0.2f",[_workTextField.text integerValue]/100.0];
         
-        [GFHttpTool PostOverDictionary:@{@"afterPhotos":URLString,@"orderId":_orderId,@"percent":cleanFloat} success:^(id responseObject) {
+        [GFHttpTool PostOverDictionary:@{@"afterPhotos":URLString,@"orderId":_orderId,@"percent":cleanFloat} success:^(NSDictionary *responseObject) {
             
             NSLog(@"请求成功啦-responseObject-%@--%@--",responseObject,responseObject[@"message"]);
+            if ([responseObject[@"result"] integerValue] == 1) {
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            }else{
+                [self addAlertView:responseObject[@"message"]];
+            }
+            
             
         } failure:^(NSError *error) {
             NSLog(@"--请求失败了--%@--",error);

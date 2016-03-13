@@ -15,5 +15,6 @@ typedef void (^addOrderBlock)();
 @property (nonatomic ,copy) addOrderBlock addBlock;
 @property (nonatomic ,strong) NSString *orderNum;
 
+@property (nonatomic ,strong) NSDictionary *dataDictionary;
 
 @end

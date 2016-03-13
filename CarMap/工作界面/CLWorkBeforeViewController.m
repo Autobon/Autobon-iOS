@@ -29,6 +29,10 @@
     UIButton *_carImageButton;
     UIButton *_cameraBtn;
     NSMutableArray *_imageArray;
+    
+    UILabel *_distanceLabel;
+    NSTimer *_timer;
+    
 }
 
 
@@ -36,6 +40,13 @@
 
 @implementation CLWorkBeforeViewController
 
+- (void)viewDidDisappear:(BOOL)animated{
+    [_timer invalidate];
+    _timer = nil;
+}
+- (void)viewDidAppear:(BOOL)animated{
+    [self startTimeForNows];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     _imageArray = [[NSMutableArray alloc]init];
@@ -45,6 +56,8 @@
     [self setNavigation];
     
     [self titleView];
+    
+    [self startTimeForNows];
     
 }
 
@@ -96,19 +109,64 @@
     
 }
 
+
+#pragma mark - 获取开始时间计算用时
+- (void)startTimeForNows{
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[_startTime integerValue]/1000];
+    NSLog(@"---date-- %@---",[formatter stringFromDate:date]);
+    
+    NSInteger time = (NSInteger)[[NSDate date] timeIntervalSince1970] - [_startTime integerValue]/1000;
+    
+    
+    NSInteger minute = time/60;
+    if (minute > 60) {
+        _distanceLabel.text = [NSString stringWithFormat:@"已用时：%ld时 %ld分",minute/60,minute%60];
+    }else{
+        NSLog(@"----shezhi时间");
+        _distanceLabel.text = [NSString stringWithFormat:@"已用时： %ld分钟",minute];
+        
+    }
+    
+    
+    if (_timer == nil) {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timeForWork:) userInfo:@{@"time":@(time)} repeats:YES];
+    }
+    
+}
+
+- (void)timeForWork:(NSTimer *)timer{
+    
+    NSString *timeString = timer.userInfo[@"time"];
+    NSInteger time = [timeString integerValue] + 1;
+    NSInteger minute = time/60;
+    if (minute > 60) {
+        _distanceLabel.text = [NSString stringWithFormat:@"已用时：%ld时 %ld分",minute/60,minute%60];
+    }else{
+        NSLog(@"----shezhi时间");
+        _distanceLabel.text = [NSString stringWithFormat:@"已用时： %ld分钟",minute];
+        
+    }
+    
+}
+
+
+
 - (void)titleView{
     
-    CLTitleView *titleView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 64+36+40, self.view.frame.size.width, 45) Title:@"上传未开始贴膜车辆照片"];
+    CLTitleView *titleView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 64+36+40, self.view.frame.size.width, 45) Title:@"上传未开始工作车辆照片"];
     [self.view addSubview:titleView];
     
     
     
-    UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 101, self.view.frame.size.width, 40)];
-    distanceLabel.text = @"已用时：15分28秒";
-    distanceLabel.backgroundColor = [UIColor whiteColor];
-    distanceLabel.font = [UIFont systemFontOfSize:15];
-    distanceLabel.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:distanceLabel];
+    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 101, self.view.frame.size.width, 40)];
+    _distanceLabel.text = @"已用时：15分28秒";
+    _distanceLabel.backgroundColor = [UIColor whiteColor];
+    _distanceLabel.font = [UIFont systemFontOfSize:15];
+    _distanceLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:_distanceLabel];
     
     
     

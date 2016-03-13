@@ -41,6 +41,11 @@
 
 #import "GFMyMessageViewController.h"
 #import "GFSignInViewController.h"
+#import "CLCooperateFailViewController.h"
+#import "CLCooperatingViewController.h"
+#import "GFNoIndentViewController.h"
+
+
 
 
 // 个推开发者网站中申请App时，注册的AppId、AppKey、AppSecret
@@ -104,7 +109,10 @@
 //    CLAddOrderSuccessViewController *firstView = [[CLAddOrderSuccessViewController alloc]init];
 //    PoiSearchDemoViewController *firstView = [[PoiSearchDemoViewController alloc]init];
 //    CLCertifyFailViewController *firstView = [[CLCertifyFailViewController alloc]init];
-    CLWorkOverViewController *firstView = [[CLWorkOverViewController alloc]init];
+//    CLWorkOverViewController *firstView = [[CLWorkOverViewController alloc]init];
+//    CLCooperateFailViewController *firstView = [[CLCooperateFailViewController alloc]init];
+//    CLCooperatingViewController *firstView = [[CLCooperatingViewController alloc]init];
+//    GFNoIndentViewController *firstView = [[GFNoIndentViewController alloc]init];
     
 //    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
     //********************* 光法页面 **********************
