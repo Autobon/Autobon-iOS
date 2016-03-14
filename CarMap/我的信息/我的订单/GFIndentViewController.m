@@ -30,6 +30,10 @@
     
     
     NSInteger upSuo;
+    
+    NSString *mainUrl;
+    NSString *seconderUrl;
+    NSString *curUrl;
 }
 
 
@@ -70,8 +74,13 @@
 
 - (void)_setView {
     
+    mainUrl = @"http://121.40.157.200:12345/api/mobile/technician/order/listMain";
+    seconderUrl = @"http://121.40.157.200:12345/api/mobile/technician/order/listSecond";
+    curUrl = mainUrl;
+    
+    
     page = 1;
-    pageSize = 1;
+    pageSize = 2;
     
     upSuo = 0;
     
@@ -97,6 +106,7 @@
     [baseView addSubview:mainBut];
     [mainBut addTarget:self action:@selector(renButClick:) forControlEvents:UIControlEventTouchUpInside];
     mainBut.tag = 1000;
+    mainBut.userInteractionEnabled = NO;
     // 次负责人
     UIButton *otherBut = [UIButton buttonWithType:UIButtonTypeCustom];
     otherBut.frame = CGRectMake(CGRectGetMaxX(mainBut.frame), 0, kWidth / 2.0, baseViewH);
@@ -149,13 +159,25 @@
     
     if(sender.tag == 1000) {
         
+        
         UIButton *but = (UIButton *)[self.view viewWithTag:2000];
         but.selected = NO;
+        
+        but.userInteractionEnabled = YES;
+        sender.userInteractionEnabled = NO;
+        
+        curUrl = mainUrl;
         
     }else {
         
         UIButton *but = (UIButton *)[self.view viewWithTag:1000];
         but.selected = NO;
+        
+        
+        but.userInteractionEnabled = YES;
+        sender.userInteractionEnabled = NO;
+        
+        curUrl = seconderUrl;
     
     }
     
@@ -166,16 +188,22 @@
         self.lineView.center = oriPoint;
     }];
     
+    
+    [self.tableview.header beginRefreshing];
+    
+    
 }
 
 - (void)headRefresh {
     
+    self.modelArr = [[NSMutableArray alloc] init];
+    
     NSLog(@"脑袋刷新");
     
     page = 1;
-    pageSize = 1;
+    pageSize = 2;
     
-    NSString *urlStr = @"http://121.40.157.200:12345/api/mobile/technician/order/listMain";
+    NSString *urlStr = curUrl;
     NSMutableDictionary *mDic = [[NSMutableDictionary alloc] init];
     mDic[@"page"] = [NSString stringWithFormat:@"%ld", page];
     mDic[@"pageSize"] = [NSString stringWithFormat:@"%ld", pageSize];
@@ -200,10 +228,25 @@
                 listModel.orderNum = dic[@"orderNum"];
                 listModel.photo = dic[@"photo"];
                 
-                NSDictionary *mainConstructDic = dic[@"mainConstruct"];
-                listModel.payment = mainConstructDic[@"payment"];
-                listModel.workItems = mainConstructDic[@"workItems"];
-                listModel.signinTime = mainConstructDic[@"signinTime"];
+                
+                if([curUrl isEqualToString:mainUrl]) {
+                    NSDictionary *constructDic = dic[@"mainConstruct"];
+                    listModel.payment = constructDic[@"payment"];
+                    listModel.workItems = constructDic[@"workItems"];
+                    listModel.signinTime = constructDic[@"signinTime"];
+                    listModel.payStatus = constructDic[@"payStatus"];
+                
+                }else {
+                    
+                    NSLog(@"@@@@@@@@@@@\n@@@\n@@\n@@\n@@@@@   次负责人");
+                    NSDictionary *constructDic = dic[@"secondConstruct"];
+                    listModel.payment = constructDic[@"payment"];
+                    listModel.workItems = constructDic[@"workItems"];
+                    listModel.signinTime = constructDic[@"signinTime"];
+                    listModel.payStatus = constructDic[@"payStatus"];
+                
+                }
+                
                 
                 [self.modelArr addObject:listModel];
                 
@@ -238,40 +281,64 @@
     
     NSLog(@"大脚刷新");
     
+    NSString *urlStr = curUrl;
+    NSMutableDictionary *mDic = [[NSMutableDictionary alloc] init];
+    mDic[@"page"] = [NSString stringWithFormat:@"%ld", ++page];
+    mDic[@"pageSize"] = [NSString stringWithFormat:@"%ld", pageSize];
     
+    [GFHttpTool indentGet:urlStr parameters:mDic success:^(id responseObject) {
+        
+        NSInteger flage = [responseObject[@"result"] integerValue];
+        
+        if(flage == 1) {
+            
+            NSLog(@"请求成功+++++++++++%@", responseObject);
+            
+            NSLog(@"请求成功+++++++++++%@", responseObject);
+            
+            NSDictionary *dataDic = responseObject[@"data"];
+            
+            NSArray *listArr = dataDic[@"list"];
+            
+//            NSLog(@"%@*******", listArr);
+            
+            for(NSDictionary *dic in listArr) {
+                
+                GFIndentModel *listModel = [[GFIndentModel alloc] init];
+                listModel.orderNum = dic[@"orderNum"];
+                listModel.photo = dic[@"photo"];
+                
+                NSDictionary *constructDic = dic[@"mainConstruct"];
+                listModel.payment = constructDic[@"payment"];
+                listModel.workItems = constructDic[@"workItems"];
+                listModel.signinTime = constructDic[@"signinTime"];
+                
+                [self.modelArr addObject:listModel];
+                
+                [self.tableview reloadData];
+                
+            }
+
+            
+            
+        }else {
+            
+            NSLog(@"请求失败+++++++++++%@", responseObject);
+            
+        }
+        
+        [self.tableview.footer endRefreshing];
+        
+    } failure:^(NSError *error) {
+        
+        NSLog(@"网络请求失败");
+        
+        
+        [self.tableview.footer endRefreshing];
+        
+    }];
+
     
-//    NSString *urlStr = @"http://121.40.157.200:12345/api/mobile/technician/order/listMain";
-//    NSMutableDictionary *mDic = [[NSMutableDictionary alloc] init];
-//    mDic[@"page"] = [NSString stringWithFormat:@"%ld", ++page];
-//    mDic[@"pageSize"] = [NSString stringWithFormat:@"%ld", pageSize];
-//    
-//    [GFHttpTool indentGet:urlStr parameters:mDic success:^(id responseObject) {
-//        
-//        NSInteger flage = [responseObject[@"result"] integerValue];
-//        
-//        if(flage == 1) {
-//            
-//            NSLog(@"请求成功+++++++++++%@", responseObject);
-//            
-//            
-//        }else {
-//            
-//            NSLog(@"请求失败+++++++++++%@", responseObject);
-//            
-//        }
-//        
-//        [self.tableview.footer endRefreshing];
-//        
-//    } failure:^(NSError *error) {
-//        
-//        NSLog(@"网络请求失败");
-//        
-//        
-//        [self.tableview.footer endRefreshing];
-//        
-//    }];
-//
-//    
     
 }
 
@@ -294,6 +361,10 @@
     GFIndentModel *model = self.modelArr[indexPath.row];
     
     NSLog(@"********** %@ **********", model.orderNum);
+    NSLog(@"********** %@ **********", model.photo);
+    NSLog(@"********** %@ **********", model.payment);
+    NSLog(@"********** %@ **********", model.signinTime);
+    NSLog(@"********** %@ **********", model.workItems);
     
     // 订单编号
     cell.numberLab.text = [NSString stringWithFormat:@"订单编号%@", model.orderNum];
@@ -308,6 +379,8 @@
     formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:[model.signinTime integerValue]/1000];
     cell.timeLab.text = [NSString stringWithFormat:@"施工时间：%@", [formatter stringFromDate:date]];
+    // 施工部位
+    
 
     
     
