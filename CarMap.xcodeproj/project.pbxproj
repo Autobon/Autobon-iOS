@@ -218,7 +218,7 @@
 		868B0F081C7EA5AE00938665 /* GFBalanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFBalanceViewController.h; sourceTree = "<group>"; };
 		868B0F091C7EA5AE00938665 /* GFBalanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFBalanceViewController.m; sourceTree = "<group>"; };
 		868B0F0A1C7EA5AE00938665 /* GFBankCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFBankCardViewController.h; sourceTree = "<group>"; };
-		868B0F0B1C7EA5AE00938665 /* GFBankCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFBankCardViewController.m; sourceTree = "<group>"; };
+		868B0F0B1C7EA5AE00938665 /* GFBankCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = GFBankCardViewController.m; sourceTree = "<group>"; };
 		868B0F0D1C7EA5AE00938665 /* GFBillTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFBillTableViewCell.h; sourceTree = "<group>"; };
 		868B0F0E1C7EA5AE00938665 /* GFBillTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFBillTableViewCell.m; sourceTree = "<group>"; };
 		868B0F0F1C7EA5AE00938665 /* GFBillViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFBillViewController.h; sourceTree = "<group>"; };

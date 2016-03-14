@@ -323,6 +323,7 @@
     cell.textLabel.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
     cell.textLabel.font = [UIFont systemFontOfSize:14 / 320.0 * kWidth];
     
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     return cell;
 }
