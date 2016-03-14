@@ -139,16 +139,20 @@
         }
     
     if (_timer == nil) {
-        _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timeForWork:) userInfo:@{@"time":@(time)} repeats:YES];
+        _timer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(timeForWork:) userInfo:@{@"time":@(time)} repeats:YES];
     }
     
 }
 
 - (void)timeForWork:(NSTimer *)timer{
     
-    NSString *timeString = timer.userInfo[@"time"];
-    NSInteger time = [timeString integerValue] + 1;
-    NSInteger minute = time/60;
+    static NSInteger a = 0;
+    if (a == 0) {
+        a = [timer.userInfo[@"time"] integerValue];
+        
+    }
+    a = a + 60;
+    NSInteger minute = a/60;
     if (minute > 60) {
         _distanceLabel.text = [NSString stringWithFormat:@"已用时：%ld时 %ld分",minute/60,minute%60];
     }else{
