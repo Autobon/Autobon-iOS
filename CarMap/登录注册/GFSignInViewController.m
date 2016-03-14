@@ -367,6 +367,8 @@
                         [autobonView.certifyButton setTitle:@"查看进度" forState:UIControlStateNormal];
                     }
                     
+//                [self.navigationController pushViewController:[[CLHomeOrderViewController alloc] init] animated:YES];
+
                     
                     UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:autobonView];
                     window.rootViewController = navigation;

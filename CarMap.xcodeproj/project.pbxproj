@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		368FB3069A8AB11C0125708F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4D41BE1C67690080F4127E9 /* libPods.a */; settings = {ATTRIBUTES = (Required, ); }; };
+		860904C61C8EAB8F00CC06C1 /* GFIndentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 860904C51C8EAB8F00CC06C1 /* GFIndentModel.m */; };
 		860A4CB21C7ED9780067FB70 /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 860A4C881C7ED9780067FB70 /* MJRefreshAutoFooter.m */; };
 		860A4CB31C7ED9780067FB70 /* MJRefreshBackFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 860A4C8A1C7ED9780067FB70 /* MJRefreshBackFooter.m */; };
 		860A4CB41C7ED9780067FB70 /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 860A4C8C1C7ED9780067FB70 /* MJRefreshComponent.m */; };
@@ -139,6 +140,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		860904C41C8EAB8F00CC06C1 /* GFIndentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFIndentModel.h; sourceTree = "<group>"; };
+		860904C51C8EAB8F00CC06C1 /* GFIndentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFIndentModel.m; sourceTree = "<group>"; };
 		860A4C871C7ED9780067FB70 /* MJRefreshAutoFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshAutoFooter.h; sourceTree = "<group>"; };
 		860A4C881C7ED9780067FB70 /* MJRefreshAutoFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshAutoFooter.m; sourceTree = "<group>"; };
 		860A4C891C7ED9780067FB70 /* MJRefreshBackFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBackFooter.h; sourceTree = "<group>"; };
@@ -517,6 +520,8 @@
 			children = (
 				860A4CC61C7EE2DB0067FB70 /* GFIndentViewController.h */,
 				860A4CC71C7EE2DB0067FB70 /* GFIndentViewController.m */,
+				860904C41C8EAB8F00CC06C1 /* GFIndentModel.h */,
+				860904C51C8EAB8F00CC06C1 /* GFIndentModel.m */,
 				860A4CC91C7EE4CB0067FB70 /* GFIndentTableViewCell.h */,
 				860A4CCA1C7EE4CB0067FB70 /* GFIndentTableViewCell.m */,
 				860A4CCC1C7EF9580067FB70 /* GFIndentDetailsViewController.h */,
@@ -1187,6 +1192,7 @@
 				9BA3C8D71C7598FD007F730D /* CLHomeOrderViewController.m in Sources */,
 				86B890F81C73355B0068B95D /* GFSignUpViewController.m in Sources */,
 				9BA391721C843564002F30A7 /* CLAddPersonModel.m in Sources */,
+				860904C61C8EAB8F00CC06C1 /* GFIndentModel.m in Sources */,
 				9BA526CC1C63115700A2298F /* PoiSearchDemoViewController.mm in Sources */,
 				9B96BA2D1C7AA70200C6DDCC /* NetWorking.m in Sources */,
 				866CCEBD1C755BC800E50C67 /* AFNetworkReachabilityManager.m in Sources */,
@@ -1196,8 +1202,11 @@
 				9B771FA41C87E34C005E8567 /* CLAddOrderSuccessViewController.m in Sources */,
 				860A4CBF1C7ED9780067FB70 /* MJRefreshStateHeader.m in Sources */,
 				9B8BA6DE1C7FF66000E90CB0 /* CLPersonTableViewCell.m in Sources */,
-				9B771FA11C87E16A005E8567 /* Reachability.m in Sources */,
+
 				864C70E81C854637004B06B5 /* GFTestViewController.m in Sources */,
+				9B771FA11C87E16A005E8567 /* Reachability.m in Sources */,
+
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

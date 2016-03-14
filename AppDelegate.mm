@@ -123,6 +123,16 @@
 
     _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
 
+
+//    GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
+//    GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
+//    CLMoreViewController *moreVC = [[CLMoreViewController alloc] init];
+
+//    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
+
+
+
+
     
     _window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     _window.backgroundColor = [UIColor whiteColor];
@@ -297,6 +307,7 @@
                 notification.alertTitle = @"车邻邦";
                 notification.alertBody = responseJSON[@"title"];
                 notification.userInfo = @{@"dictionary":payloadMsg};
+
                 AudioServicesPlaySystemSound(1307);
                 NSLog(@"发出通知吧－－－%@--",notification.userInfo);
                 [[UIApplication sharedApplication]scheduleLocalNotification:notification];
