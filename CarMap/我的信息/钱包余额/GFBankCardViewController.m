@@ -11,6 +11,7 @@
 #import "GFHttpTool.h"
 #import "GFTextField.h"
 #import "GFTipView.h"
+#import "GFSignInViewController.h"
 
 @interface GFBankCardViewController () {
     
@@ -70,7 +71,7 @@
 
 - (void)_setView {
     //银行数组
-    self.bankArr = @[@"农业银行",@"招商银行",@"建设银行",@"广发银行",@"中信银行",@"光大银行",@"民生银行",@"普法银行",@"工商银行",@"中国银行",@"交通银行",@"邮政储蓄银行"];
+    self.bankArr = @[@"农业银行",@"招商银行",@"建设银行",@"广发银行",@"中信银行",@"光大银行",@"民生银行",@"普发银行",@"工商银行",@"中国银行",@"交通银行",@"邮政储蓄银行"];
     
     
     // 银行卡信息
@@ -199,39 +200,59 @@
 }
 - (void)submitClick {
     
+    // 判断银行卡
+    BOOL cardFlage = [self checkCardNo:self.cardTxt.centerTxt.text];
+    if(cardFlage == NO) {
+        
+        GFTipView *tipView = [[GFTipView alloc] initWithNormalHeightWithMessage:@"请输入正确地银行卡号" withViewController:self withShowTimw:1.5];
+        [tipView tipViewShow];
+    }else {
     
-    // 提交修改银行卡信息按钮
-    NSString *url = @"http://121.40.157.200:51234/api/mobile/technician/changeBankCard";
-    NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
-//    parDic[@"name"] = self.nameLab.text;
-//    parDic[@"bank"] = self.bankArr[index];
-//    parDic[@"bankCardNo"] = self.cardTxt.centerTxt.text;
-    parDic[@"name"] = @"陈光法";
-    parDic[@"bank"] = @"建设";
-    parDic[@"bankCardNo"] = @"621700287000250683";
-
-    
-    [GFHttpTool bankCardPost:url parameters:parDic success:^(id responseObject) {
+        // 提交修改银行卡信息按钮
+        NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/changeBankCard";
+        NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
+        //    parDic[@"name"] = self.nameLab.text;
+        parDic[@"bank"] = self.bankArr[index];
+        parDic[@"bankCardNo"] = self.cardTxt.centerTxt.text;
+        parDic[@"name"] = @"Www";
+        //    parDic[@"bank"] = @"建设银行";
+        //    parDic[@"bankCardNo"] = @"6217002870051374625";
         
-        NSLog(@"提交成功++++++++++++++");
         
-        NSInteger flage = [responseObject[@"result"] integerValue];
-        
-        if(flage == 1) {
+        [GFHttpTool bankCardPost:url parameters:parDic success:^(id responseObject) {
             
-            NSLog(@"修改成功===========\n%@", responseObject);
-        
-        }else {
-        
-            NSLog(@"修改失败===========\n%@", responseObject);
-        }
-        
-        
-    } failure:^(NSError *error) {
-        
-        NSLog(@"提交失败++++++++++++++%@", error);
-        
-    }];
+            NSLog(@"提交成功++++++++++++++");
+            
+            NSInteger flage = [responseObject[@"result"] integerValue];
+            
+            if(flage == 1) {
+                
+                GFTipView *tipView = [[GFTipView alloc] initWithNormalHeightWithMessage:@"修改成功" withViewController:self withShowTimw:1.5];
+                [tipView tipViewShow];
+                
+//                [NSThread sleepForTimeInterval:1.5];
+                [self performSelector:@selector(VCpush) withObject:nil afterDelay:1.5];
+                
+                
+                
+                NSLog(@"修改成功===========\n%@", responseObject);
+                
+            }else {
+                
+                NSLog(@"修改失败===========\n%@", responseObject);
+            }
+            
+            
+        } failure:^(NSError *error) {
+            
+            NSLog(@"提交失败++++++++++++++%@", error);
+            
+        }];
+    
+    }
+    
+    
+    
     
     
     
@@ -245,24 +266,34 @@
     
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    if (textField.tag == 5) {
-        NSLog(@"---range--%@----%@---string--%@--",@(range.location),@(range.length),string);
-        if (range.length == 0) {
-            if (range.location%5 == 4) {
-                textField.text = [NSString stringWithFormat:@"%@ ",textField.text];
-            }
-        }
-    }
-    
-    return YES;
-}
+//- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+//    if (textField.tag == 5) {
+//        NSLog(@"---range--%@----%@---string--%@--",@(range.location),@(range.length),string);
+//        if (range.length == 0) {
+//            if (range.location%5 == 4) {
+//                textField.text = [NSString stringWithFormat:@"%@ ",textField.text];
+//            }
+//        }
+//    }
+//    
+//    return YES;
+//}
 
 
 //- (void)placeButClick {
 //
 //    NSLog(@"请选择开户地点");
 //}
+- (void)VCpush {
+
+    UIWindow *window = [UIApplication sharedApplication].delegate.window;
+    UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:[[GFSignInViewController alloc] init]];
+    navVC.navigationBarHidden = YES;
+    window.backgroundColor = [UIColor colorWithRed:252 / 255.0 green:252 / 255.0 blue:252 / 255.0 alpha:1];
+    window.rootViewController = navVC;
+    [window makeKeyAndVisible];
+}
+
 
 - (void)bankButClick {
 
@@ -276,7 +307,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
 
-    return 5;
+    return self.bankArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -309,6 +340,46 @@
     
     
 
+}
+
+- (BOOL) checkCardNo:(NSString*) cardNo{
+    cardNo = [cardNo stringByReplacingOccurrencesOfString:@" " withString:@""];
+    int oddsum = 0;     //奇数求和
+    int evensum = 0;    //偶数求和
+    int allsum = 0;
+    int cardNoLength = (int)[cardNo length];
+    int lastNum = [[cardNo substringFromIndex:cardNoLength-1] intValue];
+    cardNo = [cardNo substringToIndex:cardNoLength - 1];
+    for (int i = cardNoLength -1 ; i>=1;i--) {
+        NSString *tmpString = [cardNo substringWithRange:NSMakeRange(i-1, 1)];
+        int tmpVal = [tmpString intValue];
+        if (cardNoLength % 2 ==1 ) {
+            if((i % 2) == 0){
+                tmpVal *= 2;
+                if(tmpVal>=10)
+                    tmpVal -= 9;
+                evensum += tmpVal;
+            }else{
+                oddsum += tmpVal;
+            }
+        }else{
+            if((i % 2) == 1){
+                tmpVal *= 2;
+                if(tmpVal>=10)
+                    tmpVal -= 9;
+                evensum += tmpVal;
+            }else{
+                oddsum += tmpVal;
+            }
+        }
+    }
+    
+    allsum = oddsum + evensum;
+    allsum += lastNum;
+    if((allsum % 10) == 0)
+        return YES;
+    else
+        return NO;
 }
 
 - (void)leftButClick {

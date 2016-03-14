@@ -101,9 +101,9 @@
                 [_bankButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 _bankNumberTextField.centerTxt.text = dataDic[@"bankCardNo"];
                 
-                [_headButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:51234/%@",dataDic[@"avatar"]]] forState:UIControlStateNormal];
+                [_headButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"avatar"]]] forState:UIControlStateNormal];
                 
-                [_identityButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:51234/%@",dataDic[@"idPhoto"]]] forState:UIControlStateNormal];
+                [_identityButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"idPhoto"]]] forState:UIControlStateNormal];
             }
         } failure:^(NSError *error) {
             

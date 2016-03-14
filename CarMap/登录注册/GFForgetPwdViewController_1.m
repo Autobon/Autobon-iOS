@@ -314,7 +314,7 @@
         self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(showTime) userInfo:nil repeats:YES];
         
         // 获取验证码
-        NSString *url = @"http://121.40.157.200:51234/api/mobile/verifySms";
+        NSString *url = @"http://121.40.157.200:12345/api/mobile/verifySms";
         NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
         parDic[@"phone"] = self.userNameTxt.centerTxt.text;
         
@@ -420,7 +420,7 @@
                 if([regextestPwdStr evaluateWithObject:self.passWordTxt.centerTxt.text]) {
         
                     
-                            NSString *url = @"http://121.40.157.200:51234/api/mobile/technician/resetPassword";
+                            NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/resetPassword";
                             NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
                             parDic[@"phone"] = self.userNameTxt.centerTxt.text;
                             parDic[@"verifySms"] = self.verifyTxt.centerTxt.text;

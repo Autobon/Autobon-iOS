@@ -75,10 +75,10 @@
             
             
             _identityLabel.text = dataDic[@"idNo"];
-            NSURL *URLString = [NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:51234/%@",dataDic[@"avatar"]]];
+            NSURL *URLString = [NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"avatar"]]];
             NSLog(@"----URLString---%@--",URLString);
             [_headImage sd_setImageWithURL:URLString];
-            [_identityImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:51234/%@",dataDic[@"idPhoto"]]]];
+            [_identityImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"idPhoto"]]]];
             
            
             

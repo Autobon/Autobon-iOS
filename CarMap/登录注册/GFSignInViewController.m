@@ -286,7 +286,7 @@
         [self tipShow:@"密码不能为空"];
         
     }else {
-        NSString *url = @"http://121.40.157.200:51234/api/mobile/technician/login";
+        NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/login";
         NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
         parDic[@"phone"] = self.userNameTxt.centerTxt.text;
         parDic[@"password"] = self.passWordTxt.centerTxt.text;
@@ -344,34 +344,36 @@
 // 判断 responseObject[@"status"] 的状态进行相应的页面跳转
                 UIWindow *window = [UIApplication sharedApplication].delegate.window;
                 
-                    if ([dataDic[@"status"]isEqualToString:@"VERIFIED"]) {
-                        CLHomeOrderViewController *homeVC = [[CLHomeOrderViewController alloc] init];
-                        UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
-                        window.rootViewController = navigation;
-                        navigation.navigationBarHidden = YES;
-                    }else {
-                        if([dataDic[@"status"]isEqualToString:@"NEWLY_CREATED"]){
-                            CLAutobonViewController *autobonView = [[CLAutobonViewController alloc]init];
-                            UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:autobonView];
-                            window.rootViewController = navigation;
-                            navigation.navigationBarHidden = YES;
-                        }else if ([dataDic[@"status"]isEqualToString:@"REJECTED"]){
-                            CLCertifyFailViewController *homeVC = [[CLCertifyFailViewController alloc] init];
-                            UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
-                            window.rootViewController = navigation;
-                            navigation.navigationBarHidden = YES;
-                        }else if ([dataDic[@"status"]isEqualToString:@"IN_VERIFICATION"]){
-                            CLCertifyingViewController *homeVC = [[CLCertifyingViewController alloc] init];
-                            UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
-                            window.rootViewController = navigation;
-                            navigation.navigationBarHidden = YES;
-                            [userDefaults setObject:dataDic[@"avatar"] forKey:@"userHeadImage"];
-                            [userDefaults setObject:dataDic[@"bank"] forKey:@"userBank"];
-                            [userDefaults setObject:dataDic[@"bankCardNo"] forKey:@"userBankCardNo"];
-
-                        }
-                    }
-                    
+                [self.navigationController pushViewController:[[CLHomeOrderViewController alloc] init] animated:YES];
+                
+//                    if ([dataDic[@"status"]isEqualToString:@"VERIFIED"]) {
+//                        CLHomeOrderViewController *homeVC = [[CLHomeOrderViewController alloc] init];
+//                        UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
+//                        window.rootViewController = navigation;
+//                        navigation.navigationBarHidden = YES;
+//                    }else {
+//                        if([dataDic[@"status"]isEqualToString:@"NEWLY_CREATED"]){
+//                            CLAutobonViewController *autobonView = [[CLAutobonViewController alloc]init];
+//                            UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:autobonView];
+//                            window.rootViewController = navigation;
+//                            navigation.navigationBarHidden = YES;
+//                        }else if ([dataDic[@"status"]isEqualToString:@"REJECTED"]){
+//                            CLCertifyFailViewController *homeVC = [[CLCertifyFailViewController alloc] init];
+//                            UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
+//                            window.rootViewController = navigation;
+//                            navigation.navigationBarHidden = YES;
+//                        }else if ([dataDic[@"status"]isEqualToString:@"IN_VERIFICATION"]){
+//                            CLCertifyingViewController *homeVC = [[CLCertifyingViewController alloc] init];
+//                            UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
+//                            window.rootViewController = navigation;
+//                            navigation.navigationBarHidden = YES;
+//                            [userDefaults setObject:dataDic[@"avatar"] forKey:@"userHeadImage"];
+//                            [userDefaults setObject:dataDic[@"bank"] forKey:@"userBank"];
+//                            [userDefaults setObject:dataDic[@"bankCardNo"] forKey:@"userBankCardNo"];
+//
+//                        }
+//                    }
+                
                     
             }else if([responseObject[@"result"] isEqual:@0]) {
                 

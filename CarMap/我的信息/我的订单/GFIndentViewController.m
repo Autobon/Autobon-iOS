@@ -15,13 +15,26 @@
 #import "GFIndentDetailsViewController.h"
 
 #import "MJRefresh.h"
+#import "UIImageView+WebCache.h"
 //#import "GFTipView.h"
+
+#import "GFIndentModel.h"
 
 @interface GFIndentViewController () {
     
     CGFloat kWidth;
     CGFloat kHeight;
+    
+    NSInteger page;
+    NSInteger pageSize;
+    
+    
+    NSInteger upSuo;
 }
+
+
+
+@property (nonatomic, strong) NSMutableArray *modelArr;
 
 @property (nonatomic, strong) GFNavigationView *navView;
 
@@ -57,6 +70,14 @@
 
 - (void)_setView {
     
+    page = 1;
+    pageSize = 1;
+    
+    upSuo = 0;
+    
+    
+    self.modelArr = [[NSMutableArray alloc] init];
+    
     // 负责人横条
     CGFloat baseViewW = kWidth;
     CGFloat baseViewH = kHeight * 0.0651;
@@ -86,7 +107,7 @@
     [baseView addSubview:otherBut];
     [otherBut addTarget:self action:@selector(renButClick:) forControlEvents:UIControlEventTouchUpInside];
     otherBut.tag = 2000;
-    //边线
+    // 边线
     UIView *vv = [[UIView alloc] initWithFrame:CGRectMake(0, baseViewH - 1, kWidth, 1)];
     vv.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
     [baseView addSubview:vv];
@@ -118,7 +139,7 @@
     self.tableview.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     
     [self.tableview.header beginRefreshing];
-    [self.tableview.footer beginRefreshing];
+//    [self.tableview.footer beginRefreshing];
     
 }
 
@@ -151,7 +172,65 @@
     
     NSLog(@"脑袋刷新");
     
-    [self.tableview.header endRefreshing];
+    page = 1;
+    pageSize = 1;
+    
+    NSString *urlStr = @"http://121.40.157.200:12345/api/mobile/technician/order/listMain";
+    NSMutableDictionary *mDic = [[NSMutableDictionary alloc] init];
+    mDic[@"page"] = [NSString stringWithFormat:@"%ld", page];
+    mDic[@"pageSize"] = [NSString stringWithFormat:@"%ld", pageSize];
+    
+    [GFHttpTool indentGet:urlStr parameters:mDic success:^(id responseObject) {
+        
+        NSInteger flage = [responseObject[@"result"] integerValue];
+        
+        if(flage == 1) {
+            
+            NSLog(@"请求成功+++++++++++%@", responseObject);
+            
+            NSDictionary *dataDic = responseObject[@"data"];
+            
+            NSArray *listArr = dataDic[@"list"];
+            
+//            NSLog(@"%@*******", listArr);
+            
+            for(NSDictionary *dic in listArr) {
+                
+                GFIndentModel *listModel = [[GFIndentModel alloc] init];
+                listModel.orderNum = dic[@"orderNum"];
+                listModel.photo = dic[@"photo"];
+                
+                NSDictionary *mainConstructDic = dic[@"mainConstruct"];
+                listModel.payment = mainConstructDic[@"payment"];
+                listModel.workItems = mainConstructDic[@"workItems"];
+                listModel.signinTime = mainConstructDic[@"signinTime"];
+                
+                [self.modelArr addObject:listModel];
+                
+                [self.tableview reloadData];
+                
+            }
+            
+            
+            
+            
+        }else {
+            
+            NSLog(@"请求失败+++++++++++%@", responseObject);
+            
+        }
+        
+        [self.tableview.header endRefreshing];
+        
+    } failure:^(NSError *error) {
+        
+        NSLog(@"网络请求失败");
+
+        
+        [self.tableview.header endRefreshing];
+        
+    }];
+
     
 }
 
@@ -159,13 +238,47 @@
     
     NSLog(@"大脚刷新");
     
-    [self.tableview.footer endRefreshing];
+    
+    
+//    NSString *urlStr = @"http://121.40.157.200:12345/api/mobile/technician/order/listMain";
+//    NSMutableDictionary *mDic = [[NSMutableDictionary alloc] init];
+//    mDic[@"page"] = [NSString stringWithFormat:@"%ld", ++page];
+//    mDic[@"pageSize"] = [NSString stringWithFormat:@"%ld", pageSize];
+//    
+//    [GFHttpTool indentGet:urlStr parameters:mDic success:^(id responseObject) {
+//        
+//        NSInteger flage = [responseObject[@"result"] integerValue];
+//        
+//        if(flage == 1) {
+//            
+//            NSLog(@"请求成功+++++++++++%@", responseObject);
+//            
+//            
+//        }else {
+//            
+//            NSLog(@"请求失败+++++++++++%@", responseObject);
+//            
+//        }
+//        
+//        [self.tableview.footer endRefreshing];
+//        
+//    } failure:^(NSError *error) {
+//        
+//        NSLog(@"网络请求失败");
+//        
+//        
+//        [self.tableview.footer endRefreshing];
+//        
+//    }];
+//
+//    
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     
-    return 20;
+    return self.modelArr.count;
     
 }
 
@@ -177,6 +290,26 @@
         
         cell = [[GFIndentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
+    
+    GFIndentModel *model = self.modelArr[indexPath.row];
+    
+    NSLog(@"********** %@ **********", model.orderNum);
+    
+    // 订单编号
+    cell.numberLab.text = [NSString stringWithFormat:@"订单编号%@", model.orderNum];
+    // 加载图片
+    NSURL *imgUrl = [NSURL URLWithString:model.photo];
+    [cell.photoImgView sd_setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"orderImage.png"]];
+    // 金额
+    cell.moneyLab.text = [NSString stringWithFormat:@"￥%@", model.payment];
+    // 开始时间
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[model.signinTime integerValue]/1000];
+    cell.timeLab.text = [NSString stringWithFormat:@"施工时间：%@", [formatter stringFromDate:date]];
+
+    
     
     return cell;
 }
