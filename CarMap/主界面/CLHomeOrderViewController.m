@@ -120,6 +120,7 @@
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
+    
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [GFHttpTool getOrderListSuccess:^(NSDictionary *responseObject) {
         if ([responseObject[@"result"] integerValue] == 1) {

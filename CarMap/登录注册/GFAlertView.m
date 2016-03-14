@@ -8,6 +8,7 @@
 
 #import "GFAlertView.h"
 #import "UIImageView+WebCache.h"
+#import "GFHttpTool.h"
 
 
 
@@ -491,6 +492,71 @@
     
     return self;
 }
+
+- (instancetype)initWithTitle:(NSString *)title leftBtn:(NSString *)leftBtn rightBtn:(NSString *)rightBtn{
+    self = [super init];
+    if (self) {
+        self.frame = [UIScreen mainScreen].bounds;
+        self.backgroundColor = [UIColor colorWithRed:0 / 255.0 green:0 blue:0 alpha:0.65];
+        
+        UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width-30, (self.frame.size.width - 30)*0.4)];
+        bgView.backgroundColor = [UIColor whiteColor];
+        bgView.layer.cornerRadius = 10;
+        bgView.center = self.center;
+        [self addSubview:bgView];
+        
+// 合作人暂无回应
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(50, 20, bgView.frame.size.width-100, 30)];
+        label.text = title;
+        label.textAlignment = NSTextAlignmentCenter;
+        [bgView addSubview:label];
+        
+// 继续等待
+        UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        leftButton.frame = CGRectMake(20, 60, bgView.frame.size.width/2 - 30, 40);
+        [leftButton setTitle:leftBtn forState:UIControlStateNormal];
+        leftButton.layer.borderWidth = 1.0;
+        leftButton.layer.borderColor = [[UIColor colorWithRed:221/255.0 green:221/255.0 blue:221/255.0 alpha:1.0] CGColor];
+        [leftButton setTitleColor:[UIColor colorWithRed:178/255.0 green:178/255.0 blue:178/255.0 alpha:1.0] forState:UIControlStateNormal];
+        leftButton.layer.cornerRadius = 7;
+        [leftButton addTarget:self action:@selector(leftButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        [bgView addSubview:leftButton];
+        
+        
+// 强制开始
+        _rightButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        _rightButton.frame = CGRectMake(bgView.frame.size.width/2+10, 60, bgView.frame.size.width/2-30, 40);
+        [_rightButton setTitle:rightBtn forState:UIControlStateNormal];
+        _rightButton.layer.borderWidth = 1.0;
+        _rightButton.layer.borderColor = [[UIColor colorWithRed:221/255.0 green:221/255.0 blue:221/255.0 alpha:1.0] CGColor];
+        [_rightButton setTitleColor:[UIColor colorWithRed:255/255.0 green:142/255.0 blue:79/255.0 alpha:1.0] forState:UIControlStateNormal];
+        _rightButton.layer.cornerRadius = 7;
+        
+        [bgView addSubview:_rightButton];
+        
+        
+        
+    }
+    return self;
+}
+
+
+
+- (void)leftButtonClick:(UIButton *)button{
+    UIView *view = [[button superview]superview];
+    [view removeFromSuperview];
+    
+    
+    
+}
+
+
+
+
+
+
+
+
 
 
 - (void)okButClick {

@@ -11,6 +11,7 @@
 @interface GFAlertView : UIView
 
 @property (nonatomic, strong) UIButton *okBut;
+@property (nonatomic, strong) UIButton *rightButton;
 
 - (instancetype)initWithTipName:(NSString *)tipName withTipMessage:(NSString *)tipMessageStr withButtonNameArray:(NSArray *)buttonArray;
 
@@ -18,6 +19,9 @@
 
 
 - (instancetype)initWithHeadImageURL:(NSString *)imageURL name:(NSString *)name mark:(float )mark orderNumber:(NSInteger )orderNumber goodNumber:(float)good order:(NSString *)order;
+
+
+- (instancetype)initWithTitle:(NSString *)title leftBtn:(NSString *)leftBtn rightBtn:(NSString *)rightBtn;
 
 
 

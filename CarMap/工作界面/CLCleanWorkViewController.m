@@ -35,13 +35,7 @@
 @implementation CLCleanWorkViewController
 
 
-- (void)viewDidDisappear:(BOOL)animated{
-    [_timer invalidate];
-    _timer = nil;
-}
-- (void)viewDidAppear:(BOOL)animated{
-    [self startTimeForNows];
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     _imageArray = [[NSMutableArray alloc]init];
@@ -420,30 +414,38 @@
                 URLString = [NSString stringWithFormat:@"%@,%@",URLString,obj.resultURL];
             }
         }];
+        
+        if (_workTextField.text.length > 0) {
+            NSString *cleanFloat = [NSString stringWithFormat:@"%0.2f",[_workTextField.text integerValue]/100.0];
+            
+            [GFHttpTool PostOverDictionary:@{@"afterPhotos":URLString,@"orderId":_orderId,@"percent":cleanFloat} success:^(NSDictionary *responseObject) {
+                
+                NSLog(@"请求成功啦-responseObject-%@--%@--",responseObject,responseObject[@"message"]);
+                if ([responseObject[@"result"] integerValue] == 1) {
+                    [_timer invalidate];
+                    _timer = nil;
+                    [self.navigationController popToRootViewControllerAnimated:YES];
+                }else{
+                    [self addAlertView:responseObject[@"message"]];
+                }
+                
+                
+            } failure:^(NSError *error) {
+                NSLog(@"--请求失败了--%@--",error);
+            }];
+        }else{
+            [self addAlertView:@"请填写完成工作的百分比"];
+        }
+
+        
+        
+        
+        
     }else{
         [self addAlertView:@"至少上传三张照片"];
     }
     
 //    URLString = @"123546";
-    if (_workTextField.text.length > 0) {
-        NSString *cleanFloat = [NSString stringWithFormat:@"%0.2f",[_workTextField.text integerValue]/100.0];
-        
-        [GFHttpTool PostOverDictionary:@{@"afterPhotos":URLString,@"orderId":_orderId,@"percent":cleanFloat} success:^(NSDictionary *responseObject) {
-            
-            NSLog(@"请求成功啦-responseObject-%@--%@--",responseObject,responseObject[@"message"]);
-            if ([responseObject[@"result"] integerValue] == 1) {
-                [self.navigationController popToRootViewControllerAnimated:YES];
-            }else{
-                [self addAlertView:responseObject[@"message"]];
-            }
-            
-            
-        } failure:^(NSError *error) {
-            NSLog(@"--请求失败了--%@--",error);
-        }];
-    }else{
-        [self addAlertView:@"请填写完成工作的百分比"];
-    }
     
     
 

@@ -13,6 +13,7 @@
 #import "CLAddPersonViewController.h"
 #import "GFHttpTool.h"
 #import "GFTipView.h"
+#import "GFAlertView.h"
 
 
 
@@ -229,7 +230,11 @@
 - (void)workBtnClick{
     NSLog(@"开始工作按钮");
     
-    [GFHttpTool postOrderStart:[_orderId integerValue] Success:^(NSDictionary *responseObject) {
+//    GFAlertView *alertView = [[GFAlertView alloc]initWithTitle:@"合作人暂无回应" leftBtn:@"继续等待" rightBtn:@"强制开始"];
+//    [self.view addSubview:alertView];
+    
+    
+    [GFHttpTool postOrderStart:@{@"orderId":_orderId} Success:^(NSDictionary *responseObject) {
         NSLog(@"----responseObject--%@",responseObject);
         if ([responseObject[@"result"]integerValue] == 1) {
             CLSigninViewController *signinView = [[CLSigninViewController alloc]init];
@@ -239,17 +244,13 @@
             signinView.orderType = self.orderType;
             NSDictionary *dataDictionary = responseObject[@"data"];
             signinView.startTime = dataDictionary[@"startTime"];
-            
             [self.navigationController pushViewController:signinView animated:YES];
         }else{
             if ([responseObject[@"error"] isEqualToString:@"INVITATION_NOT_FINISH"]) {
-                GFTipView *tipView = [[GFTipView alloc]initWithHeight:300 WithMessage:@"小伙伴还没答复，确定开始工作吗" withViewController:self withShowTimw:1.0];
-                [tipView tipViewShow];
+                GFAlertView *alertView = [[GFAlertView alloc]initWithTitle:@"合作人暂无回应" leftBtn:@"继续等待" rightBtn:@"强制开始"];
+                [alertView.rightButton addTarget:self action:@selector(rightButtonClick) forControlEvents:UIControlEventTouchUpInside];
+                [self.view addSubview:alertView];
             }
-            
-            
-            
-            
         }
         
     } failure:^(NSError *error) {
@@ -258,6 +259,31 @@
     
 }
 
+#pragma mark - 强制开始的方法
+- (void)rightButtonClick{
+    [GFHttpTool postOrderStart:@{@"orderId":_orderId,@"ignoreInvitation":@"true"} Success:^(NSDictionary *responseObject) {
+        NSLog(@"----responseObject--%@",responseObject);
+        if ([responseObject[@"result"]integerValue] == 1) {
+            CLSigninViewController *signinView = [[CLSigninViewController alloc]init];
+            signinView.customerLat = self.customerLat;
+            signinView.customerLon = self.customerLon;
+            signinView.orderId = self.orderId;
+            signinView.orderType = self.orderType;
+            NSDictionary *dataDictionary = responseObject[@"data"];
+            signinView.startTime = dataDictionary[@"startTime"];
+            [self.navigationController pushViewController:signinView animated:YES];
+        }else{
+            if ([responseObject[@"error"] isEqualToString:@"INVITATION_NOT_FINISH"]) {
+                GFAlertView *alertView = [[GFAlertView alloc]initWithTitle:@"合作人暂无回应" leftBtn:@"继续等待" rightBtn:@"强制开始"];
+                [alertView.rightButton addTarget:self action:@selector(rightButtonClick) forControlEvents:UIControlEventTouchUpInside];
+                [self.view addSubview:alertView];
+            }
+        }
+        
+    } failure:^(NSError *error) {
+        NSLog(@"----失败原因－－%@--",error);
+    }];
+}
 
 #pragma mark - 接受订单邀请的响应方法
 - (void)orderAgree{
@@ -301,7 +327,8 @@
     
 }
 - (void)backBtnClick{
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
     
 }
 

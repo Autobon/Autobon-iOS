@@ -63,7 +63,7 @@
 
 
 // 抢单
-+ (void)postOrderStart:(NSInteger )orderId Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
++ (void)postOrderStart:(NSDictionary *)orderId Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
 
 

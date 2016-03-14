@@ -45,13 +45,6 @@
 
 @implementation CLWorkOverViewController
 
-- (void)viewDidDisappear:(BOOL)animated{
-    [_timer invalidate];
-    _timer = nil;
-}
-- (void)viewDidAppear:(BOOL)animated{
-    [self startTimeForNows];
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     _imageArray = [[NSMutableArray alloc]init];
@@ -133,8 +126,6 @@
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:[_startTime integerValue]/1000];
-    NSLog(@"---date-- %@---",[formatter stringFromDate:date]);
-    
     NSInteger time = (NSInteger)[[NSDate date] timeIntervalSince1970] - [_startTime integerValue]/1000;
     
     
@@ -599,6 +590,8 @@
             [GFHttpTool PostOverDictionary:dictionary success:^(NSDictionary *responseObject) {
                 NSLog(@"请求成功--%@--",responseObject);
                 if ([responseObject[@"result"] integerValue] == 1) {
+                    [_timer invalidate];
+                    _timer = nil;
                     [self.navigationController popToRootViewControllerAnimated:YES];
                 }else{
                     [self addAlertView:responseObject[@"message"]];

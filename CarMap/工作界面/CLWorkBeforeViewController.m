@@ -40,13 +40,7 @@
 
 @implementation CLWorkBeforeViewController
 
-- (void)viewDidDisappear:(BOOL)animated{
-    [_timer invalidate];
-    _timer = nil;
-}
-- (void)viewDidAppear:(BOOL)animated{
-    [self startTimeForNows];
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     _imageArray = [[NSMutableArray alloc]init];
@@ -399,7 +393,8 @@
 //                workOver.orderType = _orderType;
 //                [self.navigationController pushViewController:workOver animated:YES];
                 
-                
+                [_timer invalidate];
+                _timer = nil;
                 
                 if ([_orderType integerValue] == 4) {
                     

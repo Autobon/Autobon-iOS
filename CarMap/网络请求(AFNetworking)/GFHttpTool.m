@@ -481,7 +481,7 @@ NSString* const HOST = @"http://121.40.157.200:12345/api/mobile";
 }
 
 #pragma mark - 工作开始
-+ (void)postOrderStart:(NSInteger )orderId Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
++ (void)postOrderStart:(NSDictionary *)orderId Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
     
     
     NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
@@ -492,7 +492,7 @@ NSString* const HOST = @"http://121.40.157.200:12345/api/mobile";
     NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/start",HOST];
     
     
-    [manager POST:URLString parameters:@{@"orderId":@(orderId)} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+    [manager POST:URLString parameters:orderId progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
         if(success) {
             success(responseObject);
         }
