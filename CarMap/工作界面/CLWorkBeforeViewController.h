@@ -6,8 +6,8 @@
 //  Copyright © 2016年 mll. All rights reserved.
 //
 
-#import "ViewController.h"
+#import <UIKit/UIKit.h>
 
-@interface CLWorkBeforeViewController : ViewController
+@interface CLWorkBeforeViewController : UIViewController
 
 @end

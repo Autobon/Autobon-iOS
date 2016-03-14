@@ -17,6 +17,10 @@
 #import "GFHttpTool.h"
 #import "CLHomeOrderCellModel.h"
 #import "CLWorkBeforeViewController.h"
+#import "GFAlertView.h"
+#import "CLKnockOrderViewController.h"
+#import "CLAddOrderSuccessViewController.h"
+
 
 #import "MJRefresh.h"
 
@@ -35,7 +39,32 @@
 
 @implementation CLHomeOrderViewController
 
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+
+}
+
+
+- (void)viewWillAppear:(BOOL)animated{
+    NSUserDefaults *userDefalts = [NSUserDefaults standardUserDefaults];
+    [userDefalts setObject:@"YES" forKey:@"homeOrder"];
+    [userDefalts synchronize];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    NSUserDefaults *userDefalts = [NSUserDefaults standardUserDefaults];
+    [userDefalts setObject:@"NO" forKey:@"homeOrder"];
+    [userDefalts synchronize];
+}
+
+
 - (void)viewDidLoad {
+    
+//    [super viewDidLoad];
+//    self.view.backgroundColor = [UIColor whiteColor];
+    NSLog(@"到这里了--%@--",NSHomeDirectory());
+    
     _rowNumber = 30;
     _cellModelArray = [[NSMutableArray alloc]init];
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
@@ -48,7 +77,9 @@
     
     [GFHttpTool getOrderListSuccess:^(NSDictionary *responseObject) {
         if ([responseObject[@"result"] integerValue] == 1) {
-            NSArray *dataArray = responseObject[@"data"];
+            NSDictionary *dataDit = responseObject[@"data"];
+            NSArray *dataArray = dataDit[@"list"];
+            NSLog(@"---%@--",dataArray);
             [dataArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
                 NSLog(@"---obj---%@--",obj);
                 CLHomeOrderCellModel *cellModel = [[CLHomeOrderCellModel alloc]init];
@@ -56,24 +87,34 @@
                 cellModel.orderNumber = obj[@"orderNum"];
 //                cellModel.orderTime = [obj[@"orderTime"] integerValue];
                 cellModel.orderType = obj[@"orderType"];
-                cellModel.orderPhotoURL = obj[@"a.jpg"];
-                cellModel.customerLat = obj[@"customerLat"];
-                cellModel.customerLon = obj[@"customerLon"];
+                cellModel.orderPhotoURL = obj[@"photo"];
+                cellModel.customerLat = obj[@"positionLat"];
+                cellModel.customerLon = obj[@"positionLon"];
                 cellModel.remark = obj[@"remark"];
+                cellModel.status = obj[@"status"];
                 [_cellModelArray addObject:cellModel];
-                NSDate *date = [NSDate dateWithTimeIntervalSince1970:1456398610];
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[obj[@"orderTime"] integerValue]/1000];
                 cellModel.orderTime = [formatter stringFromDate:date];
                 NSLog(@"date1:%@",cellModel.orderTime);
                 
                 
             }];
-            [_tableView reloadData];
+            if (_cellModelArray.count == 0) {
+//                _tableView.hidden = YES;
+//                UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64)];
+//                imageView.image = [UIImage imageNamed:@"nothing.jpg"];
+//                imageView.backgroundColor = [UIColor cyanColor];
+//                [self.view addSubview:imageView];
+            }else{
+                [_tableView reloadData];
+            }
+            
         }
     } failure:^(NSError *error) {
         
     }];
-    
-    
+//
+//    
     _tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
     _tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     
@@ -81,8 +122,58 @@
     [self.tableView.footer beginRefreshing];
     
     
+    [self NSNotificationCenter];
     
 }
+
+#pragma mark - 注册通知中心
+- (void)NSNotificationCenter{
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiveNotification:) name:@"NEW_ORDER" object:nil];
+}
+#pragma mark - 接受通知消息
+-(void)receiveNotification:(NSNotification *)Notification
+{
+    NSLog(@"receiveNotification---%@--",Notification.userInfo);
+//     NSDictionary *diction = @{@"action":@"NEW_ORDER",@"title":@"你收到新订单推送消息",@"order":@{@"id":@43,@"orderNum":@"20160304105202QNGXLA",@"orderType":@2,@"photo":@"http://preview.quanjing.com/mf063/mf866-03563419.jpg",@"orderTime":@1488503100000,@"addTime":@1457059922495,@"creatorType":@2,@"creatorId":@1,@"creatorName":@"超级管理员",@"contactPhone":@"13026100200",@"positionLon":@"35.123521",@"positionLat":@"20.214411",@"remark":@"这是测79423769jhjlk试内容",@"mainTechId":@0,@"secondTechId":@0,@"status":@"NEWLY_CREATED"}};
+    CLKnockOrderViewController *knockOrder = [[CLKnockOrderViewController alloc]init];
+    knockOrder.orderDictionary = Notification.userInfo;
+//    [self.navigationController pushViewController:knockOrder animated:YES];
+    
+    [self.view addSubview:knockOrder.view];
+    
+    [self addChildViewController:knockOrder];
+    [knockOrder didMoveToParentViewController:self];
+    
+    NSDictionary *orderDic = Notification.userInfo[@"order"];
+    knockOrder.certifyButton.tag = [orderDic[@"id"] integerValue];
+    [knockOrder.certifyButton addTarget:self action:@selector(knockBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+
+#pragma mark - 立即抢单
+- (void)knockBtnClick:(UIButton *)button{
+
+    [GFHttpTool postOrderId:button.tag Success:^(NSDictionary *responseObject) {
+        
+        NSLog(@"----抢单结果--%@--",responseObject);
+        
+        [[[button superview] superview]removeFromSuperview];
+        
+        CLAddOrderSuccessViewController *addSuccess = [[CLAddOrderSuccessViewController alloc]init];
+        addSuccess.addBlock = ^{
+            NSLog(@"刷新表");
+        };
+        [self.navigationController pushViewController:addSuccess animated:NO];
+        
+        
+    } failure:^(NSError *error) {
+        NSLog(@"----抢单结果-222-%@--",error);
+    }];
+    
+    
+    
+}
+
 - (void)headRefresh {
     
     NSLog(@"脑袋刷新");
@@ -128,6 +219,7 @@
 //    }];
     
     [self.view addSubview:_tableView];
+    
     
     
 }
@@ -176,8 +268,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
         return 85;
-    }else if(indexPath.row == _cellModelArray.count+1){
-        return _rowNumber;
     }else{
         return 75 + [UIScreen mainScreen].bounds.size.width*5/12;
     }
@@ -199,14 +289,6 @@
             [cell initWithTitle];
         }
         return cell;
-    }else if(indexPath.row == _cellModelArray.count+1){
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-            cell.textLabel.text = @"加载更多";
-            cell.textLabel.textAlignment = NSTextAlignmentCenter;
-        }
-        return cell;
     }else{
         CLHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"order"];
         if (cell == nil) {
@@ -218,17 +300,20 @@
         cell.orderButton.tag = indexPath.row + 1;
         cell.orderNumberLabel.text = [NSString stringWithFormat:@"订单编号%@",cellModer.orderNumber];
         cell.timeLabel.text = [NSString stringWithFormat:@"预约时间%@",cellModer.orderTime];
-        if ([cellModer.orderType integerValue] == 1) {
+        if ([cellModer.status isEqualToString:@"TAKEN_UP"]) {
             [cell.orderButton setTitle:@"开始工作" forState:UIControlStateNormal];
-            
+            NSLog(@"开始");
             [cell.orderButton addTarget:self action:@selector(workBegin:) forControlEvents:UIControlEventTouchUpInside];
         }else{
+             NSLog(@"订单");
             [cell.orderButton setTitle:@"进入订单" forState:UIControlStateNormal];
             [cell.orderButton addTarget:self action:@selector(orderBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         }
-        
+//
+//        cell.contentView.userInteractionEnabled = YES;
+//        [cell.orderButton addTarget:self action:@selector(workBegin:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
-    }
+    };
      
     
     return nil;
@@ -255,10 +340,15 @@
     orderDetail.orderPhotoURL = cellModel.orderPhotoURL;
     orderDetail.orderTime = cellModel.orderTime;
     orderDetail.remark = cellModel.remark;
+    NSLog(@"---orderDetail.remark%@---%@--",orderDetail.customerLat,orderDetail.customerLon);
     [self.navigationController pushViewController:orderDetail animated:YES];
     
     
     
+    
+//    GFAlertView *alertView = [[GFAlertView alloc]initWithHeadImageURL:nil name:nil mark:1.2 orderNumber:3 goodNumber:1.0 order:nil];
+//
+//    [self.view addSubview:alertView];
     
     
     
@@ -311,6 +401,9 @@
     GFMyMessageViewController *myMsgVC = [[GFMyMessageViewController alloc] init];
     [self.navigationController pushViewController:myMsgVC animated:YES];
     
+   
+    
+//    [self receiveNotification:nil];
 }
 
 

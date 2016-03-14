@@ -8,6 +8,10 @@
 
 #import "GFHttpTool.h"
 #import "AFNetworking.h"
+#import "Reachability.h"
+
+
+
 
 NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
 
@@ -32,7 +36,7 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
         [manager2.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         NSString *URLString = [NSString stringWithFormat:@"%@/technician/pushId",HOST];
         NSString *pushId = [userDefaultes objectForKey:@"clientId"];
-        [manager2 POST:URLString parameters:@{@"pushId":pushId} success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+        [manager2 POST:URLString parameters:@{@"pushId":pushId} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
             NSLog(@"个推ID更新成功－－%@",responseObject);
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             NSLog(@"---更新失败了－－%@",error);
@@ -199,14 +203,14 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
 
 }
 
-// 认证
+#pragma mark - 上传认证信息
 + (void)certifyPostParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
     
     NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *token = [userDefaultes objectForKey:@"autoken"];
    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-    NSString *URLString = [NSString stringWithFormat:@"%@/technician/commitCertificate",HOST];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/certificate",HOST];
     [manager POST:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * task, NSDictionary *responseObject) {
         if(success) {
             success(responseObject);
@@ -245,7 +249,7 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
         
         [formData appendPartWithFileData:image name:@"file" fileName:@"1235.jpg" mimeType:@"JPEG"];
         
-    } success:^(NSURLSessionDataTask * _Nonnull task, NSData *responseObject) {
+    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSData *responseObject) {
         
         NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         if(success) {
@@ -257,7 +261,7 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
         }
     }];
     
-   
+#warning -  网络请求超时
 //    [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
 //    manager.requestSerializer.timeoutInterval = 15.f;
 //    [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
@@ -297,7 +301,7 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
 
 
 
-// 上传证件照
+#pragma mark - 上传证件照
 + (void)idPhotoImage:(NSData *)image success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
     
     //    NSData *headData = UIImageJPEGRepresentation(image, 0.5);
@@ -316,7 +320,7 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
     [manager POST:URLString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         [formData appendPartWithFileData:image name:@"file" fileName:@"1235.jpg" mimeType:@"JPEG"];
         
-    } success:^(NSURLSessionDataTask * _Nonnull task, NSData *responseObject) {
+    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSData *responseObject) {
         
         NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         if(success) {
@@ -340,10 +344,11 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
     NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *token = [userDefaultes objectForKey:@"autoken"];
+    NSLog(@"---token---%@---",token);
     [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-    NSString *URLString = [NSString stringWithFormat:@"%@/order/orderList",HOST];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/listUnfinished",HOST];
     
-    [manager GET:URLString parameters:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+    [manager GET:URLString parameters:nil progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
         if (success) {
             success(responseObject);
         }
@@ -363,7 +368,7 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *token = [userDefaultes objectForKey:@"autoken"];
     [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-    NSString *URLString = [NSString stringWithFormat:@"%@/construction/signIn",HOST];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/signIn",HOST];
     
     [manager POST:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * task, NSDictionary *responseObject) {
         if (success) {
@@ -383,14 +388,15 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
     NSString *token = [userDefaultes objectForKey:@"autoken"];
     NSLog(@"token--%@--",token);
     [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-    NSString *URLString = [NSString stringWithFormat:@"%@/technician/getCertificate",HOST];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician",HOST];
     
     
-    [manager POST:URLString parameters:nil progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+    [manager GET:URLString parameters:nil progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
         if(success) {
             success(responseObject);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"-----失败原因－－－%@-",error);
         if(failure) {
             failure(error);
         }
@@ -450,6 +456,126 @@ NSString* const HOST = @"http://121.40.157.200:51234/api/mobile";
     }];
     
 }
+
+#pragma mark - 抢单
++ (void)postOrderId:(NSInteger )orderId Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *token = [userDefaultes objectForKey:@"autoken"];
+    NSLog(@"token--%@--",token);
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/takeup",HOST];
+    
+    
+    [manager POST:URLString parameters:@{@"orderId":@(orderId)} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+        if(success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failure) {
+            failure(error);
+        }
+    }];
+    
+}
+
+#pragma mark - 工作开始
++ (void)postOrderStart:(NSInteger )orderId Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *token = [userDefaultes objectForKey:@"autoken"];
+    NSLog(@"token--%@--",token);
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/start",HOST];
+    
+    
+    [manager POST:URLString parameters:@{@"orderId":@(orderId)} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+        if(success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failure) {
+            failure(error);
+        }
+    }];
+    
+}
+
+
+#pragma mark - 上传工作前照片
++ (void)PostImageWorkBefore:(NSData *)image orderId:(NSInteger )orderId imageNumber:(NSInteger)imageNumber success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *token = [userDefaultes objectForKey:@"autoken"];
+    
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/uploadPhoto",HOST];
+    
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager POST:URLString parameters:@{@"no":@(imageNumber),@"orderId":@(orderId),@"isBefore":@"true"} constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        [formData appendPartWithFileData:image name:@"file" fileName:@"1235.jpg" mimeType:@"JPEG"];
+        
+    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSData *responseObject) {
+        
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        if(success) {
+            success(dictionary);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failure) {
+            failure(error);
+        }
+    }];
+    
+    
+    
+    
+    
+    
+    
+}
+
+
+
+
+
+
+
+#pragma mark - 判断网络连接情况
+// 加号方法里只能够调用加号方法
++(BOOL)isConnectionAvailable{
+    
+    BOOL isExistenceNetwork = YES;
+    Reachability *reach = [Reachability reachabilityWithHostName:@"www.apple.com"];
+    switch ([reach currentReachabilityStatus]) {
+        case NotReachable:
+            isExistenceNetwork = NO;
+            //NSLog(@"notReachable");
+            break;
+        case ReachableViaWiFi:
+            isExistenceNetwork = YES;
+            //NSLog(@"WIFI");
+            break;
+        case ReachableViaWWAN:
+            isExistenceNetwork = YES;
+            //NSLog(@"3G");
+            break;
+    }
+    
+    if (!isExistenceNetwork) {
+        return NO;
+    }
+    
+    return isExistenceNetwork;
+}
+
 
 
 @end

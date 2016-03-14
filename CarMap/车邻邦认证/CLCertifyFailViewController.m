@@ -29,6 +29,9 @@
     UILabel *_bankLabel;
     UIImageView *_identityImageView;
     UIView *_line;
+    UILabel *_detailLabel;
+    
+    
 }
 @end
 
@@ -54,7 +57,7 @@
             NSArray *array = [dataDic[@"skill"] componentsSeparatedByString:@","];
             
             [array enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop) {
-                int a = [obj intValue];
+                int a = [obj intValue] - 1;
                 if (idx == 0) {
                     _skillLabel.text = [NSString stringWithFormat:@"%@%@",_skillLabel.text,skillArray[a]];
                 }else{
@@ -62,7 +65,7 @@
                 }
             }];
             
-            
+            _detailLabel.text = dataDic[@"verifyMsg"];
             
             _userNameLabel.text = dataDic[@"name"];
             _bankNumberLabel.text = [NSString stringWithFormat:@"银行卡号：%@",dataDic[@"bankCardNo"]];
@@ -107,11 +110,11 @@
     reasonLabel.font = [UIFont systemFontOfSize:16];
     [self.view addSubview:reasonLabel];
     
-    UILabel *detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(95, 100, 200, 25)];
-    detailLabel.text = @"显示失败原因，原因说明";
-    detailLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
-    detailLabel.font = [UIFont systemFontOfSize:16];
-    [self.view addSubview:detailLabel];
+    _detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(95, 100, 200, 25)];
+    _detailLabel.text = @"显示失败原因，原因说明";
+    _detailLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
+    _detailLabel.font = [UIFont systemFontOfSize:16];
+    [self.view addSubview:_detailLabel];
     
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(10, 135, self.view.frame.size.width-20, 1)];
     view.backgroundColor = [UIColor colorWithRed:160/255.0 green:160/255.0 blue:160/255.0 alpha:1.0];
@@ -210,6 +213,7 @@
     
     CLCertifyViewController *certifyView = [[CLCertifyViewController alloc]init];
     certifyView.isFail = YES;
+    [certifyView.submitButton setTitle:@"再次认证" forState:UIControlStateNormal];
     [self.navigationController pushViewController:certifyView animated:YES];
     
 }

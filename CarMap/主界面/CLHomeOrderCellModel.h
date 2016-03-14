@@ -18,7 +18,7 @@
 @property (nonatomic ,strong) NSString *customerLat;
 @property (nonatomic ,strong) NSString *customerLon;
 @property (nonatomic ,strong) NSString *remark;
-
+@property (nonatomic ,strong) NSString *status;
 
 
 

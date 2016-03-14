@@ -11,6 +11,7 @@
 #import "GFMapViewController.h"
 #import "CLWorkBeforeViewController.h"
 #import "GFHttpTool.h"
+#import "GFMyMessageViewController.h"
 
 
 
@@ -113,8 +114,9 @@
     
     NSLog(@"---签到按钮-----");
     
-    NSDictionary *dic = @{@"rtpositionLon":_customerLon,@"rtpositionLat":_customerLat,@"technicianId":@"1",@"orderId":_orderId};
+    NSDictionary *dic = @{@"positionLon":_customerLon,@"positionLat":_customerLat,@"orderId":_orderId};
     [GFHttpTool signinParameters:dic Success:^(NSDictionary *responseObject) {
+        NSLog(@"－－－－－%@---",responseObject);
         if ([responseObject[@"result"]integerValue] == 1) {
             CLWorkBeforeViewController *workBefore = [[CLWorkBeforeViewController alloc]init];
             [self.navigationController pushViewController:workBefore animated:YES];
@@ -130,7 +132,7 @@
     
     GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"person" withLeftImgHightName:@"personClick" withRightImgName:@"moreList" withRightImgHightName:@"moreListClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
     [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [navView.rightBut addTarget:self action:@selector(moreBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [navView.rightBut addTarget:navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:navView];
     
@@ -138,12 +140,10 @@
 }
 - (void)backBtnClick{
 //    [self.navigationController popViewControllerAnimated:YES];
-    
+    GFMyMessageViewController *myMessage = [[GFMyMessageViewController alloc]init];
+    [self.navigationController pushViewController:myMessage animated:YES];
 }
-// 更多按钮的响应方法
-- (void)moreBtnClick{
-    NSLog(@"更多");
-}
+
 
 
 - (void)didReceiveMemoryWarning {

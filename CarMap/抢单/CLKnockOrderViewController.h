@@ -10,4 +10,8 @@
 
 @interface CLKnockOrderViewController : UIViewController
 
+@property (nonatomic ,strong) NSDictionary *orderDictionary;
+@property (nonatomic ,strong) UIButton *certifyButton;
+
+
 @end

@@ -1,37 +1,46 @@
 //
-//  WorkBeforeViewController.m
+//  CLCleanWorkViewController.m
 //  CarMap
 //
-//  Created by 李孟龙 on 16/2/19.
+//  Created by 李孟龙 on 16/3/1.
 //  Copyright © 2016年 mll. All rights reserved.
 //
 
-#import "CLWorkBeforeViewController.h"
+#import "CLCleanWorkViewController.h"
 #import "GFNavigationView.h"
 #import "CLTitleView.h"
-#import "CLWorkOverViewController.h"
 #import "GFMyMessageViewController.h"
-#import "GFHttpTool.h"
 
 
-
-
-@interface CLWorkBeforeViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface CLCleanWorkViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
-    UIView *_chooseView;
     UIImageView *_carImageView;
     UIButton *_cameraBtn;
     NSMutableArray *_imageArray;
+    
+    UIScrollView *_scrollView;
+    UITextField *_workTextField;
+    
 }
-
 
 @end
 
-@implementation CLWorkBeforeViewController
+@implementation CLCleanWorkViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     _imageArray = [[NSMutableArray alloc]init];
+
+    
+    _scrollView = [[UIScrollView alloc]init];
+    _scrollView.frame = CGRectMake(0, 64+36, self.view.frame.size.width, self.view.frame.size.height-64-38);
+    _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, 700);
+    [self.view addSubview:_scrollView];
+    
+    
+    
+    
+    
     
     [self setDate];
     
@@ -41,7 +50,7 @@
     
 }
 
-// 设置日期和状态
+#pragma mark - 设置日期和状态
 - (void)setDate{
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 36)];
     headerView.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
@@ -51,20 +60,22 @@
     timeLabel.font = [UIFont systemFontOfSize:14];
     [headerView addSubview:timeLabel];
     
-    UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width-100, 8, 80, 20)];
-    stateLabel.text = @"工作模式";
+    UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width-120, 8, 100, 20)];
+    stateLabel.text = @"即将完成模式";
     stateLabel.textAlignment = NSTextAlignmentRight;
     stateLabel.font = [UIFont systemFontOfSize:14];
     [headerView addSubview:stateLabel];
     
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 36, self.view.frame.size.width, 1)];
-    view.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    view.backgroundColor = [UIColor colorWithRed:157/255.0 green:157/255.0 blue:157/255.0 alpha:1.0];
     [headerView addSubview:view];
     
     NSLog(@"设置日期和时间");
     //    headerView.backgroundColor = [UIColor cyanColor];
     [self.view addSubview:headerView];
 }
+
+
 #pragma mark - 获取周几
 - (NSString *)weekdayString{
     
@@ -91,109 +102,99 @@
 
 - (void)titleView{
     
-    CLTitleView *titleView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 64+36+40, self.view.frame.size.width, 45) Title:@"上传未开始贴膜车辆照片"];
-    [self.view addSubview:titleView];
-    
-    
-    
-    UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 101, self.view.frame.size.width, 40)];
+    UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 1, self.view.frame.size.width, 40)];
     distanceLabel.text = @"已用时：15分28秒";
     distanceLabel.backgroundColor = [UIColor whiteColor];
     distanceLabel.font = [UIFont systemFontOfSize:15];
     distanceLabel.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:distanceLabel];
+    [_scrollView addSubview:distanceLabel];
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    _carImageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/7, 200, self.view.frame.size.width*5/7, self.view.frame.size.width*27/70)];
+    _carImageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/7, 55, self.view.frame.size.width*5/7, self.view.frame.size.width*27/70)];
     _carImageView.image = [UIImage imageNamed:@"carImage"];
-    [self.view addSubview:_carImageView];
+    [_scrollView addSubview:_carImageView];
     
-    _cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*6/7-15, 200+self.view.frame.size.width*27/70-25, 30, 30)];
+    _cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*6/7-15, 55+self.view.frame.size.width*27/70-25, 30, 30)];
     [_cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
     [_cameraBtn addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_cameraBtn];
+    [_scrollView addSubview:_cameraBtn];
+    
+    CLTitleView *titleView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 40 + self.view.frame.size.width/3*2+10, self.view.frame.size.width, 45) Title:@"选择本次负责的工作项"];
+    [_scrollView addSubview:titleView];
     
     
     
     
-    UIButton *signinButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-60, 50)];
-    signinButton.center = CGPointMake(self.view.center.x, self.view.center.y+50+36+50);
-    [signinButton setTitle:@"继续" forState:UIControlStateNormal];
-    signinButton.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-    signinButton.layer.cornerRadius = 10;
+    _workTextField = [[UITextField alloc]initWithFrame:CGRectMake(80, titleView.frame.origin.y+60, self.view.frame.size.width-160, 40)];
+    _workTextField.textAlignment = NSTextAlignmentCenter;
+    _workTextField.layer.borderWidth = 0.5f;
+    _workTextField.keyboardType = UIKeyboardTypeNumberPad;
+    _workTextField.layer.borderColor = [[UIColor colorWithRed:174/255.0 green:174/255.0 blue:174/255.0 alpha:1.0]CGColor];
+    [_scrollView addSubview:_workTextField];
     
-    [signinButton addTarget:self action:@selector(nextBtnClick) forControlEvents:UIControlEventTouchUpInside];
+// 加减按钮
+    UIButton *subtractButton = [[UIButton alloc]initWithFrame:CGRectMake(40, _workTextField.frame.origin.y, 40, 40)];
+    [subtractButton setImage:[UIImage imageNamed:@"subtract"] forState:UIControlStateNormal];
+    subtractButton.tag = 1;
+    [subtractButton addTarget:self action:@selector(workBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:subtractButton];
     
-    [self.view addSubview:signinButton];
+    UIButton *addButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width-80, _workTextField.frame.origin.y, 40, 40)];
+    addButton.tag = 2;
+    [addButton addTarget:self action:@selector(workBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [addButton setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
+    [_scrollView addSubview:addButton];
+    
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(80, addButton.frame.origin.y + 40, self.view.frame.size.width-160, 30)];
+    label.text = @"按百分比计算(%)";
+    label.textAlignment = NSTextAlignmentCenter;
+    label.font = [UIFont systemFontOfSize:14.0];
+    label.textColor = [UIColor colorWithRed:174/255.0 green:174/255.0 blue:174/255.0 alpha:1.0];
+    [_scrollView addSubview:label];
+    
+    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(10, label.frame.origin.y+35, self.view.frame.size.width-20, 1)];
+    lineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
+    [_scrollView addSubview:lineView];
+    
+    
+    UIButton *workOverButton = [[UIButton alloc]initWithFrame:CGRectMake(30, lineView.frame.origin.y+30, self.view.frame.size.width-60, 50)];
+    //    workOverButton.center = CGPointMake(self.view.center.x, self.view.center.y+50+36+50);
+    [workOverButton setTitle:@"完成工作" forState:UIControlStateNormal];
+    workOverButton.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+    workOverButton.layer.cornerRadius = 10;
+    
+    [workOverButton addTarget:self action:@selector(workOverBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    [_scrollView addSubview:workOverButton];
     
     
 }
 
-#pragma mark - 相机按钮的实现方法
-- (void)cameraHeadBtnClick:(UIButton *)button{
-    [self.view endEditing:YES];
-    
-    
-    _chooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-100, 80)];
-    _chooseView.center = self.view.center;
-    _chooseView.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-    _chooseView.layer.cornerRadius = 15;
-    _chooseView.clipsToBounds = YES;
-    [self.view addSubview:_chooseView];
-    
-    // 相机和相册按钮
-    UIButton *cameraButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-100, 40)];
-    [cameraButton setTitle:@"相册" forState:UIControlStateNormal];
-    [cameraButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
-    cameraButton.tag = 1;
-    [_chooseView addSubview:cameraButton];
-    
-    UIButton *_photoButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 40, self.view.frame.size.width-100, 40)];
-    [_photoButton setTitle:@"相机" forState:UIControlStateNormal];
-    [_photoButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
-    _photoButton.tag = 2;
-    [_chooseView addSubview:_photoButton];
+- (void)workBtnClick:(UIButton *)button{
+    if (button.tag == 1 && [_workTextField.text integerValue]>=10) {
+        _workTextField.text = [NSString stringWithFormat:@"%ld",[_workTextField.text integerValue]-10];
+    }else if(button.tag == 2 && [_workTextField.text integerValue]<=90){
+        _workTextField.text = [NSString stringWithFormat:@"%ld",[_workTextField.text integerValue]+10];
+    }
     
     
 }
+
 #pragma mark - 选择照片
 - (void)userHeadChoose:(UIButton *)button{
-//    [_chooseView removeFromSuperview];
-//    
-//    if (button.tag == 1) {
-//        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
-//        imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-//        imagePickerController.allowsEditing = YES;
-//        imagePickerController.delegate =self;
-//        [self presentViewController:imagePickerController animated:YES completion:nil];
-//    }else{
-        NSLog(@"打开相机");
-        BOOL result = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
-        if (result) {
-            NSLog(@"---支持使用相机---");
-            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            imagePicker.delegate = self;
-            // 编辑模式
-            //            imagePicker.allowsEditing = YES;
-            [self presentViewController:imagePicker animated:YES completion:^{
-            }];
-        }else{
-            NSLog(@"----不支持使用相机----");
-        }
-        
-//    }
     
+    NSLog(@"打开相机");
+    BOOL result = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
+    if (result) {
+        NSLog(@"---支持使用相机---");
+        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        imagePicker.delegate = self;
+        
+        [self  presentViewController:imagePicker animated:YES completion:^{
+        }];
+    }else{
+        NSLog(@"----不支持使用相机----");
+    }
     
 }
 
@@ -215,15 +216,14 @@
         [deleteBtn addTarget:self action:@selector(deleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [imageView addSubview:deleteBtn];
         [_imageArray addObject:imageView];
-        [self.view addSubview:imageView];
+        [_scrollView addSubview:imageView];
         
     }else{
-        NSLog(@"小车不存在---%@--",@(_imageArray.count));
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(_cameraBtn.frame.origin.x, _cameraBtn.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3)];
         imageView.image = image;
-        [self.view addSubview:imageView];
+        [_scrollView addSubview:imageView];
         
-        if (_imageArray.count == 2) {
+        if (_imageArray.count == 5) {
             _cameraBtn.hidden = YES;
         }else{
             _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)%3),  _carImageView.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
@@ -238,15 +238,8 @@
         [_imageArray addObject:imageView];
     }
     
-    NSData *imageData = UIImageJPEGRepresentation(image, 0.3);
-    [GFHttpTool PostImageWorkBefore:imageData orderId:20 imageNumber:1 success:^(id responseObject) {
-        NSLog(@"上传成功－%@--－%@",responseObject,responseObject[@"false"]);
-    } failure:^(NSError *error) {
-        NSLog(@"上传失败原因－－%@--",error);
-    }];
     
 }
-
 #pragma mark - 删除相片的方法
 - (void)deleteBtnClick:(UIButton *)button{
     NSLog(@"删除照片");
@@ -261,34 +254,20 @@
         obj.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*(idx%3),  _carImageView.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*(idx/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
     }];
     
-    if (_imageArray.count == 2) {
+    if (_imageArray.count == 5) {
         _cameraBtn.hidden = NO;
-    }else if(_imageArray.count == 1){
-        _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)%3),  _carImageView.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
     }else{
-        _carImageView.hidden = NO;
-        _cameraBtn.frame = CGRectMake(self.view.frame.size.width*6/7-15, 200+self.view.frame.size.width*27/70-25, 30, 30);
-        [_cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
-        _cameraBtn.backgroundColor = [UIColor clearColor];
+        _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)%3),  _carImageView.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
     }
     
     
 }
 
 
-
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-// 继续按钮的响应方法
-- (void)nextBtnClick{
-    CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
-    [self.navigationController pushViewController:workOver animated:YES];
-    
-    
-    
-}
 
 // 添加导航
 - (void)setNavigation{
@@ -301,12 +280,17 @@
     
     
 }
+
+#pragma mark - 工作完成的按钮响应方法
+- (void)workOverBtnClick{
+    
+}
+
 - (void)backBtnClick{
-//    [self.navigationController popViewControllerAnimated:YES];
+    //    [self.navigationController popViewControllerAnimated:YES];
     GFMyMessageViewController *myMessage = [[GFMyMessageViewController alloc]init];
     [self.navigationController pushViewController:myMessage animated:YES];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

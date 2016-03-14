@@ -98,12 +98,15 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
     [_mapView viewWillAppear];
     _mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
     _poisearch.delegate = self;
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:YES];
+    
     [_mapView viewWillDisappear];
     _mapView.delegate = nil; // 不用时，置nil
     _poisearch.delegate = nil;

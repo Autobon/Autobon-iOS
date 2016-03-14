@@ -21,7 +21,10 @@
 #import "GFMapViewController.h"
 
 
-@interface ViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+#import "CLHomeOrderViewController.h"
+
+
+@interface ViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDelegate,UITableViewDataSource>
 
 @end
 
@@ -29,10 +32,46 @@
 
 
 - (void)viewDidLoad{
-    NSLog(@"这是什么情况");
-}
-- (void)viewDidLoad2 {
     [super viewDidLoad];
+    NSLog(@"呵呵");
+    
+//    CLHomeOrderViewController *homeView = [[CLHomeOrderViewController alloc]init];
+//    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:homeView];
+//    self.view.window.rootViewController = nav;
+//    nav.navigationBarHidden = YES;
+//    UIWindow *window = [UIApplication sharedApplication].delegate.window;
+//    window.rootViewController = nav;
+//    [self.navigationController pushViewController:homeView animated:YES];
+    UITableView *tableView = [[UITableView alloc]initWithFrame:self.view.bounds];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    [self.view addSubview:tableView];
+    
+    
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    return 10;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (!cell) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        cell.backgroundColor = [UIColor cyanColor];
+    }
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"didSelect--");
+}
+
+- (void)viewDidLoad2 {
+//    [super viewDidLoad];
     
     NSLog(@"这边也走了");
     

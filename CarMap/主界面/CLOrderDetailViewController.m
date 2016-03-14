@@ -11,6 +11,10 @@
 #import "GFNavigationView.h"
 #import "CLSigninViewController.h"
 #import "CLAddPersonViewController.h"
+#import "GFHttpTool.h"
+
+
+
 
 @interface CLOrderDetailViewController ()
 {
@@ -22,7 +26,7 @@
 @implementation CLOrderDetailViewController
 
 - (void)viewDidLoad {
-    
+    [super viewDidLoad];
     self.view.backgroundColor = [[UIColor alloc]initWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     
     [self setNavigation];
@@ -101,7 +105,7 @@
 // 添加小伙伴
     UIButton *addButton = [[UIButton alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-self.view.frame.size.height/18, self.view.frame.size.width/2, self.view.frame.size.height/18)];
     [addButton setTitle:@"+合作人" forState:UIControlStateNormal];
-    [addButton setTitleColor:[[UIColor alloc]initWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1.0] forState:UIControlStateNormal];
+    [addButton setTitleColor:[[UIColor alloc]initWithRed:163/255.0 green:163/255.0 blue:163/255.0 alpha:1.0] forState:UIControlStateNormal];
     [addButton addTarget:self action:@selector(addBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addButton];
     
@@ -131,12 +135,24 @@
 #pragma mark - 开始工作按钮的响应方法
 - (void)workBtnClick{
     NSLog(@"开始工作按钮");
-    CLSigninViewController *signinView = [[CLSigninViewController alloc]init];
-    signinView.customerLat = self.customerLat;
-    signinView.customerLon = self.customerLon;
-    signinView.orderId = self.orderId;
     
-    [self.navigationController pushViewController:signinView animated:YES];
+    [GFHttpTool postOrderStart:[_orderId integerValue] Success:^(NSDictionary *responseObject) {
+        NSLog(@"----responseObject--%@",responseObject);
+        if ([responseObject[@"result"]integerValue] == 1) {
+            CLSigninViewController *signinView = [[CLSigninViewController alloc]init];
+            signinView.customerLat = self.customerLat;
+            signinView.customerLon = self.customerLon;
+            signinView.orderId = self.orderId;
+            [self.navigationController pushViewController:signinView animated:YES];
+        }else{
+            NSLog(@"-----%@---",responseObject[@"message"]);
+        }
+        
+    } failure:^(NSError *error) {
+        NSLog(@"----失败原因－－%@--",error);
+    }];
+    
+    
     
     
 }
@@ -148,20 +164,17 @@
     
     GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:@"moreList" withRightImgHightName:@"moreListClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
     [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [navView.rightBut addTarget:self action:@selector(moreBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [navView.rightBut addTarget:navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:navView];
     
     
 }
 - (void)backBtnClick{
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
-// 更多按钮的响应方法
-- (void)moreBtnClick{
-    NSLog(@"更多");
-}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

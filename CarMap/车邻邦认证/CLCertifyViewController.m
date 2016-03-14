@@ -18,7 +18,7 @@
 #import "GFHttpTool.h"
 #import "GFTipView.h"
 #import "CLCertifyingViewController.h"
-#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
 #import "CLAutobonViewController.h"
 
 
@@ -27,8 +27,8 @@
 {
     UIView *_chooseView;
     CLTouchScrollView *_scrollView;
-    UIImageView *_headImage;
-    UIImageView *_identityImageView;
+    UIButton *_headButton;
+    UIButton *_identityButton;
     BOOL _isHeadImage;
     BOOL _isTableView;
     BOOL _isBank;
@@ -48,12 +48,24 @@
 }
 @end
 
+
+
+
+
+
 @implementation CLCertifyViewController
+
+- (UIButton *)submitButton{
+    if (_submitButton == nil) {
+        _submitButton = [[UIButton alloc]init];
+    }
+    return _submitButton;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     _skillArray = [[NSMutableArray alloc]init];
-    _bankArray = @[@"人民银行",@"建设银行",@"招商银行",@"邮政银行",@"农业银行",@"中国银行",@"工商银行",@"光大银行"];
+    _bankArray = @[@"农业银行",@"招商银行",@"建设银行",@"广发银行",@"中信银行",@"光大银行",@"民生银行",@"普法银行",@"工商银行",@"中国银行",@"交通银行",@"邮政储蓄银行"];
     [self setNavigation];
     
     [self setViewForCertify];
@@ -73,12 +85,12 @@
             _isBankNumber = YES;
             if ([responseObject[@"result"]intValue]==1) {
                 NSDictionary *dataDic = responseObject[@"data"];
-                
-                // 0,1,2,3
+                // 1,2,3,4
                 NSArray *array = [dataDic[@"skill"] componentsSeparatedByString:@","];
+                NSLog(@"---array---%@--",array);
                 [array enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop) {
-                    UIButton *button = _skillBtnArray[[obj intValue]];
-                    [_skillArray addObject:@(button.tag)];
+                    UIButton *button = _skillBtnArray[[obj intValue]-1];
+                    [_skillArray addObject:@(button.tag+1)];
                     button.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
                     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 }];
@@ -88,11 +100,10 @@
                 [_bankButton setTitle:dataDic[@"bank"] forState:UIControlStateNormal];
                 [_bankButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 _bankNumberTextField.centerTxt.text = dataDic[@"bankCardNo"];
-                [_headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:51234/%@",dataDic[@"avatar"]]]];
-                [_identityImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:51234/%@",dataDic[@"idPhoto"]]]];
                 
+                [_headButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:51234/%@",dataDic[@"avatar"]]] forState:UIControlStateNormal];
                 
-                
+                [_identityButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:51234/%@",dataDic[@"idPhoto"]]] forState:UIControlStateNormal];
             }
         } failure:^(NSError *error) {
             
@@ -108,13 +119,14 @@
     [self.view addSubview:_scrollView];
     
 //头像
-    _headImage = [[UIImageView alloc]initWithFrame:CGRectMake(10, 20, 80, 80)];
-    _headImage.image = [UIImage imageNamed:@"userHeadImage"];
-    _headImage.layer.cornerRadius = 40;
-    _headImage.clipsToBounds = YES;
+    _headButton = [[UIButton alloc]initWithFrame:CGRectMake(10, 20, 80, 80)];
+    [_headButton setBackgroundImage:[UIImage imageNamed:@"userHeadImage"] forState:UIControlStateNormal];
+    _headButton.layer.cornerRadius = 40;
+    _headButton.clipsToBounds = YES;
 //    headImage.backgroundColor = [UIColor redColor];
-    [_scrollView addSubview:_headImage];
-    
+    [_scrollView addSubview:_headButton];
+    _headButton.tag = 1;
+    [_headButton addTarget:self action:@selector(cameraHeadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     UIButton *cameraHeadBtn = [[UIButton alloc]initWithFrame:CGRectMake(70, 80, 20, 20)];
     [cameraHeadBtn setImage:[UIImage imageNamed:@"cameraHead"] forState:UIControlStateNormal];
     cameraHeadBtn.tag = 1;
@@ -183,9 +195,10 @@
     _identityView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 250, self.view.frame.size.width, 45) Title:@"手持身份证正面照"];
     [_scrollView addSubview:_identityView];
     
-    _identityImageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/5, 310, self.view.frame.size.width*3/5, self.view.frame.size.width*27/70)];
-    _identityImageView.image = [UIImage imageNamed:@"userImage"];
-    [_scrollView addSubview:_identityImageView];
+    _identityButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/5, 310, self.view.frame.size.width*3/5, self.view.frame.size.width*27/70)];
+    [_identityButton setBackgroundImage:[UIImage imageNamed:@"userImage"] forState:UIControlStateNormal];
+    [_identityButton addTarget:self action:@selector(cameraHeadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:_identityButton];
     
     UIButton *cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*4/5-15, 310+self.view.frame.size.width*27/70-25, 30, 30)];
     [cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
@@ -244,7 +257,7 @@
     _bankNumberTextField.centerTxt.tag = 5;
     [_scrollView addSubview:_bankNumberTextField];
     
-    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, _bankNumberTextField.frame.origin.y+40+40, self.view.frame.size.width, 2)];
+    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, _bankNumberTextField.frame.origin.y+40+40, self.view.frame.size.width, 1)];
     lineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [_scrollView addSubview:lineView];
     
@@ -260,11 +273,11 @@
     
     
 // 提交按钮
-    UIButton *submitButton = [[UIButton alloc]initWithFrame:CGRectMake(30, lineView.frame.origin.y+2+10, self.view.frame.size.width-60, 40)];
-    [submitButton setTitle:@"提交" forState:UIControlStateNormal];
-    [submitButton setBackgroundImage:[UIImage imageNamed:@"button"] forState:UIControlStateNormal];
-    [submitButton addTarget:self action:@selector(submitBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [_scrollView addSubview:submitButton];
+    _submitButton.frame = CGRectMake(30, lineView.frame.origin.y+2+10, self.view.frame.size.width-60, 40);
+//    [_submitButton setTitle:@"提交" forState:UIControlStateNormal];
+    [_submitButton setBackgroundImage:[UIImage imageNamed:@"button"] forState:UIControlStateNormal];
+    [_submitButton addTarget:self action:@selector(submitBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:_submitButton];
     
     UILabel *submitLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-156, lineView.frame.origin.y+2+50, 180, 30)];
     submitLabel.text = @"点击\"提交\"代表本人已阅读并同意";
@@ -338,7 +351,7 @@
                                        skillString = [NSString stringWithFormat:@"%@,%@",skillString,_skillArray[i]];
                                     }
                                 } 
-                                NSDictionary *dic= @{@"name":_userNameTextField.centerTxt.text,@"idNo":_identityTextField.centerTxt.text,@"skillArray":skillString,@"bank":_bankButton.titleLabel.text,@"bankCardNo":cardNo};
+                                NSDictionary *dic= @{@"name":_userNameTextField.centerTxt.text,@"idNo":_identityTextField.centerTxt.text,@"skills":skillString,@"bank":_bankButton.titleLabel.text,@"bankCardNo":cardNo};
                                 NSLog(@"-----dic---%@--",dic);
                                 [GFHttpTool certifyPostParameters:dic success:^(NSDictionary *responseObject) {
                                     NSLog(@"----responseObject-%@--%@",responseObject,responseObject[@"message"]);
@@ -367,9 +380,15 @@
 - (void)success{
 //    CLCertifyingViewController *certifying = [[CLCertifyingViewController alloc]init];
 //    [self.navigationController pushViewController:certifying animated:YES];
-    CLAutobonViewController *autobon = (CLAutobonViewController *)self.navigationController.viewControllers[0];
-    autobon.certifyButton.userInteractionEnabled = NO;
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    if ([_submitButton.titleLabel.text isEqualToString:@"提交"]) {
+        CLAutobonViewController *autobon = (CLAutobonViewController *)self.navigationController.viewControllers[0];
+        autobon.certifyButton.userInteractionEnabled = NO;
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
 }
 
 #pragma mark - 警告框 OK
@@ -408,11 +427,12 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-        cell.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+//        cell.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
         cell.textLabel.textColor = [UIColor whiteColor];
         UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 120, 40)];
         [button addTarget:self action:@selector(btn:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:button];
+        cell.textLabel.textColor = [UIColor blackColor];
 //        [button setTitle:@"农业银行" forState:UIControlStateNormal];
     }
     cell.textLabel.text = _bankArray[indexPath.row];
@@ -473,29 +493,29 @@
     
     
 }
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    if (textField.tag == 5) {
-        NSLog(@"---range--%@----%@---string--%@--",@(range.location),@(range.length),string);
-        if (range.length == 0) {
-            if (range.location%5 == 4) {
-                textField.text = [NSString stringWithFormat:@"%@ ",textField.text];
-            }
-        }
-    }
-    
-    return YES;
-}
+//- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+//    if (textField.tag == 5) {
+//        NSLog(@"---range--%@----%@---string--%@--",@(range.location),@(range.length),string);
+//        if (range.length == 0) {
+//            if (range.location%5 == 4) {
+//                textField.text = [NSString stringWithFormat:@"%@ ",textField.text];
+//            }
+//        }
+//    }
+//    
+//    return YES;
+//}
 
 
 #pragma mark - 技能按钮
 - (void)skillBtnClick:(UIButton *)button{
     [self.view endEditing:YES];
-    if ([_skillArray containsObject:@(button.tag)]) {
-        [_skillArray removeObject:@(button.tag)];
+    if ([_skillArray containsObject:@(button.tag+1)]) {
+        [_skillArray removeObject:@(button.tag+1)];
         button.backgroundColor = [[UIColor alloc]initWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
         [button setTitleColor:[[UIColor alloc]initWithRed:156/255.0 green:156/255.0 blue:156/255.0 alpha:1.0] forState:UIControlStateNormal];
     }else{
-        [_skillArray addObject:@(button.tag)];
+        [_skillArray addObject:@(button.tag+1)];
         
         button.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -570,7 +590,8 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo{
     [self dismissViewControllerAnimated:YES completion:nil];
     if (_isHeadImage) {
-        _headImage.image = image;
+        
+        [_headButton setImage:image forState:UIControlStateNormal];
         NSData *headData = UIImageJPEGRepresentation(image, 0.3);
         [GFHttpTool headImage:headData success:^(NSDictionary *responseObject) {
             NSLog(@"-----responseObject---%@--",responseObject);
@@ -585,9 +606,9 @@
         }];
         
     }else{
-        _identityImageView.image = image;
+        [_identityButton setImage:image forState:UIControlStateNormal];
 //        _haveIdentityImage = YES;
-        _identityImageView.contentMode = UIViewContentModeScaleAspectFit;
+        _identityButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
         NSData *idPhotoImage = UIImageJPEGRepresentation(image, 0.3);
         [GFHttpTool idPhotoImage:idPhotoImage success:^(NSDictionary *responseObject) {
             NSLog(@"----%@---",responseObject);
@@ -640,7 +661,7 @@
         flag = NO;
         return flag;
     }
-    NSString *regex2 = @"^(\\d{14}|\\d{17})(\\d|[X])$";
+    NSString *regex2 = @"^(\\d{14}|\\d{17})(\\d|[xX])$";
     NSPredicate *identityCardPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex2];
     return [identityCardPredicate evaluateWithObject:identityCard];
 }
