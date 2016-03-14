@@ -198,6 +198,8 @@
     [self.view addSubview:submitBut];
     [submitBut addTarget:self action:@selector(submitClick) forControlEvents:UIControlEventTouchUpInside];
 }
+
+
 - (void)submitClick {
     
     
@@ -211,6 +213,9 @@
     parDic[@"bank"] = @"建设";
     parDic[@"bankCardNo"] = @"621700287000250683";
 
+    
+    
+    
     
     [GFHttpTool bankCardPost:url parameters:parDic success:^(id responseObject) {
 
@@ -264,7 +269,9 @@
         }];
     
     }
-    
+    }failure:^(NSError *error) {
+        
+    }];
     
     
     
