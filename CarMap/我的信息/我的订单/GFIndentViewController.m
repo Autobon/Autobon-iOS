@@ -78,12 +78,10 @@
     seconderUrl = @"http://121.40.157.200:12345/api/mobile/technician/order/listSecond";
     curUrl = mainUrl;
     
-    
     page = 1;
     pageSize = 2;
     
     upSuo = 0;
-    
     
     self.modelArr = [[NSMutableArray alloc] init];
     
@@ -227,6 +225,7 @@
                 GFIndentModel *listModel = [[GFIndentModel alloc] init];
                 listModel.orderNum = dic[@"orderNum"];
                 listModel.photo = dic[@"photo"];
+                listModel.remark = dic[@"remark"];
                 
                 
                 if([curUrl isEqualToString:mainUrl]) {
@@ -235,8 +234,20 @@
                     listModel.workItems = constructDic[@"workItems"];
                     listModel.signinTime = constructDic[@"signinTime"];
                     listModel.payStatus = constructDic[@"payStatus"];
+                    
+                    NSInteger startTime = [constructDic[@"startTime"] integerValue];
+                    NSInteger endTime = [constructDic[@"endTime"] integerValue];
+                    NSInteger chaTime = endTime - startTime;
+                    NSInteger fenNum = chaTime % 60;
+                    NSInteger shiNum = chaTime / 60;
+                    if(shiNum > 0) {
+                        listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
+                    }else {
+                        listModel.workTime = [NSString stringWithFormat:@"%ld分", fenNum];
+                    }
+                    
                 
-                }else {
+                }else if([curUrl isEqualToString:seconderUrl]) {
                     
                     NSLog(@"@@@@@@@@@@@\n@@@\n@@\n@@\n@@@@@   次负责人");
                     NSDictionary *constructDic = dic[@"secondConstruct"];
@@ -244,6 +255,17 @@
                     listModel.workItems = constructDic[@"workItems"];
                     listModel.signinTime = constructDic[@"signinTime"];
                     listModel.payStatus = constructDic[@"payStatus"];
+                    
+                    NSInteger startTime = [constructDic[@"startTime"] integerValue];
+                    NSInteger endTime = [constructDic[@"endTime"] integerValue];
+                    NSInteger chaTime = endTime - startTime;
+                    NSInteger fenNum = chaTime % 60;
+                    NSInteger shiNum = chaTime / 60;
+                    if(shiNum > 0) {
+                        listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
+                    }else {
+                        listModel.workTime = [NSString stringWithFormat:@"%ld分", fenNum];
+                    }
                 
                 }
                 
@@ -307,11 +329,47 @@
                 GFIndentModel *listModel = [[GFIndentModel alloc] init];
                 listModel.orderNum = dic[@"orderNum"];
                 listModel.photo = dic[@"photo"];
+                listModel.remark = dic[@"remark"];
                 
-                NSDictionary *constructDic = dic[@"mainConstruct"];
-                listModel.payment = constructDic[@"payment"];
-                listModel.workItems = constructDic[@"workItems"];
-                listModel.signinTime = constructDic[@"signinTime"];
+                if([curUrl isEqualToString:mainUrl]) {
+                    NSDictionary *constructDic = dic[@"mainConstruct"];
+                    listModel.payment = constructDic[@"payment"];
+                    listModel.workItems = constructDic[@"workItems"];
+                    listModel.signinTime = constructDic[@"signinTime"];
+                    listModel.payStatus = constructDic[@"payStatus"];
+                    
+                    NSInteger startTime = [constructDic[@"startTime"] integerValue];
+                    NSInteger endTime = [constructDic[@"endTime"] integerValue];
+                    NSInteger chaTime = endTime - startTime;
+                    NSInteger fenNum = chaTime % 60;
+                    NSInteger shiNum = chaTime / 60;
+                    if(shiNum > 0) {
+                        listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
+                    }else {
+                        listModel.workTime = [NSString stringWithFormat:@"%ld分", fenNum];
+                    }
+                    
+                }else if([curUrl isEqualToString:seconderUrl]) {
+                    
+                    NSLog(@"@@@@@@@@@@@\n@@@\n@@\n@@\n@@@@@   次负责人");
+                    NSDictionary *constructDic = dic[@"secondConstruct"];
+                    listModel.payment = constructDic[@"payment"];
+                    listModel.workItems = constructDic[@"workItems"];
+                    listModel.signinTime = constructDic[@"signinTime"];
+                    listModel.payStatus = constructDic[@"payStatus"];
+                    
+                    NSInteger startTime = [constructDic[@"startTime"] integerValue];
+                    NSInteger endTime = [constructDic[@"endTime"] integerValue];
+                    NSInteger chaTime = endTime - startTime;
+                    NSInteger fenNum = chaTime % 60;
+                    NSInteger shiNum = chaTime / 60;
+                    if(shiNum > 0) {
+                        listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
+                    }else {
+                        listModel.workTime = [NSString stringWithFormat:@"%ld分", fenNum];
+                    }
+                    
+                }
                 
                 [self.modelArr addObject:listModel];
                 
@@ -365,14 +423,23 @@
     NSLog(@"********** %@ **********", model.payment);
     NSLog(@"********** %@ **********", model.signinTime);
     NSLog(@"********** %@ **********", model.workItems);
+    NSLog(@"********** %@ **********", model.remark);
     
     // 订单编号
     cell.numberLab.text = [NSString stringWithFormat:@"订单编号%@", model.orderNum];
     // 加载图片
+//    model.photo = [NSString stringWithFormat:@"http://121.40.157.200:12345%@", model.photo];
     NSURL *imgUrl = [NSURL URLWithString:model.photo];
     [cell.photoImgView sd_setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"orderImage.png"]];
     // 金额
     cell.moneyLab.text = [NSString stringWithFormat:@"￥%@", model.payment];
+    // 是否结算
+    NSInteger jisuanNum = (NSInteger)[model.payStatus integerValue];
+    if(jisuanNum == 0 || jisuanNum == 1) {
+        cell.tipBut.selected = NO;
+    }else {
+        cell.tipBut.selected = YES;
+    }
     // 开始时间
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
@@ -380,6 +447,8 @@
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:[model.signinTime integerValue]/1000];
     cell.timeLab.text = [NSString stringWithFormat:@"施工时间：%@", [formatter stringFromDate:date]];
     // 施工部位
+    
+    
     
 
     
@@ -394,11 +463,12 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    
-//    [GFTipView tipViewWithHeight:2 withTipViewMessage:@"gsag"];
 
+
+    NSLog(@"++++++++++++++\n%ld\n\n", self.modelArr.count);
+    
     GFIndentDetailsViewController *indentDeVC = [[GFIndentDetailsViewController alloc] init];
+    indentDeVC.model = self.modelArr[indexPath.row];
     [self.navigationController pushViewController:indentDeVC animated:YES];
 }
 

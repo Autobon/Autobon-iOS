@@ -11,4 +11,10 @@
 //@class GFBankCardViewController;
 @interface GFBalanceViewController : UIViewController
 
+
+
+
+@property (nonatomic, strong) NSString *moneyNum;
+//@property (nonatomic, strong) NSString 
+
 @end

@@ -15,8 +15,10 @@
 @property (nonatomic, copy) NSString *payment;      // 订单金额
 @property (nonatomic, copy) NSString *payStatus;    // 是否结算
 @property (nonatomic, copy) NSString *photo;        // 订单图片
-@property (nonatomic, copy) NSString *signinTime;   // 开始时间
+@property (nonatomic, copy) NSString *signinTime;   // 施工时间
 @property (nonatomic, copy) NSString *workItems;    // 施工部位
+@property (nonatomic, copy) NSString *remark;       // 下单备注
+@property (nonatomic, copy) NSString *workTime;     // 施工时间
 
 
 
