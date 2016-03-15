@@ -11,6 +11,11 @@
 #import "GFTextField.h"
 #import "GFHttpTool.h"
 
+#import "GFIndentViewController.h"
+#import "GFIndentModel.h"
+
+#import "UIImageView+WebCache.h"
+
 @interface GFIndentDetailsViewController () {
     
     CGFloat kWidth;
@@ -63,7 +68,7 @@
     jiange2 = kWidth * 0.065;
     
     // 导航栏
-    self.navView = [[GFNavigationView alloc] initWithLeftImgName:@"back.png" withLeftImgHightName:@"backClick.png" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"账单" withFrame:CGRectMake(0, 0, kWidth, 64)];
+    self.navView = [[GFNavigationView alloc] initWithLeftImgName:@"back.png" withLeftImgHightName:@"backClick.png" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"详情" withFrame:CGRectMake(0, 0, kWidth, 64)];
     [self.navView.leftBut addTarget:self action:@selector(leftButClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.navView];
 }
@@ -105,7 +110,7 @@
     CGFloat numberLabX = jiange1;
     CGFloat numberLabY = jianjv1;
     self.numberLab = [[UILabel alloc] initWithFrame:CGRectMake(numberLabX, numberLabY, numberLabW, numberLabH)];
-    self.numberLab.text = @"订单编号sdjfhashdfgs";
+    self.numberLab.text = [NSString stringWithFormat:@"订单编号%@", self.model.orderNum];
     self.numberLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
     [baseView addSubview:self.numberLab];
     
@@ -115,7 +120,7 @@
     CGFloat moneyLabX = kWidth - jiange1 - moneyLabW;
     CGFloat moneyLabY = numberLabY + 3 / 568.0 * kHeight;
     self.moneyLab = [[UILabel alloc] initWithFrame:CGRectMake(moneyLabX, moneyLabY, moneyLabW, moneyLabH)];
-    self.moneyLab.text = @"￥200";
+    self.moneyLab.text = [NSString stringWithFormat:@"￥%@", self.model.payment];
     self.moneyLab.textAlignment = NSTextAlignmentRight;
     self.moneyLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
     self.moneyLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
@@ -135,6 +140,13 @@
     self.tipBut.titleLabel.font = [UIFont systemFontOfSize:12 / 320.0 * kWidth];
     self.tipBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [baseView addSubview:self.tipBut];
+    // 判断订单是否结算
+    NSInteger jisuanNum = (NSInteger)[self.model.payStatus integerValue];
+    if(jisuanNum == 0 || jisuanNum == 1) {
+        self.tipBut.selected = NO;
+    }else {
+        self.tipBut.selected = YES;
+    }
     
     // 边线
     UIView *lineView1 = [[UIView alloc] initWithFrame:CGRectMake(jiange1, CGRectGetMaxY(self.numberLab.frame) - 1, numberLabW, 1)];
@@ -151,6 +163,9 @@
     self.photoImgView.backgroundColor = [UIColor greenColor];
     [baseView addSubview:self.photoImgView];
     NSLog(@"%f,,%f,,%f,,%f", photoImgViewX, photoImgViewY, photoImgViewW, photoImgViewH);
+    NSURL *imgUrl = [NSURL URLWithString:self.model.photo];
+    [self.photoImgView sd_setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"orderImage.png"]];
+    
     
     // 边线
     UIView *lineView2 = [[UIView alloc] initWithFrame:CGRectMake(jiange1, CGRectGetMaxY(self.photoImgView.frame) - 1 + jianjv2, numberLabW, 1)];
@@ -172,7 +187,7 @@
     xiadanLab.text = @"下单备注：";
     xiadanLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
     [baseView1 addSubview:xiadanLab];
-    NSString *beizhuStr = @"就发来上课就发顺丰嘎哈是嘎哈是否伽师瓜灵魂搜噶看时间回复尕乱收费伽师打个卡还是家里怪兽的话覅";
+    NSString *beizhuStr = [NSString stringWithFormat:@"%@", self.model.remark];
     NSMutableDictionary *bezhuDic = [[NSMutableDictionary alloc] init];
     bezhuDic[NSFontAttributeName] = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
     bezhuDic[NSForegroundColorAttributeName] = [UIColor blackColor];
@@ -199,7 +214,11 @@
     CGFloat workDayLabX = baseView1X;
     CGFloat workDayLabY = CGRectGetMaxY(baseView1.frame);
     self.workDayLab = [[UILabel alloc] initWithFrame:CGRectMake(workDayLabX, workDayLabY, workDayLabW, workDayLabH)];
-    self.workDayLab.text = @"施工时间：昨天15:00";
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[self.model.signinTime integerValue]/1000];
+    self.workDayLab.text = [NSString stringWithFormat:@"施工时间：%@", [formatter stringFromDate:date]];
     self.workDayLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
     [baseView addSubview:self.workDayLab];
     
@@ -215,7 +234,7 @@
     CGFloat workTimeLabX = workDayLabX;
     CGFloat workTimeLabY = CGRectGetMaxY(self.workDayLab.frame);
     self.workTimeLab = [[UILabel alloc] initWithFrame:CGRectMake(workTimeLabX, workTimeLabY, workTimeLabW, workTimeLabH)];
-    self.workTimeLab.text = @"施工耗时：1小时30分钟";
+    self.workTimeLab.text = [NSString stringWithFormat:@"施工耗时：%@", self.model.workTime];
     self.workTimeLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
     [baseView addSubview:self.workTimeLab];
     

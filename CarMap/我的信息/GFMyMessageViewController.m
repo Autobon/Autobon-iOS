@@ -16,6 +16,7 @@
 #import "GFSignInViewController.h"
 #import "GFIndentViewController.h"
 #import "CLCertifyViewController.h"
+#import "UIImageView+WebCache.h"
 
 
 @interface GFMyMessageViewController () {
@@ -119,28 +120,28 @@
     nameLab.text = nameStr;
     [msgView addSubview:nameLab];
     // 星星
-    for(int i=0; i<5; i++) {
-        
-        CGFloat starImgViewW = strRect.size.height;
-        CGFloat starImgViewH = starImgViewW;
-        CGFloat starImgViewX = CGRectGetMaxX(nameLab.frame) + starImgViewW * i;
-        CGFloat starImgViewY = nameLabY + 3.5 / 568 * kHeight;
-        UIImageView *starImgView = [[UIImageView alloc] initWithFrame:CGRectMake(starImgViewX, starImgViewY, starImgViewW, starImgViewH)];
-        starImgView.contentMode = UIViewContentModeScaleAspectFit;
-        starImgView.image = [UIImage imageNamed:@"detailsStarDark.png"];
-        [msgView addSubview:starImgView];
-    }
-    for(int i=0; i<3; i++) {
-        
-        CGFloat starImgViewW = strRect.size.height;
-        CGFloat starImgViewH = starImgViewW;
-        CGFloat starImgViewX = CGRectGetMaxX(nameLab.frame) + starImgViewW * i;
-        CGFloat starImgViewY = nameLabY + 3.5 / 568 * kHeight;
-        UIImageView *starImgView = [[UIImageView alloc] initWithFrame:CGRectMake(starImgViewX, starImgViewY, starImgViewW, starImgViewH)];
-        starImgView.contentMode = UIViewContentModeScaleAspectFit;
-        starImgView.image = [UIImage imageNamed:@"information.png"];
-        [msgView addSubview:starImgView];
-    }
+//    for(int i=0; i<5; i++) {
+//        
+//        CGFloat starImgViewW = strRect.size.height;
+//        CGFloat starImgViewH = starImgViewW;
+//        CGFloat starImgViewX = CGRectGetMaxX(nameLab.frame) + starImgViewW * i;
+//        CGFloat starImgViewY = nameLabY + 3.5 / 568 * kHeight;
+//        UIImageView *starImgView = [[UIImageView alloc] initWithFrame:CGRectMake(starImgViewX, starImgViewY, starImgViewW, starImgViewH)];
+//        starImgView.contentMode = UIViewContentModeScaleAspectFit;
+//        starImgView.image = [UIImage imageNamed:@"detailsStarDark.png"];
+//        [msgView addSubview:starImgView];
+//    }
+//    for(int i=0; i<3; i++) {
+//        
+//        CGFloat starImgViewW = strRect.size.height;
+//        CGFloat starImgViewH = starImgViewW;
+//        CGFloat starImgViewX = CGRectGetMaxX(nameLab.frame) + starImgViewW * i;
+//        CGFloat starImgViewY = nameLabY + 3.5 / 568 * kHeight;
+//        UIImageView *starImgView = [[UIImageView alloc] initWithFrame:CGRectMake(starImgViewX, starImgViewY, starImgViewW, starImgViewH)];
+//        starImgView.contentMode = UIViewContentModeScaleAspectFit;
+//        starImgView.image = [UIImage imageNamed:@"information.png"];
+//        [msgView addSubview:starImgView];
+//    }
     // 评分
     NSString *fenStr = @"2.7";
     NSMutableDictionary *fenDic = [[NSMutableDictionary alloc] init];
@@ -184,28 +185,28 @@
     numLab.text = numStr;
     [msgView addSubview:numLab];
     //好评率
-    CGFloat goodLabW = indentLabW;
-    CGFloat goodLabH = indentLabH;
-    CGFloat goodLabX = CGRectGetMaxX(numLab.frame) + jianjv1;
-    CGFloat goodLabY = indentLabY;
-    UILabel *goodLab = [[UILabel alloc] initWithFrame:CGRectMake(goodLabX, goodLabY, goodLabW, goodLabH)];
-    goodLab.text = @"好评率";
-    goodLab.font = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
-    [msgView addSubview:goodLab];
-    NSString *proStr = @"99.99%";
-    NSMutableDictionary *proDic = [[NSMutableDictionary alloc] init];
-    proDic[NSFontAttributeName] = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
-    proDic[NSForegroundColorAttributeName] = [UIColor blackColor];
-    CGRect proRect = [proStr boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:proDic context:nil];
-    CGFloat proLabW = proRect.size.width;
-    CGFloat proLabH = goodLabH;
-    CGFloat proLabX = CGRectGetMaxX(goodLab.frame) - 3;
-    CGFloat proLabY = goodLabY;
-    UILabel *proLab = [[UILabel alloc] initWithFrame:CGRectMake(proLabX, proLabY, proLabW, proLabH)];
-    proLab.text = proStr;
-    proLab.font = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
-    proLab.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-    [msgView addSubview:proLab];
+//    CGFloat goodLabW = indentLabW;
+//    CGFloat goodLabH = indentLabH;
+//    CGFloat goodLabX = CGRectGetMaxX(numLab.frame) + jianjv1;
+//    CGFloat goodLabY = indentLabY;
+//    UILabel *goodLab = [[UILabel alloc] initWithFrame:CGRectMake(goodLabX, goodLabY, goodLabW, goodLabH)];
+//    goodLab.text = @"好评率";
+//    goodLab.font = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
+//    [msgView addSubview:goodLab];
+//    NSString *proStr = @"99.99%";
+//    NSMutableDictionary *proDic = [[NSMutableDictionary alloc] init];
+//    proDic[NSFontAttributeName] = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
+//    proDic[NSForegroundColorAttributeName] = [UIColor blackColor];
+//    CGRect proRect = [proStr boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:proDic context:nil];
+//    CGFloat proLabW = proRect.size.width;
+//    CGFloat proLabH = goodLabH;
+//    CGFloat proLabX = CGRectGetMaxX(goodLab.frame) - 3;
+//    CGFloat proLabY = goodLabY;
+//    UILabel *proLab = [[UILabel alloc] initWithFrame:CGRectMake(proLabX, proLabY, proLabW, proLabH)];
+//    proLab.text = proStr;
+//    proLab.font = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
+//    proLab.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+//    [msgView addSubview:proLab];
     // 页面按钮
     CGFloat msgButW = msgViewW;
     CGFloat msgButH = msgViewH;
@@ -443,6 +444,104 @@
     UIView *exitLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, exitButW, 1)];
     exitLine.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
     [exitBut addSubview:exitLine];
+    
+    
+    // 数据请求
+    NSString *url = @"http://121.40.157.200:12345/api/mobile/technician";
+    
+    [GFHttpTool messageGet:url parameters:nil success:^(id responseObject) {
+        
+        NSInteger flage = [responseObject[@"result"] integerValue];
+        if(flage == 1) {
+            
+            NSLog(@"请求成功+++++++++++++%@", responseObject);
+            
+            NSDictionary *dataDic = responseObject[@"data"];
+            
+            NSString *idPhoto = dataDic[@"idPhoto"];
+            NSString *name = dataDic[@"name"];
+            NSString *starRate = dataDic[@"starRate"];
+            NSString *totalOrders = dataDic[@"totalOrders"];
+            NSString *balance = dataDic[@"balance"];
+            NSString *unpaidOrders = dataDic[@"unpaidOrders"];
+            
+            NSLog(@"\n%@\n%@\n%@\n%@\n%@\n%@\n", idPhoto, name, starRate, totalOrders, balance, unpaidOrders);
+            
+            // 头像
+            idPhoto = [NSString stringWithFormat:@"http://121.40.157.200:12345%@", idPhoto];
+            NSURL *imgUrl = [NSURL URLWithString:idPhoto];
+            [iconImgView sd_setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"11.png"]];
+            // 姓名
+            NSString *nameStr = name;
+            NSMutableDictionary *attDic = [[NSMutableDictionary alloc] init];
+            attDic[NSFontAttributeName] = [UIFont systemFontOfSize:16 / 320.0 * kWidth];
+            attDic[NSForegroundColorAttributeName] = [UIColor blackColor];
+            CGRect strRect1 = [nameStr boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attDic context:nil];
+            CGFloat nameLabW = strRect1.size.width + jianjv1;
+            nameLab.frame = CGRectMake(nameLabX, nameLabY, nameLabW, nameLabH);
+            nameLab.text = nameStr;
+            // 星星
+            for(int i=0; i<5; i++) {
+                
+                CGFloat starImgViewW = strRect.size.height;
+                CGFloat starImgViewH = starImgViewW;
+                CGFloat starImgViewX = CGRectGetMaxX(nameLab.frame) + starImgViewW * i;
+                CGFloat starImgViewY = nameLabY + 3.5 / 568 * kHeight;
+                UIImageView *starImgView = [[UIImageView alloc] initWithFrame:CGRectMake(starImgViewX, starImgViewY, starImgViewW, starImgViewH)];
+                starImgView.contentMode = UIViewContentModeScaleAspectFit;
+                starImgView.image = [UIImage imageNamed:@"detailsStarDark.png"];
+                [msgView addSubview:starImgView];
+                
+            }
+            CGFloat starF = [starRate floatValue];
+            CGFloat star = round(starF);
+            for(int i=0; i<star; i++) {
+                
+                CGFloat starImgViewW = strRect.size.height;
+                CGFloat starImgViewH = starImgViewW;
+                CGFloat starImgViewX = CGRectGetMaxX(nameLab.frame) + starImgViewW * i;
+                CGFloat starImgViewY = nameLabY + 3.5 / 568 * kHeight;
+                UIImageView *starImgView = [[UIImageView alloc] initWithFrame:CGRectMake(starImgViewX, starImgViewY, starImgViewW, starImgViewH)];
+                starImgView.contentMode = UIViewContentModeScaleAspectFit;
+                starImgView.image = [UIImage imageNamed:@"information.png"];
+                [msgView addSubview:starImgView];
+            }
+            // 评分
+            NSString *fenStr1 = [NSString stringWithFormat:@"%@", starRate];
+            NSMutableDictionary *fenDic = [[NSMutableDictionary alloc] init];
+            fenDic[NSFontAttributeName] = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
+            fenDic[NSForegroundColorAttributeName] = [UIColor blackColor];
+            NSLog(@"\n%@", fenDic);
+            NSLog(@"%@", fenStr1);
+            CGRect fenRect1 = [fenStr1 boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:fenDic context:nil];
+            CGFloat fenLabW = fenRect1.size.width + 10;
+            CGFloat fenLabX = CGRectGetMaxX(nameLab.frame) + strRect.size.height * 5 + jianjv1;
+            fenLab.frame = CGRectMake(fenLabX, fenLabY, fenLabW, fenLabH);
+            fenLab.text = fenStr1;
+            // 订单数
+            NSString *numStr1 = [NSString stringWithFormat:@"%@", totalOrders];
+            NSMutableDictionary *numDic = [[NSMutableDictionary alloc] init];
+            numDic[NSFontAttributeName] = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
+            numDic[NSForegroundColorAttributeName] = [UIColor blackColor];
+            CGRect numRect1 = [numStr1 boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:numDic context:nil];
+            CGFloat numLabW = numRect1.size.width;
+            numLab.frame = CGRectMake(numLabX, numLabY, numLabW, numLabH);
+            numLab.text = numStr1;
+            // 余额
+            balanceLabUp.text = [NSString stringWithFormat:@"%@", balance];
+            // 账单
+            billLabUp.text = [NSString stringWithFormat:@"%@", unpaidOrders];
+            
+        }else {
+        
+            NSLog(@"请求失败+++++++++++++%@", responseObject);
+        }
+        
+    } failure:^(NSError *error) {
+        
+        NSLog(@"网络请求失败+++++++++++++%@", error);
+    }];
+    
     
     
 }

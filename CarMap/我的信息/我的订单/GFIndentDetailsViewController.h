@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+@class GFIndentViewController;
+@class GFIndentModel;
+
 @interface GFIndentDetailsViewController : UIViewController
 
 
@@ -31,6 +34,7 @@
 @property (nonatomic, strong) UIButton *bangBut;
 @property (nonatomic, strong) UIButton *haoBut;
 
-
+@property (nonatomic, strong) GFIndentViewController *indentVC;
+@property (nonatomic, strong) GFIndentModel *model;
 
 @end
