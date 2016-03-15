@@ -40,6 +40,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[SDImageCache sharedImageCache] clearDisk];
+    
     // 基础设置
     [self _setBase];
     
@@ -552,7 +555,7 @@
     CLCertifyViewController *certify = [[CLCertifyViewController alloc]init];
     certify.isFail = YES;
     [certify.submitButton setTitle:@"再次认证" forState:UIControlStateNormal];
-    [self.navigationController pushViewController:certify animated:YES];
+    [self.navigationController pushViewController:certify animated:NO];
     
 }
 // 余额界面跳转

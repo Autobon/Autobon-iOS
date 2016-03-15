@@ -26,7 +26,7 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [[UIColor alloc]initWithWhite:0.1 alpha:0.5];
-    _orderView = [[UIView alloc]initWithFrame:CGRectMake(10, 90, self.view.frame.size.width-20, self.view.frame.size.height-100)];
+    _orderView = [[UIView alloc]initWithFrame:CGRectMake(10, 70, self.view.frame.size.width-20, self.view.frame.size.height-70)];
     _orderView.backgroundColor = [UIColor whiteColor];
     _orderView.layer.borderWidth = 1.0f;
     _orderView.layer.borderColor = [[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1]CGColor];
@@ -46,13 +46,14 @@
 
 // 添加地图
 - (void)addMap{
-    
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 5, 150, 20)];
-    titleLabel.text = @"汽车贴膜";
+    NSDictionary *orderDic = _orderDictionary[@"order"];
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 5, 150, 30)];
+    NSArray *array = @[@"隔热层",@"隐形车衣",@"车身改色",@"美容清洁"];
+    titleLabel.text = array[[orderDic[@"orderType"] integerValue]-1];
     [_orderView addSubview:titleLabel];
     
     GFMapViewController *mapVC = [[GFMapViewController alloc] init];
-    NSDictionary *orderDic = _orderDictionary[@"order"];
+    
     mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([orderDic[@"positionLat"]floatValue],[orderDic[@"positionLon"]floatValue]);
     mapVC.distanceBlock = ^(double distance) {
         NSLog(@"距离－－%f--",distance);
@@ -62,7 +63,7 @@
     [_orderView addSubview:mapVC.view];
     [self addChildViewController:mapVC];
     [mapVC didMoveToParentViewController:self];
-    mapVC.view.frame = CGRectMake(0, 30, _orderView.frame.size.width, _orderView.frame.size.height/3);
+    mapVC.view.frame = CGRectMake(0, 35, _orderView.frame.size.width, _orderView.frame.size.height/3);
     mapVC.mapView.frame = CGRectMake(0, 0, _orderView.frame.size.width, _orderView.frame.size.height/3);
 }
 
@@ -71,7 +72,7 @@
     NSDictionary *orderDic = _orderDictionary[@"order"];
     
     // 距离label
-    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, _orderView.frame.size.height/3+2+30, self.view.frame.size.width, self.view.frame.size.height/18)];
+    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, _orderView.frame.size.height/3+30, self.view.frame.size.width, self.view.frame.size.height/18)];
     //    distanceLabel.backgroundColor = [UIColor cyanColor];
     _distanceLabel.text = @"距离：  1.3km";
     _distanceLabel.font = [UIFont systemFontOfSize:14];
@@ -102,7 +103,7 @@
     
     
     
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView2.frame.origin.y+4, _orderView.frame.size.width, _orderView.frame.size.height/18)];
+    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView2.frame.origin.y, _orderView.frame.size.width, _orderView.frame.size.height/18)];
     //    timeLabel.backgroundColor = [UIColor cyanColor];
 //    timeLabel.text = @"工作时间： 今天14:30";
     timeLabel.text = [NSString stringWithFormat:@"工作时间：%@",timeString];
@@ -110,24 +111,34 @@
     timeLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [_orderView addSubview:timeLabel];
     
-    UIView *lineView3 = [[UIView alloc]initWithFrame:CGRectMake(0, timeLabel.frame.origin.y+self.view.frame.size.height/18, _orderView.frame.size.width, 1)];
+    UIView *lineView3 = [[UIView alloc]initWithFrame:CGRectMake(0, timeLabel.frame.origin.y+self.view.frame.size.height/18-5, _orderView.frame.size.width, 1)];
     lineView3.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [_orderView addSubview:lineView3];
     
     
     // 备注
-    UILabel *otherLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView3.frame.origin.y+2, self.view.frame.size.width-40, self.view.frame.size.height/18+10)];
+    UILabel *otherLabel = [[UILabel alloc]init];
     //    otherLabel.backgroundColor = [UIColor cyanColor];
 //    otherLabel.text = @"工作备注：今天天气不错，适合工作";
-    otherLabel.text = [NSString stringWithFormat:@"工作备注：%@",orderDic[@"remark"]];
+//    otherLabel.text = [NSString stringWithFormat:@"工作备注：%@",orderDic[@"remark"]];
+    otherLabel.text = [NSString stringWithFormat:@"工作备注：%@",@"今天天气不错，适合工作今天天气不错适合工作适合工作适合工作适合工作适合工作适合工作适合工作适合工作适合工作适合工作适合工作适合工作适合工作"];
+    CGSize detailSize = [otherLabel.text sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(self.view.frame.size.width-30, MAXFLOAT)];
+    if (_orderView.frame.size.height-lineView3.frame.origin.y-2-self.view.frame.size.height/18-7 > detailSize.height) {
+        otherLabel.frame = CGRectMake(10, lineView3.frame.origin.y+2, self.view.frame.size.width-40, detailSize.height);
+    }else{
+        otherLabel.frame = CGRectMake(10, lineView3.frame.origin.y+2, self.view.frame.size.width-40, _orderView.frame.size.height-lineView3.frame.origin.y-2-self.view.frame.size.height/18-7);
+    }
+    
     otherLabel.font = [UIFont systemFontOfSize:14];
+//    otherLabel.textAlignment = NSTextAlignmentRight;
+    
     otherLabel.numberOfLines = 0;
     otherLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [_orderView addSubview:otherLabel];
     
     
-    // 我要认证
-    _certifyButton = [[UIButton alloc]initWithFrame:CGRectMake(_orderView.frame.size.width/4, _orderView.frame.size.height-_orderView.frame.size.height/9+10, _orderView.frame.size.width/2, self.view.frame.size.height/18)];
+    // 立即抢单
+    _certifyButton = [[UIButton alloc]initWithFrame:CGRectMake(_orderView.frame.size.width/4, _orderView.frame.size.height-_orderView.frame.size.height/18-10, _orderView.frame.size.width/2, self.view.frame.size.height/18)];
     [_certifyButton setBackgroundImage:[UIImage imageNamed:@"button"] forState:UIControlStateNormal];
     [_certifyButton setBackgroundImage:[UIImage imageNamed:@"buttonClick"] forState:UIControlStateHighlighted];
     [_certifyButton setTitle:@"立即抢单" forState:UIControlStateNormal];

@@ -344,7 +344,47 @@
 // 判断 responseObject[@"status"] 的状态进行相应的页面跳转
                 UIWindow *window = [UIApplication sharedApplication].delegate.window;
                 
-                [self.navigationController pushViewController:[[CLHomeOrderViewController alloc] init] animated:YES];
+                
+                
+                
+                if ([dataDic[@"status"]isEqualToString:@"VERIFIED"]){
+                    CLHomeOrderViewController *homeVC = [[CLHomeOrderViewController alloc] init];
+                    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
+                    window.rootViewController = navigation;
+                    navigation.navigationBarHidden = YES;
+                    [userDefaults setObject:dataDic[@"avatar"] forKey:@"userHeadImage"];
+                    [userDefaults setObject:dataDic[@"bank"] forKey:@"userBank"];
+                    [userDefaults setObject:dataDic[@"bankCardNo"] forKey:@"userBankCardNo"];
+                    [userDefaults setObject:dataDic[@"id"] forKey:@"userId"];
+                    
+                    
+                }else{
+                    CLAutobonViewController *autobonView = [[CLAutobonViewController alloc]init];
+                    autobonView.status = dataDic[@"status"];
+                    if ([dataDic[@"status"]isEqualToString:@"NEWLY_CREATED"]) {
+                        [autobonView.certifyButton setTitle:@"我要认证" forState:UIControlStateNormal];
+                    }else{
+                        [autobonView.certifyButton setTitle:@"查看进度" forState:UIControlStateNormal];
+                    }
+                    
+//                [self.navigationController pushViewController:[[CLHomeOrderViewController alloc] init] animated:YES];
+
+                    
+                    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:autobonView];
+                    window.rootViewController = navigation;
+                    navigation.navigationBarHidden = YES;
+                }
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 
 //                    if ([dataDic[@"status"]isEqualToString:@"VERIFIED"]) {
 //                        CLHomeOrderViewController *homeVC = [[CLHomeOrderViewController alloc] init];

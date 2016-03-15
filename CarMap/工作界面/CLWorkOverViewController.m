@@ -11,18 +11,34 @@
 #import "CLTitleView.h"
 #import "GFMyMessageViewController.h"
 #import "CLShareViewController.h"
+#import "GFHttpTool.h"
+#import "MYImageView.h"
+#import "GFTipView.h"
 
 
-@interface CLWorkOverViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+
+
+@interface CLWorkOverViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     UIView *_chooseView;
-    UIImageView *_carImageView;
+    UIButton *_carImageButton;
     UIButton *_cameraBtn;
     NSMutableArray *_imageArray;
     NSMutableArray *_buttonArray;
     NSArray *_workItemarray;
-    NSMutableArray *_workItemBtnArray;
+//    NSMutableArray *_workItemBtnArray;
+    NSMutableArray *_workItemIdArray;
     UIScrollView *_scrollView;
+    NSMutableArray *_fiveItemArray;
+    NSMutableArray *_fiveItemIdArray;
+    NSMutableArray *_sevenItemArray;
+    NSMutableArray *_sevenItemIdArray;
+    UICollectionView *_collectionView;
+    
+    UILabel *_distanceLabel;
+    
+    NSTimer *_timer;
+    
 }
 
 
@@ -50,6 +66,9 @@
     [self setNavigation];
     
     [self titleView];
+    
+    
+    [self startTimeForNows];
     
 }
 
@@ -99,22 +118,69 @@
     NSString *timeString = [NSString stringWithFormat:@"%@  %@",dateString,[weekdays objectAtIndex:theComponents.weekday]];
     return timeString;
     
+}
+
+
+#pragma mark - 获取开始时间计算用时
+- (void)startTimeForNows{
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[_startTime integerValue]/1000];
+    NSInteger time = (NSInteger)[[NSDate date] timeIntervalSince1970] - [_startTime integerValue]/1000;
     
+    
+        NSInteger minute = time/60;
+        if (minute > 60) {
+            _distanceLabel.text = [NSString stringWithFormat:@"已用时：%ld时 %ld分",minute/60,minute%60];
+        }else{
+            NSLog(@"----shezhi时间");
+            _distanceLabel.text = [NSString stringWithFormat:@"已用时： %ld分钟",minute];
+            
+        }
+    
+    if (_timer == nil) {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(timeForWork:) userInfo:@{@"time":@(time)} repeats:YES];
+    }
     
 }
 
+- (void)timeForWork:(NSTimer *)timer{
+    
+    static NSInteger a = 0;
+    if (a == 0) {
+        a = [timer.userInfo[@"time"] integerValue];
+        
+    }
+    a = a + 60;
+    NSInteger minute = a/60;
+    if (minute > 60) {
+        _distanceLabel.text = [NSString stringWithFormat:@"已用时：%ld时 %ld分",minute/60,minute%60];
+    }else{
+        NSLog(@"----shezhi时间");
+        _distanceLabel.text = [NSString stringWithFormat:@"已用时： %ld分钟",minute];
+        
+    }
+    
+}
+
+
 - (void)titleView{
     
-    UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 1, self.view.frame.size.width, 40)];
-    distanceLabel.text = @"已用时：15分28秒";
-    distanceLabel.backgroundColor = [UIColor whiteColor];
-    distanceLabel.font = [UIFont systemFontOfSize:15];
-    distanceLabel.textAlignment = NSTextAlignmentCenter;
-    [_scrollView addSubview:distanceLabel];
+    NSLog(@"－1457600262000－－已用时－－%@--",_startTime);
     
-    _carImageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/7, 55, self.view.frame.size.width*5/7, self.view.frame.size.width*27/70)];
-    _carImageView.image = [UIImage imageNamed:@"carImage"];
-    [_scrollView addSubview:_carImageView];
+    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 1, self.view.frame.size.width, 40)];
+//    _distanceLabel.text = @"已用时：15分28秒";
+    _distanceLabel.backgroundColor = [UIColor whiteColor];
+    _distanceLabel.font = [UIFont systemFontOfSize:15];
+    _distanceLabel.textAlignment = NSTextAlignmentCenter;
+    [_scrollView addSubview:_distanceLabel];
+    
+    _carImageButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/7, 55, self.view.frame.size.width*5/7, self.view.frame.size.width*27/70)];
+//    _carImageView.image = [UIImage imageNamed:@"carImage"];
+    [_carImageButton setBackgroundImage:[UIImage imageNamed:@"carImage"] forState:UIControlStateNormal];
+    [_carImageButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:_carImageButton];
     
     _cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*6/7-15, 55+self.view.frame.size.width*27/70-25, 30, 30)];
     [_cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
@@ -133,7 +199,7 @@
     [fiveButton setTitle:@"五座车" forState:UIControlStateNormal];
     [fiveButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     fiveButton.imageEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
-    [fiveButton setImage:[UIImage imageNamed:@"over"] forState:UIControlStateNormal];
+    [fiveButton setImage:[UIImage imageNamed:@"overClick"] forState:UIControlStateNormal];
     [fiveButton addTarget:self action:@selector(workItemBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     fiveButton.tag = 5;
     [_scrollView addSubview:fiveButton];
@@ -155,107 +221,132 @@
     [_scrollView addSubview:lineView];
     
     
-    _workItemBtnArray = [[NSMutableArray alloc]init];
+//    _workItenIdArray = [[NSMutableArray alloc]init];
+    
 //    _workItemarray = @[@"前风挡",@"左前门",@"右前门",@"左后门",@"右后门",@"左中门",@"右中门",@"左大角",@"右大角",@"后风挡"];
-    _workItemarray = @[@"前保险杠",@"左前翼子板",@"右前翼子板",@"左前门",@"右前门",@"左中门",@"右中门",@"左后门",@"右后门",@"左后翼子板",@"右后翼子板",@"左底边",@"右底边",@"引擎盖",@"后背箱盖",@"后保险杠",@"车顶",@"左后视镜",@"右后视镜"];
+//    _workItemarray = @[@"前保险杠",@"左前翼子板",@"右前翼子板",@"左前门",@"右前门",@"左中门",@"右中门",@"左后门",@"右后门",@"左后翼子板",@"右后翼子板",@"左底边",@"右底边",@"引擎盖",@"后背箱盖",@"后保险杠",@"车顶",@"左后视镜",@"右后视镜"];
+    _fiveItemArray = [[NSMutableArray alloc]init];
+    _sevenItemArray = [[NSMutableArray alloc]init];
+    _fiveItemIdArray = [[NSMutableArray alloc]init];
+    _sevenItemIdArray = [[NSMutableArray alloc]init];
     
-    for (int i = 0; i < _workItemarray.count; i++) {
-        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(10+(10+(self.view.frame.size.width-50)/4)*(i%4), lineView.frame.origin.y+10+35*(i/4), (self.view.frame.size.width-50)/4, 30)];
-        [button setTitle:_workItemarray[i] forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont systemFontOfSize:13];
-        button.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
-        button.layer.cornerRadius = 10;
-        button.layer.borderWidth = 1.0;
-        button.layer.borderColor = [[UIColor colorWithRed:219/255.0 green:219/255.0 blue:219/255.0 alpha:1.0]CGColor];
-        [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
-        [button setTitleColor:[UIColor colorWithRed:167/255.0 green:167/255.0 blue:167/255.0 alpha:1.0] forState:UIControlStateNormal];
-        [_scrollView addSubview:button];
-        [_workItemBtnArray addObject:button];
-    }
+    [GFHttpTool GetWorkItemsOrderTypeId:[_orderType integerValue] success:^(NSDictionary *responseObject) {
+        NSLog(@"－－－%@---",responseObject);
+        NSArray *dataArray = responseObject[@"data"];
+        [dataArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
+            if ([obj[@"seat"]integerValue] == 5) {
+                [_fiveItemArray addObject:obj[@"name"]];
+                [_fiveItemIdArray addObject:obj[@"id"]];
+            }else{
+                [_sevenItemArray addObject:obj[@"name"]];
+                [_sevenItemIdArray addObject:obj[@"id"]];
+            }
+        }];
+        
+        _workItemarray = _fiveItemArray;
+        _workItemIdArray = _fiveItemIdArray;
+        
+        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+        layout.itemSize = CGSizeMake((self.view.frame.size.width-50)/4, 30);
+        layout.minimumInteritemSpacing = 5.0f;
+        layout.minimumLineSpacing = 5.0f;
+        layout.sectionInset = UIEdgeInsetsMake(10, 10, 0, 10);
+        
+        _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, lineView.frame.origin.y + 5, self.view.frame.size.width , ((_workItemarray.count+1)/4 + 1)*35+10) collectionViewLayout:layout];
+        [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+        _collectionView.backgroundColor = [UIColor whiteColor];
+        _collectionView.delegate = self;
+        _collectionView.dataSource = self;
+        [_scrollView addSubview:_collectionView];
+        
+        UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(10, _collectionView.frame.origin.y+_collectionView.frame.size.height+10, self.view.frame.size.width-20, 1)];
+        lineView2.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
+        [_scrollView addSubview:lineView2];
+        
+        UIButton *workOverButton = [[UIButton alloc]initWithFrame:CGRectMake(30, lineView2.frame.origin.y+30, self.view.frame.size.width-60, 50)];
+        //    workOverButton.center = CGPointMake(self.view.center.x, self.view.center.y+50+36+50);
+        [workOverButton setTitle:@"完成工作" forState:UIControlStateNormal];
+        workOverButton.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+        workOverButton.layer.cornerRadius = 10;
+        
+        [workOverButton addTarget:self action:@selector(workOverBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        
+        [_scrollView addSubview:workOverButton];
+        
+        
+    } failure:^(NSError *error) {
+        NSLog(@"失败了－－－%@---",error);
+    }];
+    
+//
+
     
     
-    UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(10, titleView.frame.origin.y+80+(_workItemarray.count/4+1)*40, self.view.frame.size.width-20, 1)];
-    lineView2.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
-    [_scrollView addSubview:lineView2];
     
-    UIButton *workOverButton = [[UIButton alloc]initWithFrame:CGRectMake(30, lineView2.frame.origin.y+30, self.view.frame.size.width-60, 50)];
-//    workOverButton.center = CGPointMake(self.view.center.x, self.view.center.y+50+36+50);
-    [workOverButton setTitle:@"完成工作" forState:UIControlStateNormal];
-    workOverButton.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-    workOverButton.layer.cornerRadius = 10;
     
-    [workOverButton addTarget:self action:@selector(workOverBtnClick) forControlEvents:UIControlEventTouchUpInside];
     
-    [_scrollView addSubview:workOverButton];
     
     
 }
 
-#pragma mark - 五座车七座车按钮
-- (void)workItemBtnClick:(UIButton *)button{
-    if (button.tag == 5) {
-        [button setImage:[UIImage imageNamed:@"overClick"] forState:UIControlStateNormal];
-        UIButton *severBtn = (UIButton *)[self.view viewWithTag:7];
-        [severBtn setImage:[UIImage imageNamed:@"over"] forState:UIControlStateNormal];
-        UIButton *leftCentre = _workItemBtnArray[5];
-        if (!leftCentre.hidden) {
-            leftCentre.hidden = YES;
-            UIButton *rightCentre = _workItemBtnArray[6];
-            rightCentre.hidden = YES;
-            [_buttonArray removeAllObjects];
-            for (int i = 0; i < _workItemBtnArray.count; i++) {
-                UIButton *moveBtn = _workItemBtnArray[i];
-                moveBtn.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
-                [moveBtn setTitleColor:[UIColor colorWithRed:167/255.0 green:167/255.0 blue:167/255.0 alpha:1.0] forState:UIControlStateNormal];
-                if (i>6) {
-                    moveBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-50)/4)*((i-2)%4), button.frame.origin.y+40+35*((i-2)/4), (self.view.frame.size.width-50)/4, 30);
-                }
-            }
-        }
-        
-        
-        
-    }else{
-        [button setImage:[UIImage imageNamed:@"overClick"] forState:UIControlStateNormal];
-        UIButton *fiveBtn = (UIButton *)[self.view viewWithTag:5];
-        [fiveBtn setImage:[UIImage imageNamed:@"over"] forState:UIControlStateNormal];
-        UIButton *leftCentre = _workItemBtnArray[5];
-        if (leftCentre.hidden) {
-            leftCentre.hidden = NO;
-            UIButton *rightCentre = _workItemBtnArray[6];
-            rightCentre.hidden = NO;
-            [_buttonArray removeAllObjects];
-            for (int i = 0; i < _workItemBtnArray.count; i++) {
-                UIButton *moveBtn = _workItemBtnArray[i];
-                moveBtn.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
-                [moveBtn setTitleColor:[UIColor colorWithRed:167/255.0 green:167/255.0 blue:167/255.0 alpha:1.0] forState:UIControlStateNormal];
-                if (i>6) {
-                    moveBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-50)/4)*(i%4), button.frame.origin.y+40+35*(i/4), (self.view.frame.size.width-50)/4, 30);
-                }
-            }
-        }
-        
-        
-    }
+
+#pragma mark - UICollectionViewDataSource
+//返回当前区有多少 item。每一个单独的元素就是一个 item。
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return _workItemarray.count;
 }
 
-- (void)buttonClick:(UIButton *)button{
+//配置每个 item。
+
+- (UICollectionViewCell* )collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    if ([_buttonArray containsObject:button]) {
-        button.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
-        [button setTitleColor:[UIColor colorWithRed:167/255.0 green:167/255.0 blue:167/255.0 alpha:1.0] forState:UIControlStateNormal];
-        button.layer.borderColor = [[UIColor colorWithRed:219/255.0 green:219/255.0 blue:219/255.0 alpha:1.0]CGColor];
-        [_buttonArray removeObject:button];
+   
+    
+    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    cell.layer.cornerRadius = 10;
+    cell.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    cell.layer.borderWidth = 1.0;
+    cell.layer.borderColor = [[UIColor colorWithRed:219/255.0 green:219/255.0 blue:219/255.0 alpha:1.0]CGColor];
+
+    
+    UILabel* label = (UILabel *)[cell viewWithTag:5];
+    if(!label){
+        label = [[UILabel alloc] init];
+        label.frame = CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height);
+        label.tag = 5;
+    }
+    
+    label.text = _workItemarray[indexPath.row];
+    label.textColor = [UIColor colorWithRed:167/255.0 green:167/255.0 blue:167/255.0 alpha:1.0];
+    label.font = [UIFont systemFontOfSize:13];
+    label.textAlignment = NSTextAlignmentCenter;
+    [cell addSubview:label];
+    return cell;
+}
+
+#pragma mark - UICollectionViewDelegate
+
+//选中某个 item。
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+    UILabel *label = (UILabel *)[cell viewWithTag:5];
+    if ([_buttonArray containsObject:_workItemIdArray[indexPath.row]]) {
+        cell.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+        label.textColor = [UIColor colorWithRed:167/255.0 green:167/255.0 blue:167/255.0 alpha:1.0];
+        cell.layer.borderColor = [[UIColor colorWithRed:219/255.0 green:219/255.0 blue:219/255.0 alpha:1.0]CGColor];
+        [_buttonArray removeObject:_workItemIdArray[indexPath.row]];
     }else{
         
-        button.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        button.layer.borderColor = [[UIColor clearColor]CGColor];
-        [_buttonArray addObject:button];
+        cell.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+        label.textColor = [UIColor whiteColor];
+        cell.layer.borderColor = [[UIColor clearColor]CGColor];
+        [_buttonArray addObject:_workItemIdArray[indexPath.row]];
     }
     
     
 }
+
+
 
 #pragma mark - 相机按钮的实现方法
 - (void)cameraHeadBtnClick:(UIButton *)button{
@@ -318,11 +409,11 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     
     if (_imageArray.count == 0) {
-        _carImageView.hidden = YES;
-        UIImageView *imageView = [[UIImageView alloc]init];
+        _carImageButton.hidden = YES;
+        MYImageView *imageView = [[MYImageView alloc]init];
         imageView.image = image;
-        imageView.frame = CGRectMake(10, _carImageView.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
-        _cameraBtn.frame = CGRectMake(20+(self.view.frame.size.width-40)/3, _carImageView.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+        imageView.frame = CGRectMake(10, _carImageButton.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+        _cameraBtn.frame = CGRectMake(20+(self.view.frame.size.width-40)/3, _carImageButton.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
         [_cameraBtn setImage:[UIImage imageNamed:@"addImage"] forState:UIControlStateNormal];
         _cameraBtn.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
         imageView.userInteractionEnabled = YES;
@@ -335,14 +426,14 @@
         
     }else{
         NSLog(@"小车不存在---%@--",@(_imageArray.count));
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(_cameraBtn.frame.origin.x, _cameraBtn.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3)];
+        MYImageView *imageView = [[MYImageView alloc]initWithFrame:CGRectMake(_cameraBtn.frame.origin.x, _cameraBtn.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3)];
         imageView.image = image;
         [_scrollView addSubview:imageView];
         
         if (_imageArray.count == 5) {
             _cameraBtn.hidden = YES;
         }else{
-            _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)%3),  _carImageView.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+            _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)%3),  _carImageButton.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
         }
         
         
@@ -354,8 +445,50 @@
         [_imageArray addObject:imageView];
     }
 
+    CGSize imagesize;
+    imagesize.width = image.size.width/2;
+    imagesize.height = image.size.height/2;
+    UIImage *imageNew = [self imageWithImage:image scaledToSize:imagesize];
+    NSData *imageData = UIImageJPEGRepresentation(imageNew, 0.1);
+    [GFHttpTool PostImageForWork:imageData success:^(NSDictionary *responseObject) {
+        NSLog(@"上传成功－%@--－%@",responseObject,responseObject[@"message"]);
+        if ([responseObject[@"result"] integerValue] == 1) {
+            MYImageView *imageView = [_imageArray objectAtIndex:_imageArray.count-1];
+            imageView.resultURL = responseObject[@"data"];
+        }else{
+#warning --图片上传失败，从数组移走图片
+            
+        }
+        
+    } failure:^(NSError *error) {
+        NSLog(@"上传失败原因－－%@--",error);
+    }];
     
 }
+
+#pragma mark - 压缩图片尺寸
+-(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
+{
+    // Create a graphics image context
+    UIGraphicsBeginImageContext(newSize);
+    
+    // Tell the old image to draw in this new context, with the desired
+    // new size
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    
+    // Get the new image from the context
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // End the context
+    UIGraphicsEndImageContext();
+    
+    // Return the new image.
+    return newImage;
+}
+
+
+
+
 #pragma mark - 删除相片的方法
 - (void)deleteBtnClick:(UIButton *)button{
     NSLog(@"删除照片");
@@ -367,18 +500,18 @@
     
     [_imageArray enumerateObjectsUsingBlock:^(UIImageView *obj, NSUInteger idx, BOOL *stop) {
         
-        obj.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*(idx%3),  _carImageView.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*(idx/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+        obj.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*(idx%3),  _carImageButton.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*(idx/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
     }];
     
     if (_imageArray.count == 5) {
         _cameraBtn.hidden = NO;
     }else if (_imageArray.count == 0){
-        _carImageView.hidden = NO;
+        _carImageButton.hidden = NO;
         _cameraBtn.frame = CGRectMake(self.view.frame.size.width*6/7-15, 55+self.view.frame.size.width*27/70-25, 30, 30);
         [_cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
         _cameraBtn.backgroundColor = [UIColor clearColor];
     }else{
-        _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)%3),  _carImageView.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+        _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)%3),  _carImageButton.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
     }
     
     
@@ -389,12 +522,131 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+
+#pragma mark - 五座车七座车按钮
+- (void)workItemBtnClick:(UIButton *)button{
+    
+    
+    [_buttonArray removeAllObjects];
+    if (button.tag == 5) {
+        [button setImage:[UIImage imageNamed:@"overClick"] forState:UIControlStateNormal];
+        UIButton *severBtn = (UIButton *)[self.view viewWithTag:7];
+        [severBtn setImage:[UIImage imageNamed:@"over"] forState:UIControlStateNormal];
+        
+        _workItemarray = _fiveItemArray;
+        _workItemIdArray = _fiveItemIdArray;
+        [_collectionView reloadData];
+        
+    }else{
+        [button setImage:[UIImage imageNamed:@"overClick"] forState:UIControlStateNormal];
+        UIButton *fiveBtn = (UIButton *)[self.view viewWithTag:5];
+        [fiveBtn setImage:[UIImage imageNamed:@"over"] forState:UIControlStateNormal];
+        _workItemarray = _sevenItemArray;
+        _workItemIdArray = _sevenItemIdArray;
+        [_collectionView reloadData];
+    
+}
+    
+    
+    
+}
 #pragma mark - 工作完成的按钮响应方法
 - (void)workOverBtnClick{
     
-    CLShareViewController *shareView = [[CLShareViewController alloc]init];
-    [self.navigationController pushViewController:shareView animated:YES];
     
+    NSString *carSeat;
+    if (_workItemarray.count < _sevenItemArray.count) {
+        NSLog(@"五座车");
+        carSeat = @"5";
+    }else{
+        NSLog(@"七座车");
+        carSeat = @"7";
+    }
+    
+    __block NSString *itemIdString;
+    
+    
+    __block NSString *URLString;
+// 判断图片个数
+    if (_imageArray.count > 2) {
+        [_imageArray enumerateObjectsUsingBlock:^(MYImageView *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSLog(@"imageURL---%@--",obj.resultURL);
+            if (idx == 0) {
+                URLString = obj.resultURL;
+            }else{
+                URLString = [NSString stringWithFormat:@"%@,%@",URLString,obj.resultURL];
+            }
+        }];
+
+    // 判断是否选择工作项
+        if (_buttonArray.count > 0) {
+            [_buttonArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop) {
+                if (idx == 0) {
+                    itemIdString = obj;
+                }else{
+                    itemIdString = [NSString stringWithFormat:@"%@,%@",itemIdString,obj];
+                }
+            }];
+            NSLog(@"----itemIdString---%@---",itemIdString);
+            
+            NSDictionary *dictionary = @{@"orderId":_orderId,@"afterPhotos":URLString,@"workItems":itemIdString,@"carSeat":carSeat};
+            NSLog(@"----dictionary---%@--",dictionary);
+            
+            [GFHttpTool PostOverDictionary:dictionary success:^(NSDictionary *responseObject) {
+                NSLog(@"请求成功--%@--",responseObject);
+                if ([responseObject[@"result"] integerValue] == 1) {
+                    [_timer invalidate];
+                    _timer = nil;
+                    
+                    CLShareViewController *homeOrder = [[CLShareViewController alloc]init];
+                    
+                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeOrder];
+                    navigation.navigationBarHidden = YES;
+                    window.rootViewController = navigation;
+                    
+                    
+                    
+                    
+                }else{
+                    [self addAlertView:responseObject[@"message"]];
+                }
+                
+                
+                
+            } failure:^(NSError *error) {
+                NSLog(@"----请求失败了--%@--",error);
+                
+            }];
+            
+            
+            
+        }else{
+            [self addAlertView:@"请选择工作项"];
+        }
+        
+        
+        
+       
+    }else{
+        [self addAlertView:@"至少上传三张照片"];
+    }
+    
+    NSLog(@"----URLString----%@---",URLString);
+    
+    
+    
+    
+    
+//    CLShareViewController *shareView = [[CLShareViewController alloc]init];
+//    [self.navigationController pushViewController:shareView animated:YES];
+    
+}
+
+#pragma mark - AlertView
+- (void)addAlertView:(NSString *)title{
+    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
+    [tipView tipViewShow];
 }
 
 // 添加导航

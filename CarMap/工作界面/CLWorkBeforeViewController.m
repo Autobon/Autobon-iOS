@@ -12,6 +12,13 @@
 #import "CLWorkOverViewController.h"
 #import "GFMyMessageViewController.h"
 #import "GFHttpTool.h"
+#import "GFTipView.h"
+#import "MYImageView.h"
+#import "CLCleanWorkViewController.h"
+
+
+
+
 
 
 
@@ -19,15 +26,20 @@
 @interface CLWorkBeforeViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
     UIView *_chooseView;
-    UIImageView *_carImageView;
+    UIButton *_carImageButton;
     UIButton *_cameraBtn;
     NSMutableArray *_imageArray;
+    
+    UILabel *_distanceLabel;
+    NSTimer *_timer;
+    
 }
 
 
 @end
 
 @implementation CLWorkBeforeViewController
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -38,6 +50,8 @@
     [self setNavigation];
     
     [self titleView];
+    
+    [self startTimeForNows];
     
 }
 
@@ -89,34 +103,77 @@
     
 }
 
+
+#pragma mark - 获取开始时间计算用时
+- (void)startTimeForNows{
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[_startTime integerValue]/1000];
+    NSLog(@"---date-- %@---",[formatter stringFromDate:date]);
+    
+    NSInteger time = (NSInteger)[[NSDate date] timeIntervalSince1970] - [_startTime integerValue]/1000;
+    
+    
+    NSInteger minute = time/60;
+    if (minute > 60) {
+        _distanceLabel.text = [NSString stringWithFormat:@"已用时：%ld时 %ld分",minute/60,minute%60];
+    }else{
+        NSLog(@"----shezhi时间");
+        _distanceLabel.text = [NSString stringWithFormat:@"已用时： %ld分钟",minute];
+        
+    }
+    
+    
+    if (_timer == nil) {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(timeForWork:) userInfo:@{@"time":@(time)} repeats:YES];
+    }
+    
+}
+
+- (void)timeForWork:(NSTimer *)timer{
+    
+    static NSInteger a = 0;
+    if (a == 0) {
+        a = [timer.userInfo[@"time"] integerValue];
+        
+    }
+    a = a + 60;
+    NSInteger minute = a/60;
+    if (minute > 60) {
+        _distanceLabel.text = [NSString stringWithFormat:@"已用时：%ld时 %ld分",minute/60,minute%60];
+    }else{
+        NSLog(@"----shezhi时间");
+        _distanceLabel.text = [NSString stringWithFormat:@"已用时： %ld分钟",minute];
+        
+    }
+    
+}
+
+
+
 - (void)titleView{
     
-    CLTitleView *titleView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 64+36+40, self.view.frame.size.width, 45) Title:@"上传未开始贴膜车辆照片"];
+    CLTitleView *titleView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 64+36+40, self.view.frame.size.width, 45) Title:@"上传未开始工作车辆照片"];
     [self.view addSubview:titleView];
     
     
     
-    UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 101, self.view.frame.size.width, 40)];
-    distanceLabel.text = @"已用时：15分28秒";
-    distanceLabel.backgroundColor = [UIColor whiteColor];
-    distanceLabel.font = [UIFont systemFontOfSize:15];
-    distanceLabel.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:distanceLabel];
+    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 101, self.view.frame.size.width, 40)];
+    _distanceLabel.text = @"已用时：15分28秒";
+    _distanceLabel.backgroundColor = [UIColor whiteColor];
+    _distanceLabel.font = [UIFont systemFontOfSize:15];
+    _distanceLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:_distanceLabel];
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    _carImageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/7, 200, self.view.frame.size.width*5/7, self.view.frame.size.width*27/70)];
-    _carImageView.image = [UIImage imageNamed:@"carImage"];
-    [self.view addSubview:_carImageView];
+    _carImageButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/7, 200, self.view.frame.size.width*5/7, self.view.frame.size.width*27/70)];
+//    _carImageView.image = [UIImage imageNamed:@"carImage"];
+    [_carImageButton setBackgroundImage:[UIImage imageNamed:@"carImage"] forState:UIControlStateNormal];
+    [_carImageButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
+//    _carImageButton.backgroundColor = [UIColor cyanColor];
+    [self.view addSubview:_carImageButton];
     
     _cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*6/7-15, 200+self.view.frame.size.width*27/70-25, 30, 30)];
     [_cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
@@ -202,11 +259,11 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     
     if (_imageArray.count == 0) {
-        _carImageView.hidden = YES;
-        UIImageView *imageView = [[UIImageView alloc]init];
+        _carImageButton.hidden = YES;
+        MYImageView *imageView = [[MYImageView alloc]init];
         imageView.image = image;
-        imageView.frame = CGRectMake(10, _carImageView.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
-        _cameraBtn.frame = CGRectMake(20+(self.view.frame.size.width-40)/3, _carImageView.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+        imageView.frame = CGRectMake(10, _carImageButton.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+        _cameraBtn.frame = CGRectMake(20+(self.view.frame.size.width-40)/3, _carImageButton.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
         [_cameraBtn setImage:[UIImage imageNamed:@"addImage"] forState:UIControlStateNormal];
         _cameraBtn.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
         imageView.userInteractionEnabled = YES;
@@ -219,14 +276,14 @@
         
     }else{
         NSLog(@"小车不存在---%@--",@(_imageArray.count));
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(_cameraBtn.frame.origin.x, _cameraBtn.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3)];
+        MYImageView *imageView = [[MYImageView alloc]initWithFrame:CGRectMake(_cameraBtn.frame.origin.x, _cameraBtn.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3)];
         imageView.image = image;
         [self.view addSubview:imageView];
         
         if (_imageArray.count == 2) {
             _cameraBtn.hidden = YES;
         }else{
-            _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)%3),  _carImageView.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+            _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)%3),  _carImageButton.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
         }
         
         
@@ -238,14 +295,49 @@
         [_imageArray addObject:imageView];
     }
     
-    NSData *imageData = UIImageJPEGRepresentation(image, 0.3);
-    [GFHttpTool PostImageWorkBefore:imageData orderId:20 imageNumber:1 success:^(id responseObject) {
-        NSLog(@"上传成功－%@--－%@",responseObject,responseObject[@"false"]);
+    CGSize imagesize;
+    imagesize.width = image.size.width/2;
+    imagesize.height = image.size.height/2;
+    UIImage *imageNew = [self imageWithImage:image scaledToSize:imagesize];
+    NSData *imageData = UIImageJPEGRepresentation(imageNew, 0.1);
+    MYImageView *imageView = [_imageArray objectAtIndex:_imageArray.count-1];
+    [GFHttpTool PostImageForWork:imageData success:^(NSDictionary *responseObject) {
+        NSLog(@"上传成功－%@--－%@",responseObject,responseObject[@"message"]);
+        if ([responseObject[@"result"] integerValue] == 1) {
+           
+            imageView.resultURL = responseObject[@"data"];
+        }else{
+#warning --图片上传失败，从数组移走图片
+            
+        }
+
     } failure:^(NSError *error) {
         NSLog(@"上传失败原因－－%@--",error);
     }];
     
 }
+
+#pragma mark - 压缩图片尺寸
+-(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
+{
+    // Create a graphics image context
+    UIGraphicsBeginImageContext(newSize);
+    
+    // Tell the old image to draw in this new context, with the desired
+    // new size
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    
+    // Get the new image from the context
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // End the context
+    UIGraphicsEndImageContext();
+    
+    // Return the new image.
+    return newImage;
+}
+
+
 
 #pragma mark - 删除相片的方法
 - (void)deleteBtnClick:(UIButton *)button{
@@ -258,15 +350,15 @@
     
     [_imageArray enumerateObjectsUsingBlock:^(UIImageView *obj, NSUInteger idx, BOOL *stop) {
         
-        obj.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*(idx%3),  _carImageView.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*(idx/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+        obj.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*(idx%3),  _carImageButton.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*(idx/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
     }];
     
     if (_imageArray.count == 2) {
         _cameraBtn.hidden = NO;
     }else if(_imageArray.count == 1){
-        _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)%3),  _carImageView.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+        _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)%3),  _carImageButton.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
     }else{
-        _carImageView.hidden = NO;
+        _carImageButton.hidden = NO;
         _cameraBtn.frame = CGRectMake(self.view.frame.size.width*6/7-15, 200+self.view.frame.size.width*27/70-25, 30, 30);
         [_cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
         _cameraBtn.backgroundColor = [UIColor clearColor];
@@ -283,11 +375,88 @@
 
 // 继续按钮的响应方法
 - (void)nextBtnClick{
-    CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
-    [self.navigationController pushViewController:workOver animated:YES];
+    
+    if (_imageArray.count > 0) {
+        
+        __block NSString *URLString;
+        [_imageArray enumerateObjectsUsingBlock:^(MYImageView *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSLog(@"imageURL---%@--",obj.resultURL);
+            if (idx == 0) {
+                URLString = obj.resultURL;
+            }else{
+                URLString = [NSString stringWithFormat:@"%@,%@",URLString,obj.resultURL];
+            }
+        }];
+        
+        
+        [GFHttpTool PostPhotoForBeforeOrderId:[_orderId integerValue] URLs:URLString success:^(NSDictionary *responseObject) {
+            if ([responseObject[@"result"] integerValue] == 1) {
+                
+//                CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
+//                workOver.orderId = _orderId;
+//                workOver.orderType = _orderType;
+//                [self.navigationController pushViewController:workOver animated:YES];
+                
+                [_timer invalidate];
+                _timer = nil;
+                
+                if ([_orderType integerValue] == 4) {
+                    
+                    CLCleanWorkViewController *cleanWork = [[CLCleanWorkViewController alloc]init];
+                    cleanWork.orderId = _orderId;
+                    cleanWork.startTime = _startTime;
+//                    [self.navigationController pushViewController:cleanWork animated:YES];
+                    
+                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:cleanWork];
+                    navigation.navigationBarHidden = YES;
+                    window.rootViewController = navigation;
+                    
+                    
+                    
+                }else{
+                    CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
+                    workOver.orderId = _orderId;
+                    workOver.orderType = _orderType;
+                    workOver.startTime = _startTime;
+                    
+                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:workOver];
+                    navigation.navigationBarHidden = YES;
+                    window.rootViewController = navigation;
+                    
+                    
+//                    [self.navigationController pushViewController:workOver animated:YES];
+                }
+                
+                
+                
+            }
+        } failure:^(NSError *error) {
+            NSLog(@"－－－失败了--%@",error);
+        }];
+        
+        
+        
+        
+        
+        
+        }else{
+        [self addAlertView:@"至少上传一张照片照片"];
+    }
     
     
     
+    
+    
+}
+
+
+
+#pragma mark - AlertView
+- (void)addAlertView:(NSString *)title{
+    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
+    [tipView tipViewShow];
 }
 
 // 添加导航

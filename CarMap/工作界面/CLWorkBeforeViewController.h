@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+
+
+
 @interface CLWorkBeforeViewController : UIViewController
+
+@property (nonatomic ,strong) NSString *orderId;
+@property (nonatomic ,strong) NSString *orderType;
+@property (nonatomic ,strong) NSString *startTime;
 
 @end

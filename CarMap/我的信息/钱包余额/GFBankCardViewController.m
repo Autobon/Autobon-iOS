@@ -198,11 +198,30 @@
     [self.view addSubview:submitBut];
     [submitBut addTarget:self action:@selector(submitClick) forControlEvents:UIControlEventTouchUpInside];
 }
+
+
 - (void)submitClick {
     
-    // 判断银行卡
+    
+    // 提交修改银行卡信息按钮
+    NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/changeBankCard";
+    NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
+//    parDic[@"name"] = self.nameLab.text;
+//    parDic[@"bank"] = self.bankArr[index];
+//    parDic[@"bankCardNo"] = self.cardTxt.centerTxt.text;
+    parDic[@"name"] = @"陈光法";
+    parDic[@"bank"] = @"建设";
+    parDic[@"bankCardNo"] = @"621700287000250683";
+
+    
+    
+    
+    
+    [GFHttpTool bankCardPost:url parameters:parDic success:^(id responseObject) {
+
     BOOL cardFlage = [self checkCardNo:self.cardTxt.centerTxt.text];
     if(cardFlage == NO) {
+
         
         GFTipView *tipView = [[GFTipView alloc] initWithNormalHeightWithMessage:@"请输入正确地银行卡号" withViewController:self withShowTimw:1.5];
         [tipView tipViewShow];
@@ -250,7 +269,9 @@
         }];
     
     }
-    
+    }failure:^(NSError *error) {
+        
+    }];
     
     
     

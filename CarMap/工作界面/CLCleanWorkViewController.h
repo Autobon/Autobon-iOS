@@ -10,4 +10,7 @@
 
 @interface CLCleanWorkViewController : UIViewController
 
+@property (nonatomic ,strong) NSString *orderId;
+@property (nonatomic ,strong) NSString *startTime;
+
 @end

@@ -41,6 +41,11 @@
 
 #import "GFMyMessageViewController.h"
 #import "GFSignInViewController.h"
+#import "CLCooperateFailViewController.h"
+#import "CLCooperatingViewController.h"
+#import "GFNoIndentViewController.h"
+
+
 
 
 // 个推开发者网站中申请App时，注册的AppId、AppKey、AppSecret
@@ -100,28 +105,31 @@
     
    
 //    CLShareViewController *firstView = [[CLShareViewController alloc]init];
-    CLHomeOrderViewController *firstView = [[CLHomeOrderViewController alloc]init];
+//    CLHomeOrderViewController *firstView = [[CLHomeOrderViewController alloc]init];
 //    CLAddOrderSuccessViewController *firstView = [[CLAddOrderSuccessViewController alloc]init];
 //    PoiSearchDemoViewController *firstView = [[PoiSearchDemoViewController alloc]init];
+//    CLCertifyFailViewController *firstView = [[CLCertifyFailViewController alloc]init];
+//    CLWorkOverViewController *firstView = [[CLWorkOverViewController alloc]init];
+//    CLCooperateFailViewController *firstView = [[CLCooperateFailViewController alloc]init];
+//    CLCooperatingViewController *firstView = [[CLCooperatingViewController alloc]init];
+//    GFNoIndentViewController *firstView = [[GFNoIndentViewController alloc]init];
     
 //    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
     //********************* 光法页面 **********************
-
-    GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
+//    GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
+    
     GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
-    CLMoreViewController *moreVC = [[CLMoreViewController alloc] init];
+//    CLMoreViewController *moreVC = [[CLMoreViewController alloc] init];
+
+    _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
+
+
+//    GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
+//    GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
+//    CLMoreViewController *moreVC = [[CLMoreViewController alloc] init];
 
 //    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
 
-    GFTestViewController *testVC = [[GFTestViewController alloc] init];
-
-//<<<<<<< HEAD
-    _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
-
-//    GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
-    
-
-//    CLMoreViewController *moreVC = [[CLMoreViewController alloc] init];
 
 
 
@@ -279,10 +287,10 @@
     NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:nil];
     
     
-    if ([responseJSON[@"action"]isEqualToString:@"NEW_ORDER"]) {
+    if ([responseJSON[@"action"]isEqualToString:@"NEW_ORDER"] || [responseJSON[@"action"]isEqualToString:@"INVITE_PARTNER"]) {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         if ([[userDefaults objectForKey:@"homeOrder"]isEqualToString:@"YES"]) {
-            NSLog(@"发出通知吧");
+            
             
             [[NSNotificationCenter defaultCenter]postNotificationName:@"NEW_ORDER" object:self userInfo:responseJSON];
             
@@ -298,12 +306,55 @@
                 NSLog(@"----_pushDate-%@--%@-----",_pushDate,[NSDate date]);
                 notification.alertTitle = @"车邻邦";
                 notification.alertBody = responseJSON[@"title"];
-//                notification.userInfo = responseJSON;
+                notification.userInfo = @{@"dictionary":payloadMsg};
+
                 AudioServicesPlaySystemSound(1307);
+                NSLog(@"发出通知吧－－－%@--",notification.userInfo);
                 [[UIApplication sharedApplication]scheduleLocalNotification:notification];
             }
         }
+    }else if ([responseJSON[@"action"]isEqualToString:@"VERIFICATION_FAILED"] || [responseJSON[@"action"]isEqualToString:@"VERIFICATION_SUCCEED"]||[responseJSON[@"action"]isEqualToString:@"INVITATION_ACCEPTED"]){
+        UILocalNotification*notification = [[UILocalNotification alloc] init];
+        if (nil != notification)
+        {
+            notification.fireDate = [NSDate date];
+            _pushDate = [NSDate date];
+            NSLog(@"----_pushDate-%@--%@-----",_pushDate,[NSDate date]);
+            notification.alertTitle = @"车邻邦";
+            notification.alertBody = responseJSON[@"title"];
+            AudioServicesPlaySystemSound(1307);
+            [[UIApplication sharedApplication]scheduleLocalNotification:notification];
+        }
+    
+    }else if ([responseJSON[@"action"]isEqualToString:@"INVITATION_REJECTED"]){
+        UILocalNotification*notification = [[UILocalNotification alloc] init];
+        if (nil != notification)
+        {
+            notification.fireDate = [NSDate date];
+            _pushDate = [NSDate date];
+            NSLog(@"----_pushDate-%@--%@-----",_pushDate,[NSDate date]);
+            notification.alertTitle = @"车邻邦";
+            notification.alertBody = responseJSON[@"title"];
+            AudioServicesPlaySystemSound(1307);
+            [[UIApplication sharedApplication]scheduleLocalNotification:notification];
+        }
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"NEW_ORDER" object:self userInfo:@{@"INVITATION_REJECTED":@"INVITATION_REJECTED"}];
     }
+    
+    
+//    else if ([responseJSON[@"action"]isEqualToString:@"INVITE_PARTNER"]){
+//        UILocalNotification*notification = [[UILocalNotification alloc] init];
+//        if (nil != notification)
+//        {
+//            notification.fireDate = [NSDate date];
+//            _pushDate = [NSDate date];
+//            notification.alertTitle = @"车邻邦";
+//            notification.alertBody = responseJSON[@"title"];
+//            AudioServicesPlaySystemSound(1307);
+//            [[UIApplication sharedApplication]scheduleLocalNotification:notification];
+//        }
+//    }
     
     
     
@@ -341,7 +392,6 @@
 #pragma mark - 后台运行调用的方法
     NSLog(@"\n>>>[Receive ------ RemoteNotification - Background Fetch]:%@\n\n",userInfo);
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//    [userDefaults setObject:@"通知消息" forKey:@"title"];
     completionHandler(UIBackgroundFetchResultNewData);
     
     NSLog(@"走了啊－－－%@---%@---",[userDefaults objectForKey:@"autoken"],[userDefaults objectForKey:@"homeOrder"]);
@@ -372,21 +422,39 @@
     long time = (long)[[NSDate date] timeIntervalSince1970] - [_pushDate timeIntervalSince1970];
     NSLog(@"---time--%ld----",time);
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    if (0 < time) {
+    if (0 < time && notification.userInfo) {
          NSLog(@"消息来了a－－%@",notification.userInfo);
-        if ([userDefaults objectForKey:@"autoken"]) {
-            if (![[userDefaults objectForKey:@"homeOrder"]isEqualToString:@"YES"]) {
-                UIWindow *window = [UIApplication sharedApplication].delegate.window;
-                CLHomeOrderViewController *homeOrderView = [[CLHomeOrderViewController alloc]init];
-                window.rootViewController = homeOrderView;
-            }
+        NSData *JSONData = [notification.userInfo[@"dictionary"] dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:nil];
+        
+        if ([responseJSON[@"action"]isEqualToString:@"NEW_ORDER"] || [responseJSON[@"action"]isEqualToString:@"INVITE_PARTNER"]) {
+        
+            if ([userDefaults objectForKey:@"autoken"]) {
+                if (![[userDefaults objectForKey:@"homeOrder"]isEqualToString:@"YES"]) {
+                    UIWindow *window = [UIApplication sharedApplication].delegate.window;
+                    
+                    CLHomeOrderViewController *homeOrderView = [[CLHomeOrderViewController alloc]init];
+                    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeOrderView];
+                    navigation.navigationBarHidden = YES;
+                    window.rootViewController = navigation;
+                }
 #warning --发送通知
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"NEW_ORDER" object:self userInfo:notification.userInfo];
+                
+                [self performSelector:@selector(after:) withObject:responseJSON afterDelay:1.0];
+                
+            }
+            
         }
+        
+        
         
     }
     
     
+}
+
+- (void)after:(NSDictionary *)responseJSON{
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"NEW_ORDER" object:self userInfo:responseJSON];
 }
 
 -(void)btnClick:(UIButton *)button{

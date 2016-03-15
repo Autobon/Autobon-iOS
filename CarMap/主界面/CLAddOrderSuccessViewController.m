@@ -9,6 +9,7 @@
 #import "CLAddOrderSuccessViewController.h"
 #import "GFNavigationView.h"
 #import "GFMyMessageViewController.h"
+#import "CLOrderDetailViewController.h"
 
 
 
@@ -16,10 +17,22 @@
 @interface CLAddOrderSuccessViewController ()
 {
     UIButton *_submitButton;
+    NSTimer *_timer;
+    NSInteger _a;
+    
 }
 @end
 
 @implementation CLAddOrderSuccessViewController
+
+
+- (NSDictionary *)dataDictionary{
+    if (_dataDictionary) {
+        _dataDictionary = [[NSDictionary alloc]init];
+    }
+    return _dataDictionary;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -31,24 +44,24 @@
     
     [self setViewForSuccess];
     
+    _a = 5;
     
-    
-    [self performSelector:@selector(workBegin) withObject:nil afterDelay:1.0f];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(workBegin) userInfo:nil repeats:YES];
     
 }
 
 - (void)workBegin{
     
-    static NSInteger a = 5;
-    a--;
-    [_submitButton setTitle:[NSString stringWithFormat:@"开始工作(%ld)",a] forState:UIControlStateNormal];
-    if (a < 0) {
+    
+    _a--;
+    [_submitButton setTitle:[NSString stringWithFormat:@"开始工作(%ld)",_a] forState:UIControlStateNormal];
+    if (_a < 0) {
         [self.navigationController popViewControllerAnimated:NO];
+        [_timer invalidate];
+        _timer = nil;
         if (_addBlock) {
             _addBlock();
         }
-    }else{
-        [self performSelector:@selector(workBegin) withObject:nil afterDelay:1.0f];
     }
 }
 
@@ -136,7 +149,7 @@
     [self.view addSubview:label];
     
     UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 180, self.view.frame.size.width-20, 30)];
-    label2.text = @"订单编号:20160304105202QNGXLA";
+    label2.text = [NSString stringWithFormat:@"订单编号：%@",_orderNum];
     label2.textColor = [UIColor colorWithRed:155/255.0 green:155/255.0 blue:155/255.0 alpha:1.0];
     label2.textAlignment = NSTextAlignmentCenter;
     label2.font = [UIFont systemFontOfSize:16];
@@ -153,22 +166,42 @@
     
 }
 
+#pragma mark - 开始工作的按钮响应方法
 - (void)submitBtnClick{
-    //    static int a = 1302;
-    //    AudioServicesPlaySystemSound(1307);
-    //    NSLog(@"---%d---",a);
-    //    a++;
-    //    1002
-    //    1006
-}
-
-
-#pragma mark - 工作完成的按钮响应方法
-- (void)workOverBtnClick{
+   
+    NSLog(@"----%@---",_dataDictionary);
+    [_timer invalidate];
+    _timer = nil;
+    CLOrderDetailViewController *detailView = [[CLOrderDetailViewController alloc]init];
+    detailView.customerLat = _dataDictionary[@"positionLat"];
+    detailView.customerLon = _dataDictionary[@"positionLon"];
+    detailView.orderPhotoURL = _dataDictionary[@"photo"];
+    
+    
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[_dataDictionary[@"orderTime"] integerValue]/1000];
+    NSLog(@"---date-- %@---",[formatter stringFromDate:date]);
+    
+    detailView.orderTime = [formatter stringFromDate:date];
+    
+    
+    
+    
+    detailView.remark = _dataDictionary[@"remark"];
+    detailView.orderId = _dataDictionary[@"id"];
+    detailView.orderType = _dataDictionary[@"orderType"];
+    detailView.action = _dataDictionary[@"status"];
+    [self.navigationController pushViewController:detailView animated:YES];
     
     
     
 }
+
+
+
+
 
 - (void)backBtnClick{
     //    [self.navigationController popViewControllerAnimated:YES];

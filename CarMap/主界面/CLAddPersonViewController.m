@@ -95,8 +95,11 @@
             if (listArray.count>0) {
                 [listArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
                     CLAddPersonModel *person = [[CLAddPersonModel alloc]init];
-                    person.headImageURL = [NSString stringWithFormat:@"http://121.40.157.200:12345/%@",obj[@"avatar"]];
-                    person.nameString = obj[@"name"];
+
+                    if (![obj[@"avatar"] isKindOfClass:[NSNull class]] && ![obj[@"name"] isKindOfClass:[NSNull class]]) {
+                        person.headImageURL = [NSString stringWithFormat:@"http://121.40.157.200:12345/%@",obj[@"avatar"]];
+                        person.nameString = obj[@"name"];
+                    }
                     person.phoneString = obj[@"phone"];
                     person.personId = obj[@"id"];
                     [_addPersonArray addObject:person];
@@ -106,6 +109,8 @@
                 [self addAlertView:@"技师不存在"];
             }
             [_tableView reloadData];
+        }else{
+            [self addAlertView:responseObject[@"message"]];
         }
     } failure:^(NSError *error) {
         
@@ -140,13 +145,16 @@
 - (void)addPersonBtnClick:(UIButton *)button{
     NSLog(@"添加合伙技师");
     CLAddPersonModel *person = _addPersonArray[button.tag];
-    NSDictionary *dic = @{@"orderId":_orderId,@"technicianId":person.personId};
+    NSDictionary *dic = @{@"orderId":_orderId,@"partnerId":person.personId};
     [GFHttpTool postAddPerson:dic Success:^(NSDictionary *responseObject) {
+         NSLog(@"－－－%@--",responseObject);
         if ([responseObject[@"result"]integerValue]==1) {
-            [self addAlertView:@"邀请已发送，等待对方接受"];
+            [self addAlertView:@"邀请已发送"];
+        }else{
+            [self addAlertView:responseObject[@"message"]];
         }
     } failure:^(NSError *error) {
-        
+        NSLog(@"－－－%@--",error);
     }];
 }
 

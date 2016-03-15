@@ -79,7 +79,11 @@
 // 添加地图
 - (void)addMap{
     GFMapViewController *mapVC = [[GFMapViewController alloc] init];
-    mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([self.customerLat floatValue],[self.customerLon floatValue]);
+    if ([self.customerLat isKindOfClass:[NSNull class]]) {
+        mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30.4,114.4);
+    }else{
+        mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([self.customerLat floatValue],[self.customerLon floatValue]);
+    }
     mapVC.distanceBlock = ^(double distance) {
         NSLog(@"距离－－%f--",distance);
     };
@@ -119,6 +123,9 @@
         NSLog(@"－－－－－%@---",responseObject);
         if ([responseObject[@"result"]integerValue] == 1) {
             CLWorkBeforeViewController *workBefore = [[CLWorkBeforeViewController alloc]init];
+            workBefore.orderId = _orderId;
+            workBefore.orderType = _orderType;
+            workBefore.startTime = _startTime;
             [self.navigationController pushViewController:workBefore animated:YES];
         }
     } failure:^(NSError *error) {

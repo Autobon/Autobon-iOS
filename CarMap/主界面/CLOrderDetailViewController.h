@@ -16,6 +16,9 @@
 @property (nonatomic ,strong) NSString *orderTime;
 @property (nonatomic ,strong) NSString *remark;
 @property (nonatomic ,strong) NSString *orderId;
-
+@property (nonatomic ,strong) NSString *action;
+@property (nonatomic ,strong) NSString *mainTechId;
+@property (nonatomic ,strong) NSString *secondId;
+@property (nonatomic ,strong) NSString *orderType;
 
 @end

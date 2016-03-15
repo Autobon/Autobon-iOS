@@ -65,7 +65,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _skillArray = [[NSMutableArray alloc]init];
-    _bankArray = @[@"农业银行",@"招商银行",@"建设银行",@"广发银行",@"中信银行",@"光大银行",@"民生银行",@"普法银行",@"工商银行",@"中国银行",@"交通银行",@"邮政储蓄银行"];
+    _bankArray = @[@"农业银行",@"招商银行",@"建设银行",@"广发银行",@"中信银行",@"光大银行",@"民生银行",@"普发银行",@"工商银行",@"中国银行",@"交通银行",@"邮政储蓄银行"];
     [self setNavigation];
     
     [self setViewForCertify];
@@ -101,9 +101,12 @@
                 [_bankButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 _bankNumberTextField.centerTxt.text = dataDic[@"bankCardNo"];
                 
-                [_headButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"avatar"]]] forState:UIControlStateNormal];
+
+                [_headButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345%@",dataDic[@"avatar"]]] forState:UIControlStateNormal];
                 
                 [_identityButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"idPhoto"]]] forState:UIControlStateNormal];
+                NSLog(@"----证件照－－%@---",[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"idPhoto"]]);
+
             }
         } failure:^(NSError *error) {
             
@@ -590,10 +593,15 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo{
     [self dismissViewControllerAnimated:YES completion:nil];
     if (_isHeadImage) {
-        
         [_headButton setImage:image forState:UIControlStateNormal];
-        NSData *headData = UIImageJPEGRepresentation(image, 0.3);
-        [GFHttpTool headImage:headData success:^(NSDictionary *responseObject) {
+        CGSize imagesize;
+        imagesize.width = image.size.width/2;
+        imagesize.height = image.size.height/2;
+        UIImage *imageNew = [self imageWithImage:image scaledToSize:imagesize];
+        NSData *imageData = UIImageJPEGRepresentation(imageNew, 0.3);
+        
+        
+        [GFHttpTool headImage:imageData success:^(NSDictionary *responseObject) {
             NSLog(@"-----responseObject---%@--",responseObject);
             if ([responseObject[@"result"]intValue] == 1) {
                 _haveHeadImage = YES;
@@ -606,11 +614,16 @@
         }];
         
     }else{
-        [_identityButton setImage:image forState:UIControlStateNormal];
+        [_identityButton setBackgroundImage:image forState:UIControlStateNormal];
 //        _haveIdentityImage = YES;
         _identityButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
-        NSData *idPhotoImage = UIImageJPEGRepresentation(image, 0.3);
-        [GFHttpTool idPhotoImage:idPhotoImage success:^(NSDictionary *responseObject) {
+        
+        CGSize imagesize;
+        imagesize.width = image.size.width/2;
+        imagesize.height = image.size.height/2;
+        UIImage *imageNew = [self imageWithImage:image scaledToSize:imagesize];
+        NSData *imageData = UIImageJPEGRepresentation(imageNew, 0.3);
+        [GFHttpTool idPhotoImage:imageData success:^(NSDictionary *responseObject) {
             NSLog(@"----%@---",responseObject);
             if ([responseObject[@"result"]intValue] == 1) {
                 _haveIdentityImage = YES;
@@ -626,6 +639,26 @@
     
 }
 
+
+#pragma mark - 压缩图片尺寸
+-(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
+{
+    // Create a graphics image context
+    UIGraphicsBeginImageContext(newSize);
+    
+    // Tell the old image to draw in this new context, with the desired
+    // new size
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    
+    // Get the new image from the context
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // End the context
+    UIGraphicsEndImageContext();
+    
+    // Return the new image.
+    return newImage;
+}
 
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{

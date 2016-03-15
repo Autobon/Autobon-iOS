@@ -11,8 +11,9 @@
 @interface CLWorkOverViewController : UIViewController
 
 
-
-
+@property (nonatomic ,strong) NSString *orderId;
+@property (nonatomic ,strong) NSString *orderType;
+@property (nonatomic ,strong) NSString *startTime;
 
 
 
