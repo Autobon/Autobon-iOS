@@ -35,6 +35,10 @@
     UILabel *_noOrderlabel;
     UIImageView *_noOrderImageView;
     NSDictionary *_inviteDictionary;
+    
+    NSInteger _page;
+    NSInteger _pageSize;
+    
 }
 @property (nonatomic ,strong) NSMutableArray *cellModelArray;
 @property (nonatomic ,strong) UITableView *tableView;
@@ -103,7 +107,7 @@
 //
 //
     _tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
-//    _tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+    _tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     
     [self.tableView.header beginRefreshing];
 //    [self.tableView.footer beginRefreshing];
@@ -122,12 +126,14 @@
     formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [GFHttpTool getOrderListSuccess:^(NSDictionary *responseObject) {
+    NSDictionary *dictionary = @{@"page":@(_page),@"pageSize":@(_pageSize)};
+    [GFHttpTool getOrderListDictionary:dictionary Success:^(NSDictionary *responseObject) {
         if ([responseObject[@"result"] integerValue] == 1) {
             NSDictionary *dataDit = responseObject[@"data"];
             NSArray *dataArray = dataDit[@"list"];
-            NSLog(@"---%@--",dataArray);
-            _cellModelArray = [[NSMutableArray alloc]init];
+            if (_page == 1) {
+                _cellModelArray = [[NSMutableArray alloc]init];
+            }
             [dataArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
                 NSLog(@"---obj---%@--",obj);
                 CLHomeOrderCellModel *cellModel = [[CLHomeOrderCellModel alloc]init];
@@ -141,7 +147,10 @@
                 cellModel.remark = obj[@"remark"];
                 cellModel.status = obj[@"status"];
                 NSDictionary *mainTechDictionary = obj[@"mainTech"];
-                cellModel.mainTechId = mainTechDictionary[@"id"];
+                
+                if ([mainTechDictionary[@"id"] integerValue] == [[userDefaults objectForKey:@"userId"] integerValue]) {
+                    cellModel.mainTechId = mainTechDictionary[@"id"];
+                }
                 if ([[userDefaults objectForKey:@"userId"] integerValue] == [cellModel.mainTechId integerValue]) {
                     NSLog(@"我是主技师");
                     if (![obj[@"mainConstruct"] isKindOfClass:[NSNull class]]) {
@@ -155,13 +164,14 @@
                     if (![obj[@"secondTech"] isKindOfClass:[NSNull class]]) {
                         NSLog(@"有小伙伴");
                         NSDictionary *secondDictionary = obj[@"secondTech"];
+                        cellModel.secondTechId = secondDictionary[@"name"];
                         cellModel.mateName = secondDictionary[@"name"];
                     }
                     
                 }else{
                     NSLog(@"我是次技师");
                     NSDictionary *secondDictionary = obj[@"mainTech"];
-                    cellModel.mateName = secondDictionary[@"name"];
+//                    cellModel.mateName = secondDictionary[@"name"];
                     if (![obj[@"secondConstruct"] isKindOfClass:[NSNull class]]) {
                         NSDictionary *mainDictionary = obj[@"secondConstruct"];
                         cellModel.startTime = mainDictionary[@"startTime"];
@@ -169,6 +179,8 @@
                         cellModel.beforePhotos = mainDictionary[@"beforePhotos"];
                         cellModel.afterPhotos = mainDictionary[@"afterPhotos"];
                     }
+                    
+                    cellModel.secondTechId = secondDictionary[@"name"];
                 }
                 
 //                cellModel.secondTechId = obj[@"secondTechId"];
@@ -189,7 +201,9 @@
                 _noOrderlabel.hidden = NO;
             }
             [_tableView reloadData];
+            
             [self.tableView.header endRefreshing];
+            [self.tableView.footer endRefreshing];
         }
     } failure:^(NSError *error) {
         
@@ -219,6 +233,7 @@
         //    [self.navigationController pushViewController:knockOrder animated:YES];
         
         [self.view addSubview:knockOrder.view];
+        [self.view bringSubviewToFront:knockOrder.view];
         
         [self addChildViewController:knockOrder];
         [knockOrder didMoveToParentViewController:self];
@@ -237,6 +252,8 @@
         [self.view addSubview:alertView];
         _inviteDictionary = [[NSDictionary alloc]initWithDictionary:Notification.userInfo];
 
+    }else{
+        [self headRefresh];
     }
     
     
@@ -255,15 +272,18 @@
     orderDetail.customerLon = orderDic[@"positionLon"];
     orderDetail.orderPhotoURL = orderDic[@"photo"];
     orderDetail.remark = orderDic[@"remark"];
+    orderDetail.mainTechId = @"2";
+    NSDictionary *mainTechDictionary = _inviteDictionary[@"owner"];
+    orderDetail.secondId = mainTechDictionary[@"name"];
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:[orderDic[@"orderTime"] integerValue]/1000];
     orderDetail.orderTime = [formatter stringFromDate:date];
     
-    orderDetail.action = _inviteDictionary[@"action"];
+    orderDetail.action = @"SEND_INVITATION";
     
-    NSLog(@"---orderDetail.remark%@---%@--",orderDetail.customerLat,orderDetail.customerLon);
+    NSLog(@"---orderDetail.remark----%@---%@--",_inviteDictionary[@"action"],orderDetail.customerLon);
     [self.navigationController pushViewController:orderDetail animated:YES];
 }
 
@@ -319,7 +339,8 @@
 
 - (void)headRefresh {
     
-    NSLog(@"脑袋刷新");
+    _page = 1;
+    _pageSize = 2;
     
     
     [self httpWorkForTableView];
@@ -327,9 +348,10 @@
 
 - (void)footRefresh {
     
-    NSLog(@"大脚刷新");
+    _page = _page + 1;
+    _pageSize = 2;
     
-    [self.tableView.footer endRefreshing];
+    [self httpWorkForTableView];
 }
 
 
@@ -503,9 +525,10 @@
                     }else{
                         CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
                         workOver.startTime = cellModel.startTime;
-                        NSLog(@"---workOver---%@--",workOver.startTime);
+                        NSLog(@"---workOver---%@--",self.navigationController);
                         workOver.orderId = cellModel.orderId;
                         workOver.orderType = cellModel.orderType;
+                        
                         
                         [self.navigationController pushViewController:workOver animated:YES];
                     }
@@ -528,7 +551,7 @@
                 
                 NSLog(@"我还没有开始啊--%@--",cellModel.mateName);
                 if (cellModel.mateName) {
-                    // 小伙伴存在
+                    
                     orderDetail.action = @"INVITATION_ACCEPTED";
                     orderDetail.secondId = cellModel.mateName;
                     [self.navigationController pushViewController:orderDetail animated:YES];
@@ -666,7 +689,8 @@
     orderDetail.mainTechId = cellModel.mainTechId;
     orderDetail.secondId = cellModel.secondTechId;
     orderDetail.orderType = cellModel.orderType;
-    NSLog(@"---orderDetail.remark%@---%@--",orderDetail.customerLat,orderDetail.customerLon);
+        
+    NSLog(@"---orderDetail.remark---%@--",orderDetail.action);
     [self.navigationController pushViewController:orderDetail animated:YES];
     }
     

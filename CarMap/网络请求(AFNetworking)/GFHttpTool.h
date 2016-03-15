@@ -48,7 +48,7 @@
 + (void)headImage:(NSData *)image success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
 // 获取订单列表
-+ (void)getOrderListSuccess:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
++ (void)getOrderListDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
 
 // 获取订单列表

@@ -356,7 +356,7 @@ NSString* const HOST = @"http://121.40.157.200:12345/api/mobile";
 
 
 
-+ (void)getOrderListSuccess:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
++ (void)getOrderListDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
     NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *token = [userDefaultes objectForKey:@"autoken"];
@@ -364,7 +364,7 @@ NSString* const HOST = @"http://121.40.157.200:12345/api/mobile";
     [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
     NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/listUnfinished",HOST];
     
-    [manager GET:URLString parameters:nil progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+    [manager GET:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
         if (success) {
             success(responseObject);
         }

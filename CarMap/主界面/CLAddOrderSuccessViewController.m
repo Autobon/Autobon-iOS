@@ -18,6 +18,7 @@
 {
     UIButton *_submitButton;
     NSTimer *_timer;
+    NSInteger _a;
     
 }
 @end
@@ -43,7 +44,7 @@
     
     [self setViewForSuccess];
     
-    
+    _a = 5;
     
     _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(workBegin) userInfo:nil repeats:YES];
     
@@ -51,10 +52,10 @@
 
 - (void)workBegin{
     
-    static NSInteger a = 5;
-    a--;
-    [_submitButton setTitle:[NSString stringWithFormat:@"开始工作(%ld)",a] forState:UIControlStateNormal];
-    if (a < 0) {
+    
+    _a--;
+    [_submitButton setTitle:[NSString stringWithFormat:@"开始工作(%ld)",_a] forState:UIControlStateNormal];
+    if (_a < 0) {
         [self.navigationController popViewControllerAnimated:NO];
         [_timer invalidate];
         _timer = nil;

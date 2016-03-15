@@ -10,6 +10,9 @@
 #import "GFNavigationView.h"
 #import "GFMyMessageViewController.h"
 #import "UMSocial.h"
+#import "CLHomeOrderViewController.h"
+
+
 
 @interface CLShareViewController ()
 
@@ -112,19 +115,21 @@
 }
 
 - (void)submitBtnClick{
-//    static int a = 1302;
-//    AudioServicesPlaySystemSound(1307);
-//    NSLog(@"---%d---",a);
-//    a++;
-//    1002
-//    1006
+    
+    CLHomeOrderViewController *homeView = [[CLHomeOrderViewController alloc]init];
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeView];
+    window.rootViewController = navigation;
+    navigation.navigationBarHidden = YES;
+    
 }
 
 
-#pragma mark - 工作完成的按钮响应方法
+#pragma mark - 继续接单按钮响应方法
 - (void)workOverBtnClick{
     
-    [self.navigationController popToRootViewControllerAnimated:YES];
+//    [self.navigationController popToRootViewControllerAnimated:YES];
+    
     
 }
 

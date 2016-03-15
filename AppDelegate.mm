@@ -313,7 +313,7 @@
                 [[UIApplication sharedApplication]scheduleLocalNotification:notification];
             }
         }
-    }else if ([responseJSON[@"action"]isEqualToString:@"VERIFICATION_FAILED"] || [responseJSON[@"action"]isEqualToString:@"VERIFICATION_SUCCEED"]||[responseJSON[@"action"]isEqualToString:@"INVITATION_ACCEPTED"]||[responseJSON[@"action"]isEqualToString:@"INVITATION_REJECTED"]){
+    }else if ([responseJSON[@"action"]isEqualToString:@"VERIFICATION_FAILED"] || [responseJSON[@"action"]isEqualToString:@"VERIFICATION_SUCCEED"]||[responseJSON[@"action"]isEqualToString:@"INVITATION_ACCEPTED"]){
         UILocalNotification*notification = [[UILocalNotification alloc] init];
         if (nil != notification)
         {
@@ -325,7 +325,24 @@
             AudioServicesPlaySystemSound(1307);
             [[UIApplication sharedApplication]scheduleLocalNotification:notification];
         }
+    
+    }else if ([responseJSON[@"action"]isEqualToString:@"INVITATION_REJECTED"]){
+        UILocalNotification*notification = [[UILocalNotification alloc] init];
+        if (nil != notification)
+        {
+            notification.fireDate = [NSDate date];
+            _pushDate = [NSDate date];
+            NSLog(@"----_pushDate-%@--%@-----",_pushDate,[NSDate date]);
+            notification.alertTitle = @"车邻邦";
+            notification.alertBody = responseJSON[@"title"];
+            AudioServicesPlaySystemSound(1307);
+            [[UIApplication sharedApplication]scheduleLocalNotification:notification];
+        }
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"NEW_ORDER" object:self userInfo:@{@"INVITATION_REJECTED":@"INVITATION_REJECTED"}];
     }
+    
+    
 //    else if ([responseJSON[@"action"]isEqualToString:@"INVITE_PARTNER"]){
 //        UILocalNotification*notification = [[UILocalNotification alloc] init];
 //        if (nil != notification)
@@ -415,12 +432,16 @@
             if ([userDefaults objectForKey:@"autoken"]) {
                 if (![[userDefaults objectForKey:@"homeOrder"]isEqualToString:@"YES"]) {
                     UIWindow *window = [UIApplication sharedApplication].delegate.window;
+                    
                     CLHomeOrderViewController *homeOrderView = [[CLHomeOrderViewController alloc]init];
-                    window.rootViewController = homeOrderView;
+                    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeOrderView];
+                    navigation.navigationBarHidden = YES;
+                    window.rootViewController = navigation;
                 }
 #warning --发送通知
                 
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"NEW_ORDER" object:self userInfo:responseJSON];
+                [self performSelector:@selector(after:) withObject:responseJSON afterDelay:1.0];
+                
             }
             
         }
@@ -430,6 +451,10 @@
     }
     
     
+}
+
+- (void)after:(NSDictionary *)responseJSON{
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"NEW_ORDER" object:self userInfo:responseJSON];
 }
 
 -(void)btnClick:(UIButton *)button{

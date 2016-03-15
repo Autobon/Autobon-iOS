@@ -13,7 +13,8 @@
 #import "GFHttpTool.h"
 #import "GFTipView.h"
 #import "MYImageView.h"
-
+#import "CLTouchScrollView.h"
+#import "CLShareViewController.h"
 
 
 @interface CLCleanWorkViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextFieldDelegate>
@@ -22,7 +23,7 @@
     UIButton *_cameraBtn;
     NSMutableArray *_imageArray;
     
-    UIScrollView *_scrollView;
+    CLTouchScrollView *_scrollView;
     UITextField *_workTextField;
     
     NSTimer *_timer;
@@ -41,9 +42,9 @@
     _imageArray = [[NSMutableArray alloc]init];
 
     
-    _scrollView = [[UIScrollView alloc]init];
+    _scrollView = [[CLTouchScrollView alloc]init];
     _scrollView.frame = CGRectMake(0, 64+36, self.view.frame.size.width, self.view.frame.size.height-64-38);
-    _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, 700);
+    
     [self.view addSubview:_scrollView];
     
     
@@ -179,7 +180,7 @@
     
     [_scrollView addSubview:workOverButton];
     
-    
+    _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, workOverButton.frame.origin.y + 80);
 }
 
 
@@ -407,7 +408,7 @@
 #pragma mark - 工作完成的按钮响应方法
 - (void)workOverBtnClick{
     
-    
+    [self.view endEditing:YES];
     __block NSString *URLString;
     if (_imageArray.count > 2) {
         [_imageArray enumerateObjectsUsingBlock:^(MYImageView *obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -428,7 +429,12 @@
                 if ([responseObject[@"result"] integerValue] == 1) {
                     [_timer invalidate];
                     _timer = nil;
-                    [self.navigationController popToRootViewControllerAnimated:YES];
+                    CLShareViewController *homeOrder = [[CLShareViewController alloc]init];
+                    
+                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeOrder];
+                    navigation.navigationBarHidden = YES;
+                    window.rootViewController = navigation;
                 }else{
                     [self addAlertView:responseObject[@"message"]];
                 }
@@ -468,6 +474,18 @@
     return YES;
 }
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    
+    _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, _scrollView.contentSize.height + 300);
+    _scrollView.contentOffset = CGPointMake(0, 350);
+}
+
+
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    
+    _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, _scrollView.contentSize.height - 300);
+//    _scrollView.contentOffset = CGPointMake(0, 300);
+}
 
 
 #pragma mark - AlertView

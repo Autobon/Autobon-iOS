@@ -405,14 +405,28 @@
                     CLCleanWorkViewController *cleanWork = [[CLCleanWorkViewController alloc]init];
                     cleanWork.orderId = _orderId;
                     cleanWork.startTime = _startTime;
-                    [self.navigationController pushViewController:cleanWork animated:YES];
+//                    [self.navigationController pushViewController:cleanWork animated:YES];
+                    
+                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:cleanWork];
+                    navigation.navigationBarHidden = YES;
+                    window.rootViewController = navigation;
+                    
+                    
                     
                 }else{
                     CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
                     workOver.orderId = _orderId;
                     workOver.orderType = _orderType;
                     workOver.startTime = _startTime;
-                    [self.navigationController pushViewController:workOver animated:YES];
+                    
+                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:workOver];
+                    navigation.navigationBarHidden = YES;
+                    window.rootViewController = navigation;
+                    
+                    
+//                    [self.navigationController pushViewController:workOver animated:YES];
                 }
                 
                 
@@ -428,7 +442,7 @@
         
         
         }else{
-        [self addAlertView:@"至少上传一张照片"];
+        [self addAlertView:@"至少上传一张照片照片"];
     }
     
     

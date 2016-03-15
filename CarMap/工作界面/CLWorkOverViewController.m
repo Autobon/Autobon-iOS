@@ -17,6 +17,7 @@
 
 
 
+
 @interface CLWorkOverViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     UIView *_chooseView;
@@ -596,7 +597,17 @@
                 if ([responseObject[@"result"] integerValue] == 1) {
                     [_timer invalidate];
                     _timer = nil;
-                    [self.navigationController popToRootViewControllerAnimated:YES];
+                    
+                    CLShareViewController *homeOrder = [[CLShareViewController alloc]init];
+                    
+                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeOrder];
+                    navigation.navigationBarHidden = YES;
+                    window.rootViewController = navigation;
+                    
+                    
+                    
+                    
                 }else{
                     [self addAlertView:responseObject[@"message"]];
                 }

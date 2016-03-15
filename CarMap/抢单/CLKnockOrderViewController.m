@@ -26,7 +26,7 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [[UIColor alloc]initWithWhite:0.1 alpha:0.5];
-    _orderView = [[UIView alloc]initWithFrame:CGRectMake(10, 80, self.view.frame.size.width-20, self.view.frame.size.height-80)];
+    _orderView = [[UIView alloc]initWithFrame:CGRectMake(10, 70, self.view.frame.size.width-20, self.view.frame.size.height-70)];
     _orderView.backgroundColor = [UIColor whiteColor];
     _orderView.layer.borderWidth = 1.0f;
     _orderView.layer.borderColor = [[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1]CGColor];
@@ -47,7 +47,7 @@
 // 添加地图
 - (void)addMap{
     NSDictionary *orderDic = _orderDictionary[@"order"];
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 5, 150, 20)];
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 5, 150, 30)];
     NSArray *array = @[@"隔热层",@"隐形车衣",@"车身改色",@"美容清洁"];
     titleLabel.text = array[[orderDic[@"orderType"] integerValue]-1];
     [_orderView addSubview:titleLabel];
@@ -63,7 +63,7 @@
     [_orderView addSubview:mapVC.view];
     [self addChildViewController:mapVC];
     [mapVC didMoveToParentViewController:self];
-    mapVC.view.frame = CGRectMake(0, 25, _orderView.frame.size.width, _orderView.frame.size.height/3);
+    mapVC.view.frame = CGRectMake(0, 35, _orderView.frame.size.width, _orderView.frame.size.height/3);
     mapVC.mapView.frame = CGRectMake(0, 0, _orderView.frame.size.width, _orderView.frame.size.height/3);
 }
 
@@ -72,7 +72,7 @@
     NSDictionary *orderDic = _orderDictionary[@"order"];
     
     // 距离label
-    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, _orderView.frame.size.height/3+20, self.view.frame.size.width, self.view.frame.size.height/18)];
+    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, _orderView.frame.size.height/3+30, self.view.frame.size.width, self.view.frame.size.height/18)];
     //    distanceLabel.backgroundColor = [UIColor cyanColor];
     _distanceLabel.text = @"距离：  1.3km";
     _distanceLabel.font = [UIFont systemFontOfSize:14];
