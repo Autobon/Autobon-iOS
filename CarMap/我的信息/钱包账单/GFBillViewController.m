@@ -24,6 +24,7 @@
     
     NSInteger page;
     NSInteger pageSize;
+    NSMutableDictionary *_listDictionary;
 }
 
 @property (nonatomic, strong) GFNavigationView *navView;
@@ -32,16 +33,10 @@
 
 @property (nonatomic, strong) UIButton *timeBut;
 @property (nonatomic, strong) UIButton *moneyBut;
-
-
-@property (nonatomic, strong) NSMutableArray *modelArr;
-
 @property (nonatomic, strong) GFBillModel *billModel;
-
-@property (nonatomic, strong) NSMutableArray *monthArr;
 @property (nonatomic, strong) NSMutableArray *yearArr;
 
-@property (nonatomic, strong) NSMutableArray *allArr;
+
 
 @end
 
@@ -97,13 +92,7 @@
 
     NSLog(@"脑袋刷新");
     // 数组初始化并清空数组的元素
-    self.modelArr = [[NSMutableArray alloc] init];
-    
-    self.allArr = [[NSMutableArray alloc] init];
-    
     self.yearArr = [[NSMutableArray alloc] init];
-    
-    self.monthArr = [[NSMutableArray alloc] init];
     
     // 网络请求数据
     NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/bill";
@@ -145,6 +134,10 @@
             NSDictionary *dataDic = responseObject[@"data"];
             // 获取data中List数组
             NSArray *listArr = dataDic[@"list"];
+            
+            _listDictionary = [[NSMutableDictionary alloc]init];
+            NSMutableArray *monthArray;
+            NSString *yearString;
             // 遍历数组  获取时间
             for(int i=0; i<listArr.count; i++) {
                 
@@ -155,81 +148,50 @@
                 [formatter setDateFormat:@"yyyy-MM"];
                 formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
                 NSDate *date = [NSDate dateWithTimeIntervalSince1970:[time integerValue]/1000];
-                NSLog(@"^^^^^^^^^^^^^^^^^^^\n%@\n\n", [formatter stringFromDate:date]);
                 NSString *str = [formatter stringFromDate:date];
-                [self.allArr addObject:str];
-//                NSRange rang1 = NSMakeRange(0, 4);
-//                NSString *yearStr = [str substringWithRange:rang1];
-//                NSLog(@"￥￥￥￥￥￥￥￥￥年\n%@\n", yearStr);
-//                NSRange rang2 = NSMakeRange(5, 2);
-//                NSString *monthStr = [str substringWithRange:rang2];
-//                NSLog(@"￥￥￥￥￥￥￥￥￥月\n%@\n", monthStr);
-                
-//                if(i == 0) {
-//                    
-//                    NSString *time = dic[@"billMonth"];
-//                    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-//                    [formatter setDateFormat:@"yyyy-MM"];
-//                    formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
-//                    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[time integerValue]/1000];
-//                    NSLog(@"^^^^^^^^^^^^^^^^^^^\n%@\n\n", [formatter stringFromDate:date]);
-//                    NSString *str = [formatter stringFromDate:date];
-//                    NSRange rang1 = NSMakeRange(0, 4);
-//                    NSString *yearStr = [str substringWithRange:rang1];
-//                    [self.yearArr addObject:yearStr];
-//                    NSRange rang2 = NSMakeRange(5, 2);
-//                    NSString *monthStr = [str substringWithRange:rang2];
-//                    [self.modelArr addObject:monthStr];
-//                   
-//                    
-//                    
-//                }else {
-//                
-//                    // 获取时间进行分组
-//                    NSString *time = responseObject[@"billMonth"];
-//                    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-//                    [formatter setDateFormat:@"yyyy-MM"];
-//                    formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
-//                    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[time integerValue]/1000];
-//                    NSLog(@"^^^^^^^^^^^^^^^^^^^\n%@\n\n", [formatter stringFromDate:date]);
-//                    NSString *str = [formatter stringFromDate:date];
-//                    NSRange rang1 = NSMakeRange(0, 4);
-//                    NSString *yearStr = [str substringWithRange:rang1];
-//                }
-                
-                
+//                NSLog(@"------str---%@--",str);
+                NSArray *stringArray = [str componentsSeparatedByString:@"-"];
                 
                 self.billModel = [[GFBillModel alloc] init];
                 self.billModel.billId = dic[@"id"];
                 self.billModel.techId = dic[@"techId"];
-                self.billModel.billMonth = dic[@"billMonth"];
+                self.billModel.billMonth = stringArray[1];
                 self.billModel.sum = dic[@"sum"];
                 self.billModel.payed = dic[@"payed"];
                 
-                [self.modelArr addObject:self.billModel];
-            }
-            // 遍历时间数组
-            for(int i=0; i<self.allArr.count; i++) {
-                
-                NSString *timeStr = self.allArr[i];
-                NSRange rang = NSMakeRange(0, 4);
-                NSString *yearStr = [timeStr substringWithRange:rang];
-                
-                if(i == 0) {
+//                NSLog(@"-----month---%@--payed---%@---",_billModel.billMonth,_billModel.sum);
+                if (i == 0) {
+                    monthArray = [[NSMutableArray alloc]init];
+                    [monthArray addObject:self.billModel];
+                }else if (i == listArr.count - 1){
                     
-                    [self.yearArr addObject:yearStr];
-                }else {
-                
-                    NSString *year1 = self.yearArr[self.yearArr.count - 1];
                     
-                    if([yearStr isEqualToString:year1] == NO) {
+                    
+                    [monthArray addObject:self.billModel];
+                    [_listDictionary setObject:monthArray forKey:stringArray[0]];
+                    [_yearArr addObject:stringArray[0]];
+                    
+                    
+                }else{
+                    if ([yearString isEqualToString:stringArray[0]]) {
+                        [monthArray addObject:self.billModel];
+                    }else{
+                        [_listDictionary setObject:monthArray forKey:yearString];
+                        [_yearArr addObject:yearString];
                         
-                        
+                        monthArray = [[NSMutableArray alloc]init];
+                        [monthArray addObject:self.billModel];
                     }
                 }
                 
+                yearString = stringArray[0];
                 
             }
+            
+//            NSLog(@"--_yearArr--%@--listDictionary--%@----",_yearArr,_listDictionary);
+            
+            
+            
             
             [self.tableView reloadData];
             
@@ -269,12 +231,15 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
-    return 3;
+    return _yearArr.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return self.modelArr.count;
+    NSString *year = _yearArr[section];
+    NSArray *monthArray = _listDictionary[year];
+    
+    return monthArray.count;
     
 }
 
@@ -291,10 +256,17 @@
     
     }
 
-    if(indexPath.row == 1) {
-        cell.jiesuanBut.selected = YES;
-    }
+    
 
+    NSString *year = _yearArr[indexPath.section];
+    NSArray *billArray = _listDictionary[year];
+    GFBillModel *billModel = billArray[indexPath.row];
+    cell.jiesuanBut.selected = [billModel.payed integerValue];
+//    NSLog(@"-----month---%@--payed---%@---",billModel.month,billModel.payed);
+    
+    cell.monthLab.text = billModel.billMonth;
+    cell.sumMoneyLab.text = [NSString stringWithFormat:@"￥ %@",billModel.sum];
+    
 //    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     
@@ -340,15 +312,24 @@
     self.timeBut.frame = CGRectMake(jianjv1, 0, (kWidth - jianjv1 * 2) * 0.5, kHeight * 0.053);
     self.timeBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     self.timeBut.titleLabel.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
-    [self.timeBut setTitle:@"2016年" forState:UIControlStateNormal];
+    [self.timeBut setTitle:_yearArr[section] forState:UIControlStateNormal];
     [headView addSubview:self.timeBut];
     [self.timeBut setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
+    NSArray *billArray = _listDictionary[_yearArr[section]];
+    __block NSInteger money = 0;
+    [billArray enumerateObjectsUsingBlock:^(GFBillModel *obj, NSUInteger idx, BOOL *stop) {
+        
+        money = [obj.sum integerValue] + money;
+        
+    }];
+    
     
     self.moneyBut = [UIButton buttonWithType:UIButtonTypeCustom];
     self.moneyBut.frame = CGRectMake(kWidth / 2.0, 0, (kWidth - jianjv1 * 2) * 0.5, kHeight * 0.053);
     self.moneyBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     self.moneyBut.titleLabel.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
-    [self.moneyBut setTitle:@"2016年" forState:UIControlStateNormal];
+    [self.moneyBut setTitle:[NSString stringWithFormat:@"￥ %ld",(long)money] forState:UIControlStateNormal];
     [headView addSubview:self.moneyBut];
     [self.moneyBut setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
