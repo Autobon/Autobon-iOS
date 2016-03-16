@@ -104,5 +104,12 @@
 
 
 
+// 报告实时位置
++ (void)PostReportLocation:(NSDictionary *)dictionary success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+
+
+
+
+
 
 @end

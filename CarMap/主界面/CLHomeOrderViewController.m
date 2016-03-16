@@ -56,24 +56,26 @@
 
 
 - (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     NSUserDefaults *userDefalts = [NSUserDefaults standardUserDefaults];
     [userDefalts setObject:@"YES" forKey:@"homeOrder"];
     [userDefalts synchronize];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:YES];
     NSUserDefaults *userDefalts = [NSUserDefaults standardUserDefaults];
     [userDefalts setObject:@"NO" forKey:@"homeOrder"];
     [userDefalts synchronize];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
-    
+    [super viewDidAppear:YES];
     [self headRefresh];
 }
 
 - (void)viewDidLoad {
-    
+    [super viewDidLoad];
 //    [super viewDidLoad];
 //    self.view.backgroundColor = [UIColor whiteColor];
     NSLog(@"到这里了--%@--",NSHomeDirectory());
@@ -554,6 +556,7 @@
                     
                     orderDetail.action = @"INVITATION_ACCEPTED";
                     orderDetail.secondId = cellModel.mateName;
+                    orderDetail.mainTechId = @"0";
                     [self.navigationController pushViewController:orderDetail animated:YES];
                     
                 }else{
