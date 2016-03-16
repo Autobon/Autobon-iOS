@@ -708,6 +708,38 @@ NSString* const HOST = @"http://121.40.157.200:12345/api/mobile";
 }
 
 
+#pragma mark - 报告实时位置的方法
++ (void)PostReportLocation:(NSDictionary *)dictionary success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *token = [userDefaultes objectForKey:@"autoken"];
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+    //    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/reportLocation",HOST];
+    NSLog(@"-----dicrionary---%@--",dictionary);
+    [manager POST:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+        NSLog(@"-----%@－－－－",responseObject[@"message"]);
+        if(success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"－－－－%@----",error);
+        if(failure) {
+            failure(error);
+        }
+    }];
+    
+}
+
+
+
+
+
+
+
+
+
 
 
 #pragma mark - 判断网络连接情况

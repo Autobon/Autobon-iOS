@@ -238,8 +238,10 @@
                     NSInteger startTime = [constructDic[@"startTime"] integerValue];
                     NSInteger endTime = [constructDic[@"endTime"] integerValue];
                     NSInteger chaTime = endTime - startTime;
-                    NSInteger fenNum = chaTime / 1000 % 60;
-                    NSInteger shiNum = chaTime / 60 / 1000;
+                    
+                    NSInteger fenNum = chaTime/1000 % 60;
+                    NSInteger shiNum = chaTime/1000 / 60;
+
                     if(shiNum > 0) {
                         listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
                     }else {
@@ -259,8 +261,10 @@
                     NSInteger startTime = [constructDic[@"startTime"] integerValue];
                     NSInteger endTime = [constructDic[@"endTime"] integerValue];
                     NSInteger chaTime = endTime - startTime;
-                    NSInteger fenNum = chaTime / 1000 % 60;
-                    NSInteger shiNum = chaTime / 60 / 1000;
+
+                    NSInteger fenNum = chaTime/1000 % 60;
+                    NSInteger shiNum = chaTime/1000 / 60;
+
                     if(shiNum > 0) {
                         listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
                     }else {
@@ -269,6 +273,7 @@
                 }
                 
                 [self.modelArr addObject:listModel];
+
             }
             
             [self.tableview reloadData];

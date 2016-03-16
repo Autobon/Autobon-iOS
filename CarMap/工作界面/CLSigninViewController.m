@@ -16,7 +16,12 @@
 
 
 @interface CLSigninViewController ()
-
+{
+    
+    GFMapViewController *_mapVC;
+    NSTimer *_timer;
+    
+}
 @end
 
 @implementation CLSigninViewController
@@ -78,21 +83,21 @@
 
 // 添加地图
 - (void)addMap{
-    GFMapViewController *mapVC = [[GFMapViewController alloc] init];
+    _mapVC = [[GFMapViewController alloc] init];
     if ([self.customerLat isKindOfClass:[NSNull class]]) {
-        mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30.4,114.4);
+        _mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30.4,114.4);
     }else{
-        mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([self.customerLat floatValue],[self.customerLon floatValue]);
+        _mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([self.customerLat floatValue],[self.customerLon floatValue]);
     }
-    mapVC.distanceBlock = ^(double distance) {
+    _mapVC.distanceBlock = ^(double distance) {
         NSLog(@"距离－－%f--",distance);
     };
     
-    [self.view addSubview:mapVC.view];
-    [self addChildViewController:mapVC];
-    [mapVC didMoveToParentViewController:self];
-    mapVC.view.frame = CGRectMake(0, 64+36, self.view.frame.size.width, self.view.frame.size.height/3);
-    mapVC.mapView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height/3);
+    [self.view addSubview:_mapVC.view];
+    [self addChildViewController:_mapVC];
+    [_mapVC didMoveToParentViewController:self];
+    _mapVC.view.frame = CGRectMake(0, 64+36, self.view.frame.size.width, self.view.frame.size.height/3);
+    _mapVC.mapView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height/3);
     
     
     UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height/3+64+36, self.view.frame.size.width, 60)];
@@ -110,8 +115,19 @@
     
     [self.view addSubview:signinButton];
     
+    if (_timer == nil) {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(UserLocation) userInfo:nil repeats:YES];
+    }
+    
     
 }
+
+#pragma mark - 调用地图的定位方法
+- (void)UserLocation{
+    [_mapVC startUserLocationService];
+}
+
+
 
 // 签到按钮的响应方法
 - (void)signinBtnClick{
@@ -127,6 +143,8 @@
             workBefore.orderType = _orderType;
             workBefore.startTime = _startTime;
             [self.navigationController pushViewController:workBefore animated:YES];
+            [_timer invalidate];
+            _timer == nil;
         }
     } failure:^(NSError *error) {
         NSLog(@"--qiandao---%@--",error);

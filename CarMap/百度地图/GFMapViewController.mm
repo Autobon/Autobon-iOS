@@ -8,6 +8,8 @@
 
 #import "GFMapViewController.h"
 #import <UIKit/UIKit.h>
+#import "GFHttpTool.h"
+
 
 // 百度地图类库
 #import "BMKMapManager.h"
@@ -257,9 +259,22 @@
 //         _mapView.zoomLevel = _mapView.zoomLevel - 0.3;
     }
     
+    [self.locationService stopUserLocationService];
+    
+}
+
+#pragma mark - 定位方法，发送定位信息
+- (void)startUserLocationService{
+    [self.locationService startUserLocationService];
+    
+    [GFHttpTool PostReportLocation:@{@"rtpostionLon":@(self.workerPointAnno.coordinate.longitude),@"rtpositionLat":@(self.workerPointAnno.coordinate.latitude)} success:^(NSDictionary *responseObject) {
+        NSLog(@"------%@-----%@----",responseObject,responseObject[@"message"]);
+    } failure:^(NSError *error) {
+        NSLog(@"----失败原因----%@---",error);
+    }];
     
     
-    
+}
     
     
     
@@ -333,7 +348,7 @@
 //         num = 5;
         
 //    }
-}
+//}
 
 
 

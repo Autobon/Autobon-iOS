@@ -219,7 +219,8 @@
                 label2.layer.cornerRadius = 10;
                 label2.clipsToBounds = YES;
                 [_scrollView addSubview:label2];
-            label3.hidden = YES;
+            label3.text = @"已接单";
+
         }else{
             UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(90, lineView4.frame.origin.y + 4, 80, 30)];
             label2.text = _secondId;
@@ -229,8 +230,8 @@
             label2.layer.cornerRadius = 10;
             label2.clipsToBounds = YES;
             [_scrollView addSubview:label2];
-            label3.text = @"已接单";
-//            label3.hidden = YES;
+//            label3.text = @"已接单";
+            label3.hidden = YES;
         }
         
         
