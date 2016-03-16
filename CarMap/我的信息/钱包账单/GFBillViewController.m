@@ -26,6 +26,8 @@
     NSInteger pageSize;
 }
 
+@property (nonatomic, strong) NSMutableDictionary *monthDic;
+
 @property (nonatomic, strong) GFNavigationView *navView;
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -73,6 +75,21 @@
 }
 
 - (void)_setView {
+    
+    self.monthDic = [[NSMutableDictionary alloc] init];
+    self.monthDic[@"01"] = @"一月";
+    self.monthDic[@"02"] = @"二月";
+    self.monthDic[@"03"] = @"三月";
+    self.monthDic[@"04"] = @"四月";
+    self.monthDic[@"05"] = @"五月";
+    self.monthDic[@"06"] = @"六月";
+    self.monthDic[@"07"] = @"七月";
+    self.monthDic[@"08"] = @"八月";
+    self.monthDic[@"09"] = @"九月";
+    self.monthDic[@"10"] = @"十月";
+    self.monthDic[@"11"] = @"十一月";
+    self.monthDic[@"12"] = @"十二月";
+    
     
     page = 1;
     pageSize = 20;
