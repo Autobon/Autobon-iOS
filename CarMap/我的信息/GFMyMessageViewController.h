@@ -10,4 +10,11 @@
 
 @interface GFMyMessageViewController : UIViewController
 
+
+@property (nonatomic, strong) NSString *bank;
+@property (nonatomic, strong) NSString *bankCardNo;
+@property (nonatomic, strong) NSString *balance;
+@property (nonatomic, strong) NSString *name;
+
+
 @end

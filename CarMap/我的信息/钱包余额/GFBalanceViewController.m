@@ -12,6 +12,7 @@
 #import "GFHttpTool.h"
 #import "GFBankCardViewController.h"
 
+#import "GFIndentModel.h"
 
 @interface GFBalanceViewController () <GFBankCardViewControllerDelegate> {
     
@@ -74,15 +75,13 @@
     self.upMoneyLab = [[UILabel alloc] initWithFrame:CGRectMake(upMoneyLabX, upMoneyLabY, upMoneyLabW, upMoneyLabH)];
     self.upMoneyLab.backgroundColor = [UIColor whiteColor];
     self.upMoneyLab.textAlignment = NSTextAlignmentCenter;
-    self.upMoneyLab.text = @"100.32元";
+    self.upMoneyLab.text = [NSString stringWithFormat:@"%@元", self.balance];
     self.upMoneyLab.font = [UIFont systemFontOfSize:28 / 320.0 * kWidth];
     [self.view addSubview:self.upMoneyLab];
     // 边线
     UIView *lineView1 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.upMoneyLab.frame) - 1, kWidth, 1)];
     lineView1.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
     [self.view addSubview:lineView1];
-    
-    
     
     
     // 银行卡栏
@@ -99,7 +98,7 @@
     CGFloat bankLabX = jianjv1;
     CGFloat bankLabY = 3;
     self.bankLab = [[UILabel alloc] initWithFrame:CGRectMake(bankLabX, bankLabY, bankLabW, bankLabH)];
-    self.bankLab.text = @"农业银行";
+    self.bankLab.text = self.bank;
     self.bankLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
     [bankView addSubview:self.bankLab];
     // 银行卡号Lab
@@ -108,7 +107,7 @@
     CGFloat cardLabX = bankLabX;
     CGFloat cardLabY = CGRectGetMaxY(self.bankLab.frame);
     self.cardLab = [[UILabel alloc] initWithFrame:CGRectMake(cardLabX, cardLabY, cardLabW, cardLabH)];
-    self.cardLab.text = @"8888888888888888";
+    self.cardLab.text = self.bankCardNo;
     self.cardLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
     [bankView addSubview:self.cardLab];
     // 边线
@@ -127,7 +126,6 @@
     bankBut.frame = CGRectMake(bankButX, bankButY, bankButW, bankButH);
     [bankView addSubview:bankBut];
     [bankBut addTarget:self action:@selector(bankButClick) forControlEvents:UIControlEventTouchUpInside];
-    
     
     
     // 结算时间Lab
@@ -172,6 +170,8 @@
     self.bankCardVC.bankStr = self.bankLab.text;
     self.bankCardVC.bankCard = self.cardLab.text;
     
+    self.bankCardVC.name = self.name;
+    
     [self.navigationController pushViewController:self.bankCardVC animated:YES];
 
 }
@@ -180,6 +180,7 @@
 
     self.bankLab.text = bankCardVC.bankStr;
     self.cardLab.text = bankCardVC.bankCard;
+    
     
 }
 

@@ -31,4 +31,7 @@
 @property (nonatomic, strong) GFTextField *cardTxt;
 
 
+@property (nonatomic, strong) NSString *name;
+
+
 @end

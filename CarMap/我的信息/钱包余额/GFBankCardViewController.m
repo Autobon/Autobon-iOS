@@ -12,6 +12,8 @@
 #import "GFTextField.h"
 #import "GFTipView.h"
 #import "GFSignInViewController.h"
+#import "GFMyMessageViewController.h"
+#import "GFBalanceViewController.h"
 
 @interface GFBankCardViewController () {
     
@@ -96,6 +98,7 @@
     line1.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
     [baseView addSubview:line1];
     
+    
     // 姓名
     CGFloat nameViewW = kWidth;
     CGFloat nameViewH = kHeight * 0.083;
@@ -106,7 +109,7 @@
     [self.view addSubview:nameView];
     // 姓名Lab
     self.nameLab = [[UILabel alloc] initWithFrame:CGRectMake(jiange1, 0, 200, nameViewH)];
-    self.nameLab.text = @"陈光法";
+    self.nameLab.text = self.name;
     self.nameLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
     self.nameLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
     [nameView addSubview:self.nameLab];
@@ -206,12 +209,12 @@
     // 提交修改银行卡信息按钮
     NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/changeBankCard";
     NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
-//    parDic[@"name"] = self.nameLab.text;
-//    parDic[@"bank"] = self.bankArr[index];
-//    parDic[@"bankCardNo"] = self.cardTxt.centerTxt.text;
-    parDic[@"name"] = @"陈光法";
-    parDic[@"bank"] = @"建设";
-    parDic[@"bankCardNo"] = @"621700287000250683";
+    parDic[@"name"] = self.nameLab.text;
+    parDic[@"bank"] = self.bankArr[index];
+    parDic[@"bankCardNo"] = self.cardTxt.centerTxt.text;
+//    parDic[@"name"] = @"陈光法";
+//    parDic[@"bank"] = @"建设";
+//    parDic[@"bankCardNo"] = @"621700287000250683";
 
     
     
@@ -221,7 +224,6 @@
 
     BOOL cardFlage = [self checkCardNo:self.cardTxt.centerTxt.text];
     if(cardFlage == NO) {
-
         
         GFTipView *tipView = [[GFTipView alloc] initWithNormalHeightWithMessage:@"请输入正确地银行卡号" withViewController:self withShowTimw:1.5];
         [tipView tipViewShow];
@@ -230,12 +232,9 @@
         // 提交修改银行卡信息按钮
         NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/changeBankCard";
         NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
-        //    parDic[@"name"] = self.nameLab.text;
         parDic[@"bank"] = self.bankArr[index];
         parDic[@"bankCardNo"] = self.cardTxt.centerTxt.text;
         parDic[@"name"] = @"Www";
-        //    parDic[@"bank"] = @"建设银行";
-        //    parDic[@"bankCardNo"] = @"6217002870051374625";
         
         
         [GFHttpTool bankCardPost:url parameters:parDic success:^(id responseObject) {
@@ -277,13 +276,11 @@
     
     
     
-//    self.bankStr = self.bankArr[index];
-//    self.bankCard = self.cardTxt.centerTxt.text;
-//    
-//
-//    [self.delegate changeBankCardViewController:self];
-//    
-//    [self.navigationController popViewControllerAnimated:YES];
+    self.bankStr = self.bankArr[index];
+    self.bankCard = self.cardTxt.centerTxt.text;
+    
+
+    
     
 }
 
@@ -307,12 +304,28 @@
 //}
 - (void)VCpush {
 
-    UIWindow *window = [UIApplication sharedApplication].delegate.window;
-    UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:[[GFSignInViewController alloc] init]];
-    navVC.navigationBarHidden = YES;
-    window.backgroundColor = [UIColor colorWithRed:252 / 255.0 green:252 / 255.0 blue:252 / 255.0 alpha:1];
-    window.rootViewController = navVC;
-    [window makeKeyAndVisible];
+//    NSLog(@"%@", self.navigationController.viewControllers);
+    
+    GFMyMessageViewController *myMsgVC = (GFMyMessageViewController *)self.navigationController.viewControllers[(self.navigationController.viewControllers.count - 3)];
+//    GFBalanceViewController *balanceVC = (GFBalanceViewController *)self.navigationController.viewControllers[(self.navigationController.viewControllers.count - 2)];
+    myMsgVC.bank = self.bankName;
+    myMsgVC.bankCardNo = self.cardTxt.centerTxt.text;
+    
+//    balanceVC.bank = self.bankName;
+//    balanceVC.bankCardNo = self.cardTxt.centerTxt.text;
+    
+    
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    [self.delegate changeBankCardViewController:self];
+
+//    UIWindow *window = [UIApplication sharedApplication].delegate.window;
+//    UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:[[GFSignInViewController alloc] init]];
+//    navVC.navigationBarHidden = YES;
+//    window.backgroundColor = [UIColor colorWithRed:252 / 255.0 green:252 / 255.0 blue:252 / 255.0 alpha:1];
+//    window.rootViewController = navVC;
+//    [window makeKeyAndVisible];
 }
 
 
