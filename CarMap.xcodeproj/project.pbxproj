@@ -48,6 +48,7 @@
 		866CCEC01C755BC800E50C67 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 866CCEB71C755BC800E50C67 /* AFURLResponseSerialization.m */; };
 		866CCEC11C755BC800E50C67 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 866CCEB91C755BC800E50C67 /* AFURLSessionManager.m */; };
 		866CCEC21C755BC800E50C67 /* GFHttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 866CCEBB1C755BC800E50C67 /* GFHttpTool.m */; };
+		8673FDBA1C98F33900666634 /* GFBillModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8673FDB91C98F33900666634 /* GFBillModel.m */; };
 		868B0F111C7EA5AE00938665 /* GFBalanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 868B0F091C7EA5AE00938665 /* GFBalanceViewController.m */; };
 		868B0F121C7EA5AE00938665 /* GFBankCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 868B0F0B1C7EA5AE00938665 /* GFBankCardViewController.m */; };
 		868B0F131C7EA5AE00938665 /* GFBillTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 868B0F0E1C7EA5AE00938665 /* GFBillTableViewCell.m */; };
@@ -221,6 +222,8 @@
 		866CCEB91C755BC800E50C67 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
 		866CCEBA1C755BC800E50C67 /* GFHttpTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFHttpTool.h; sourceTree = "<group>"; };
 		866CCEBB1C755BC800E50C67 /* GFHttpTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFHttpTool.m; sourceTree = "<group>"; };
+		8673FDB81C98F33900666634 /* GFBillModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFBillModel.h; sourceTree = "<group>"; };
+		8673FDB91C98F33900666634 /* GFBillModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFBillModel.m; sourceTree = "<group>"; };
 		868B0F081C7EA5AE00938665 /* GFBalanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFBalanceViewController.h; sourceTree = "<group>"; };
 		868B0F091C7EA5AE00938665 /* GFBalanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFBalanceViewController.m; sourceTree = "<group>"; };
 		868B0F0A1C7EA5AE00938665 /* GFBankCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFBankCardViewController.h; sourceTree = "<group>"; };
@@ -576,6 +579,8 @@
 			children = (
 				868B0F0F1C7EA5AE00938665 /* GFBillViewController.h */,
 				868B0F101C7EA5AE00938665 /* GFBillViewController.m */,
+				8673FDB81C98F33900666634 /* GFBillModel.h */,
+				8673FDB91C98F33900666634 /* GFBillModel.m */,
 				868B0F0D1C7EA5AE00938665 /* GFBillTableViewCell.h */,
 				868B0F0E1C7EA5AE00938665 /* GFBillTableViewCell.m */,
 				868B0F151C7EA63A00938665 /* GFBillDetailsViewController.h */,
@@ -1130,6 +1135,7 @@
 				865637E41C8425A100BE7D8D /* GFTransformViewController.m in Sources */,
 				9B7AEEC71C740992003B1126 /* CLTitleView.m in Sources */,
 				860A4CBB1C7ED9780067FB70 /* MJRefreshBackNormalFooter.m in Sources */,
+				8673FDBA1C98F33900666634 /* GFBillModel.m in Sources */,
 				866CCEC11C755BC800E50C67 /* AFURLSessionManager.m in Sources */,
 				86B890F51C73355B0068B95D /* GFForgetPwdViewController_2.m in Sources */,
 				9B93BF291C89548800397078 /* UIButton+WebCache.m in Sources */,
@@ -1202,11 +1208,8 @@
 				9B771FA41C87E34C005E8567 /* CLAddOrderSuccessViewController.m in Sources */,
 				860A4CBF1C7ED9780067FB70 /* MJRefreshStateHeader.m in Sources */,
 				9B8BA6DE1C7FF66000E90CB0 /* CLPersonTableViewCell.m in Sources */,
-
 				864C70E81C854637004B06B5 /* GFTestViewController.m in Sources */,
 				9B771FA11C87E16A005E8567 /* Reachability.m in Sources */,
-
-
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

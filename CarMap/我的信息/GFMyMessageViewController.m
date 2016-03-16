@@ -28,10 +28,13 @@
     
     CGFloat jianjv1;
     CGFloat jianjv2;
+
     
 }
 
 @property (nonatomic, strong) GFNavigationView *navView;
+
+
 
 
 @end
@@ -468,6 +471,12 @@
             NSString *balance = dataDic[@"balance"];
             NSString *unpaidOrders = dataDic[@"unpaidOrders"];
             
+            
+            self.bank = dataDic[@"bank"];
+            self.bankCardNo = dataDic[@"bankCardNo"];
+            self.balance = balance;
+            self.name = name;
+            
             NSLog(@"\n%@\n%@\n%@\n%@\n%@\n%@\n", idPhoto, name, starRate, totalOrders, balance, unpaidOrders);
             
             // 头像
@@ -563,6 +572,10 @@
 
     NSLog(@"余额栏界面");
     GFBalanceViewController *balVC = [[GFBalanceViewController alloc] init];
+    balVC.bank = self.bank;
+    balVC.bankCardNo = self.bankCardNo;
+    balVC.balance = self.balance;
+    balVC.name = self.name;
     [self.navigationController pushViewController:balVC animated:YES];
 }
 // 账单界面跳转

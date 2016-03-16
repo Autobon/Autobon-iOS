@@ -8,13 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+
+
+
 //@class GFBankCardViewController;
 @interface GFBalanceViewController : UIViewController
 
 
 
+@property (nonatomic, strong) NSString *bank;
+@property (nonatomic, strong) NSString *bankCardNo;
+@property (nonatomic, strong) NSString *balance;
+@property (nonatomic, strong) NSString *name;
 
-@property (nonatomic, strong) NSString *moneyNum;
 //@property (nonatomic, strong) NSString 
 
 @end
