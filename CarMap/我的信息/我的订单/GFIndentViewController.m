@@ -20,6 +20,8 @@
 
 #import "GFIndentModel.h"
 
+#import "GFNothingView.h"
+
 @interface GFIndentViewController () {
     
     CGFloat kWidth;
@@ -47,6 +49,8 @@
 @property (nonatomic, strong) UIView *lineView;
 
 @property (nonatomic, strong) NSMutableArray *workItemArr;
+
+@property (nonatomic, strong) GFNothingView *nothingView;
 
 @end
 
@@ -89,6 +93,8 @@
     
     self.modelArr = [[NSMutableArray alloc] init];
     
+    
+    
     // 负责人横条
     CGFloat baseViewW = kWidth;
     CGFloat baseViewH = kHeight * 0.0651;
@@ -97,6 +103,9 @@
     UIView *baseView = [[UIView alloc] initWithFrame:CGRectMake(baseViewX, baseViewY, baseViewW, baseViewH)];
     baseView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:baseView];
+    
+    
+    
     // 主负责人
     UIButton *mainBut = [UIButton buttonWithType:UIButtonTypeCustom];
     mainBut.frame = CGRectMake(0, 0, baseViewW / 2.0, baseViewH);
@@ -147,11 +156,19 @@
     [self.view addSubview:self.tableview];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    self.nothingView = [[GFNothingView alloc] initWithImageName:@"NoOrder" withTipString:@"暂无订单" withSubtipString:nil];
+//    UIWindow *window = [UIApplication sharedApplication].delegate.window;
+    [self.view addSubview:self.nothingView];
+//    [self.tableview addSubview:self.nothingView];
+    
     self.tableview.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
     self.tableview.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     
     [self.tableview.header beginRefreshing];
 //    [self.tableview.footer beginRefreshing];
+    
+    
+    
     
 }
 
@@ -221,6 +238,13 @@
             NSDictionary *dataDic = responseObject[@"data"];
             
             NSArray *listArr = dataDic[@"list"];
+            
+            if(listArr.count > 0) {
+                self.nothingView.hidden = YES;
+//                [self.nothingView removeFromSuperview];
+            }else {
+                self.nothingView.hidden = NO;
+            }
             
 //            NSLog(@"%@*******", listArr);
             

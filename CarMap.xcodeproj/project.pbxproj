@@ -41,6 +41,7 @@
 		865637E71C84261F00BE7D8D /* GFQualifieTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 865637E61C84261F00BE7D8D /* GFQualifieTableViewCell.m */; };
 		865637EA1C84264000BE7D8D /* GFTrainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 865637E91C84264000BE7D8D /* GFTrainTableViewCell.m */; };
 		865637ED1C84265E00BE7D8D /* GFTransformTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 865637EC1C84265E00BE7D8D /* GFTransformTableViewCell.m */; };
+		865EB95E1C9A59D600B045C7 /* GFNothingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 865EB95D1C9A59D600B045C7 /* GFNothingView.m */; };
 		866CCEBC1C755BC800E50C67 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 866CCEAE1C755BC800E50C67 /* AFHTTPSessionManager.m */; };
 		866CCEBD1C755BC800E50C67 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 866CCEB11C755BC800E50C67 /* AFNetworkReachabilityManager.m */; };
 		866CCEBE1C755BC800E50C67 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 866CCEB31C755BC800E50C67 /* AFSecurityPolicy.m */; };
@@ -208,6 +209,8 @@
 		865637E91C84264000BE7D8D /* GFTrainTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFTrainTableViewCell.m; sourceTree = "<group>"; };
 		865637EB1C84265E00BE7D8D /* GFTransformTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFTransformTableViewCell.h; sourceTree = "<group>"; };
 		865637EC1C84265E00BE7D8D /* GFTransformTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFTransformTableViewCell.m; sourceTree = "<group>"; };
+		865EB95C1C9A59D600B045C7 /* GFNothingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFNothingView.h; sourceTree = "<group>"; };
+		865EB95D1C9A59D600B045C7 /* GFNothingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFNothingView.m; sourceTree = "<group>"; };
 		866CCEAD1C755BC800E50C67 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		866CCEAE1C755BC800E50C67 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
 		866CCEAF1C755BC800E50C67 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
@@ -589,6 +592,8 @@
 				868B0F161C7EA63A00938665 /* GFBillDetailsViewController.m */,
 				868B0F181C7EA6FA00938665 /* GFBillDetailsTableViewCell.h */,
 				868B0F191C7EA6FA00938665 /* GFBillDetailsTableViewCell.m */,
+				865EB95C1C9A59D600B045C7 /* GFNothingView.h */,
+				865EB95D1C9A59D600B045C7 /* GFNothingView.m */,
 			);
 			path = "钱包账单";
 			sourceTree = "<group>";
@@ -1160,6 +1165,7 @@
 				860A4CB51C7ED9780067FB70 /* MJRefreshFooter.m in Sources */,
 				860A4CC21C7ED9780067FB70 /* UIScrollView+MJExtension.m in Sources */,
 				9B3FCD0F1C929FC300E871C7 /* GFNoIndentTableViewCell.m in Sources */,
+				865EB95E1C9A59D600B045C7 /* GFNothingView.m in Sources */,
 				86B890F41C73355B0068B95D /* GFForgetPwdViewController_1.m in Sources */,
 				860A4CC41C7ED9780067FB70 /* UIView+MJExtension.m in Sources */,
 				866CCEBC1C755BC800E50C67 /* AFHTTPSessionManager.m in Sources */,

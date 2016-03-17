@@ -116,7 +116,7 @@
         downLine.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
         [baseView addSubview:downLine];
         
-        UIView *line_1 = [[UIView alloc] initWithFrame:CGRectMake(photoImgViewX, CGRectGetMaxY(self.numberLab.frame), photoImgViewW, 1)];
+        UIView *line_1 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.numberLab.frame), kWidth, 1)];
         line_1.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
         [baseView addSubview:line_1];
         

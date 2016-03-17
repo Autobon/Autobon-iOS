@@ -14,6 +14,7 @@
 #import "GFBillDetailsViewController.h"
 #import "GFBillModel.h"
 #import "MJRefresh.h"
+#import "GFNothingView.h"
 
 @interface GFBillViewController () {
     
@@ -37,6 +38,7 @@
 @property (nonatomic, strong) UIButton *moneyBut;
 @property (nonatomic, strong) GFBillModel *billModel;
 @property (nonatomic, strong) NSMutableArray *yearArr;
+@property (nonatomic, strong) GFNothingView *nothingView;
 
 
 
@@ -85,6 +87,10 @@
     self.monthDic[@"11"] = @"十一月";
     self.monthDic[@"12"] = @"十二月";
     
+    // 无数据提示页
+    self.nothingView = [[GFNothingView alloc] initWithImageName:@"Nothing.png" withTipString:@"暂无账单" withSubtipString:@"本页为月账单显示页"];
+    [self.view addSubview:self.nothingView];
+    
     
     page = 1;
     pageSize = 2;
@@ -100,8 +106,13 @@
     self.tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
     self.tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     
+    
+    
     [self.tableView.header beginRefreshing];
 //    [self.tableView.footer beginRefreshing];
+    
+    
+    
     
 }
 
@@ -128,6 +139,12 @@
             NSDictionary *dataDic = responseObject[@"data"];
             // 获取data中List数组
             NSArray *listArr = dataDic[@"list"];
+            
+            // 添加无数据背景
+            if(listArr.count > 0) {
+                self.nothingView.hidden = YES;
+                [self.nothingView removeFromSuperview];
+            }
             
             _listDictionary = [[NSMutableDictionary alloc]init];
             NSMutableArray *monthArray;
@@ -233,6 +250,8 @@
             NSDictionary *dataDic = responseObject[@"data"];
             // 获取data中List数组
             NSArray *listArr = dataDic[@"list"];
+            
+            
             
             _listDictionary = [[NSMutableDictionary alloc]init];
             NSMutableArray *monthArray;
