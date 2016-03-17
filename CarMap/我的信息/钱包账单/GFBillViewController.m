@@ -70,7 +70,7 @@
 - (void)_setView {
     
     page = 1;
-    pageSize = 20;
+    pageSize = 2;
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kWidth, kHeight - 64) style:UITableViewStylePlain];
     [self.view addSubview:self.tableView];
@@ -84,7 +84,7 @@
     self.tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     
     [self.tableView.header beginRefreshing];
-//    [self.tableView.footer beginRefreshing];
+    [self.tableView.footer beginRefreshing];
     
 }
 
@@ -93,124 +93,10 @@
     NSLog(@"脑袋刷新");
     // 数组初始化并清空数组的元素
     self.yearArr = [[NSMutableArray alloc] init];
+    _listDictionary = [[NSMutableDictionary alloc]init];
+    page = 1;
     
-    // 网络请求数据
-    NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/bill";
-    NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
-    parDic[@"page"] = [NSString stringWithFormat:@"%ld", page];
-    parDic[@"pageSize"] = [NSString stringWithFormat:@"%ld", pageSize];
-    [GFHttpTool billGet:url parameters:parDic success:^(id responseObject) {
-        
-        NSInteger flage = [responseObject[@"result"] integerValue];
-        
-        if(flage == 1) {
-            
-            NSLog(@"请求成功##########%@", responseObject);
-            
-//            NSString *time = @"1435680000000";
-//            NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-//            //                [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-//            [formatter setDateFormat:@"yyyy-MM"];
-//            formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
-//            NSDate *date = [NSDate dateWithTimeIntervalSince1970:[time integerValue]/1000];
-//            NSLog(@"^^^^^^^^^^^^^^^^^^^\n%@\n\n", [formatter stringFromDate:date]);
-            
-            // 获取时间进行分组
-            //                    NSString *time = responseObject[@"billMonth"];
-//            NSString *time = @"1435680000000";
-//            NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-//            [formatter setDateFormat:@"yyyy-MM"];
-//            formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
-//            NSDate *date = [NSDate dateWithTimeIntervalSince1970:[time integerValue]/1000];
-//            NSLog(@"^^^^^^^^^^^^^^^^^^^\n%@\n\n", [formatter stringFromDate:date]);
-//            NSString *str = [formatter stringFromDate:date];
-//             NSLog(@"^^^^^^^^^^^^^^^^^^^\n%@\n\n", str);
-//            
-//            NSRange rang = NSMakeRange(0, 4);
-//            NSString *yearStr = [str substringWithRange:rang];
-//            NSLog(@"￥￥￥￥￥￥￥￥￥年\n%@", yearStr);
-            
-            // 获取data字典
-            NSDictionary *dataDic = responseObject[@"data"];
-            // 获取data中List数组
-            NSArray *listArr = dataDic[@"list"];
-            
-            _listDictionary = [[NSMutableDictionary alloc]init];
-            NSMutableArray *monthArray;
-            NSString *yearString;
-            // 遍历数组  获取时间
-            for(int i=0; i<listArr.count; i++) {
-                
-                NSDictionary *dic = listArr[i];
-                
-                NSString *time = dic[@"billMonth"];
-                NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-                [formatter setDateFormat:@"yyyy-MM"];
-                formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
-                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[time integerValue]/1000];
-                NSString *str = [formatter stringFromDate:date];
-//                NSLog(@"------str---%@--",str);
-                NSArray *stringArray = [str componentsSeparatedByString:@"-"];
-                
-                self.billModel = [[GFBillModel alloc] init];
-                self.billModel.billId = dic[@"id"];
-                self.billModel.techId = dic[@"techId"];
-                self.billModel.billMonth = stringArray[1];
-                self.billModel.sum = dic[@"sum"];
-                self.billModel.payed = dic[@"payed"];
-                
-//                NSLog(@"-----month---%@--payed---%@---",_billModel.billMonth,_billModel.sum);
-                if (i == 0) {
-                    monthArray = [[NSMutableArray alloc]init];
-                    [monthArray addObject:self.billModel];
-                }else if (i == listArr.count - 1){
-                    
-                    
-                    
-                    [monthArray addObject:self.billModel];
-                    [_listDictionary setObject:monthArray forKey:stringArray[0]];
-                    [_yearArr addObject:stringArray[0]];
-                    
-                    
-                }else{
-                    if ([yearString isEqualToString:stringArray[0]]) {
-                        [monthArray addObject:self.billModel];
-                    }else{
-                        [_listDictionary setObject:monthArray forKey:yearString];
-                        [_yearArr addObject:yearString];
-                        
-                        monthArray = [[NSMutableArray alloc]init];
-                        [monthArray addObject:self.billModel];
-                    }
-                }
-                
-                yearString = stringArray[0];
-                
-            }
-            
-//            NSLog(@"--_yearArr--%@--listDictionary--%@----",_yearArr,_listDictionary);
-            
-            
-            
-            
-            [self.tableView reloadData];
-            
-            
-        }else {
-        
-            NSLog(@"请求失败");
-            
-        }
-        
-        
-    } failure:^(NSError *error) {
-        
-        
-        NSLog(@"网络请求失败=====%@", error);
-        
-    }];
-    
-    
+    [self tableViewHttp];
     
     [self.tableView.header endRefreshing];
     
@@ -220,7 +106,193 @@
 
     NSLog(@"大脚刷新");
     
+    page = page + 1;
+    [self tableViewHttp];
+    
     [self.tableView.footer endRefreshing];
+}
+
+
+- (void)tableViewHttp{
+    
+    // 网络请求数据
+    NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/bill";
+    NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
+    parDic[@"page"] = [NSString stringWithFormat:@"%ld", page];
+    parDic[@"pageSize"] = [NSString stringWithFormat:@"%ld", pageSize];
+    [GFHttpTool billGet:url parameters:parDic success:^(id responseObject) {
+        
+        NSLog(@"----parDic--%@----responseObject--%@--",parDic,responseObject);
+        
+        
+        
+        NSInteger flage = [responseObject[@"result"] integerValue];
+        if(flage == 1) {
+            // 获取data字典
+            NSDictionary *dataDic = responseObject[@"data"];
+            // 获取data中List数组
+            NSArray *listArr = dataDic[@"list"];
+            NSMutableArray *monthArray;
+            NSString *yearString;
+            // 遍历数组  获取时间
+            for(int i=0; i<listArr.count; i++) {
+                NSDictionary *dic = listArr[i];
+                
+                NSString *time = dic[@"billMonth"];
+                NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+                [formatter setDateFormat:@"yyyy-MM"];
+                formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[time integerValue]/1000];
+                NSString *str = [formatter stringFromDate:date];
+                //                NSLog(@"------str---%@--",str);
+                NSArray *stringArray = [str componentsSeparatedByString:@"-"];
+                
+                self.billModel = [[GFBillModel alloc] init];
+                self.billModel.billId = dic[@"id"];
+                self.billModel.techId = dic[@"techId"];
+                self.billModel.billMonth = stringArray[1];
+                self.billModel.sum = dic[@"sum"];
+                self.billModel.payed = dic[@"payed"];
+                
+                
+                if (_listDictionary.allKeys.count == 0) {
+                    
+                    if (listArr.count == 1) {
+                        
+                        [_listDictionary setObject:@[self.billModel] forKey:stringArray[0]];
+                        [_yearArr addObject:stringArray[0]];
+                        
+                    }else{
+                        
+                        
+                        if (i == 0) {
+                            monthArray = [[NSMutableArray alloc]init];
+                            [monthArray addObject:self.billModel];
+                        }else if (i == listArr.count - 1){
+                            
+                            if ([yearString isEqualToString:stringArray[0]]) {
+                                [monthArray addObject:self.billModel];
+                                [_listDictionary setObject:monthArray forKey:stringArray[0]];
+                                if (![_yearArr containsObject:stringArray[0]]) {
+                                    [_yearArr addObject:stringArray[0]];
+                                }
+                            }else{
+                                [_listDictionary setObject:monthArray forKey:yearString];
+                                if (![_yearArr containsObject:stringArray[0]]) {
+                                    [_yearArr addObject:yearString];
+                                }
+                                monthArray = [[NSMutableArray alloc]init];
+                                [monthArray addObject:self.billModel];
+                                [_listDictionary setObject:monthArray forKey:stringArray[0]];
+                                [_yearArr addObject:stringArray[0]];
+                                
+                            }
+                            
+                        }else{
+                            if ([yearString isEqualToString:stringArray[0]]) {
+                                [monthArray addObject:self.billModel];
+                            }else{
+                                [_listDictionary setObject:monthArray forKey:yearString];
+                                [_yearArr addObject:yearString];
+                                
+                                monthArray = [[NSMutableArray alloc]init];
+                                [monthArray addObject:self.billModel];
+                            }
+                        }
+                        
+                        yearString = stringArray[0];
+                        
+                    }
+                }else{
+                    
+                     NSLog(@"---year--%@--_list--%@--",_yearArr,_listDictionary);
+                    
+                    if (i == 0) {
+                        
+                        if ([_yearArr containsObject:stringArray[0]]) {
+                           monthArray = [[NSMutableArray alloc]initWithArray:[_listDictionary objectForKey:stringArray[0]]];
+                        }else{
+                            monthArray = [[NSMutableArray alloc]init];
+                        }
+                    }
+                    if (listArr.count == 1) {
+                        [monthArray addObject:self.billModel];
+                        [_listDictionary setObject:monthArray forKey:stringArray[0]];
+                        if (![_yearArr containsObject:stringArray[0]]) {
+                            [_yearArr addObject:stringArray[0]];
+                        }
+                    }else{
+                        
+                        if (i == 0) {
+                            [monthArray addObject:self.billModel];
+                            
+                        }else if (i == listArr.count - 1){
+                            
+                            if ([yearString isEqualToString:stringArray[0]]) {
+                                [monthArray addObject:self.billModel];
+                                [_listDictionary setObject:monthArray forKey:stringArray[0]];
+                                if ([_yearArr containsObject:stringArray[0]]) {
+                                    
+                                }else{
+                                    [_yearArr addObject:stringArray[0]];
+                                }
+                                 NSLog(@"---year--%@--_list--%@--",_yearArr,_listDictionary);
+                            }else{
+                                [_listDictionary setObject:monthArray forKey:yearString];
+                                if ([_yearArr containsObject:stringArray[0]]) {
+                                    
+                                }else{
+                                    [_yearArr addObject:stringArray[0]];
+                                }
+                                 NSLog(@"---year--%@--_list--%@--",_yearArr,_listDictionary);
+                                monthArray = [[NSMutableArray alloc]init];
+                                [monthArray addObject:self.billModel];
+                                [_listDictionary setObject:monthArray forKey:stringArray[0]];
+                                if ([_yearArr containsObject:stringArray[0]]) {
+                                    
+                                }else{
+                                    [_yearArr addObject:stringArray[0]];
+                                }
+                                 NSLog(@"---year--%@--_list--%@--",_yearArr,_listDictionary);
+                            }
+                            
+                        }else{
+                            if ([yearString isEqualToString:stringArray[0]]) {
+                                [monthArray addObject:self.billModel];
+                            }else{
+                                [_listDictionary setObject:monthArray forKey:yearString];
+                                if ([_yearArr containsObject:stringArray[0]]) {
+                                    
+                                }else{
+                                    [_yearArr addObject:stringArray[0]];
+                                }
+                                
+                                monthArray = [[NSMutableArray alloc]init];
+                                [monthArray addObject:self.billModel];
+                            }
+                        }
+                        
+                        yearString = stringArray[0];
+                    }
+                    
+                    
+                }
+            }
+                
+            NSLog(@"---year--%@--_list--%@--",_yearArr,_listDictionary);
+                
+            [self.tableView reloadData];
+        }else {
+            NSLog(@"请求失败");
+        }
+        
+    } failure:^(NSError *error) {
+   
+        NSLog(@"网络请求失败=====%@", error);
+        
+    }];
+    
+    
 }
 
 
@@ -261,13 +333,14 @@
     NSString *year = _yearArr[indexPath.section];
     NSArray *billArray = _listDictionary[year];
     GFBillModel *billModel = billArray[indexPath.row];
+    NSLog(@"-----month---%@--payed---%@--%@-",billModel.month,billModel.payed,indexPath);
     cell.jiesuanBut.selected = [billModel.payed integerValue];
-//    NSLog(@"-----month---%@--payed---%@---",billModel.month,billModel.payed);
+    
     
     cell.monthLab.text = billModel.billMonth;
     cell.sumMoneyLab.text = [NSString stringWithFormat:@"￥ %@",billModel.sum];
     
-//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
     
     
     return cell;

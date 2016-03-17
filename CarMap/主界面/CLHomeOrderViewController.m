@@ -146,7 +146,11 @@
                 cellModel.orderPhotoURL = obj[@"photo"];
                 cellModel.customerLat = obj[@"positionLat"];
                 cellModel.customerLon = obj[@"positionLon"];
-                cellModel.remark = obj[@"remark"];
+                if ([obj[@"remark"] isKindOfClass:[NSNull class]]) {
+                    cellModel.remark = @" ";
+                }else{
+                    cellModel.remark = obj[@"remark"];
+                }
                 cellModel.status = obj[@"status"];
                 NSDictionary *mainTechDictionary = obj[@"mainTech"];
                 
@@ -173,7 +177,7 @@
                 }else{
                     NSLog(@"我是次技师");
                     NSDictionary *secondDictionary = obj[@"mainTech"];
-//                    cellModel.mateName = secondDictionary[@"name"];
+                    cellModel.mateName = secondDictionary[@"name"];
                     if (![obj[@"secondConstruct"] isKindOfClass:[NSNull class]]) {
                         NSDictionary *mainDictionary = obj[@"secondConstruct"];
                         cellModel.startTime = mainDictionary[@"startTime"];

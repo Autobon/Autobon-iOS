@@ -135,12 +135,7 @@
     workButton.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
     [self.view addSubview:workButton];
     
-    if ([_action isEqualToString:@"INVITE_PARTNER"]) {
-        [addButton setTitle:@"拒绝" forState:UIControlStateNormal];
-        [addButton addTarget:self action:@selector(orderDisagree) forControlEvents:UIControlEventTouchUpInside];
-        [workButton addTarget:self action:@selector(orderAgree) forControlEvents:UIControlEventTouchUpInside];
-        [workButton setTitle:@"接受" forState:UIControlStateNormal];
-    }else if ([_action isEqualToString:@"TAKEN_UP"] || [_action isEqualToString:@"INVITATION_REJECTED"]){
+    if ([_action isEqualToString:@"TAKEN_UP"] || [_action isEqualToString:@"INVITATION_REJECTED"]){
         [addButton setTitle:@"+合作人" forState:UIControlStateNormal];
         [addButton addTarget:self action:@selector(addBtnClick) forControlEvents:UIControlEventTouchUpInside];
         
@@ -150,6 +145,27 @@
     }else if ([_action isEqualToString:@"SEND_INVITATION"]){
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         UILabel *label3 = [[UILabel alloc]init];
+        lineView4.frame = CGRectMake(0, otherLabel.frame.origin.y + otherLabel.frame.size.height+3, self.view.frame.size.width, 1);
+        UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView4.frame.origin.y + 4, 85, 30)];
+        label1.text = @"合 作 人 ：";
+        [_scrollView addSubview:label1];
+        UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(90, lineView4.frame.origin.y + 4, 80, 30)];
+        label2.text = _secondId;
+        label2.textAlignment = NSTextAlignmentCenter;
+        label2.textColor = [UIColor whiteColor];
+        label2.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+        label2.layer.cornerRadius = 10;
+        label2.clipsToBounds = YES;
+        [_scrollView addSubview:label2];
+        
+        label3.frame = CGRectMake(self.view.frame.size.width-80, lineView4.frame.origin.y + 4, 70, 30);
+        label3.textAlignment = NSTextAlignmentLeft;
+        label3.textColor = [UIColor colorWithRed:152/255.0 green:152/255.0 blue:152/255.0 alpha:1.0];
+        [_scrollView addSubview:label3];
+        lineView4.hidden = NO;
+        
+        
+        
         if ([[userDefaults objectForKey:@"userId"] integerValue] == [_mainTechId integerValue]) {
             [addButton setTitle:@"+合作人" forState:UIControlStateNormal];
             [addButton addTarget:self action:@selector(addBtnClick) forControlEvents:UIControlEventTouchUpInside];
@@ -158,48 +174,25 @@
             [workButton setTitle:@"开始工作" forState:UIControlStateNormal];
             label3.text = @"待确认";
         }else{
+            
+            
+            label1.frame = CGRectMake(10, lineView2.frame.origin.y+4, 85, 30);
+            label1.text = @"主 技 师：";
+            label2.frame = CGRectMake(90, lineView2.frame.origin.y+4, 85, 30);
+            label2.backgroundColor = [UIColor whiteColor];
+            label2.textColor = [UIColor blackColor];
+            timeLabel.frame = CGRectMake(10, lineView3.frame.origin.y+4, self.view.frame.size.width, self.view.frame.size.height/18);
+            lineView4.frame = CGRectMake(0, timeLabel.frame.size.height + timeLabel.frame.origin.y, self.view.frame.size.width, 1);
+            otherLabel.frame = CGRectMake(10, lineView4.frame.origin.y+4, self.view.frame.size.width-20, detailSize.height);
+            
+            
             [addButton setTitle:@"拒绝" forState:UIControlStateNormal];
             [addButton addTarget:self action:@selector(orderDisagree) forControlEvents:UIControlEventTouchUpInside];
             [workButton addTarget:self action:@selector(orderAgree) forControlEvents:UIControlEventTouchUpInside];
             [workButton setTitle:@"接受" forState:UIControlStateNormal];
         
         }
-        lineView4.frame = CGRectMake(0, otherLabel.frame.origin.y + otherLabel.frame.size.height+3, self.view.frame.size.width, 1);
-        UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView4.frame.origin.y + 4, 85, 30)];
-        label1.text = @"合 作 人 ：";
-        [_scrollView addSubview:label1];
         
-        NSLog(@"_mainTechid--%@--",_mainTechId);
-        if (_mainTechId) {
-            
-                UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(90, lineView4.frame.origin.y + 4, 80, 30)];
-                label2.text = _secondId;
-                label2.textAlignment = NSTextAlignmentCenter;
-                label2.textColor = [UIColor whiteColor];
-                label2.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-                label2.layer.cornerRadius = 10;
-                label2.clipsToBounds = YES;
-                [_scrollView addSubview:label2];
-
-        }else{
-            UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(90, lineView4.frame.origin.y + 4, 80, 30)];
-            label2.text = _secondId;
-            label2.textAlignment = NSTextAlignmentCenter;
-            label2.textColor = [UIColor whiteColor];
-            label2.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-            label2.layer.cornerRadius = 10;
-            label2.clipsToBounds = YES;
-            [_scrollView addSubview:label2];
-            
-        }
-        
-        
-
-        label3.frame = CGRectMake(self.view.frame.size.width-80, lineView4.frame.origin.y + 4, 70, 30);
-        label3.textAlignment = NSTextAlignmentLeft;
-        label3.textColor = [UIColor colorWithRed:152/255.0 green:152/255.0 blue:152/255.0 alpha:1.0];
-        [_scrollView addSubview:label3];
-        lineView4.hidden = NO;
         
     }else if ([_action isEqualToString:@"INVITATION_ACCEPTED"]){
         UILabel *label3 = [[UILabel alloc]init];
@@ -254,9 +247,9 @@
 
     }
     if (lineView4.hidden) {
-        _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, lineView4.frame.origin.y+1);
+        _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, lineView3.frame.origin.y+1+detailSize.height+self.view.frame.size.height/18);
     }else{
-        _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, lineView4.frame.origin.y+1+40);
+        _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, lineView3.frame.origin.y+1+detailSize.height+self.view.frame.size.height/18+15);
     }
     
 }
@@ -272,7 +265,6 @@
 #pragma mark - 开始工作按钮的响应方法
 - (void)workBtnClick{
     NSLog(@"开始工作按钮");
-    
     
     [GFHttpTool postOrderStart:@{@"orderId":_orderId} Success:^(NSDictionary *responseObject) {
         NSLog(@"----responseObject--%@",responseObject);
