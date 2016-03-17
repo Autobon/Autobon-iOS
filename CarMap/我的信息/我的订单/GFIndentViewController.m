@@ -46,6 +46,8 @@
 
 @property (nonatomic, strong) UIView *lineView;
 
+@property (nonatomic, strong) NSMutableArray *workItemArr;
+
 @end
 
 @implementation GFIndentViewController
@@ -73,6 +75,8 @@
 }
 
 - (void)_setView {
+    
+    self.workItemArr = [[NSMutableArray alloc] init];
     
     mainUrl = @"http://121.40.157.200:12345/api/mobile/technician/order/listMain";
     seconderUrl = @"http://121.40.157.200:12345/api/mobile/technician/order/listSecond";
@@ -446,8 +450,23 @@
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:[model.signinTime integerValue]/1000];
     cell.timeLab.text = [NSString stringWithFormat:@"施工时间：%@", [formatter stringFromDate:date]];
     // 施工部位
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"WorkItemDic" ofType:@"plist"];
+    NSDictionary *dic = [NSDictionary dictionaryWithContentsOfFile:path];
+    NSString *workItemsStr = [[NSString alloc] init];
+    NSArray *strArr = [model.workItems componentsSeparatedByString:@","];
+    for(NSString *str in strArr) {
+        if(workItemsStr.length == 0) {
+            workItemsStr = [NSString stringWithFormat:@"%@", dic[str]];
+        }else {
+            workItemsStr = [NSString stringWithFormat:@"%@,%@", workItemsStr, dic[str]];
+        }
+    }
     
+    NSLog(@"%@", strArr);
     
+    cell.placeLab.text = [NSString stringWithFormat:@"施工部位：%@", workItemsStr];
+    
+    [self.workItemArr addObject:workItemsStr];
     
 
     
@@ -468,6 +487,7 @@
     
     GFIndentDetailsViewController *indentDeVC = [[GFIndentDetailsViewController alloc] init];
     indentDeVC.model = self.modelArr[indexPath.row];
+    indentDeVC.workItems = self.workItemArr[indexPath.row];
     [self.navigationController pushViewController:indentDeVC animated:YES];
 }
 

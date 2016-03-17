@@ -46,6 +46,11 @@
         self.numberLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
         [baseView addSubview:self.numberLab];
         
+        // 竖条
+        UIView *shuView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 4 / 320.0 * kWidth, numberLabH)];
+        shuView.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+        [baseView addSubview:shuView];
+        
         // 金额
         CGFloat moneyLabW = 200;
         CGFloat moneyLabH = numberLabH / 2.0;
@@ -129,6 +134,18 @@
 
 }
 
+- (void)setWorkItems:(NSString *)workItems {
+    
+    self.workItems = workItems;
+
+    if(workItems != nil) {
+        
+        
+        
+    }
+    
+    
+}
 
 - (void)awakeFromNib {
     // Initialization code

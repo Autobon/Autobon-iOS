@@ -467,9 +467,21 @@
             NSString *idPhoto = dataDic[@"idPhoto"];
             NSString *name = dataDic[@"name"];
             NSString *starRate = dataDic[@"starRate"];
+            if([starRate isKindOfClass:[NSNull class]]) {
+                starRate = [NSString stringWithFormat:@"0"];
+            }
             NSString *totalOrders = dataDic[@"totalOrders"];
+            if([totalOrders isKindOfClass:[NSNull class]]) {
+                totalOrders = [NSString stringWithFormat:@"0"];
+            }
             NSString *balance = dataDic[@"balance"];
+            if([balance isKindOfClass:[NSNull class]]) {
+                balance = [NSString stringWithFormat:@"0"];
+            }
             NSString *unpaidOrders = dataDic[@"unpaidOrders"];
+            if([unpaidOrders isKindOfClass:[NSNull class]]) {
+                unpaidOrders = [NSString stringWithFormat:@"0"];
+            }
             
             
             self.bank = dataDic[@"bank"];
