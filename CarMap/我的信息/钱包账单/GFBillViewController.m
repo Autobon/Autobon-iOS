@@ -27,6 +27,8 @@
     NSMutableDictionary *_listDictionary;
 }
 
+@property (nonatomic, strong) NSMutableDictionary *monthDic;
+
 @property (nonatomic, strong) GFNavigationView *navView;
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -68,6 +70,21 @@
 }
 
 - (void)_setView {
+    
+    self.monthDic = [[NSMutableDictionary alloc] init];
+    self.monthDic[@"01"] = @"一月";
+    self.monthDic[@"02"] = @"二月";
+    self.monthDic[@"03"] = @"三月";
+    self.monthDic[@"04"] = @"四月";
+    self.monthDic[@"05"] = @"五月";
+    self.monthDic[@"06"] = @"六月";
+    self.monthDic[@"07"] = @"七月";
+    self.monthDic[@"08"] = @"八月";
+    self.monthDic[@"09"] = @"九月";
+    self.monthDic[@"10"] = @"十月";
+    self.monthDic[@"11"] = @"十一月";
+    self.monthDic[@"12"] = @"十二月";
+    
     
     page = 1;
     pageSize = 2;
@@ -128,6 +145,7 @@
         
         NSInteger flage = [responseObject[@"result"] integerValue];
         if(flage == 1) {
+
             // 获取data字典
             NSDictionary *dataDic = responseObject[@"data"];
             // 获取data中List数组
@@ -144,7 +162,7 @@
                 formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
                 NSDate *date = [NSDate dateWithTimeIntervalSince1970:[time integerValue]/1000];
                 NSString *str = [formatter stringFromDate:date];
-                //                NSLog(@"------str---%@--",str);
+
                 NSArray *stringArray = [str componentsSeparatedByString:@"-"];
                 
                 self.billModel = [[GFBillModel alloc] init];
@@ -154,8 +172,16 @@
                 self.billModel.sum = dic[@"sum"];
                 self.billModel.payed = dic[@"payed"];
                 
+
                 
                 if (_listDictionary.allKeys.count == 0) {
+
+                if (i == 0) {
+                    monthArray = [[NSMutableArray alloc]init];
+                    [monthArray addObject:self.billModel];
+                }else if (i == listArr.count - 1){
+                    
+                    
                     
                     if (listArr.count == 1) {
                         
@@ -203,6 +229,7 @@
                         yearString = stringArray[0];
                         
                     }
+                }
                 }else{
                     
                      NSLog(@"---year--%@--_list--%@--",_yearArr,_listDictionary);
@@ -293,7 +320,10 @@
     }];
     
     
+    [self.tableView.header endRefreshing];
+    
 }
+
 
 
 - (void)leftButClick {
@@ -337,7 +367,7 @@
     cell.jiesuanBut.selected = [billModel.payed integerValue];
     
     
-    cell.monthLab.text = billModel.billMonth;
+    cell.monthLab.text = self.monthDic[billModel.billMonth];
     cell.sumMoneyLab.text = [NSString stringWithFormat:@"￥ %@",billModel.sum];
     
 

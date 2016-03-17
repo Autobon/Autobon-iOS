@@ -61,9 +61,10 @@
         self.monthLab.font = [UIFont systemFontOfSize:16 / 320.0 * kWidth];
         
         
-        CGFloat sumMoneyLabW = monthLabW;
+        CGFloat sumMoneyLabW = kWidth - (kWidth * 0.046) * 2;
         CGFloat sumMoneyLabH = monthLabH;
-        CGFloat sumMoneyLabX = CGRectGetMaxX(self.monthLab.frame);
+//        CGFloat sumMoneyLabX = CGRectGetMaxX(self.monthLab.frame);
+        CGFloat sumMoneyLabX = kWidth * 0.046;
         CGFloat sumMoneyLabY = 0;
         self.sumMoneyLab = [[UILabel alloc] initWithFrame:CGRectMake(sumMoneyLabX, sumMoneyLabY, sumMoneyLabW, sumMoneyLabH)];
         self.sumMoneyLab.textAlignment = NSTextAlignmentRight;
