@@ -125,7 +125,6 @@
     page = 1;
     
     [self tableViewHttp];
-//>>>>>>> CLmaster
     
     [self.tableView.header endRefreshing];
     
