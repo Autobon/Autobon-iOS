@@ -64,6 +64,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+     [[SDImageCache sharedImageCache] clearDisk];
     _skillArray = [[NSMutableArray alloc]init];
     _bankArray = @[@"农业银行",@"招商银行",@"建设银行",@"广发银行",@"中信银行",@"光大银行",@"民生银行",@"普发银行",@"工商银行",@"中国银行",@"交通银行",@"邮政储蓄银行"];
     [self setNavigation];
@@ -102,6 +103,8 @@
                 _bankNumberTextField.centerTxt.text = dataDic[@"bankCardNo"];
                 
 
+               
+                
                 [_headButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345%@",dataDic[@"avatar"]]] forState:UIControlStateNormal];
                 
                 [_identityButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"idPhoto"]]] forState:UIControlStateNormal];

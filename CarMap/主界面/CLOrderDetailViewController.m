@@ -366,8 +366,8 @@
 }
 - (void)backBtnClick{
     
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    
+//    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

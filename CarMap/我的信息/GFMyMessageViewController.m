@@ -464,7 +464,7 @@
             
             NSDictionary *dataDic = responseObject[@"data"];
             
-            NSString *idPhoto = dataDic[@"idPhoto"];
+            NSString *idPhoto = dataDic[@"avatar"];
             NSString *name = dataDic[@"name"];
             NSString *starRate = dataDic[@"starRate"];
             if([starRate isKindOfClass:[NSNull class]]) {
