@@ -310,8 +310,7 @@
         self.timeLab.hidden = NO;
         sender.userInteractionEnabled = NO;
         
-        // 计时器
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(showTime) userInfo:nil repeats:YES];
+        
         
         // 获取验证码
         NSString *url = @"http://121.40.157.200:12345/api/mobile/verifySms";
@@ -325,16 +324,19 @@
             NSInteger flage = [responseObject[@"result"] integerValue];
             
             if(flage == 1) {
-                
+                // 计时器
+                if (self.timer == nil) {
+                    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(showTime) userInfo:nil repeats:YES];
+                }
                 [self tipShow:@"验证码已发送到您手机"];
             }else {
-            
+                sender.userInteractionEnabled = YES;
                 [self tipShow:@"获取验证码失败"];
             }
             
             
         } failure:^(NSError *error) {
-            
+            sender.userInteractionEnabled = YES;
             NSLog(@"获取验证码失败  %@", error);
             
         }];

@@ -365,8 +365,7 @@
         sender.frame = CGRectMake(verifyButOriW - verifyButNewW, 0, strRect.size.width + 20 / 320.0 * kWidth, kHeight * 0.037);
         [sender setTitle:nameStr forState:UIControlStateNormal];
         sender.userInteractionEnabled = NO;
-        // 计时器
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(showTime) userInfo:nil repeats:YES];
+        
 
         
         NSString *url = @"http://121.40.157.200:12345/api/mobile/verifySms";
@@ -378,17 +377,20 @@
             NSInteger flage = [responseObject[@"result"] integerValue];
             
             if(flage == 1) {
-                
+                // 计时器
+                if (self.timer == nil) {
+                    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(showTime) userInfo:nil repeats:YES];
+                }
                 NSLog(@"获取验证码成功======\n%@", responseObject);
                 [self tipShow:@"验证码已发送到您手机"];
             }else {
             
                 [self tipShow:@"获取验证码失败"];
+                sender.userInteractionEnabled = YES;
             }
             
-            
         } failure:^(NSError *error) {
-            
+            sender.userInteractionEnabled = YES;
             NSLog(@"获取验证码失败  %@", error);
             [self tipShow:@"获取验证码失败"];
             

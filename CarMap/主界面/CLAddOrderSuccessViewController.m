@@ -45,8 +45,10 @@
     [self setViewForSuccess];
     
     _a = 5;
+    if (_timer == nil) {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(workBegin) userInfo:nil repeats:YES];
+    }
     
-    _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(workBegin) userInfo:nil repeats:YES];
     
 }
 

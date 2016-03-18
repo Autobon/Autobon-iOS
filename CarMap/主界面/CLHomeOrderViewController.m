@@ -439,7 +439,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
-        return 85;
+        return 0;
     }else{
         return 75 + [UIScreen mainScreen].bounds.size.width*5/12;
     }
@@ -457,10 +457,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
    
     if (indexPath.row == 0) {
-        CLTitleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"title"];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"title"];
         if (cell == nil) {
-            cell = [[CLTitleTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"title"];
-            [cell initWithTitle];
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"title"];
+//            [cell initWithTitle];
         }
         return cell;
     }else{

@@ -352,7 +352,9 @@
                     UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
                     window.rootViewController = navigation;
                     navigation.navigationBarHidden = YES;
-                    [userDefaults setObject:dataDic[@"avatar"] forKey:@"userHeadImage"];
+                    if (![dataDic[@"avatar"] isKindOfClass:[NSNull class]]) {
+                        [userDefaults setObject:dataDic[@"avatar"] forKey:@"userHeadImage"];
+                    }
                     [userDefaults setObject:dataDic[@"bank"] forKey:@"userBank"];
                     [userDefaults setObject:dataDic[@"bankCardNo"] forKey:@"userBankCardNo"];
                     [userDefaults setObject:dataDic[@"id"] forKey:@"userId"];
