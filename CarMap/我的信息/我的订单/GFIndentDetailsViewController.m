@@ -259,7 +259,7 @@
     shigongLab.text = @"施工部位：";
     shigongLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
     [baseView2 addSubview:shigongLab];
-    NSString *buweiStr = @"就发来上课就发顺丰嘎哈是嘎哈是否伽sdhfkljahskdfjakshdgjdhfagjks师瓜灵魂搜噶看时间回复尕乱收费伽师打个卡还是家里怪兽的话覅";
+    NSString *buweiStr = self.workItems;
     NSMutableDictionary *buweiDic = [[NSMutableDictionary alloc] init];
     buweiDic[NSFontAttributeName] = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
     buweiDic[NSForegroundColorAttributeName] = [UIColor blackColor];

@@ -20,6 +20,8 @@
 
 #import "GFIndentModel.h"
 
+#import "GFNothingView.h"
+
 @interface GFIndentViewController () {
     
     CGFloat kWidth;
@@ -45,6 +47,10 @@
 @property (nonatomic, strong) UITableView *tableview;
 
 @property (nonatomic, strong) UIView *lineView;
+
+@property (nonatomic, strong) NSMutableArray *workItemArr;
+
+@property (nonatomic, strong) GFNothingView *nothingView;
 
 @end
 
@@ -74,6 +80,8 @@
 
 - (void)_setView {
     
+    self.workItemArr = [[NSMutableArray alloc] init];
+    
     mainUrl = @"http://121.40.157.200:12345/api/mobile/technician/order/listMain";
     seconderUrl = @"http://121.40.157.200:12345/api/mobile/technician/order/listSecond";
     curUrl = mainUrl;
@@ -85,6 +93,8 @@
     
     self.modelArr = [[NSMutableArray alloc] init];
     
+    
+    
     // 负责人横条
     CGFloat baseViewW = kWidth;
     CGFloat baseViewH = kHeight * 0.0651;
@@ -93,6 +103,9 @@
     UIView *baseView = [[UIView alloc] initWithFrame:CGRectMake(baseViewX, baseViewY, baseViewW, baseViewH)];
     baseView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:baseView];
+    
+    
+    
     // 主负责人
     UIButton *mainBut = [UIButton buttonWithType:UIButtonTypeCustom];
     mainBut.frame = CGRectMake(0, 0, baseViewW / 2.0, baseViewH);
@@ -143,11 +156,19 @@
     [self.view addSubview:self.tableview];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    self.nothingView = [[GFNothingView alloc] initWithImageName:@"NoOrder" withTipString:@"暂无订单" withSubtipString:nil];
+//    UIWindow *window = [UIApplication sharedApplication].delegate.window;
+    [self.view addSubview:self.nothingView];
+//    [self.tableview addSubview:self.nothingView];
+    
     self.tableview.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
     self.tableview.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     
     [self.tableview.header beginRefreshing];
 //    [self.tableview.footer beginRefreshing];
+    
+    
+    
     
 }
 
@@ -217,6 +238,13 @@
             NSDictionary *dataDic = responseObject[@"data"];
             
             NSArray *listArr = dataDic[@"list"];
+            
+            if(listArr.count > 0) {
+                self.nothingView.hidden = YES;
+//                [self.nothingView removeFromSuperview];
+            }else {
+                self.nothingView.hidden = NO;
+            }
             
 //            NSLog(@"%@*******", listArr);
             
@@ -446,8 +474,23 @@
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:[model.signinTime integerValue]/1000];
     cell.timeLab.text = [NSString stringWithFormat:@"施工时间：%@", [formatter stringFromDate:date]];
     // 施工部位
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"WorkItemDic" ofType:@"plist"];
+    NSDictionary *dic = [NSDictionary dictionaryWithContentsOfFile:path];
+    NSString *workItemsStr = [[NSString alloc] init];
+    NSArray *strArr = [model.workItems componentsSeparatedByString:@","];
+    for(NSString *str in strArr) {
+        if(workItemsStr.length == 0) {
+            workItemsStr = [NSString stringWithFormat:@"%@", dic[str]];
+        }else {
+            workItemsStr = [NSString stringWithFormat:@"%@,%@", workItemsStr, dic[str]];
+        }
+    }
     
+    NSLog(@"%@", strArr);
     
+    cell.placeLab.text = [NSString stringWithFormat:@"施工部位：%@", workItemsStr];
+    
+    [self.workItemArr addObject:workItemsStr];
     
 
     
@@ -468,6 +511,7 @@
     
     GFIndentDetailsViewController *indentDeVC = [[GFIndentDetailsViewController alloc] init];
     indentDeVC.model = self.modelArr[indexPath.row];
+    indentDeVC.workItems = self.workItemArr[indexPath.row];
     [self.navigationController pushViewController:indentDeVC animated:YES];
 }
 

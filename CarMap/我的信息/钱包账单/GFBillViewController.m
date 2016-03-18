@@ -14,6 +14,7 @@
 #import "GFBillDetailsViewController.h"
 #import "GFBillModel.h"
 #import "MJRefresh.h"
+#import "GFNothingView.h"
 
 @interface GFBillViewController () {
     
@@ -37,6 +38,7 @@
 @property (nonatomic, strong) UIButton *moneyBut;
 @property (nonatomic, strong) GFBillModel *billModel;
 @property (nonatomic, strong) NSMutableArray *yearArr;
+@property (nonatomic, strong) GFNothingView *nothingView;
 
 
 
@@ -85,6 +87,10 @@
     self.monthDic[@"11"] = @"十一月";
     self.monthDic[@"12"] = @"十二月";
     
+    // 无数据提示页
+    self.nothingView = [[GFNothingView alloc] initWithImageName:@"Nothing.png" withTipString:@"暂无账单" withSubtipString:@"本页为月账单显示页"];
+    [self.view addSubview:self.nothingView];
+    
     
     page = 1;
     pageSize = 2;
@@ -100,8 +106,13 @@
     self.tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
     self.tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     
+    
+    
     [self.tableView.header beginRefreshing];
     [self.tableView.footer beginRefreshing];
+    
+    
+    
     
 }
 
@@ -113,7 +124,108 @@
     _listDictionary = [[NSMutableDictionary alloc]init];
     page = 1;
     
+//<<<<<<< HEAD
+    // 网络请求数据
+    NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/bill";
+    NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
+    parDic[@"page"] = [NSString stringWithFormat:@"%ld", page];
+    parDic[@"pageSize"] = [NSString stringWithFormat:@"%ld", pageSize];
+    [GFHttpTool billGet:url parameters:parDic success:^(id responseObject) {
+        
+        NSInteger flage = [responseObject[@"result"] integerValue];
+        
+        if(flage == 1) {
+            
+            NSLog(@"请求成功##########%@", responseObject);
+            
+            // 获取data字典
+            NSDictionary *dataDic = responseObject[@"data"];
+            // 获取data中List数组
+            NSArray *listArr = dataDic[@"list"];
+            
+            // 添加无数据背景
+            if(listArr.count > 0) {
+                self.nothingView.hidden = YES;
+                [self.nothingView removeFromSuperview];
+            }
+            
+            _listDictionary = [[NSMutableDictionary alloc]init];
+            NSMutableArray *monthArray;
+            NSString *yearString;
+            // 遍历数组  获取时间
+            for(int i=0; i<listArr.count; i++) {
+                
+                NSDictionary *dic = listArr[i];
+                
+                NSString *time = dic[@"billMonth"];
+                NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+                [formatter setDateFormat:@"yyyy-MM"];
+                formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[time integerValue]/1000];
+                NSString *str = [formatter stringFromDate:date];
+                NSArray *stringArray = [str componentsSeparatedByString:@"-"];
+                
+                self.billModel = [[GFBillModel alloc] init];
+                self.billModel.billId = dic[@"id"];
+                self.billModel.techId = dic[@"techId"];
+                self.billModel.billMonth = stringArray[1];
+                self.billModel.sum = dic[@"sum"];
+                self.billModel.payed = dic[@"payed"];
+                
+                if (i == 0) {
+                    monthArray = [[NSMutableArray alloc]init];
+                    [monthArray addObject:self.billModel];
+                }else if (i == listArr.count - 1){
+                    
+                    
+                    
+                    [monthArray addObject:self.billModel];
+                    [_listDictionary setObject:monthArray forKey:stringArray[0]];
+                    [_yearArr addObject:stringArray[0]];
+                    
+                    
+                }else{
+                    if ([yearString isEqualToString:stringArray[0]]) {
+                        [monthArray addObject:self.billModel];
+                    }else{
+                        [_listDictionary setObject:monthArray forKey:yearString];
+                        [_yearArr addObject:yearString];
+                        
+                        monthArray = [[NSMutableArray alloc]init];
+                        [monthArray addObject:self.billModel];
+                    }
+                }
+                
+                yearString = stringArray[0];
+                
+            }
+            
+//            NSLog(@"--_yearArr--%@--listDictionary--%@----",_yearArr,_listDictionary);
+            
+            
+            
+            
+            [self.tableView reloadData];
+            
+            
+        }else {
+        
+            NSLog(@"请求失败");
+            
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+        
+        NSLog(@"网络请求失败=====%@", error);
+        
+    }];
+    
+    
+//=======
     [self tableViewHttp];
+//>>>>>>> CLmaster
     
     [self.tableView.header endRefreshing];
     
@@ -150,6 +262,13 @@
             NSDictionary *dataDic = responseObject[@"data"];
             // 获取data中List数组
             NSArray *listArr = dataDic[@"list"];
+//<<<<<<< HEAD
+            
+            
+            
+            _listDictionary = [[NSMutableDictionary alloc]init];
+//=======
+//>>>>>>> CLmaster
             NSMutableArray *monthArray;
             NSString *yearString;
             // 遍历数组  获取时间

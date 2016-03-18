@@ -18,4 +18,7 @@
 @property (nonatomic, strong) UILabel *timeLab;
 @property (nonatomic, strong) UILabel *placeLab;
 
+
+@property (nonatomic, strong) NSString *workItems;
+
 @end

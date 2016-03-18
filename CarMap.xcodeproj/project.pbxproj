@@ -41,6 +41,7 @@
 		865637E71C84261F00BE7D8D /* GFQualifieTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 865637E61C84261F00BE7D8D /* GFQualifieTableViewCell.m */; };
 		865637EA1C84264000BE7D8D /* GFTrainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 865637E91C84264000BE7D8D /* GFTrainTableViewCell.m */; };
 		865637ED1C84265E00BE7D8D /* GFTransformTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 865637EC1C84265E00BE7D8D /* GFTransformTableViewCell.m */; };
+		865EB95E1C9A59D600B045C7 /* GFNothingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 865EB95D1C9A59D600B045C7 /* GFNothingView.m */; };
 		866CCEBC1C755BC800E50C67 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 866CCEAE1C755BC800E50C67 /* AFHTTPSessionManager.m */; };
 		866CCEBD1C755BC800E50C67 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 866CCEB11C755BC800E50C67 /* AFNetworkReachabilityManager.m */; };
 		866CCEBE1C755BC800E50C67 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 866CCEB31C755BC800E50C67 /* AFSecurityPolicy.m */; };
@@ -49,6 +50,7 @@
 		866CCEC11C755BC800E50C67 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 866CCEB91C755BC800E50C67 /* AFURLSessionManager.m */; };
 		866CCEC21C755BC800E50C67 /* GFHttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 866CCEBB1C755BC800E50C67 /* GFHttpTool.m */; };
 		8673FDBA1C98F33900666634 /* GFBillModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8673FDB91C98F33900666634 /* GFBillModel.m */; };
+		8679EBCA1C9A4950001C1D99 /* WorkItemDic.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8679EBC91C9A4950001C1D99 /* WorkItemDic.plist */; };
 		868B0F111C7EA5AE00938665 /* GFBalanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 868B0F091C7EA5AE00938665 /* GFBalanceViewController.m */; };
 		868B0F121C7EA5AE00938665 /* GFBankCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 868B0F0B1C7EA5AE00938665 /* GFBankCardViewController.m */; };
 		868B0F131C7EA5AE00938665 /* GFBillTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 868B0F0E1C7EA5AE00938665 /* GFBillTableViewCell.m */; };
@@ -112,7 +114,6 @@
 		9B9C259E1C75BF9C009A69D6 /* CLTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9C259D1C75BF9C009A69D6 /* CLTitleTableViewCell.m */; };
 		9B9C25A11C75BFD6009A69D6 /* CLHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9C25A01C75BFD6009A69D6 /* CLHomeTableViewCell.m */; };
 		9B9C25A61C75CC05009A69D6 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B02AF661C5A22CB0044FB71 /* StoreKit.framework */; };
-		9B9F28A01C98F44F009377CE /* WorkItemDic.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9B9F289F1C98F44F009377CE /* WorkItemDic.plist */; };
 		9B9FCF081C8AA2DB0022F54E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9FCF071C8AA2DB0022F54E /* ViewController.m */; };
 		9BA391721C843564002F30A7 /* CLAddPersonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA391711C843564002F30A7 /* CLAddPersonModel.m */; };
 		9BA3C5BC1C75621B007F730D /* GFAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA3C5BB1C75621B007F730D /* GFAlertView.m */; };
@@ -208,6 +209,8 @@
 		865637E91C84264000BE7D8D /* GFTrainTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFTrainTableViewCell.m; sourceTree = "<group>"; };
 		865637EB1C84265E00BE7D8D /* GFTransformTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFTransformTableViewCell.h; sourceTree = "<group>"; };
 		865637EC1C84265E00BE7D8D /* GFTransformTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFTransformTableViewCell.m; sourceTree = "<group>"; };
+		865EB95C1C9A59D600B045C7 /* GFNothingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFNothingView.h; sourceTree = "<group>"; };
+		865EB95D1C9A59D600B045C7 /* GFNothingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFNothingView.m; sourceTree = "<group>"; };
 		866CCEAD1C755BC800E50C67 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		866CCEAE1C755BC800E50C67 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
 		866CCEAF1C755BC800E50C67 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
@@ -225,6 +228,7 @@
 		866CCEBB1C755BC800E50C67 /* GFHttpTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFHttpTool.m; sourceTree = "<group>"; };
 		8673FDB81C98F33900666634 /* GFBillModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFBillModel.h; sourceTree = "<group>"; };
 		8673FDB91C98F33900666634 /* GFBillModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFBillModel.m; sourceTree = "<group>"; };
+		8679EBC91C9A4950001C1D99 /* WorkItemDic.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = WorkItemDic.plist; sourceTree = "<group>"; };
 		868B0F081C7EA5AE00938665 /* GFBalanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFBalanceViewController.h; sourceTree = "<group>"; };
 		868B0F091C7EA5AE00938665 /* GFBalanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFBalanceViewController.m; sourceTree = "<group>"; };
 		868B0F0A1C7EA5AE00938665 /* GFBankCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFBankCardViewController.h; sourceTree = "<group>"; };
@@ -349,7 +353,6 @@
 		9B9C259D1C75BF9C009A69D6 /* CLTitleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLTitleTableViewCell.m; sourceTree = "<group>"; };
 		9B9C259F1C75BFD6009A69D6 /* CLHomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLHomeTableViewCell.h; sourceTree = "<group>"; };
 		9B9C25A01C75BFD6009A69D6 /* CLHomeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLHomeTableViewCell.m; sourceTree = "<group>"; };
-		9B9F289F1C98F44F009377CE /* WorkItemDic.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = WorkItemDic.plist; sourceTree = "<group>"; };
 		9B9FCF061C8AA2DB0022F54E /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		9B9FCF071C8AA2DB0022F54E /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		9BA391701C843564002F30A7 /* CLAddPersonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAddPersonModel.h; sourceTree = "<group>"; };
@@ -589,6 +592,8 @@
 				868B0F161C7EA63A00938665 /* GFBillDetailsViewController.m */,
 				868B0F181C7EA6FA00938665 /* GFBillDetailsTableViewCell.h */,
 				868B0F191C7EA6FA00938665 /* GFBillDetailsTableViewCell.m */,
+				865EB95C1C9A59D600B045C7 /* GFNothingView.h */,
+				865EB95D1C9A59D600B045C7 /* GFNothingView.m */,
 			);
 			path = "钱包账单";
 			sourceTree = "<group>";
@@ -857,9 +862,9 @@
 				9B771FA01C87E16A005E8567 /* Reachability.m */,
 				9B8BA6DF1C7FF7F000E90CB0 /* icon.png */,
 				9BA74D241C75CDF100AF7B26 /* LaunchScreen.storyboard */,
-				9B9F289F1C98F44F009377CE /* WorkItemDic.plist */,
 				9B9515441C6089A200445F93 /* PrefixHeader.pch */,
 				9B9754481C5765B3004BDC7C /* Assets.xcassets */,
+				8679EBC91C9A4950001C1D99 /* WorkItemDic.plist */,
 				9B97544D1C5765B3004BDC7C /* Info.plist */,
 				9B97543C1C5765B3004BDC7C /* Supporting Files */,
 			);
@@ -1036,7 +1041,7 @@
 				9B93BF1F1C89548800397078 /* LICENSE in Resources */,
 				9B9754491C5765B3004BDC7C /* Assets.xcassets in Resources */,
 				860A4CC01C7ED9780067FB70 /* MJRefresh.bundle in Resources */,
-				9B9F28A01C98F44F009377CE /* WorkItemDic.plist in Resources */,
+				8679EBCA1C9A4950001C1D99 /* WorkItemDic.plist in Resources */,
 				9B9754471C5765B3004BDC7C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1160,6 +1165,7 @@
 				860A4CB51C7ED9780067FB70 /* MJRefreshFooter.m in Sources */,
 				860A4CC21C7ED9780067FB70 /* UIScrollView+MJExtension.m in Sources */,
 				9B3FCD0F1C929FC300E871C7 /* GFNoIndentTableViewCell.m in Sources */,
+				865EB95E1C9A59D600B045C7 /* GFNothingView.m in Sources */,
 				86B890F41C73355B0068B95D /* GFForgetPwdViewController_1.m in Sources */,
 				860A4CC41C7ED9780067FB70 /* UIView+MJExtension.m in Sources */,
 				866CCEBC1C755BC800E50C67 /* AFHTTPSessionManager.m in Sources */,
