@@ -38,4 +38,5 @@
 @property (nonatomic, strong) GFIndentModel *model;
 @property (nonatomic, strong) NSString *workItems;
 
+
 @end
