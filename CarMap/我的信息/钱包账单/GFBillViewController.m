@@ -124,7 +124,7 @@
     _listDictionary = [[NSMutableDictionary alloc]init];
     page = 1;
     
-<<<<<<< HEAD
+//<<<<<<< HEAD
     // 网络请求数据
     NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/bill";
     NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
@@ -223,9 +223,9 @@
     }];
     
     
-=======
+//=======
     [self tableViewHttp];
->>>>>>> CLmaster
+//>>>>>>> CLmaster
     
     [self.tableView.header endRefreshing];
     
@@ -262,13 +262,13 @@
             NSDictionary *dataDic = responseObject[@"data"];
             // 获取data中List数组
             NSArray *listArr = dataDic[@"list"];
-<<<<<<< HEAD
+//<<<<<<< HEAD
             
             
             
             _listDictionary = [[NSMutableDictionary alloc]init];
-=======
->>>>>>> CLmaster
+//=======
+//>>>>>>> CLmaster
             NSMutableArray *monthArray;
             NSString *yearString;
             // 遍历数组  获取时间

@@ -60,6 +60,8 @@
     self.navView = [[GFNavigationView alloc] initWithLeftImgName:@"back.png" withLeftImgHightName:@"backClick.png" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"余额" withFrame:CGRectMake(0, 0, kWidth, 64)];
     [self.navView.leftBut addTarget:self action:@selector(leftButClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.navView];
+    
+    
 }
 
 - (void)_setView {
@@ -148,6 +150,8 @@
     self.baseView.backgroundColor = [UIColor colorWithRed:0 / 255.0 green:0 blue:0 alpha:0.65];
     [self.view addSubview:self.baseView];
     
+    [self _setTapGest];
+    
     UIButton *changBut = [UIButton buttonWithType:UIButtonTypeCustom];
     changBut.frame = CGRectMake(kWidth * 0.125, kHeight * 0.4, kWidth - (kWidth * 0.125 * 2), kHeight * 0.09);
     changBut.backgroundColor = [UIColor whiteColor];
@@ -161,6 +165,22 @@
     [changBut addTarget:self action:@selector(changeButClick) forControlEvents:UIControlEventTouchUpInside];
     
     
+}
+
+- (void)_setTapGest {
+    
+    UITapGestureRecognizer *tapGest = [[UITapGestureRecognizer alloc] init];
+    
+    [self.baseView addGestureRecognizer:tapGest];
+    
+    [tapGest addTarget:self action:@selector(tapGestDone:)];
+    
+}
+- (void)tapGestDone:(UITapGestureRecognizer *)tapGest {
+    
+    [self.baseView removeFromSuperview];
+    
+
 }
 
 - (void)changeButClick {
