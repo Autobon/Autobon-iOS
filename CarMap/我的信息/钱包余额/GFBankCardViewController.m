@@ -136,6 +136,7 @@
     [self.bankBut setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateNormal];
     self.bankBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     self.bankBut.contentEdgeInsets = UIEdgeInsetsMake(0, 5 / 320.0 * kWidth, 0, 0);
+    NSLog(@"\n\n\n%@\n\n\n", self.bankStr);
     [self.bankBut setTitle:self.bankStr forState:UIControlStateNormal];
     [self.bankBut setTitleColor:[UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1] forState:UIControlStateNormal];
     self.bankBut.titleLabel.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];

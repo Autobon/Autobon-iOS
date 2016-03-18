@@ -407,6 +407,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     GFBillDetailsViewController *billDeVC = [[GFBillDetailsViewController alloc] init];
+    
+    NSString *str1 = _yearArr[indexPath.section];
+    NSArray *arr1 = _listDictionary[str1];
+    GFBillModel *model = arr1[indexPath.row];
+    billDeVC.model = model;
     [self.navigationController pushViewController:billDeVC animated:YES];
     
 }

@@ -66,8 +66,7 @@
 
 - (void)_setView {
     
-    self.bankCardVC = [[GFBankCardViewController alloc] init];
-    self.bankCardVC.delegate = self;
+    
     
     // 金额显示Lab
     CGFloat upMoneyLabW = kWidth;
@@ -186,6 +185,9 @@
 - (void)changeButClick {
 
     [self.baseView removeFromSuperview];
+    
+    self.bankCardVC = [[GFBankCardViewController alloc] init];
+    self.bankCardVC.delegate = self;
     
     self.bankCardVC.bankStr = self.bankLab.text;
     self.bankCardVC.bankCard = self.cardLab.text;
