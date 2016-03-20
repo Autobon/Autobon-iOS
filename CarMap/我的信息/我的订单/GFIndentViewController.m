@@ -254,12 +254,14 @@
                 listModel.orderNum = dic[@"orderNum"];
                 listModel.photo = dic[@"photo"];
                 listModel.remark = dic[@"remark"];
-                
-                
+  
                 if([curUrl isEqualToString:mainUrl]) {
                     NSDictionary *constructDic = dic[@"mainConstruct"];
                     listModel.payment = constructDic[@"payment"];
-                    listModel.workItems = constructDic[@"workItems"];
+                    if (![constructDic[@"workItems"] isKindOfClass:[NSNull class]]) {
+                        listModel.workItems = constructDic[@"workItems"];
+                    }
+                    
                     listModel.signinTime = constructDic[@"signinTime"];
                     listModel.payStatus = constructDic[@"payStatus"];
                     

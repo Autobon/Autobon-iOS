@@ -66,7 +66,7 @@
     [super viewDidLoad];
      [[SDImageCache sharedImageCache] clearDisk];
     _skillArray = [[NSMutableArray alloc]init];
-    _bankArray = @[@"农业银行",@"招商银行",@"建设银行",@"广发银行",@"中信银行",@"光大银行",@"民生银行",@"普发银行",@"工商银行",@"中国银行",@"交通银行",@"邮政储蓄银行"];
+    _bankArray = @[@"农业银行",@"招商银行",@"建设银行",@"广发银行",@"中信银行",@"光大银行",@"民生银行",@"浦发银行",@"工商银行",@"中国银行",@"交通银行",@"邮政储蓄银行"];
     [self setNavigation];
     
     [self setViewForCertify];
@@ -499,19 +499,41 @@
     
     
 }
-//- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-//    if (textField.tag == 5) {
-//        NSLog(@"---range--%@----%@---string--%@--",@(range.location),@(range.length),string);
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if (textField.tag == 5) {
+        NSLog(@"---range--%@----%@---string--(%@)--",@(range.location),@(range.length),string);
 //        if (range.length == 0) {
 //            if (range.location%5 == 4) {
 //                textField.text = [NSString stringWithFormat:@"%@ ",textField.text];
 //            }
 //        }
-//    }
-//    
-//    return YES;
-//}
+        
+//        if ([string integerValue]) {
+//            
+//        }else{
+//            return NO;
+//        }
+        
+        return [self isNumber:string];
+    }
+    
+    return YES;
+}
 
+- (BOOL)isNumber:(NSString *)string{
+    
+    BOOL flag;
+    if (string.length <= 0) {
+        flag = YES;
+        return flag;
+    }
+    NSString *regex2 = @"^[0-9]*[1-9][0-9]*$";
+    NSPredicate *identityCardPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex2];
+    return [identityCardPredicate evaluateWithObject:string];
+    
+    
+    return YES;
+}
 
 #pragma mark - 技能按钮
 - (void)skillBtnClick:(UIButton *)button{

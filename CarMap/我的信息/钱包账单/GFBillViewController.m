@@ -161,7 +161,6 @@
             NSDictionary *dataDic = responseObject[@"data"];
             // 获取data中List数组
             NSArray *listArr = dataDic[@"list"];
-//<<<<<<< HEAD
             if(listArr.count > 0) {
                 self.nothingView.hidden = YES;
             }

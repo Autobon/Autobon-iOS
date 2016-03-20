@@ -99,7 +99,7 @@
     [self.languageBut setTitleColor:[UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1] forState:UIControlStateNormal];
     self.languageBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     self.languageBut.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
-    [self.view addSubview:self.languageBut];
+//    [self.view addSubview:self.languageBut];
     [self.languageBut addTarget:self action:@selector(languageButClick) forControlEvents:UIControlEventTouchUpInside];
     
     
