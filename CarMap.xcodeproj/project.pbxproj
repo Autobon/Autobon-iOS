@@ -28,9 +28,9 @@
 		860A4CC21C7ED9780067FB70 /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 860A4CAD1C7ED9780067FB70 /* UIScrollView+MJExtension.m */; };
 		860A4CC31C7ED9780067FB70 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 860A4CAF1C7ED9780067FB70 /* UIScrollView+MJRefresh.m */; };
 		860A4CC41C7ED9780067FB70 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 860A4CB11C7ED9780067FB70 /* UIView+MJExtension.m */; };
-		860A4CC81C7EE2DB0067FB70 /* GFIndentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 860A4CC71C7EE2DB0067FB70 /* GFIndentViewController.m */; };
 		860A4CCB1C7EE4CB0067FB70 /* GFIndentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 860A4CCA1C7EE4CB0067FB70 /* GFIndentTableViewCell.m */; };
 		860A4CCE1C7EF9580067FB70 /* GFIndentDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 860A4CCD1C7EF9580067FB70 /* GFIndentDetailsViewController.m */; };
+		862FF11F1C9BAFE3004A5879 /* GFIndentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 862FF11E1C9BAFE3004A5879 /* GFIndentViewController.m */; };
 		864C70E81C854637004B06B5 /* GFTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 864C70E71C854637004B06B5 /* GFTestViewController.m */; };
 		8655B0E51C76F15800D9FCB4 /* GFChangePwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8655B0E41C76F15800D9FCB4 /* GFChangePwdViewController.m */; };
 		8655C5C61C7D8E1000E5C69C /* GFMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8655C5C51C7D8E1000E5C69C /* GFMoreViewController.m */; };
@@ -184,11 +184,11 @@
 		860A4CB01C7ED9780067FB70 /* UIView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJExtension.h"; sourceTree = "<group>"; };
 		860A4CB11C7ED9780067FB70 /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
 		860A4CC61C7EE2DB0067FB70 /* GFIndentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFIndentViewController.h; sourceTree = "<group>"; };
-		860A4CC71C7EE2DB0067FB70 /* GFIndentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFIndentViewController.m; sourceTree = "<group>"; };
 		860A4CC91C7EE4CB0067FB70 /* GFIndentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFIndentTableViewCell.h; sourceTree = "<group>"; };
 		860A4CCA1C7EE4CB0067FB70 /* GFIndentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFIndentTableViewCell.m; sourceTree = "<group>"; };
 		860A4CCC1C7EF9580067FB70 /* GFIndentDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFIndentDetailsViewController.h; sourceTree = "<group>"; };
 		860A4CCD1C7EF9580067FB70 /* GFIndentDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFIndentDetailsViewController.m; sourceTree = "<group>"; };
+		862FF11E1C9BAFE3004A5879 /* GFIndentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFIndentViewController.m; sourceTree = "<group>"; };
 		864C70E61C854637004B06B5 /* GFTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFTestViewController.h; sourceTree = "<group>"; };
 		864C70E71C854637004B06B5 /* GFTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFTestViewController.m; sourceTree = "<group>"; };
 		8655B0E31C76F15800D9FCB4 /* GFChangePwdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFChangePwdViewController.h; sourceTree = "<group>"; };
@@ -527,7 +527,7 @@
 			isa = PBXGroup;
 			children = (
 				860A4CC61C7EE2DB0067FB70 /* GFIndentViewController.h */,
-				860A4CC71C7EE2DB0067FB70 /* GFIndentViewController.m */,
+				862FF11E1C9BAFE3004A5879 /* GFIndentViewController.m */,
 				860904C41C8EAB8F00CC06C1 /* GFIndentModel.h */,
 				860904C51C8EAB8F00CC06C1 /* GFIndentModel.m */,
 				860A4CC91C7EE4CB0067FB70 /* GFIndentTableViewCell.h */,
@@ -1125,7 +1125,6 @@
 				9B93BF211C89548800397078 /* NSData+ImageContentType.m in Sources */,
 				860A4CBE1C7ED9780067FB70 /* MJRefreshNormalHeader.m in Sources */,
 				9BE53AE41C72ADED00BBB424 /* CLAutobonViewController.m in Sources */,
-				860A4CC81C7EE2DB0067FB70 /* GFIndentViewController.m in Sources */,
 				865637DE1C8423A800BE7D8D /* GFQualifieViewController.m in Sources */,
 				860A4CC31C7ED9780067FB70 /* UIScrollView+MJRefresh.m in Sources */,
 				865637EA1C84264000BE7D8D /* GFTrainTableViewCell.m in Sources */,
@@ -1158,6 +1157,7 @@
 				860A4CBC1C7ED9780067FB70 /* MJRefreshBackStateFooter.m in Sources */,
 				865637DB1C8419A000BE7D8D /* GFServeViewController.m in Sources */,
 				868B0F131C7EA5AE00938665 /* GFBillTableViewCell.m in Sources */,
+				862FF11F1C9BAFE3004A5879 /* GFIndentViewController.m in Sources */,
 				860A4CB41C7ED9780067FB70 /* MJRefreshComponent.m in Sources */,
 				9B93BF261C89548800397078 /* SDWebImageDownloaderOperation.m in Sources */,
 				860A4CB31C7ED9780067FB70 /* MJRefreshBackFooter.m in Sources */,

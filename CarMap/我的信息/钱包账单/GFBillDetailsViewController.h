@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class GFBillModel;
+
 @interface GFBillDetailsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
+
+@property (nonatomic, strong) GFBillModel *model;
+
 
 @end

@@ -14,10 +14,15 @@
 
 #import "MJRefresh.h"
 
+#import "GFBillModel.h"
+
 @interface GFBillDetailsViewController () {
     
     CGFloat kWidth;
     CGFloat kHeight;
+    
+    NSInteger page;
+    NSInteger pageSize;
 }
 
 @property (nonatomic, strong) GFNavigationView *navView;
@@ -53,6 +58,9 @@
 
 - (void)_setView {
     
+    page = 1;
+    pageSize = 1;
+    
     self.tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kWidth, kHeight - 64) style:UITableViewStylePlain];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
@@ -64,13 +72,15 @@
     self.tableview.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     
     [self.tableview.header beginRefreshing];
-    [self.tableview.footer beginRefreshing];
+//    [self.tableview.footer beginRefreshing];
     
 }
 
 - (void)headRefresh {
     
     NSLog(@"脑袋刷新");
+    
+    [self http];
     
     [self.tableview.header endRefreshing];
     
@@ -82,6 +92,29 @@
     
     [self.tableview.footer endRefreshing];
 }
+
+- (void)http {
+
+//    NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/bill/order";
+    NSString *url = [NSString stringWithFormat:@"http://121.40.157.200:12345/api/mobile/technician/bill/%@/order", self.model.billId];
+    NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
+    parDic[@"billd"] = self.model.billId;
+    parDic[@"page"] = @"1";
+    parDic[@"pageSize"] = @"1";
+    [GFHttpTool billDetailsGet:url parameters:parDic success:^(id responseObject) {
+        
+        NSLog(@"\n请求成功！！！！\n%@\n\n", responseObject);
+        
+    } failure:^(NSError *error) {
+        
+        
+        NSLog(@"\n请求失败！！！！\n%@\n\n", error);
+    }];
+    
+    
+    
+}
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 

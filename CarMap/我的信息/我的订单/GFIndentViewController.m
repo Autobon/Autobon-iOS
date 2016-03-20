@@ -479,20 +479,34 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"WorkItemDic" ofType:@"plist"];
     NSDictionary *dic = [NSDictionary dictionaryWithContentsOfFile:path];
     NSString *workItemsStr = [[NSString alloc] init];
-    NSArray *strArr = [model.workItems componentsSeparatedByString:@","];
-    for(NSString *str in strArr) {
-        if(workItemsStr.length == 0) {
-            workItemsStr = [NSString stringWithFormat:@"%@", dic[str]];
-        }else {
-            workItemsStr = [NSString stringWithFormat:@"%@,%@", workItemsStr, dic[str]];
+    NSLog(@"\n\n\n%@", model.workItems);
+    if(![model.workItems isKindOfClass:[NSNull class]]) {
+        NSArray *strArr = [model.workItems componentsSeparatedByString:@","];
+        for(NSString *str in strArr) {
+            if(workItemsStr.length == 0) {
+                workItemsStr = [NSString stringWithFormat:@"%@", dic[str]];
+            }else {
+                workItemsStr = [NSString stringWithFormat:@"%@,%@", workItemsStr, dic[str]];
+            }
         }
+        
+        cell.placeLab.text = [NSString stringWithFormat:@"施工部位：%@", workItemsStr];
+        
+        [self.workItemArr addObject:workItemsStr];
+
+    }else {
+        
+        workItemsStr = @"无";
+        
+        cell.placeLab.text = [NSString stringWithFormat:@"施工部位：%@", workItemsStr];
+        
+        [self.workItemArr addObject:workItemsStr];
+        
     }
     
-    NSLog(@"%@", strArr);
+//    NSLog(@"%@", strArr);
     
-    cell.placeLab.text = [NSString stringWithFormat:@"施工部位：%@", workItemsStr];
     
-    [self.workItemArr addObject:workItemsStr];
     
 
     
