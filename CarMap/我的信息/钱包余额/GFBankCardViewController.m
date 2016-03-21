@@ -25,6 +25,7 @@
     
     
     NSInteger index;
+    NSInteger suo;
 }
 
 @property (nonatomic, strong) GFNavigationView *navView;
@@ -36,6 +37,8 @@
 @property (nonatomic, strong) UILabel *nameLab;
 @property (nonatomic, copy) NSString *bankName;
 @property (nonatomic, strong) NSArray *bankArr;
+
+
 
 
 
@@ -72,6 +75,7 @@
 }
 
 - (void)_setView {
+    suo = 0;
     //银行数组
     self.bankArr = @[@"农业银行",@"招商银行",@"建设银行",@"广发银行",@"中信银行",@"光大银行",@"民生银行",@"普发银行",@"工商银行",@"中国银行",@"交通银行",@"邮政储蓄银行"];
     
@@ -170,6 +174,7 @@
     self.cardTxt.centerTxt.tag = 5;
     self.cardTxt.centerTxt.delegate = self;
     self.cardTxt.centerTxt.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
+    self.cardTxt.centerTxt.keyboardType = UIKeyboardTypeNumberPad;
     // 边线
     UIView *line3 = [[UIView alloc] initWithFrame:CGRectMake(0, jvtiViewH - 1, kWidth, 1)];
     line3.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
@@ -207,78 +212,81 @@
 - (void)submitClick {
     
     
-    // 提交修改银行卡信息按钮
-    NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/changeBankCard";
-    NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
-    parDic[@"name"] = self.nameLab.text;
-    parDic[@"bank"] = self.bankArr[index];
-    parDic[@"bankCardNo"] = self.cardTxt.centerTxt.text;
-//    parDic[@"name"] = @"陈光法";
-//    parDic[@"bank"] = @"建设";
-//    parDic[@"bankCardNo"] = @"621700287000250683";
-
-    
-    
-    
-    
-    [GFHttpTool bankCardPost:url parameters:parDic success:^(id responseObject) {
-
-    BOOL cardFlage = [self checkCardNo:self.cardTxt.centerTxt.text];
-    if(cardFlage == NO) {
+    if(self.cardTxt.centerTxt.text.length == 0) {
         
-        GFTipView *tipView = [[GFTipView alloc] initWithNormalHeightWithMessage:@"请输入正确地银行卡号" withViewController:self withShowTimw:1.5];
+        NSLog(@"提交失败");
+        GFTipView *tipView = [[GFTipView alloc] initWithNormalHeightWithMessage:@"请输入银行卡信息" withViewController:self withShowTimw:1.5];
         [tipView tipViewShow];
+        
     }else {
-    
         // 提交修改银行卡信息按钮
+        
         NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/changeBankCard";
         NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
-        parDic[@"bank"] = self.bankArr[index];
+        parDic[@"name"] = self.nameLab.text;
+        if(suo == 0) {
+            parDic[@"bank"] = self.bankStr;
+            self.endBank = self.bankStr;
+            NSLog(@" 未改前  %@", parDic[@"bank"]);
+        }else {
+            parDic[@"bank"] = self.bankArr[index];
+            self.endBank = self.bankArr[index];
+            NSLog(@" 改之后  %@", parDic[@"bank"]);
+        }
+        
+        NSLog(@"###############\n\n\n %@ \n\n\n###############", parDic[@"bank"]);
+        
         parDic[@"bankCardNo"] = self.cardTxt.centerTxt.text;
-        parDic[@"name"] = @"Www";
+        
+        BOOL cardFlage = [self checkCardNo:self.cardTxt.centerTxt.text];
+        if(cardFlage == NO) {
+            
+            GFTipView *tipView = [[GFTipView alloc] initWithNormalHeightWithMessage:@"请输入正确地银行卡号" withViewController:self withShowTimw:1.5];
+            [tipView tipViewShow];
+        }else {
+            
+            
+            [GFHttpTool bankCardPost:url parameters:parDic success:^(id responseObject) {
+                
+                suo = 0;
+                
+                NSLog(@"提交成功++++++++++++++");
+                
+                NSInteger flage = [responseObject[@"result"] integerValue];
+                
+                if(flage == 1) {
+                    
+                    GFTipView *tipView = [[GFTipView alloc] initWithNormalHeightWithMessage:@"修改成功" withViewController:self withShowTimw:1.5];
+                    [tipView tipViewShow];
+                    
+                    //                [NSThread sleepForTimeInterval:1.5];
+                    [self performSelector:@selector(VCpush) withObject:nil afterDelay:1.5];
+                    
+                    
+                    
+                    NSLog(@"修改成功===========\n%@", responseObject);
+                    
+                }else {
+                    
+                    NSLog(@"修改失败===========\n%@", responseObject);
+                }
+                
+                
+            } failure:^(NSError *error) {
+                
+                NSLog(@"提交失败++++++++++++++%@", error);
+                
+            }];
+            
+        }
         
         
-        [GFHttpTool bankCardPost:url parameters:parDic success:^(id responseObject) {
-            
-            NSLog(@"提交成功++++++++++++++");
-            
-            NSInteger flage = [responseObject[@"result"] integerValue];
-            
-            if(flage == 1) {
-                
-                GFTipView *tipView = [[GFTipView alloc] initWithNormalHeightWithMessage:@"修改成功" withViewController:self withShowTimw:1.5];
-                [tipView tipViewShow];
-                
-//                [NSThread sleepForTimeInterval:1.5];
-                [self performSelector:@selector(VCpush) withObject:nil afterDelay:1.5];
-                
-                
-                
-                NSLog(@"修改成功===========\n%@", responseObject);
-                
-            }else {
-                
-                NSLog(@"修改失败===========\n%@", responseObject);
-            }
-            
-            
-        } failure:^(NSError *error) {
-            
-            NSLog(@"提交失败++++++++++++++%@", error);
-            
-        }];
+//        self.bankStr = self.bankArr[index];
+        self.bankCard = self.cardTxt.centerTxt.text;
     
     }
-    }failure:^(NSError *error) {
-        
-    }];
     
     
-    
-    
-    
-    self.bankStr = self.bankArr[index];
-    self.bankCard = self.cardTxt.centerTxt.text;
     
 
     
@@ -309,7 +317,14 @@
     
     GFMyMessageViewController *myMsgVC = (GFMyMessageViewController *)self.navigationController.viewControllers[(self.navigationController.viewControllers.count - 3)];
 //    GFBalanceViewController *balanceVC = (GFBalanceViewController *)self.navigationController.viewControllers[(self.navigationController.viewControllers.count - 2)];
-    myMsgVC.bank = self.bankName;
+//    if(suo == 0) {
+//        self.bankName = self.bankStr;
+//    }else {
+//        self.bankName = self.bankArr[index];
+//    }
+    
+    
+    myMsgVC.bank = self.endBank;
     myMsgVC.bankCardNo = self.cardTxt.centerTxt.text;
     
 //    balanceVC.bank = self.bankName;
@@ -368,7 +383,11 @@
     
     index = indexPath.row;
     
-    self.bankName = self.bankArr[index];
+    
+    
+    suo = 1;
+    
+    self.bankName = self.bankArr[indexPath.row];
     
     [self.bankBut setTitle:self.bankName forState:UIControlStateNormal];
     

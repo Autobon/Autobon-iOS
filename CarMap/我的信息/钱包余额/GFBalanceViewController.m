@@ -200,7 +200,7 @@
 
 - (void)changeBankCardViewController:(GFBankCardViewController *)bankCardVC {
 
-    self.bankLab.text = bankCardVC.bankStr;
+    self.bankLab.text = bankCardVC.endBank;
     self.cardLab.text = bankCardVC.bankCard;
     
     

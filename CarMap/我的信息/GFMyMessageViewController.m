@@ -17,9 +17,10 @@
 #import "GFIndentViewController.h"
 #import "CLCertifyViewController.h"
 #import "UIImageView+WebCache.h"
+#import "GFBankCardViewController.h"
 
 
-@interface GFMyMessageViewController () {
+@interface GFMyMessageViewController ()<GFBankCardViewControllerDelegate> {
     
     CGFloat kWidth;
     CGFloat kHeight;
