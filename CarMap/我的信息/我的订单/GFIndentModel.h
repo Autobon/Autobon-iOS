@@ -19,7 +19,7 @@
 @property (nonatomic, copy) NSString *workItems;    // 施工部位
 @property (nonatomic, copy) NSString *remark;       // 下单备注
 @property (nonatomic, copy) NSString *workTime;     // 施工时间
-
+@property (nonatomic, copy) NSDictionary *commentDictionary;     // 评论字典
 
 
 

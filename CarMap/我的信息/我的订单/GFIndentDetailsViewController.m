@@ -82,7 +82,7 @@
 //    self.scrollView.pagingEnabled = YES;
     self.scrollView.bounces = NO;
     [self.view addSubview:self.scrollView];
-    self.scrollView.contentSize = CGSizeMake(0, 1400);
+    
     
     
     // 订单信息
@@ -199,7 +199,11 @@
     self.beizhuLab = [[UILabel alloc] initWithFrame:CGRectMake(beizhuLabX, beizhuLabY, beizhuLabW, beizhuLabH)];
     self.beizhuLab.numberOfLines = 0;
     self.beizhuLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
-    self.beizhuLab.text = beizhuStr;
+    if ([self.model.remark isKindOfClass:[NSNull class]]) {
+        self.beizhuLab.text = @"";
+    }else{
+        self.beizhuLab.text = beizhuStr;
+    }
     [baseView1 addSubview:self.beizhuLab];
     baseView1.frame = CGRectMake(baseView1X, baseView1Y, baseView1W, beizhuRect.size.height - xiadanLabH + baseView1H);
     
@@ -327,79 +331,97 @@
     lineView.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
     [baseView addSubview:lineView];
     
-    // 星星
-    for(int i=0; i<5; i++) {
+    
+    if ([_model.commentDictionary isKindOfClass:[NSNull class]]) {
+        // 其他意见和建议
         
-        CGFloat imgViewW = (kWidth - kWidth * 0.25 * 2) / 5.0;
-        CGFloat imgViewH = imgViewW - 4 / 320.0 * kWidth;
-        CGFloat imgViewX = kWidth * 0.21 + (imgViewW + 1 / 320.0 * kWidth) * i;
-        CGFloat imgViewY = jianjv3 + CGRectGetMaxY(baseView_1.frame);
-        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(imgViewX, imgViewY, imgViewW, imgViewH)];
-        [baseView addSubview:imgView];
-        imgView.image = [UIImage imageNamed:@"detailsStarDark.png"];
-        imgView.contentMode = UIViewContentModeScaleAspectFit;
+        UILabel *otherLabel = [[UILabel alloc]init];
+        otherLabel.text = @"暂无评价";
+        otherLabel.frame = CGRectMake(0, lineView.frame.origin.y + 5, self.view.frame.size.width, 40);
+        otherLabel.textAlignment = NSTextAlignmentCenter;
+        baseView.frame = CGRectMake(baseViewX, baseViewY, baseViewH, downBaseViewH);
+        [baseView addSubview:otherLabel];
+        
+        
+        self.scrollView.contentSize = CGSizeMake(0, CGRectGetMaxY(baseView.frame)+30);
+    }else{
+        // 星星
+        for(int i=0; i<5; i++) {
+            
+            CGFloat imgViewW = (kWidth - kWidth * 0.25 * 2) / 5.0;
+            CGFloat imgViewH = imgViewW - 4 / 320.0 * kWidth;
+            CGFloat imgViewX = kWidth * 0.21 + (imgViewW + 1 / 320.0 * kWidth) * i;
+            CGFloat imgViewY = jianjv3 + CGRectGetMaxY(baseView_1.frame);
+            UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(imgViewX, imgViewY, imgViewW, imgViewH)];
+            [baseView addSubview:imgView];
+            imgView.image = [UIImage imageNamed:@"detailsStarDark.png"];
+            imgView.contentMode = UIViewContentModeScaleAspectFit;
+        }
+        
+        for(int i=0; i<4; i++) {
+            
+            CGFloat imgViewW = (kWidth - kWidth * 0.25 * 2) / 5.0;
+            CGFloat imgViewH = imgViewW - 4 / 320.0 * kWidth;
+            CGFloat imgViewX = kWidth * 0.21 + (imgViewW + 1 / 320.0 * kWidth) * i;
+            CGFloat imgViewY = jianjv3 + CGRectGetMaxY(baseView_1.frame);
+            UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(imgViewX, imgViewY, imgViewW, imgViewH)];
+            [baseView addSubview:imgView];
+            imgView.image = [UIImage imageNamed:@"information.png"];
+            imgView.contentMode = UIViewContentModeScaleAspectFit;
+        }
+        
+        // 准时到达
+        UIView *daodaView = [self messageButView:@"准时到达" withSelected:YES withX:jiange2 withY:CGRectGetMaxY(baseView_1.frame) + jianjv3 * 2 + jianjv4 + (kWidth - kWidth * 0.25 * 2) / 5.0 - 4 / 320.0 * kWidth];
+        [baseView addSubview:daodaView];
+        
+        // 准时完工
+        UIView *wangongView = [self messageButView:@"准时完工" withSelected:NO withX:kWidth * 0.676 withY:CGRectGetMaxY(baseView_1.frame) + jianjv3 * 2 + jianjv4 + (kWidth - kWidth * 0.25 * 2) / 5.0 - 4 / 320.0 * kWidth];
+        [baseView addSubview:wangongView];
+        
+        // 技术专业
+        UIView *zhuanyeView = [self messageButView:@"技术专业" withSelected:YES withX:jiange2 withY:CGRectGetMaxY(wangongView.frame) + jianjv4];
+        [baseView addSubview:zhuanyeView];
+        
+        // 着装整洁
+        UIView *zhengjieView = [self messageButView:@"着装整洁" withSelected:NO withX:kWidth * 0.676 withY:CGRectGetMaxY(wangongView.frame) + jianjv4];
+        [baseView addSubview:zhengjieView];
+        
+        // 车辆保护超级棒
+        UIView *bangView = [self messageButView:@"车辆保护超级棒" withSelected:YES withX:jiange2 withY:CGRectGetMaxY(zhengjieView.frame) + jianjv4];
+        [baseView addSubview:bangView];
+        
+        // 态度好
+        UIView *haoView = [self messageButView:@"态度好" withSelected:YES withX:kWidth * 0.676 withY:CGRectGetMaxY(zhengjieView.frame) + jianjv4];
+        [baseView addSubview:haoView];
+        
+        // 边线
+        UIView *lineView2 = [[UIView alloc] initWithFrame:CGRectMake(jiange1, CGRectGetMaxY(haoView.frame) - 1 + jianjv3, kWidth - jiange1 * 2, 1)];
+        lineView2.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+        [baseView addSubview:lineView2];
+        
+        // 其他意见和建议
+        NSString *fenStr = @"asdfa阿斯顿福建阿拉山口阿迪激发了手机的管理卡啥都没发过来sakjdfhasjklhgok";
+        NSMutableDictionary *fenDic = [[NSMutableDictionary alloc] init];
+        fenDic[NSFontAttributeName] = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
+        fenDic[NSForegroundColorAttributeName] = [UIColor blackColor];
+        CGRect fenRect = [fenStr boundingRectWithSize:CGSizeMake(kWidth - jiange2 * 2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:fenDic context:nil];
+        CGFloat otherLabW = kWidth - jiange2 * 2;
+        CGFloat otherLabH = fenRect.size.height;
+        CGFloat otherLabX = jiange2;
+        CGFloat otherLabY = CGRectGetMaxY(lineView2.frame) + jianjv4;
+        UILabel *otherLab = [[UILabel alloc] initWithFrame:CGRectMake(otherLabX, otherLabY, otherLabW, otherLabH)];
+        otherLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
+        otherLab.text = fenStr;
+        otherLab.numberOfLines = 0;
+        //    otherLab.backgroundColor = [UIColor redColor];
+        [baseView addSubview:otherLab];
+        
+        downBaseViewH = CGRectGetMaxY(otherLab.frame) + jianjv4;
+        baseView.frame = CGRectMake(baseViewX, baseViewY, baseViewH, downBaseViewH);
+        
+        self.scrollView.contentSize = CGSizeMake(0, CGRectGetMaxY(baseView.frame)+30);
     }
     
-    for(int i=0; i<4; i++) {
-        
-        CGFloat imgViewW = (kWidth - kWidth * 0.25 * 2) / 5.0;
-        CGFloat imgViewH = imgViewW - 4 / 320.0 * kWidth;
-        CGFloat imgViewX = kWidth * 0.21 + (imgViewW + 1 / 320.0 * kWidth) * i;
-        CGFloat imgViewY = jianjv3 + CGRectGetMaxY(baseView_1.frame);
-        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(imgViewX, imgViewY, imgViewW, imgViewH)];
-        [baseView addSubview:imgView];
-        imgView.image = [UIImage imageNamed:@"information.png"];
-        imgView.contentMode = UIViewContentModeScaleAspectFit;
-    }
-    
-    // 准时到达
-    UIView *daodaView = [self messageButView:@"准时到达" withSelected:YES withX:jiange2 withY:CGRectGetMaxY(baseView_1.frame) + jianjv3 * 2 + jianjv4 + (kWidth - kWidth * 0.25 * 2) / 5.0 - 4 / 320.0 * kWidth];
-    [baseView addSubview:daodaView];
-    
-    // 准时完工
-    UIView *wangongView = [self messageButView:@"准时完工" withSelected:NO withX:kWidth * 0.676 withY:CGRectGetMaxY(baseView_1.frame) + jianjv3 * 2 + jianjv4 + (kWidth - kWidth * 0.25 * 2) / 5.0 - 4 / 320.0 * kWidth];
-    [baseView addSubview:wangongView];
-    
-    // 技术专业
-    UIView *zhuanyeView = [self messageButView:@"技术专业" withSelected:YES withX:jiange2 withY:CGRectGetMaxY(wangongView.frame) + jianjv4];
-    [baseView addSubview:zhuanyeView];
-    
-    // 着装整洁
-    UIView *zhengjieView = [self messageButView:@"着装整洁" withSelected:NO withX:kWidth * 0.676 withY:CGRectGetMaxY(wangongView.frame) + jianjv4];
-    [baseView addSubview:zhengjieView];
-    
-    // 车辆保护超级棒
-    UIView *bangView = [self messageButView:@"车辆保护超级棒" withSelected:YES withX:jiange2 withY:CGRectGetMaxY(zhengjieView.frame) + jianjv4];
-    [baseView addSubview:bangView];
-    
-    // 态度好
-    UIView *haoView = [self messageButView:@"态度好" withSelected:YES withX:kWidth * 0.676 withY:CGRectGetMaxY(zhengjieView.frame) + jianjv4];
-    [baseView addSubview:haoView];
-    
-    // 边线
-    UIView *lineView2 = [[UIView alloc] initWithFrame:CGRectMake(jiange1, CGRectGetMaxY(haoView.frame) - 1 + jianjv3, kWidth - jiange1 * 2, 1)];
-    lineView2.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
-    [baseView addSubview:lineView2];
-    
-    // 其他意见和建议
-    NSString *fenStr = @"asdfa阿斯顿福建阿拉山口阿迪激发了手机的管理卡啥都没发过来sakjdfhasjklhgok";
-    NSMutableDictionary *fenDic = [[NSMutableDictionary alloc] init];
-    fenDic[NSFontAttributeName] = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
-    fenDic[NSForegroundColorAttributeName] = [UIColor blackColor];
-    CGRect fenRect = [fenStr boundingRectWithSize:CGSizeMake(kWidth - jiange2 * 2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:fenDic context:nil];
-    CGFloat otherLabW = kWidth - jiange2 * 2;
-    CGFloat otherLabH = fenRect.size.height;
-    CGFloat otherLabX = jiange2;
-    CGFloat otherLabY = CGRectGetMaxY(lineView2.frame) + jianjv4;
-    UILabel *otherLab = [[UILabel alloc] initWithFrame:CGRectMake(otherLabX, otherLabY, otherLabW, otherLabH)];
-    otherLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
-    otherLab.text = fenStr;
-    otherLab.numberOfLines = 0;
-    otherLab.backgroundColor = [UIColor redColor];
-    [baseView addSubview:otherLab];
-    
-    downBaseViewH = CGRectGetMaxY(otherLab.frame) + jianjv4;
-    baseView.frame = CGRectMake(baseViewX, baseViewY, baseViewH, downBaseViewH);
     
 }
 

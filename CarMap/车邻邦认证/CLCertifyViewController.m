@@ -86,29 +86,39 @@
             _isBankNumber = YES;
             if ([responseObject[@"result"]intValue]==1) {
                 NSDictionary *dataDic = responseObject[@"data"];
-                // 1,2,3,4
-                NSArray *array = [dataDic[@"skill"] componentsSeparatedByString:@","];
-                NSLog(@"---array---%@--",array);
-                [array enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop) {
-                    UIButton *button = _skillBtnArray[[obj intValue]-1];
-                    [_skillArray addObject:@(button.tag+1)];
-                    button.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                }];
+                if (![dataDic[@"skill"] isKindOfClass:[NSNull class]]) {
+                    NSLog(@"－－－－skill---%@--",responseObject[@"skill"]);
+                    NSArray *array = [dataDic[@"skill"] componentsSeparatedByString:@","];
+                    [array enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop) {
+                        UIButton *button = _skillBtnArray[[obj intValue]-1];
+                        [_skillArray addObject:@(button.tag+1)];
+                        button.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+                        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                    }];
+                }
                 
-                _userNameTextField.centerTxt.text = dataDic[@"name"];
-                _identityTextField.centerTxt.text = dataDic[@"idNo"];
-                [_bankButton setTitle:dataDic[@"bank"] forState:UIControlStateNormal];
-                [_bankButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                _bankNumberTextField.centerTxt.text = dataDic[@"bankCardNo"];
+                NSLog(@"---name---%@--",responseObject[@"name"]);
+                if (![dataDic[@"name"] isKindOfClass:[NSNull class]]) {
+                    _userNameTextField.centerTxt.text = dataDic[@"name"];
+                }
                 
-
+                if (![dataDic[@"idNo"] isKindOfClass:[NSNull class]]) {
+                    _identityTextField.centerTxt.text = dataDic[@"idNo"];
+     
+                }
+                
+                if (![dataDic[@"bank"] isKindOfClass:[NSNull class]]) {
+                    [_bankButton setTitle:dataDic[@"bank"] forState:UIControlStateNormal];
+                    [_bankButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                    _bankNumberTextField.centerTxt.text = dataDic[@"bankCardNo"];
+                }
+                
+                
+                
+                [_headButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345%@",dataDic[@"avatar"]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
+                
+                [_identityButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"idPhoto"]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"userImage"]];
                
-                
-                [_headButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345%@",dataDic[@"avatar"]]] forState:UIControlStateNormal];
-                
-                [_identityButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"idPhoto"]]] forState:UIControlStateNormal];
-                NSLog(@"----证件照－－%@---",[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"idPhoto"]]);
 
             }
         } failure:^(NSError *error) {
@@ -139,7 +149,7 @@
     [cameraHeadBtn addTarget:self action:@selector(cameraHeadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:cameraHeadBtn];
     
-    _userNameTextField = [[GFTextField alloc]initWithPlaceholder:@"姓名" withFrame:CGRectMake(110, 20, self.view.frame.size.width - 140, 50)];
+    _userNameTextField = [[GFTextField alloc]initWithPlaceholder:@"用户名" withFrame:CGRectMake(110, 20, self.view.frame.size.width - 140, 50)];
     [_scrollView addSubview:_userNameTextField];
     
     _identityTextField = [[GFTextField alloc]initWithPlaceholder:@"身份证号" withFrame:CGRectMake(110, 80, self.view.frame.size.width - 140, 50)];
@@ -317,6 +327,7 @@
 
 #pragma mark - 提交按钮事件
 - (void)submitBtnClick{
+    [self.view endEditing:YES];
 // 判断头像
     if (!_haveHeadImage) {
         [self addAlertView:@"请选择头像"];
@@ -390,7 +401,8 @@
     if ([_submitButton.titleLabel.text isEqualToString:@"提交"]) {
         CLAutobonViewController *autobon = (CLAutobonViewController *)self.navigationController.viewControllers[0];
         autobon.certifyButton.userInteractionEnabled = NO;
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        [autobon.certifyButton setTitleColor:[[UIColor alloc]initWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1.0] forState:UIControlStateNormal];
+        [self.navigationController popViewControllerAnimated:YES];
     }else{
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -527,7 +539,7 @@
         flag = YES;
         return flag;
     }
-    NSString *regex2 = @"^[0-9]*[1-9][0-9]*$";
+    NSString *regex2 = @"^[0-9]*$";
     NSPredicate *identityCardPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex2];
     return [identityCardPredicate evaluateWithObject:string];
     

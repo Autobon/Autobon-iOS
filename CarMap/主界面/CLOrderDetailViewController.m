@@ -30,6 +30,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+     NSLog(@"orderNumber--%@--",self.orderNumber);
+    
     self.view.backgroundColor = [[UIColor alloc]initWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     
     _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, -20, self.view.frame.size.width, self.view.frame.size.height-20)];
@@ -264,7 +266,7 @@
 
 #pragma mark - 开始工作按钮的响应方法
 - (void)workBtnClick{
-    NSLog(@"开始工作按钮");
+   
     
     [GFHttpTool postOrderStart:@{@"orderId":_orderId} Success:^(NSDictionary *responseObject) {
         NSLog(@"----responseObject--%@",responseObject);
@@ -276,7 +278,7 @@
             signinView.orderType = self.orderType;
             NSDictionary *dataDictionary = responseObject[@"data"];
             signinView.startTime = dataDictionary[@"startTime"];
-            
+            signinView.orderNumber = self.orderNumber;
             
             UIWindow *window = [UIApplication sharedApplication].keyWindow;
             UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:signinView];
@@ -315,23 +317,27 @@
             navigation.navigationBarHidden = YES;
             window.rootViewController = navigation;
         }else{
-            
+            [self addAlertView:responseObject[@"message"]];
         }
         
     } failure:^(NSError *error) {
-        NSLog(@"----失败原因－－%@--",error);
+        [self addAlertView:@"请求失败"];
     }];
 }
 
 #pragma mark - 接受订单邀请的响应方法
 - (void)orderAgree{
     [GFHttpTool PostAcceptOrderId:[_orderId integerValue] accept:@"true" success:^(id responseObject) {
+        if ([responseObject[@"result"]integerValue] == 1) {
+            [self addAlertView:@"接受邀请成功"];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }else{
+            [self addAlertView:responseObject[@"message"]];
+        }
         
-        [self addAlertView:@"接受邀请成功"];
-        [self.navigationController popToRootViewControllerAnimated:YES];
         
     } failure:^(NSError *error) {
-        NSLog(@"---error---%@--",error);
+        [self addAlertView:@"请求失败"];
     }];
 }
 
@@ -366,8 +372,8 @@
 }
 - (void)backBtnClick{
     
-//    [self.navigationController popToRootViewControllerAnimated:YES];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

@@ -73,7 +73,7 @@
 
 - (void)_setView {
     //银行数组
-    self.bankArr = @[@"农业银行",@"招商银行",@"建设银行",@"广发银行",@"中信银行",@"光大银行",@"民生银行",@"浦发银行",@"工商银行",@"中国银行",@"交通银行",@"邮政储蓄银行"];
+    self.bankArr = @[@"农业银行",@"招商银行",@"建设银行",@"广发银行",@"中信银行",@"光大银行",@"民生银行",@"普发银行",@"工商银行",@"中国银行",@"交通银行",@"邮政储蓄银行"];
     
     
     // 银行卡信息
@@ -213,13 +213,9 @@
     parDic[@"name"] = self.nameLab.text;
     parDic[@"bank"] = self.bankArr[index];
     parDic[@"bankCardNo"] = self.cardTxt.centerTxt.text;
-//    parDic[@"name"] = @"陈光法";
-//    parDic[@"bank"] = @"建设";
-//    parDic[@"bankCardNo"] = @"621700287000250683";
 
-    
-    
-    
+
+
     
     [GFHttpTool bankCardPost:url parameters:parDic success:^(id responseObject) {
 
@@ -264,13 +260,13 @@
             
         } failure:^(NSError *error) {
             
-            NSLog(@"提交失败++++++++++++++%@", error);
+            [self addAlertView:@"修改失败"];
             
         }];
     
     }
     }failure:^(NSError *error) {
-        
+        [self addAlertView:@"修改失败"];
     }];
     
     
@@ -283,6 +279,13 @@
 
     
     
+}
+
+
+#pragma mark - AlertView
+- (void)addAlertView:(NSString *)title{
+    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
+    [tipView tipViewShow];
 }
 
 //- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{

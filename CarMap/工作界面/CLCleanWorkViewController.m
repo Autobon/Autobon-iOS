@@ -430,7 +430,7 @@
                     [_timer invalidate];
                     _timer = nil;
                     CLShareViewController *homeOrder = [[CLShareViewController alloc]init];
-                    
+                    homeOrder.orderNumber = self.orderNumber;
                     UIWindow *window = [UIApplication sharedApplication].keyWindow;
                     UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeOrder];
                     navigation.navigationBarHidden = YES;
@@ -442,6 +442,7 @@
                 
             } failure:^(NSError *error) {
                 NSLog(@"--请求失败了--%@--",error);
+                [self addAlertView:@"提交失败"];
             }];
         }else{
             [self addAlertView:@"请填写完成工作的百分比"];

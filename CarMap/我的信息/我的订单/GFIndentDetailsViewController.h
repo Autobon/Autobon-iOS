@@ -25,6 +25,7 @@
 
 
 
+
 @property (nonatomic, strong) UILabel *pingjiaLab;
 @property (nonatomic, assign) NSInteger fenshu;
 @property (nonatomic, strong) UIButton *daodaBut;

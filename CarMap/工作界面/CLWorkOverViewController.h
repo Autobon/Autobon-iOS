@@ -12,6 +12,7 @@
 
 
 @property (nonatomic ,strong) NSString *orderId;
+@property (nonatomic ,strong) NSString *orderNumber;
 @property (nonatomic ,strong) NSString *orderType;
 @property (nonatomic ,strong) NSString *startTime;
 

@@ -12,6 +12,7 @@
 #import "CLWorkBeforeViewController.h"
 #import "GFHttpTool.h"
 #import "GFMyMessageViewController.h"
+#import "GFTipView.h"
 
 
 
@@ -21,7 +22,15 @@
     GFMapViewController *_mapVC;
     NSTimer *_timer;
     
+    
+    
 }
+
+@property (nonatomic ,strong) UILabel *distanceLabel;
+@property (nonatomic ,strong) UIButton *signinButton;
+
+
+
 @end
 
 @implementation CLSigninViewController
@@ -89,8 +98,19 @@
     }else{
         _mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([self.customerLat floatValue],[self.customerLon floatValue]);
     }
+    
+    __weak CLSigninViewController *signinView = self;
+    
     _mapVC.distanceBlock = ^(double distance) {
         NSLog(@"距离－－%f--",distance);
+        
+        signinView.distanceLabel.text = [NSString stringWithFormat:@"距离：%0.2fkm",distance/1000.0];
+        if (distance < 500000) {
+            signinView.signinButton.userInteractionEnabled = YES;
+            signinView.signinButton.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+//            [signinView.signinButton setTitle:@"可以签到了" forState:UIControlStateNormal];
+        }
+        
     };
     
     [self.view addSubview:_mapVC.view];
@@ -100,23 +120,22 @@
     _mapVC.mapView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height/3);
     
     
-    UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height/3+64+36, self.view.frame.size.width, 60)];
-    distanceLabel.text = @"距离门店 300m";
-    distanceLabel.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:distanceLabel];
+    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height/3+64+36, self.view.frame.size.width, 60)];
+    _distanceLabel.text = @"距离门店 0 m";
+    _distanceLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:_distanceLabel];
     
-    UIButton *signinButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-60, 50)];
-    signinButton.center = CGPointMake(self.view.center.x, self.view.center.y+50+36);
-    [signinButton setTitle:@"签到" forState:UIControlStateNormal];
-    signinButton.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
-    signinButton.layer.cornerRadius = 10;
+    _signinButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-60, 50)];
+    _signinButton.center = CGPointMake(self.view.center.x, self.view.center.y+50+36);
+    [_signinButton setTitle:@"签到" forState:UIControlStateNormal];
+    _signinButton.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    _signinButton.layer.cornerRadius = 10;
+    [_signinButton addTarget:self action:@selector(signinBtnClick) forControlEvents:UIControlEventTouchUpInside];
     
-    [signinButton addTarget:self action:@selector(signinBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.view addSubview:signinButton];
+    [self.view addSubview:_signinButton];
     
     if (_timer == nil) {
-        _timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(UserLocation) userInfo:nil repeats:YES];
+        _timer = [NSTimer scheduledTimerWithTimeInterval:300 target:self selector:@selector(UserLocation) userInfo:nil repeats:YES];
     }
     
     
@@ -132,7 +151,6 @@
 // 签到按钮的响应方法
 - (void)signinBtnClick{
     
-    NSLog(@"---签到按钮-----");
     
     NSDictionary *dic = @{@"positionLon":_customerLon,@"positionLat":_customerLat,@"orderId":_orderId};
     [GFHttpTool signinParameters:dic Success:^(NSDictionary *responseObject) {
@@ -142,14 +160,25 @@
             workBefore.orderId = _orderId;
             workBefore.orderType = _orderType;
             workBefore.startTime = _startTime;
+            workBefore.orderNumber = self.orderNumber;
             [self.navigationController pushViewController:workBefore animated:YES];
             [_timer invalidate];
-            _timer == nil;
+            _timer = nil;
+        }else{
+            [self addAlertView:responseObject[@"message"]];
         }
     } failure:^(NSError *error) {
         NSLog(@"--qiandao---%@--",error);
+        [self addAlertView:@"请填写完成工作的百分比"];
     }];
     
+}
+
+
+#pragma mark - AlertView
+- (void)addAlertView:(NSString *)title{
+    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
+    [tipView tipViewShow];
 }
 
 // 添加导航

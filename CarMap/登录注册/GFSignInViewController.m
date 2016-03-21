@@ -261,23 +261,16 @@
     [self.tipView removeFromSuperview];
     
     self.userNameTxt.centerTxt.text =  [self.userNameTxt.centerTxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
-    NSString *CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
-    NSString *CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
-    NSString *CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
-    NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];  // 小灵通
-    NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];  // 移动
-    NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];  // 灵通
-    NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];  // 电信
+    NSString *phoneRegex = @"^((13[0-9])|(15[^4,\\D])|(18[0,0-9])|(17[0,0-9]))\\d{8}$";
+    
+    NSPredicate *phonegextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
     
     if(self.userNameTxt.centerTxt.text.length == 0) {
         
         [self tipShow:@"手机号不能为空"];
         
-    }else if(([regextestmobile evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)
-             && ([regextestcm evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)
-             && ([regextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)
-             && ([regextestcu evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)) {
+    }else if([phonegextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)
+              {
         
         [self tipShow:@"请输入正确的手机号"];
         
@@ -310,21 +303,17 @@
                     if ([cookie.name isEqualToString:@"autoken"]) { // 获取响应头数组对象里地名字为autoken的对象
                         
                         // 提示语
-                        [UIView animateWithDuration:1.2 animations:^{
-                            
-                            [self tipView:CGRectGetMinY(self.userNameTxt.frame) + kHeight * 0.4 withTipmessage:responseObject[@"message"]];
-                            self.signInBut.userInteractionEnabled = NO;
-                            
-                        } completion:^(BOOL finished) {
-                            
-                            [self.tipView removeFromSuperview];
-                            self.signInBut.userInteractionEnabled = YES;
-                            
-                        }];
-                        
-                        
-                        
-                        
+//                        [UIView animateWithDuration:1.2 animations:^{
+//                            
+//                            [self tipView:CGRectGetMinY(self.userNameTxt.frame) + kHeight * 0.4 withTipmessage:responseObject[@"message"]];
+//                            self.signInBut.userInteractionEnabled = NO;
+//                            
+//                        } completion:^(BOOL finished) {
+//                            
+//                            [self.tipView removeFromSuperview];
+//                            self.signInBut.userInteractionEnabled = YES;
+//                            
+//                        }];
                         NSLog(@"############%@", [NSString stringWithFormat:@"%@=%@",[cookie name],[cookie value]]); //获取响应头数组对象里地名字为autoken的对象的数据，这个数据是用来验证用户身份相当于“key”
                         
                         
@@ -369,12 +358,7 @@
                         [autobonView.certifyButton setTitle:@"查看进度" forState:UIControlStateNormal];
                     }
                     
-//                [self.navigationController pushViewController:[[CLHomeOrderViewController alloc] init] animated:YES];
-
-                    
-                    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:autobonView];
-                    window.rootViewController = navigation;
-                    navigation.navigationBarHidden = YES;
+                [self.navigationController pushViewController:autobonView animated:YES];
                 }
                 
                 
@@ -436,18 +420,12 @@
                 
             }
             
-//            CLCertifyViewController *certify = [[CLCertifyViewController alloc] init];
-//            CLHomeOrderViewController *homeVC = [[CLHomeOrderViewController alloc] init];
-//            [self.navigationController pushViewController:certify animated:YES];
 
             
             
         } failure:^(NSError *error) {
             
-            
-            NSLog(@"请求失败==========%@", error);
-            
-            
+            [self tipShow:@"登录失败，请重试"];
             
         }];
     

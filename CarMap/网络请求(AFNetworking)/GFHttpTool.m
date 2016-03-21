@@ -14,7 +14,7 @@
 
 
 NSString* const HOST = @"http://121.40.157.200:12345/api/mobile";
-
+NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
 
 @implementation GFHttpTool
 
@@ -645,7 +645,7 @@ NSString* const HOST = @"http://121.40.157.200:12345/api/mobile";
 //    NSString *token = [userDefaultes objectForKey:@"autoken"];
 //    NSLog(@"token--%@--",token);
 //    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-    NSString *URLString = [NSString stringWithFormat:@"%@/pub/technician/workItems",HOST];
+    NSString *URLString = [NSString stringWithFormat:@"%@/pub/technician/workItems",PUBHOST];
     [manager GET:URLString parameters:@{@"orderType":@(TypeId)} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
         if(success) {
             success(responseObject);
@@ -734,14 +734,14 @@ NSString* const HOST = @"http://121.40.157.200:12345/api/mobile";
     [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
     //    manager.requestSerializer = [AFJSONRequestSerializer serializer];
     NSString *URLString = [NSString stringWithFormat:@"%@/technician/reportLocation",HOST];
-    NSLog(@"-----dicrionary---%@--",dictionary);
+//    NSLog(@"-----dicrionary---%@--",dictionary);
     [manager POST:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
-        NSLog(@"-----%@－－－－",responseObject[@"message"]);
+//        NSLog(@"-----%@－－－－",responseObject[@"message"]);
         if(success) {
             success(responseObject);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"－－－－%@----",error);
+//        NSLog(@"－－－－%@----",error);
         if(failure) {
             failure(error);
         }

@@ -11,6 +11,7 @@
 @interface CLCleanWorkViewController : UIViewController
 
 @property (nonatomic ,strong) NSString *orderId;
+@property (nonatomic ,strong) NSString *orderNumber;
 @property (nonatomic ,strong) NSString *startTime;
 
 @end

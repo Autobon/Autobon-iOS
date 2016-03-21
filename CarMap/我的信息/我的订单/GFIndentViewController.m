@@ -216,9 +216,10 @@
 - (void)headRefresh {
     
     self.modelArr = [[NSMutableArray alloc] init];
+    _workItemArr = [[NSMutableArray alloc]init];
     
     NSLog(@"脑袋刷新");
-    
+    self.tableview.userInteractionEnabled = NO;
     page = 1;
     pageSize = 2;
     
@@ -233,7 +234,6 @@
         
         if(flage == 1) {
             
-            NSLog(@"请求成功+++++++++++%@", responseObject);
             
             NSDictionary *dataDic = responseObject[@"data"];
             
@@ -246,7 +246,7 @@
                 self.nothingView.hidden = NO;
             }
             
-//            NSLog(@"%@*******", listArr);
+            NSLog(@"%@*******", listArr);
             
             for(NSDictionary *dic in listArr) {
                 
@@ -254,6 +254,7 @@
                 listModel.orderNum = dic[@"orderNum"];
                 listModel.photo = dic[@"photo"];
                 listModel.remark = dic[@"remark"];
+                listModel.commentDictionary = dic[@"comment"];
   
                 if([curUrl isEqualToString:mainUrl]) {
                     NSDictionary *constructDic = dic[@"mainConstruct"];
@@ -268,9 +269,9 @@
                     NSInteger startTime = [constructDic[@"startTime"] integerValue];
                     NSInteger endTime = [constructDic[@"endTime"] integerValue];
                     NSInteger chaTime = endTime - startTime;
-                    
-                    NSInteger fenNum = chaTime/1000 % 60;
-                    NSInteger shiNum = chaTime/1000 / 60;
+                    NSLog(@"--starTime-%ld-End--%ld---%ld--",startTime,endTime,chaTime);
+                    NSInteger fenNum = chaTime/1000 / 60;
+                    NSInteger shiNum = fenNum/1000 / 60;
 
                     if(shiNum > 0) {
                         listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
@@ -281,7 +282,6 @@
                 
                 }else if([curUrl isEqualToString:seconderUrl]) {
                     
-                    NSLog(@"@@@@@@@@@@@\n@@@\n@@\n@@\n@@@@@   次负责人");
                     NSDictionary *constructDic = dic[@"secondConstruct"];
                     listModel.payment = constructDic[@"payment"];
                     listModel.workItems = constructDic[@"workItems"];
@@ -292,8 +292,8 @@
                     NSInteger endTime = [constructDic[@"endTime"] integerValue];
                     NSInteger chaTime = endTime - startTime;
 
-                    NSInteger fenNum = chaTime/1000 % 60;
-                    NSInteger shiNum = chaTime/1000 / 60;
+                    NSInteger fenNum = chaTime/1000 / 60;
+                    NSInteger shiNum = fenNum/1000 / 60;
 
                     if(shiNum > 0) {
                         listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
@@ -303,15 +303,66 @@
                 }
                 
                 [self.modelArr addObject:listModel];
+    
+                
+                // 施工部位
+                NSString *path = [[NSBundle mainBundle] pathForResource:@"WorkItemDic" ofType:@"plist"];
+                NSDictionary *itemDic = [NSDictionary dictionaryWithContentsOfFile:path];
+                NSString *workItemsStr = [[NSString alloc] init];
+                NSLog(@"订单类型%@", dic[@"orderType"]);
+                
+                if ([dic[@"orderType"] integerValue] == 4) {
+                    workItemsStr = @"美容清洁";
+                    
+                    
+                    [self.workItemArr addObject:workItemsStr];
+                }else{
+                    if([listModel.workItems isKindOfClass:[NSNull class]]) {
+                        
+                        workItemsStr = @"无";
+                        
+                        
+                        [self.workItemArr addObject:workItemsStr];
+                        
+                        
+                    }else if (listModel.workItems == NULL){
+                        workItemsStr = @"无";
+                        
+                        [self.workItemArr addObject:workItemsStr];
+                    }else {
+                        
+                        NSArray *strArr = [listModel.workItems componentsSeparatedByString:@","];
+                        for(NSString *str in strArr) {
+                            if(workItemsStr.length == 0) {
+                                workItemsStr = [NSString stringWithFormat:@"%@", itemDic[str]];
+                            }else {
+                                workItemsStr = [NSString stringWithFormat:@"%@,%@", workItemsStr, itemDic[str]];
+                            }
+                        }
+                        
+                        [self.workItemArr addObject:workItemsStr];
+                        
+                    }
+                
+                }
+                
 
+           
+            
             }
             
-            [self.tableview reloadData];
             
+            
+            
+            
+            
+            [self.tableview reloadData];
+            self.tableview.userInteractionEnabled = YES;
             
         }else {
             
-            NSLog(@"请求失败+++++++++++%@", responseObject); 
+            NSLog(@"请求失败+++++++++++%@", responseObject);
+            self.tableview.userInteractionEnabled = YES;
         }
         
         [self.tableview.header endRefreshing];
@@ -320,7 +371,7 @@
         
         NSLog(@"网络请求失败");
 
-        
+        self.tableview.userInteractionEnabled = YES;
         [self.tableview.header endRefreshing];
         
     }];
@@ -359,7 +410,7 @@
                 listModel.orderNum = dic[@"orderNum"];
                 listModel.photo = dic[@"photo"];
                 listModel.remark = dic[@"remark"];
-                
+                listModel.commentDictionary = dic[@"comment"];
                 if([curUrl isEqualToString:mainUrl]) {
                     NSDictionary *constructDic = dic[@"mainConstruct"];
                     listModel.payment = constructDic[@"payment"];
@@ -370,8 +421,9 @@
                     NSInteger startTime = [constructDic[@"startTime"] integerValue];
                     NSInteger endTime = [constructDic[@"endTime"] integerValue];
                     NSInteger chaTime = endTime - startTime;
-                    NSInteger fenNum = chaTime / 1000 % 60;
-                    NSInteger shiNum = chaTime / 60 / 1000;
+                    NSInteger fenNum = chaTime/1000 / 60;
+                    NSInteger shiNum = fenNum/1000 / 60;
+                   
                     if(shiNum > 0) {
                         listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
                     }else {
@@ -380,7 +432,6 @@
                     
                 }else if([curUrl isEqualToString:seconderUrl]) {
                     
-                    NSLog(@"@@@@@@@@@@@\n@@@\n@@\n@@\n@@@@@   次负责人");
                     NSDictionary *constructDic = dic[@"secondConstruct"];
                     listModel.payment = constructDic[@"payment"];
                     listModel.workItems = constructDic[@"workItems"];
@@ -390,8 +441,8 @@
                     NSInteger startTime = [constructDic[@"startTime"] integerValue];
                     NSInteger endTime = [constructDic[@"endTime"] integerValue];
                     NSInteger chaTime = endTime - startTime;
-                    NSInteger fenNum = chaTime / 1000 % 60;
-                    NSInteger shiNum = chaTime / 60 / 1000;
+                    NSInteger fenNum = chaTime/1000 / 60;
+                    NSInteger shiNum = fenNum/1000 / 60;
                     if(shiNum > 0) {
                         listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
                     }else {
@@ -400,11 +451,54 @@
                     
                 }
                 
+                
                 [self.modelArr addObject:listModel];
+                
+                // 施工部位
+                NSString *path = [[NSBundle mainBundle] pathForResource:@"WorkItemDic" ofType:@"plist"];
+                NSDictionary *itemDic = [NSDictionary dictionaryWithContentsOfFile:path];
+                NSString *workItemsStr = [[NSString alloc] init];
+                NSLog(@"订单类型%@", dic[@"orderType"]);
+                
+                if ([dic[@"orderType"] integerValue] == 4) {
+                    workItemsStr = @"美容清洁";
+                    
+                    
+                    [self.workItemArr addObject:workItemsStr];
+                }else{
+                    if([listModel.workItems isKindOfClass:[NSNull class]]) {
+                        
+                        workItemsStr = @"无";
+                        
+                        
+                        [self.workItemArr addObject:workItemsStr];
+                        
+                        
+                    }else if (listModel.workItems == NULL){
+                        workItemsStr = @"无";
+                        
+                        [self.workItemArr addObject:workItemsStr];
+                    }else {
+                        
+                        NSArray *strArr = [listModel.workItems componentsSeparatedByString:@","];
+                        for(NSString *str in strArr) {
+                            if(workItemsStr.length == 0) {
+                                workItemsStr = [NSString stringWithFormat:@"%@", itemDic[str]];
+                            }else {
+                                workItemsStr = [NSString stringWithFormat:@"%@,%@", workItemsStr, itemDic[str]];
+                            }
+                        }
+                        
+                        [self.workItemArr addObject:workItemsStr];
+                        
+                    }
+                }
+                
                 
                 
                 
             }
+                
 
             [self.tableview reloadData];
             
@@ -475,39 +569,10 @@
     formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:[model.signinTime integerValue]/1000];
     cell.timeLab.text = [NSString stringWithFormat:@"施工时间：%@", [formatter stringFromDate:date]];
-    // 施工部位
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"WorkItemDic" ofType:@"plist"];
-    NSDictionary *dic = [NSDictionary dictionaryWithContentsOfFile:path];
-    NSString *workItemsStr = [[NSString alloc] init];
-    NSLog(@"\n\n\n%@", model.workItems);
-    if(![model.workItems isKindOfClass:[NSNull class]]) {
-        NSArray *strArr = [model.workItems componentsSeparatedByString:@","];
-        for(NSString *str in strArr) {
-            if(workItemsStr.length == 0) {
-                workItemsStr = [NSString stringWithFormat:@"%@", dic[str]];
-            }else {
-                workItemsStr = [NSString stringWithFormat:@"%@,%@", workItemsStr, dic[str]];
-            }
-        }
-        
-        cell.placeLab.text = [NSString stringWithFormat:@"施工部位：%@", workItemsStr];
-        
-        [self.workItemArr addObject:workItemsStr];
+    cell.placeLab.text = [NSString stringWithFormat:@"施工部位：%@", _workItemArr[indexPath.row]];
 
-    }else {
-        
-        workItemsStr = @"无";
-        
-        cell.placeLab.text = [NSString stringWithFormat:@"施工部位：%@", workItemsStr];
-        
-        [self.workItemArr addObject:workItemsStr];
-        
-    }
     
-//    NSLog(@"%@", strArr);
-    
-    
-    
+
 
     
     
@@ -523,7 +588,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 
-    NSLog(@"++++++++++++++\n%ld\n\n", self.modelArr.count);
+    NSLog(@"++++++++++++++\n%@\n\n", self.workItemArr);
     
     GFIndentDetailsViewController *indentDeVC = [[GFIndentDetailsViewController alloc] init];
     indentDeVC.model = self.modelArr[indexPath.row];

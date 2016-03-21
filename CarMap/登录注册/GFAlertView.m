@@ -290,7 +290,8 @@
         iconImgView.clipsToBounds = YES;
         iconImgView.contentMode = UIViewContentModeScaleAspectFill;
 //        iconImgView.image = [UIImage imageNamed:@"11.png"];
-        [iconImgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345%@",imageURL]]];
+        [iconImgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345%@",imageURL]] placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
+        NSLog(@"---imageUrl---%@----",[NSString stringWithFormat:@"http://121.40.157.200:12345%@",imageURL]);
         [baseView addSubview:iconImgView];
         // 姓名
         NSString *nameStr = name;
@@ -318,7 +319,7 @@
             starImgView.image = [UIImage imageNamed:@"detailsStarDark.png"];
             [baseView addSubview:starImgView];
         }
-        for(int i=0; i<3; i++) {
+        for(int i=0; i < mark; i++) {
             
             CGFloat starImgViewW = strRect.size.height;
             CGFloat starImgViewH = starImgViewW;
@@ -330,7 +331,7 @@
             [baseView addSubview:starImgView];
         }
         // 评分
-        NSString *fenStr = @"2.7";
+        NSString *fenStr = [NSString stringWithFormat:@"%0.0f",mark];
         NSMutableDictionary *fenDic = [[NSMutableDictionary alloc] init];
         fenDic[NSFontAttributeName] = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
         fenDic[NSForegroundColorAttributeName] = [UIColor blackColor];
@@ -357,7 +358,7 @@
         indentLab.text = @"订单数";
         indentLab.font = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
         [baseView addSubview:indentLab];
-        NSString *numStr = @"999";
+        NSString *numStr = [NSString stringWithFormat:@"%ld",orderNumber];
         NSMutableDictionary *numDic = [[NSMutableDictionary alloc] init];
         numDic[NSFontAttributeName] = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
         numDic[NSForegroundColorAttributeName] = [UIColor blackColor];
@@ -372,28 +373,28 @@
         numLab.text = numStr;
         [baseView addSubview:numLab];
         //好评率
-        CGFloat goodLabW = indentLabW;
-        CGFloat goodLabH = indentLabH;
-        CGFloat goodLabX = CGRectGetMaxX(numLab.frame) + jianjv1;
-        CGFloat goodLabY = indentLabY;
-        UILabel *goodLab = [[UILabel alloc] initWithFrame:CGRectMake(goodLabX, goodLabY, goodLabW, goodLabH)];
-        goodLab.text = @"好评率";
-        goodLab.font = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
-        [baseView addSubview:goodLab];
-        NSString *proStr = @"99.99%";
-        NSMutableDictionary *proDic = [[NSMutableDictionary alloc] init];
-        proDic[NSFontAttributeName] = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
-        proDic[NSForegroundColorAttributeName] = [UIColor blackColor];
-        CGRect proRect = [proStr boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:proDic context:nil];
-        CGFloat proLabW = proRect.size.width;
-        CGFloat proLabH = goodLabH;
-        CGFloat proLabX = CGRectGetMaxX(goodLab.frame) - 3;
-        CGFloat proLabY = goodLabY;
-        UILabel *proLab = [[UILabel alloc] initWithFrame:CGRectMake(proLabX, proLabY, proLabW, proLabH)];
-        proLab.text = proStr;
-        proLab.font = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
-        proLab.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-        [baseView addSubview:proLab];
+//        CGFloat goodLabW = indentLabW;
+//        CGFloat goodLabH = indentLabH;
+//        CGFloat goodLabX = CGRectGetMaxX(numLab.frame) + jianjv1;
+//        CGFloat goodLabY = indentLabY;
+//        UILabel *goodLab = [[UILabel alloc] initWithFrame:CGRectMake(goodLabX, goodLabY, goodLabW, goodLabH)];
+//        goodLab.text = @"好评率";
+//        goodLab.font = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
+//        [baseView addSubview:goodLab];
+//        NSString *proStr = @"99.99%";
+//        NSMutableDictionary *proDic = [[NSMutableDictionary alloc] init];
+//        proDic[NSFontAttributeName] = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
+//        proDic[NSForegroundColorAttributeName] = [UIColor blackColor];
+//        CGRect proRect = [proStr boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:proDic context:nil];
+//        CGFloat proLabW = proRect.size.width;
+//        CGFloat proLabH = goodLabH;
+//        CGFloat proLabX = CGRectGetMaxX(goodLab.frame) - 3;
+//        CGFloat proLabY = goodLabY;
+//        UILabel *proLab = [[UILabel alloc] initWithFrame:CGRectMake(proLabX, proLabY, proLabW, proLabH)];
+//        proLab.text = proStr;
+//        proLab.font = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
+//        proLab.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+//        [baseView addSubview:proLab];
         
         
         // 右上方按钮

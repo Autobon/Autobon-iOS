@@ -90,8 +90,8 @@
             
             
             _identityLabel.text = dataDic[@"idNo"];
-            [_headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"avatar"]]]];
-            [_identityImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"idPhoto"]]]];
+            [_headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"avatar"]]] placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
+            [_identityImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"idPhoto"]]] placeholderImage:[UIImage imageNamed:@"userImage"]];
             
             
             

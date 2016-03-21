@@ -227,17 +227,9 @@
     NSLog(@"receiveNotification---%@--",Notification.userInfo);
     
     
-   
-//    CLKnockOrderViewController *knockOrder = [[CLKnockOrderViewController alloc]init];
-//    [self.view addSubview:knockOrder.view];
-//    [self addChildViewController:knockOrder];
-//    [knockOrder didMoveToParentViewController:self];
-    
     if ([Notification.userInfo[@"action"] isEqualToString:@"NEW_ORDER"]) {
         CLKnockOrderViewController *knockOrder = [[CLKnockOrderViewController alloc]init];
         knockOrder.orderDictionary = Notification.userInfo;
-        //    [self.navigationController pushViewController:knockOrder animated:YES];
-        
         [self.view addSubview:knockOrder.view];
         [self.view bringSubviewToFront:knockOrder.view];
         
@@ -253,7 +245,7 @@
         NSDictionary *orderDictionary = Notification.userInfo[@"order"];
         NSArray *skillArray = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
         NSString *orderDetail = [NSString stringWithFormat:@"邀请你参与%@的订单，订单号%@",skillArray[[orderDictionary[@"orderType"] integerValue] - 1],orderDictionary[@"orderNum"]];
-        GFAlertView *alertView = [[GFAlertView alloc]initWithHeadImageURL:dictionary[@"avatar"] name:dictionary[@"name"] mark:1.2 orderNumber:2 goodNumber:1.0 order:orderDetail];
+        GFAlertView *alertView = [[GFAlertView alloc]initWithHeadImageURL:dictionary[@"avatar"] name:dictionary[@"name"] mark:[dictionary[@"starRate"] floatValue] orderNumber:[dictionary[@"unpaidOrders"] integerValue] goodNumber:1.0 order:orderDetail];
         [alertView.okBut addTarget:self action:@selector(OrderDetailBtnClick) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:alertView];
         _inviteDictionary = [[NSDictionary alloc]initWithDictionary:Notification.userInfo];
@@ -277,7 +269,12 @@
     orderDetail.customerLat = orderDic[@"positionLat"];
     orderDetail.customerLon = orderDic[@"positionLon"];
     orderDetail.orderPhotoURL = orderDic[@"photo"];
-    orderDetail.remark = orderDic[@"remark"];
+    if (![orderDic[@"remark"]isKindOfClass:[NSNull class]]) {
+        orderDetail.remark = orderDic[@"remark"];
+    }else{
+        orderDetail.remark = @"";
+    }
+    
     orderDetail.mainTechId = @"2";
     NSDictionary *mainTechDictionary = _inviteDictionary[@"owner"];
     orderDetail.secondId = mainTechDictionary[@"name"];
@@ -508,6 +505,7 @@
                     signinView.orderId = cellModel.orderId;
                     signinView.orderType = cellModel.orderType;
                     signinView.startTime = cellModel.startTime;
+                    signinView.orderNumber = cellModel.orderNumber;
                     [self.navigationController pushViewController:signinView animated:YES];
                     
                     
@@ -517,6 +515,7 @@
                     workBefore.orderId = cellModel.orderId;
                     workBefore.orderType = cellModel.orderType;
                     workBefore.startTime = cellModel.startTime;
+                    workBefore.orderNumber = cellModel.orderNumber;
                     [self.navigationController pushViewController:workBefore animated:YES];
                     
                     NSLog(@"未上传开始前照片");
@@ -526,6 +525,7 @@
                         CLCleanWorkViewController *cleanWork = [[CLCleanWorkViewController alloc]init];
                         cleanWork.orderId = cellModel.orderId;
                         cleanWork.startTime = cellModel.startTime;
+                        cleanWork.orderNumber = cellModel.orderNumber;
                         [self.navigationController pushViewController:cleanWork animated:YES];
                         
                     }else{
@@ -534,7 +534,7 @@
                         NSLog(@"---workOver---%@--",self.navigationController);
                         workOver.orderId = cellModel.orderId;
                         workOver.orderType = cellModel.orderType;
-                        
+                        workOver.orderNumber = cellModel.orderNumber;
                         
                         [self.navigationController pushViewController:workOver animated:YES];
                     }
@@ -554,7 +554,7 @@
                 orderDetail.orderTime = cellModel.orderTime;
                 orderDetail.remark = cellModel.remark;
                 orderDetail.orderType = cellModel.orderType;
-                
+                orderDetail.orderNumber = cellModel.orderNumber;
                 NSLog(@"我还没有开始啊--%@--",cellModel.mateName);
                 if (cellModel.mateName) {
                     
@@ -682,7 +682,6 @@
 
 #pragma mark - 开始工作的按钮点击方法
 - (void)workBegin:(UIButton *)button{
-    NSLog(@"点击订单");
     if ([button.titleLabel.text isEqualToString:@"开始工作"]) {
     CLHomeOrderCellModel *cellModel = _cellModelArray[button.tag-2];
     CLOrderDetailViewController *orderDetail = [[CLOrderDetailViewController alloc]init];
@@ -696,7 +695,7 @@
     orderDetail.mainTechId = cellModel.mainTechId;
     orderDetail.secondId = cellModel.secondTechId;
     orderDetail.orderType = cellModel.orderType;
-        
+    orderDetail.orderNumber = cellModel.orderNumber;
     NSLog(@"---orderDetail.remark---%@--",orderDetail.action);
     [self.navigationController pushViewController:orderDetail animated:YES];
     }

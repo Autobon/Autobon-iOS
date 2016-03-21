@@ -232,6 +232,7 @@
             
         } failure:^(NSError *error) {
             NSLog(@"修改密码提交失败");
+            [self tipShow:@"修改密码失败"];
         }];
     
     }

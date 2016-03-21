@@ -15,6 +15,9 @@
 #import "MJRefresh.h"
 
 #import "GFBillModel.h"
+#import "GFTipView.h"
+
+
 
 @interface GFBillDetailsViewController () {
     
@@ -108,12 +111,13 @@
     } failure:^(NSError *error) {
         
         
-        NSLog(@"\n请求失败！！！！\n%@\n\n", error);
+        [self addAlertView:@"请求失败"];
     }];
     
     
     
 }
+
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -140,7 +144,11 @@
     
     return kHeight * 0.464 + kHeight * 0.0183;
 }
-
+#pragma mark - AlertView
+- (void)addAlertView:(NSString *)title{
+    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
+    [tipView tipViewShow];
+}
 - (void)leftButClick {
     
     [self.navigationController popViewControllerAnimated:YES];

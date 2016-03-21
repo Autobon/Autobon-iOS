@@ -77,8 +77,8 @@
             _identityLabel.text = dataDic[@"idNo"];
             NSURL *URLString = [NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"avatar"]]];
             NSLog(@"----URLString---%@--",URLString);
-            [_headImage sd_setImageWithURL:URLString];
-            [_identityImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"idPhoto"]]]];
+            [_headImage sd_setImageWithURL:URLString placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
+            [_identityImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"idPhoto"]]] placeholderImage:[UIImage imageNamed:@"userImage"]];
             
            
             
@@ -212,10 +212,10 @@
 }
 
 -(void)backBtnClick{
-//    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
     
-    CLHomeOrderViewController *home = [[CLHomeOrderViewController alloc]init];
-    [self.navigationController pushViewController:home animated:YES];
+//    CLHomeOrderViewController *home = [[CLHomeOrderViewController alloc]init];
+//    [self.navigationController pushViewController:home animated:YES];
     
     
 }

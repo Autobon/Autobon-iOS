@@ -12,7 +12,7 @@
 #import "GFNavigationView.h"
 #import "CLCertifyingViewController.h"
 #import "CLCertifyFailViewController.h"
-
+#import "CLHomeOrderViewController.h"
 
 
 @interface CLAutobonViewController ()
@@ -145,15 +145,24 @@
 // 添加导航
 - (void)setNavigation{
     
-    GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:nil withLeftImgHightName:nil withRightImgName:@"moreList" withRightImgHightName:@"moreListClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+    GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:@"moreList" withRightImgHightName:@"moreListClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
     [navView.rightBut addTarget:navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:navView];
     
 
 }
 
+- (void)backBtnClick{
+    [self.navigationController popViewControllerAnimated:YES];
+    
+//    CLHomeOrderViewController *home = [[CLHomeOrderViewController alloc]init];
+//    [self.navigationController pushViewController:home animated:YES];
 
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

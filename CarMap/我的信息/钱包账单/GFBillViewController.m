@@ -15,6 +15,9 @@
 #import "GFBillModel.h"
 #import "MJRefresh.h"
 #import "GFNothingView.h"
+#import "GFTipView.h"
+
+
 
 @interface GFBillViewController () {
     
@@ -336,13 +339,14 @@
                 
             [self.tableView reloadData];
         }else {
-            NSLog(@"请求失败");
+           
+            [self addAlertView:responseObject[@"message"]];
         }
         
     } failure:^(NSError *error) {
    
-        NSLog(@"网络请求失败=====%@", error);
         
+        [self addAlertView:@"请求失败"];
     }];
     
     
@@ -350,6 +354,11 @@
     
 }
 
+#pragma mark - AlertView
+- (void)addAlertView:(NSString *)title{
+    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
+    [tipView tipViewShow];
+}
 
 
 - (void)leftButClick {

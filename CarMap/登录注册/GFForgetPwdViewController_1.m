@@ -285,35 +285,22 @@
     [self.view endEditing:YES];
     
     self.userNameTxt.centerTxt.text =  [self.userNameTxt.centerTxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
-    NSString *CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
-    NSString *CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
-    NSString *CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
-    NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];  // 小灵通
-    NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];  // 移动
-    NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];  // 灵通
-    NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];  // 电信
-    
-    
+    NSString *phoneRegex = @"^((13[0-9])|(15[^4,\\D])|(18[0,0-9])|(17[0,0-9]))\\d{8}$";
+
+    NSPredicate *phonegextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
+
     if(self.userNameTxt.centerTxt.text.length == 0) {
         
         [self tipShow:@"手机号不能为空"];
         
-    }else if (([regextestmobile evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
-        || ([regextestcm evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
-        || ([regextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
-        || ([regextestcu evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)) {
-        
-        self.timeLab.hidden = NO;
-        time = 5;
-        self.timeLab.text = [NSString stringWithFormat:@"(%ld)秒", time];
-        self.timeLab.hidden = NO;
+    }else if (([phonegextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
+        ) {
+
+        time = 60;
         sender.userInteractionEnabled = NO;
         
-        
-        
         // 获取验证码
-        NSString *url = @"http://121.40.157.200:12345/api/mobile/verifySms";
+        NSString *url = @"http://121.40.157.200:12345/api/pub/verifySms";
         NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
         parDic[@"phone"] = self.userNameTxt.centerTxt.text;
         
@@ -327,6 +314,8 @@
                 // 计时器
                 if (self.timer == nil) {
                     self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(showTime) userInfo:nil repeats:YES];
+                    self.timeLab.text = [NSString stringWithFormat:@"(%ld)秒", time];
+                    self.timeLab.hidden = NO;
                 }
                 [self tipShow:@"验证码已发送到您手机"];
             }else {
@@ -337,7 +326,7 @@
             
         } failure:^(NSError *error) {
             sender.userInteractionEnabled = YES;
-            NSLog(@"获取验证码失败  %@", error);
+            [self tipShow:@"获取验证码失败"];
             
         }];
         
@@ -377,22 +366,15 @@
     [self.tipView removeFromSuperview];
     
     self.userNameTxt.centerTxt.text =  [self.userNameTxt.centerTxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
-    NSString *CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
-    NSString *CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
-    NSString *CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
-    NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];  // 小灵通
-    NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];  // 移动
-    NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];  // 灵通
-    NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];  // 电信
+    NSString *phoneRegex = @"^((13[0-9])|(15[^4,\\D])|(18[0,0-9])|(17[0,0-9]))\\d{8}$";
+    
+    NSPredicate *phonegextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
     
     if(self.userNameTxt.centerTxt.text.length == 0) {
         
         [self tipShow:@"手机号不能为空"];
-    }else if(([regextestmobile evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)
-             && ([regextestcm evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)
-             && ([regextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)
-             && ([regextestcu evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)) {
+    }else if([phonegextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)
+              {
         
         [self tipShow:@"请输入正确的手机号"];
         
@@ -410,10 +392,8 @@
         
         
 
-        if (([regextestmobile evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
-            || ([regextestcm evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
-            || ([regextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
-            || ([regextestcu evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)) {
+        if ([phonegextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == YES
+            ) {
 
             if(self.verifyTxt.centerTxt.text.length == 6) {
                 
@@ -459,9 +439,8 @@
                                 
                             } failure:^(NSError *error) {
                                 
-                                NSLog(@"找回密码失败————————————————%@", error);
                                 
-                                
+                                [self tipShow:@"找回密码失败"];
                             }];
 
                     

@@ -10,4 +10,6 @@
 
 @interface CLShareViewController : UIViewController
 
+@property (nonatomic ,strong) NSString *orderNumber;
+
 @end

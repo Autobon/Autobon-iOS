@@ -190,11 +190,16 @@
     
     
     
-    
-    detailView.remark = _dataDictionary[@"remark"];
+    if (![_dataDictionary[@"remark"] isKindOfClass:[NSNull class]]) {
+        detailView.remark = _dataDictionary[@"remark"];
+    }else{
+        detailView.remark = @"";
+    }
     detailView.orderId = _dataDictionary[@"id"];
     detailView.orderType = _dataDictionary[@"orderType"];
     detailView.action = _dataDictionary[@"status"];
+    detailView.orderNumber = _dataDictionary[@"orderNum"];
+    
     [self.navigationController pushViewController:detailView animated:YES];
     
     
@@ -206,9 +211,9 @@
 
 
 - (void)backBtnClick{
-    //    [self.navigationController popViewControllerAnimated:YES];
-    GFMyMessageViewController *myMessage = [[GFMyMessageViewController alloc]init];
-    [self.navigationController pushViewController:myMessage animated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
+//    GFMyMessageViewController *myMessage = [[GFMyMessageViewController alloc]init];
+//    [self.navigationController pushViewController:myMessage animated:YES];
 }
 
 

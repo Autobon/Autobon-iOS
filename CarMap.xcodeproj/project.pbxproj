@@ -52,7 +52,6 @@
 		8673FDBA1C98F33900666634 /* GFBillModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8673FDB91C98F33900666634 /* GFBillModel.m */; };
 		8679EBCA1C9A4950001C1D99 /* WorkItemDic.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8679EBC91C9A4950001C1D99 /* WorkItemDic.plist */; };
 		868B0F111C7EA5AE00938665 /* GFBalanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 868B0F091C7EA5AE00938665 /* GFBalanceViewController.m */; };
-		868B0F121C7EA5AE00938665 /* GFBankCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 868B0F0B1C7EA5AE00938665 /* GFBankCardViewController.m */; };
 		868B0F131C7EA5AE00938665 /* GFBillTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 868B0F0E1C7EA5AE00938665 /* GFBillTableViewCell.m */; };
 		868B0F141C7EA5AE00938665 /* GFBillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 868B0F101C7EA5AE00938665 /* GFBillViewController.m */; };
 		868B0F171C7EA63A00938665 /* GFBillDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 868B0F161C7EA63A00938665 /* GFBillDetailsViewController.m */; };
@@ -123,6 +122,7 @@
 		9BA9C8141C7D4F13005CE1C0 /* CLKnockOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA9C8131C7D4F13005CE1C0 /* CLKnockOrderViewController.m */; };
 		9BA9C8171C7DB3CC005CE1C0 /* CLWorkOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA9C8161C7DB3CC005CE1C0 /* CLWorkOverViewController.m */; };
 		9BA9CBD51C5B02220059F145 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA9CBD41C5B02220059F145 /* FirstViewController.m */; };
+		9BB940F71C9FCDAE00A3FABC /* GFBankCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB940F61C9FCDAE00A3FABC /* GFBankCardViewController.m */; };
 		9BCFDC971C859397003A35A8 /* CLCleanWorkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BCFDC961C859397003A35A8 /* CLCleanWorkViewController.m */; };
 		9BCFDCA51C85B6CF003A35A8 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9BCFDCA21C85B6CF003A35A8 /* AppDelegate.mm */; };
 		9BE53AE41C72ADED00BBB424 /* CLAutobonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE53AE31C72ADED00BBB424 /* CLAutobonViewController.m */; };
@@ -232,7 +232,6 @@
 		868B0F081C7EA5AE00938665 /* GFBalanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFBalanceViewController.h; sourceTree = "<group>"; };
 		868B0F091C7EA5AE00938665 /* GFBalanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFBalanceViewController.m; sourceTree = "<group>"; };
 		868B0F0A1C7EA5AE00938665 /* GFBankCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFBankCardViewController.h; sourceTree = "<group>"; };
-		868B0F0B1C7EA5AE00938665 /* GFBankCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = GFBankCardViewController.m; sourceTree = "<group>"; };
 		868B0F0D1C7EA5AE00938665 /* GFBillTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFBillTableViewCell.h; sourceTree = "<group>"; };
 		868B0F0E1C7EA5AE00938665 /* GFBillTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFBillTableViewCell.m; sourceTree = "<group>"; };
 		868B0F0F1C7EA5AE00938665 /* GFBillViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFBillViewController.h; sourceTree = "<group>"; };
@@ -370,6 +369,7 @@
 		9BA9C8161C7DB3CC005CE1C0 /* CLWorkOverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLWorkOverViewController.m; sourceTree = "<group>"; };
 		9BA9CBD31C5B02220059F145 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
 		9BA9CBD41C5B02220059F145 /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		9BB940F61C9FCDAE00A3FABC /* GFBankCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFBankCardViewController.m; sourceTree = "<group>"; };
 		9BCFDC951C859397003A35A8 /* CLCleanWorkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCleanWorkViewController.h; sourceTree = "<group>"; };
 		9BCFDC961C859397003A35A8 /* CLCleanWorkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLCleanWorkViewController.m; sourceTree = "<group>"; };
 		9BCFDCA11C85B6CF003A35A8 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -574,7 +574,7 @@
 				868B0F081C7EA5AE00938665 /* GFBalanceViewController.h */,
 				868B0F091C7EA5AE00938665 /* GFBalanceViewController.m */,
 				868B0F0A1C7EA5AE00938665 /* GFBankCardViewController.h */,
-				868B0F0B1C7EA5AE00938665 /* GFBankCardViewController.m */,
+				9BB940F61C9FCDAE00A3FABC /* GFBankCardViewController.m */,
 			);
 			path = "钱包余额";
 			sourceTree = "<group>";
@@ -1201,7 +1201,6 @@
 				9B93BF2B1C89548800397078 /* UIImage+MultiFormat.m in Sources */,
 				9B93BF2D1C89548800397078 /* UIImageView+WebCache.m in Sources */,
 				9B95A79D1C7C46140041C7BA /* CLCertifyingViewController.m in Sources */,
-				868B0F121C7EA5AE00938665 /* GFBankCardViewController.m in Sources */,
 				9BA3C5BC1C75621B007F730D /* GFAlertView.m in Sources */,
 				9B3FCD231C92A09500E871C7 /* GFTitleView.m in Sources */,
 				860A4CBA1C7ED9780067FB70 /* MJRefreshBackGifFooter.m in Sources */,
@@ -1212,6 +1211,7 @@
 				9BA526CC1C63115700A2298F /* PoiSearchDemoViewController.mm in Sources */,
 				9B96BA2D1C7AA70200C6DDCC /* NetWorking.m in Sources */,
 				866CCEBD1C755BC800E50C67 /* AFNetworkReachabilityManager.m in Sources */,
+				9BB940F71C9FCDAE00A3FABC /* GFBankCardViewController.m in Sources */,
 				860A4CC11C7ED9780067FB70 /* MJRefreshConst.m in Sources */,
 				868B0F111C7EA5AE00938665 /* GFBalanceViewController.m in Sources */,
 				9BA9CBD51C5B02220059F145 /* FirstViewController.m in Sources */,

@@ -96,7 +96,7 @@
 
 - (void)setViewForShare{
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(30, 140, self.view.frame.size.width-60, 80)];
-    label.text = @"恭喜，您已经顺利完成本次编号为CLB00001的订单，分享可获得奖励啊！";
+    label.text = [NSString stringWithFormat:@"恭喜，您已经顺利完成本次编号为%@的订单，分享可获得奖励啊！",_orderNumber];
 //    label.textAlignment = NSTextAlignmentCenter;
     label.font = [UIFont systemFontOfSize:20];
     label.numberOfLines = 0;

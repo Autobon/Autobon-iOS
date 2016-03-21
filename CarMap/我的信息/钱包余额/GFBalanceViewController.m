@@ -76,7 +76,12 @@
     self.upMoneyLab = [[UILabel alloc] initWithFrame:CGRectMake(upMoneyLabX, upMoneyLabY, upMoneyLabW, upMoneyLabH)];
     self.upMoneyLab.backgroundColor = [UIColor whiteColor];
     self.upMoneyLab.textAlignment = NSTextAlignmentCenter;
-    self.upMoneyLab.text = [NSString stringWithFormat:@"%@元", self.balance];
+    if (self.balance == NULL) {
+        self.upMoneyLab.text = @"0元";
+    }else{
+        self.upMoneyLab.text = [NSString stringWithFormat:@"%@元", self.balance];
+    }
+    
     self.upMoneyLab.font = [UIFont systemFontOfSize:28 / 320.0 * kWidth];
     [self.view addSubview:self.upMoneyLab];
     // 边线

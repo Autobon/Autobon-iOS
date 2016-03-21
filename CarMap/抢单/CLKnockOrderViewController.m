@@ -74,7 +74,7 @@
     // 距离label
     _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, _orderView.frame.size.height/3+30, self.view.frame.size.width, self.view.frame.size.height/18)];
     //    distanceLabel.backgroundColor = [UIColor cyanColor];
-    _distanceLabel.text = @"距离：  1.3km";
+    _distanceLabel.text = @"距离：  0km";
     _distanceLabel.font = [UIFont systemFontOfSize:14];
     _distanceLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [_orderView addSubview:_distanceLabel];
@@ -87,7 +87,7 @@
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, lineView.frame.origin.y + 7, _orderView.frame.size.width - 20, _orderView.frame.size.height/4)];
     //    imageView.backgroundColor = [UIColor darkGrayColor];
     imageView.image = [UIImage imageNamed:@"orderImage"];
-    [imageView sd_setImageWithURL:[NSURL URLWithString:orderDic[@"photo"]]];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:orderDic[@"photo"]] placeholderImage:[UIImage imageNamed:@"orderImage"]];
     [_orderView addSubview:imageView];
     
     UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(0, imageView.frame.origin.y+_orderView.frame.size.height/4+5, _orderView.frame.size.width, 1)];
@@ -118,10 +118,15 @@
     
     // 备注
     UILabel *otherLabel = [[UILabel alloc]init];
-    //    otherLabel.backgroundColor = [UIColor cyanColor];
-//    otherLabel.text = @"工作备注：今天天气不错，适合工作";
-//    otherLabel.text = [NSString stringWithFormat:@"工作备注：%@",orderDic[@"remark"]];
-    otherLabel.text = [NSString stringWithFormat:@"工作备注：%@",@"今天天气不错，适合工作今天天气不错适合工作适合工作适合工作适合工作适合工作适合工作适合工作适合工作适合工作适合工作适合工作适合工作适合工作"];
+    NSString *remarkString = orderDic[@"remark"];
+    NSLog(@"---_orderDictionary--%@--",_orderDictionary);
+    
+    if ([remarkString isKindOfClass:[NSNull class]]) {
+        otherLabel.text = [NSString stringWithFormat:@"工作备注："];
+    }else{
+        otherLabel.text = [NSString stringWithFormat:@"工作备注：%@",_orderDictionary[@"remark"]];
+    }
+    
     CGSize detailSize = [otherLabel.text sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(self.view.frame.size.width-30, MAXFLOAT)];
     if (_orderView.frame.size.height-lineView3.frame.origin.y-2-self.view.frame.size.height/18-7 > detailSize.height) {
         otherLabel.frame = CGRectMake(10, lineView3.frame.origin.y+2, self.view.frame.size.width-40, detailSize.height);

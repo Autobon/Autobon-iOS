@@ -17,6 +17,7 @@
 #import "GFIndentViewController.h"
 #import "CLCertifyViewController.h"
 #import "UIImageView+WebCache.h"
+#import "GFTipView.h"
 
 
 @interface GFMyMessageViewController () {
@@ -109,10 +110,10 @@
     iconImgView.layer.cornerRadius = iconImgViewW / 2.0;
     iconImgView.clipsToBounds = YES;
     iconImgView.contentMode = UIViewContentModeScaleAspectFill;
-    iconImgView.image = [UIImage imageNamed:@"11.png"];
+    iconImgView.image = [UIImage imageNamed:@"userHeadImage"];
     [msgView addSubview:iconImgView];
     // 姓名
-    NSString *nameStr = @"陈光法";
+    NSString *nameStr = @"";
     NSMutableDictionary *attDic = [[NSMutableDictionary alloc] init];
     attDic[NSFontAttributeName] = [UIFont systemFontOfSize:16 / 320.0 * kWidth];
     attDic[NSForegroundColorAttributeName] = [UIColor blackColor];
@@ -125,31 +126,8 @@
     nameLab.font = [UIFont systemFontOfSize:16.5 / 320.0 * kWidth];
     nameLab.text = nameStr;
     [msgView addSubview:nameLab];
-    // 星星
-//    for(int i=0; i<5; i++) {
-//        
-//        CGFloat starImgViewW = strRect.size.height;
-//        CGFloat starImgViewH = starImgViewW;
-//        CGFloat starImgViewX = CGRectGetMaxX(nameLab.frame) + starImgViewW * i;
-//        CGFloat starImgViewY = nameLabY + 3.5 / 568 * kHeight;
-//        UIImageView *starImgView = [[UIImageView alloc] initWithFrame:CGRectMake(starImgViewX, starImgViewY, starImgViewW, starImgViewH)];
-//        starImgView.contentMode = UIViewContentModeScaleAspectFit;
-//        starImgView.image = [UIImage imageNamed:@"detailsStarDark.png"];
-//        [msgView addSubview:starImgView];
-//    }
-//    for(int i=0; i<3; i++) {
-//        
-//        CGFloat starImgViewW = strRect.size.height;
-//        CGFloat starImgViewH = starImgViewW;
-//        CGFloat starImgViewX = CGRectGetMaxX(nameLab.frame) + starImgViewW * i;
-//        CGFloat starImgViewY = nameLabY + 3.5 / 568 * kHeight;
-//        UIImageView *starImgView = [[UIImageView alloc] initWithFrame:CGRectMake(starImgViewX, starImgViewY, starImgViewW, starImgViewH)];
-//        starImgView.contentMode = UIViewContentModeScaleAspectFit;
-//        starImgView.image = [UIImage imageNamed:@"information.png"];
-//        [msgView addSubview:starImgView];
-//    }
-    // 评分
-    NSString *fenStr = @"2.7";
+
+    NSString *fenStr = @"0";
     NSMutableDictionary *fenDic = [[NSMutableDictionary alloc] init];
     fenDic[NSFontAttributeName] = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
     fenDic[NSForegroundColorAttributeName] = [UIColor blackColor];
@@ -176,7 +154,7 @@
     indentLab.text = @"订单数";
     indentLab.font = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
     [msgView addSubview:indentLab];
-    NSString *numStr = @"999";
+    NSString *numStr = @"0";
     NSMutableDictionary *numDic = [[NSMutableDictionary alloc] init];
     numDic[NSFontAttributeName] = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
     numDic[NSForegroundColorAttributeName] = [UIColor blackColor];
@@ -467,6 +445,10 @@
             NSString *idPhoto = dataDic[@"avatar"];
             NSString *name = dataDic[@"name"];
             NSString *starRate = dataDic[@"starRate"];
+            if([name isKindOfClass:[NSNull class]]) {
+                name = [NSString stringWithFormat:@""];
+            }
+            
             if([starRate isKindOfClass:[NSNull class]]) {
                 starRate = [NSString stringWithFormat:@"0"];
             }
@@ -488,13 +470,12 @@
             self.bankCardNo = dataDic[@"bankCardNo"];
             self.balance = balance;
             self.name = name;
-            
             NSLog(@"\n%@\n%@\n%@\n%@\n%@\n%@\n", idPhoto, name, starRate, totalOrders, balance, unpaidOrders);
             
             // 头像
             idPhoto = [NSString stringWithFormat:@"http://121.40.157.200:12345%@", idPhoto];
             NSURL *imgUrl = [NSURL URLWithString:idPhoto];
-            [iconImgView sd_setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"11.png"]];
+            [iconImgView sd_setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
             // 姓名
             NSString *nameStr = name;
             NSMutableDictionary *attDic = [[NSMutableDictionary alloc] init];
@@ -563,11 +544,18 @@
         
     } failure:^(NSError *error) {
         
-        NSLog(@"网络请求失败+++++++++++++%@", error);
+        [self addAlertView:@"信息请求失败"];
     }];
     
     
     
+}
+
+
+#pragma mark - AlertView
+- (void)addAlertView:(NSString *)title{
+    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
+    [tipView tipViewShow];
 }
 
 // 信息界面按钮跳转
@@ -583,11 +571,16 @@
 - (void)balButClick {
 
     NSLog(@"余额栏界面");
+    
     GFBalanceViewController *balVC = [[GFBalanceViewController alloc] init];
-    balVC.bank = self.bank;
-    balVC.bankCardNo = self.bankCardNo;
-    balVC.balance = self.balance;
-    balVC.name = self.name;
+    if (![self.bank isKindOfClass:[NSNull class]]) {
+        balVC.bank = self.bank;
+        balVC.bankCardNo = self.bankCardNo;
+        balVC.balance = self.balance;
+        balVC.name = self.name;
+    }else{
+        
+    }
     [self.navigationController pushViewController:balVC animated:YES];
 }
 // 账单界面跳转

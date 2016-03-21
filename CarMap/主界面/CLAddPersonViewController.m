@@ -113,7 +113,7 @@
             [self addAlertView:responseObject[@"message"]];
         }
     } failure:^(NSError *error) {
-        
+        [self addAlertView:@"请求失败"];
     }];
 }
 
@@ -133,12 +133,17 @@
         cell.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     }
     CLAddPersonModel *person = _addPersonArray[indexPath.row];
-    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:person.headImageURL]];
+    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:person.headImageURL] placeholderImage:[UIImage imageNamed:@"userHeadimage"]];
     cell.userNameLabel.text = person.nameString;
     cell.identityLabel.text = person.phoneString;
     cell.button.tag = indexPath.row;
     [cell.button addTarget:self action:@selector(addPersonBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
 }
 
 #pragma mark - 添加合伙人按钮
@@ -154,7 +159,7 @@
             [self addAlertView:responseObject[@"message"]];
         }
     } failure:^(NSError *error) {
-        NSLog(@"－－－%@--",error);
+       [self addAlertView:@"请求失败"];
     }];
 }
 

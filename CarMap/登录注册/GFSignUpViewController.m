@@ -332,26 +332,18 @@
     [self.view endEditing:YES];
     
     self.userNameTxt.centerTxt.text =  [self.userNameTxt.centerTxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
-    NSString *CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
-    NSString *CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
-    NSString *CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
-    NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];  // 小灵通
-    NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];  // 移动
-    NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];  // 灵通
-    NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];  // 电信
+    NSString *phoneRegex = @"^((13[0-9])|(15[^4,\\D])|(18[0,0-9])|(17[0,0-9]))\\d{8}$";
+    
+    NSPredicate *phonegextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
     
     if(self.userNameTxt.centerTxt.text.length == 0) {
     
         [self tipShow:@"手机号不能为空"];
         
-    }else if (([regextestmobile evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
-        || ([regextestcm evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
-        || ([regextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
-        || ([regextestcu evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)) {
+    }else if ([phonegextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == YES) {
         
         
-        time = 5;
+        time = 60;
         
         // 倒计时
         NSString *nameStr = @"(60)秒";
@@ -368,7 +360,7 @@
         
 
         
-        NSString *url = @"http://121.40.157.200:12345/api/mobile/verifySms";
+        NSString *url = @"http://121.40.157.200:12345/api/pub/verifySms";
         NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
         parDic[@"phone"] = self.userNameTxt.centerTxt.text;
         
@@ -391,9 +383,7 @@
             
         } failure:^(NSError *error) {
             sender.userInteractionEnabled = YES;
-            NSLog(@"获取验证码失败  %@", error);
-            [self tipShow:@"获取验证码失败"];
-            
+            [self tipShow:@"获取验证码失败"];    
         }];
     }else {
     
@@ -431,24 +421,17 @@
     [self.tipView removeFromSuperview];
     
     self.userNameTxt.centerTxt.text =  [self.userNameTxt.centerTxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
-    NSString *CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
-    NSString *CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
-    NSString *CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
-    NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];  // 小灵通
-    NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];  // 移动
-    NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];  // 灵通
-    NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];  // 电信
+    NSString *phoneRegex = @"^((13[0-9])|(15[^4,\\D])|(18[0,0-9])|(17[0,0-9]))\\d{8}$";
+    
+    NSPredicate *phonegextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
 
     
     if(self.userNameTxt.centerTxt.text.length == 0) {
         
         [self tipShow:@"手机号不能为空"];
         
-    }else if(([regextestmobile evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)
-             && ([regextestcm evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)
-             && ([regextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)
-             && ([regextestcu evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)) {
+    }else if([phonegextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)
+              {
         
         [self tipShow:@"请输入正确的手机号"];
         
@@ -472,10 +455,8 @@
     }else {
         
         
-        if (([regextestmobile evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
-            || ([regextestcm evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
-            || ([regextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)
-            || ([regextestcu evaluateWithObject:self.userNameTxt.centerTxt.text] == YES)) {
+        if ([phonegextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == YES
+            ) {
 
             NSLog(@"是手机号");
             NSLog(@"开开##################2222222222");
@@ -524,7 +505,7 @@
                         
                         
                     } failure:^(NSError *error) {
-                        NSLog(@"注册提交失败=======%@", error);
+                        [self tipShow:@"注册失败，请重试"];
                     }];
                     
                 }else {

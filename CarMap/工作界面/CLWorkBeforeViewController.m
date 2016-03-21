@@ -406,7 +406,7 @@
                     cleanWork.orderId = _orderId;
                     cleanWork.startTime = _startTime;
 //                    [self.navigationController pushViewController:cleanWork animated:YES];
-                    
+                    cleanWork.orderNumber = self.orderNumber;
                     UIWindow *window = [UIApplication sharedApplication].keyWindow;
                     UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:cleanWork];
                     navigation.navigationBarHidden = YES;
@@ -419,7 +419,7 @@
                     workOver.orderId = _orderId;
                     workOver.orderType = _orderType;
                     workOver.startTime = _startTime;
-                    
+                    workOver.orderNumber = self.orderNumber;
                     UIWindow *window = [UIApplication sharedApplication].keyWindow;
                     UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:workOver];
                     navigation.navigationBarHidden = YES;
@@ -434,6 +434,7 @@
             }
         } failure:^(NSError *error) {
             NSLog(@"－－－失败了--%@",error);
+            [self addAlertView:@"提交失败"];
         }];
         
         
