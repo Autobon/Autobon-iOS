@@ -139,6 +139,8 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
 // 修改银行卡
 + (void)bankCardPost:(NSString *)url parameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
 
+    NSLog(@"\n$$$$$$$$$$$\n\n\n\n  %@  \n\n\n\n$$$$$$$$", parameters);
+    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"autoken"];
     [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];

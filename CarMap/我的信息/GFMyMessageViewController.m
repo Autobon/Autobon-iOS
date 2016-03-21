@@ -20,6 +20,7 @@
 #import "GFTipView.h"
 
 
+
 @interface GFMyMessageViewController () {
     
     CGFloat kWidth;
