@@ -369,7 +369,7 @@
         
     } failure:^(NSError *error) {
         
-        NSLog(@"网络请求失败");
+        NSLog(@"网络请求失败－－－%@--",error);
 
         self.tableview.userInteractionEnabled = YES;
         [self.tableview.header endRefreshing];
@@ -566,8 +566,8 @@
     // 开始时间
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-    formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[model.signinTime integerValue]/1000];
+    [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[model.signinTime floatValue]/1000];
     cell.timeLab.text = [NSString stringWithFormat:@"施工时间：%@", [formatter stringFromDate:date]];
     cell.placeLab.text = [NSString stringWithFormat:@"施工部位：%@", _workItemArr[indexPath.row]];
 

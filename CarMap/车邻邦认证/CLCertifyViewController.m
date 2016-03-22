@@ -156,6 +156,7 @@
     _identityTextField.centerTxt.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     _identityTextField.centerTxt.delegate = self;
     _identityTextField.centerTxt.tag = 2;
+    _identityTextField.centerTxt.font = [UIFont systemFontOfSize:16];
     [_scrollView addSubview:_identityTextField];
     
 // 技能项目

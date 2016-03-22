@@ -182,8 +182,8 @@
     
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-    formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[_dataDictionary[@"orderTime"] integerValue]/1000];
+    [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[_dataDictionary[@"orderTime"] floatValue]/1000];
     NSLog(@"---date-- %@---",[formatter stringFromDate:date]);
     
     detailView.orderTime = [formatter stringFromDate:date];

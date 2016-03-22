@@ -77,7 +77,7 @@
 //    FirstViewController *first = [[FirstViewController alloc]init];
 //    [self presentViewController:first animated:YES completion:nil];
     
-    self.view.backgroundColor = [UIColor cyanColor];
+//    self.view.backgroundColor = [UIColor cyanColor];
     [super viewDidLoad];
     
 //    self.view.backgroundColor = [UIColor redColor];

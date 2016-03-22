@@ -179,8 +179,8 @@
                 NSString *time = dic[@"billMonth"];
                 NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
                 [formatter setDateFormat:@"yyyy-MM"];
-                formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
-                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[time integerValue]/1000];
+                [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[time floatValue]/1000];
                 NSString *str = [formatter stringFromDate:date];
 
                 NSArray *stringArray = [str componentsSeparatedByString:@"-"];

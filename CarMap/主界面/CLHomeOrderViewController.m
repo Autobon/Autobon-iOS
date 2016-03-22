@@ -125,7 +125,7 @@
     
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-    formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
+    [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *dictionary = @{@"page":@(_page),@"pageSize":@(_pageSize)};
@@ -141,7 +141,6 @@
                 CLHomeOrderCellModel *cellModel = [[CLHomeOrderCellModel alloc]init];
                 cellModel.orderId = obj[@"id"];
                 cellModel.orderNumber = obj[@"orderNum"];
-                //                cellModel.orderTime = [obj[@"orderTime"] integerValue];
                 cellModel.orderType = obj[@"orderType"];
                 cellModel.orderPhotoURL = obj[@"photo"];
                 cellModel.customerLat = obj[@"positionLat"];
@@ -191,7 +190,7 @@
                 
 //                cellModel.secondTechId = obj[@"secondTechId"];
                 [_cellModelArray addObject:cellModel];
-                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[obj[@"orderTime"] integerValue]/1000];
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[obj[@"orderTime"] floatValue]/1000];
                 cellModel.orderTime = [formatter stringFromDate:date];
                 NSLog(@"date1:%@",cellModel.orderTime);
                 
@@ -228,9 +227,19 @@
     
     
     if ([Notification.userInfo[@"action"] isEqualToString:@"NEW_ORDER"]) {
+        
+        
+        NSUserDefaults *userDefalts = [NSUserDefaults standardUserDefaults];
+        [userDefalts setObject:@"NO" forKey:@"homeOrder"];
+        [userDefalts synchronize];
+        UIView *knockView = [self.view viewWithTag:10];
+        [knockView removeFromSuperview];
+        
+        
         CLKnockOrderViewController *knockOrder = [[CLKnockOrderViewController alloc]init];
         knockOrder.orderDictionary = Notification.userInfo;
         [self.view addSubview:knockOrder.view];
+        knockOrder.view.tag = 10;
         [self.view bringSubviewToFront:knockOrder.view];
         
         [self addChildViewController:knockOrder];
@@ -280,8 +289,8 @@
     orderDetail.secondId = mainTechDictionary[@"name"];
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-    formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[orderDic[@"orderTime"] integerValue]/1000];
+    [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[orderDic[@"orderTime"] floatValue]/1000];
     orderDetail.orderTime = [formatter stringFromDate:date];
     
     orderDetail.action = @"SEND_INVITATION";

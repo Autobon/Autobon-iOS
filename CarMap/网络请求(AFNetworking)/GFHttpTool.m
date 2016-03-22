@@ -158,11 +158,16 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
 // 账单
 + (void)billGet:(NSString *)url parameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
     
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *token = [userDefaultes objectForKey:@"autoken"];
+    NSLog(@"----token---%@--",token);
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
     
     [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if(success) {
             success(responseObject);
+            
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if(failure) {
@@ -191,6 +196,11 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
 + (void)indentGet:(NSString *)url parameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"autoken"];
+    
+    NSLog(@"token----%@---",token);
+    
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
     
     [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if(success) {
@@ -625,7 +635,7 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
     NSString *token = [userDefaultes objectForKey:@"autoken"];
     NSLog(@"token--%@--",token);
     [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-    NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/%d/invitation",HOST,orderId];
+    NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/%ld/invitation",HOST,orderId];
     [manager POST:URLString parameters:@{@"accepted":accept} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
         if(success) {
             success(responseObject);

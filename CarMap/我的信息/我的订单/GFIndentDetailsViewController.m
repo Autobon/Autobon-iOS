@@ -220,8 +220,8 @@
     self.workDayLab = [[UILabel alloc] initWithFrame:CGRectMake(workDayLabX, workDayLabY, workDayLabW, workDayLabH)];
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-    formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[self.model.signinTime integerValue]/1000];
+    [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[self.model.signinTime floatValue]/1000];
     self.workDayLab.text = [NSString stringWithFormat:@"施工时间：%@", [formatter stringFromDate:date]];
     self.workDayLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
     [baseView addSubview:self.workDayLab];
@@ -358,7 +358,7 @@
             imgView.contentMode = UIViewContentModeScaleAspectFit;
         }
         
-        for(int i=0; i<4; i++) {
+        for(int i=0; i<[_model.commentDictionary[@"star"] integerValue]; i++) {
             
             CGFloat imgViewW = (kWidth - kWidth * 0.25 * 2) / 5.0;
             CGFloat imgViewH = imgViewW - 4 / 320.0 * kWidth;
@@ -371,27 +371,27 @@
         }
         
         // 准时到达
-        UIView *daodaView = [self messageButView:@"准时到达" withSelected:YES withX:jiange2 withY:CGRectGetMaxY(baseView_1.frame) + jianjv3 * 2 + jianjv4 + (kWidth - kWidth * 0.25 * 2) / 5.0 - 4 / 320.0 * kWidth];
+        UIView *daodaView = [self messageButView:@"准时到达" withSelected:_model.commentDictionary[@"arriveOnTime"] withX:jiange2 withY:CGRectGetMaxY(baseView_1.frame) + jianjv3 * 2 + jianjv4 + (kWidth - kWidth * 0.25 * 2) / 5.0 - 4 / 320.0 * kWidth];
         [baseView addSubview:daodaView];
         
         // 准时完工
-        UIView *wangongView = [self messageButView:@"准时完工" withSelected:NO withX:kWidth * 0.676 withY:CGRectGetMaxY(baseView_1.frame) + jianjv3 * 2 + jianjv4 + (kWidth - kWidth * 0.25 * 2) / 5.0 - 4 / 320.0 * kWidth];
+        UIView *wangongView = [self messageButView:@"准时完工" withSelected:_model.commentDictionary[@"completeOnTime"] withX:kWidth * 0.676 withY:CGRectGetMaxY(baseView_1.frame) + jianjv3 * 2 + jianjv4 + (kWidth - kWidth * 0.25 * 2) / 5.0 - 4 / 320.0 * kWidth];
         [baseView addSubview:wangongView];
         
         // 技术专业
-        UIView *zhuanyeView = [self messageButView:@"技术专业" withSelected:YES withX:jiange2 withY:CGRectGetMaxY(wangongView.frame) + jianjv4];
+        UIView *zhuanyeView = [self messageButView:@"技术专业" withSelected:_model.commentDictionary[@"professional"] withX:jiange2 withY:CGRectGetMaxY(wangongView.frame) + jianjv4];
         [baseView addSubview:zhuanyeView];
         
         // 着装整洁
-        UIView *zhengjieView = [self messageButView:@"着装整洁" withSelected:NO withX:kWidth * 0.676 withY:CGRectGetMaxY(wangongView.frame) + jianjv4];
+        UIView *zhengjieView = [self messageButView:@"着装整洁" withSelected:_model.commentDictionary[@"dressNeatly"] withX:kWidth * 0.676 withY:CGRectGetMaxY(wangongView.frame) + jianjv4];
         [baseView addSubview:zhengjieView];
         
         // 车辆保护超级棒
-        UIView *bangView = [self messageButView:@"车辆保护超级棒" withSelected:YES withX:jiange2 withY:CGRectGetMaxY(zhengjieView.frame) + jianjv4];
+        UIView *bangView = [self messageButView:@"车辆保护超级棒" withSelected:_model.commentDictionary[@"carProtect"] withX:jiange2 withY:CGRectGetMaxY(zhengjieView.frame) + jianjv4];
         [baseView addSubview:bangView];
         
         // 态度好
-        UIView *haoView = [self messageButView:@"态度好" withSelected:YES withX:kWidth * 0.676 withY:CGRectGetMaxY(zhengjieView.frame) + jianjv4];
+        UIView *haoView = [self messageButView:@"态度好" withSelected:_model.commentDictionary[@"goodAttitude"] withX:kWidth * 0.676 withY:CGRectGetMaxY(zhengjieView.frame) + jianjv4];
         [baseView addSubview:haoView];
         
         // 边线
@@ -400,7 +400,7 @@
         [baseView addSubview:lineView2];
         
         // 其他意见和建议
-        NSString *fenStr = @"asdfa阿斯顿福建阿拉山口阿迪激发了手机的管理卡啥都没发过来sakjdfhasjklhgok";
+        NSString *fenStr = _model.commentDictionary[@"advice"];
         NSMutableDictionary *fenDic = [[NSMutableDictionary alloc] init];
         fenDic[NSFontAttributeName] = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
         fenDic[NSForegroundColorAttributeName] = [UIColor blackColor];

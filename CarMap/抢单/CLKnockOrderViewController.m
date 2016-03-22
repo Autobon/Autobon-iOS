@@ -97,8 +97,8 @@
     // 施工时间
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-    formatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[orderDic[@"orderTime"] integerValue]/1000];
+    [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[orderDic[@"orderTime"] floatValue]/1000];
     NSString *timeString = [formatter stringFromDate:date];
     
     
@@ -118,13 +118,16 @@
     
     // 备注
     UILabel *otherLabel = [[UILabel alloc]init];
+    
     NSString *remarkString = orderDic[@"remark"];
     NSLog(@"---_orderDictionary--%@--",_orderDictionary);
     
     if ([remarkString isKindOfClass:[NSNull class]]) {
         otherLabel.text = [NSString stringWithFormat:@"工作备注："];
+    }else if(remarkString == NULL){
+        otherLabel.text = [NSString stringWithFormat:@"工作备注："];
     }else{
-        otherLabel.text = [NSString stringWithFormat:@"工作备注：%@",_orderDictionary[@"remark"]];
+        otherLabel.text = [NSString stringWithFormat:@"工作备注：%@",orderDic[@"remark"]];
     }
     
     CGSize detailSize = [otherLabel.text sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(self.view.frame.size.width-30, MAXFLOAT)];
@@ -161,7 +164,13 @@
     
 }
 -(void)deleteBtnClick{
+    
+    NSUserDefaults *userDefalts = [NSUserDefaults standardUserDefaults];
+    [userDefalts setObject:@"YES" forKey:@"homeOrder"];
+    [userDefalts synchronize];
+    
     [self.view removeFromSuperview];
+    
 }
 
 

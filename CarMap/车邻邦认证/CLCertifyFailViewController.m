@@ -155,12 +155,12 @@
     
     
     _userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(120, view.frame.origin.y + 30, 100, 40)];
-    _userNameLabel.text = @"林峰";
+//    _userNameLabel.text = @"林峰";
     _userNameLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
     [scrollView addSubview:_userNameLabel];
     
     _identityLabel = [[UILabel alloc]initWithFrame:CGRectMake(120, view.frame.origin.y + 55, self.view.frame.size.width - 140, 40)];
-    _identityLabel.text = @"4200000000231235";
+    _identityLabel.font = [UIFont systemFontOfSize:16];
     _identityLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
     [scrollView addSubview:_identityLabel];
     

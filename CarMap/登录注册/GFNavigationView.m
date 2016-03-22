@@ -60,6 +60,7 @@
             [self.rightBut setImage:[UIImage imageNamed:rightImgHightName] forState:UIControlStateHighlighted];
             [self addSubview:self.rightBut];
 
+            self.rightBut.hidden = YES;
         }
     }
     

@@ -18,11 +18,11 @@
 
 
 
-@interface CLOrderDetailViewController ()
+@interface CLOrderDetailViewController ()<UIScrollViewDelegate>
 {
     UILabel *_distanceLabel;
     UIScrollView *_scrollView;
-    
+    GFMapViewController *_mapVC;
 }
 @end
 
@@ -35,36 +35,38 @@
     self.view.backgroundColor = [[UIColor alloc]initWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     
     _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, -20, self.view.frame.size.width, self.view.frame.size.height-20)];
+    _scrollView.bounces = NO;
+    _scrollView.delegate = self;
     [self.view addSubview:_scrollView];
 //    _scrollView.backgroundColor = [UIColor cyanColor];
     
-    [self setNavigation];
+    
     
     [self addMap];
-    
+    [self setNavigation];
     [self setViewForAutobon];
 }
 
 // 添加地图
 - (void)addMap{
-    GFMapViewController *mapVC = [[GFMapViewController alloc] init];
+    _mapVC = [[GFMapViewController alloc] init];
     if ([self.customerLat isKindOfClass:[NSNull class]]) {
-        mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30.4,114.4);
+        _mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30.4,114.4);
     }else{
-        mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([self.customerLat floatValue],[self.customerLon floatValue]);
+        _mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([self.customerLat floatValue],[self.customerLon floatValue]);
     }
     
-    mapVC.distanceBlock = ^(double distance) {
+    _mapVC.distanceBlock = ^(double distance) {
 //        NSLog(@"距离－－%f--",distance);
 #pragma mark - 返回距离
         _distanceLabel.text = [NSString stringWithFormat:@"距离：%0.2fkm",distance/1000.0];
     };
     
-    [_scrollView addSubview:mapVC.view];
-    [self addChildViewController:mapVC];
-    [mapVC didMoveToParentViewController:self];
-    mapVC.view.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height/3);
-    mapVC.mapView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height/3);
+    [self.view addSubview:_mapVC.view];
+    [self addChildViewController:_mapVC];
+    [_mapVC didMoveToParentViewController:self];
+    _mapVC.view.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height/3);
+    _mapVC.mapView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height/3);
 }
 
 - (void)setViewForAutobon{
@@ -255,6 +257,16 @@
     }
     
 }
+
+
+#pragma mark - 视图滑动的时候调用的方法
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    _mapVC.view.frame = CGRectMake(0, -scrollView.contentOffset.y+44, self.view.frame.size.width, _mapVC.view.frame.size.height);
+    
+    
+}
+
+
 
 #pragma mark - 添加合作小伙伴的响应方法
 - (void)addBtnClick{
