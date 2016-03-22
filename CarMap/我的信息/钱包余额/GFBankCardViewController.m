@@ -212,6 +212,8 @@
 - (void)submitClick {
     
     
+    [self.view endEditing:YES];
+    
     if(self.cardTxt.centerTxt.text.length == 0) {
         
         NSLog(@"提交失败");
