@@ -20,6 +20,7 @@
 #import "CLCertifyingViewController.h"
 #import "UIButton+WebCache.h"
 #import "CLAutobonViewController.h"
+#import "CLDelegateViewController.h"
 
 
 
@@ -317,7 +318,9 @@
 
 #pragma mark - 认证协议
 - (void)delegateBtnClick{
-    NSLog(@"是时候看看协议了");
+    
+    CLDelegateViewController *delegateView = [[CLDelegateViewController alloc]init];
+    [self.navigationController pushViewController:delegateView animated:YES];
 }
 
 #pragma mark - AlertView
@@ -329,6 +332,7 @@
 #pragma mark - 提交按钮事件
 - (void)submitBtnClick{
     [self.view endEditing:YES];
+//    [self performSelector:@selector(success) withObject:nil afterDelay:1.5];
 // 判断头像
     if (!_haveHeadImage) {
         [self addAlertView:@"请选择头像"];
@@ -400,7 +404,7 @@
 //    [self.navigationController pushViewController:certifying animated:YES];
     
     if ([_submitButton.titleLabel.text isEqualToString:@"提交"]) {
-        CLAutobonViewController *autobon = (CLAutobonViewController *)self.navigationController.viewControllers[0];
+        CLAutobonViewController *autobon = (CLAutobonViewController *)self.navigationController.viewControllers[1];
         autobon.certifyButton.userInteractionEnabled = NO;
         [autobon.certifyButton setTitleColor:[[UIColor alloc]initWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1.0] forState:UIControlStateNormal];
         [self.navigationController popViewControllerAnimated:YES];

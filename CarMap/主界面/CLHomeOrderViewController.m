@@ -136,6 +136,9 @@
             if (_page == 1) {
                 _cellModelArray = [[NSMutableArray alloc]init];
             }
+            if (dataArray.count == 0 && _cellModelArray.count > 0) {
+                [self addAlertView:@"以加载全部"];
+            }
             [dataArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
                 NSLog(@"---obj---%@--",obj);
                 CLHomeOrderCellModel *cellModel = [[CLHomeOrderCellModel alloc]init];

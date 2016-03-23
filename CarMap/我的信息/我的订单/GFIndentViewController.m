@@ -16,7 +16,7 @@
 
 #import "MJRefresh.h"
 #import "UIImageView+WebCache.h"
-//#import "GFTipView.h"
+#import "GFTipView.h"
 
 #import "GFIndentModel.h"
 
@@ -402,6 +402,10 @@
             
             NSArray *listArr = dataDic[@"list"];
             
+            if (listArr.count == 0 ) {
+                [self addAlertView:@"已加载全部"];
+            }
+            
 //            NSLog(@"%@*******", listArr);
             
             for(NSDictionary *dic in listArr) {
@@ -595,6 +599,14 @@
     indentDeVC.workItems = self.workItemArr[indexPath.row];
     [self.navigationController pushViewController:indentDeVC animated:YES];
 }
+
+
+#pragma mark - AlertView
+- (void)addAlertView:(NSString *)title{
+    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
+    [tipView tipViewShow];
+}
+
 
 - (void)leftButClick {
     
