@@ -15,6 +15,75 @@
 @implementation GFAlertView
 
 
+// 进度条
++ (instancetype)initWithJinduTiaoTipName:(NSString *)tipName {
+    
+    NSMutableArray *mArr = [[NSMutableArray alloc] init];
+    
+    CGFloat kWidth = [UIScreen mainScreen].bounds.size.width;
+    CGFloat kHeight = [UIScreen mainScreen].bounds.size.height;
+
+
+    GFAlertView *alertView = [[GFAlertView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    alertView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+    
+    
+    CGFloat baseViewW = 150 / 320.0 * kWidth;
+    CGFloat baseViewH = 90 / 568.0 * kHeight;
+    CGFloat baseViewX = (kWidth - baseViewW) / 2.0;
+    CGFloat baseViewY = (kHeight - baseViewH) / 2.0 - 50;
+    UIView *baseView = [[UIView alloc] initWithFrame:CGRectMake(baseViewX, baseViewY, baseViewW, baseViewH)];
+    baseView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.55];
+    baseView.layer.cornerRadius = 5;
+    [alertView addSubview:baseView];
+    
+    
+    
+    CGFloat imgViewW = 40;
+    CGFloat imgViewH = 40;
+    CGFloat imgViewX = (baseViewW - 50) / 2.0;
+    CGFloat imgViewY = 10;
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(imgViewX, imgViewY, imgViewW, imgViewH)];
+    for(int i=1; i<9; i++) {
+    
+        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"%d.png", i]];
+        [mArr addObject:image];
+        
+    }
+    
+    imgView.animationImages = mArr;
+    
+//    imgView.backgroundColor = [UIColor whiteColor];
+    
+    imgView.animationDuration = 1.2;
+    [imgView startAnimating];
+//    [imgView stopAnimating];
+    
+    [baseView addSubview:imgView];
+    
+    
+    CGFloat labW = baseViewW;
+    CGFloat labH = 35;
+    CGFloat labX = 0;
+    CGFloat labY = CGRectGetMaxY(imgView.frame);
+    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(labX, labY, labW, labH)];
+    lab.textAlignment = NSTextAlignmentCenter;
+    lab.textColor = [UIColor whiteColor];
+    lab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
+    lab.text = tipName;
+    [baseView addSubview:lab];
+    
+    
+    UIWindow *window = [UIApplication sharedApplication].delegate.window;
+    [window addSubview:alertView];
+    
+
+    return alertView;
+
+}
+
+
+
 - (instancetype)initWithTipName:(NSString *)tipName withTipMessage:(NSString *)tipMessageStr withButtonNameArray:(NSArray *)buttonArray {
 
     self = [super init];

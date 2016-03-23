@@ -23,6 +23,6 @@
 
 - (instancetype)initWithTitle:(NSString *)title leftBtn:(NSString *)leftBtn rightBtn:(NSString *)rightBtn;
 
-
-
+// 进度条
++ (instancetype)initWithJinduTiaoTipName:(NSString *)tipName;
 @end
