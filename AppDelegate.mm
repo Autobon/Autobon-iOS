@@ -322,6 +322,7 @@
             NSLog(@"----_pushDate-%@--%@-----",_pushDate,[NSDate date]);
             notification.alertTitle = @"车邻邦";
             notification.alertBody = responseJSON[@"title"];
+            notification.userInfo = @{@"dictionary":payloadMsg};
             AudioServicesPlaySystemSound(1307);
             [[UIApplication sharedApplication]scheduleLocalNotification:notification];
         }
@@ -420,7 +421,7 @@
     
     
     long time = (long)[[NSDate date] timeIntervalSince1970] - [_pushDate timeIntervalSince1970];
-    NSLog(@"---time--%ld----",time);
+//    NSLog(@"---time--%@----",notification.userInfo);
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if (0 < time && notification.userInfo) {
          NSLog(@"消息来了a－－%@",notification.userInfo);
@@ -443,6 +444,14 @@
                 [self performSelector:@selector(after:) withObject:responseJSON afterDelay:1.0];
                 
             }
+        }else if ([responseJSON[@"action"]isEqualToString:@"VERIFICATION_SUCCEED"] || [responseJSON[@"action"]isEqualToString:@"VERIFICATION_FAILED"]){
+            NSLog(@"认证消息");
+            UIWindow *window = [UIApplication sharedApplication].delegate.window;
+            GFSignInViewController *signin = [[GFSignInViewController alloc]init];
+            UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:signin];
+            navigation.navigationBarHidden = YES;
+            window.rootViewController = navigation;
+            
             
         }
         

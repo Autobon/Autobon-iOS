@@ -33,7 +33,6 @@
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-    NSLog(@"呵呵");
     
 //    CLHomeOrderViewController *homeView = [[CLHomeOrderViewController alloc]init];
 //    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:homeView];
