@@ -9,6 +9,7 @@
 #import "GFHttpTool.h"
 #import "AFNetworking.h"
 #import "Reachability.h"
+#import "GFTipView.h"
 
 
 
@@ -22,6 +23,14 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
 // 登录
 + (void)signInPost:(NSString *)url parameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
 
+    if ([GFHttpTool isConnectionAvailable]) {
+        
+        
+    }else{
+        
+        [GFHttpTool addAlertView:@"无网络连接"];
+    }
+    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     [manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id responseObject) {
@@ -41,10 +50,6 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             NSLog(@"---更新失败了－－%@",error);
         }];
-        
-        
-        
-        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"失败了－－%@",error);
         if(failure) {
@@ -799,6 +804,10 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
     return isExistenceNetwork;
 }
 
-
+#pragma mark - AlertView
++ (void)addAlertView:(NSString *)title{
+    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withShowTimw:1.0];
+    [tipView tipViewShow];
+}
 
 @end

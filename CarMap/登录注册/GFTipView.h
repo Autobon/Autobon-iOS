@@ -18,6 +18,7 @@
 // 手动设置高度
 - (instancetype)initWithHeight:(CGFloat)height WithMessage:(NSString *)messageStr withViewController:(UIViewController *)viewController withShowTimw:(CGFloat)times;
 
+- (instancetype)initWithNormalHeightWithMessage:(NSString *)messageStr withShowTimw:(CGFloat)times;
 
 // 调用上面init方法后，调用此方法可显示提示框
 - (void)tipViewShow;
