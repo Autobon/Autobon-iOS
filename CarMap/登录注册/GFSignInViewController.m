@@ -63,6 +63,8 @@
     // 界面搭建
     [self _setView];
     
+//    GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"正在登陆..."];
+    
 }
 
 - (void)_setBase {
