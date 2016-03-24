@@ -25,7 +25,7 @@
 
 
     GFAlertView *alertView = [[GFAlertView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    alertView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+    alertView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.25];
     
     
     CGFloat baseViewW = 150 / 320.0 * kWidth;
@@ -33,14 +33,14 @@
     CGFloat baseViewX = (kWidth - baseViewW) / 2.0;
     CGFloat baseViewY = (kHeight - baseViewH) / 2.0 - 50;
     UIView *baseView = [[UIView alloc] initWithFrame:CGRectMake(baseViewX, baseViewY, baseViewW, baseViewH)];
-    baseView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.55];
+    baseView.backgroundColor = [UIColor whiteColor];
     baseView.layer.cornerRadius = 5;
     [alertView addSubview:baseView];
     
     
     
-    CGFloat imgViewW = 40;
-    CGFloat imgViewH = 40;
+    CGFloat imgViewW = 40 / 320.0 * kWidth;
+    CGFloat imgViewH = 40 / 320.0 * kWidth;
     CGFloat imgViewX = (baseViewW - 50) / 2.0;
     CGFloat imgViewY = 10;
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(imgViewX, imgViewY, imgViewW, imgViewH)];
@@ -53,22 +53,19 @@
     
     imgView.animationImages = mArr;
     
-//    imgView.backgroundColor = [UIColor whiteColor];
-    
     imgView.animationDuration = 1.2;
     [imgView startAnimating];
-//    [imgView stopAnimating];
     
     [baseView addSubview:imgView];
     
     
     CGFloat labW = baseViewW;
-    CGFloat labH = 35;
+    CGFloat labH = 35 / 320.0 * kWidth;
     CGFloat labX = 0;
     CGFloat labY = CGRectGetMaxY(imgView.frame);
     UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(labX, labY, labW, labH)];
     lab.textAlignment = NSTextAlignmentCenter;
-    lab.textColor = [UIColor whiteColor];
+    lab.textColor = [UIColor blackColor];
     lab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
     lab.text = tipName;
     [baseView addSubview:lab];

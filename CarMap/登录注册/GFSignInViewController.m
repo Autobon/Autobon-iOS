@@ -256,7 +256,9 @@
     
     
     
-
+    GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
+    
+    
 }
 
 
