@@ -371,27 +371,27 @@
         }
         
         // 准时到达
-        UIView *daodaView = [self messageButView:@"准时到达" withSelected:_model.commentDictionary[@"arriveOnTime"] withX:jiange2 withY:CGRectGetMaxY(baseView_1.frame) + jianjv3 * 2 + jianjv4 + (kWidth - kWidth * 0.25 * 2) / 5.0 - 4 / 320.0 * kWidth];
+        UIView *daodaView = [self messageButView:@"准时到达" withSelected:[_model.commentDictionary[@"arriveOnTime"] integerValue] withX:jiange2 withY:CGRectGetMaxY(baseView_1.frame) + jianjv3 * 2 + jianjv4 + (kWidth - kWidth * 0.25 * 2) / 5.0 - 4 / 320.0 * kWidth];
         [baseView addSubview:daodaView];
         
         // 准时完工
-        UIView *wangongView = [self messageButView:@"准时完工" withSelected:_model.commentDictionary[@"completeOnTime"] withX:kWidth * 0.676 withY:CGRectGetMaxY(baseView_1.frame) + jianjv3 * 2 + jianjv4 + (kWidth - kWidth * 0.25 * 2) / 5.0 - 4 / 320.0 * kWidth];
+        UIView *wangongView = [self messageButView:@"准时完工" withSelected:[_model.commentDictionary[@"completeOnTime"] integerValue] withX:kWidth * 0.676 withY:CGRectGetMaxY(baseView_1.frame) + jianjv3 * 2 + jianjv4 + (kWidth - kWidth * 0.25 * 2) / 5.0 - 4 / 320.0 * kWidth];
         [baseView addSubview:wangongView];
         
         // 技术专业
-        UIView *zhuanyeView = [self messageButView:@"技术专业" withSelected:_model.commentDictionary[@"professional"] withX:jiange2 withY:CGRectGetMaxY(wangongView.frame) + jianjv4];
+        UIView *zhuanyeView = [self messageButView:@"技术专业" withSelected:[_model.commentDictionary[@"professional"] integerValue] withX:jiange2 withY:CGRectGetMaxY(wangongView.frame) + jianjv4];
         [baseView addSubview:zhuanyeView];
         
         // 着装整洁
-        UIView *zhengjieView = [self messageButView:@"着装整洁" withSelected:_model.commentDictionary[@"dressNeatly"] withX:kWidth * 0.676 withY:CGRectGetMaxY(wangongView.frame) + jianjv4];
+        UIView *zhengjieView = [self messageButView:@"着装整洁" withSelected:[_model.commentDictionary[@"dressNeatly"] integerValue] withX:kWidth * 0.676 withY:CGRectGetMaxY(wangongView.frame) + jianjv4];
         [baseView addSubview:zhengjieView];
         
         // 车辆保护超级棒
-        UIView *bangView = [self messageButView:@"车辆保护超级棒" withSelected:_model.commentDictionary[@"carProtect"] withX:jiange2 withY:CGRectGetMaxY(zhengjieView.frame) + jianjv4];
+        UIView *bangView = [self messageButView:@"车辆保护超级棒" withSelected:[_model.commentDictionary[@"carProtect"] integerValue] withX:jiange2 withY:CGRectGetMaxY(zhengjieView.frame) + jianjv4];
         [baseView addSubview:bangView];
         
         // 态度好
-        UIView *haoView = [self messageButView:@"态度好" withSelected:_model.commentDictionary[@"goodAttitude"] withX:kWidth * 0.676 withY:CGRectGetMaxY(zhengjieView.frame) + jianjv4];
+        UIView *haoView = [self messageButView:@"态度好" withSelected:[_model.commentDictionary[@"goodAttitude"] integerValue] withX:kWidth * 0.676 withY:CGRectGetMaxY(zhengjieView.frame) + jianjv4];
         [baseView addSubview:haoView];
         
         // 边线

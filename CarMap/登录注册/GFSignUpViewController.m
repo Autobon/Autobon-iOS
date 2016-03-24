@@ -11,6 +11,8 @@
 #import "GFTextField.h"
 #import "GFHttpTool.h"
 #import "GFAlertView.h"
+#import "CLDelegateViewController.h"
+
 
 @interface GFSignUpViewController () {
     
@@ -223,9 +225,14 @@
 
     
 }
+
+
+#pragma mark - 车邻邦技师服务协议按钮
 - (void)agreeButClick {
 
-    NSLog(@"协议按钮点击了");
+    CLDelegateViewController *delegateView = [[CLDelegateViewController alloc]init];
+    [self.navigationController pushViewController:delegateView animated:YES];
+    
 }
 
 //- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {

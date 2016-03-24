@@ -150,7 +150,6 @@
         UILabel *msgLab = [[UILabel alloc] initWithFrame:CGRectMake(msgLabX, msgLabY, msgLabW+40, msgLabH)];
         
         msgLab.text = messageStr;
-        //        msgLab.backgroundColor = [UIColor redColor];
         [tipView addSubview:msgLab];
         msgLab.textAlignment = NSTextAlignmentCenter;
         msgLab.numberOfLines = 0;

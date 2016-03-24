@@ -153,8 +153,6 @@
     parDic[@"pageSize"] = [NSString stringWithFormat:@"%ld", pageSize];
     [GFHttpTool billGet:url parameters:parDic success:^(id responseObject) {
         
-        NSLog(@"----parDic--%@----responseObject--%@--",parDic,responseObject);
-        
         
         
         NSInteger flage = [responseObject[@"result"] integerValue];
@@ -167,7 +165,9 @@
             if(listArr.count > 0) {
                 self.nothingView.hidden = YES;
             }
-            
+            if (listArr.count == 0 && _yearArr.count > 0) {
+                [self addAlertView:@"已加载全部"];
+            }
             
 
             NSMutableArray *monthArray;
