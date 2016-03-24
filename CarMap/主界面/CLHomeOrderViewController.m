@@ -25,7 +25,7 @@
 #import "CLSigninViewController.h"
 #import "CLWorkOverViewController.h"
 #import "CLCleanWorkViewController.h"
-
+#import "UIImageView+WebCache.h"
 
 
 @interface CLHomeOrderViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -137,7 +137,7 @@
                 _cellModelArray = [[NSMutableArray alloc]init];
             }
             if (dataArray.count == 0 && _cellModelArray.count > 0) {
-                [self addAlertView:@"以加载全部"];
+                [self addAlertView:@"已加载全部"];
             }
             [dataArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
                 NSLog(@"---obj---%@--",obj);
@@ -145,7 +145,7 @@
                 cellModel.orderId = obj[@"id"];
                 cellModel.orderNumber = obj[@"orderNum"];
                 cellModel.orderType = obj[@"orderType"];
-                cellModel.orderPhotoURL = obj[@"photo"];
+                cellModel.orderPhotoURL = [NSString stringWithFormat:@"http://121.40.157.200:12345%@",obj[@"photo"]];
                 cellModel.customerLat = obj[@"positionLat"];
                 cellModel.customerLon = obj[@"positionLon"];
                 if ([obj[@"remark"] isKindOfClass:[NSNull class]]) {
@@ -280,7 +280,7 @@
     orderDetail.orderId = orderDic[@"id"];
     orderDetail.customerLat = orderDic[@"positionLat"];
     orderDetail.customerLon = orderDic[@"positionLon"];
-    orderDetail.orderPhotoURL = orderDic[@"photo"];
+    orderDetail.orderPhotoURL = [NSString stringWithFormat:@"http://121.40.157.200:12345%@",orderDic[@"photo"]];
     if (![orderDic[@"remark"]isKindOfClass:[NSNull class]]) {
         orderDetail.remark = orderDic[@"remark"];
     }else{
@@ -483,6 +483,7 @@
         cell.orderButton.tag = indexPath.row + 1;
         cell.orderNumberLabel.text = [NSString stringWithFormat:@"订单编号%@",cellModer.orderNumber];
         cell.timeLabel.text = [NSString stringWithFormat:@"预约时间%@",cellModer.orderTime];
+        [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:cellModer.orderPhotoURL] placeholderImage:[UIImage imageNamed:@"orderImage"]];
         if ([cellModer.status isEqualToString:@"IN_PROGRESS"]) {
             [cell.orderButton setTitle:@"进入订单" forState:UIControlStateNormal];
             [cell.orderButton addTarget:self action:@selector(orderBtnClick:) forControlEvents:UIControlEventTouchUpInside];

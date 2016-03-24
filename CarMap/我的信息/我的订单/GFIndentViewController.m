@@ -252,7 +252,7 @@
                 
                 GFIndentModel *listModel = [[GFIndentModel alloc] init];
                 listModel.orderNum = dic[@"orderNum"];
-                listModel.photo = dic[@"photo"];
+                listModel.photo = [NSString stringWithFormat:@"http://121.40.157.200:12345%@",dic[@"photo"]];
                 listModel.remark = dic[@"remark"];
                 listModel.commentDictionary = dic[@"comment"];
   
@@ -412,7 +412,7 @@
                 
                 GFIndentModel *listModel = [[GFIndentModel alloc] init];
                 listModel.orderNum = dic[@"orderNum"];
-                listModel.photo = dic[@"photo"];
+                listModel.photo = [NSString stringWithFormat:@"http://121.40.157.200:12345%@",dic[@"photo"]];
                 listModel.remark = dic[@"remark"];
                 listModel.commentDictionary = dic[@"comment"];
                 if([curUrl isEqualToString:mainUrl]) {
