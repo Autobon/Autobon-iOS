@@ -33,12 +33,11 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         
         [manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id responseObject) {
-            
-            
-            [aView removeFromSuperview];
-            
+ 
             
             if(success) {
+                [aView removeFromSuperview];
+                
                 success(responseObject);
             }
             
@@ -55,11 +54,14 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
             }];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
-            [aView removeFromSuperview];
+            
             
             
             NSLog(@"失败了－－%@",error);
             if(failure) {
+                
+                [aView removeFromSuperview];
+                
                 failure(error);
             }
         }];
@@ -124,16 +126,21 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         
         [manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
-            [aView removeFromSuperview];
+            
             
             if(success) {
+                
+                [aView removeFromSuperview];
+                
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
-            [aView removeFromSuperview];
+            
             
             if(failure) {
+                
+                [aView removeFromSuperview];
                 failure(error);
             }
         }];
@@ -163,18 +170,21 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         
         [manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            
-            
-            [aView removeFromSuperview];
+
             
             if(success) {
+                
+                [aView removeFromSuperview];
+                
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
-            [aView removeFromSuperview];
+            
             
             if(failure) {
+                
+                [aView removeFromSuperview];
                 failure(error);
             }
         }];
@@ -241,16 +251,22 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
     
     if ([GFHttpTool isConnectionAvailable]) {
         
-        
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
         
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         
         [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if(success) {
+                
+                [aView removeFromSuperview];
+                
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             if(failure) {
+                
+                [aView removeFromSuperview];
+                
                 failure(error);
             }
         }];
@@ -278,6 +294,8 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
     if ([GFHttpTool isConnectionAvailable]) {
         
         
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"提交中..."];
+        
         
         NSLog(@"\n$$$$$$$$$$$\n\n\n\n  %@  \n\n\n\n$$$$$$$$", parameters);
         
@@ -286,10 +304,17 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         [manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if(success) {
+                
+                [aView removeFromSuperview];
+                
+                
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             if(failure) {
+                
+                [aView removeFromSuperview];
+                
                 failure(error);
             }
         }];
@@ -314,6 +339,8 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
     
     if ([GFHttpTool isConnectionAvailable]) {
         
+//        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
+        
         
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -323,11 +350,17 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         
         [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if(success) {
+                
+//                [aView removeFromSuperview];
+                
                 success(responseObject);
                 
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             if(failure) {
+                
+//                [aView removeFromSuperview];
+                
                 failure(error);
             }
         }];
@@ -352,14 +385,20 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
     if ([GFHttpTool isConnectionAvailable]) {
         
         
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
+        
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         
         [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if(success) {
+                [aView removeFromSuperview];
+                
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             if(failure) {
+                
+                [aView removeFromSuperview];
                 failure(error);
             }
         }];
@@ -384,6 +423,7 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
     if ([GFHttpTool isConnectionAvailable]) {
         
         
+        
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"autoken"];
         
@@ -393,10 +433,12 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         
         [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if(success) {
+                
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             if(failure) {
+                
                 failure(error);
             }
         }];
@@ -476,6 +518,9 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
     if ([GFHttpTool isConnectionAvailable]) {
         
         
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"上传中..."];
+        
+        
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         NSString *token = [userDefaultes objectForKey:@"autoken"];
@@ -483,10 +528,14 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         NSString *URLString = [NSString stringWithFormat:@"%@/technician/certificate",HOST];
         [manager POST:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * task, NSDictionary *responseObject) {
             if(success) {
+                [aView removeFromSuperview];
+                
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             if(failure) {
+                [aView removeFromSuperview];
+                
                 failure(error);
             } 
         }];
@@ -514,6 +563,8 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
     if ([GFHttpTool isConnectionAvailable]) {
         
         
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"正在上传..."];
+        
         //    NSData *headData = UIImageJPEGRepresentation(image, 0.5);
         
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
@@ -539,10 +590,16 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
             
             NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
             if(success) {
+                
+                [aView removeFromSuperview];
+                
                 success(dictionary);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             if(failure) {
+                
+                [aView removeFromSuperview];
+                
                 failure(error);
             }
         }];
@@ -607,7 +664,7 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
     
     if ([GFHttpTool isConnectionAvailable]) {
         
-        
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"正在上传..."];
         
         
         //    NSData *headData = UIImageJPEGRepresentation(image, 0.5);
@@ -630,10 +687,14 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
             
             NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
             if(success) {
+                
+                [aView removeFromSuperview];
                 success(dictionary);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             if(failure) {
+                
+                [aView removeFromSuperview];
                 failure(error);
             }
         }];
@@ -737,6 +798,7 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
     
     if ([GFHttpTool isConnectionAvailable]) {
         
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
         
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -748,11 +810,16 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         
         [manager GET:URLString parameters:nil progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
             if(success) {
+                
+                [aView removeFromSuperview];
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             NSLog(@"-----失败原因－－－%@-",error);
             if(failure) {
+                
+                [aView removeFromSuperview];
+                
                 failure(error);
             }
         }];
@@ -775,6 +842,7 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
     
     if ([GFHttpTool isConnectionAvailable]) {
         
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"查找中..."];
         
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -787,10 +855,15 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         [manager GET:URLString parameters:@{@"query":string} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
             NSLog(@"----responseObject--%@--",responseObject);
             if(success) {
+                
+                [aView removeFromSuperview];
+                
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             if(failure) {
+                [aView removeFromSuperview];
+                
                 failure(error);
             }
         }];
@@ -813,6 +886,8 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
     if ([GFHttpTool isConnectionAvailable]) {
         
         
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"添加中..."];
+        
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         NSString *token = [userDefaultes objectForKey:@"autoken"];
@@ -823,10 +898,14 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         
         [manager POST:URLString parameters:orderDic progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
             if(success) {
+                
+                [aView removeFromSuperview];
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             if(failure) {
+                
+                [aView removeFromSuperview];
                 failure(error);
             }
         }];
@@ -935,7 +1014,7 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
     
     if ([GFHttpTool isConnectionAvailable]) {
         
-        
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"正在上传..."];
         
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -955,10 +1034,13 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
             
             NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
             if(success) {
+                
+                [aView removeFromSuperview];
                 success(dictionary);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             if(failure) {
+                [aView removeFromSuperview];
                 failure(error);
             }
         }];
@@ -986,6 +1068,9 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
     if ([GFHttpTool isConnectionAvailable]) {
         
         
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"上传中..."];
+        
+        
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         NSString *token = [userDefaultes objectForKey:@"autoken"];
@@ -1004,10 +1089,14 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
             
             NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
             if(success) {
+                
+                [aView removeFromSuperview];
                 success(dictionary);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             if(failure) {
+                
+                [aView removeFromSuperview];
                 failure(error);
             }
         }];
@@ -1119,6 +1208,8 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
     if ([GFHttpTool isConnectionAvailable]) {
         
         
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"上传中..."];
+        
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         NSString *token = [userDefaultes objectForKey:@"autoken"];
@@ -1127,11 +1218,15 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         [manager POST:URLString parameters:@{@"orderId":@(orderId),@"urls":URLs} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
             NSLog(@"-----%@－－－－",responseObject[@"message"]);
             if(success) {
+                
+                [aView removeFromSuperview];
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             NSLog(@"－－－－%@----",error);
             if(failure) {
+                
+                [aView removeFromSuperview];
                 failure(error);
             }
         }];
