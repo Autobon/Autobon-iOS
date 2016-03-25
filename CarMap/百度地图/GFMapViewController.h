@@ -28,5 +28,6 @@ typedef void (^DistanceBlock)(double distance);
 
 - (void)startUserLocationService;
 
+- (void)userLocationService;
 
 @end

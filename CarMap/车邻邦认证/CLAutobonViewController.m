@@ -41,10 +41,11 @@
 
 // 添加地图
 - (void)addMap{
-    GFMapViewController *mapVC = [[GFMapViewController alloc] init];
+    __block GFMapViewController *mapVC = [[GFMapViewController alloc] init];
     mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30.4,114.4);
+    
     mapVC.distanceBlock = ^(double distance) {
-        NSLog(@"距离－－%f--",distance);
+        [mapVC userLocationService];
     };
     
     [self.view addSubview:mapVC.view];
@@ -52,6 +53,7 @@
     [mapVC didMoveToParentViewController:self];
     mapVC.view.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height/3);
     mapVC.mapView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height/3);
+//
 }
 
 - (void)setViewForAutobon{
@@ -59,7 +61,7 @@
 // 距离label
     UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, self.view.frame.size.height/3+2+64, self.view.frame.size.width, self.view.frame.size.height/18)];
 //    distanceLabel.backgroundColor = [UIColor cyanColor];
-    distanceLabel.text = @"距离：  1.3km";
+    distanceLabel.text = @"距离：  ";
     distanceLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [self.view addSubview:distanceLabel];
     
@@ -80,7 +82,11 @@
 // 施工时间
     UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView2.frame.origin.y+4, self.view.frame.size.width, self.view.frame.size.height/18)];
 //    timeLabel.backgroundColor = [UIColor cyanColor];
-    timeLabel.text = @"工作时间： 今天14:30";
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
+    NSString *dateString = [formatter stringFromDate:[NSDate date]];
+    timeLabel.text = [NSString stringWithFormat:@"工作时间：%@",dateString];
     timeLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [self.view addSubview:timeLabel];
     
@@ -92,7 +98,7 @@
 // 备注
     UILabel *otherLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView3.frame.origin.y+4, self.view.frame.size.width, self.view.frame.size.height/18)];
 //    otherLabel.backgroundColor = [UIColor cyanColor];
-    otherLabel.text = @"工作备注：今天天气不错，适合工作";
+    otherLabel.text = @"工作备注：";
     otherLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [self.view addSubview:otherLabel];
     

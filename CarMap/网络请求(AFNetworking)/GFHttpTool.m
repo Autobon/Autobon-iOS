@@ -31,7 +31,7 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         
         
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        
+//        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         [manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id responseObject) {
  
             
@@ -931,7 +931,7 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
     
     if ([GFHttpTool isConnectionAvailable]) {
         
-        
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
         
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -942,10 +942,12 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         
         
         [manager POST:URLString parameters:@{@"orderId":@(orderId)} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            [aView removeFromSuperview];
             if(success) {
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            [aView removeFromSuperview];
             if(failure) {
                 failure(error);
             }
@@ -1295,7 +1297,7 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
     
     if ([GFHttpTool isConnectionAvailable]) {
         
-        
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"提交中..."];
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         NSString *token = [userDefaultes objectForKey:@"autoken"];
@@ -1303,12 +1305,12 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         //    manager.requestSerializer = [AFJSONRequestSerializer serializer];
         NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/finish",HOST];
         [manager POST:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
-            NSLog(@"-----%@－－－－",responseObject[@"message"]);
+            [aView removeFromSuperview];
             if(success) {
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            NSLog(@"－－－－%@----",error);
+            [aView removeFromSuperview];
             if(failure) {
                 failure(error);
             }

@@ -133,6 +133,8 @@
 
 - (void)timeForWork:(NSTimer *)timer{
     
+    NSLog(@"----%@----",timer.userInfo[@"time"]);
+    
     static NSInteger a = 0;
     if (a == 0) {
         a = [timer.userInfo[@"time"] integerValue];

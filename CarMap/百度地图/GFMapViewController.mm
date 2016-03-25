@@ -189,7 +189,7 @@
 //    self.bossPointAnno.title = @"我是老板";
 //    self.bossPointAnno.subtitle = @"派活啦，赶紧抢吧";
 //    self.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30.4,114.4);
-    self.bossPointAnno.iconImgName = @"location";
+//    self.bossPointAnno.iconImgName = @"location";
     [self.mapView addAnnotation:self.bossPointAnno];
     NSLog(@"加载地图");
     
@@ -275,7 +275,13 @@
     
     
 }
-    
+
+- (void)userLocationService{
+    self.bossPointAnno.coordinate = self.workerPointAnno.coordinate;
+//    NSLog(@"--------self.work---%@-",self.workerPointAnno.coordinate);
+//    self.bossPointAnno.coordinate = CLLocationCoordinate2DMake(self.workerPointAnno.coordinate.longitude,self.workerPointAnno.coordinate.latitude);
+    [self.locationService startUserLocationService];
+}
     
     
 #pragma mark - 路径

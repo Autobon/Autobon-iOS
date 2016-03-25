@@ -266,9 +266,6 @@
 //}
 
 //- (void)textFieldDidEndEditing:(UITextField *)textField {
-//
-//    
-//
 //    if(textField.tag == 100) {
 //        self.userNameTxt.centerTxt.text =  [self.userNameTxt.centerTxt.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 //        NSString *MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
@@ -328,7 +325,7 @@
 //    
 //}
 
-// 获取验证码
+#pragma mark - 获取验证码
 - (void)verifyButClick:(UIButton *)sender {
     
     NSLog(@"获取验证码");

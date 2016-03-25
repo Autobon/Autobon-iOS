@@ -294,7 +294,7 @@
         [GFHttpTool signInPost:url parameters:parDic success:^(id responseObject) {
             
             // 判断是否登录成功
-            if([responseObject[@"result"] isEqual:@1]) {
+            if([responseObject[@"result"] integerValue] == 1) {
                
                 NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
                 [userDefaults setObject:self.userNameTxt.centerTxt.text forKey:@"userName"];

@@ -21,10 +21,14 @@
 
 @interface CLOrderDetailViewController ()<UIScrollViewDelegate>
 {
-    UILabel *_distanceLabel;
+    
     UIScrollView *_scrollView;
     GFMapViewController *_mapVC;
 }
+
+@property (nonatomic ,strong) UILabel *distanceLabel;
+
+
 @end
 
 @implementation CLOrderDetailViewController
@@ -55,12 +59,14 @@
         _mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30.4,114.4);
     }else{
         _mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([self.customerLat floatValue],[self.customerLon floatValue]);
+        
     }
-    
+    _mapVC.bossPointAnno.iconImgName = @"location";
+    __weak CLOrderDetailViewController *weakOrder = self;
     _mapVC.distanceBlock = ^(double distance) {
 //        NSLog(@"距离－－%f--",distance);
 #pragma mark - 返回距离
-        _distanceLabel.text = [NSString stringWithFormat:@"距离：%0.2fkm",distance/1000.0];
+        weakOrder.distanceLabel.text = [NSString stringWithFormat:@"距离：%0.2fkm",distance/1000.0];
     };
     
     [self.view addSubview:_mapVC.view];
@@ -305,6 +311,8 @@
                 GFAlertView *alertView = [[GFAlertView alloc]initWithTitle:@"合作人暂无回应" leftBtn:@"继续等待" rightBtn:@"强制开始"];
                 [alertView.rightButton addTarget:self action:@selector(rightButtonClick) forControlEvents:UIControlEventTouchUpInside];
                 [self.view addSubview:alertView];
+            }else{
+                [self addAlertView:responseObject[@"message"]];
             }
         }
         

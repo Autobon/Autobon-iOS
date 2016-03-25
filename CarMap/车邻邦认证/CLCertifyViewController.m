@@ -339,59 +339,67 @@
     }else{
     // 判断姓名
         if (_userNameTextField.centerTxt.text.length == 0) {
-           [self addAlertView:@"请输入姓名"];
+           [self addAlertView:@"请输入用户名"];
         }else{
         // 判断身份证号
-            if (!_isIdNumber) {
-                [self addAlertView:@"请输入合法身份证号"];
+            if (_identityTextField.centerTxt.text.length == 0) {
+                [self addAlertView:@"请输入身份证号"];
             }else{
-            // 判断至少一个技能
-                if (_skillArray.count == 0) {
-                    [self addAlertView:@"请至少选择一个技能"];
+                if (!_isIdNumber) {
+                    [self addAlertView:@"请输入合法身份证号"];
                 }else{
-                // 证件照
-                    if (!_haveIdentityImage) {
-                        [self addAlertView:@"请选择证件照"];
+                    // 判断至少一个技能
+                    if (_skillArray.count == 0) {
+                        [self addAlertView:@"请至少选择一个技能"];
                     }else{
-                    // 银行类型
-                        if (!_isBank) {
-                            [self addAlertView:@"请选择银行卡类型"];
+                        // 证件照
+                        if (!_haveIdentityImage) {
+                            [self addAlertView:@"请上传证件照"];
                         }else{
-                        // 银行卡号
-                            if (!_isBankNumber) {
-                                [self addAlertView:@"请输入合法银行卡号"];
+                            // 银行类型
+                            if (!_isBank) {
+                                [self addAlertView:@"请选择银行卡类型"];
                             }else{
-                               
-//                                NSLog(@"---%@----id--%@--",headData,idData);
-                                NSString *cardNo = [_bankNumberTextField.centerTxt.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-                                NSString *skillString = nil;
-                                
-                                for (int i = 0; i < _skillArray.count; i++ ) {
-                                    if (i == 0) {
-                                        skillString = [NSString stringWithFormat:@"%@",_skillArray[i]];
+                                // 银行卡号
+                                if (_bankNumberTextField.centerTxt.text.length == 0) {
+                                    [self addAlertView:@"请输入银行卡号"];
+                                }else{
+                                    if (!_isBankNumber) {
+                                        [self addAlertView:@"请输入合法银行卡号"];
                                     }else{
-                                       skillString = [NSString stringWithFormat:@"%@,%@",skillString,_skillArray[i]];
-                                    }
-                                } 
-                                NSDictionary *dic= @{@"name":_userNameTextField.centerTxt.text,@"idNo":_identityTextField.centerTxt.text,@"skills":skillString,@"bank":_bankButton.titleLabel.text,@"bankCardNo":cardNo};
-                                NSLog(@"-----dic---%@--",dic);
-                                [GFHttpTool certifyPostParameters:dic success:^(NSDictionary *responseObject) {
-                                    NSLog(@"----responseObject-%@--%@",responseObject,responseObject[@"message"]);
-                                    if ([responseObject[@"result"] intValue] == 1) {
                                         
-                                       [self addAlertView:@"提交成功"];
-                                        [self performSelector:@selector(success) withObject:nil afterDelay:1.5];
+                                        //                                NSLog(@"---%@----id--%@--",headData,idData);
+                                        NSString *cardNo = [_bankNumberTextField.centerTxt.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+                                        NSString *skillString = nil;
                                         
-                                    }else{
-                                       [self addAlertView:responseObject[@"message"]];
+                                        for (int i = 0; i < _skillArray.count; i++ ) {
+                                            if (i == 0) {
+                                                skillString = [NSString stringWithFormat:@"%@",_skillArray[i]];
+                                            }else{
+                                                skillString = [NSString stringWithFormat:@"%@,%@",skillString,_skillArray[i]];
+                                            }
+                                        }
+                                        NSDictionary *dic= @{@"name":_userNameTextField.centerTxt.text,@"idNo":_identityTextField.centerTxt.text,@"skills":skillString,@"bank":_bankButton.titleLabel.text,@"bankCardNo":cardNo};
+                                        NSLog(@"-----dic---%@--",dic);
+                                        [GFHttpTool certifyPostParameters:dic success:^(NSDictionary *responseObject) {
+                                            NSLog(@"----responseObject-%@--%@",responseObject,responseObject[@"message"]);
+                                            if ([responseObject[@"result"] intValue] == 1) {
+                                                
+                                                [self addAlertView:@"提交成功"];
+                                                [self performSelector:@selector(success) withObject:nil afterDelay:1.5];
+                                                
+                                            }else{
+                                                [self addAlertView:responseObject[@"message"]];
+                                            }
+                                            
+                                        } failure:^(NSError *error) {
+                                            NSLog(@"应该不会---%@--",error);
+                                        }];
                                     }
-                                    
-                                } failure:^(NSError *error) {
-                                    NSLog(@"应该不会---%@--",error);
-                                }];
+                                }
                             }
                         }
-                     }
+                    }
                 }
             }
         }
@@ -500,18 +508,18 @@
                 [self addAlertView:@"银行卡号码格式错误"];
                 _isBankNumber = NO;
             }
-        }else{
-            [self addAlertView:@"银行卡号码格式错误"];
-            _isBankNumber = NO;
         }
         
     }else{
-        if ([self validateIdentityCard:textField.text]) {
-            _isIdNumber = YES;
-        }else{
-            [self addAlertView:@"身份证号码格式错误"];
-            _isIdNumber = NO;
+        if (textField.text.length > 0) {
+            if ([self validateIdentityCard:textField.text]) {
+                _isIdNumber = YES;
+            }else{
+                [self addAlertView:@"身份证号码格式错误"];
+                _isIdNumber = NO;
+            }
         }
+        
     }
     
     

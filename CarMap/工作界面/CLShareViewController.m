@@ -61,7 +61,7 @@
         
     [UMSocialSnsService presentSnsIconSheetView:self
                                          appKey:@"564d41b4e0f55a596d003fe4"
-                                      shareText:@"123"
+                                      shareText:@"车邻邦测试分享消息"
                                      shareImage:nil
                                 shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQzone,UMShareToQQ,UMShareToSina,nil]
                                        delegate:self];

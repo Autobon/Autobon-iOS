@@ -15,7 +15,7 @@
 #import "GFMyMessageViewController.h"
 #import "GFBalanceViewController.h"
 
-@interface GFBankCardViewController () {
+@interface GFBankCardViewController ()<UITextFieldDelegate> {
     
     CGFloat kWidth;
     CGFloat kHeight;
@@ -355,6 +355,41 @@
     
 
 }
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if (textField.tag == 5) {
+        NSLog(@"---range--%@----%@---string--(%@)--",@(range.location),@(range.length),string);
+        //        if (range.length == 0) {
+        //            if (range.location%5 == 4) {
+        //                textField.text = [NSString stringWithFormat:@"%@ ",textField.text];
+        //            }
+        //        }
+        
+        //        if ([string integerValue]) {
+        //
+        //        }else{
+        //            return NO;
+        //        }
+        
+        return [self isNumber:string];
+    }
+    
+    return YES;
+}
+- (BOOL)isNumber:(NSString *)string{
+    
+    BOOL flag;
+    if (string.length <= 0) {
+        flag = YES;
+        return flag;
+    }
+    NSString *regex2 = @"^[0-9]*$";
+    NSPredicate *identityCardPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex2];
+    return [identityCardPredicate evaluateWithObject:string];
+    
+    
+    return YES;
+}
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
