@@ -46,6 +46,7 @@
     GFTextField *_bankNumberTextField;
     UITableView *_tableView;
     NSArray *_skillBtnArray;
+    NSMutableDictionary *_dataDictionary;
 }
 @end
 
@@ -65,6 +66,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _dataDictionary = [[NSMutableDictionary alloc]init];
      [[SDImageCache sharedImageCache] clearDisk];
     _skillArray = [[NSMutableArray alloc]init];
     _bankArray = @[@"农业银行",@"招商银行",@"建设银行",@"广发银行",@"中信银行",@"光大银行",@"民生银行",@"浦发银行",@"工商银行",@"中国银行",@"交通银行",@"邮政储蓄银行"];
@@ -119,7 +121,7 @@
                 [_headButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345%@",dataDic[@"avatar"]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
                 
                 [_identityButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"idPhoto"]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"userImage"]];
-               
+                [_dataDictionary setObject:dataDic[@"idPhoto"] forKey:@"idPhoto"];
 
             }
         } failure:^(NSError *error) {
@@ -379,9 +381,16 @@
                                                 skillString = [NSString stringWithFormat:@"%@,%@",skillString,_skillArray[i]];
                                             }
                                         }
-                                        NSDictionary *dic= @{@"name":_userNameTextField.centerTxt.text,@"idNo":_identityTextField.centerTxt.text,@"skills":skillString,@"bank":_bankButton.titleLabel.text,@"bankCardNo":cardNo};
-                                        NSLog(@"-----dic---%@--",dic);
-                                        [GFHttpTool certifyPostParameters:dic success:^(NSDictionary *responseObject) {
+//                                        _dataDictionary = @{@"name":_userNameTextField.centerTxt.text,@"idNo":_identityTextField.centerTxt.text,@"skills":skillString,@"bank":_bankButton.titleLabel.text,@"bankCardNo":cardNo};
+                                        
+                                        [_dataDictionary setObject:_userNameTextField.centerTxt.text forKey:@"name"];
+                                        [_dataDictionary setObject:_identityTextField.centerTxt.text forKey:@"idNo"];
+                                        [_dataDictionary setObject:skillString forKey:@"skills"];
+                                        [_dataDictionary setObject:_bankButton.titleLabel.text forKey:@"bank"];
+                                        [_dataDictionary setObject:cardNo forKey:@"bankCardNo"];
+                                        
+                                        NSLog(@"-----dic---%@--",_dataDictionary);
+                                        [GFHttpTool certifyPostParameters:_dataDictionary success:^(NSDictionary *responseObject) {
                                             NSLog(@"----responseObject-%@--%@",responseObject,responseObject[@"message"]);
                                             if ([responseObject[@"result"] intValue] == 1) {
                                                 
@@ -678,6 +687,8 @@
             if ([responseObject[@"result"]intValue] == 1) {
                 _haveIdentityImage = YES;
                 [self addAlertView:@"证件照上传成功"];
+                [_dataDictionary setObject:responseObject[@"data"] forKey:@"idPhoto"];
+                
             }else{
                 [self addAlertView:@"证件照上传失败"];
             }
