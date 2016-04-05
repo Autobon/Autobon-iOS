@@ -81,7 +81,8 @@
     NSLog(@"到这里了--%@--",NSHomeDirectory());
     
     _rowNumber = 30;
-    
+    _page = 1;
+    _pageSize = 2;
     
 
     

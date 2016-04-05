@@ -55,7 +55,7 @@
 // 添加地图
 - (void)addMap{
     _mapVC = [[GFMapViewController alloc] init];
-    if ([self.customerLat isKindOfClass:[NSNull class]]) {
+    if ([self.customerLon isKindOfClass:[NSNull class]]) {
         _mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30.4,114.4);
     }else{
         _mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([self.customerLat floatValue],[self.customerLon floatValue]);

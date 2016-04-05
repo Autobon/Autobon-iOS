@@ -258,7 +258,7 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if(success) {
                 
-                [aView removeFromSuperview];
+                [aView remove];
                 
                 success(responseObject);
             }
@@ -811,7 +811,10 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         [manager GET:URLString parameters:nil progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
             if(success) {
                 
-                [aView removeFromSuperview];
+                [aView remove];
+                
+                
+                
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {

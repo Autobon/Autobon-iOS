@@ -69,6 +69,7 @@
 		9B3FCD101C929FC300E871C7 /* GFNoIndentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3FCD0E1C929FC300E871C7 /* GFNoIndentViewController.m */; };
 		9B3FCD1F1C92A09500E871C7 /* GFButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3FCD151C92A09500E871C7 /* GFButton.m */; };
 		9B3FCD231C92A09500E871C7 /* GFTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3FCD1D1C92A09500E871C7 /* GFTitleView.m */; };
+		9B5FBC291CAE58D400A0BF96 /* CLLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5FBC281CAE58D400A0BF96 /* CLLocationViewController.m */; };
 		9B7301571C5F2CDF00FB2DEB /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7301561C5F2CDF00FB2DEB /* SecondViewController.m */; };
 		9B771FA11C87E16A005E8567 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B771FA01C87E16A005E8567 /* Reachability.m */; };
 		9B771FA41C87E34C005E8567 /* CLAddOrderSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B771FA31C87E34C005E8567 /* CLAddOrderSuccessViewController.m */; };
@@ -116,7 +117,6 @@
 		9BA391721C843564002F30A7 /* CLAddPersonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA391711C843564002F30A7 /* CLAddPersonModel.m */; };
 		9BA3C5BC1C75621B007F730D /* GFAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA3C5BB1C75621B007F730D /* GFAlertView.m */; };
 		9BA3C8D71C7598FD007F730D /* CLHomeOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA3C8D61C7598FD007F730D /* CLHomeOrderViewController.m */; };
-		9BA526CC1C63115700A2298F /* PoiSearchDemoViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9BA526CB1C63115700A2298F /* PoiSearchDemoViewController.mm */; };
 		9BA74D251C75CDF100AF7B26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BA74D241C75CDF100AF7B26 /* LaunchScreen.storyboard */; };
 		9BA9C8141C7D4F13005CE1C0 /* CLKnockOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA9C8131C7D4F13005CE1C0 /* CLKnockOrderViewController.m */; };
 		9BA9C8171C7DB3CC005CE1C0 /* CLWorkOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA9C8161C7DB3CC005CE1C0 /* CLWorkOverViewController.m */; };
@@ -267,6 +267,8 @@
 		9B3FCD151C92A09500E871C7 /* GFButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFButton.m; sourceTree = "<group>"; };
 		9B3FCD1C1C92A09500E871C7 /* GFTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFTitleView.h; sourceTree = "<group>"; };
 		9B3FCD1D1C92A09500E871C7 /* GFTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFTitleView.m; sourceTree = "<group>"; };
+		9B5FBC271CAE58D400A0BF96 /* CLLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLLocationViewController.h; sourceTree = "<group>"; };
+		9B5FBC281CAE58D400A0BF96 /* CLLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLLocationViewController.m; sourceTree = "<group>"; };
 		9B7301551C5F2CDF00FB2DEB /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
 		9B7301561C5F2CDF00FB2DEB /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		9B771F9F1C87E16A005E8567 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
@@ -358,8 +360,6 @@
 		9BA3C5BB1C75621B007F730D /* GFAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFAlertView.m; sourceTree = "<group>"; };
 		9BA3C8D51C7598FD007F730D /* CLHomeOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLHomeOrderViewController.h; path = "CarMap/主界面/CLHomeOrderViewController.h"; sourceTree = SOURCE_ROOT; };
 		9BA3C8D61C7598FD007F730D /* CLHomeOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLHomeOrderViewController.m; path = "CarMap/主界面/CLHomeOrderViewController.m"; sourceTree = SOURCE_ROOT; };
-		9BA526CA1C63115700A2298F /* PoiSearchDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiSearchDemoViewController.h; sourceTree = "<group>"; };
-		9BA526CB1C63115700A2298F /* PoiSearchDemoViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PoiSearchDemoViewController.mm; sourceTree = "<group>"; };
 		9BA74D241C75CDF100AF7B26 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9BA9C8121C7D4F13005CE1C0 /* CLKnockOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLKnockOrderViewController.h; sourceTree = "<group>"; };
 		9BA9C8131C7D4F13005CE1C0 /* CLKnockOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLKnockOrderViewController.m; sourceTree = "<group>"; };
@@ -764,6 +764,8 @@
 				9B95153E1C60503800445F93 /* GFAnnotationView.m */,
 				9B95153F1C60503800445F93 /* GFMapViewController.h */,
 				9B9515401C60503800445F93 /* GFMapViewController.mm */,
+				9B5FBC271CAE58D400A0BF96 /* CLLocationViewController.h */,
+				9B5FBC281CAE58D400A0BF96 /* CLLocationViewController.m */,
 			);
 			path = "百度地图";
 			sourceTree = "<group>";
@@ -837,8 +839,6 @@
 				9BA9CBD41C5B02220059F145 /* FirstViewController.m */,
 				9B9515371C60501B00445F93 /* TestViewController.h */,
 				9B9515381C60501B00445F93 /* TestViewController.m */,
-				9BA526CA1C63115700A2298F /* PoiSearchDemoViewController.h */,
-				9BA526CB1C63115700A2298F /* PoiSearchDemoViewController.mm */,
 				9B3FCD051C925E6800E871C7 /* CLCooperateFailViewController.h */,
 				9B3FCD061C925E6800E871C7 /* CLCooperateFailViewController.m */,
 				9B3FCD081C92707D00E871C7 /* CLCooperatingViewController.h */,
@@ -1163,6 +1163,7 @@
 				9B3FCD0F1C929FC300E871C7 /* GFNoIndentTableViewCell.m in Sources */,
 				865EB95E1C9A59D600B045C7 /* GFNothingView.m in Sources */,
 				86B890F41C73355B0068B95D /* GFForgetPwdViewController_1.m in Sources */,
+				9B5FBC291CAE58D400A0BF96 /* CLLocationViewController.m in Sources */,
 				860A4CC41C7ED9780067FB70 /* UIView+MJExtension.m in Sources */,
 				866CCEBC1C755BC800E50C67 /* AFHTTPSessionManager.m in Sources */,
 				866CCEC01C755BC800E50C67 /* AFURLResponseSerialization.m in Sources */,
@@ -1205,7 +1206,6 @@
 				9BA391721C843564002F30A7 /* CLAddPersonModel.m in Sources */,
 				9BAF986A1CA2761700CFD9F3 /* CLDelegateViewController.m in Sources */,
 				860904C61C8EAB8F00CC06C1 /* GFIndentModel.m in Sources */,
-				9BA526CC1C63115700A2298F /* PoiSearchDemoViewController.mm in Sources */,
 				866CCEBD1C755BC800E50C67 /* AFNetworkReachabilityManager.m in Sources */,
 				860A4CC11C7ED9780067FB70 /* MJRefreshConst.m in Sources */,
 				868B0F111C7EA5AE00938665 /* GFBalanceViewController.m in Sources */,

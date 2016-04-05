@@ -152,6 +152,11 @@
     
 }
 
+
+
+
+
+
 #pragma mark - ***** 地图 *****
 - (void)_setMapView {
 //    self.mapView = [[BMKMapView alloc] initWithFrame:CGRectMake(10, 50, [UIScreen mainScreen].bounds.size.width - 20, 350)];
@@ -159,6 +164,10 @@
     
     /* 设定代理 */
     self.mapView.delegate = self;
+    
+    UIView *mapView = _mapView.subviews[0];
+    [mapView.subviews[mapView.subviews.count-1] removeFromSuperview];
+    
     [self.view addSubview:self.mapView];
     
     [self.mapView setMapType:BMKMapTypeStandard];   // 地图类型

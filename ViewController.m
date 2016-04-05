@@ -17,7 +17,6 @@
 #import "FirstViewController.h"
 #import "UMSocial.h"
 #import "SecondViewController.h"
-#import "PoiSearchDemoViewController.h"
 #import "GFMapViewController.h"
 
 
@@ -173,11 +172,11 @@
 }
 
 -(void)mapBtnClick{
-    PoiSearchDemoViewController *second = [[PoiSearchDemoViewController alloc]init];
+//    PoiSearchDemoViewController *second = [[PoiSearchDemoViewController alloc]init];
 //    SecondViewController *second = [[SecondViewController alloc]init];
 //    self.view.window.rootViewController = second;
 //    LineViewController *route = [[LineViewController alloc]init];
-    [self.navigationController pushViewController:second animated:YES];
+//    [self.navigationController pushViewController:second animated:YES];
     
 //    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
 //    imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;

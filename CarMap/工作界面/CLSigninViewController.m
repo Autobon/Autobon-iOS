@@ -20,7 +20,7 @@
 {
     
     GFMapViewController *_mapVC;
-    NSTimer *_timer;
+//    NSTimer *_timer;
     
     
     
@@ -134,9 +134,9 @@
     
     [self.view addSubview:_signinButton];
     
-    if (_timer == nil) {
-        _timer = [NSTimer scheduledTimerWithTimeInterval:300 target:self selector:@selector(UserLocation) userInfo:nil repeats:YES];
-    }
+//    if (_timer == nil) {
+//        _timer = [NSTimer scheduledTimerWithTimeInterval:300 target:self selector:@selector(UserLocation) userInfo:nil repeats:YES];
+//    }
     
     
 }
@@ -162,8 +162,8 @@
             workBefore.startTime = _startTime;
             workBefore.orderNumber = self.orderNumber;
             [self.navigationController pushViewController:workBefore animated:YES];
-            [_timer invalidate];
-            _timer = nil;
+//            [_timer invalidate];
+//            _timer = nil;
         }else{
             [self addAlertView:responseObject[@"message"]];
         }

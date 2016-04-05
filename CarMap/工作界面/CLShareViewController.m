@@ -58,15 +58,15 @@
 }
 
 - (void)shareBtnClick{
-        
-    [UMSocialSnsService presentSnsIconSheetView:self
-                                         appKey:@"564d41b4e0f55a596d003fe4"
-                                      shareText:@"车邻邦测试分享消息"
-                                     shareImage:nil
-                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQzone,UMShareToQQ,UMShareToSina,nil]
-                                       delegate:self];
+    
+    
+    
+//    [[UMSocialData defaultData].urlResource setResourceType:UMSocialUrlResourceTypeImage url:@"http://media.incardata.com.cn/others%2f512-512.png"];
+    [UMSocialSnsService presentSnsIconSheetView:self appKey:@"564572b9e0f55a38dd001e6c" shareText:@"车邻邦测试分享消息" shareImage:nil shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQzone,UMShareToQQ,UMShareToSina,nil] delegate:self];
         
         
+    
+    
     
 }
 

@@ -199,7 +199,7 @@
         curUrl = seconderUrl;
     
     }
-    
+
     CGFloat centerX = sender.center.x;
     CGPoint oriPoint = self.lineView.center;
     oriPoint.x = centerX;
@@ -351,10 +351,7 @@
             
             }
             
-            
-            
-            
-            
+
             
             [self.tableview reloadData];
             self.tableview.userInteractionEnabled = YES;

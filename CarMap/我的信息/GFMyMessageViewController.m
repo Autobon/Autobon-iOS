@@ -565,7 +565,7 @@
     CLCertifyViewController *certify = [[CLCertifyViewController alloc]init];
     certify.isFail = YES;
     [certify.submitButton setTitle:@"再次认证" forState:UIControlStateNormal];
-    [self.navigationController pushViewController:certify animated:NO];
+    [self.navigationController pushViewController:certify animated:YES];
     
 }
 // 余额界面跳转

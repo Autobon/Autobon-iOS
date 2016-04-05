@@ -231,7 +231,7 @@
     _bankButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width/2-15, 40)];
     _bankButton.center = CGPointMake(self.view.center.x, bankView.frame.origin.y+45+10+20);
     [_bankButton setBackgroundImage:[UIImage imageNamed:@"choose"] forState:UIControlStateNormal];
-    [_bankButton setTitle:@"农业银行" forState:UIControlStateNormal];
+    [_bankButton setTitle:@"选择银行" forState:UIControlStateNormal];
     [_bankButton setTitleColor:[UIColor colorWithRed:163 / 255.0 green:163 / 255.0 blue:163 / 255.0 alpha:1] forState:UIControlStateNormal];
 //    bankButton.titleLabel.textAlignment = NSTextAlignmentLeft;
     _bankButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
