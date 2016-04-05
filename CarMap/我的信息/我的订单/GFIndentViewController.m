@@ -199,7 +199,7 @@
         curUrl = seconderUrl;
     
     }
-    
+
     CGFloat centerX = sender.center.x;
     CGPoint oriPoint = self.lineView.center;
     oriPoint.x = centerX;
@@ -252,7 +252,7 @@
                 
                 GFIndentModel *listModel = [[GFIndentModel alloc] init];
                 listModel.orderNum = dic[@"orderNum"];
-                listModel.photo = dic[@"photo"];
+                listModel.photo = [NSString stringWithFormat:@"http://121.40.157.200:12345%@",dic[@"photo"]];
                 listModel.remark = dic[@"remark"];
                 listModel.commentDictionary = dic[@"comment"];
   
@@ -270,8 +270,8 @@
                     NSInteger endTime = [constructDic[@"endTime"] integerValue];
                     NSInteger chaTime = endTime - startTime;
                     NSLog(@"--starTime-%ld-End--%ld---%ld--",startTime,endTime,chaTime);
-                    NSInteger fenNum = chaTime/1000 / 60;
-                    NSInteger shiNum = fenNum/1000 / 60;
+                    NSInteger fenNum = (chaTime/1000/60)%60;
+                    NSInteger shiNum = chaTime/1000 /3600;
 
                     if(shiNum > 0) {
                         listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
@@ -292,8 +292,8 @@
                     NSInteger endTime = [constructDic[@"endTime"] integerValue];
                     NSInteger chaTime = endTime - startTime;
 
-                    NSInteger fenNum = chaTime/1000 / 60;
-                    NSInteger shiNum = fenNum/1000 / 60;
+                    NSInteger fenNum = (chaTime/1000/60)%60;
+                    NSInteger shiNum = chaTime/1000 /3600;
 
                     if(shiNum > 0) {
                         listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
@@ -351,10 +351,7 @@
             
             }
             
-            
-            
-            
-            
+
             
             [self.tableview reloadData];
             self.tableview.userInteractionEnabled = YES;
@@ -412,7 +409,7 @@
                 
                 GFIndentModel *listModel = [[GFIndentModel alloc] init];
                 listModel.orderNum = dic[@"orderNum"];
-                listModel.photo = dic[@"photo"];
+                listModel.photo = [NSString stringWithFormat:@"http://121.40.157.200:12345%@",dic[@"photo"]];
                 listModel.remark = dic[@"remark"];
                 listModel.commentDictionary = dic[@"comment"];
                 if([curUrl isEqualToString:mainUrl]) {
@@ -425,8 +422,8 @@
                     NSInteger startTime = [constructDic[@"startTime"] integerValue];
                     NSInteger endTime = [constructDic[@"endTime"] integerValue];
                     NSInteger chaTime = endTime - startTime;
-                    NSInteger fenNum = chaTime/1000 / 60;
-                    NSInteger shiNum = fenNum/1000 / 60;
+                    NSInteger fenNum = (chaTime/1000/60)%60;
+                    NSInteger shiNum = chaTime/1000 /3600;
                    
                     if(shiNum > 0) {
                         listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
@@ -445,8 +442,8 @@
                     NSInteger startTime = [constructDic[@"startTime"] integerValue];
                     NSInteger endTime = [constructDic[@"endTime"] integerValue];
                     NSInteger chaTime = endTime - startTime;
-                    NSInteger fenNum = chaTime/1000 / 60;
-                    NSInteger shiNum = fenNum/1000 / 60;
+                    NSInteger fenNum = (chaTime/1000/60)%60;
+                    NSInteger shiNum = chaTime/1000 /3600;
                     if(shiNum > 0) {
                         listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
                     }else {
@@ -545,12 +542,12 @@
     
     GFIndentModel *model = self.modelArr[indexPath.row];
     
-    NSLog(@"********** %@ **********", model.orderNum);
-    NSLog(@"********** %@ **********", model.photo);
-    NSLog(@"********** %@ **********", model.payment);
-    NSLog(@"********** %@ **********", model.signinTime);
-    NSLog(@"********** %@ **********", model.workItems);
-    NSLog(@"********** %@ **********", model.remark);
+//    NSLog(@"********** %@ **********", model.orderNum);
+//    NSLog(@"********** %@ **********", model.photo);
+//    NSLog(@"********** %@ **********", model.payment);
+//    NSLog(@"********** %@ **********", model.signinTime);
+//    NSLog(@"********** %@ **********", model.workItems);
+//    NSLog(@"********** %@ **********", model.remark);
     
     // 订单编号
     cell.numberLab.text = [NSString stringWithFormat:@"订单编号%@", model.orderNum];

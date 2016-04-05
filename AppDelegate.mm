@@ -35,15 +35,13 @@
 #import "CLCleanWorkViewController.h"
 #import "CLShareViewController.h"
 #import "CLAddOrderSuccessViewController.h"
-#import "PoiSearchDemoViewController.h"
-
 #import "GFTestViewController.h"
-
 #import "GFMyMessageViewController.h"
 #import "GFSignInViewController.h"
 #import "CLCooperateFailViewController.h"
 #import "CLCooperatingViewController.h"
 #import "GFNoIndentViewController.h"
+#import "GFMapViewController.h"
 
 
 
@@ -84,13 +82,14 @@
     [self registerUserNotification];
     
     
-    [UMSocialData setAppKey:@"564d41b4e0f55a596d003fe4"];
+    [UMSocialData setAppKey:@"564572b9e0f55a38dd001e6c"];
     
     
-    [UMSocialWechatHandler setWXAppId:@"wxccc42b939e04a75a" appSecret:@"d4624c36b6795d1d99dcf0547af5443d" url:@"http://www.umeng.com/social"];
+    [UMSocialWechatHandler setWXAppId:@"wx0d70fda19b5c107c" appSecret:@"bac3ef447782aa76059af754510d84ca" url:@"http://www.incardata.com.cn"];
     
-    [UMSocialQQHandler setQQWithAppId:@"1105028016" appKey:@"9xBu4r8AcljNU4bS" url:@"http://www.umeng.com/social"];
-    [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
+    [UMSocialQQHandler setQQWithAppId:@"1105263986" appKey:@"sjj2sjhLIqtjmcfL" url:@"http://www.incardata.com.cn"];
+    
+//    [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
     
 //    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:@"439118116" RedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
 
@@ -132,7 +131,6 @@
 
 
 
-
     
     _window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     _window.backgroundColor = [UIColor whiteColor];
@@ -140,6 +138,7 @@
     _navigation.navigationBarHidden = YES;
     _window.rootViewController = _navigation;
     [_window makeKeyAndVisible];
+    
     
     return YES;
 }
@@ -163,6 +162,7 @@
         NSLog(@"onGetPermissionState %d",iError);
     }
 }
+
 
 
 //-(void)applicationWillEnterForeground:(UIApplication *)application{

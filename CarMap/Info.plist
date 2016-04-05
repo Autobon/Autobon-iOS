@@ -31,7 +31,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wxccc42b939e04a75a</string>
+				<string>wx0d70fda19b5c107c</string>
 			</array>
 		</dict>
 		<dict>
@@ -39,7 +39,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>QQ41dd63b0</string>
+				<string>QQ41e0fd72</string>
 			</array>
 		</dict>
 		<dict>
@@ -47,15 +47,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>sina.564d41b4e0f55a596d003fe4</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>wb439118116</string>
+				<string>sina.564572b9e0f55a38dd001e6c</string>
 			</array>
 		</dict>
 	</array>
@@ -92,6 +84,7 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
+		<string>location</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UIMainStoryboardFile</key>

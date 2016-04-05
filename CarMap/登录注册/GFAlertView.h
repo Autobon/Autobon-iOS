@@ -25,4 +25,12 @@
 
 // 进度条
 + (instancetype)initWithJinduTiaoTipName:(NSString *)tipName;
+
+
+// 延迟移除进度条
+- (void)remove;
+
+
+
+
 @end

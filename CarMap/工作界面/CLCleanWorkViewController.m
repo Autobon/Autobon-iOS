@@ -113,25 +113,36 @@
 
 - (void)titleView{
     
-    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 1, self.view.frame.size.width, 40)];
-    _distanceLabel.text = @"已用时：15分28秒";
+    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, -10, self.view.frame.size.width, 20)];
+    _distanceLabel.text = @"已用时：";
     _distanceLabel.backgroundColor = [UIColor whiteColor];
     _distanceLabel.font = [UIFont systemFontOfSize:15];
     _distanceLabel.textAlignment = NSTextAlignmentCenter;
     [_scrollView addSubview:_distanceLabel];
     
-    _carImageButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/7, 55, self.view.frame.size.width*5/7, self.view.frame.size.width*27/70)];
+    CLTitleView *photoTitle = [[CLTitleView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_distanceLabel.frame)+10, self.view.frame.size.width, 45) Title:@"上传工作完成车辆照片"];
+    UILabel *photoLabel = [[UILabel alloc]init];
+    photoLabel.text = @"不少于3张";
+    photoLabel.font = [UIFont systemFontOfSize:16];
+    photoLabel.textColor = [UIColor colorWithRed:196/255.0 green:196/255.0 blue:196/255.0 alpha:1.0];
+    photoLabel.frame = CGRectMake(190, 8, 120, 35);
+    [photoTitle addSubview:photoLabel];
+    
+    [_scrollView addSubview:photoTitle];
+    
+    
+    _carImageButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/7, CGRectGetMaxY(photoTitle.frame)+10, self.view.frame.size.width*5/7, self.view.frame.size.width*27/70)];
 //    _carImageView.image = [UIImage imageNamed:@"carImage"];
     [_carImageButton setBackgroundImage:[UIImage imageNamed:@"carImage"] forState:UIControlStateNormal];
     [_carImageButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:_carImageButton];
     
-    _cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*6/7-15, 55+self.view.frame.size.width*27/70-25, 30, 30)];
+    _cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_carImageButton.frame)-15, CGRectGetMaxY(_carImageButton.frame)-20, 30, 30)];
     [_cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
     [_cameraBtn addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:_cameraBtn];
     
-    CLTitleView *titleView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 40 + self.view.frame.size.width/3*2+10, self.view.frame.size.width, 45) Title:@"选择本次负责的工作项"];
+    CLTitleView *titleView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 40 + self.view.frame.size.width/3*2+30, self.view.frame.size.width, 45) Title:@"选择本次负责的工作项"];
     [_scrollView addSubview:titleView];
     
     

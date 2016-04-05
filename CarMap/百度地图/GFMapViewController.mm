@@ -152,6 +152,11 @@
     
 }
 
+
+
+
+
+
 #pragma mark - ***** 地图 *****
 - (void)_setMapView {
 //    self.mapView = [[BMKMapView alloc] initWithFrame:CGRectMake(10, 50, [UIScreen mainScreen].bounds.size.width - 20, 350)];
@@ -159,6 +164,10 @@
     
     /* 设定代理 */
     self.mapView.delegate = self;
+    
+    UIView *mapView = _mapView.subviews[0];
+    [mapView.subviews[mapView.subviews.count-1] removeFromSuperview];
+    
     [self.view addSubview:self.mapView];
     
     [self.mapView setMapType:BMKMapTypeStandard];   // 地图类型
@@ -189,7 +198,7 @@
 //    self.bossPointAnno.title = @"我是老板";
 //    self.bossPointAnno.subtitle = @"派活啦，赶紧抢吧";
 //    self.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30.4,114.4);
-    self.bossPointAnno.iconImgName = @"location";
+//    self.bossPointAnno.iconImgName = @"location";
     [self.mapView addAnnotation:self.bossPointAnno];
     NSLog(@"加载地图");
     
@@ -275,7 +284,13 @@
     
     
 }
-    
+
+- (void)userLocationService{
+    self.bossPointAnno.coordinate = self.workerPointAnno.coordinate;
+//    NSLog(@"--------self.work---%@-",self.workerPointAnno.coordinate);
+//    self.bossPointAnno.coordinate = CLLocationCoordinate2DMake(self.workerPointAnno.coordinate.longitude,self.workerPointAnno.coordinate.latitude);
+    [self.locationService startUserLocationService];
+}
     
     
 #pragma mark - 路径

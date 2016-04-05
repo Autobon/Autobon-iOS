@@ -26,7 +26,11 @@ typedef void (^DistanceBlock)(double distance);
 @property(nonatomic, strong) GFAnnotation *bossPointAnno;
 
 
+
+
+
 - (void)startUserLocationService;
 
+- (void)userLocationService;
 
 @end

@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "130F165F622963A493A901D58024DAF73EED956D",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "130F165F622963A493A901D58024DAF73EED956D" : 0,
+    "86D612AC776B12A19BC2513F9DF83DA3840BEB61" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "2B32CDF8-718C-49E0-A989-E8748A525A91",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "130F165F622963A493A901D58024DAF73EED956D" : "CarMap\/",
+    "86D612AC776B12A19BC2513F9DF83DA3840BEB61" : "%E8%BD%A6%E9%82%BB%E9%82%A6-B%E7%AB%AF\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "CarMap",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "CarMap.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Autobon\/Autobon-iOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "130F165F622963A493A901D58024DAF73EED956D"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Autobon\/Autobon-B-iOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "86D612AC776B12A19BC2513F9DF83DA3840BEB61"
+    }
+  ]
+}

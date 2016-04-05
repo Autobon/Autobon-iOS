@@ -14,16 +14,21 @@
 #import "GFHttpTool.h"
 #import "GFTipView.h"
 #import "GFAlertView.h"
+#import "UIImageView+WebCache.h"
 
 
 
 
 @interface CLOrderDetailViewController ()<UIScrollViewDelegate>
 {
-    UILabel *_distanceLabel;
+    
     UIScrollView *_scrollView;
     GFMapViewController *_mapVC;
 }
+
+@property (nonatomic ,strong) UILabel *distanceLabel;
+
+
 @end
 
 @implementation CLOrderDetailViewController
@@ -50,16 +55,18 @@
 // 添加地图
 - (void)addMap{
     _mapVC = [[GFMapViewController alloc] init];
-    if ([self.customerLat isKindOfClass:[NSNull class]]) {
+    if ([self.customerLon isKindOfClass:[NSNull class]]) {
         _mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30.4,114.4);
     }else{
         _mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([self.customerLat floatValue],[self.customerLon floatValue]);
+        
     }
-    
+    _mapVC.bossPointAnno.iconImgName = @"location";
+    __weak CLOrderDetailViewController *weakOrder = self;
     _mapVC.distanceBlock = ^(double distance) {
 //        NSLog(@"距离－－%f--",distance);
 #pragma mark - 返回距离
-        _distanceLabel.text = [NSString stringWithFormat:@"距离：%0.2fkm",distance/1000.0];
+        weakOrder.distanceLabel.text = [NSString stringWithFormat:@"距离：%0.2fkm",distance/1000.0];
     };
     
     [self.view addSubview:_mapVC.view];
@@ -85,7 +92,8 @@
     // 订单图片
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, lineView.frame.origin.y + 7, self.view.frame.size.width - 20, self.view.frame.size.height/4)];
     //    imageView.backgroundColor = [UIColor darkGrayColor];
-    imageView.image = [UIImage imageNamed:@"orderImage"];
+//    imageView.image = [UIImage imageNamed:@"orderImage"];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:_orderPhotoURL] placeholderImage:[UIImage imageNamed:@"orderImage"]];
     [_scrollView addSubview:imageView];
     
     UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(0, imageView.frame.origin.y+self.view.frame.size.height/4+5, self.view.frame.size.width, 1)];
@@ -303,6 +311,8 @@
                 GFAlertView *alertView = [[GFAlertView alloc]initWithTitle:@"合作人暂无回应" leftBtn:@"继续等待" rightBtn:@"强制开始"];
                 [alertView.rightButton addTarget:self action:@selector(rightButtonClick) forControlEvents:UIControlEventTouchUpInside];
                 [self.view addSubview:alertView];
+            }else{
+                [self addAlertView:responseObject[@"message"]];
             }
         }
         

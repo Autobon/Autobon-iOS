@@ -55,6 +55,7 @@
     GFMapViewController *mapVC = [[GFMapViewController alloc] init];
     
     mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([orderDic[@"positionLat"]floatValue],[orderDic[@"positionLon"]floatValue]);
+    mapVC.bossPointAnno.iconImgName = @"location";
     mapVC.distanceBlock = ^(double distance) {
         NSLog(@"距离－－%f--",distance);
         _distanceLabel.text = [NSString stringWithFormat:@"距离：  %0.2fkm",distance/1000.0];
@@ -87,7 +88,7 @@
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, lineView.frame.origin.y + 7, _orderView.frame.size.width - 20, _orderView.frame.size.height/4)];
     //    imageView.backgroundColor = [UIColor darkGrayColor];
     imageView.image = [UIImage imageNamed:@"orderImage"];
-    [imageView sd_setImageWithURL:[NSURL URLWithString:orderDic[@"photo"]] placeholderImage:[UIImage imageNamed:@"orderImage"]];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345%@",orderDic[@"photo"]]] placeholderImage:[UIImage imageNamed:@"orderImage"]];
     [_orderView addSubview:imageView];
     
     UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(0, imageView.frame.origin.y+_orderView.frame.size.height/4+5, _orderView.frame.size.width, 1)];
