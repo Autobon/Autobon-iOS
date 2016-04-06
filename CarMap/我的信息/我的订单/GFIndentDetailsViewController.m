@@ -218,11 +218,18 @@
     CGFloat workDayLabX = baseView1X;
     CGFloat workDayLabY = CGRectGetMaxY(baseView1.frame);
     self.workDayLab = [[UILabel alloc] initWithFrame:CGRectMake(workDayLabX, workDayLabY, workDayLabW, workDayLabH)];
-    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-    [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[self.model.signinTime floatValue]/1000];
-    self.workDayLab.text = [NSString stringWithFormat:@"施工时间：%@", [formatter stringFromDate:date]];
+    
+    if ([self.moneyLab.text isEqualToString:@"￥0"]) {
+        self.workDayLab.text = @"施工时间：无";
+    }else{
+        NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+        [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:[self.model.signinTime floatValue]/1000];
+        self.workDayLab.text = [NSString stringWithFormat:@"施工时间：%@", [formatter stringFromDate:date]];
+    }
+    
+    
     self.workDayLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
     [baseView addSubview:self.workDayLab];
     

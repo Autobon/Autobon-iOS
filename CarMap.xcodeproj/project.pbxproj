@@ -114,6 +114,7 @@
 		9B9C25A11C75BFD6009A69D6 /* CLHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9C25A01C75BFD6009A69D6 /* CLHomeTableViewCell.m */; };
 		9B9C25A61C75CC05009A69D6 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B02AF661C5A22CB0044FB71 /* StoreKit.framework */; };
 		9B9FCF081C8AA2DB0022F54E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9FCF071C8AA2DB0022F54E /* ViewController.m */; };
+		9BA3480E1CB4B0C700B76895 /* CLBillTableViewCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA3480D1CB4B0C700B76895 /* CLBillTableViewCellModel.m */; };
 		9BA391721C843564002F30A7 /* CLAddPersonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA391711C843564002F30A7 /* CLAddPersonModel.m */; };
 		9BA3C5BC1C75621B007F730D /* GFAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA3C5BB1C75621B007F730D /* GFAlertView.m */; };
 		9BA3C8D71C7598FD007F730D /* CLHomeOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA3C8D61C7598FD007F730D /* CLHomeOrderViewController.m */; };
@@ -354,6 +355,8 @@
 		9B9C25A01C75BFD6009A69D6 /* CLHomeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLHomeTableViewCell.m; sourceTree = "<group>"; };
 		9B9FCF061C8AA2DB0022F54E /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		9B9FCF071C8AA2DB0022F54E /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		9BA3480C1CB4B0C700B76895 /* CLBillTableViewCellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLBillTableViewCellModel.h; sourceTree = "<group>"; };
+		9BA3480D1CB4B0C700B76895 /* CLBillTableViewCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLBillTableViewCellModel.m; sourceTree = "<group>"; };
 		9BA391701C843564002F30A7 /* CLAddPersonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAddPersonModel.h; sourceTree = "<group>"; };
 		9BA391711C843564002F30A7 /* CLAddPersonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAddPersonModel.m; sourceTree = "<group>"; };
 		9BA3C5BA1C75621B007F730D /* GFAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFAlertView.h; sourceTree = "<group>"; };
@@ -590,6 +593,8 @@
 				8673FDB91C98F33900666634 /* GFBillModel.m */,
 				868B0F0D1C7EA5AE00938665 /* GFBillTableViewCell.h */,
 				868B0F0E1C7EA5AE00938665 /* GFBillTableViewCell.m */,
+				9BA3480C1CB4B0C700B76895 /* CLBillTableViewCellModel.h */,
+				9BA3480D1CB4B0C700B76895 /* CLBillTableViewCellModel.m */,
 				868B0F151C7EA63A00938665 /* GFBillDetailsViewController.h */,
 				868B0F161C7EA63A00938665 /* GFBillDetailsViewController.m */,
 				868B0F181C7EA6FA00938665 /* GFBillDetailsTableViewCell.h */,
@@ -1153,6 +1158,7 @@
 				860A4CBC1C7ED9780067FB70 /* MJRefreshBackStateFooter.m in Sources */,
 				865637DB1C8419A000BE7D8D /* GFServeViewController.m in Sources */,
 				868B0F131C7EA5AE00938665 /* GFBillTableViewCell.m in Sources */,
+				9BA3480E1CB4B0C700B76895 /* CLBillTableViewCellModel.m in Sources */,
 				862FF11F1C9BAFE3004A5879 /* GFIndentViewController.m in Sources */,
 				860A4CB41C7ED9780067FB70 /* MJRefreshComponent.m in Sources */,
 				9B93BF261C89548800397078 /* SDWebImageDownloaderOperation.m in Sources */,

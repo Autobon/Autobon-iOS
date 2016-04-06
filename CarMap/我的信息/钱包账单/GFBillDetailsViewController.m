@@ -16,7 +16,8 @@
 
 #import "GFBillModel.h"
 #import "GFTipView.h"
-
+#import "CLBillTableViewCellModel.h"
+#import "UIImageView+WebCache.h"
 
 
 @interface GFBillDetailsViewController () {
@@ -26,6 +27,8 @@
     
     NSInteger page;
     NSInteger pageSize;
+    
+    NSMutableArray *_billDetailsArray;
 }
 
 @property (nonatomic, strong) GFNavigationView *navView;
@@ -38,7 +41,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    _billDetailsArray = [[NSMutableArray alloc]init];
     // 基础设置
     [self _setBase];
     
@@ -103,10 +106,97 @@
     NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
     parDic[@"billd"] = self.model.billId;
     parDic[@"page"] = @"1";
-    parDic[@"pageSize"] = @"1";
+    parDic[@"pageSize"] = @"6";
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"WorkItemDic" ofType:@"plist"];
+    NSDictionary *itemDic = [NSDictionary dictionaryWithContentsOfFile:path];
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
+    
     [GFHttpTool billDetailsGet:url parameters:parDic success:^(id responseObject) {
         
-        NSLog(@"\n请求成功！！！！\n%@\n\n", responseObject);
+        if ([responseObject[@"result"] integerValue] == 1) {
+            NSDictionary *dataDictionary = responseObject[@"data"];
+            NSArray *listArray = dataDictionary[@"list"];
+            [listArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                NSLog(@"----listDictionary---obj--%@--",obj);
+                CLBillTableViewCellModel *cellModel = [[CLBillTableViewCellModel alloc]init];
+                cellModel.orderNumber = obj[@"orderNum"];
+                cellModel.orderImage = obj[@"photo"];
+                
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[obj[@"finishTime"] floatValue]/1000];
+                cellModel.orderTime = [formatter stringFromDate:date];
+                if ([obj[@"secondTech"]isKindOfClass:[NSNull class]]) {
+                    NSDictionary *mainConstructDictionary = obj[@"mainConstruct"];
+                    cellModel.orderPay = [NSString stringWithFormat:@"￥%@",mainConstructDictionary[@"payment"]];
+                    if ([mainConstructDictionary[@"workItems"]isKindOfClass:[NSNull class]]) {
+                        cellModel.orderItem = @"美容清洁";
+                    }else{
+                        cellModel.orderItem = mainConstructDictionary[@"workItems"];
+                        
+                        NSArray *strArr = [cellModel.orderItem componentsSeparatedByString:@","];
+                        NSString *workItemsStr = @"";
+                        for(NSString *str in strArr) {
+                            if(workItemsStr.length == 0) {
+                                workItemsStr = [NSString stringWithFormat:@"%@", itemDic[str]];
+                            }else {
+                                workItemsStr = [NSString stringWithFormat:@"%@,%@", workItemsStr, itemDic[str]];
+                            }
+                        }
+                        cellModel.orderItem = workItemsStr;
+                    }
+                }else{
+                    NSDictionary *secondTechDictionary = obj[@"secondTech"];
+                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                    NSString *userId = [userDefaults objectForKey:@"userId"];
+                    if ([userId integerValue] == [secondTechDictionary[@"id"] integerValue]) {
+                        NSDictionary *secondConstructDictionary = obj[@"secondConstruct"];
+                        cellModel.orderPay = [NSString stringWithFormat:@"￥%@",secondConstructDictionary[@"payment"]];
+                        if ([secondConstructDictionary[@"workItems"]isKindOfClass:[NSNull class]]) {
+                            cellModel.orderItem = @"美容清洁";
+                        }else{
+                            cellModel.orderItem = secondConstructDictionary[@"workItems"];
+                            
+                            NSArray *strArr = [cellModel.orderItem componentsSeparatedByString:@","];
+                            NSString *workItemsStr = @"";
+                            for(NSString *str in strArr) {
+                                if(workItemsStr.length == 0) {
+                                    workItemsStr = [NSString stringWithFormat:@"%@", itemDic[str]];
+                                }else {
+                                    workItemsStr = [NSString stringWithFormat:@"%@,%@", workItemsStr, itemDic[str]];
+                                }
+                            }
+                            cellModel.orderItem = workItemsStr;
+                        }
+                    }else{
+                        NSDictionary *mainConstructDictionary = obj[@"mainConstruct"];
+                        cellModel.orderPay = [NSString stringWithFormat:@"￥%@",mainConstructDictionary[@"payment"]];
+                        if ([mainConstructDictionary[@"workItems"]isKindOfClass:[NSNull class]]) {
+                            cellModel.orderItem = @"美容清洁";
+                        }else{
+                            cellModel.orderItem = mainConstructDictionary[@"workItems"];
+                            
+                            NSArray *strArr = [cellModel.orderItem componentsSeparatedByString:@","];
+                            NSString *workItemsStr = @"";
+                            for(NSString *str in strArr) {
+                                if(workItemsStr.length == 0) {
+                                    workItemsStr = [NSString stringWithFormat:@"%@", itemDic[str]];
+                                }else {
+                                    workItemsStr = [NSString stringWithFormat:@"%@,%@", workItemsStr, itemDic[str]];
+                                }
+                            }
+                            cellModel.orderItem = workItemsStr;
+                        }
+                    }
+                }
+                
+                
+                
+                [_billDetailsArray addObject:cellModel];
+            }];
+        }
+        
+        [_tableview reloadData];
         
     } failure:^(NSError *error) {
         
@@ -123,7 +213,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
 
-    return 20;
+    return _billDetailsArray.count;
 
 }
 
@@ -135,7 +225,13 @@
         
         cell = [[GFBillDetailsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
-
+    CLBillTableViewCellModel *model = _billDetailsArray[indexPath.row];
+    cell.numberLab.text = [NSString stringWithFormat:@"订单编号%@",model.orderNumber];
+    cell.moneyLab.text = model.orderPay;
+    [cell.photoImgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345%@",model.orderImage]] placeholderImage:[UIImage imageNamed:@"orderImage"]];
+    cell.timeLab.text = [NSString stringWithFormat:@"施工时间：%@",model.orderTime];
+    cell.placeLab.text = [NSString stringWithFormat:@"施工部位：%@",model.orderItem];
+    
     return cell;
 }
 

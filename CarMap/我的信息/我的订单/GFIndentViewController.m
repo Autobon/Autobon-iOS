@@ -258,48 +258,57 @@
   
                 if([curUrl isEqualToString:mainUrl]) {
                     NSDictionary *constructDic = dic[@"mainConstruct"];
-                    listModel.payment = constructDic[@"payment"];
-                    if (![constructDic[@"workItems"] isKindOfClass:[NSNull class]]) {
-                        listModel.workItems = constructDic[@"workItems"];
+                    if (![constructDic isKindOfClass:[NSNull class]]) {
+                        listModel.payment = constructDic[@"payment"];
+                        if (![constructDic[@"workItems"] isKindOfClass:[NSNull class]]) {
+                            listModel.workItems = constructDic[@"workItems"];
+                        }
+                        
+                        listModel.signinTime = constructDic[@"signinTime"];
+                        listModel.payStatus = constructDic[@"payStatus"];
+                        
+                        NSInteger startTime = [constructDic[@"startTime"] integerValue];
+                        NSInteger endTime = [constructDic[@"endTime"] integerValue];
+                        NSInteger chaTime = endTime - startTime;
+//                        NSLog(@"--starTime-%ld-End--%ld---%ld--",startTime,endTime,chaTime);
+                        NSInteger fenNum = (chaTime/1000/60)%60;
+                        NSInteger shiNum = chaTime/1000 /3600;
+                        if(shiNum > 0) {
+                            listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
+                        }else {
+                            listModel.workTime = [NSString stringWithFormat:@"%ld分", fenNum];
+                        }
+                    }else{
+                        listModel.payment = @"0";
+                        listModel.workTime = @"0时0分";
                     }
-                    
-                    listModel.signinTime = constructDic[@"signinTime"];
-                    listModel.payStatus = constructDic[@"payStatus"];
-                    
-                    NSInteger startTime = [constructDic[@"startTime"] integerValue];
-                    NSInteger endTime = [constructDic[@"endTime"] integerValue];
-                    NSInteger chaTime = endTime - startTime;
-                    NSLog(@"--starTime-%ld-End--%ld---%ld--",startTime,endTime,chaTime);
-                    NSInteger fenNum = (chaTime/1000/60)%60;
-                    NSInteger shiNum = chaTime/1000 /3600;
-
-                    if(shiNum > 0) {
-                        listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
-                    }else {
-                        listModel.workTime = [NSString stringWithFormat:@"%ld分", fenNum];
-                    }
-                    
                 
                 }else if([curUrl isEqualToString:seconderUrl]) {
                     
                     NSDictionary *constructDic = dic[@"secondConstruct"];
-                    listModel.payment = constructDic[@"payment"];
-                    listModel.workItems = constructDic[@"workItems"];
-                    listModel.signinTime = constructDic[@"signinTime"];
-                    listModel.payStatus = constructDic[@"payStatus"];
-                    
-                    NSInteger startTime = [constructDic[@"startTime"] integerValue];
-                    NSInteger endTime = [constructDic[@"endTime"] integerValue];
-                    NSInteger chaTime = endTime - startTime;
-
-                    NSInteger fenNum = (chaTime/1000/60)%60;
-                    NSInteger shiNum = chaTime/1000 /3600;
-
-                    if(shiNum > 0) {
-                        listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
-                    }else {
-                        listModel.workTime = [NSString stringWithFormat:@"%ld分", fenNum];
+                    if (![constructDic isKindOfClass:[NSNull class]]) {
+                        listModel.payment = constructDic[@"payment"];
+                        listModel.workItems = constructDic[@"workItems"];
+                        listModel.signinTime = constructDic[@"signinTime"];
+                        listModel.payStatus = constructDic[@"payStatus"];
+                        
+                        NSInteger startTime = [constructDic[@"startTime"] integerValue];
+                        NSInteger endTime = [constructDic[@"endTime"] integerValue];
+                        NSInteger chaTime = endTime - startTime;
+                        
+                        NSInteger fenNum = (chaTime/1000/60)%60;
+                        NSInteger shiNum = chaTime/1000 /3600;
+                        
+                        if(shiNum > 0) {
+                            listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
+                        }else {
+                            listModel.workTime = [NSString stringWithFormat:@"%ld分", fenNum];
+                        }
+                    }else{
+                        listModel.payment = @"0";
+                        listModel.workTime = @"0时0分";
                     }
+                    
                 }
                 
                 [self.modelArr addObject:listModel];
@@ -353,15 +362,15 @@
             
 
             
-            [self.tableview reloadData];
-            self.tableview.userInteractionEnabled = YES;
+            
             
         }else {
             
             NSLog(@"请求失败+++++++++++%@", responseObject);
             self.tableview.userInteractionEnabled = YES;
         }
-        
+        [self.tableview reloadData];
+        self.tableview.userInteractionEnabled = YES;
         [self.tableview.header endRefreshing];
         
     } failure:^(NSError *error) {
@@ -414,42 +423,57 @@
                 listModel.commentDictionary = dic[@"comment"];
                 if([curUrl isEqualToString:mainUrl]) {
                     NSDictionary *constructDic = dic[@"mainConstruct"];
-                    listModel.payment = constructDic[@"payment"];
-                    listModel.workItems = constructDic[@"workItems"];
-                    listModel.signinTime = constructDic[@"signinTime"];
-                    listModel.payStatus = constructDic[@"payStatus"];
+                    if ([constructDic isKindOfClass:[NSNull class]]) {
                     
-                    NSInteger startTime = [constructDic[@"startTime"] integerValue];
-                    NSInteger endTime = [constructDic[@"endTime"] integerValue];
-                    NSInteger chaTime = endTime - startTime;
-                    NSInteger fenNum = (chaTime/1000/60)%60;
-                    NSInteger shiNum = chaTime/1000 /3600;
-                   
-                    if(shiNum > 0) {
-                        listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
-                    }else {
-                        listModel.workTime = [NSString stringWithFormat:@"%ld分", fenNum];
+                        listModel.payment = @"0";
+                        listModel.workTime = @"0时0分";
+                       
+                    }else{
+                        listModel.payment = constructDic[@"payment"];
+                        listModel.workItems = constructDic[@"workItems"];
+                        listModel.signinTime = constructDic[@"signinTime"];
+                        listModel.payStatus = constructDic[@"payStatus"];
+                        
+                        NSInteger startTime = [constructDic[@"startTime"] integerValue];
+                        NSInteger endTime = [constructDic[@"endTime"] integerValue];
+                        NSInteger chaTime = endTime - startTime;
+                        NSInteger fenNum = (chaTime/1000/60)%60;
+                        NSInteger shiNum = chaTime/1000 /3600;
+                        
+                        if(shiNum > 0) {
+                            listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
+                        }else {
+                            listModel.workTime = [NSString stringWithFormat:@"%ld分", fenNum];
+                        }
                     }
+                    
                     
                 }else if([curUrl isEqualToString:seconderUrl]) {
                     
                     NSDictionary *constructDic = dic[@"secondConstruct"];
-                    listModel.payment = constructDic[@"payment"];
-                    listModel.workItems = constructDic[@"workItems"];
-                    listModel.signinTime = constructDic[@"signinTime"];
-                    listModel.payStatus = constructDic[@"payStatus"];
                     
-                    NSInteger startTime = [constructDic[@"startTime"] integerValue];
-                    NSInteger endTime = [constructDic[@"endTime"] integerValue];
-                    NSInteger chaTime = endTime - startTime;
-                    NSInteger fenNum = (chaTime/1000/60)%60;
-                    NSInteger shiNum = chaTime/1000 /3600;
-                    if(shiNum > 0) {
-                        listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
-                    }else {
-                        listModel.workTime = [NSString stringWithFormat:@"%ld分", fenNum];
+                    if ([constructDic isKindOfClass:[NSNull class]]) {
+                        
+                        listModel.payment = @"0";
+                        listModel.workTime = @"0时0分";
+                        
+                    }else{
+                        listModel.payment = constructDic[@"payment"];
+                        listModel.workItems = constructDic[@"workItems"];
+                        listModel.signinTime = constructDic[@"signinTime"];
+                        listModel.payStatus = constructDic[@"payStatus"];
+                        
+                        NSInteger startTime = [constructDic[@"startTime"] integerValue];
+                        NSInteger endTime = [constructDic[@"endTime"] integerValue];
+                        NSInteger chaTime = endTime - startTime;
+                        NSInteger fenNum = (chaTime/1000/60)%60;
+                        NSInteger shiNum = chaTime/1000 /3600;
+                        if(shiNum > 0) {
+                            listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
+                        }else {
+                            listModel.workTime = [NSString stringWithFormat:@"%ld分", fenNum];
+                        }
                     }
-                    
                 }
                 
                 
@@ -542,13 +566,6 @@
     
     GFIndentModel *model = self.modelArr[indexPath.row];
     
-//    NSLog(@"********** %@ **********", model.orderNum);
-//    NSLog(@"********** %@ **********", model.photo);
-//    NSLog(@"********** %@ **********", model.payment);
-//    NSLog(@"********** %@ **********", model.signinTime);
-//    NSLog(@"********** %@ **********", model.workItems);
-//    NSLog(@"********** %@ **********", model.remark);
-    
     // 订单编号
     cell.numberLab.text = [NSString stringWithFormat:@"订单编号%@", model.orderNum];
     // 加载图片
@@ -564,12 +581,17 @@
     }else {
         cell.tipBut.selected = YES;
     }
-    // 开始时间
-    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-    [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[model.signinTime floatValue]/1000];
-    cell.timeLab.text = [NSString stringWithFormat:@"施工时间：%@", [formatter stringFromDate:date]];
+    if ([cell.moneyLab.text isEqualToString:@"￥0"]) {
+        cell.timeLab.text = @"施工时间：无";
+    }else{
+        // 开始时间
+        NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+        [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:[model.signinTime floatValue]/1000];
+        cell.timeLab.text = [NSString stringWithFormat:@"施工时间：%@", [formatter stringFromDate:date]];
+    }
+    
     cell.placeLab.text = [NSString stringWithFormat:@"施工部位：%@", _workItemArr[indexPath.row]];
 
     

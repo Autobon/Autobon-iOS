@@ -106,7 +106,7 @@
     [self.view addSubview:_noOrderlabel];
     [self.view bringSubviewToFront:_noOrderImageView];
     
-    [self httpWorkForTableView];
+//    [self httpWorkForTableView];
 //
 //
     _tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
@@ -124,6 +124,8 @@
 
 - (void)httpWorkForTableView{
     
+    
+    
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
@@ -132,6 +134,7 @@
     NSDictionary *dictionary = @{@"page":@(_page),@"pageSize":@(_pageSize)};
     [GFHttpTool getOrderListDictionary:dictionary Success:^(NSDictionary *responseObject) {
         if ([responseObject[@"result"] integerValue] == 1) {
+            NSLog(@"wangluoqingqiu");
             NSDictionary *dataDit = responseObject[@"data"];
             NSArray *dataArray = dataDit[@"list"];
             if (_page == 1) {
@@ -479,19 +482,20 @@
             cell = [[CLHomeTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"order"];
             [cell initWithOrder];
         }
-        
-        CLHomeOrderCellModel *cellModer = _cellModelArray[indexPath.row-1];
-        cell.orderButton.tag = indexPath.row + 1;
-        cell.orderNumberLabel.text = [NSString stringWithFormat:@"订单编号%@",cellModer.orderNumber];
-        cell.timeLabel.text = [NSString stringWithFormat:@"预约时间%@",cellModer.orderTime];
-        [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:cellModer.orderPhotoURL] placeholderImage:[UIImage imageNamed:@"orderImage"]];
-        if ([cellModer.status isEqualToString:@"IN_PROGRESS"]) {
-            [cell.orderButton setTitle:@"进入订单" forState:UIControlStateNormal];
-            [cell.orderButton addTarget:self action:@selector(orderBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        }else{
-            [cell.orderButton setTitle:@"开始工作" forState:UIControlStateNormal];
-            [cell.orderButton addTarget:self action:@selector(workBegin:) forControlEvents:UIControlEventTouchUpInside];
-
+        if (indexPath.row < _cellModelArray.count) {
+            CLHomeOrderCellModel *cellModer = _cellModelArray[indexPath.row-1];
+            cell.orderButton.tag = indexPath.row + 1;
+            cell.orderNumberLabel.text = [NSString stringWithFormat:@"订单编号%@",cellModer.orderNumber];
+            cell.timeLabel.text = [NSString stringWithFormat:@"预约时间%@",cellModer.orderTime];
+            [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:cellModer.orderPhotoURL] placeholderImage:[UIImage imageNamed:@"orderImage"]];
+            if ([cellModer.status isEqualToString:@"IN_PROGRESS"]) {
+                [cell.orderButton setTitle:@"进入订单" forState:UIControlStateNormal];
+                [cell.orderButton addTarget:self action:@selector(orderBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            }else{
+                [cell.orderButton setTitle:@"开始工作" forState:UIControlStateNormal];
+                [cell.orderButton addTarget:self action:@selector(workBegin:) forControlEvents:UIControlEventTouchUpInside];
+                
+            }
         }
 //        cell.contentView.userInteractionEnabled = YES;
 //        [cell.orderButton addTarget:self action:@selector(workBegin:) forControlEvents:UIControlEventTouchUpInside];
