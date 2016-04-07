@@ -13,6 +13,8 @@
 #import "CLAddPersonModel.h"
 #import "UIImageView+WebCache.h"
 #import "GFTipView.h"
+#import "CLHomeOrderViewController.h"
+
 
 //@interface UITableView (touch)
 //
@@ -33,6 +35,7 @@
     NSMutableArray *_addPersonArray;
     UITableView *_tableView;
     
+    BOOL _isAdd;
     
 }
 @end
@@ -156,6 +159,7 @@
          NSLog(@"－－－%@--",responseObject);
         if ([responseObject[@"result"]integerValue]==1) {
             [self addAlertView:@"邀请已发送"];
+            _isAdd = YES;
         }else{
             [self addAlertView:responseObject[@"message"]];
         }
@@ -181,6 +185,10 @@
     
 }
 - (void)backBtnClick{
+    if (_isAdd) {
+        CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
+        [homeOrder headRefresh];
+    }
     [self.navigationController popViewControllerAnimated:YES];
     
 }

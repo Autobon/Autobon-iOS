@@ -71,7 +71,7 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:YES];
-    [self headRefresh];
+//    [self headRefresh];
 }
 
 - (void)viewDidLoad {
@@ -134,7 +134,7 @@
     NSDictionary *dictionary = @{@"page":@(_page),@"pageSize":@(_pageSize)};
     [GFHttpTool getOrderListDictionary:dictionary Success:^(NSDictionary *responseObject) {
         if ([responseObject[@"result"] integerValue] == 1) {
-            NSLog(@"wangluoqingqiu");
+//            NSLog(@"wangluoqingqiu");
             NSDictionary *dataDit = responseObject[@"data"];
             NSArray *dataArray = dataDit[@"list"];
             if (_page == 1) {
@@ -199,7 +199,7 @@
                 [_cellModelArray addObject:cellModel];
                 NSDate *date = [NSDate dateWithTimeIntervalSince1970:[obj[@"orderTime"] floatValue]/1000];
                 cellModel.orderTime = [formatter stringFromDate:date];
-                NSLog(@"date1:%@",cellModel.orderTime);
+                NSLog(@"cellModel.orderNumber:%@",cellModel.orderNumber);
                 
                 
             }];
@@ -212,13 +212,14 @@
                 _noOrderImageView.hidden = NO;
                 _noOrderlabel.hidden = NO;
             }
+            
             [_tableView reloadData];
             
             [self.tableView.header endRefreshing];
             [self.tableView.footer endRefreshing];
         }
     } failure:^(NSError *error) {
-        
+        NSLog(@"-不知道为什么请求失败了－－error--%@---",error);
     }];
 }
 
@@ -230,7 +231,7 @@
 #pragma mark - 接受通知消息
 -(void)receiveNotification:(NSNotification *)Notification
 {
-    NSLog(@"receiveNotification---%@--",Notification.userInfo);
+//    NSLog(@"receiveNotification---%@--",Notification.userInfo);
     
     
     if ([Notification.userInfo[@"action"] isEqualToString:@"NEW_ORDER"]) {
@@ -279,9 +280,11 @@
 #pragma mark - 收到推送消息查看邀请订单详情
 - (void)OrderDetailBtnClick{
 
+//    NSLog(@"----orderDic--%@--",_inviteDictionary);
     CLOrderDetailViewController *orderDetail = [[CLOrderDetailViewController alloc]init];
     NSDictionary *orderDic = _inviteDictionary[@"order"];
     orderDetail.orderId = orderDic[@"id"];
+//    orderDetail.orderNumber = orderDic[@"orderNum"];
     orderDetail.customerLat = orderDic[@"positionLat"];
     orderDetail.customerLon = orderDic[@"positionLon"];
     orderDetail.orderPhotoURL = [NSString stringWithFormat:@"http://121.40.157.200:12345%@",orderDic[@"photo"]];
@@ -461,7 +464,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"dianjifangfa");
+//    NSLog(@"dianjifangfa");
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     
@@ -482,7 +485,7 @@
             cell = [[CLHomeTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"order"];
             [cell initWithOrder];
         }
-        if (indexPath.row < _cellModelArray.count) {
+        if (indexPath.row <= _cellModelArray.count) {
             CLHomeOrderCellModel *cellModer = _cellModelArray[indexPath.row-1];
             cell.orderButton.tag = indexPath.row + 1;
             cell.orderNumberLabel.text = [NSString stringWithFormat:@"订单编号%@",cellModer.orderNumber];

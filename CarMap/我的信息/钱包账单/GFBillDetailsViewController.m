@@ -25,8 +25,8 @@
     CGFloat kWidth;
     CGFloat kHeight;
     
-    NSInteger page;
-    NSInteger pageSize;
+    NSInteger _page;
+    NSInteger _pageSize;
     
     NSMutableArray *_billDetailsArray;
 }
@@ -64,8 +64,8 @@
 
 - (void)_setView {
     
-    page = 1;
-    pageSize = 1;
+    _page = 1;
+    _pageSize = 2;
     
     self.tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kWidth, kHeight - 64) style:UITableViewStylePlain];
     self.tableview.delegate = self;
@@ -86,27 +86,29 @@
     
     NSLog(@"脑袋刷新");
     
+    _page = 1;
+    _billDetailsArray = [[NSMutableArray alloc]init];
     [self http];
     
-    [self.tableview.header endRefreshing];
     
 }
 
 - (void)footRefresh {
     
     NSLog(@"大脚刷新");
+    _page = _page+1;
+    [self http];
     
-    [self.tableview.footer endRefreshing];
 }
 
 - (void)http {
-
+    _tableview.userInteractionEnabled = NO;
 //    NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/bill/order";
     NSString *url = [NSString stringWithFormat:@"http://121.40.157.200:12345/api/mobile/technician/bill/%@/order", self.model.billId];
     NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
     parDic[@"billd"] = self.model.billId;
-    parDic[@"page"] = @"1";
-    parDic[@"pageSize"] = @"6";
+    parDic[@"page"] = @(_page);
+    parDic[@"pageSize"] = @(_pageSize);
     NSString *path = [[NSBundle mainBundle] pathForResource:@"WorkItemDic" ofType:@"plist"];
     NSDictionary *itemDic = [NSDictionary dictionaryWithContentsOfFile:path];
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
@@ -118,6 +120,9 @@
         if ([responseObject[@"result"] integerValue] == 1) {
             NSDictionary *dataDictionary = responseObject[@"data"];
             NSArray *listArray = dataDictionary[@"list"];
+            if (listArray.count == 0 && _billDetailsArray.count > 0) {
+                [self addAlertView:@"已加载全部"];
+            }
             [listArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 NSLog(@"----listDictionary---obj--%@--",obj);
                 CLBillTableViewCellModel *cellModel = [[CLBillTableViewCellModel alloc]init];
@@ -195,12 +200,13 @@
                 [_billDetailsArray addObject:cellModel];
             }];
         }
-        
+        [self.tableview.header endRefreshing];
+        [self.tableview.footer endRefreshing];
         [_tableview reloadData];
-        
+        _tableview.userInteractionEnabled = YES;
     } failure:^(NSError *error) {
         
-        
+        _tableview.userInteractionEnabled = YES;
         [self addAlertView:@"请求失败"];
     }];
     

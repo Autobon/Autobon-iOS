@@ -345,7 +345,7 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         NSString *token = [userDefaultes objectForKey:@"autoken"];
-        NSLog(@"----token---%@--",token);
+//        NSLog(@"----token---%@--",token);
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         
         [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -385,20 +385,20 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
     if ([GFHttpTool isConnectionAvailable]) {
         
         
-        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
+//        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
         
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         
         [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if(success) {
-                [aView removeFromSuperview];
+//                [aView removeFromSuperview];
                 
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             if(failure) {
                 
-                [aView removeFromSuperview];
+//                [aView removeFromSuperview];
                 failure(error);
             }
         }];
@@ -730,14 +730,27 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/listUnfinished",HOST];
-        NSLog(@"---token---%@---%@--",URLString,dictionary);
+        NSLog(@"-请求没有成功程序挂掉啦--token---%@---%@---%@-",manager,URLString,dictionary);
+//        [manager GET:URLString parameters:dictionary success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//            NSLog(@"请求成功了－22－－");
+//            if (success) {
+//                success(responseObject);
+//            }
+//        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//            NSLog(@"请求失败了－－－");
+//            if (failure) {
+//                failure(error);
+//            }
+//        }];
+        
         [manager GET:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
-            NSLog(@"请求成功了－－－");
+            NSLog(@"请求成功了－11－－");
             if (success) {
                 success(responseObject);
             }
             
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            NSLog(@"请求失败了－－－");
             if (failure) {
                 failure(error);
             }
@@ -1136,14 +1149,17 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         NSString *token = [userDefaultes objectForKey:@"autoken"];
-        NSLog(@"token--%@--",token);
+        
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-        NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/%ld/invitation",HOST,orderId];
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/%ld/invitation",HOST,(long)orderId];
+        NSLog(@"token-可能是这里错了-%@-－－URLString--%@-",token,URLString);
         [manager POST:URLString parameters:@{@"accepted":accept} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            NSLog(@"走出来了");
             if(success) {
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            NSLog(@"没有走出来－－－%@--",error);
             if(failure) {
                 failure(error);
             }

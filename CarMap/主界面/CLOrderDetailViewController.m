@@ -15,7 +15,7 @@
 #import "GFTipView.h"
 #import "GFAlertView.h"
 #import "UIImageView+WebCache.h"
-
+#import "CLHomeOrderViewController.h"
 
 
 
@@ -197,9 +197,9 @@
             lineView4.frame = CGRectMake(0, timeLabel.frame.size.height + timeLabel.frame.origin.y, self.view.frame.size.width, 1);
             otherLabel.frame = CGRectMake(10, lineView4.frame.origin.y+4, self.view.frame.size.width-20, detailSize.height);
             
-            
-            [addButton setTitle:@"拒绝" forState:UIControlStateNormal];
             [addButton addTarget:self action:@selector(orderDisagree) forControlEvents:UIControlEventTouchUpInside];
+            [addButton setTitle:@"拒绝" forState:UIControlStateNormal];
+            
             [workButton addTarget:self action:@selector(orderAgree) forControlEvents:UIControlEventTouchUpInside];
             [workButton setTitle:@"接受" forState:UIControlStateNormal];
         
@@ -269,6 +269,7 @@
 
 #pragma mark - 视图滑动的时候调用的方法
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
     _mapVC.view.frame = CGRectMake(0, -scrollView.contentOffset.y+44, self.view.frame.size.width, _mapVC.view.frame.size.height);
     
     
@@ -332,6 +333,7 @@
             signinView.customerLon = self.customerLon;
             signinView.orderId = self.orderId;
             signinView.orderType = self.orderType;
+            signinView.orderNumber = self.orderNumber;
             NSDictionary *dataDictionary = responseObject[@"data"];
             signinView.startTime = dataDictionary[@"startTime"];
             UIWindow *window = [UIApplication sharedApplication].keyWindow;
@@ -352,6 +354,8 @@
     [GFHttpTool PostAcceptOrderId:[_orderId integerValue] accept:@"true" success:^(id responseObject) {
         if ([responseObject[@"result"]integerValue] == 1) {
             [self addAlertView:@"接受邀请成功"];
+            CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
+            [homeOrder headRefresh];
             [self.navigationController popToRootViewControllerAnimated:YES];
         }else{
             [self addAlertView:responseObject[@"message"]];
@@ -365,8 +369,11 @@
 
 #pragma mark - 不接受订单邀请的响应方法
 - (void)orderDisagree{
+    
     [GFHttpTool PostAcceptOrderId:[_orderId integerValue] accept:@"false" success:^(id responseObject) {
         [self addAlertView:@"已拒绝邀请"];
+        CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
+        [homeOrder headRefresh];
         [self.navigationController popToRootViewControllerAnimated:YES];
     } failure:^(NSError *error) {
         NSLog(@"---error---%@--",error);
@@ -393,6 +400,11 @@
     
 }
 - (void)backBtnClick{
+    
+    if (_orderNumber==nil) {
+        CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
+        [homeOrder headRefresh];
+    }
     
     [self.navigationController popToRootViewControllerAnimated:YES];
 //    [self.navigationController popViewControllerAnimated:YES];
