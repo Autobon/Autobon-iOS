@@ -96,7 +96,7 @@
     
     
     page = 1;
-    pageSize = 2;
+    pageSize = 4;
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kWidth, kHeight - 64) style:UITableViewStylePlain];
     [self.view addSubview:self.tableView];
@@ -126,7 +126,7 @@
     self.yearArr = [[NSMutableArray alloc] init];
     _listDictionary = [[NSMutableDictionary alloc]init];
     page = 1;
-    
+    pageSize = 4;
     [self tableViewHttp];
     
     [self.tableView.header endRefreshing];
@@ -138,6 +138,7 @@
     NSLog(@"大脚刷新");
     
     page = page + 1;
+    pageSize = 2;
     [self tableViewHttp];
     
     [self.tableView.footer endRefreshing];

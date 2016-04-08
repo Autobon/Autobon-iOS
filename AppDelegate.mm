@@ -42,7 +42,7 @@
 #import "CLCooperatingViewController.h"
 #import "GFNoIndentViewController.h"
 #import "GFMapViewController.h"
-
+#import <CoreLocation/CoreLocation.h>
 
 
 
@@ -55,13 +55,16 @@
 //#define kGtAppKey     @"J7erlQojfG6L4Fli5I3kz1"
 //#define kGtAppSecret  @"9CI81CHleC6R4KyDvQYK35"
 
-@interface AppDelegate ()<GeTuiSdkDelegate,BMKGeneralDelegate>
+@interface AppDelegate ()<GeTuiSdkDelegate,BMKGeneralDelegate,CLLocationManagerDelegate>
 {
     NSDictionary *_launchDict;
     BMKMapManager *_mapManager;
 //    ViewController *_firstView;
     UINavigationController *_navigation;
     NSDate *_pushDate;
+    CLGeocoder *_coder;
+    //存储上一次的位置
+    
 }
 @end
 
@@ -140,8 +143,76 @@
     [_window makeKeyAndVisible];
     
     
+    
+    //1.创建定位管理对象
+    CLLocationManager *manager=[[CLLocationManager alloc]init];
+//    [manager requestAlwaysAuthorization];
+//    [manager requestWhenInUseAuthorization];
+    _coder=[[CLGeocoder alloc]init];
+    //2.设置属性 distanceFilter、desiredAccuracy
+    manager.distanceFilter=kCLDistanceFilterNone;//实时更新定位位置
+    manager.desiredAccuracy=kCLLocationAccuracyBest;//定位精确度
+    if([manager respondsToSelector:@selector(requestAlwaysAuthorization)])
+    {
+        [manager requestAlwaysAuthorization];
+    }
+    //该模式是抵抗程序在后台被杀，申明不能够被暂停
+    //    _manager.pausesLocationUpdatesAutomatically=NO;
+    //3.设置代理
+    manager.delegate=self;
+    //4.开始定位
+    [manager startUpdatingLocation];
+    
+    
     return YES;
 }
+
+
+
+
+#pragma mark-CLLocationManager代理方法
+//定位失败时调用的方法
+-(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"定位失败%@",error);
+}
+//定位成功调用的的方法
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    
+    NSLog(@"－－－－－");
+    
+    
+    if(locations.count>0)
+    {
+        //        获取位置信息
+        CLLocation *loc=[locations lastObject];
+        //        获取经纬度的结构体
+        CLLocationCoordinate2D coor=loc.coordinate;
+        CLLocation *location=[[CLLocation alloc]initWithLatitude:coor.latitude longitude:coor.longitude];
+        
+        
+        NSString *URLString = [NSString stringWithFormat:@"http://api.map.baidu.com/geoconv/v1/?ak=FPzmlgz02SERkbPsRyGOiGfj&coords=%f,%f",coor.longitude,coor.latitude];
+        NSLog(@"-----location---%@---",URLString);
+        [_coder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+            CLPlacemark *pmark=[placemarks firstObject];
+            NSLog(@"%@",pmark.addressDictionary);
+            
+            NSString *state = pmark.addressDictionary[@"State"];
+            NSString *city = pmark.addressDictionary[@"City"];
+            NSString *SubLocality = pmark.addressDictionary[@"SubLocality"];
+            NSString *street = pmark.addressDictionary[@"Street"];
+            
+            NSString *addressString = [NSString stringWithFormat:@"%@%@%@%@",state,city,SubLocality,street];
+            
+            NSLog(@"-----location---%@---",addressString);
+            
+        }];
+        
+    }
+}
+
+
 - (void)onGetNetworkState:(int)iError
 {
     if (0 == iError) {

@@ -17,5 +17,13 @@
 @property (nonatomic, strong) UILabel *timeLab;
 @property (nonatomic, strong) UILabel *placeLab;
 
+@property (nonatomic, assign) CGFloat placeLabW;
+@property (nonatomic, assign) CGFloat placeLabH;
+@property (nonatomic, assign) CGFloat placeLabX;
+@property (nonatomic, assign) CGFloat placeLabY;
+
+
+@property (nonatomic, strong) UIView *downLine;
+@property (nonatomic, strong) UIView *baseView;
 
 @end

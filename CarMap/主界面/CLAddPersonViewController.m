@@ -13,6 +13,8 @@
 #import "CLAddPersonModel.h"
 #import "UIImageView+WebCache.h"
 #import "GFTipView.h"
+#import "CLHomeOrderViewController.h"
+
 
 //@interface UITableView (touch)
 //
@@ -33,6 +35,7 @@
     NSMutableArray *_addPersonArray;
     UITableView *_tableView;
     
+    BOOL _isAdd;
     
 }
 @end
@@ -133,7 +136,8 @@
         cell.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     }
     CLAddPersonModel *person = _addPersonArray[indexPath.row];
-    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:person.headImageURL] placeholderImage:[UIImage imageNamed:@"userHeadimage"]];
+    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:person.headImageURL] placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
+    
     cell.userNameLabel.text = person.nameString;
     cell.identityLabel.text = person.phoneString;
     cell.button.tag = indexPath.row;
@@ -155,6 +159,7 @@
          NSLog(@"－－－%@--",responseObject);
         if ([responseObject[@"result"]integerValue]==1) {
             [self addAlertView:@"邀请已发送"];
+            _isAdd = YES;
         }else{
             [self addAlertView:responseObject[@"message"]];
         }
@@ -180,6 +185,10 @@
     
 }
 - (void)backBtnClick{
+    if (_isAdd) {
+        CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
+        [homeOrder headRefresh];
+    }
     [self.navigationController popViewControllerAnimated:YES];
     
 }
