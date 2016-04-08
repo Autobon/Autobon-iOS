@@ -161,14 +161,17 @@
         UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView4.frame.origin.y + 4, 85, 30)];
         label1.text = @"合 作 人 ：";
         [_scrollView addSubview:label1];
-        UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(90, lineView4.frame.origin.y + 4, 80, 30)];
+        UILabel *label2 = [[UILabel alloc]init];
         label2.text = _secondId;
+        CGSize nameSize = [_secondId sizeWithFont:[UIFont systemFontOfSize:17] constrainedToSize:CGSizeMake(MAXFLOAT, 30)];
+        label2.frame = CGRectMake(90, lineView4.frame.origin.y + 4, nameSize.width+10, 30);
         label2.textAlignment = NSTextAlignmentCenter;
         label2.textColor = [UIColor whiteColor];
         label2.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
         label2.layer.cornerRadius = 10;
         label2.clipsToBounds = YES;
         [_scrollView addSubview:label2];
+        
         
         label3.frame = CGRectMake(self.view.frame.size.width-80, lineView4.frame.origin.y + 4, 70, 30);
         label3.textAlignment = NSTextAlignmentLeft;
@@ -189,9 +192,10 @@
             
             
             label1.frame = CGRectMake(10, lineView2.frame.origin.y+4, 85, 30);
-            label1.text = @"主 技 师：";
-            label2.frame = CGRectMake(90, lineView2.frame.origin.y+4, 85, 30);
+            label1.text = @"主 技 师 ：";
+            label2.frame = CGRectMake(95, lineView2.frame.origin.y+4, 200, 30);
             label2.backgroundColor = [UIColor whiteColor];
+            label2.textAlignment = NSTextAlignmentLeft;
             label2.textColor = [UIColor blackColor];
             timeLabel.frame = CGRectMake(10, lineView3.frame.origin.y+4, self.view.frame.size.width, self.view.frame.size.height/18);
             lineView4.frame = CGRectMake(0, timeLabel.frame.size.height + timeLabel.frame.origin.y, self.view.frame.size.width, 1);
@@ -216,8 +220,10 @@
         
         if (_mainTechId) {
             
-                UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(90, lineView4.frame.origin.y + 4, 80, 30)];
+                UILabel *label2 = [[UILabel alloc]init];
                 label2.text = _secondId;
+            CGSize nameSize = [_secondId sizeWithFont:[UIFont systemFontOfSize:17] constrainedToSize:CGSizeMake(MAXFLOAT, 30)];
+            label2.frame = CGRectMake(90, lineView4.frame.origin.y + 4, nameSize.width+10, 30);
                 label2.textAlignment = NSTextAlignmentCenter;
                 label2.textColor = [UIColor whiteColor];
                 label2.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
@@ -227,8 +233,10 @@
             label3.text = @"已接单";
 
         }else{
-            UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(90, lineView4.frame.origin.y + 4, 80, 30)];
+            UILabel *label2 = [[UILabel alloc]init];
             label2.text = _secondId;
+            CGSize nameSize = [_secondId sizeWithFont:[UIFont systemFontOfSize:17] constrainedToSize:CGSizeMake(MAXFLOAT, 30)];
+            label2.frame = CGRectMake(90, lineView4.frame.origin.y + 4, nameSize.width+10, 30);
             label2.textAlignment = NSTextAlignmentCenter;
             label2.textColor = [UIColor whiteColor];
             label2.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];

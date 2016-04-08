@@ -386,7 +386,9 @@
 }
 
 - (void)footRefresh {
-    
+    if (page == 1) {
+        page = 2;
+    }
     NSLog(@"大脚刷新");
     pageSize = 2;
     NSString *urlStr = curUrl;

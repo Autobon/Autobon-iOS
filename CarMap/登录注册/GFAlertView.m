@@ -379,49 +379,7 @@
         nameLab.font = [UIFont systemFontOfSize:16.5 / 320.0 * kWidth];
         nameLab.text = nameStr;
         [baseView addSubview:nameLab];
-        // 星星
-        for(int i=0; i<5; i++) {
-            
-            CGFloat starImgViewW = strRect.size.height;
-            CGFloat starImgViewH = starImgViewW;
-            CGFloat starImgViewX = CGRectGetMaxX(nameLab.frame) + starImgViewW * i;
-            CGFloat starImgViewY = nameLabY + 3.5 / 568 * kHeight;
-            UIImageView *starImgView = [[UIImageView alloc] initWithFrame:CGRectMake(starImgViewX, starImgViewY, starImgViewW, starImgViewH)];
-            starImgView.contentMode = UIViewContentModeScaleAspectFit;
-            starImgView.image = [UIImage imageNamed:@"detailsStarDark"];
-            [baseView addSubview:starImgView];
-        }
         
-        for(int i = 0; i < round(mark); i++) {
-            NSLog(@"星星数量－－－");
-            CGFloat starImgViewW = strRect.size.height;
-            CGFloat starImgViewH = starImgViewW;
-            CGFloat starImgViewX = CGRectGetMaxX(nameLab.frame) + starImgViewW * i;
-            CGFloat starImgViewY = nameLabY + 3.5 / 568 * kHeight;
-            UIImageView *starImgView = [[UIImageView alloc] initWithFrame:CGRectMake(starImgViewX, starImgViewY, starImgViewW, starImgViewH)];
-            starImgView.contentMode = UIViewContentModeScaleAspectFit;
-            starImgView.image = [UIImage imageNamed:@"information"];
-            [baseView addSubview:starImgView];
-        }
-        // 评分
-        NSString *fenStr = [NSString stringWithFormat:@"%0.1f",mark];
-        NSMutableDictionary *fenDic = [[NSMutableDictionary alloc] init];
-        fenDic[NSFontAttributeName] = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
-        fenDic[NSForegroundColorAttributeName] = [UIColor blackColor];
-        CGRect fenRect = [fenStr boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:fenDic context:nil];
-        CGFloat fenLabW = fenRect.size.width + 10;
-        CGFloat fenLabH = strRect.size.height;
-        CGFloat fenLabX = CGRectGetMaxX(nameLab.frame) + strRect.size.height * 5 + jianjv1;
-        CGFloat fenLabY = nameLabY + 3.5 / 568 * kHeight;
-        UILabel *fenLab = [[UILabel alloc] initWithFrame:CGRectMake(fenLabX, fenLabY, fenLabW, fenLabH)];
-        fenLab.textColor = [UIColor whiteColor];
-        fenLab.textAlignment = NSTextAlignmentCenter;
-        fenLab.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-        fenLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
-        fenLab.text = fenStr;
-        fenLab.layer.cornerRadius = 7.5;
-        fenLab.clipsToBounds = YES;
-        [baseView addSubview:fenLab];
         // 订单数
         CGFloat indentLabW = kWidth * 0.16;
         CGFloat indentLabH = nameLabH;
@@ -445,6 +403,53 @@
         numLab.font = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
         numLab.text = numStr;
         [baseView addSubview:numLab];
+        
+        
+        
+        // 星星
+        for(int i=0; i<5; i++) {
+            
+            CGFloat starImgViewW = strRect.size.height;
+            CGFloat starImgViewH = starImgViewW;
+            CGFloat starImgViewX = CGRectGetMaxX(numLab.frame) + 10 + starImgViewW * i;
+            CGFloat starImgViewY = numLabY + 3.5 / 568 * kHeight;
+            UIImageView *starImgView = [[UIImageView alloc] initWithFrame:CGRectMake(starImgViewX, starImgViewY, starImgViewW, starImgViewH)];
+            starImgView.contentMode = UIViewContentModeScaleAspectFit;
+            starImgView.image = [UIImage imageNamed:@"detailsStarDark"];
+            [baseView addSubview:starImgView];
+        }
+        
+        for(int i = 0; i < round(mark); i++) {
+            NSLog(@"星星数量－－－");
+            CGFloat starImgViewW = strRect.size.height;
+            CGFloat starImgViewH = starImgViewW;
+            CGFloat starImgViewX = CGRectGetMaxX(numLab.frame) + 10 + starImgViewW * i;
+            CGFloat starImgViewY = numLabY + 3.5 / 568 * kHeight;
+            UIImageView *starImgView = [[UIImageView alloc] initWithFrame:CGRectMake(starImgViewX, starImgViewY, starImgViewW, starImgViewH)];
+            starImgView.contentMode = UIViewContentModeScaleAspectFit;
+            starImgView.image = [UIImage imageNamed:@"information"];
+            [baseView addSubview:starImgView];
+        }
+        // 评分
+        NSString *fenStr = [NSString stringWithFormat:@"%0.1f",mark];
+        NSMutableDictionary *fenDic = [[NSMutableDictionary alloc] init];
+        fenDic[NSFontAttributeName] = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
+        fenDic[NSForegroundColorAttributeName] = [UIColor blackColor];
+        CGRect fenRect = [fenStr boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:fenDic context:nil];
+        CGFloat fenLabW = fenRect.size.width + 10;
+        CGFloat fenLabH = strRect.size.height;
+        CGFloat fenLabX = CGRectGetMaxX(numLab.frame) + 20 + strRect.size.height * 5 + jianjv1;
+        CGFloat fenLabY = numLabY + 3.5 / 568 * kHeight;
+        UILabel *fenLab = [[UILabel alloc] initWithFrame:CGRectMake(fenLabX, fenLabY, fenLabW, fenLabH)];
+        fenLab.textColor = [UIColor whiteColor];
+        fenLab.textAlignment = NSTextAlignmentCenter;
+        fenLab.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+        fenLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
+        fenLab.text = fenStr;
+        fenLab.layer.cornerRadius = 7.5;
+        fenLab.clipsToBounds = YES;
+        [baseView addSubview:fenLab];
+       
         //好评率
 //        CGFloat goodLabW = indentLabW;
 //        CGFloat goodLabH = indentLabH;

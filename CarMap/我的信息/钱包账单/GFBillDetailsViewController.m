@@ -106,7 +106,9 @@
 }
 
 - (void)footRefresh {
-    
+    if (_page == 1) {
+        _page = 2;
+    }
     NSLog(@"大脚刷新");
     _page = _page+1;
     _pageSize = 2;

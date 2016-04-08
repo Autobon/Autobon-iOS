@@ -23,7 +23,7 @@
     [self addSubview:_headImage];
     
     
-    _userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(120, 10, 100, 40)];
+    _userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(120, 10, 200, 40)];
 //    _userNameLabel.text = @"林峰";
     _userNameLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
     [self addSubview:_userNameLabel];

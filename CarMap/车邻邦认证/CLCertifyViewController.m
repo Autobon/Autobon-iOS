@@ -153,6 +153,8 @@
     [_scrollView addSubview:cameraHeadBtn];
     
     _userNameTextField = [[GFTextField alloc]initWithPlaceholder:@"用户名" withFrame:CGRectMake(110, 20, self.view.frame.size.width - 140, 50)];
+    _userNameTextField.centerTxt.delegate = self;
+    _userNameTextField.centerTxt.tag = 1;
     [_scrollView addSubview:_userNameTextField];
     
     _identityTextField = [[GFTextField alloc]initWithPlaceholder:@"身份证号" withFrame:CGRectMake(110, 80, self.view.frame.size.width - 140, 50)];
@@ -534,8 +536,9 @@
     
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    NSLog(@"---range--%@----%@---string--(%@)--",@(range.location),@(range.length),string);
     if (textField.tag == 5) {
-        NSLog(@"---range--%@----%@---string--(%@)--",@(range.location),@(range.length),string);
+//        NSLog(@"---range--%@----%@---string--(%@)--",@(range.location),@(range.length),string);
 //        if (range.length == 0) {
 //            if (range.location%5 == 4) {
 //                textField.text = [NSString stringWithFormat:@"%@ ",textField.text];
@@ -549,6 +552,11 @@
 //        }
         
         return [self isNumber:string];
+    }else if (textField.tag == 1){
+        NSLog(@"-----text---%@--",textField.text);
+        if (textField.text.length>9 && range.location>0) {
+            return NO;
+        }
     }
     
     return YES;

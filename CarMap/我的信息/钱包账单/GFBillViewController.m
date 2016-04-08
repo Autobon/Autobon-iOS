@@ -135,8 +135,10 @@
 
 - (void)footRefresh {
 
-    NSLog(@"大脚刷新");
-    
+//    NSLog(@"账单大脚刷新");
+    if (page == 1) {
+        page = 2;
+    }
     page = page + 1;
     pageSize = 2;
     [self tableViewHttp];

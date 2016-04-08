@@ -43,7 +43,7 @@
 #import "GFNoIndentViewController.h"
 #import "GFMapViewController.h"
 #import <CoreLocation/CoreLocation.h>
-
+#import "GFHttpTool.h"
 
 
 // 个推开发者网站中申请App时，注册的AppId、AppKey、AppSecret
@@ -62,9 +62,11 @@
 //    ViewController *_firstView;
     UINavigationController *_navigation;
     NSDate *_pushDate;
+    
     CLGeocoder *_coder;
     //存储上一次的位置
-    
+    CLLocationManager *_manager;
+//    NSTimer *_timer;
 }
 @end
 
@@ -133,8 +135,25 @@
 //    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
 
 
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    if ([userDefaultes objectForKey:@"autoken"]) {
+        //1.创建定位管理对象
+        _manager=[[CLLocationManager alloc]init];
+        _coder=[[CLGeocoder alloc]init];
+        _manager.distanceFilter=kCLDistanceFilterNone;//实时更新定位位置
+        _manager.desiredAccuracy=kCLLocationAccuracyBest;//定位精确度
+        if([_manager respondsToSelector:@selector(requestAlwaysAuthorization)])
+        {
+            [_manager requestAlwaysAuthorization];
+        }
+        //该模式是抵抗程序在后台被杀，申明不能够被暂停
+        _manager.pausesLocationUpdatesAutomatically=NO;
+        //3.设置代理
+        _manager.delegate=self;
+        //4.开始定位
+        [_manager startUpdatingLocation];
+    }
 
-    
     _window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     _window.backgroundColor = [UIColor whiteColor];
 
@@ -144,24 +163,7 @@
     
     
     
-    //1.创建定位管理对象
-    CLLocationManager *manager=[[CLLocationManager alloc]init];
-//    [manager requestAlwaysAuthorization];
-//    [manager requestWhenInUseAuthorization];
-    _coder=[[CLGeocoder alloc]init];
-    //2.设置属性 distanceFilter、desiredAccuracy
-    manager.distanceFilter=kCLDistanceFilterNone;//实时更新定位位置
-    manager.desiredAccuracy=kCLLocationAccuracyBest;//定位精确度
-    if([manager respondsToSelector:@selector(requestAlwaysAuthorization)])
-    {
-        [manager requestAlwaysAuthorization];
-    }
-    //该模式是抵抗程序在后台被杀，申明不能够被暂停
-    //    _manager.pausesLocationUpdatesAutomatically=NO;
-    //3.设置代理
-    manager.delegate=self;
-    //4.开始定位
-    [manager startUpdatingLocation];
+   
     
     
     return YES;
@@ -174,13 +176,13 @@
 //定位失败时调用的方法
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    NSLog(@"定位失败%@",error);
+    NSLog(@"定位失败了%@",error);
 }
 //定位成功调用的的方法
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     
-    NSLog(@"－－－－－");
+//    NSLog(@"－－－－－");
     
     
     if(locations.count>0)
@@ -191,26 +193,71 @@
         CLLocationCoordinate2D coor=loc.coordinate;
         CLLocation *location=[[CLLocation alloc]initWithLatitude:coor.latitude longitude:coor.longitude];
         
-        
         NSString *URLString = [NSString stringWithFormat:@"http://api.map.baidu.com/geoconv/v1/?ak=FPzmlgz02SERkbPsRyGOiGfj&coords=%f,%f",coor.longitude,coor.latitude];
-        NSLog(@"-----location---%@---",URLString);
-        [_coder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-            CLPlacemark *pmark=[placemarks firstObject];
-            NSLog(@"%@",pmark.addressDictionary);
-            
-            NSString *state = pmark.addressDictionary[@"State"];
-            NSString *city = pmark.addressDictionary[@"City"];
-            NSString *SubLocality = pmark.addressDictionary[@"SubLocality"];
-            NSString *street = pmark.addressDictionary[@"Street"];
-            
-            NSString *addressString = [NSString stringWithFormat:@"%@%@%@%@",state,city,SubLocality,street];
-            
-            NSLog(@"-----location---%@---",addressString);
+        __block NSMutableDictionary *locationDictionary = [[NSMutableDictionary alloc]init];
+        [GFHttpTool getCoordsURLString:URLString success:^(id responseObject) {
+//            NSLog(@"－－－－请求成功－－－%@--",responseObject);
+            if ([responseObject[@"status"] integerValue] == 0) {
+                NSArray *resultArray = responseObject[@"result"];
+                NSDictionary *resultDictionary = resultArray[0];
+                locationDictionary[@"lng"] = resultDictionary[@"x"];
+                locationDictionary[@"lat"] = resultDictionary[@"y"];
+                [_coder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+                    CLPlacemark *pmark=[placemarks firstObject];
+                    NSString *state = pmark.addressDictionary[@"State"];
+                    NSString *city = pmark.addressDictionary[@"City"];
+                    NSString *subLocality = pmark.addressDictionary[@"SubLocality"];
+                    NSString *street = pmark.addressDictionary[@"Street"];
+                    
+                    locationDictionary[@"province"] = state;
+                    locationDictionary[@"city"] = city;
+                    locationDictionary[@"district"] = subLocality;
+                    locationDictionary[@"street"] = street;
+//                    NSLog(@"-----location---%@---",locationDictionary);
+                    [GFHttpTool PostReportLocation:locationDictionary success:^(id responseObject) {
+                        
+//                        NSLog(@"－－－－上传实时位置成功－－－%@－－－-----%@--",responseObject,responseObject[@"message"]);
+                        if ([responseObject[@"result"] integerValue] == 1) {
+                            [_manager stopUpdatingLocation];
+                            [_manager performSelector:@selector(startUpdatingLocation) withObject:nil afterDelay:300];
+                        }
+                        
+                        
+                    } failure:^(NSError *error) {
+                        
+//                        NSLog(@"上传实时位置失败---%@---",error);
+                        
+                    }];
+                }];
+            }
+        } failure:^(NSError *error) {
             
         }];
         
+        
+        
     }
 }
+
+
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+        if([CLLocationManager significantLocationChangeMonitoringAvailable])
+        {
+//            ViewController *vc=(ViewController *)self.window.rootViewController;
+            [_manager stopUpdatingLocation];
+            [_manager startMonitoringSignificantLocationChanges];
+        }
+}
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+        if([CLLocationManager significantLocationChangeMonitoringAvailable])
+        {
+//            ViewController *vc=(ViewController *)self.window.rootViewController;
+            [_manager stopMonitoringSignificantLocationChanges];
+            [_manager startUpdatingLocation];
+        }
+}
+
+
 
 
 - (void)onGetNetworkState:(int)iError
