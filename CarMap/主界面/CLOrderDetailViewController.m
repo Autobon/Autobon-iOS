@@ -354,6 +354,7 @@
     [GFHttpTool PostAcceptOrderId:[_orderId integerValue] accept:@"true" success:^(id responseObject) {
         if ([responseObject[@"result"]integerValue] == 1) {
             [self addAlertView:@"接受邀请成功"];
+            _scrollView.delegate = nil;
             CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
             [homeOrder headRefresh];
             [self.navigationController popToRootViewControllerAnimated:YES];
@@ -372,6 +373,7 @@
     
     [GFHttpTool PostAcceptOrderId:[_orderId integerValue] accept:@"false" success:^(id responseObject) {
         [self addAlertView:@"已拒绝邀请"];
+        _scrollView.delegate = nil;
         CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
         [homeOrder headRefresh];
         [self.navigationController popToRootViewControllerAnimated:YES];
@@ -400,7 +402,7 @@
     
 }
 - (void)backBtnClick{
-    
+    _scrollView.delegate = nil;
     if (_orderNumber==nil) {
         CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
         [homeOrder headRefresh];

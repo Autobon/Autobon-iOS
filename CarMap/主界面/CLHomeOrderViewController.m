@@ -69,10 +69,10 @@
     [userDefalts synchronize];
 }
 
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:YES];
+//- (void)viewDidAppear:(BOOL)animated{
+//    [super viewDidAppear:YES];
 //    [self headRefresh];
-}
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
