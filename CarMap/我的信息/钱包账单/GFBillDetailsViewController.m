@@ -26,11 +26,15 @@
     
     NSInteger page;
     NSInteger pageSize;
+    
+    
 }
 
 @property (nonatomic, strong) GFNavigationView *navView;
 
 @property (nonatomic, strong) UITableView *tableview;
+
+@property (nonatomic, strong) NSString *userId;
 
 @end
 
@@ -77,6 +81,10 @@
     [self.tableview.header beginRefreshing];
 //    [self.tableview.footer beginRefreshing];
     
+    
+   
+    
+    
 }
 
 - (void)headRefresh {
@@ -97,16 +105,16 @@
 }
 
 - (void)http {
-
-//    NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/bill/order";
+    
     NSString *url = [NSString stringWithFormat:@"http://121.40.157.200:12345/api/mobile/technician/bill/%@/order", self.model.billId];
     NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
     parDic[@"billd"] = self.model.billId;
     parDic[@"page"] = @"1";
-    parDic[@"pageSize"] = @"1";
+    parDic[@"pageSize"] = @"5";
     [GFHttpTool billDetailsGet:url parameters:parDic success:^(id responseObject) {
         
-        NSLog(@"\n请求成功！！！！\n%@\n\n", responseObject);
+        NSLog(@"\n账单详情请求成功！！！！\n%@\n\n", responseObject);
+        
         
     } failure:^(NSError *error) {
         
@@ -146,6 +154,7 @@
 }
 #pragma mark - AlertView
 - (void)addAlertView:(NSString *)title{
+    
     GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
     [tipView tipViewShow];
 }

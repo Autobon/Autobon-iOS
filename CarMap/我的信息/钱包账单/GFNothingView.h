@@ -13,5 +13,5 @@
 
 - (instancetype)initWithImageName:(NSString *)imgName withTipString:(NSString *)tipStr withSubtipString:(NSString *)subTipStr;
 
-- (instancetype)initTTWithImageName:(NSString *)imgName withTipString:(NSString *)tipStr withSubtipString:(NSString *)subTipStr;
+//- (instancetype)initTTWithImageName:(NSString *)imgName withTipString:(NSString *)tipStr withSubtipString:(NSString *)subTipStr;
 @end
