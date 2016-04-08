@@ -10,6 +10,7 @@
 #import "GFNavigationView.h"
 #import "GFMyMessageViewController.h"
 #import "CLOrderDetailViewController.h"
+#import "CLHomeOrderViewController.h"
 
 
 
@@ -56,9 +57,10 @@
     
     
     _a--;
-    [_submitButton setTitle:[NSString stringWithFormat:@"开始工作(%ld)",_a] forState:UIControlStateNormal];
+    [_submitButton setTitle:[NSString stringWithFormat:@"开始工作(%ld)",(long)_a] forState:UIControlStateNormal];
     if (_a < 0) {
-        [self.navigationController popViewControllerAnimated:NO];
+        
+        [self backBtnClick];
         [_timer invalidate];
         _timer = nil;
         if (_addBlock) {
@@ -174,6 +176,10 @@
     NSLog(@"----%@---",_dataDictionary);
     [_timer invalidate];
     _timer = nil;
+    
+    CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
+    [homeOrder headRefresh];
+    
     CLOrderDetailViewController *detailView = [[CLOrderDetailViewController alloc]init];
     detailView.customerLat = _dataDictionary[@"positionLat"];
     detailView.customerLon = _dataDictionary[@"positionLon"];
@@ -211,6 +217,8 @@
 
 
 - (void)backBtnClick{
+    CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
+    [homeOrder headRefresh];
     [self.navigationController popViewControllerAnimated:YES];
 //    GFMyMessageViewController *myMessage = [[GFMyMessageViewController alloc]init];
 //    [self.navigationController pushViewController:myMessage animated:YES];

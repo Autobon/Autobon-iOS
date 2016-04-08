@@ -544,7 +544,7 @@
     rect.origin = BMKMapPointMake(ltX , ltY);
     rect.size = BMKMapSizeMake(rbX - ltX, rbY - ltY);
     [_mapView setVisibleMapRect:rect];
-    _mapView.zoomLevel = _mapView.zoomLevel - 0.3;
+    _mapView.zoomLevel = _mapView.zoomLevel + 1.3;
 }
 
 -(void)onGetTransitRouteResult:(BMKRouteSearch*)searcher result:    (BMKTransitRouteResult*)result errorCode:(BMKSearchErrorCode)error

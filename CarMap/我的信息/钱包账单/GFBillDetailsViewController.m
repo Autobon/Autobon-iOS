@@ -16,7 +16,8 @@
 
 #import "GFBillModel.h"
 #import "GFTipView.h"
-
+#import "CLBillTableViewCellModel.h"
+#import "UIImageView+WebCache.h"
 
 
 @interface GFBillDetailsViewController () {
@@ -24,13 +25,22 @@
     CGFloat kWidth;
     CGFloat kHeight;
     
-    NSInteger page;
-    NSInteger pageSize;
+
+    NSInteger _page;
+    NSInteger _pageSize;
+    
+    NSMutableArray *_billDetailsArray;
+    
+    
+    CGFloat _cellhh;
+
 }
 
 @property (nonatomic, strong) GFNavigationView *navView;
 
 @property (nonatomic, strong) UITableView *tableview;
+
+@property (nonatomic, strong) NSString *userId;
 
 @end
 
@@ -38,7 +48,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    _billDetailsArray = [[NSMutableArray alloc]init];
     // 基础设置
     [self _setBase];
     
@@ -61,8 +71,8 @@
 
 - (void)_setView {
     
-    page = 1;
-    pageSize = 1;
+    _page = 1;
+    _pageSize = 4;
     
     self.tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kWidth, kHeight - 64) style:UITableViewStylePlain];
     self.tableview.delegate = self;
@@ -77,40 +87,141 @@
     [self.tableview.header beginRefreshing];
 //    [self.tableview.footer beginRefreshing];
     
+    
+   
+    
+    
 }
 
 - (void)headRefresh {
     
     NSLog(@"脑袋刷新");
     
+    _page = 1;
+    _pageSize = 4;
+    _billDetailsArray = [[NSMutableArray alloc]init];
     [self http];
     
-    [self.tableview.header endRefreshing];
     
 }
 
 - (void)footRefresh {
     
     NSLog(@"大脚刷新");
+    _page = _page+1;
+    _pageSize = 2;
+    [self http];
     
-    [self.tableview.footer endRefreshing];
 }
 
 - (void)http {
 
+    _tableview.userInteractionEnabled = NO;
 //    NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/bill/order";
     NSString *url = [NSString stringWithFormat:@"http://121.40.157.200:12345/api/mobile/technician/bill/%@/order", self.model.billId];
     NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
     parDic[@"billd"] = self.model.billId;
-    parDic[@"page"] = @"1";
-    parDic[@"pageSize"] = @"1";
+    parDic[@"page"] = @(_page);
+    parDic[@"pageSize"] = @(_pageSize);
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"WorkItemDic" ofType:@"plist"];
+    NSDictionary *itemDic = [NSDictionary dictionaryWithContentsOfFile:path];
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
+    
     [GFHttpTool billDetailsGet:url parameters:parDic success:^(id responseObject) {
         
-        NSLog(@"\n请求成功！！！！\n%@\n\n", responseObject);
-        
+        if ([responseObject[@"result"] integerValue] == 1) {
+            NSDictionary *dataDictionary = responseObject[@"data"];
+            NSArray *listArray = dataDictionary[@"list"];
+            if (listArray.count == 0 && _billDetailsArray.count > 0) {
+                [self addAlertView:@"已加载全部"];
+            }
+            [listArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                NSLog(@"----listDictionary---obj--%@--",obj);
+                CLBillTableViewCellModel *cellModel = [[CLBillTableViewCellModel alloc]init];
+                cellModel.orderNumber = obj[@"orderNum"];
+                cellModel.orderImage = obj[@"photo"];
+                
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[obj[@"finishTime"] floatValue]/1000];
+                cellModel.orderTime = [formatter stringFromDate:date];
+                if ([obj[@"secondTech"]isKindOfClass:[NSNull class]]) {
+                    NSDictionary *mainConstructDictionary = obj[@"mainConstruct"];
+                    cellModel.orderPay = [NSString stringWithFormat:@"￥%@",mainConstructDictionary[@"payment"]];
+                    if ([mainConstructDictionary[@"workItems"]isKindOfClass:[NSNull class]]) {
+                        cellModel.orderItem = @"美容清洁";
+                    }else{
+                        cellModel.orderItem = mainConstructDictionary[@"workItems"];
+                        
+                        NSArray *strArr = [cellModel.orderItem componentsSeparatedByString:@","];
+                        NSString *workItemsStr = @"";
+                        for(NSString *str in strArr) {
+                            if(workItemsStr.length == 0) {
+                                workItemsStr = [NSString stringWithFormat:@"%@", itemDic[str]];
+                            }else {
+                                workItemsStr = [NSString stringWithFormat:@"%@,%@", workItemsStr, itemDic[str]];
+                            }
+                        }
+                        cellModel.orderItem = workItemsStr;
+                    }
+                }else{
+                    NSDictionary *secondTechDictionary = obj[@"secondTech"];
+                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                    NSString *userId = [userDefaults objectForKey:@"userId"];
+                    if ([userId integerValue] == [secondTechDictionary[@"id"] integerValue]) {
+                        NSDictionary *secondConstructDictionary = obj[@"secondConstruct"];
+                        cellModel.orderPay = [NSString stringWithFormat:@"￥%@",secondConstructDictionary[@"payment"]];
+                        if ([secondConstructDictionary[@"workItems"]isKindOfClass:[NSNull class]]) {
+                            cellModel.orderItem = @"美容清洁";
+                        }else{
+                            cellModel.orderItem = secondConstructDictionary[@"workItems"];
+                            
+                            NSArray *strArr = [cellModel.orderItem componentsSeparatedByString:@","];
+                            NSString *workItemsStr = @"";
+                            for(NSString *str in strArr) {
+                                if(workItemsStr.length == 0) {
+                                    workItemsStr = [NSString stringWithFormat:@"%@", itemDic[str]];
+                                }else {
+                                    workItemsStr = [NSString stringWithFormat:@"%@,%@", workItemsStr, itemDic[str]];
+                                }
+                            }
+                            cellModel.orderItem = workItemsStr;
+                        }
+                    }else{
+                        NSDictionary *mainConstructDictionary = obj[@"mainConstruct"];
+                        cellModel.orderPay = [NSString stringWithFormat:@"￥%@",mainConstructDictionary[@"payment"]];
+                        if ([mainConstructDictionary[@"workItems"]isKindOfClass:[NSNull class]]) {
+                            cellModel.orderItem = @"美容清洁";
+                        }else{
+                            cellModel.orderItem = mainConstructDictionary[@"workItems"];
+                            
+                            NSArray *strArr = [cellModel.orderItem componentsSeparatedByString:@","];
+                            NSString *workItemsStr = @"";
+                            for(NSString *str in strArr) {
+                                if(workItemsStr.length == 0) {
+                                    workItemsStr = [NSString stringWithFormat:@"%@", itemDic[str]];
+                                }else {
+                                    workItemsStr = [NSString stringWithFormat:@"%@,%@", workItemsStr, itemDic[str]];
+                                }
+                            }
+                            cellModel.orderItem = workItemsStr;
+                        }
+                    }
+                }
+                
+                
+                
+                [_billDetailsArray addObject:cellModel];
+            }];
+        }
+        [self.tableview.header endRefreshing];
+        [self.tableview.footer endRefreshing];
+        [_tableview reloadData];
+        _tableview.userInteractionEnabled = YES;
+//>>>>>>> CLmaster
     } failure:^(NSError *error) {
         
-        
+        _tableview.userInteractionEnabled = YES;
         [self addAlertView:@"请求失败"];
     }];
     
@@ -123,7 +234,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
 
-    return 20;
+    return _billDetailsArray.count;
 
 }
 
@@ -135,17 +246,37 @@
         
         cell = [[GFBillDetailsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
-
+    CLBillTableViewCellModel *model = _billDetailsArray[indexPath.row];
+    cell.numberLab.text = [NSString stringWithFormat:@"订单编号%@",model.orderNumber];
+    cell.moneyLab.text = model.orderPay;
+    [cell.photoImgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345%@",model.orderImage]] placeholderImage:[UIImage imageNamed:@"orderImage"]];
+    cell.timeLab.text = [NSString stringWithFormat:@"施工时间：%@",model.orderTime];
+    NSString *beizhuStr = [NSString stringWithFormat:@"%@", model.orderItem];
+    NSMutableDictionary *bezhuDic = [[NSMutableDictionary alloc] init];
+    bezhuDic[NSFontAttributeName] = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
+    bezhuDic[NSForegroundColorAttributeName] = [UIColor blackColor];
+    CGRect beizhuRect = [beizhuStr boundingRectWithSize:CGSizeMake(kWidth - kWidth * 0.056 * 2 - kWidth * 0.21, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:bezhuDic context:nil];
+    cell.placeLab.text = beizhuStr;
+    cell.placeLabH = beizhuRect.size.height;
+    cell.placeLab.frame = CGRectMake(cell.placeLabX, cell.placeLabY, cell.placeLabW, cell.placeLabH);
+    _cellhh = CGRectGetMaxY(cell.placeLab.frame) + 10.5 / 568.0 * kHeight;
+    CGFloat baseViewW = kWidth;
+    CGFloat baseViewH = _cellhh;
+    CGFloat baseViewX = 0;
+    CGFloat baseViewY = kHeight * 0.0183;
+    cell.baseView.frame = CGRectMake(baseViewX, baseViewY, baseViewW, baseViewH);
+    cell.downLine.frame = CGRectMake(0, baseViewH - 1, kWidth, 1);
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     
-    return kHeight * 0.464 + kHeight * 0.0183;
+    return _cellhh + kHeight * 0.0183;
 }
 #pragma mark - AlertView
 - (void)addAlertView:(NSString *)title{
+    
     GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
     [tipView tipViewShow];
 }

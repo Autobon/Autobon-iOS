@@ -16,14 +16,14 @@
 // 订单编号
     _orderNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 250, 30)];
 //     orderNumberLabel.textAlignment = NSTextAlignmentCenter;
-    _orderNumberLabel.text = @"订单编号CLB280050900001";
+//    _orderNumberLabel.text = @"订单编号CLB280050900001";
     _orderNumberLabel.font = [UIFont systemFontOfSize:14.0];
 //    orderNumberLabel.backgroundColor = [UIColor cyanColor];
     [self addSubview:_orderNumberLabel];
         
 // 预约时间
     _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, 250, 30)];
-    _timeLabel.text = @"预约时间 今天 12:00";
+//    _timeLabel.text = @"预约时间 今天 12:00";
     _timeLabel.textColor = [UIColor colorWithRed:157/255.0 green:157/255.0 blue:157/255.0 alpha:1.0];
     _timeLabel.font = [UIFont systemFontOfSize:15.0];
 //    timeLabel.backgroundColor = [UIColor cyanColor];

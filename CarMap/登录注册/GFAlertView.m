@@ -388,22 +388,23 @@
             CGFloat starImgViewY = nameLabY + 3.5 / 568 * kHeight;
             UIImageView *starImgView = [[UIImageView alloc] initWithFrame:CGRectMake(starImgViewX, starImgViewY, starImgViewW, starImgViewH)];
             starImgView.contentMode = UIViewContentModeScaleAspectFit;
-            starImgView.image = [UIImage imageNamed:@"detailsStarDark.png"];
+            starImgView.image = [UIImage imageNamed:@"detailsStarDark"];
             [baseView addSubview:starImgView];
         }
-        for(int i=0; i < mark; i++) {
-            
+        
+        for(int i = 0; i < round(mark); i++) {
+            NSLog(@"星星数量－－－");
             CGFloat starImgViewW = strRect.size.height;
             CGFloat starImgViewH = starImgViewW;
             CGFloat starImgViewX = CGRectGetMaxX(nameLab.frame) + starImgViewW * i;
             CGFloat starImgViewY = nameLabY + 3.5 / 568 * kHeight;
             UIImageView *starImgView = [[UIImageView alloc] initWithFrame:CGRectMake(starImgViewX, starImgViewY, starImgViewW, starImgViewH)];
             starImgView.contentMode = UIViewContentModeScaleAspectFit;
-            starImgView.image = [UIImage imageNamed:@"information.png"];
+            starImgView.image = [UIImage imageNamed:@"information"];
             [baseView addSubview:starImgView];
         }
         // 评分
-        NSString *fenStr = [NSString stringWithFormat:@"%0.0f",mark];
+        NSString *fenStr = [NSString stringWithFormat:@"%0.1f",mark];
         NSMutableDictionary *fenDic = [[NSMutableDictionary alloc] init];
         fenDic[NSFontAttributeName] = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
         fenDic[NSForegroundColorAttributeName] = [UIColor blackColor];
