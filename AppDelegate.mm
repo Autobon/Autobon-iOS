@@ -216,7 +216,7 @@
 //                    NSLog(@"-----location---%@---",locationDictionary);
                     [GFHttpTool PostReportLocation:locationDictionary success:^(id responseObject) {
                         
-//                        NSLog(@"－－－－上传实时位置成功－－－%@－－－-----%@--",responseObject,responseObject[@"message"]);
+                        NSLog(@"－－－－上传实时位置成功－－－%@－－－-----%@--",responseObject,responseObject[@"message"]);
                         if ([responseObject[@"result"] integerValue] == 1) {
                             [_manager stopUpdatingLocation];
                             [_manager performSelector:@selector(startUpdatingLocation) withObject:nil afterDelay:300];

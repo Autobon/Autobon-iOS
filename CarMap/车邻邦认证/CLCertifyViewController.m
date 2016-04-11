@@ -324,6 +324,7 @@
 - (void)delegateBtnClick{
     
     CLDelegateViewController *delegateView = [[CLDelegateViewController alloc]init];
+    delegateView.delegateTitle = @"CertifyDelegate";
     [self.navigationController pushViewController:delegateView animated:YES];
 }
 
@@ -554,7 +555,7 @@
         return [self isNumber:string];
     }else if (textField.tag == 1){
         NSLog(@"-----text---%@--",textField.text);
-        if (textField.text.length>9 && range.location>0) {
+        if (textField.text.length>9 && range.length==0) {
             return NO;
         }
     }

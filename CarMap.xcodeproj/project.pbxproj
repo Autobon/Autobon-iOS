@@ -101,8 +101,9 @@
 		9BA9C8171C7DB3CC005CE1C0 /* CLWorkOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA9C8161C7DB3CC005CE1C0 /* CLWorkOverViewController.m */; };
 		9BA9CBD51C5B02220059F145 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA9CBD41C5B02220059F145 /* FirstViewController.m */; };
 		9BAF986A1CA2761700CFD9F3 /* CLDelegateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BAF98691CA2761700CFD9F3 /* CLDelegateViewController.m */; };
-		9BAF986C1CA276A100CFD9F3 /* servicedelegate.html in Resources */ = {isa = PBXBuildFile; fileRef = 9BAF986B1CA276A100CFD9F3 /* servicedelegate.html */; };
 		9BB940FA1C9FF30800A3FABC /* GFBankCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB940F91C9FF30800A3FABC /* GFBankCardViewController.m */; };
+		9BBA2BD21CBB727E00543004 /* CertifyDelegate.html in Resources */ = {isa = PBXBuildFile; fileRef = 9BBA2BD01CBB727E00543004 /* CertifyDelegate.html */; };
+		9BBA2BD61CBB72E500543004 /* servicedelegate.html in Resources */ = {isa = PBXBuildFile; fileRef = 9BBA2BD51CBB72E500543004 /* servicedelegate.html */; };
 		9BCFDC971C859397003A35A8 /* CLCleanWorkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BCFDC961C859397003A35A8 /* CLCleanWorkViewController.m */; };
 		9BCFDCA51C85B6CF003A35A8 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9BCFDCA21C85B6CF003A35A8 /* AppDelegate.mm */; };
 		9BE53AE41C72ADED00BBB424 /* CLAutobonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE53AE31C72ADED00BBB424 /* CLAutobonViewController.m */; };
@@ -306,9 +307,10 @@
 		9BA9CBD41C5B02220059F145 /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 		9BAF98681CA2761700CFD9F3 /* CLDelegateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLDelegateViewController.h; sourceTree = "<group>"; };
 		9BAF98691CA2761700CFD9F3 /* CLDelegateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLDelegateViewController.m; sourceTree = "<group>"; };
-		9BAF986B1CA276A100CFD9F3 /* servicedelegate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = servicedelegate.html; sourceTree = "<group>"; };
 		9BB940F81C9FF30800A3FABC /* GFBankCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFBankCardViewController.h; sourceTree = "<group>"; };
 		9BB940F91C9FF30800A3FABC /* GFBankCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFBankCardViewController.m; sourceTree = "<group>"; };
+		9BBA2BD01CBB727E00543004 /* CertifyDelegate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = CertifyDelegate.html; sourceTree = "<group>"; };
+		9BBA2BD51CBB72E500543004 /* servicedelegate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = servicedelegate.html; sourceTree = "<group>"; };
 		9BCFDC951C859397003A35A8 /* CLCleanWorkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCleanWorkViewController.h; sourceTree = "<group>"; };
 		9BCFDC961C859397003A35A8 /* CLCleanWorkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLCleanWorkViewController.m; sourceTree = "<group>"; };
 		9BCFDCA11C85B6CF003A35A8 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -725,7 +727,8 @@
 				9B8BA6DF1C7FF7F000E90CB0 /* icon.png */,
 				9BA74D241C75CDF100AF7B26 /* LaunchScreen.storyboard */,
 				9B9515441C6089A200445F93 /* PrefixHeader.pch */,
-				9BAF986B1CA276A100CFD9F3 /* servicedelegate.html */,
+				9BBA2BD51CBB72E500543004 /* servicedelegate.html */,
+				9BBA2BD01CBB727E00543004 /* CertifyDelegate.html */,
 				9B9754481C5765B3004BDC7C /* Assets.xcassets */,
 				8679EBC91C9A4950001C1D99 /* WorkItemDic.plist */,
 				9B97544D1C5765B3004BDC7C /* Info.plist */,
@@ -902,8 +905,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B8BA6E01C7FF7F000E90CB0 /* icon.png in Resources */,
+				9BBA2BD61CBB72E500543004 /* servicedelegate.html in Resources */,
 				9BA74D251C75CDF100AF7B26 /* LaunchScreen.storyboard in Resources */,
-				9BAF986C1CA276A100CFD9F3 /* servicedelegate.html in Resources */,
+				9BBA2BD21CBB727E00543004 /* CertifyDelegate.html in Resources */,
 				9B9754491C5765B3004BDC7C /* Assets.xcassets in Resources */,
 				860A4CC01C7ED9780067FB70 /* MJRefresh.bundle in Resources */,
 				8679EBCA1C9A4950001C1D99 /* WorkItemDic.plist in Resources */,

@@ -231,6 +231,7 @@
 - (void)agreeButClick {
 
     CLDelegateViewController *delegateView = [[CLDelegateViewController alloc]init];
+    delegateView.delegateTitle = @"servicedelegate";
     [self.navigationController pushViewController:delegateView animated:YES];
     
 }

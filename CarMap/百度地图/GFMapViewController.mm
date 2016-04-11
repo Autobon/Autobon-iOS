@@ -276,11 +276,11 @@
 - (void)startUserLocationService{
     [self.locationService startUserLocationService];
     
-    [GFHttpTool PostReportLocation:@{@"positionLon":@(self.workerPointAnno.coordinate.longitude),@"positionLat":@(self.workerPointAnno.coordinate.latitude)} success:^(NSDictionary *responseObject) {
-        NSLog(@"------%@-----%@----",responseObject,responseObject[@"message"]);
-    } failure:^(NSError *error) {
-        NSLog(@"----失败原因----%@---",error);
-    }];
+//    [GFHttpTool PostReportLocation:@{@"positionLon":@(self.workerPointAnno.coordinate.longitude),@"positionLat":@(self.workerPointAnno.coordinate.latitude)} success:^(NSDictionary *responseObject) {
+//        NSLog(@"------%@-----%@----",responseObject,responseObject[@"message"]);
+//    } failure:^(NSError *error) {
+//        NSLog(@"----失败原因----%@---",error);
+//    }];
     
     
 }

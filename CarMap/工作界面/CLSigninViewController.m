@@ -20,7 +20,7 @@
 {
     
     GFMapViewController *_mapVC;
-//    NSTimer *_timer;
+    NSTimer *_timer;
     
     
     
@@ -35,6 +35,10 @@
 
 @implementation CLSigninViewController
 
+- (void)dealloc{
+    [_timer invalidate];
+    _timer = nil;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -134,9 +138,9 @@
     
     [self.view addSubview:_signinButton];
     
-//    if (_timer == nil) {
-//        _timer = [NSTimer scheduledTimerWithTimeInterval:300 target:self selector:@selector(UserLocation) userInfo:nil repeats:YES];
-//    }
+    if (_timer == nil) {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(UserLocation) userInfo:nil repeats:YES];
+    }
     
     
 }

@@ -10,4 +10,6 @@
 
 @interface CLDelegateViewController : UIViewController
 
+@property (nonatomic ,strong) NSString *delegateTitle;
+
 @end
