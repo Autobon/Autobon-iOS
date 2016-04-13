@@ -437,8 +437,17 @@
                         listModel.payStatus = constructDic[@"payStatus"];
                         
                         NSInteger startTime = [constructDic[@"startTime"] integerValue];
-                        NSInteger endTime = [constructDic[@"endTime"] integerValue];
-                        NSInteger chaTime = endTime - startTime;
+                        NSInteger endTime;
+                        NSInteger chaTime;
+                        if ([constructDic[@"endTime"] isKindOfClass:[NSNull class]]) {
+                            endTime = 0;
+                            chaTime = 0;
+                        }else{
+                            endTime = [constructDic[@"endTime"] integerValue];
+                            chaTime = endTime - startTime;
+                        }
+                        
+                        
                         NSInteger fenNum = (chaTime/1000/60)%60;
                         NSInteger shiNum = chaTime/1000 /3600;
                         

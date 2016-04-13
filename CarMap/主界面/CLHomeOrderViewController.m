@@ -38,6 +38,7 @@
     
     NSInteger _page;
     NSInteger _pageSize;
+    CLKnockOrderViewController *_knockOrder;
     
 }
 @property (nonatomic ,strong) NSMutableArray *cellModelArray;
@@ -230,7 +231,7 @@
 #pragma mark - 接受通知消息
 -(void)receiveNotification:(NSNotification *)Notification
 {
-//    NSLog(@"receiveNotification---%@--",Notification.userInfo);
+    NSLog(@"receiveNotification---%@--",Notification.userInfo);
     
     
     if ([Notification.userInfo[@"action"] isEqualToString:@"NEW_ORDER"]) {
@@ -239,22 +240,24 @@
         NSUserDefaults *userDefalts = [NSUserDefaults standardUserDefaults];
         [userDefalts setObject:@"NO" forKey:@"homeOrder"];
         [userDefalts synchronize];
-        UIView *knockView = [self.view viewWithTag:10];
-        [knockView removeFromSuperview];
+//        UIView *knockView = [self.view viewWithTag:10];
+//        [knockView removeFromSuperview];
         
+        if (!_knockOrder) {
+            _knockOrder = [[CLKnockOrderViewController alloc]init];
+            _knockOrder.orderDictionary = Notification.userInfo;
+            [self.view addSubview:_knockOrder.view];
+            _knockOrder.view.tag = 10;
+            [self.view bringSubviewToFront:_knockOrder.view];
+            
+            [self addChildViewController:_knockOrder];
+            [_knockOrder didMoveToParentViewController:self];
+            
+            NSDictionary *orderDic = Notification.userInfo[@"order"];
+            _knockOrder.certifyButton.tag = [orderDic[@"id"] integerValue];
+            [_knockOrder.certifyButton addTarget:self action:@selector(knockBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        }
         
-        CLKnockOrderViewController *knockOrder = [[CLKnockOrderViewController alloc]init];
-        knockOrder.orderDictionary = Notification.userInfo;
-        [self.view addSubview:knockOrder.view];
-        knockOrder.view.tag = 10;
-        [self.view bringSubviewToFront:knockOrder.view];
-        
-        [self addChildViewController:knockOrder];
-        [knockOrder didMoveToParentViewController:self];
-        
-        NSDictionary *orderDic = Notification.userInfo[@"order"];
-        knockOrder.certifyButton.tag = [orderDic[@"id"] integerValue];
-        [knockOrder.certifyButton addTarget:self action:@selector(knockBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }else if ([Notification.userInfo[@"action"] isEqualToString:@"INVITE_PARTNER"]){
         NSLog(@"有人邀请");
         NSDictionary *dictionary = Notification.userInfo[@"owner"];

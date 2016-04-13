@@ -88,6 +88,7 @@
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, lineView.frame.origin.y + 7, _orderView.frame.size.width - 20, _orderView.frame.size.height/4)];
     //    imageView.backgroundColor = [UIColor darkGrayColor];
     imageView.image = [UIImage imageNamed:@"orderImage"];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
     [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345%@",orderDic[@"photo"]]] placeholderImage:[UIImage imageNamed:@"orderImage"]];
     [_orderView addSubview:imageView];
     

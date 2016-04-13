@@ -463,8 +463,8 @@
         if ([phonegextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == YES
             ) {
 
-            NSLog(@"是手机号");
-            NSLog(@"开开##################2222222222");
+//            NSLog(@"是手机号");
+//            NSLog(@"开开##################2222222222");
             
             if(self.verifyTxt.centerTxt.text.length == 6) {
         

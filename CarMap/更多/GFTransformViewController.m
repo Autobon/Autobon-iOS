@@ -9,8 +9,11 @@
 #import "GFTransformViewController.h"
 #import "GFNavigationView.h"
 #import "GFHttpTool.h"
-
 #import "GFTransformTableViewCell.h"
+#import "CLNotificationModel.h"
+#import "GFTipView.h"
+
+
 
 @interface GFTransformViewController () {
     
@@ -18,6 +21,9 @@
     CGFloat kHeight;
     
     CGFloat cellHeight;
+    
+    NSMutableArray *_notificationModelArray;
+    
 }
 
 @property (nonatomic, strong) GFNavigationView *navView;
@@ -30,17 +36,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // 基础设置
-    [self _setBase];
+    _notificationModelArray = [[NSMutableArray alloc]init];
     
     // 界面搭建
     [self _setView];
+    
+    // 基础设置
+    [self _setBase];
+    
+    
+    
+    [self getNotification];
+    
 }
 
 - (void)_setBase {
     
-    kWidth = [UIScreen mainScreen].bounds.size.width;
-    kHeight = [UIScreen mainScreen].bounds.size.height;
+    
     
     self.view.backgroundColor = [UIColor colorWithRed:252 / 255.0 green:252 / 255.0 blue:252 / 255.0 alpha:1];
     
@@ -52,8 +64,9 @@
 
 - (void)_setView {
     
-    
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kWidth, kHeight - 64) style:UITableViewStylePlain];
+    kWidth = [UIScreen mainScreen].bounds.size.width;
+    kHeight = [UIScreen mainScreen].bounds.size.height;
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, kWidth, kHeight - 44) style:UITableViewStylePlain];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -65,10 +78,46 @@
 }
 
 
+- (void)getNotification{
+    
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
+    
+    
+    [GFHttpTool getMessageDictionary:nil Success:^(id responseObject) {
+        //        NSLog(@"－－－网络通知列表－－%@----",responseObject);
+        if ([responseObject[@"result"] integerValue] == 1) {
+            NSDictionary *dataDictionary = responseObject[@"data"];
+            NSArray *listArray = dataDictionary[@"list"];
+            //            NSLog(@"listArray-----%@---",listArray);
+            [listArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
+                CLNotificationModel *model = [[CLNotificationModel alloc]init];
+                model.titleString = obj[@"title"];
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[obj[@"publishTime"] floatValue]/1000];
+                model.timeString = [formatter stringFromDate:date];
+                //                model.timeString = obj[@"publishTime"];
+                model.contentString = obj[@"content"];
+                [_notificationModelArray addObject:model];
+            }];
+            
+            //            NSLog(@"----notificationArray----%@",_notificationModelArray);
+            [_tableView reloadData];
+            
+        }else{
+            [self addAlertView:responseObject[@"message"]];
+        }
+        
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     
-    return 2;
+    return _notificationModelArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -81,7 +130,12 @@
         
         cell = [[GFTransformTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
+    CLNotificationModel *model = _notificationModelArray[indexPath.row];
     
+    cell.titleLabel.text = model.titleString;
+    cell.contentLabel.text = model.contentString;
+    cell.timeLab.text = model.timeString;
+    [cell cellForMessage];
     cellHeight = cell.cellHeight;
     
     
@@ -101,7 +155,11 @@
 
 
 
-
+#pragma mark - AlertView
+- (void)addAlertView:(NSString *)title{
+    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
+    [tipView tipViewShow];
+}
 
 - (void)leftButClick {
     

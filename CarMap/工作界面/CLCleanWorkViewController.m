@@ -39,6 +39,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     _imageArray = [[NSMutableArray alloc]init];
 
     
@@ -332,10 +333,15 @@
     
     
     CGSize imagesize;
-    imagesize.width = image.size.width/2;
-    imagesize.height = image.size.height/2;
+    if (image.size.width > image.size.height) {
+        imagesize.width = 800;
+        imagesize.height = image.size.height*800/image.size.width;
+    }else{
+        imagesize.height = 800;
+        imagesize.width = image.size.width*800/image.size.height;
+    }
     UIImage *imageNew = [self imageWithImage:image scaledToSize:imagesize];
-    NSData *imageData = UIImageJPEGRepresentation(imageNew, 0.1);
+    NSData *imageData = UIImageJPEGRepresentation(imageNew, 0.8);
     [GFHttpTool PostImageForWork:imageData success:^(NSDictionary *responseObject) {
         NSLog(@"上传成功－%@--－%@",responseObject,responseObject[@"message"]);
         if ([responseObject[@"result"] integerValue] == 1) {

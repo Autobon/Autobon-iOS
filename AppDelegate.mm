@@ -219,7 +219,7 @@
                         NSLog(@"－－－－上传实时位置成功－－－%@－－－-----%@--",responseObject,responseObject[@"message"]);
                         if ([responseObject[@"result"] integerValue] == 1) {
                             [_manager stopUpdatingLocation];
-                            [_manager performSelector:@selector(startUpdatingLocation) withObject:nil afterDelay:300];
+                            [_manager performSelector:@selector(startUpdatingLocation) withObject:nil afterDelay:60];
                         }
                         
                         
@@ -401,21 +401,38 @@
     NSString *msg = [NSString stringWithFormat:@" payloadId=%@,taskId=%@,messageId:%@,payloadMsg:%@%@",payloadId,taskId,aMsgId,payloadMsg,offLine ? @"<离线消息>" : @""];
     NSLog(@"\n>前台>>[GexinSdk ReceivePayload]:%@\n\n", msg);
     [GeTuiSdk sendFeedbackMessage:90001 taskId:taskId msgId:aMsgId];
-    NSData *JSONData = [payloadMsg dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:nil];
-    
-    
-    if ([responseJSON[@"action"]isEqualToString:@"NEW_ORDER"] || [responseJSON[@"action"]isEqualToString:@"INVITE_PARTNER"]) {
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        if ([[userDefaults objectForKey:@"homeOrder"]isEqualToString:@"YES"]) {
-            
-            
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"NEW_ORDER" object:self userInfo:responseJSON];
-            
-//            CLHomeOrderViewController *orderView = [[CLHomeOrderViewController alloc]init];
-//            [self.window.rootViewController presentViewController:orderView animated:YES completion:nil];
-    
-        }else{
+    if (!offLine) {
+        NSData *JSONData = [payloadMsg dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:nil];
+        
+        
+        if ([responseJSON[@"action"]isEqualToString:@"NEW_ORDER"] || [responseJSON[@"action"]isEqualToString:@"INVITE_PARTNER"]) {
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            if ([[userDefaults objectForKey:@"homeOrder"]isEqualToString:@"YES"]) {
+                
+                
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"NEW_ORDER" object:self userInfo:responseJSON];
+                
+                //            CLHomeOrderViewController *orderView = [[CLHomeOrderViewController alloc]init];
+                //            [self.window.rootViewController presentViewController:orderView animated:YES completion:nil];
+                
+            }else{
+                UILocalNotification*notification = [[UILocalNotification alloc] init];
+                if (nil != notification)
+                {
+                    notification.fireDate = [NSDate date];
+                    _pushDate = [NSDate date];
+                    NSLog(@"----_pushDate-%@--%@-----",_pushDate,[NSDate date]);
+                    notification.alertTitle = @"车邻邦";
+                    notification.alertBody = responseJSON[@"title"];
+                    notification.userInfo = @{@"dictionary":payloadMsg};
+                    
+                    AudioServicesPlaySystemSound(1307);
+                    NSLog(@"发出通知吧－－－%@--",notification.userInfo);
+                    [[UIApplication sharedApplication]scheduleLocalNotification:notification];
+                }
+            }
+        }else if ([responseJSON[@"action"]isEqualToString:@"VERIFICATION_FAILED"] || [responseJSON[@"action"]isEqualToString:@"VERIFICATION_SUCCEED"]||[responseJSON[@"action"]isEqualToString:@"INVITATION_ACCEPTED"]){
             UILocalNotification*notification = [[UILocalNotification alloc] init];
             if (nil != notification)
             {
@@ -425,41 +442,27 @@
                 notification.alertTitle = @"车邻邦";
                 notification.alertBody = responseJSON[@"title"];
                 notification.userInfo = @{@"dictionary":payloadMsg};
-
                 AudioServicesPlaySystemSound(1307);
-                NSLog(@"发出通知吧－－－%@--",notification.userInfo);
                 [[UIApplication sharedApplication]scheduleLocalNotification:notification];
             }
+            
+        }else if ([responseJSON[@"action"]isEqualToString:@"INVITATION_REJECTED"]){
+            UILocalNotification*notification = [[UILocalNotification alloc] init];
+            if (nil != notification)
+            {
+                notification.fireDate = [NSDate date];
+                _pushDate = [NSDate date];
+                NSLog(@"----_pushDate-%@--%@-----",_pushDate,[NSDate date]);
+                notification.alertTitle = @"车邻邦";
+                notification.alertBody = responseJSON[@"title"];
+                AudioServicesPlaySystemSound(1307);
+                [[UIApplication sharedApplication]scheduleLocalNotification:notification];
+            }
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"NEW_ORDER" object:self userInfo:@{@"INVITATION_REJECTED":@"INVITATION_REJECTED"}];
         }
-    }else if ([responseJSON[@"action"]isEqualToString:@"VERIFICATION_FAILED"] || [responseJSON[@"action"]isEqualToString:@"VERIFICATION_SUCCEED"]||[responseJSON[@"action"]isEqualToString:@"INVITATION_ACCEPTED"]){
-        UILocalNotification*notification = [[UILocalNotification alloc] init];
-        if (nil != notification)
-        {
-            notification.fireDate = [NSDate date];
-            _pushDate = [NSDate date];
-            NSLog(@"----_pushDate-%@--%@-----",_pushDate,[NSDate date]);
-            notification.alertTitle = @"车邻邦";
-            notification.alertBody = responseJSON[@"title"];
-            notification.userInfo = @{@"dictionary":payloadMsg};
-            AudioServicesPlaySystemSound(1307);
-            [[UIApplication sharedApplication]scheduleLocalNotification:notification];
-        }
-    
-    }else if ([responseJSON[@"action"]isEqualToString:@"INVITATION_REJECTED"]){
-        UILocalNotification*notification = [[UILocalNotification alloc] init];
-        if (nil != notification)
-        {
-            notification.fireDate = [NSDate date];
-            _pushDate = [NSDate date];
-            NSLog(@"----_pushDate-%@--%@-----",_pushDate,[NSDate date]);
-            notification.alertTitle = @"车邻邦";
-            notification.alertBody = responseJSON[@"title"];
-            AudioServicesPlaySystemSound(1307);
-            [[UIApplication sharedApplication]scheduleLocalNotification:notification];
-        }
-        
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"NEW_ORDER" object:self userInfo:@{@"INVITATION_REJECTED":@"INVITATION_REJECTED"}];
     }
+    
     
     
 //    else if ([responseJSON[@"action"]isEqualToString:@"INVITE_PARTNER"]){
@@ -513,17 +516,21 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     completionHandler(UIBackgroundFetchResultNewData);
     
-    NSLog(@"走了啊－－－%@---%@---",[userDefaults objectForKey:@"autoken"],[userDefaults objectForKey:@"homeOrder"]);
-        if (![userDefaults objectForKey:@"autoken"]) {
-            if (![[userDefaults objectForKey:@"homeOrder"]isEqualToString:@"YES"]) {
-                UIWindow *window = [UIApplication sharedApplication].delegate.window;
-                CLHomeOrderViewController *homeOrderView = [[CLHomeOrderViewController alloc]init];
-                window.rootViewController = homeOrderView;
-            }
-#warning --发通知
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"NEW_ORDER" object:self userInfo:userInfo];
-            
+//    NSLog(@"json----%@--",userInfo[@"json"]);
+    NSData *JSONData = [userInfo[@"json"] dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:nil];
+    NSLog(@"----responseJSON----%@---",responseJSON);
+    if ([responseJSON[@"action"] isEqualToString:@"NEW_ORDER"]||[responseJSON[@"action"]isEqualToString:@"INVITE_PARTNER"]) {
+        if (![[userDefaults objectForKey:@"homeOrder"]isEqualToString:@"YES"]) {
+            UIWindow *window = [UIApplication sharedApplication].delegate.window;
+            CLHomeOrderViewController *homeOrderView = [[CLHomeOrderViewController alloc]init];
+            UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeOrderView];
+            navigation.navigationBarHidden = YES;
+            window.rootViewController = navigation;
         }
+#warning --发通知
+        [self performSelector:@selector(after:) withObject:responseJSON afterDelay:1.0];
+    }
     
 
 }

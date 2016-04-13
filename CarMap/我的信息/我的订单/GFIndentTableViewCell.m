@@ -84,6 +84,7 @@
         CGFloat photoImgViewX = jiange;
         CGFloat photoImgViewY = CGRectGetMaxY(self.numberLab.frame) + kHeight * 0.013;
         self.photoImgView = [[UIImageView alloc] initWithFrame:CGRectMake(photoImgViewX, photoImgViewY, photoImgViewW, photoImgViewH)];
+        _photoImgView.contentMode = UIViewContentModeScaleAspectFit;
         self.photoImgView.image = [UIImage imageNamed:@"orderImage.png"];
         [baseView addSubview:self.photoImgView];
         

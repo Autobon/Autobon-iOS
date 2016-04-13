@@ -45,6 +45,7 @@
     _orderImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 60, [UIScreen mainScreen].bounds.size.width-20, [UIScreen mainScreen].bounds.size.width*5/12)];
     _orderImageView.image = [UIImage imageNamed:@"orderImage"];
 //    orderImageView.backgroundColor = [[UIColor alloc]initWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    _orderImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:_orderImageView];
         
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(10, 73 + [UIScreen mainScreen].bounds.size.width*5/12, [UIScreen mainScreen].bounds.size.width-20, 1)];

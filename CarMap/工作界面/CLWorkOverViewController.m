@@ -48,6 +48,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     _imageArray = [[NSMutableArray alloc]init];
     _buttonArray = [[NSMutableArray alloc]init];
     
@@ -459,10 +460,15 @@
     }
 
     CGSize imagesize;
-    imagesize.width = image.size.width/2;
-    imagesize.height = image.size.height/2;
+    if (image.size.width > image.size.height) {
+        imagesize.width = 800;
+        imagesize.height = image.size.height*800/image.size.width;
+    }else{
+        imagesize.height = 800;
+        imagesize.width = image.size.width*800/image.size.height;
+    }
     UIImage *imageNew = [self imageWithImage:image scaledToSize:imagesize];
-    NSData *imageData = UIImageJPEGRepresentation(imageNew, 0.1);
+    NSData *imageData = UIImageJPEGRepresentation(imageNew, 0.8);
     [GFHttpTool PostImageForWork:imageData success:^(NSDictionary *responseObject) {
         NSLog(@"上传成功－%@--－%@",responseObject,responseObject[@"message"]);
         if ([responseObject[@"result"] integerValue] == 1) {
@@ -520,7 +526,7 @@
         _cameraBtn.hidden = NO;
     }else if (_imageArray.count == 0){
         _carImageButton.hidden = NO;
-        _cameraBtn.frame = CGRectMake(self.view.frame.size.width*6/7-15, 55+self.view.frame.size.width*27/70-25, 30, 30);
+        _cameraBtn.frame = CGRectMake(CGRectGetMaxX(_carImageButton.frame)-15, CGRectGetMaxY(_carImageButton.frame)-20, 30, 30);
         [_cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
         _cameraBtn.backgroundColor = [UIColor clearColor];
     }else{

@@ -62,7 +62,7 @@
     CGFloat photoLabX = kWidth * 0.06;
     CGFloat photoLabY = 0;
     UILabel *photoLab = [[UILabel alloc] initWithFrame:CGRectMake(photoLabX, photoLabY, photoLabW, photoLabH)];
-    photoLab.text = @"电话：000-80000009";
+    photoLab.text = @"电话：4001871500";
     photoLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
     [baseView addSubview:photoLab];
     
@@ -81,7 +81,7 @@
     CGFloat addressLabX = photoLabX;
     CGFloat addressLabY = CGRectGetMaxY(emailLab.frame);
     UILabel *addressLab = [[UILabel alloc] initWithFrame:CGRectMake(addressLabX, addressLabY, addressLabW, addressLabH)];
-    addressLab.text = @"地址：背景发生空间的风景阿贾克斯电话";
+    addressLab.text = @"地址：湖北省武汉市洪山区光谷软件园";
     addressLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
     [baseView addSubview:addressLab];
     

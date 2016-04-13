@@ -86,5 +86,9 @@
 // 调用百度接口转换经纬度
 + (void)getCoordsURLString:(NSString *)URLString success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
+// 获取通知消息
++ (void)getMessageDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+
+
 
 @end

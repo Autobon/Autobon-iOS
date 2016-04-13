@@ -64,6 +64,10 @@
 		9B3FCD1F1C92A09500E871C7 /* GFButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3FCD151C92A09500E871C7 /* GFButton.m */; };
 		9B3FCD231C92A09500E871C7 /* GFTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3FCD1D1C92A09500E871C7 /* GFTitleView.m */; };
 		9B5FBC291CAE58D400A0BF96 /* CLLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5FBC281CAE58D400A0BF96 /* CLLocationViewController.m */; };
+		9B6925441CBCC7C00093B22C /* CLNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6925431CBCC7C00093B22C /* CLNotificationViewController.m */; };
+		9B6925471CBCCDA30093B22C /* CLNotificationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6925461CBCCDA30093B22C /* CLNotificationModel.m */; };
+		9B69254A1CBCD96C0093B22C /* CLNotificationDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6925491CBCD96C0093B22C /* CLNotificationDetailViewController.m */; };
+		9B69254D1CBCF6DA0093B22C /* CLNotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B69254C1CBCF6DA0093B22C /* CLNotificationTableViewCell.m */; };
 		9B7301571C5F2CDF00FB2DEB /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7301561C5F2CDF00FB2DEB /* SecondViewController.m */; };
 		9B771FA11C87E16A005E8567 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B771FA01C87E16A005E8567 /* Reachability.m */; };
 		9B771FA41C87E34C005E8567 /* CLAddOrderSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B771FA31C87E34C005E8567 /* CLAddOrderSuccessViewController.m */; };
@@ -236,6 +240,14 @@
 		9B3FCD1D1C92A09500E871C7 /* GFTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFTitleView.m; sourceTree = "<group>"; };
 		9B5FBC271CAE58D400A0BF96 /* CLLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLLocationViewController.h; sourceTree = "<group>"; };
 		9B5FBC281CAE58D400A0BF96 /* CLLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLLocationViewController.m; sourceTree = "<group>"; };
+		9B6925421CBCC7C00093B22C /* CLNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLNotificationViewController.h; sourceTree = "<group>"; };
+		9B6925431CBCC7C00093B22C /* CLNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLNotificationViewController.m; sourceTree = "<group>"; };
+		9B6925451CBCCDA30093B22C /* CLNotificationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLNotificationModel.h; sourceTree = "<group>"; };
+		9B6925461CBCCDA30093B22C /* CLNotificationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLNotificationModel.m; sourceTree = "<group>"; };
+		9B6925481CBCD96C0093B22C /* CLNotificationDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLNotificationDetailViewController.h; sourceTree = "<group>"; };
+		9B6925491CBCD96C0093B22C /* CLNotificationDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLNotificationDetailViewController.m; sourceTree = "<group>"; };
+		9B69254B1CBCF6DA0093B22C /* CLNotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLNotificationTableViewCell.h; sourceTree = "<group>"; };
+		9B69254C1CBCF6DA0093B22C /* CLNotificationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLNotificationTableViewCell.m; sourceTree = "<group>"; };
 		9B7301551C5F2CDF00FB2DEB /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
 		9B7301561C5F2CDF00FB2DEB /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		9B771F9F1C87E16A005E8567 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
@@ -550,6 +562,14 @@
 				86B890F31C73355B0068B95D /* GFMyMessageViewController.m */,
 				8655B0E31C76F15800D9FCB4 /* GFChangePwdViewController.h */,
 				8655B0E41C76F15800D9FCB4 /* GFChangePwdViewController.m */,
+				9B6925421CBCC7C00093B22C /* CLNotificationViewController.h */,
+				9B6925431CBCC7C00093B22C /* CLNotificationViewController.m */,
+				9B6925481CBCD96C0093B22C /* CLNotificationDetailViewController.h */,
+				9B6925491CBCD96C0093B22C /* CLNotificationDetailViewController.m */,
+				9B6925451CBCCDA30093B22C /* CLNotificationModel.h */,
+				9B6925461CBCCDA30093B22C /* CLNotificationModel.m */,
+				9B69254B1CBCF6DA0093B22C /* CLNotificationTableViewCell.h */,
+				9B69254C1CBCF6DA0093B22C /* CLNotificationTableViewCell.m */,
 				8655C5C41C7D8E1000E5C69C /* GFMoreViewController.h */,
 				8655C5C51C7D8E1000E5C69C /* GFMoreViewController.m */,
 				868B0F071C7EA5AE00938665 /* 钱包余额 */,
@@ -982,6 +1002,7 @@
 				8655B0E51C76F15800D9FCB4 /* GFChangePwdViewController.m in Sources */,
 				860A4CB71C7ED9780067FB70 /* MJRefreshAutoGifFooter.m in Sources */,
 				9B3FCD0A1C92707D00E871C7 /* CLCooperatingViewController.m in Sources */,
+				9B6925471CBCCDA30093B22C /* CLNotificationModel.m in Sources */,
 				9B9515411C60503800445F93 /* GFAnnotation.m in Sources */,
 				86B890FA1C73355B0068B95D /* GFMyMessageViewController.m in Sources */,
 				9B7301571C5F2CDF00FB2DEB /* SecondViewController.m in Sources */,
@@ -993,6 +1014,7 @@
 				865637EA1C84264000BE7D8D /* GFTrainTableViewCell.m in Sources */,
 				86B890F71C73355B0068B95D /* GFSignInViewController.m in Sources */,
 				9B9C25A11C75BFD6009A69D6 /* CLHomeTableViewCell.m in Sources */,
+				9B69254D1CBCF6DA0093B22C /* CLNotificationTableViewCell.m in Sources */,
 				865637ED1C84265E00BE7D8D /* GFTransformTableViewCell.m in Sources */,
 				9B7F4C691C8694BC007CF96C /* CLShareViewController.m in Sources */,
 				860A4CB61C7ED9780067FB70 /* MJRefreshHeader.m in Sources */,
@@ -1009,6 +1031,7 @@
 				86B890F51C73355B0068B95D /* GFForgetPwdViewController_2.m in Sources */,
 				9BA9C8171C7DB3CC005CE1C0 /* CLWorkOverViewController.m in Sources */,
 				9B7C3FD21C770F7100E3F53F /* CLSigninViewController.m in Sources */,
+				9B69254A1CBCD96C0093B22C /* CLNotificationDetailViewController.m in Sources */,
 				9BEE38BD1C8EBBE000A698A8 /* MYImageView.m in Sources */,
 				9B95A7A41C7C5EBD0041C7BA /* CLMoreViewController.m in Sources */,
 				9B9B5E6C1C7EACBC000D617E /* CLHomeOrderCellModel.m in Sources */,
@@ -1034,6 +1057,7 @@
 				9B95A7A01C7C46430041C7BA /* CLCertifyFailViewController.m in Sources */,
 				865637E11C8424F100BE7D8D /* GFTrainViewController.m in Sources */,
 				9B9B5E7B1C7F07BD000D617E /* CLAddPersonViewController.m in Sources */,
+				9B6925441CBCC7C00093B22C /* CLNotificationViewController.m in Sources */,
 				9B9FCF081C8AA2DB0022F54E /* ViewController.m in Sources */,
 				9B9C259E1C75BF9C009A69D6 /* CLTitleTableViewCell.m in Sources */,
 				9BCFDC971C859397003A35A8 /* CLCleanWorkViewController.m in Sources */,

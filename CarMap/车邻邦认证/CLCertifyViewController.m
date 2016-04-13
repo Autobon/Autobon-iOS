@@ -66,6 +66,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     _dataDictionary = [[NSMutableDictionary alloc]init];
      [[SDImageCache sharedImageCache] clearDisk];
     _skillArray = [[NSMutableArray alloc]init];
@@ -663,10 +664,15 @@
     if (_isHeadImage) {
         [_headButton setImage:image forState:UIControlStateNormal];
         CGSize imagesize;
-        imagesize.width = image.size.width/2;
-        imagesize.height = image.size.height/2;
+        if (image.size.width > image.size.height) {
+            imagesize.width = 800;
+            imagesize.height = image.size.height*800/image.size.width;
+        }else{
+            imagesize.height = 800;
+            imagesize.width = image.size.width*800/image.size.height;
+        }
         UIImage *imageNew = [self imageWithImage:image scaledToSize:imagesize];
-        NSData *imageData = UIImageJPEGRepresentation(imageNew, 0.3);
+        NSData *imageData = UIImageJPEGRepresentation(imageNew, 0.8);
         
         
         [GFHttpTool headImage:imageData success:^(NSDictionary *responseObject) {

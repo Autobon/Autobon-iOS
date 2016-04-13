@@ -1422,6 +1422,38 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
 }
 
 
+#pragma mark - 获取通知消息
++ (void)getMessageDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    if ([GFHttpTool isConnectionAvailable]) {
+        
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"获取中..."];
+        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        NSString *token = [userDefaultes objectForKey:@"autoken"];
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/message",HOST];
+        
+        
+        [manager GET:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            [aView remove];
+            if(success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            [aView remove];
+            if(failure) {
+                failure(error);
+            }
+        }];
+        
+        
+    }else{
+        
+        [GFHttpTool addAlertView:@"无网络连接"];
+    }
+    
+}
 
 
 

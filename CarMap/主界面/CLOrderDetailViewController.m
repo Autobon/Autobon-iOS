@@ -35,6 +35,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
      NSLog(@"orderNumber--%@--",self.orderNumber);
     
     self.view.backgroundColor = [[UIColor alloc]initWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
@@ -94,6 +95,7 @@
     //    imageView.backgroundColor = [UIColor darkGrayColor];
 //    imageView.image = [UIImage imageNamed:@"orderImage"];
     [imageView sd_setImageWithURL:[NSURL URLWithString:_orderPhotoURL] placeholderImage:[UIImage imageNamed:@"orderImage"]];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
     [_scrollView addSubview:imageView];
     
     UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(0, imageView.frame.origin.y+self.view.frame.size.height/4+5, self.view.frame.size.width, 1)];

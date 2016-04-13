@@ -9,9 +9,16 @@
 #import <UIKit/UIKit.h>
 
 @interface GFTransformTableViewCell : UITableViewCell
-
+{
+    UIImageView *_lineImgView;
+    UIView *_baseView;
+}
 
 @property (nonatomic, assign) NSInteger cellHeight;
+@property (nonatomic ,strong) UILabel *titleLabel;
+@property (nonatomic ,strong) UILabel *contentLabel;
+@property (nonatomic ,strong) UILabel *timeLab;
 
+- (void)cellForMessage;
 
 @end

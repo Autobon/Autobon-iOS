@@ -18,6 +18,9 @@
 #import "CLCertifyViewController.h"
 #import "UIImageView+WebCache.h"
 #import "GFTipView.h"
+#import "CLNotificationViewController.h"
+#import "GFTransformViewController.h"
+#import "GFServeViewController.h"
 
 
 
@@ -363,11 +366,69 @@
     
     
     
+    
+    
+    // 通知列表
+    CGFloat notificationViewW = msgViewW;
+    CGFloat notificationViewH = indentViewH;
+    CGFloat notificationViewX = msgViewX;
+    CGFloat notificationViewY = CGRectGetMaxY(indentView.frame) + jiange1;
+    UIView *notificationView = [[UIView alloc] initWithFrame:CGRectMake(notificationViewX, notificationViewY, notificationViewW, notificationViewH)];
+    notificationView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:notificationView];
+    // 边线
+    UIView *notificationLineUp = [[UIView alloc] initWithFrame:CGRectMake(0, 0, notificationViewW, 1)];
+    notificationLineUp.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+    [notificationView addSubview:notificationLineUp];
+    UIView *notificationLineDown = [[UIView alloc] initWithFrame:CGRectMake(0, notificationViewH - 1, notificationViewW, 1)];
+    notificationLineDown.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+    [notificationView addSubview:notificationLineDown];
+    // 界面
+    CGFloat notificationImgViewW = kWidth * 0.075;
+    CGFloat notificationImgViewH = notificationImgViewW;
+    CGFloat notificationImgViewX = jianjv1;
+    CGFloat notificationImgViewY = (notificationViewH - notificationImgViewH) / 2.0;
+    UIImageView *notificationImgView = [[UIImageView alloc] initWithFrame:CGRectMake(notificationImgViewX, notificationImgViewY, notificationImgViewW, notificationImgViewH)];
+    notificationImgView.image = [UIImage imageNamed:@"information-2"];
+    [notificationView addSubview:notificationImgView];
+    CGFloat notificationLabW = 150;
+    CGFloat notificationLabH = notificationImgViewH;
+    CGFloat notificationLabX = CGRectGetMaxX(notificationImgView.frame) + jianjv1;
+    CGFloat notificationLabY = notificationImgViewY;
+    UILabel *notificationLab = [[UILabel alloc] initWithFrame:CGRectMake(notificationLabX, notificationLabY, notificationLabW, notificationLabH)];
+    notificationLab.text = @"通知列表";
+//    notificationLab.backgroundColor = [UIColor redColor];
+    [notificationView addSubview:notificationLab];
+    // 右边箭头
+    CGFloat notificationRightButW = kWidth * 0.08;
+    CGFloat notificationRightButH = indentViewH;
+    CGFloat notificationRightButX = kWidth * 0.92;
+    CGFloat notificationRightButY = 0;
+    UIButton *notificationRightBut = [UIButton buttonWithType:UIButtonTypeCustom];
+    notificationRightBut.frame = CGRectMake(notificationRightButX, notificationRightButY, notificationRightButW, notificationRightButH);
+    [notificationRightBut setImage:[UIImage imageNamed:@"right"] forState:UIControlStateNormal];
+    notificationRightBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [notificationView addSubview:notificationRightBut];
+    // 修改密码界面按钮
+    CGFloat notificationButW = notificationViewW;
+    CGFloat notificationButH = notificationViewH;
+    CGFloat notificationButX = 0;
+    CGFloat notificationButY = 0;
+    UIButton *notificationBut = [UIButton buttonWithType:UIButtonTypeCustom];
+    notificationBut.frame = CGRectMake(notificationButX, notificationButY, notificationButW, notificationButH);
+    [notificationView addSubview:notificationBut];
+    [notificationBut addTarget:self action:@selector(notificationButClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    
+    
+    
+    
     // 修改密码
     CGFloat changePwdViewW = msgViewW;
     CGFloat changePwdViewH = indentViewH;
     CGFloat changePwdViewX = msgViewX;
-    CGFloat changePwdViewY = CGRectGetMaxY(indentView.frame) + jiange1;
+    CGFloat changePwdViewY = CGRectGetMaxY(notificationView.frame) + jiange1;
     UIView *changePwdView = [[UIView alloc] initWithFrame:CGRectMake(changePwdViewX, changePwdViewY, changePwdViewW, changePwdViewH)];
     changePwdView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:changePwdView];
@@ -412,6 +473,69 @@
     changePwdBut.frame = CGRectMake(changePwdButX, changePwdButY, changePwdButW, changePwdButH);
     [changePwdView addSubview:changePwdBut];
     [changePwdBut addTarget:self action:@selector(changePwdButClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    
+    
+    
+    
+    
+    // 英卡服务项
+    CGFloat serveViewW = msgViewW;
+    CGFloat serveViewH = indentViewH;
+    CGFloat serveViewX = msgViewX;
+    CGFloat serveViewY = CGRectGetMaxY(changePwdView.frame) + jiange1;
+    UIView *serveView = [[UIView alloc] initWithFrame:CGRectMake(serveViewX, serveViewY, serveViewW, serveViewH)];
+//    serveView.backgroundColor = [UIColor redColor];
+    [self.view addSubview:serveView];
+    // 边线
+    UIView *serveLineUp = [[UIView alloc] initWithFrame:CGRectMake(0, 0, serveViewW, 1)];
+    serveLineUp.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+    [serveView addSubview:serveLineUp];
+    UIView *serveLineDown = [[UIView alloc] initWithFrame:CGRectMake(0, serveViewH - 1, serveViewW, 1)];
+    serveLineDown.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+    [serveView addSubview:serveLineDown];
+    // 界面
+    CGFloat serveImgViewW = kWidth * 0.075;
+    CGFloat serveImgViewH = serveImgViewW;
+    CGFloat serveImgViewX = jianjv1;
+    CGFloat serveImgViewY = (serveViewH - serveImgViewH) / 2.0;
+    UIImageView *serveImgView = [[UIImageView alloc] initWithFrame:CGRectMake(serveImgViewX, serveImgViewY, serveImgViewW, serveImgViewH)];
+    serveImgView.image = [UIImage imageNamed:@"centre"];
+    [serveView addSubview:serveImgView];
+    CGFloat serveLabW = 150;
+    CGFloat serveLabH = serveImgViewH;
+    CGFloat serveLabX = CGRectGetMaxX(serveImgView.frame) + jianjv1;
+    CGFloat serveLabY = changPwdImgViewY;
+    UILabel *serveLab = [[UILabel alloc] initWithFrame:CGRectMake(serveLabX, serveLabY, serveLabW, serveLabH)];
+    serveLab.text = @"服务中心";
+    [serveView addSubview:serveLab];
+    // 右边箭头
+    CGFloat serveRightButW = kWidth * 0.08;
+    CGFloat serveRightButH = indentViewH;
+    CGFloat serveRightButX = kWidth * 0.92;
+    CGFloat serveRightButY = 0;
+    UIButton *serveRightBut = [UIButton buttonWithType:UIButtonTypeCustom];
+    serveRightBut.frame = CGRectMake(serveRightButX, serveRightButY, serveRightButW, serveRightButH);
+    [serveRightBut setImage:[UIImage imageNamed:@"right"] forState:UIControlStateNormal];
+    serveRightBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [serveView addSubview:serveRightBut];
+    // 修改密码界面按钮
+    CGFloat serveButW = serveViewW;
+    CGFloat serveButH = serveViewH;
+    CGFloat serveButX = 0;
+    CGFloat serveButY = 0;
+    UIButton *serveBut = [UIButton buttonWithType:UIButtonTypeCustom];
+    serveBut.frame = CGRectMake(serveButX, serveButY, serveButW, serveButH);
+    [serveView addSubview:serveBut];
+    [serveBut addTarget:self action:@selector(serveButClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -562,6 +686,25 @@
     GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
     [tipView tipViewShow];
 }
+
+#pragma mark - 通知列表按钮的响应方法
+- (void)notificationButClick{
+    
+    GFTransformViewController *notificationView = [[GFTransformViewController alloc]init];
+    [self.navigationController pushViewController:notificationView animated:YES];
+    
+    
+}
+
+#pragma mark - 服务中心客服电话
+- (void)serveButClick{
+    
+    GFServeViewController *serveView = [[GFServeViewController alloc]init];
+    [self.navigationController pushViewController:serveView animated:YES];
+    
+}
+
+
 
 // 信息界面按钮跳转
 - (void)msgButClick {
