@@ -128,15 +128,15 @@
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
 //    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[_startTime floatValue]/1000];
-    NSInteger time = (NSInteger)[[NSDate date] timeIntervalSince1970] - [_startTime integerValue]/1000;
+    NSInteger time = (NSInteger)[[NSDate date] timeIntervalSince1970] - [_startTime floatValue]/1000;
     
     
         NSInteger minute = time/60;
         if (minute > 60) {
-            _distanceLabel.text = [NSString stringWithFormat:@"已用时：%ld时 %ld分",minute/60,minute%60];
+            _distanceLabel.text = [NSString stringWithFormat:@"已用时：%d时 %d分",minute/60,minute%60];
         }else{
             NSLog(@"----shezhi时间");
-            _distanceLabel.text = [NSString stringWithFormat:@"已用时： %ld分钟",minute];
+            _distanceLabel.text = [NSString stringWithFormat:@"已用时： %ld分钟",(long)minute];
             
         }
     

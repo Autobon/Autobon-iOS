@@ -160,7 +160,8 @@
     CGFloat photoImgViewY = CGRectGetMaxY(self.numberLab.frame) + jianjv2;
     self.photoImgView = [[UIImageView alloc] initWithFrame:CGRectMake(photoImgViewX, photoImgViewY, photoImgViewW, photoImgViewH)];
     self.photoImgView.image = [UIImage imageNamed:@"orderImage.png"];
-    self.photoImgView.backgroundColor = [UIColor greenColor];
+//    self.photoImgView.backgroundColor = [UIColor greenColor];
+    self.photoImgView.contentMode = UIViewContentModeScaleAspectFit;
     [baseView addSubview:self.photoImgView];
     NSLog(@"%f,,%f,,%f,,%f", photoImgViewX, photoImgViewY, photoImgViewW, photoImgViewH);
     NSURL *imgUrl = [NSURL URLWithString:self.model.photo];

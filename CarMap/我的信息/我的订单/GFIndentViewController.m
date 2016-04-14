@@ -268,19 +268,29 @@
                         listModel.payStatus = constructDic[@"payStatus"];
                         
                         NSInteger startTime = [constructDic[@"startTime"] integerValue];
-                        NSInteger endTime = [constructDic[@"endTime"] integerValue];
-                        NSInteger chaTime = endTime - startTime;
+                        NSInteger endTime;
+                        NSInteger fenNum;
+                        NSInteger shiNum;
+                        NSInteger chaTime;
+                        if ([constructDic[@"endTime"] isKindOfClass:[NSNull class]]) {
+                            endTime = 0;
+                            chaTime = 0;
+                        }else{
+                            endTime = [constructDic[@"endTime"] integerValue];
+                            chaTime = endTime - startTime;
+                        }
+//                        chaTime = endTime - startTime;
 //                        NSLog(@"--starTime-%ld-End--%ld---%ld--",startTime,endTime,chaTime);
-                        NSInteger fenNum = (chaTime/1000/60)%60;
-                        NSInteger shiNum = chaTime/1000 /3600;
+                        fenNum = (chaTime/1000/60)%60;
+                        shiNum = chaTime/1000 /3600;
                         if(shiNum > 0) {
-                            listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
+                            listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", (long)shiNum, (long)fenNum];
                         }else {
-                            listModel.workTime = [NSString stringWithFormat:@"%ld分", fenNum];
+                            listModel.workTime = [NSString stringWithFormat:@"%ld分", (long)fenNum];
                         }
                     }else{
                         listModel.payment = @"0";
-                        listModel.workTime = @"0时0分";
+                        listModel.workTime = @"0分";
                     }
                 
                 }else if([curUrl isEqualToString:seconderUrl]) {
@@ -293,11 +303,24 @@
                         listModel.payStatus = constructDic[@"payStatus"];
                         
                         NSInteger startTime = [constructDic[@"startTime"] integerValue];
-                        NSInteger endTime = [constructDic[@"endTime"] integerValue];
-                        NSInteger chaTime = endTime - startTime;
+//                        NSInteger endTime = [constructDic[@"endTime"] integerValue];
+                        NSInteger endTime;
+                        NSInteger fenNum;
+                        NSInteger shiNum;
+                        NSInteger chaTime;
+                        if ([constructDic[@"endTime"] isKindOfClass:[NSNull class]]) {
+                            endTime = 0;
+                            chaTime = 0;
+                        }else{
+                            endTime = [constructDic[@"endTime"] integerValue];
+                            chaTime = endTime - startTime;
+                        }
                         
-                        NSInteger fenNum = (chaTime/1000/60)%60;
-                        NSInteger shiNum = chaTime/1000 /3600;
+                        
+//                        chaTime = endTime - startTime;
+                        
+                        fenNum = (chaTime/1000/60)%60;
+                        shiNum = chaTime/1000 /3600;
                         
                         if(shiNum > 0) {
                             listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
@@ -306,7 +329,7 @@
                         }
                     }else{
                         listModel.payment = @"0";
-                        listModel.workTime = @"0时0分";
+                        listModel.workTime = @"0分";
                     }
                     
                 }
@@ -428,7 +451,7 @@
                     if ([constructDic isKindOfClass:[NSNull class]]) {
                     
                         listModel.payment = @"0";
-                        listModel.workTime = @"0时0分";
+                        listModel.workTime = @"0分";
                        
                     }else{
                         listModel.payment = constructDic[@"payment"];
@@ -466,7 +489,7 @@
                     if ([constructDic isKindOfClass:[NSNull class]]) {
                         
                         listModel.payment = @"0";
-                        listModel.workTime = @"0时0分";
+                        listModel.workTime = @"0分";
                         
                     }else{
                         listModel.payment = constructDic[@"payment"];
@@ -475,14 +498,26 @@
                         listModel.payStatus = constructDic[@"payStatus"];
                         
                         NSInteger startTime = [constructDic[@"startTime"] integerValue];
-                        NSInteger endTime = [constructDic[@"endTime"] integerValue];
-                        NSInteger chaTime = endTime - startTime;
-                        NSInteger fenNum = (chaTime/1000/60)%60;
-                        NSInteger shiNum = chaTime/1000 /3600;
+                        
+                        NSInteger endTime;
+                        NSInteger fenNum;
+                        NSInteger shiNum;
+                        NSInteger chaTime;
+                        if ([constructDic[@"endTime"] isKindOfClass:[NSNull class]]) {
+                            endTime = 0;
+                            chaTime = 0;
+                        }else{
+                            endTime = [constructDic[@"endTime"] integerValue];
+                            chaTime = endTime - startTime;
+                        }
+                        
+//                        chaTime = endTime - startTime;
+                        fenNum = (chaTime/1000/60)%60;
+                        shiNum = chaTime/1000 /3600;
                         if(shiNum > 0) {
-                            listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", shiNum, fenNum];
+                            listModel.workTime = [NSString stringWithFormat:@"%ld小时%ld分", (long)shiNum, (long)fenNum];
                         }else {
-                            listModel.workTime = [NSString stringWithFormat:@"%ld分", fenNum];
+                            listModel.workTime = [NSString stringWithFormat:@"%ld分", (long)fenNum];
                         }
                     }
                 }

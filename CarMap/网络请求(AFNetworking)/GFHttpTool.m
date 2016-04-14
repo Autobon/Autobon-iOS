@@ -1427,21 +1427,21 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
     
     if ([GFHttpTool isConnectionAvailable]) {
         
-        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"获取中..."];
+//        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"获取中..."];
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         NSString *token = [userDefaultes objectForKey:@"autoken"];
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         NSString *URLString = [NSString stringWithFormat:@"%@/technician/message",HOST];
         
-        
+        NSLog(@"dictionary----%@---",dictionary);
         [manager GET:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
-            [aView remove];
+//            [aView remove];
             if(success) {
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            [aView remove];
+//            [aView remove];
             if(failure) {
                 failure(error);
             }

@@ -12,6 +12,8 @@
 #import "GFTransformTableViewCell.h"
 #import "CLNotificationModel.h"
 #import "GFTipView.h"
+#import "MJRefresh.h"
+#import "GFNothingView.h"
 
 
 
@@ -23,6 +25,8 @@
     CGFloat cellHeight;
     
     NSMutableArray *_notificationModelArray;
+    NSInteger _page;
+    NSInteger _pagesize;
     
 }
 
@@ -36,7 +40,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _notificationModelArray = [[NSMutableArray alloc]init];
+//    _notificationModelArray = [[NSMutableArray alloc]init];
     
     // 界面搭建
     [self _setView];
@@ -46,7 +50,7 @@
     
     
     
-    [self getNotification];
+//    [self getNotification];
     
 }
 
@@ -72,9 +76,30 @@
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
     
+    self.tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
+    self.tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+    
+    [self.tableView.header beginRefreshing];
     
     
+}
+
+- (void)headRefresh{
+    _page = 1;
+    _pagesize = 4;
+    _notificationModelArray = [[NSMutableArray alloc]init];
+    [self getNotification];
     
+}
+
+- (void)footRefresh{
+    if (_page == 1) {
+        _page = 2;
+        _pagesize = 2;
+    }
+    _page = _page + 1;
+    
+    [self getNotification];
 }
 
 
@@ -84,32 +109,46 @@
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
     
+    NSDictionary *dictionary = @{@"page":@(_page),@"pageSize":@(_pagesize)};
     
-    [GFHttpTool getMessageDictionary:nil Success:^(id responseObject) {
-        //        NSLog(@"－－－网络通知列表－－%@----",responseObject);
+    [GFHttpTool getMessageDictionary:dictionary Success:^(id responseObject) {
+                NSLog(@"－－－网络通知列表－－%@----",responseObject);
         if ([responseObject[@"result"] integerValue] == 1) {
             NSDictionary *dataDictionary = responseObject[@"data"];
             NSArray *listArray = dataDictionary[@"list"];
             //            NSLog(@"listArray-----%@---",listArray);
-            [listArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
-                CLNotificationModel *model = [[CLNotificationModel alloc]init];
-                model.titleString = obj[@"title"];
-                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[obj[@"publishTime"] floatValue]/1000];
-                model.timeString = [formatter stringFromDate:date];
-                //                model.timeString = obj[@"publishTime"];
-                model.contentString = obj[@"content"];
-                [_notificationModelArray addObject:model];
-            }];
             
-            //            NSLog(@"----notificationArray----%@",_notificationModelArray);
-            [_tableView reloadData];
+            if (_page != 1 && listArray.count == 0) {
+                [self addAlertView:@"已加载全部"];
+            }else{
+                [listArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
+                    CLNotificationModel *model = [[CLNotificationModel alloc]init];
+                    model.titleString = obj[@"title"];
+                    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[obj[@"publishTime"] floatValue]/1000];
+                    model.timeString = [formatter stringFromDate:date];
+                    //                model.timeString = obj[@"publishTime"];
+                    model.contentString = obj[@"content"];
+                    [_notificationModelArray addObject:model];
+                }];
+                
+                //            NSLog(@"----notificationArray----%@",_notificationModelArray);
+                [_tableView reloadData];
+            }
+
+            [_tableView.header endRefreshing];
+            [_tableView.footer endRefreshing];
+            if (_notificationModelArray.count == 0) {
+                _tableView.userInteractionEnabled = NO;
+                GFNothingView *nothingView = [[GFNothingView alloc] initWithImageName:@"NoOrder" withTipString:@"暂无数据" withSubtipString:nil];
+                [self.view addSubview:nothingView];
+            }
             
         }else{
             [self addAlertView:responseObject[@"message"]];
         }
         
     } failure:^(NSError *error) {
-        
+//        NSLog(@"请求失败了－－－%@--",error);
     }];
 }
 

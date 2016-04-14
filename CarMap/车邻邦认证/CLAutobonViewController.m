@@ -133,13 +133,13 @@
     if ([_status isEqualToString:@"NEWLY_CREATED"]) {
         CLCertifyViewController *certify = [[CLCertifyViewController alloc]init];
         [certify.submitButton setTitle:@"提交" forState:UIControlStateNormal];
-        [self.navigationController pushViewController:certify animated:NO];
+        [self.navigationController pushViewController:certify animated:YES];
     }else if ([_status isEqualToString:@"REJECTED"]){
         CLCertifyFailViewController *homeVC = [[CLCertifyFailViewController alloc] init];
-        [self.navigationController pushViewController:homeVC animated:NO];
+        [self.navigationController pushViewController:homeVC animated:YES];
     }else{
         CLCertifyingViewController *homeVC = [[CLCertifyingViewController alloc] init];
-        [self.navigationController pushViewController:homeVC animated:NO];
+        [self.navigationController pushViewController:homeVC animated:YES];
     }
     
     

@@ -44,6 +44,7 @@
 #import "GFMapViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import "GFHttpTool.h"
+#import "GFAlertView.h"
 
 
 // 个推开发者网站中申请App时，注册的AppId、AppKey、AppSecret
@@ -67,6 +68,9 @@
     //存储上一次的位置
     CLLocationManager *_manager;
 //    NSTimer *_timer;
+    
+    GFAlertView *_alertView;
+    
 }
 @end
 
@@ -460,6 +464,14 @@
             }
             
             [[NSNotificationCenter defaultCenter]postNotificationName:@"NEW_ORDER" object:self userInfo:@{@"INVITATION_REJECTED":@"INVITATION_REJECTED"}];
+        }else if ([responseJSON[@"action"]isEqualToString:@"NEW_MESSAGE"]){
+            NSDictionary *messageDictionary = responseJSON[@"message"];
+            
+            _alertView = [[GFAlertView alloc]initWithTitleString:messageDictionary[@"title"] withTipMessage:messageDictionary[@"content"] withButtonNameArray:@[@"确定"]];
+            
+            UIWindow *window = [UIApplication sharedApplication].delegate.window;
+            [window addSubview:_alertView];
+            
         }
     }
     
@@ -530,6 +542,20 @@
         }
 #warning --发通知
         [self performSelector:@selector(after:) withObject:responseJSON afterDelay:1.0];
+    }else if ([responseJSON[@"action"]isEqualToString:@"NEW_MESSAGE"]){
+        NSDictionary *messageDictionary = responseJSON[@"message"];
+        
+        UIWindow *window = [UIApplication sharedApplication].delegate.window;
+        CLHomeOrderViewController *homeOrderView = [[CLHomeOrderViewController alloc]init];
+        UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeOrderView];
+        navigation.navigationBarHidden = YES;
+        window.rootViewController = navigation;
+        
+        _alertView = [[GFAlertView alloc]initWithTitleString:messageDictionary[@"title"] withTipMessage:messageDictionary[@"content"] withButtonNameArray:@[@"确定"]];
+        
+//        UIWindow *window = [UIApplication sharedApplication].delegate.window;
+        [window addSubview:_alertView];
+        
     }
     
 

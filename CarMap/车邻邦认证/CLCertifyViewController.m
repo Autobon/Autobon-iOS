@@ -121,7 +121,7 @@
                 
                 [_headButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345%@",dataDic[@"avatar"]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
                 
-                [_identityButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"idPhoto"]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"userImage"]];
+                [_identityButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"idPhoto"]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"userImage"]];
                 [_dataDictionary setObject:dataDic[@"idPhoto"] forKey:@"idPhoto"];
 
             }
@@ -221,6 +221,7 @@
     _identityButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/5, 310, self.view.frame.size.width*3/5, self.view.frame.size.width*27/70)];
     [_identityButton setBackgroundImage:[UIImage imageNamed:@"userImage"] forState:UIControlStateNormal];
     [_identityButton addTarget:self action:@selector(cameraHeadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    _identityButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [_scrollView addSubview:_identityButton];
     
     UIButton *cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*4/5-15, 310+self.view.frame.size.width*27/70-25, 30, 30)];
@@ -404,7 +405,7 @@
                                             }else{
                                                 [self addAlertView:responseObject[@"message"]];
                                             }
-                                            
+                                        
                                         } failure:^(NSError *error) {
                                             NSLog(@"应该不会---%@--",error);
                                         }];
@@ -525,12 +526,15 @@
         
     }else{
         if (textField.text.length > 0) {
-            if ([self validateIdentityCard:textField.text]) {
-                _isIdNumber = YES;
-            }else{
-                [self addAlertView:@"身份证号码格式错误"];
-                _isIdNumber = NO;
+            if (textField.tag == 2) {
+                if ([self validateIdentityCard:textField.text]) {
+                    _isIdNumber = YES;
+                }else{
+                    [self addAlertView:@"身份证号码格式错误"];
+                    _isIdNumber = NO;
+                }
             }
+            
         }
         
     }
@@ -688,7 +692,7 @@
         }];
         
     }else{
-        [_identityButton setBackgroundImage:image forState:UIControlStateNormal];
+        [_identityButton setImage:image forState:UIControlStateNormal];
 //        _haveIdentityImage = YES;
         _identityButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
         

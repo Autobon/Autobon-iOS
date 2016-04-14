@@ -31,6 +31,8 @@
 - (void)remove;
 
 
+- (instancetype)initWithTitleString:(NSString *)title withTipMessage:(NSString *)tipMessageStr withButtonNameArray:(NSArray *)buttonArray;
+
 
 
 @end
