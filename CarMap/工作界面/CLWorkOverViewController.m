@@ -133,7 +133,7 @@
     
         NSInteger minute = time/60;
         if (minute > 60) {
-            _distanceLabel.text = [NSString stringWithFormat:@"已用时：%d时 %d分",minute/60,minute%60];
+            _distanceLabel.text = [NSString stringWithFormat:@"已用时：%ld时 %ld分",minute/60,minute%60];
         }else{
 //            NSLog(@"----shezhi时间");
             _distanceLabel.text = [NSString stringWithFormat:@"已用时： %ld分钟",(long)minute];

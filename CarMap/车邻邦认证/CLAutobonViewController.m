@@ -43,9 +43,9 @@
 - (void)addMap{
     __block GFMapViewController *mapVC = [[GFMapViewController alloc] init];
     mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30.4,114.4);
-    
+    __weak GFMapViewController *weakMapVC = mapVC;
     mapVC.distanceBlock = ^(double distance) {
-        [mapVC userLocationService];
+        [weakMapVC userLocationService];
     };
     
     [self.view addSubview:mapVC.view];

@@ -204,7 +204,7 @@
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[_startTime floatValue]/1000];
+//    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[_startTime floatValue]/1000];
 //    NSLog(@"---date-- %@---",[formatter stringFromDate:date]);
     
     NSInteger time = (NSInteger)[[NSDate date] timeIntervalSince1970] - [_startTime integerValue]/1000;

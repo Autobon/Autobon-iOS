@@ -393,7 +393,7 @@
     _tableView.dataSource = self;
    
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-     __weak CLHomeOrderViewController *weakSelf = self;
+//     __weak CLHomeOrderViewController *weakSelf = self;
 //    [_tableView addInfiniteScrollingWithActionHandler:^{
 //        NSLog(@"下拉");
 //        weakSelf.rowNumber = 0;
