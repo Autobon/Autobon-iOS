@@ -10,38 +10,14 @@
 #import "AppDelegate.h"
 #import "GeTuiSdk.h"
 #import "FirstViewController.h"
-//#import "ViewController.h"
 #import "UMSocial.h"
 #import "UMSocialWechatHandler.h"
 #import "UMSocialSinaHandler.h"
 #import "UMSocialQQHandler.h"
 #import "UMSocialSinaSSOHandler.h"
 #import <BaiduMapAPI_Base/BMKBaseComponent.h>
-#import "SecondViewController.h"
-#import "TestViewController.h"
-#import "GFMapViewController.h"
-//#import "ViewController.h"
-#import "CLAutobonViewController.h"
-#import "CLCertifyViewController.h"
 #import "CLHomeOrderViewController.h"
-#import "CLCertifyingViewController.h"
-#import "CLCertifyFailViewController.h"
-#import "CLMoreViewController.h"
-#import "CLKnockOrderViewController.h"
-#import "CLWorkBeforeViewController.h"
-#import "CLWorkOverViewController.h"
-#import "CLAddPersonViewController.h"
-#import "CLMoreViewController.h"
-#import "CLCleanWorkViewController.h"
-#import "CLShareViewController.h"
-#import "CLAddOrderSuccessViewController.h"
-#import "GFTestViewController.h"
-#import "GFMyMessageViewController.h"
 #import "GFSignInViewController.h"
-#import "CLCooperateFailViewController.h"
-#import "CLCooperatingViewController.h"
-#import "GFNoIndentViewController.h"
-#import "GFMapViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import "GFHttpTool.h"
 #import "GFAlertView.h"
@@ -94,9 +70,9 @@
     [UMSocialData setAppKey:@"564572b9e0f55a38dd001e6c"];
     
     
-    [UMSocialWechatHandler setWXAppId:@"wx0d70fda19b5c107c" appSecret:@"bac3ef447782aa76059af754510d84ca" url:@"http://www.incardata.com.cn"];
+    [UMSocialWechatHandler setWXAppId:@"wx0d70fda19b5c107c" appSecret:@"bac3ef447782aa76059af754510d84ca" url:@"http://hpecar.com:12345/shareA.html"];
     
-    [UMSocialQQHandler setQQWithAppId:@"1105263986" appKey:@"sjj2sjhLIqtjmcfL" url:@"http://www.incardata.com.cn"];
+    [UMSocialQQHandler setQQWithAppId:@"1105263986" appKey:@"sjj2sjhLIqtjmcfL" url:@"http://hpecar.com:12345/shareA.html"];
     
 //    [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
     

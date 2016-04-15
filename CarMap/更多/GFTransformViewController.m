@@ -169,13 +169,16 @@
         
         cell = [[GFTransformTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
-    CLNotificationModel *model = _notificationModelArray[indexPath.row];
-    
-    cell.titleLabel.text = model.titleString;
-    cell.contentLabel.text = model.contentString;
-    cell.timeLab.text = model.timeString;
-    [cell cellForMessage];
-    cellHeight = cell.cellHeight;
+    if (indexPath.row < _notificationModelArray.count) {
+        CLNotificationModel *model = _notificationModelArray[indexPath.row];
+        
+        cell.titleLabel.text = model.titleString;
+        cell.contentLabel.text = model.contentString;
+        cell.timeLab.text = model.timeString;
+        [cell cellForMessage];
+        cellHeight = cell.cellHeight;
+    }
+   
     
     
     return cell;

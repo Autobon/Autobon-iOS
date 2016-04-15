@@ -38,7 +38,7 @@
 // 添加导航
 - (void)setNavigation{
     
-    GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"person" withLeftImgHightName:@"personClick" withRightImgName:@"moreList" withRightImgHightName:@"moreListClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+    GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:@"person" withRightImgHightName:@"personClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
     [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [navView.rightBut addTarget:navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -62,7 +62,10 @@
     
     
 //    [[UMSocialData defaultData].urlResource setResourceType:UMSocialUrlResourceTypeImage url:@"http://media.incardata.com.cn/others%2f512-512.png"];
-    [UMSocialSnsService presentSnsIconSheetView:self appKey:@"564572b9e0f55a38dd001e6c" shareText:@"车邻邦测试分享消息" shareImage:nil shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQzone,UMShareToQQ,UMShareToSina,nil] delegate:self];
+    [UMSocialData defaultData].extConfig.wechatSessionData.title = @"车邻邦";
+    [UMSocialData defaultData].extConfig.qqData.title = @"车邻邦";
+    [UMSocialData defaultData].extConfig.qzoneData.title = @"车邻邦";
+    [UMSocialSnsService presentSnsIconSheetView:self appKey:@"564572b9e0f55a38dd001e6c" shareText:@"车邻邦专业的汽车保养团队" shareImage:[UIImage imageNamed:@"logoImage"] shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQzone,UMShareToQQ,UMShareToSina,nil] delegate:self];
         
         
     
@@ -134,9 +137,9 @@
 }
 
 - (void)backBtnClick{
-    //    [self.navigationController popViewControllerAnimated:YES];
-    GFMyMessageViewController *myMessage = [[GFMyMessageViewController alloc]init];
-    [self.navigationController pushViewController:myMessage animated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
+//    GFMyMessageViewController *myMessage = [[GFMyMessageViewController alloc]init];
+//    [self.navigationController pushViewController:myMessage animated:YES];
 }
 
 

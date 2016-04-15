@@ -7,7 +7,8 @@
 //
 
 #import "GFNavigationView.h"
-#import "CLMoreViewController.h"
+//#import "CLMoreViewController.h"
+#import "GFMyMessageViewController.h"
 
 
 
@@ -60,7 +61,7 @@
             [self.rightBut setImage:[UIImage imageNamed:rightImgHightName] forState:UIControlStateHighlighted];
             [self addSubview:self.rightBut];
 
-            self.rightBut.hidden = YES;
+//            self.rightBut.hidden = YES;
         }
     }
     
@@ -75,7 +76,7 @@
         if ([nextResponder isKindOfClass:[UIViewController
                                          class]]) {
             UIViewController *view = (UIViewController *)nextResponder;
-            [view.navigationController pushViewController:[[CLMoreViewController alloc]init] animated:NO];
+            [view.navigationController pushViewController:[[GFMyMessageViewController alloc]init] animated:NO];
             
         }
     }

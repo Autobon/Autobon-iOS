@@ -189,7 +189,7 @@
 // 添加导航
 - (void)setNavigation{
     
-    GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"person" withLeftImgHightName:@"personClick" withRightImgName:@"moreList" withRightImgHightName:@"moreListClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+    GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:@"person" withRightImgHightName:@"personClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
     [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [navView.rightBut addTarget:navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -198,9 +198,9 @@
     
 }
 - (void)backBtnClick{
-//    [self.navigationController popViewControllerAnimated:YES];
-    GFMyMessageViewController *myMessage = [[GFMyMessageViewController alloc]init];
-    [self.navigationController pushViewController:myMessage animated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
+//    GFMyMessageViewController *myMessage = [[GFMyMessageViewController alloc]init];
+//    [self.navigationController pushViewController:myMessage animated:YES];
 }
 
 
