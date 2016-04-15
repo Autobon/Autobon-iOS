@@ -363,7 +363,7 @@
         iconImgView.contentMode = UIViewContentModeScaleAspectFill;
 //        iconImgView.image = [UIImage imageNamed:@"11.png"];
         [iconImgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345%@",imageURL]] placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
-        NSLog(@"---imageUrl---%@----",[NSString stringWithFormat:@"http://121.40.157.200:12345%@",imageURL]);
+//        NSLog(@"---imageUrl---%@----",[NSString stringWithFormat:@"http://121.40.157.200:12345%@",imageURL]);
         [baseView addSubview:iconImgView];
         // 姓名
         NSString *nameStr = name;
@@ -420,7 +420,7 @@
         }
         
         for(int i = 0; i < round(mark); i++) {
-            NSLog(@"星星数量－－－");
+//            NSLog(@"星星数量－－－");
             CGFloat starImgViewW = strRect.size.height;
             CGFloat starImgViewH = starImgViewW;
             CGFloat starImgViewX = CGRectGetMaxX(numLab.frame) + 10 + starImgViewW * i;

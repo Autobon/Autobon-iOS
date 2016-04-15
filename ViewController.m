@@ -65,13 +65,13 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"didSelect--");
+//    NSLog(@"didSelect--");
 }
 
 - (void)viewDidLoad2 {
 //    [super viewDidLoad];
     
-    NSLog(@"这边也走了");
+//    NSLog(@"这边也走了");
     
     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(100, 100, 120, 40)];
     button.backgroundColor = [UIColor cyanColor];
@@ -117,9 +117,9 @@
 - (void)imageBtnClick{
     BOOL result = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
     if (result) {
-        NSLog(@"---支持使用相机---");
+//        NSLog(@"---支持使用相机---");
     }else{
-        NSLog(@"----不支持使用相机----");
+//        NSLog(@"----不支持使用相机----");
     }
     
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
@@ -133,7 +133,7 @@
     
 }
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo{
-    NSLog(@"----选中了一张图片----");
+//    NSLog(@"----选中了一张图片----");
     [self dismissViewControllerAnimated:YES completion:nil];
     
     UIImageView *imageView = [[UIImageView alloc]init];
@@ -163,7 +163,7 @@
 }
 
 - (void)addMap{
-    NSLog(@"添加地图");
+//    NSLog(@"添加地图");
     
     GFMapViewController *mapVC = [[GFMapViewController alloc] init];
     [self.view addSubview:mapVC.view];
@@ -190,7 +190,7 @@
 
 - (void)btnClick{
 //    [GeTuiSdk bindAlias:@"个推研发"];
-    NSLog(@"发信号－－");
+//    NSLog(@"发信号－－");
 //    UILocalNotification* ln = [[UILocalNotification alloc] init];
 //    ln.fireDate = [NSDate dateWithTimeIntervalSinceNow:3.0];
 //    ln.alertBody = @"category";

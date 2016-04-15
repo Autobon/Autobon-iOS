@@ -123,7 +123,7 @@
     
 }
 -(void)backClick{
-    NSLog(@"出栈啦");
+//    NSLog(@"出栈啦");
     
     [self dismissViewControllerAnimated:YES completion:nil];
 //    [self.navigationController popViewControllerAnimated:YES];
@@ -200,7 +200,7 @@
 //    self.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30.4,114.4);
 //    self.bossPointAnno.iconImgName = @"location";
     [self.mapView addAnnotation:self.bossPointAnno];
-    NSLog(@"加载地图");
+//    NSLog(@"加载地图");
     
     
 //#pragma mark - 路径
@@ -251,7 +251,7 @@
     [self.mapView updateLocationData:userLocation];
     
     double a = [self calculatorWithCoordinate1:self.workerPointAnno.coordinate withCoordinate2:self.bossPointAnno.coordinate];
-    NSLog(@"---技师和客户的距离－－%@--",@(a));
+//    NSLog(@"---技师和客户的距离－－%@--",@(a));
     _distanceLabel.text = [NSString stringWithFormat:@"距离工作地点%0.1fkm",a/1000];
     if (_distanceBlock) {
         _distanceBlock(a);
@@ -557,15 +557,15 @@
         //result.routeAddrResult
     }
     else {
-        NSLog(@"抱歉，未找到结果");
+//        NSLog(@"抱歉，未找到结果");
     }
 }
 - (void)onGetRoutePlanShareURLResult:(BMKShareURLSearch *)searcher result:(BMKShareURLResult *)result errorCode:(BMKSearchErrorCode)error {
-    NSLog(@"onGetRoutePlanShareURLResult error:%d", (int)error);
+//    NSLog(@"onGetRoutePlanShareURLResult error:%d", (int)error);
     if (error == BMK_SEARCH_NO_ERROR) {
         NSString *shortUrl = result.url;
         NSString *showmeg = [NSString stringWithFormat:@"%@",shortUrl];
-        NSLog(@"----%@----",shortUrl);
+//        NSLog(@"----%@----",shortUrl);
         UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"短串分享" message:showmeg delegate:self cancelButtonTitle:nil otherButtonTitles:@"分享",@"取消",nil];
         myAlertView.tag = 1000;
         [myAlertView show];
@@ -579,7 +579,7 @@
  */
 - (void)didFailToLocateUserWithError:(NSError *)error {
     
-    NSLog(@"获取当前位置失败，请检查您的网络－－%@",error);
+//    NSLog(@"获取当前位置失败，请检查您的网络－－%@",error);
 }
 
 

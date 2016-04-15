@@ -76,7 +76,7 @@
         if ([nextResponder isKindOfClass:[UIViewController
                                          class]]) {
             UIViewController *view = (UIViewController *)nextResponder;
-            [view.navigationController pushViewController:[[GFMyMessageViewController alloc]init] animated:NO];
+            [view.navigationController pushViewController:[[GFMyMessageViewController alloc]init] animated:YES];
             
         }
     }

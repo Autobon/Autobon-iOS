@@ -567,7 +567,7 @@
         NSInteger flage = [responseObject[@"result"] integerValue];
         if(flage == 1) {
             
-            NSLog(@"请求成功+++++++++++++%@", responseObject);
+//            NSLog(@"请求成功+++++++++++++%@", responseObject);
             
             NSDictionary *dataDic = responseObject[@"data"];
             
@@ -599,7 +599,7 @@
             self.bankCardNo = dataDic[@"bankCardNo"];
             self.balance = balance;
             self.name = name;
-            NSLog(@"\n%@\n%@\n%@\n%@\n%@\n%@\n", idPhoto, name, starRate, totalOrders, balance, unpaidOrders);
+//            NSLog(@"\n%@\n%@\n%@\n%@\n%@\n%@\n", idPhoto, name, starRate, totalOrders, balance, unpaidOrders);
             
             // 头像
             idPhoto = [NSString stringWithFormat:@"http://121.40.157.200:12345%@", idPhoto];
@@ -645,8 +645,8 @@
             NSMutableDictionary *fenDic = [[NSMutableDictionary alloc] init];
             fenDic[NSFontAttributeName] = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
             fenDic[NSForegroundColorAttributeName] = [UIColor blackColor];
-            NSLog(@"\n%@", fenDic);
-            NSLog(@"%@", fenStr1);
+//            NSLog(@"\n%@", fenDic);
+//            NSLog(@"%@", fenStr1);
             CGRect fenRect1 = [fenStr1 boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:fenDic context:nil];
             CGFloat fenLabW = fenRect1.size.width + 10;
             CGFloat fenLabX = CGRectGetMaxX(numLab.frame) + 20 + strRect.size.height * 5 + jianjv1;
@@ -668,7 +668,7 @@
             
         }else {
         
-            NSLog(@"请求失败+++++++++++++%@", responseObject);
+//            NSLog(@"请求失败+++++++++++++%@", responseObject);
         }
         
     } failure:^(NSError *error) {
@@ -718,7 +718,7 @@
 // 余额界面跳转
 - (void)balButClick {
 
-    NSLog(@"余额栏界面");
+//    NSLog(@"余额栏界面");
     
     GFBalanceViewController *balVC = [[GFBalanceViewController alloc] init];
     if (![self.bank isKindOfClass:[NSNull class]]) {
@@ -734,14 +734,14 @@
 // 账单界面跳转
 - (void)billBut {
 
-    NSLog(@"账单栏界面");
+//    NSLog(@"账单栏界面");
     GFBillViewController *billVC = [[GFBillViewController alloc] init];
     [self.navigationController pushViewController:billVC animated:YES];
 }
 // 我的订单界面跳转
 - (void)indentButClick {
     
-    NSLog(@"我的订单界面");
+//    NSLog(@"我的订单界面");
     GFIndentViewController *indentVC = [[GFIndentViewController alloc] init];
     
     [self.navigationController pushViewController:indentVC animated:YES];
@@ -749,7 +749,7 @@
 // 修改密码界面跳转
 - (void)changePwdButClick {
     
-    NSLog(@"修改密码界面");
+//    NSLog(@"修改密码界面");
     
     GFChangePwdViewController *chagePwdVC = [[GFChangePwdViewController alloc] init];
     [self.navigationController pushViewController:chagePwdVC animated:YES];

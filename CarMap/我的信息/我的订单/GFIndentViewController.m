@@ -218,7 +218,7 @@
     self.modelArr = [[NSMutableArray alloc] init];
     _workItemArr = [[NSMutableArray alloc]init];
     
-    NSLog(@"脑袋刷新");
+//    NSLog(@"脑袋刷新");
     self.tableview.userInteractionEnabled = NO;
     page = 1;
     pageSize = 4;
@@ -246,7 +246,7 @@
                 self.nothingView.hidden = NO;
             }
             
-            NSLog(@"%@*******", listArr);
+//            NSLog(@"%@*******", listArr);
             
             for(NSDictionary *dic in listArr) {
                 
@@ -341,7 +341,7 @@
                 NSString *path = [[NSBundle mainBundle] pathForResource:@"WorkItemDic" ofType:@"plist"];
                 NSDictionary *itemDic = [NSDictionary dictionaryWithContentsOfFile:path];
                 NSString *workItemsStr = [[NSString alloc] init];
-                NSLog(@"订单类型%@", dic[@"orderType"]);
+//                NSLog(@"订单类型%@", dic[@"orderType"]);
                 
                 if ([dic[@"orderType"] integerValue] == 4) {
                     workItemsStr = @"美容清洁";
@@ -389,7 +389,7 @@
             
         }else {
             
-            NSLog(@"请求失败+++++++++++%@", responseObject);
+//            NSLog(@"请求失败+++++++++++%@", responseObject);
             self.tableview.userInteractionEnabled = YES;
         }
         [self.tableview reloadData];
@@ -398,7 +398,7 @@
         
     } failure:^(NSError *error) {
         
-        NSLog(@"网络请求失败－－－%@--",error);
+//        NSLog(@"网络请求失败－－－%@--",error);
 
         self.tableview.userInteractionEnabled = YES;
         [self.tableview.header endRefreshing];
@@ -412,7 +412,7 @@
     if (page == 1) {
         page = 2;
     }
-    NSLog(@"大脚刷新");
+//    NSLog(@"大脚刷新");
     pageSize = 2;
     NSString *urlStr = curUrl;
     NSMutableDictionary *mDic = [[NSMutableDictionary alloc] init];
@@ -425,9 +425,9 @@
         
         if(flage == 1) {
             
-            NSLog(@"请求成功+++++++++++%@", responseObject);
+//            NSLog(@"请求成功+++++++++++%@", responseObject);
             
-            NSLog(@"请求成功+++++++++++%@", responseObject);
+//            NSLog(@"请求成功+++++++++++%@", responseObject);
             
             NSDictionary *dataDic = responseObject[@"data"];
             
@@ -529,7 +529,7 @@
                 NSString *path = [[NSBundle mainBundle] pathForResource:@"WorkItemDic" ofType:@"plist"];
                 NSDictionary *itemDic = [NSDictionary dictionaryWithContentsOfFile:path];
                 NSString *workItemsStr = [[NSString alloc] init];
-                NSLog(@"订单类型%@", dic[@"orderType"]);
+//                NSLog(@"订单类型%@", dic[@"orderType"]);
                 
                 if ([dic[@"orderType"] integerValue] == 4) {
                     workItemsStr = @"美容清洁";
@@ -575,7 +575,7 @@
             
         }else {
             
-            NSLog(@"请求失败+++++++++++%@", responseObject);
+//            NSLog(@"请求失败+++++++++++%@", responseObject);
             
         }
         
@@ -583,7 +583,7 @@
         
     } failure:^(NSError *error) {
         
-        NSLog(@"网络请求失败");
+//        NSLog(@"网络请求失败");
         
         
         [self.tableview.footer endRefreshing];
@@ -657,7 +657,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 
-    NSLog(@"++++++++++++++\n%@\n\n", self.workItemArr);
+//    NSLog(@"++++++++++++++\n%@\n\n", self.workItemArr);
     
     GFIndentDetailsViewController *indentDeVC = [[GFIndentDetailsViewController alloc] init];
     indentDeVC.model = self.modelArr[indexPath.row];

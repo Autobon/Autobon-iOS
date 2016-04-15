@@ -89,11 +89,11 @@
     BOOL flag = [_poisearch poiSearchInCity:citySearchOption];
     if(flag)
     {
-        NSLog(@"城市内检索发送成功");
+//        NSLog(@"城市内检索发送成功");
     }
     else
     {
-        NSLog(@"城市内检索发送失败");
+//        NSLog(@"城市内检索发送失败");
     }
 }
 
@@ -130,7 +130,7 @@
         [_mapView addAnnotations:annotations];
         [_mapView showAnnotations:annotations animated:YES];
     } else if (error == BMK_SEARCH_AMBIGUOUS_ROURE_ADDR){
-        NSLog(@"起始点有歧义");
+//        NSLog(@"起始点有歧义");
     } else {
         // 各种情况的判断。。。
     }
@@ -171,7 +171,7 @@
 }
 - (void)mapView:(BMKMapView *)mapView didAddAnnotationViews:(NSArray *)views
 {
-    NSLog(@"didAddAnnotationViews");
+//    NSLog(@"didAddAnnotationViews");
 }
 
 - (void)didReceiveMemoryWarning {

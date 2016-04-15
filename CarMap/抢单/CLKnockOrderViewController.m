@@ -57,7 +57,7 @@
     mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([orderDic[@"positionLat"]floatValue],[orderDic[@"positionLon"]floatValue]);
     mapVC.bossPointAnno.iconImgName = @"location";
     mapVC.distanceBlock = ^(double distance) {
-        NSLog(@"距离－－%f--",distance);
+//        NSLog(@"距离－－%f--",distance);
         _distanceLabel.text = [NSString stringWithFormat:@"距离：  %0.2fkm",distance/1000.0];
     };
     
@@ -122,7 +122,7 @@
     UILabel *otherLabel = [[UILabel alloc]init];
     
     NSString *remarkString = orderDic[@"remark"];
-    NSLog(@"---_orderDictionary--%@--",_orderDictionary);
+//    NSLog(@"---_orderDictionary--%@--",_orderDictionary);
     
     if ([remarkString isKindOfClass:[NSNull class]]) {
         otherLabel.text = [NSString stringWithFormat:@"工作备注："];

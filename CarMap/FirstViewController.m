@@ -40,11 +40,11 @@
     [self presentViewController:map animated:YES completion:nil];
 }
 - (void)firstBackClick{
-    NSLog(@"返回出栈");
+//    NSLog(@"返回出栈");
     [self.navigationController popViewControllerAnimated:NO];
 }
 - (void)btnClick:(UIButton *)button{
-    NSLog(@"其实这个方法是不会被调用的");
+//    NSLog(@"其实这个方法是不会被调用的");
 }
 
 - (void)didReceiveMemoryWarning {

@@ -95,7 +95,7 @@
 
 - (void)headRefresh {
     
-    NSLog(@"脑袋刷新");
+//    NSLog(@"脑袋刷新");
     
     _page = 1;
     _pageSize = 4;
@@ -109,7 +109,7 @@
     if (_page == 1) {
         _page = 2;
     }
-    NSLog(@"大脚刷新");
+//    NSLog(@"大脚刷新");
     _page = _page+1;
     _pageSize = 2;
     [self http];
@@ -140,7 +140,7 @@
                 [self addAlertView:@"已加载全部"];
             }
             [listArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                NSLog(@"----listDictionary---obj--%@--",obj);
+//                NSLog(@"----listDictionary---obj--%@--",obj);
                 CLBillTableViewCellModel *cellModel = [[CLBillTableViewCellModel alloc]init];
                 cellModel.orderNumber = obj[@"orderNum"];
                 cellModel.orderImage = obj[@"photo"];

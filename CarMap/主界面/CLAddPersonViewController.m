@@ -88,7 +88,7 @@
 
 
 - (void)searchBtnClick{
-    NSLog(@"搜索按钮被点击了");
+//    NSLog(@"搜索按钮被点击了");
     [self.view endEditing:YES];
     [GFHttpTool getSearch:_searchbar.text Success:^(NSDictionary *responseObject) {
         if ([responseObject[@"result"]integerValue] == 1) {
@@ -152,11 +152,11 @@
 
 #pragma mark - 添加合伙人按钮
 - (void)addPersonBtnClick:(UIButton *)button{
-    NSLog(@"添加合伙技师");
+//    NSLog(@"添加合伙技师");
     CLAddPersonModel *person = _addPersonArray[button.tag];
     NSDictionary *dic = @{@"orderId":_orderId,@"partnerId":person.personId};
     [GFHttpTool postAddPerson:dic Success:^(NSDictionary *responseObject) {
-         NSLog(@"－－－%@--",responseObject);
+//         NSLog(@"－－－%@--",responseObject);
         if ([responseObject[@"result"]integerValue]==1) {
             [self addAlertView:@"邀请已发送"];
             _isAdd = YES;
@@ -194,7 +194,7 @@
 }
 // 更多按钮的响应方法
 - (void)moreBtnClick{
-    NSLog(@"更多");
+//    NSLog(@"更多");
 }
 
 #pragma mark - AlertView

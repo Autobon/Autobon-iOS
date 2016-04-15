@@ -329,9 +329,9 @@
 #pragma mark - 获取验证码
 - (void)verifyButClick:(UIButton *)sender {
     
-    NSLog(@"获取验证码");
-    
-    NSLog(@"fasdgasdgasgsagasgsf %@", self.userNameTxt.centerTxt.text);
+//    NSLog(@"获取验证码");
+//    
+//    NSLog(@"fasdgasdgasgsagasgsf %@", self.userNameTxt.centerTxt.text);
     
     [self.tipView removeFromSuperview];
     [self.view endEditing:YES];
@@ -378,7 +378,7 @@
                 if (self.timer == nil) {
                     self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(showTime) userInfo:nil repeats:YES];
                 }
-                NSLog(@"获取验证码成功======\n%@", responseObject);
+//                NSLog(@"获取验证码成功======\n%@", responseObject);
                 [self tipShow:@"验证码已发送到您手机"];
             }else {
             
@@ -473,7 +473,7 @@
                 NSPredicate *regextestPwdStr = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", pwdStr];
                 if([regextestPwdStr evaluateWithObject:self.passWordTxt.centerTxt.text]) {
         
-                    NSLog(@"密码格式输入正确");
+//                    NSLog(@"密码格式输入正确");
                     
                     /**
                      *  提交注册
@@ -485,7 +485,7 @@
                     parDic[@"verifySms"] = self.verifyTxt.centerTxt.text;
                     [GFHttpTool verifyPost:url parameters:parDic success:^(id responseObject) {
                         
-                        NSLog(@"注册提交成功======\n%@", responseObject);
+//                        NSLog(@"注册提交成功======\n%@", responseObject);
                         
                         NSInteger flage = [responseObject[@"result"] integerValue];
                         

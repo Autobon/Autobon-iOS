@@ -22,6 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     
     
     [self setNavigation];
@@ -90,7 +91,7 @@
     view.backgroundColor = [UIColor colorWithRed:157/255.0 green:157/255.0 blue:157/255.0 alpha:1.0];
     [headerView addSubview:view];
     
-    NSLog(@"设置日期和时间");
+//    NSLog(@"设置日期和时间");
     //    headerView.backgroundColor = [UIColor cyanColor];
     [self.view addSubview:headerView];
 }
@@ -112,19 +113,20 @@
     [submitButton setTitle:@"继续接单" forState:UIControlStateNormal];
     [submitButton setBackgroundImage:[UIImage imageNamed:@"button"] forState:UIControlStateNormal];
     [submitButton setBackgroundImage:[UIImage imageNamed:@"buttonClick"] forState:UIControlStateHighlighted];
-    [submitButton addTarget:self action:@selector(submitBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [submitButton addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:submitButton];
     
 }
 
 - (void)submitBtnClick{
     
-    CLHomeOrderViewController *homeView = [[CLHomeOrderViewController alloc]init];
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeView];
-    window.rootViewController = navigation;
-    navigation.navigationBarHidden = YES;
+//    CLHomeOrderViewController *homeView = [[CLHomeOrderViewController alloc]init];
+//    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+//    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeView];
+//    window.rootViewController = navigation;
+//    navigation.navigationBarHidden = YES;
     
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -137,7 +139,10 @@
 }
 
 - (void)backBtnClick{
-        [self.navigationController popViewControllerAnimated:YES];
+    
+    CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
+    [homeOrder headRefresh];
+        [self.navigationController popToRootViewControllerAnimated:YES];
 //    GFMyMessageViewController *myMessage = [[GFMyMessageViewController alloc]init];
 //    [self.navigationController pushViewController:myMessage animated:YES];
 }

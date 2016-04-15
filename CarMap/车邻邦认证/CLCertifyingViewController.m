@@ -45,7 +45,7 @@
     NSArray *skillArray = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
     
     [GFHttpTool getCertificateSuccess:^(NSDictionary *responseObject) {
-        NSLog(@"获取认证信息%@",responseObject);
+//        NSLog(@"获取认证信息%@",responseObject);
         if ([responseObject[@"result"]intValue]==1) {
             NSDictionary *dataDic = responseObject[@"data"];
 
@@ -76,7 +76,7 @@
             
             _identityLabel.text = dataDic[@"idNo"];
             NSURL *URLString = [NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"avatar"]]];
-            NSLog(@"----URLString---%@--",URLString);
+//            NSLog(@"----URLString---%@--",URLString);
             [_headImage sd_setImageWithURL:URLString placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
             [_identityImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"idPhoto"]]] placeholderImage:[UIImage imageNamed:@"userImage"]];
             

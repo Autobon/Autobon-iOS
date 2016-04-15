@@ -15,6 +15,7 @@
 #import "GFTipView.h"
 #import "MYImageView.h"
 #import "CLCleanWorkViewController.h"
+#import "CLHomeOrderViewController.h"
 
 
 
@@ -76,7 +77,7 @@
     view.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
     [headerView addSubview:view];
     
-    NSLog(@"设置日期和时间");
+//    NSLog(@"设置日期和时间");
     //    headerView.backgroundColor = [UIColor cyanColor];
     [self.view addSubview:headerView];
 }
@@ -95,7 +96,7 @@
     [formatter setDateFormat:@"yyyy-MM-dd"];
     [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
     NSString *dateString = [formatter stringFromDate:[NSDate date]];
-    NSLog(@"---dateString--%@---",dateString);
+//    NSLog(@"---dateString--%@---",dateString);
     
     NSString *timeString = [NSString stringWithFormat:@"%@  %@",dateString,[weekdays objectAtIndex:theComponents.weekday]];
     return timeString;
@@ -111,7 +112,7 @@
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:[_startTime floatValue]/1000];
-    NSLog(@"---date-- %@---",[formatter stringFromDate:date]);
+//    NSLog(@"---date-- %@---",[formatter stringFromDate:date]);
     
     NSInteger time = (NSInteger)[[NSDate date] timeIntervalSince1970] - [_startTime integerValue]/1000;
     
@@ -120,7 +121,7 @@
     if (minute > 60) {
         _distanceLabel.text = [NSString stringWithFormat:@"已用时：%ld时 %ld分",minute/60,minute%60];
     }else{
-        NSLog(@"----shezhi时间");
+//        NSLog(@"----shezhi时间");
         _distanceLabel.text = [NSString stringWithFormat:@"已用时： %ld分钟",minute];
         
     }
@@ -134,7 +135,7 @@
 
 - (void)timeForWork:(NSTimer *)timer{
     
-    NSLog(@"----%@----",timer.userInfo[@"time"]);
+//    NSLog(@"----%@----",timer.userInfo[@"time"]);
     
     static NSInteger a = 0;
     if (a == 0) {
@@ -146,7 +147,7 @@
     if (minute > 60) {
         _distanceLabel.text = [NSString stringWithFormat:@"已用时：%ld时 %ld分",minute/60,minute%60];
     }else{
-        NSLog(@"----shezhi时间");
+//        NSLog(@"----shezhi时间");
         _distanceLabel.text = [NSString stringWithFormat:@"已用时： %ld分钟",minute];
         
     }
@@ -237,10 +238,10 @@
 //        imagePickerController.delegate =self;
 //        [self presentViewController:imagePickerController animated:YES completion:nil];
 //    }else{
-        NSLog(@"打开相机");
+//        NSLog(@"打开相机");
         BOOL result = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
         if (result) {
-            NSLog(@"---支持使用相机---");
+//            NSLog(@"---支持使用相机---");
             UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
             imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
             imagePicker.delegate = self;
@@ -249,7 +250,7 @@
             [self presentViewController:imagePicker animated:YES completion:^{
             }];
         }else{
-            NSLog(@"----不支持使用相机----");
+//            NSLog(@"----不支持使用相机----");
         }
         
 //    }
@@ -278,7 +279,7 @@
         [self.view addSubview:imageView];
         
     }else{
-        NSLog(@"小车不存在---%@--",@(_imageArray.count));
+//        NSLog(@"小车不存在---%@--",@(_imageArray.count));
         MYImageView *imageView = [[MYImageView alloc]initWithFrame:CGRectMake(_cameraBtn.frame.origin.x, _cameraBtn.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3)];
         imageView.image = image;
         [self.view addSubview:imageView];
@@ -310,7 +311,7 @@
     NSData *imageData = UIImageJPEGRepresentation(imageNew, 0.8);
     MYImageView *imageView = [_imageArray objectAtIndex:_imageArray.count-1];
     [GFHttpTool PostImageForWork:imageData success:^(NSDictionary *responseObject) {
-        NSLog(@"上传成功－%@--－%@",responseObject,responseObject[@"message"]);
+//        NSLog(@"上传成功－%@--－%@",responseObject,responseObject[@"message"]);
         if ([responseObject[@"result"] integerValue] == 1) {
            
             imageView.resultURL = responseObject[@"data"];
@@ -320,7 +321,7 @@
         }
 
     } failure:^(NSError *error) {
-        NSLog(@"上传失败原因－－%@--",error);
+//        NSLog(@"上传失败原因－－%@--",error);
     }];
     
 }
@@ -349,7 +350,7 @@
 
 #pragma mark - 删除相片的方法
 - (void)deleteBtnClick:(UIButton *)button{
-    NSLog(@"删除照片");
+//    NSLog(@"删除照片");
     
     UIImageView *imageView = (UIImageView *)[button superview];
     [imageView removeFromSuperview];
@@ -388,7 +389,7 @@
         
         __block NSString *URLString;
         [_imageArray enumerateObjectsUsingBlock:^(MYImageView *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            NSLog(@"imageURL---%@--",obj.resultURL);
+//            NSLog(@"imageURL---%@--",obj.resultURL);
             if (idx == 0) {
                 URLString = obj.resultURL;
             }else{
@@ -415,11 +416,11 @@
                     cleanWork.startTime = _startTime;
 //                    [self.navigationController pushViewController:cleanWork animated:YES];
                     cleanWork.orderNumber = self.orderNumber;
-                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-                    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:cleanWork];
-                    navigation.navigationBarHidden = YES;
-                    window.rootViewController = navigation;
-                    
+//                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+//                    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:cleanWork];
+//                    navigation.navigationBarHidden = YES;
+//                    window.rootViewController = navigation;
+                    [self.navigationController pushViewController:cleanWork animated:YES];
                     
                     
                 }else{
@@ -428,20 +429,20 @@
                     workOver.orderType = _orderType;
                     workOver.startTime = _startTime;
                     workOver.orderNumber = self.orderNumber;
-                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-                    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:workOver];
-                    navigation.navigationBarHidden = YES;
-                    window.rootViewController = navigation;
+//                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+//                    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:workOver];
+//                    navigation.navigationBarHidden = YES;
+//                    window.rootViewController = navigation;
                     
                     
-//                    [self.navigationController pushViewController:workOver animated:YES];
+                    [self.navigationController pushViewController:workOver animated:YES];
                 }
                 
                 
                 
             }
         } failure:^(NSError *error) {
-            NSLog(@"－－－失败了--%@",error);
+//            NSLog(@"－－－失败了--%@",error);
             [self addAlertView:@"提交失败"];
         }];
         
@@ -480,7 +481,13 @@
     
 }
 - (void)backBtnClick{
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    [_timer invalidate];
+    _timer = nil;
+    CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
+    [homeOrder headRefresh];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
 //    GFMyMessageViewController *myMessage = [[GFMyMessageViewController alloc]init];
 //    [self.navigationController pushViewController:myMessage animated:YES];
 }

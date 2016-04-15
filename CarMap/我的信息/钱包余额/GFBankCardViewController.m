@@ -140,7 +140,7 @@
     [self.bankBut setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateNormal];
     self.bankBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     self.bankBut.contentEdgeInsets = UIEdgeInsetsMake(0, 5 / 320.0 * kWidth, 0, 0);
-    NSLog(@"\n\n\n%@\n\n\n", self.bankStr);
+//    NSLog(@"\n\n\n%@\n\n\n", self.bankStr);
     [self.bankBut setTitle:self.bankStr forState:UIControlStateNormal];
     [self.bankBut setTitleColor:[UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1] forState:UIControlStateNormal];
     self.bankBut.titleLabel.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
@@ -216,7 +216,7 @@
     
     if(self.cardTxt.centerTxt.text.length == 0) {
         
-        NSLog(@"提交失败");
+//        NSLog(@"提交失败");
         GFTipView *tipView = [[GFTipView alloc] initWithNormalHeightWithMessage:@"请输入银行卡信息" withViewController:self withShowTimw:1.5];
         [tipView tipViewShow];
         
@@ -229,14 +229,14 @@
         if(suo == 0) {
             parDic[@"bank"] = self.bankStr;
             self.endBank = self.bankStr;
-            NSLog(@" 未改前  %@", parDic[@"bank"]);
+//            NSLog(@" 未改前  %@", parDic[@"bank"]);
         }else {
             parDic[@"bank"] = self.bankArr[index];
             self.endBank = self.bankArr[index];
-            NSLog(@" 改之后  %@", parDic[@"bank"]);
+//            NSLog(@" 改之后  %@", parDic[@"bank"]);
         }
         
-        NSLog(@"###############\n\n\n %@ \n\n\n###############", parDic[@"bank"]);
+//        NSLog(@"###############\n\n\n %@ \n\n\n###############", parDic[@"bank"]);
         
         parDic[@"bankCardNo"] = self.cardTxt.centerTxt.text;
         
@@ -252,7 +252,7 @@
                 
                 suo = 0;
                 
-                NSLog(@"提交成功++++++++++++++");
+//                NSLog(@"提交成功++++++++++++++");
                 
                 NSInteger flage = [responseObject[@"result"] integerValue];
                 
@@ -266,17 +266,17 @@
                     
                     
                     
-                    NSLog(@"修改成功===========\n%@", responseObject);
+//                    NSLog(@"修改成功===========\n%@", responseObject);
                     
                 }else {
                     
-                    NSLog(@"修改失败===========\n%@", responseObject);
+//                    NSLog(@"修改失败===========\n%@", responseObject);
                 }
                 
                 
             } failure:^(NSError *error) {
                 
-                NSLog(@"提交失败++++++++++++++%@", error);
+//                NSLog(@"提交失败++++++++++++++%@", error);
                 
             }];
             
@@ -349,7 +349,7 @@
 
 - (void)bankButClick {
 
-    NSLog(@"请选择开户银行");
+//    NSLog(@"请选择开户银行");
     self.tableView.delegate = self;
     self.tableView.hidden = !self.tableView.hidden;
     
@@ -357,7 +357,7 @@
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     if (textField.tag == 5) {
-        NSLog(@"---range--%@----%@---string--(%@)--",@(range.location),@(range.length),string);
+//        NSLog(@"---range--%@----%@---string--(%@)--",@(range.location),@(range.length),string);
         //        if (range.length == 0) {
         //            if (range.location%5 == 4) {
         //                textField.text = [NSString stringWithFormat:@"%@ ",textField.text];

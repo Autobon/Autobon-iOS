@@ -123,10 +123,10 @@
     NSPredicate *regextestPwdStr = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", pwdStr];
     if([regextestPwdStr evaluateWithObject:textField.text]) {
         
-        NSLog(@"密码格式输入正确");
+//        NSLog(@"密码格式输入正确");
     }else {
         
-        NSLog(@"密码格式不正确");
+//        NSLog(@"密码格式不正确");
         if(textField.tag == 1000) {
             
 //            [textField becomeFirstResponder];
@@ -167,7 +167,7 @@
     
     BOOL flage2 = [regextestPwdStr evaluateWithObject:self.passwordTxt.centerTxt.text];
     
-    NSLog(@"修改密码提交按钮");
+//    NSLog(@"修改密码提交按钮");
     
 //    [self.tipView removeFromSuperview];
 //    [self.tipView removeFromSuperview];
@@ -209,9 +209,9 @@
         
         [GFHttpTool changePwdPost:url parameters:parDic success:^(id responseObject) {
             
-            NSLog(@"修改密码提交成功+++++++++++ \n %@", responseObject);
+//            NSLog(@"修改密码提交成功+++++++++++ \n %@", responseObject);
             
-            NSLog(@"#####%@  \n####%@", responseObject[@"result"], responseObject[@"message"]);
+//            NSLog(@"#####%@  \n####%@", responseObject[@"result"], responseObject[@"message"]);
             
             NSInteger result = [responseObject[@"result"] integerValue];
             
@@ -231,7 +231,7 @@
 
             
         } failure:^(NSError *error) {
-            NSLog(@"修改密码提交失败");
+//            NSLog(@"修改密码提交失败");
             [self tipShow:@"修改密码失败"];
         }];
     

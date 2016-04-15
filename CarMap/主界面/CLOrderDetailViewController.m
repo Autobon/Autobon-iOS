@@ -36,7 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-     NSLog(@"orderNumber--%@--",self.orderNumber);
+//     NSLog(@"orderNumber--%@--",self.orderNumber);
     
     self.view.backgroundColor = [[UIColor alloc]initWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     
@@ -289,7 +289,7 @@
 
 #pragma mark - 添加合作小伙伴的响应方法
 - (void)addBtnClick{
-    NSLog(@"是时候添加一个小伙伴啦");
+//    NSLog(@"是时候添加一个小伙伴啦");
     CLAddPersonViewController *addPerson = [[CLAddPersonViewController alloc]init];
     addPerson.orderId = _orderId;
     [self.navigationController pushViewController:addPerson animated:YES];
@@ -300,7 +300,7 @@
    
     
     [GFHttpTool postOrderStart:@{@"orderId":_orderId} Success:^(NSDictionary *responseObject) {
-        NSLog(@"----responseObject--%@",responseObject);
+//        NSLog(@"----responseObject--%@",responseObject);
         if ([responseObject[@"result"]integerValue] == 1) {
             CLSigninViewController *signinView = [[CLSigninViewController alloc]init];
             signinView.customerLat = self.customerLat;
@@ -311,12 +311,12 @@
             signinView.startTime = dataDictionary[@"startTime"];
             signinView.orderNumber = self.orderNumber;
             
-            UIWindow *window = [UIApplication sharedApplication].keyWindow;
-            UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:signinView];
-            navigation.navigationBarHidden = YES;
-            window.rootViewController = navigation;
+//            UIWindow *window = [UIApplication sharedApplication].keyWindow;
+//            UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:signinView];
+//            navigation.navigationBarHidden = YES;
+//            window.rootViewController = navigation;
             
-//            [self.navigationController pushViewController:signinView animated:YES];
+            [self.navigationController pushViewController:signinView animated:YES];
         }else{
             if ([responseObject[@"error"] isEqualToString:@"INVITATION_NOT_FINISH"]) {
                 GFAlertView *alertView = [[GFAlertView alloc]initWithTitle:@"合作人暂无回应" leftBtn:@"继续等待" rightBtn:@"强制开始"];
@@ -328,7 +328,7 @@
         }
         
     } failure:^(NSError *error) {
-        NSLog(@"----失败原因－－%@--",error);
+//        NSLog(@"----失败原因－－%@--",error);
     }];
     
 }
@@ -336,7 +336,7 @@
 #pragma mark - 强制开始的方法
 - (void)rightButtonClick{
     [GFHttpTool postOrderStart:@{@"orderId":_orderId,@"ignoreInvitation":@"true"} Success:^(NSDictionary *responseObject) {
-        NSLog(@"----responseObject--%@",responseObject);
+//        NSLog(@"----responseObject--%@",responseObject);
         if ([responseObject[@"result"]integerValue] == 1) {
             CLSigninViewController *signinView = [[CLSigninViewController alloc]init];
             signinView.customerLat = self.customerLat;
@@ -346,10 +346,11 @@
             signinView.orderNumber = self.orderNumber;
             NSDictionary *dataDictionary = responseObject[@"data"];
             signinView.startTime = dataDictionary[@"startTime"];
-            UIWindow *window = [UIApplication sharedApplication].keyWindow;
-            UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:signinView];
-            navigation.navigationBarHidden = YES;
-            window.rootViewController = navigation;
+//            UIWindow *window = [UIApplication sharedApplication].keyWindow;
+//            UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:signinView];
+//            navigation.navigationBarHidden = YES;
+//            window.rootViewController = navigation;
+            [self.navigationController pushViewController:signinView animated:YES];
         }else{
             [self addAlertView:responseObject[@"message"]];
         }
@@ -388,7 +389,7 @@
         [homeOrder headRefresh];
         [self.navigationController popToRootViewControllerAnimated:YES];
     } failure:^(NSError *error) {
-        NSLog(@"---error---%@--",error);
+//        NSLog(@"---error---%@--",error);
     }];
 
 }

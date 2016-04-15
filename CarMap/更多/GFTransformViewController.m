@@ -112,7 +112,7 @@
     NSDictionary *dictionary = @{@"page":@(_page),@"pageSize":@(_pagesize)};
     
     [GFHttpTool getMessageDictionary:dictionary Success:^(id responseObject) {
-                NSLog(@"－－－网络通知列表－－%@----",responseObject);
+//                NSLog(@"－－－网络通知列表－－%@----",responseObject);
         if ([responseObject[@"result"] integerValue] == 1) {
             NSDictionary *dataDictionary = responseObject[@"data"];
             NSArray *listArray = dataDictionary[@"list"];
@@ -186,7 +186,7 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"点击方法");
+//    NSLog(@"点击方法");
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

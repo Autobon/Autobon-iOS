@@ -48,6 +48,7 @@
     [self setNavigation];
     
     [self addMap];
+    _signinButton.userInteractionEnabled = NO;
     
 }
 
@@ -67,7 +68,7 @@
     stateLabel.font = [UIFont systemFontOfSize:14];
     [headerView addSubview:stateLabel];
     
-    NSLog(@"设置日期和时间");
+//    NSLog(@"设置日期和时间");
 //    headerView.backgroundColor = [UIColor cyanColor];
     [self.view addSubview:headerView];
 }
@@ -86,7 +87,7 @@
     [formatter setDateFormat:@"yyyy-MM-dd"];
     [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
     NSString *dateString = [formatter stringFromDate:[NSDate date]];
-    NSLog(@"---dateString--%@---",dateString);
+//    NSLog(@"---dateString--%@---",dateString);
     
     NSString *timeString = [NSString stringWithFormat:@"%@  %@",dateString,[weekdays objectAtIndex:theComponents.weekday]];
     return timeString;
@@ -107,10 +108,10 @@
     __weak CLSigninViewController *signinView = self;
     
     _mapVC.distanceBlock = ^(double distance) {
-        NSLog(@"距离－－%f--",distance);
+//        NSLog(@"距离－－%f--",distance);
         
         signinView.distanceLabel.text = [NSString stringWithFormat:@"距离：%0.2fkm",distance/1000.0];
-        if (distance < 500000) {
+        if (distance < 1000) {
             signinView.signinButton.userInteractionEnabled = YES;
             signinView.signinButton.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
 //            [signinView.signinButton setTitle:@"可以签到了" forState:UIControlStateNormal];
@@ -126,7 +127,7 @@
     
     
     _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height/3+64+36, self.view.frame.size.width, 60)];
-    _distanceLabel.text = @"距离门店 0 m";
+    _distanceLabel.text = @"距离门店   m";
     _distanceLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_distanceLabel];
     
@@ -159,7 +160,7 @@
     
     NSDictionary *dic = @{@"positionLon":_customerLon,@"positionLat":_customerLat,@"orderId":_orderId};
     [GFHttpTool signinParameters:dic Success:^(NSDictionary *responseObject) {
-        NSLog(@"－－－－－%@---",responseObject);
+//        NSLog(@"－－－－－%@---",responseObject);
         if ([responseObject[@"result"]integerValue] == 1) {
             CLWorkBeforeViewController *workBefore = [[CLWorkBeforeViewController alloc]init];
             workBefore.orderId = _orderId;
@@ -173,8 +174,8 @@
             [self addAlertView:responseObject[@"message"]];
         }
     } failure:^(NSError *error) {
-        NSLog(@"--qiandao---%@--",error);
-        [self addAlertView:@"请填写完成工作的百分比"];
+//        NSLog(@"--qiandao---%@--",error);
+        [self addAlertView:@"请求失败"];
     }];
     
 }
@@ -198,7 +199,7 @@
     
 }
 - (void)backBtnClick{
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 //    GFMyMessageViewController *myMessage = [[GFMyMessageViewController alloc]init];
 //    [self.navigationController pushViewController:myMessage animated:YES];
 }

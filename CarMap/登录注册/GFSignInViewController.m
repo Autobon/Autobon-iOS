@@ -83,7 +83,7 @@
     GFTipView *tipView = [[GFTipView alloc] initWithNormalHeightWithMessage:@"好东西" withViewController:self withShowTimw:2];
     [tipView tipViewShow];
     
-    NSLog(@"提示框");
+//    NSLog(@"提示框");
     
 }
 
@@ -302,7 +302,7 @@
                 
                 // 获取token 针对个人的操作要加
                 NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage]; // 获得响应头
-                NSLog(@"####################################\n---%@--",[cookieJar cookies]); // 获取响应头的数组
+//                NSLog(@"####################################\n---%@--",[cookieJar cookies]); // 获取响应头的数组
                 NSUserDefaults *autokenValue = [NSUserDefaults standardUserDefaults];
                 for (int i = 0; i < [cookieJar cookies].count; i++) {
                     NSHTTPCookie *cookie = [cookieJar cookies][i]; // 实例化响应头数组对象
@@ -321,7 +321,7 @@
 //                            self.signInBut.userInteractionEnabled = YES;
 //                            
 //                        }];
-                        NSLog(@"############%@", [NSString stringWithFormat:@"%@=%@",[cookie name],[cookie value]]); //获取响应头数组对象里地名字为autoken的对象的数据，这个数据是用来验证用户身份相当于“key”
+//                        NSLog(@"############%@", [NSString stringWithFormat:@"%@=%@",[cookie name],[cookie value]]); //获取响应头数组对象里地名字为autoken的对象的数据，这个数据是用来验证用户身份相当于“key”
                         
                         
                         
@@ -336,7 +336,7 @@
                 
 #pragma mark - 个人信息持久化
                 
-                NSLog(@"---dataDic---%@-",dataDic);
+//                NSLog(@"---dataDic---%@-",dataDic);
 // 判断 responseObject[@"status"] 的状态进行相应的页面跳转
                 UIWindow *window = [UIApplication sharedApplication].delegate.window;
                 
@@ -410,7 +410,7 @@
                     
             }else if([responseObject[@"result"] isEqual:@0]) {
                 
-                NSLog(@"登录失败==========%@", responseObject);
+//                NSLog(@"登录失败==========%@", responseObject);
                 
                 [UIView animateWithDuration:1.2 animations:^{
                     

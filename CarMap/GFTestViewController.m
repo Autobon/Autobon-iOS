@@ -53,7 +53,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSLog(@"点击单元格");
+//    NSLog(@"点击单元格");
     
 }
 - (void)didReceiveMemoryWarning {

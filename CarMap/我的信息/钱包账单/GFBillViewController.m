@@ -121,7 +121,7 @@
 
 - (void)headRefresh {
 
-    NSLog(@"脑袋刷新");
+//    NSLog(@"脑袋刷新");
     // 数组初始化并清空数组的元素
     self.yearArr = [[NSMutableArray alloc] init];
     _listDictionary = [[NSMutableDictionary alloc]init];
@@ -218,7 +218,7 @@
                                 
                             }else{
                                 
-                                NSLog(@"---%d--%@--%@--",i,stringArray,yearString);
+//                                NSLog(@"---%d--%@--%@--",i,stringArray,yearString);
                                 
                                 if (i == 0) {
                                     monthArray = [[NSMutableArray alloc]init];
@@ -270,7 +270,7 @@
                
                 }else{
                     
-                     NSLog(@"---year--%@--_list--%@--",_yearArr,_listDictionary);
+//                     NSLog(@"---year--%@--_list--%@--",_yearArr,_listDictionary);
                     
                     if (i == 0) {
                         
@@ -303,7 +303,7 @@
                                 }else{
                                     [_yearArr addObject:stringArray[0]];
                                 }
-                                 NSLog(@"---year--%@--_list--%@--",_yearArr,_listDictionary);
+//                                 NSLog(@"---year--%@--_list--%@--",_yearArr,_listDictionary);
                             }else{
                                 [_listDictionary setObject:monthArray forKey:yearString];
                                 if ([_yearArr containsObject:stringArray[0]]) {
@@ -311,7 +311,7 @@
                                 }else{
                                     [_yearArr addObject:stringArray[0]];
                                 }
-                                 NSLog(@"---year--%@--_list--%@--",_yearArr,_listDictionary);
+//                                 NSLog(@"---year--%@--_list--%@--",_yearArr,_listDictionary);
                                 monthArray = [[NSMutableArray alloc]init];
                                 [monthArray addObject:self.billModel];
                                 [_listDictionary setObject:monthArray forKey:stringArray[0]];
@@ -320,7 +320,7 @@
                                 }else{
                                     [_yearArr addObject:stringArray[0]];
                                 }
-                                 NSLog(@"---year--%@--_list--%@--",_yearArr,_listDictionary);
+//                                 NSLog(@"---year--%@--_list--%@--",_yearArr,_listDictionary);
                             }
                             
                         }else{
@@ -347,8 +347,8 @@
                 
             }
                 
-            NSLog(@"---year--%@--_list--%@--",_yearArr,_listDictionary);
-                
+//            NSLog(@"---year--%@--_list--%@--",_yearArr,_listDictionary);
+            
             [self.tableView reloadData];
         }else {
            
@@ -410,7 +410,7 @@
     NSString *year = _yearArr[indexPath.section];
     NSArray *billArray = _listDictionary[year];
     GFBillModel *billModel = billArray[indexPath.row];
-    NSLog(@"-----month---%@--payed---%@--%@-",billModel.month,billModel.payed,indexPath);
+//    NSLog(@"-----month---%@--payed---%@--%@-",billModel.month,billModel.payed,indexPath);
     cell.jiesuanBut.selected = [billModel.payed integerValue];
     
     

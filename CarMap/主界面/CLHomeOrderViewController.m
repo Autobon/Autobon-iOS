@@ -79,7 +79,7 @@
     [super viewDidLoad];
 //    [super viewDidLoad];
 //    self.view.backgroundColor = [UIColor whiteColor];
-    NSLog(@"到这里了--%@--",NSHomeDirectory());
+//    NSLog(@"到这里了--%@--",NSHomeDirectory());
     
     _rowNumber = 30;
     _page = 1;
@@ -144,7 +144,7 @@
                 [self addAlertView:@"已加载全部"];
             }
             [dataArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
-                NSLog(@"---obj---%@--",obj);
+//                NSLog(@"---obj---%@--",obj);
                 CLHomeOrderCellModel *cellModel = [[CLHomeOrderCellModel alloc]init];
                 cellModel.orderId = obj[@"id"];
                 cellModel.orderNumber = obj[@"orderNum"];
@@ -164,7 +164,7 @@
                     cellModel.mainTechId = mainTechDictionary[@"id"];
                 }
                 if ([[userDefaults objectForKey:@"userId"] integerValue] == [cellModel.mainTechId integerValue]) {
-                    NSLog(@"我是主技师");
+//                    NSLog(@"我是主技师");
                     if (![obj[@"mainConstruct"] isKindOfClass:[NSNull class]]) {
                         NSDictionary *mainDictionary = obj[@"mainConstruct"];
                         cellModel.startTime = mainDictionary[@"startTime"];
@@ -174,14 +174,14 @@
                         
                     }
                     if (![obj[@"secondTech"] isKindOfClass:[NSNull class]]) {
-                        NSLog(@"有小伙伴");
+//                        NSLog(@"有小伙伴");
                         NSDictionary *secondDictionary = obj[@"secondTech"];
                         cellModel.secondTechId = secondDictionary[@"name"];
                         cellModel.mateName = secondDictionary[@"name"];
                     }
                     
                 }else{
-                    NSLog(@"我是次技师");
+//                    NSLog(@"我是次技师");
                     NSDictionary *secondDictionary = obj[@"mainTech"];
                     cellModel.mateName = secondDictionary[@"name"];
                     if (![obj[@"secondConstruct"] isKindOfClass:[NSNull class]]) {
@@ -199,7 +199,7 @@
                 [_cellModelArray addObject:cellModel];
                 NSDate *date = [NSDate dateWithTimeIntervalSince1970:[obj[@"orderTime"] floatValue]/1000];
                 cellModel.orderTime = [formatter stringFromDate:date];
-                NSLog(@"cellModel.orderNumber:%@",cellModel.orderNumber);
+//                NSLog(@"cellModel.orderNumber:%@",cellModel.orderNumber);
                 
                 
             }];
@@ -219,7 +219,7 @@
             [self.tableView.footer endRefreshing];
         }
     } failure:^(NSError *error) {
-        NSLog(@"-不知道为什么请求失败了－－error--%@---",error);
+//        NSLog(@"-不知道为什么请求失败了－－error--%@---",error);
     }];
 }
 
@@ -231,7 +231,7 @@
 #pragma mark - 接受通知消息
 -(void)receiveNotification:(NSNotification *)Notification
 {
-    NSLog(@"receiveNotification---%@--",Notification.userInfo);
+//    NSLog(@"receiveNotification---%@--",Notification.userInfo);
     
     
     if ([Notification.userInfo[@"action"] isEqualToString:@"NEW_ORDER"]) {
@@ -259,7 +259,7 @@
         }
         
     }else if ([Notification.userInfo[@"action"] isEqualToString:@"INVITE_PARTNER"]){
-        NSLog(@"有人邀请");
+//        NSLog(@"有人邀请");
         NSDictionary *dictionary = Notification.userInfo[@"owner"];
         NSDictionary *orderDictionary = Notification.userInfo[@"order"];
         NSArray *skillArray = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
@@ -307,7 +307,7 @@
     
     orderDetail.action = @"SEND_INVITATION";
     
-    NSLog(@"---orderDetail.remark----%@---%@--",_inviteDictionary[@"action"],orderDetail.customerLon);
+//    NSLog(@"---orderDetail.remark----%@---%@--",_inviteDictionary[@"action"],orderDetail.customerLon);
     [self.navigationController pushViewController:orderDetail animated:YES];
 }
 
@@ -329,7 +329,7 @@
     
     [GFHttpTool postOrderId:button.tag Success:^(NSDictionary *responseObject) {
         
-        NSLog(@"----抢单结果--%@--",responseObject);
+//        NSLog(@"----抢单结果--%@--",responseObject);
         if ([responseObject[@"result"]integerValue] == 1) {
             
             [[[button superview] superview]removeFromSuperview];
@@ -352,7 +352,7 @@
             [self addAlertView:responseObject[@"message"]];
         }
     } failure:^(NSError *error) {
-        NSLog(@"----抢单结果-222-%@--",error);
+//        NSLog(@"----抢单结果-222-%@--",error);
     }];
     
     
@@ -524,7 +524,7 @@
             if (cellModel.startTime) {
                 // 已经开始
                 if ([cellModel.signinTime isKindOfClass:[NSNull class]]) {
-                    NSLog(@"未签到");
+//                    NSLog(@"未签到");
                     CLSigninViewController *signinView = [[CLSigninViewController alloc]init];
                     signinView.customerLat = cellModel.customerLat;
                     signinView.customerLon = cellModel.customerLon;
@@ -544,7 +544,7 @@
                     workBefore.orderNumber = cellModel.orderNumber;
                     [self.navigationController pushViewController:workBefore animated:YES];
                     
-                    NSLog(@"未上传开始前照片");
+//                    NSLog(@"未上传开始前照片");
                 }else if ([cellModel.afterPhotos isKindOfClass:[NSNull class]]){
                     if ([cellModel.orderType integerValue] == 4) {
                         
@@ -557,14 +557,14 @@
                     }else{
                         CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
                         workOver.startTime = cellModel.startTime;
-                        NSLog(@"---workOver---%@--",self.navigationController);
+//                        NSLog(@"---workOver---%@--",self.navigationController);
                         workOver.orderId = cellModel.orderId;
                         workOver.orderType = cellModel.orderType;
                         workOver.orderNumber = cellModel.orderNumber;
                         
                         [self.navigationController pushViewController:workOver animated:YES];
                     }
-                    NSLog(@"未上传结束时照片");
+//                    NSLog(@"未上传结束时照片");
                 }else{
                     [self addAlertView:@"等待小伙伴提交"];
                 }
@@ -581,7 +581,7 @@
                 orderDetail.remark = cellModel.remark;
                 orderDetail.orderType = cellModel.orderType;
                 orderDetail.orderNumber = cellModel.orderNumber;
-                NSLog(@"我还没有开始啊--%@--",cellModel.mateName);
+//                NSLog(@"我还没有开始啊--%@--",cellModel.mateName);
                 if (cellModel.mateName) {
                     
                     orderDetail.action = @"INVITATION_ACCEPTED";
@@ -591,7 +591,7 @@
                     
                 }else{
                     // 小伙伴不存在，可以随便邀请
-                    NSLog(@"---xiaohuoban-");
+//                    NSLog(@"---xiaohuoban-");
                 }
                 
             }
@@ -722,7 +722,7 @@
     orderDetail.secondId = cellModel.secondTechId;
     orderDetail.orderType = cellModel.orderType;
     orderDetail.orderNumber = cellModel.orderNumber;
-    NSLog(@"---orderDetail.remark---%@--",orderDetail.action);
+//    NSLog(@"---orderDetail.remark---%@--",orderDetail.action);
     [self.navigationController pushViewController:orderDetail animated:YES];
     }
     
@@ -750,7 +750,7 @@
     [formatter setDateFormat:@"yyyy-MM-dd"];
     [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
     NSString *dateString = [formatter stringFromDate:[NSDate date]];
-    NSLog(@"---dateString--%@---",dateString);
+//    NSLog(@"---dateString--%@---",dateString);
     
     NSString *timeString = [NSString stringWithFormat:@"%@  %@",dateString,[weekdays objectAtIndex:theComponents.weekday]];
     return timeString;
@@ -785,7 +785,7 @@
 }
 
 -(void)backBtnClick{
-    NSLog(@"个人信息界面");
+//    NSLog(@"个人信息界面");
     GFMyMessageViewController *myMsgVC = [[GFMyMessageViewController alloc] init];
     [self.navigationController pushViewController:myMsgVC animated:YES];
     

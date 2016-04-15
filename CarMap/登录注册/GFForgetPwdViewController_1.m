@@ -306,7 +306,7 @@
         
         [GFHttpTool codeGet:url parameters:parDic success:^(id responseObject) {
             
-            NSLog(@"获取验证码成功======\n%@", responseObject);
+//            NSLog(@"获取验证码成功======\n%@", responseObject);
             
             NSInteger flage = [responseObject[@"result"] integerValue];
             
@@ -410,7 +410,7 @@
                             
                             [GFHttpTool forgetPwdPost:url parameters:parDic success:^(id responseObject) {
                                 
-                                NSLog(@"找回密码成功++++++++++%@", responseObject);
+//                                NSLog(@"找回密码成功++++++++++%@", responseObject);
                                 
                                 NSInteger flage = [responseObject[@"result"] integerValue];
                                 

@@ -65,7 +65,7 @@
 
 
 - (void)btnClick:(UIButton *)button{
-    NSLog(@"-------%ld---",(long)button.tag);
+//    NSLog(@"-------%ld---",(long)button.tag);
     
     if(button.tag == 1) {
     

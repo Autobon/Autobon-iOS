@@ -109,7 +109,7 @@
     view.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
     [headerView addSubview:view];
     
-    NSLog(@"设置日期和时间");
+//    NSLog(@"设置日期和时间");
     //    headerView.backgroundColor = [UIColor cyanColor];
     [self.view addSubview:headerView];
 }
@@ -129,7 +129,7 @@
     [formatter setDateFormat:@"yyyy-MM-dd"];
     [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
     NSString *dateString = [formatter stringFromDate:[NSDate date]];
-    NSLog(@"---dateString--%@---",dateString);
+//    NSLog(@"---dateString--%@---",dateString);
     
     NSString *timeString = [NSString stringWithFormat:@"%@  %@",dateString,[weekdays objectAtIndex:theComponents.weekday]];
     return timeString;
@@ -173,7 +173,7 @@
 #pragma mark - 开始工作的按钮响应方法
 - (void)submitBtnClick{
    
-    NSLog(@"----%@---",_dataDictionary);
+//    NSLog(@"----%@---",_dataDictionary);
     [_timer invalidate];
     _timer = nil;
     
@@ -190,7 +190,7 @@
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:[_dataDictionary[@"orderTime"] floatValue]/1000];
-    NSLog(@"---date-- %@---",[formatter stringFromDate:date]);
+//    NSLog(@"---date-- %@---",[formatter stringFromDate:date]);
     
     detailView.orderTime = [formatter stringFromDate:date];
     

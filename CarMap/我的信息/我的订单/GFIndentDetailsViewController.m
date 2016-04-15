@@ -163,7 +163,7 @@
 //    self.photoImgView.backgroundColor = [UIColor greenColor];
     self.photoImgView.contentMode = UIViewContentModeScaleAspectFit;
     [baseView addSubview:self.photoImgView];
-    NSLog(@"%f,,%f,,%f,,%f", photoImgViewX, photoImgViewY, photoImgViewW, photoImgViewH);
+//    NSLog(@"%f,,%f,,%f,,%f", photoImgViewX, photoImgViewY, photoImgViewW, photoImgViewH);
     NSURL *imgUrl = [NSURL URLWithString:self.model.photo];
     [self.photoImgView sd_setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"orderImage.png"]];
     

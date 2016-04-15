@@ -50,7 +50,7 @@
     NSArray *skillArray = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
     
     [GFHttpTool getCertificateSuccess:^(NSDictionary *responseObject) {
-        NSLog(@"%@",responseObject);
+//        NSLog(@"%@",responseObject);
         if ([responseObject[@"result"]intValue]==1) {
             NSDictionary *dataDic = responseObject[@"data"];
             
@@ -60,7 +60,7 @@
             
             _detailLabel.frame = CGRectMake(15, 100, self.view.frame.size.width-30, detailSize.height);
             [self setViewForCertify];
-            NSLog(@"----_datailLabel --%@---size---%f",_detailLabel,detailSize.height);
+//            NSLog(@"----_datailLabel --%@---size---%f",_detailLabel,detailSize.height);
             
             // 0,1,2,3
             NSArray *array = [dataDic[@"skill"] componentsSeparatedByString:@","];

@@ -148,7 +148,7 @@
 
 - (void)bankButClick {
 
-    NSLog(@"修改银行卡信息");
+//    NSLog(@"修改银行卡信息");
     
     self.baseView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.baseView.backgroundColor = [UIColor colorWithRed:0 / 255.0 green:0 blue:0 alpha:0.65];

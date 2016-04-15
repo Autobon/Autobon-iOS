@@ -121,7 +121,7 @@
 //    label.text = [NSString stringWithFormat:@"%@  %@",[model.timeString componentsSeparatedByString:@" "][0],model.titleString];
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@  %@",[model.timeString componentsSeparatedByString:@" "][0],model.titleString]];
     [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.6] range:NSMakeRange(0,10)];
-        NSLog(@"---label.text-----%@------array-",str);
+//        NSLog(@"---label.text-----%@------array-",str);
     label.attributedText = str;
     CGRect labelRect = [label.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width-20, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17]} context:nil];
     

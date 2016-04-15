@@ -91,7 +91,7 @@
             if ([responseObject[@"result"]intValue]==1) {
                 NSDictionary *dataDic = responseObject[@"data"];
                 if (![dataDic[@"skill"] isKindOfClass:[NSNull class]]) {
-                    NSLog(@"－－－－skill---%@--",responseObject[@"skill"]);
+//                    NSLog(@"－－－－skill---%@--",responseObject[@"skill"]);
                     NSArray *array = [dataDic[@"skill"] componentsSeparatedByString:@","];
                     [array enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop) {
                         UIButton *button = _skillBtnArray[[obj intValue]-1];
@@ -101,7 +101,7 @@
                     }];
                 }
                 
-                NSLog(@"---name---%@--",responseObject[@"name"]);
+//                NSLog(@"---name---%@--",responseObject[@"name"]);
                 if (![dataDic[@"name"] isKindOfClass:[NSNull class]]) {
                     _userNameTextField.centerTxt.text = dataDic[@"name"];
                 }
@@ -394,9 +394,9 @@
                                         [_dataDictionary setObject:_bankButton.titleLabel.text forKey:@"bank"];
                                         [_dataDictionary setObject:cardNo forKey:@"bankCardNo"];
                                         
-                                        NSLog(@"-----dic---%@--",_dataDictionary);
+//                                        NSLog(@"-----dic---%@--",_dataDictionary);
                                         [GFHttpTool certifyPostParameters:_dataDictionary success:^(NSDictionary *responseObject) {
-                                            NSLog(@"----responseObject-%@--%@",responseObject,responseObject[@"message"]);
+//                                            NSLog(@"----responseObject-%@--%@",responseObject,responseObject[@"message"]);
                                             if ([responseObject[@"result"] intValue] == 1) {
                                                 
                                                 [self addAlertView:@"提交成功"];
@@ -407,7 +407,7 @@
                                             }
                                         
                                         } failure:^(NSError *error) {
-                                            NSLog(@"应该不会---%@--",error);
+//                                            NSLog(@"应该不会---%@--",error);
                                         }];
                                     }
                                 }
@@ -454,7 +454,7 @@
 }
 #pragma mark - tableView协议方法
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"dianjifangfa");
+//    NSLog(@"dianjifangfa");
     [_bankButton setTitle:_bankArray[indexPath.row] forState:UIControlStateNormal];
     [_bankButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     _isTableView = NO;
@@ -486,7 +486,7 @@
 - (void)btn:(UIButton *)button{
     UITableViewCell *cell = (UITableViewCell *)[button superview];
     NSIndexPath *indexPath = [_tableView indexPathForCell:cell];
-    NSLog(@"btntbn--cell--%@",@(indexPath.row));
+//    NSLog(@"btntbn--cell--%@",@(indexPath.row));
     [_bankButton setTitle:_bankArray[indexPath.row] forState:UIControlStateNormal];
     [_bankButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     _isBank = YES;
@@ -494,7 +494,7 @@
 }
 #pragma mark - 开户地点按钮事件
 -(void)whereBtnClick:(UIButton *)button{
-    NSLog(@"选择开户地点");
+//    NSLog(@"选择开户地点");
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2+5, button.frame.origin.y + 40, button.frame.size.width , 100) style:UITableViewStylePlain];
     tableView.delegate = self;
     tableView.dataSource = self;
@@ -542,7 +542,7 @@
     
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    NSLog(@"---range--%@----%@---string--(%@)--",@(range.location),@(range.length),string);
+//    NSLog(@"---range--%@----%@---string--(%@)--",@(range.location),@(range.length),string);
     if (textField.tag == 5) {
 //        NSLog(@"---range--%@----%@---string--(%@)--",@(range.location),@(range.length),string);
 //        if (range.length == 0) {
@@ -559,7 +559,7 @@
         
         return [self isNumber:string];
     }else if (textField.tag == 1){
-        NSLog(@"-----text---%@--",textField.text);
+//        NSLog(@"-----text---%@--",textField.text);
         if (textField.text.length>9 && range.length==0) {
             return NO;
         }
@@ -642,10 +642,10 @@
         imagePickerController.delegate =self;
         [self presentViewController:imagePickerController animated:YES completion:nil];
     }else{
-        NSLog(@"打开相机");
+//        NSLog(@"打开相机");
         BOOL result = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
         if (result) {
-            NSLog(@"---支持使用相机---");
+//            NSLog(@"---支持使用相机---");
             UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
             imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
             imagePicker.delegate = self;
@@ -654,7 +654,7 @@
             [self  presentViewController:imagePicker animated:YES completion:^{
             }];
         }else{
-            NSLog(@"----不支持使用相机----");
+//            NSLog(@"----不支持使用相机----");
         }
         
     }
@@ -680,7 +680,7 @@
         
         
         [GFHttpTool headImage:imageData success:^(NSDictionary *responseObject) {
-            NSLog(@"-----responseObject---%@--",responseObject);
+//            NSLog(@"-----responseObject---%@--",responseObject);
             if ([responseObject[@"result"]intValue] == 1) {
                 _haveHeadImage = YES;
                 [self addAlertView:@"头像上传成功"];
@@ -702,7 +702,7 @@
         UIImage *imageNew = [self imageWithImage:image scaledToSize:imagesize];
         NSData *imageData = UIImageJPEGRepresentation(imageNew, 0.3);
         [GFHttpTool idPhotoImage:imageData success:^(NSDictionary *responseObject) {
-            NSLog(@"----%@---",responseObject);
+//            NSLog(@"----%@---",responseObject);
             if ([responseObject[@"result"]intValue] == 1) {
                 _haveIdentityImage = YES;
                 [self addAlertView:@"证件照上传成功"];

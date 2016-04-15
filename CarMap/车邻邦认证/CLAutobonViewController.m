@@ -129,7 +129,7 @@
 
 
 - (void)certifyBtnClick{
-    NSLog(@"认证按钮的响应方法");
+//    NSLog(@"认证按钮的响应方法");
     if ([_status isEqualToString:@"NEWLY_CREATED"]) {
         CLCertifyViewController *certify = [[CLCertifyViewController alloc]init];
         [certify.submitButton setTitle:@"提交" forState:UIControlStateNormal];

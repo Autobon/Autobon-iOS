@@ -48,16 +48,16 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
             NSString *URLString = [NSString stringWithFormat:@"%@/technician/pushId",HOST];
             NSString *pushId = [userDefaultes objectForKey:@"clientId"];
             [manager2 POST:URLString parameters:@{@"pushId":pushId} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
-                NSLog(@"个推ID更新成功－－%@",responseObject);
+//                NSLog(@"个推ID更新成功－－%@",responseObject);
             } failure:^(NSURLSessionDataTask *task, NSError *error) {
-                NSLog(@"---更新失败了－－%@",error);
+//                NSLog(@"---更新失败了－－%@",error);
             }];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
             
             
             
-            NSLog(@"失败了－－%@",error);
+//            NSLog(@"失败了－－%@",error);
             if(failure) {
                 
                 [aView removeFromSuperview];
@@ -297,7 +297,7 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"提交中..."];
         
         
-        NSLog(@"\n$$$$$$$$$$$\n\n\n\n  %@  \n\n\n\n$$$$$$$$", parameters);
+//        NSLog(@"\n$$$$$$$$$$$\n\n\n\n  %@  \n\n\n\n$$$$$$$$", parameters);
         
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"autoken"];
@@ -427,7 +427,7 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"autoken"];
         
-        NSLog(@"token----%@---",token);
+//        NSLog(@"token----%@---",token);
         
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         
@@ -730,7 +730,7 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/listUnfinished",HOST];
-        NSLog(@"-请求没有成功程序挂掉啦--token---%@---%@---%@-",manager,URLString,dictionary);
+//        NSLog(@"-请求没有成功程序挂掉啦--token---%@---%@---%@-",manager,URLString,dictionary);
 //        [manager GET:URLString parameters:dictionary success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 //            NSLog(@"请求成功了－22－－");
 //            if (success) {
@@ -744,13 +744,13 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
 //        }];
         
         [manager GET:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
-            NSLog(@"请求成功了－11－－");
+//            NSLog(@"请求成功了－11－－");
             if (success) {
                 success(responseObject);
             }
             
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            NSLog(@"请求失败了－－－");
+//            NSLog(@"请求失败了－－－");
             if (failure) {
                 failure(error);
             }
@@ -817,7 +817,7 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         NSString *token = [userDefaultes objectForKey:@"autoken"];
-        NSLog(@"token--%@--",token);
+//        NSLog(@"token--%@--",token);
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         NSString *URLString = [NSString stringWithFormat:@"%@/technician",HOST];
         
@@ -832,7 +832,7 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            NSLog(@"-----失败原因－－－%@-",error);
+//            NSLog(@"-----失败原因－－－%@-",error);
             if(failure) {
                 
                 [aView removeFromSuperview];
@@ -864,13 +864,13 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         NSString *token = [userDefaultes objectForKey:@"autoken"];
-        NSLog(@"token--%@--",token);
+//        NSLog(@"token--%@--",token);
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         NSString *URLString = [NSString stringWithFormat:@"%@/technician/search",HOST];
         
         
         [manager GET:URLString parameters:@{@"query":string} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
-            NSLog(@"----responseObject--%@--",responseObject);
+//            NSLog(@"----responseObject--%@--",responseObject);
             if(success) {
                 
                 [aView removeFromSuperview];
@@ -908,7 +908,7 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         NSString *token = [userDefaultes objectForKey:@"autoken"];
-        NSLog(@"token--%@--",token);
+//        NSLog(@"token--%@--",token);
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/%@/invite/%@",HOST,orderDic[@"orderId"],orderDic[@"partnerId"]];
         
@@ -953,7 +953,7 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         NSString *token = [userDefaultes objectForKey:@"autoken"];
-        NSLog(@"token--%@--",token);
+//        NSLog(@"token--%@--",token);
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/takeup",HOST];
         
@@ -997,7 +997,7 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         NSString *token = [userDefaultes objectForKey:@"autoken"];
-        NSLog(@"token--%@--",token);
+//        NSLog(@"token--%@--",token);
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/start",HOST];
         
@@ -1152,14 +1152,14 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/%ld/invitation",HOST,(long)orderId];
-        NSLog(@"token-可能是这里错了-%@-－－URLString--%@-",token,URLString);
+//        NSLog(@"token-可能是这里错了-%@-－－URLString--%@-",token,URLString);
         [manager POST:URLString parameters:@{@"accepted":accept} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
-            NSLog(@"走出来了");
+//            NSLog(@"走出来了");
             if(success) {
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            NSLog(@"没有走出来－－－%@--",error);
+//            NSLog(@"没有走出来－－－%@--",error);
             if(failure) {
                 failure(error);
             }
@@ -1238,14 +1238,14 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/beforePhoto",HOST];
         [manager POST:URLString parameters:@{@"orderId":@(orderId),@"urls":URLs} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
-            NSLog(@"-----%@－－－－",responseObject[@"message"]);
+//            NSLog(@"-----%@－－－－",responseObject[@"message"]);
             if(success) {
                 
                 [aView removeFromSuperview];
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            NSLog(@"－－－－%@----",error);
+//            NSLog(@"－－－－%@----",error);
             if(failure) {
                 
                 [aView removeFromSuperview];
@@ -1434,7 +1434,7 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         NSString *URLString = [NSString stringWithFormat:@"%@/technician/message",HOST];
         
-        NSLog(@"dictionary----%@---",dictionary);
+//        NSLog(@"dictionary----%@---",dictionary);
         [manager GET:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
 //            [aView remove];
             if(success) {

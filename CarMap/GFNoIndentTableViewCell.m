@@ -178,8 +178,8 @@
     self.baseView.frame = CGRectMake(0, 0, kWidth, CGRectGetMaxY(self.baseView2.frame));
     self.lab3.backgroundColor = [UIColor cyanColor];
     
-    NSLog(@"%f  %f  %f  %f", lab3X, lab3Y, lab3W, lab3H);
-    NSLog(@"%f", self.imageView.frame.origin.y);
+//    NSLog(@"%f  %f  %f  %f", lab3X, lab3Y, lab3W, lab3H);
+//    NSLog(@"%f", self.imageView.frame.origin.y);
 }
 
 
