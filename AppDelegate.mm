@@ -21,7 +21,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "GFHttpTool.h"
 #import "GFAlertView.h"
-
+#import "CLShareViewController.h"
 
 // 个推开发者网站中申请App时，注册的AppId、AppKey、AppSecret
 #define kGtAppId      @"zoCAUGD4Hi55CS6iW1OI77"
@@ -70,7 +70,7 @@
     [UMSocialData setAppKey:@"564572b9e0f55a38dd001e6c"];
     
     
-    [UMSocialWechatHandler setWXAppId:@"wx0d70fda19b5c107c" appSecret:@"bac3ef447782aa76059af754510d84ca" url:@"http://hpecar.com:12345/shareA.html"];
+    [UMSocialWechatHandler setWXAppId:@"wx2dba3ddd59971960" appSecret:@"42debc338ace109597e5a3a514bbf4e5" url:@"http://hpecar.com:12345/shareA.html"];
     
     [UMSocialQQHandler setQQWithAppId:@"1105263986" appKey:@"sjj2sjhLIqtjmcfL" url:@"http://hpecar.com:12345/shareA.html"];
     
@@ -88,7 +88,7 @@
     [userDefaults  removeObjectForKey:@"homeOrder"];
     
    
-//    CLShareViewController *firstView = [[CLShareViewController alloc]init];
+    CLShareViewController *firstView = [[CLShareViewController alloc]init];
 //    CLHomeOrderViewController *firstView = [[CLHomeOrderViewController alloc]init];
 //    CLAddOrderSuccessViewController *firstView = [[CLAddOrderSuccessViewController alloc]init];
 //    PoiSearchDemoViewController *firstView = [[PoiSearchDemoViewController alloc]init];

@@ -12,15 +12,11 @@
 #import "GFForgetPwdViewController_1.h"
 #import "GFHttpTool.h"
 #import "GFAlertView.h"
-
 #import "CLHomeOrderViewController.h"
 #import "CLCertifyViewController.h"
 #import "CLAutobonViewController.h"
 #import "CLCertifyFailViewController.h"
 #import "CLCertifyingViewController.h"
-
-
-
 #import "GFTipView.h"
 
 @interface GFSignInViewController () {

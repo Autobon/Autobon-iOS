@@ -53,6 +53,7 @@
         _contentLabel.numberOfLines = 0;
 //        lab2.text = _contentString;
         _contentLabel.font = [UIFont systemFontOfSize:14 / 320.0 * kWidth];
+        _contentLabel.alpha = 0.6;
         [_baseView addSubview:_contentLabel];
         
         

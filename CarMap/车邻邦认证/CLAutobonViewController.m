@@ -12,7 +12,6 @@
 #import "GFNavigationView.h"
 #import "CLCertifyingViewController.h"
 #import "CLCertifyFailViewController.h"
-#import "CLHomeOrderViewController.h"
 
 
 @interface CLAutobonViewController ()

@@ -110,6 +110,7 @@
 		9BBA2BD61CBB72E500543004 /* servicedelegate.html in Resources */ = {isa = PBXBuildFile; fileRef = 9BBA2BD51CBB72E500543004 /* servicedelegate.html */; };
 		9BCFDC971C859397003A35A8 /* CLCleanWorkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BCFDC961C859397003A35A8 /* CLCleanWorkViewController.m */; };
 		9BCFDCA51C85B6CF003A35A8 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9BCFDCA21C85B6CF003A35A8 /* AppDelegate.mm */; };
+		9BD52BE71CC46C6E009FE948 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BD52BE61CC46C6E009FE948 /* GoogleService-Info.plist */; };
 		9BE53AE41C72ADED00BBB424 /* CLAutobonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE53AE31C72ADED00BBB424 /* CLAutobonViewController.m */; };
 		9BE53AEA1C7301A200BBB424 /* CLCertifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE53AE91C7301A200BBB424 /* CLCertifyViewController.m */; };
 		9BE53AF31C73406800BBB424 /* GFTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE53AF21C73406800BBB424 /* GFTextField.m */; };
@@ -327,6 +328,7 @@
 		9BCFDC961C859397003A35A8 /* CLCleanWorkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLCleanWorkViewController.m; sourceTree = "<group>"; };
 		9BCFDCA11C85B6CF003A35A8 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9BCFDCA21C85B6CF003A35A8 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
+		9BD52BE61CC46C6E009FE948 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9BE53AE21C72ADED00BBB424 /* CLAutobonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAutobonViewController.h; sourceTree = "<group>"; };
 		9BE53AE31C72ADED00BBB424 /* CLAutobonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAutobonViewController.m; sourceTree = "<group>"; };
 		9BE53AE81C7301A200BBB424 /* CLCertifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCertifyViewController.h; sourceTree = "<group>"; };
@@ -751,6 +753,7 @@
 				9B9754481C5765B3004BDC7C /* Assets.xcassets */,
 				8679EBC91C9A4950001C1D99 /* WorkItemDic.plist */,
 				9B97544D1C5765B3004BDC7C /* Info.plist */,
+				9BD52BE61CC46C6E009FE948 /* GoogleService-Info.plist */,
 				9B42F0771CBFADDA00F08C4E /* Images.xcassets */,
 				9B97543C1C5765B3004BDC7C /* Supporting Files */,
 			);
@@ -925,6 +928,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BBA2BD61CBB72E500543004 /* servicedelegate.html in Resources */,
+				9BD52BE71CC46C6E009FE948 /* GoogleService-Info.plist in Resources */,
 				9B42F0781CBFADDA00F08C4E /* Images.xcassets in Resources */,
 				9BA74D251C75CDF100AF7B26 /* LaunchScreen.storyboard in Resources */,
 				9BBA2BD21CBB727E00543004 /* CertifyDelegate.html in Resources */,

@@ -12,9 +12,7 @@
 #import "CLTitleView.h"
 #import "CLTouchScrollView.h"
 #import "GFAlertView.h"
-//#import "CLHomeViewController.h"
-//#import "CLOrderViewController.h"
-#import "CLHomeOrderViewController.h"
+//#import "CLHomeOrderViewController.h"
 #import "GFHttpTool.h"
 #import "GFTipView.h"
 #import "CLCertifyingViewController.h"
@@ -438,8 +436,8 @@
 
 #pragma mark - 警告框 OK
 - (void)alertBtnClick{
-    CLHomeOrderViewController *homeView = [[CLHomeOrderViewController alloc]init];
-    [self.navigationController pushViewController:homeView animated:YES];
+//    CLHomeOrderViewController *homeView = [[CLHomeOrderViewController alloc]init];
+//    [self.navigationController pushViewController:homeView animated:YES];
 //    UIWindow *window = [UIApplication sharedApplication].delegate.window;
 //    window.rootViewController = homeView;
 //    NSLog(@"----shuohsuokanal--");
