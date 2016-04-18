@@ -63,7 +63,6 @@
 		9B3FCD101C929FC300E871C7 /* GFNoIndentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3FCD0E1C929FC300E871C7 /* GFNoIndentViewController.m */; };
 		9B3FCD1F1C92A09500E871C7 /* GFButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3FCD151C92A09500E871C7 /* GFButton.m */; };
 		9B3FCD231C92A09500E871C7 /* GFTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3FCD1D1C92A09500E871C7 /* GFTitleView.m */; };
-		9B42F0781CBFADDA00F08C4E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B42F0771CBFADDA00F08C4E /* Images.xcassets */; };
 		9B5FBC291CAE58D400A0BF96 /* CLLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5FBC281CAE58D400A0BF96 /* CLLocationViewController.m */; };
 		9B6925441CBCC7C00093B22C /* CLNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6925431CBCC7C00093B22C /* CLNotificationViewController.m */; };
 		9B6925471CBCCDA30093B22C /* CLNotificationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6925461CBCCDA30093B22C /* CLNotificationModel.m */; };
@@ -239,7 +238,6 @@
 		9B3FCD151C92A09500E871C7 /* GFButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFButton.m; sourceTree = "<group>"; };
 		9B3FCD1C1C92A09500E871C7 /* GFTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFTitleView.h; sourceTree = "<group>"; };
 		9B3FCD1D1C92A09500E871C7 /* GFTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFTitleView.m; sourceTree = "<group>"; };
-		9B42F0771CBFADDA00F08C4E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		9B5FBC271CAE58D400A0BF96 /* CLLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLLocationViewController.h; sourceTree = "<group>"; };
 		9B5FBC281CAE58D400A0BF96 /* CLLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLLocationViewController.m; sourceTree = "<group>"; };
 		9B6925421CBCC7C00093B22C /* CLNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLNotificationViewController.h; sourceTree = "<group>"; };
@@ -754,7 +752,6 @@
 				8679EBC91C9A4950001C1D99 /* WorkItemDic.plist */,
 				9B97544D1C5765B3004BDC7C /* Info.plist */,
 				9BD52BE61CC46C6E009FE948 /* GoogleService-Info.plist */,
-				9B42F0771CBFADDA00F08C4E /* Images.xcassets */,
 				9B97543C1C5765B3004BDC7C /* Supporting Files */,
 			);
 			path = CarMap;
@@ -929,7 +926,6 @@
 			files = (
 				9BBA2BD61CBB72E500543004 /* servicedelegate.html in Resources */,
 				9BD52BE71CC46C6E009FE948 /* GoogleService-Info.plist in Resources */,
-				9B42F0781CBFADDA00F08C4E /* Images.xcassets in Resources */,
 				9BA74D251C75CDF100AF7B26 /* LaunchScreen.storyboard in Resources */,
 				9BBA2BD21CBB727E00543004 /* CertifyDelegate.html in Resources */,
 				9B9754491C5765B3004BDC7C /* Assets.xcassets in Resources */,
@@ -1235,6 +1231,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = CarNeighbor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -1254,6 +1251,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = CarNeighbor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

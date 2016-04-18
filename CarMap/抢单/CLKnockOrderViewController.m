@@ -53,8 +53,13 @@
     [_orderView addSubview:titleLabel];
     
     GFMapViewController *mapVC = [[GFMapViewController alloc] init];
+    if (![orderDic[@"positionLat"] isKindOfClass:[NSNull class]] && ![orderDic[@"positionLon"] isKindOfClass:[NSNull class]]) {
+        mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([orderDic[@"positionLat"]floatValue],[orderDic[@"positionLon"]floatValue]);
+    }else{
+        mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30,114);
+    }
     
-    mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([orderDic[@"positionLat"]floatValue],[orderDic[@"positionLon"]floatValue]);
+    
     mapVC.bossPointAnno.iconImgName = @"location";
     mapVC.distanceBlock = ^(double distance) {
 //        NSLog(@"距离－－%f--",distance);

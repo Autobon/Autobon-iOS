@@ -25,6 +25,9 @@
 #import "CLWorkOverViewController.h"
 #import "CLCleanWorkViewController.h"
 #import "UIImageView+WebCache.h"
+#import <Google/Analytics.h>
+
+
 
 
 @interface CLHomeOrderViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -60,6 +63,12 @@
     NSUserDefaults *userDefalts = [NSUserDefaults standardUserDefaults];
     [userDefalts setObject:@"YES" forKey:@"homeOrder"];
     [userDefalts synchronize];
+    
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"home"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated{

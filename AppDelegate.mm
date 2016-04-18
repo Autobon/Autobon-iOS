@@ -22,6 +22,9 @@
 #import "GFHttpTool.h"
 #import "GFAlertView.h"
 #import "CLShareViewController.h"
+#import <Google/Analytics.h>
+
+
 
 // 个推开发者网站中申请App时，注册的AppId、AppKey、AppSecret
 #define kGtAppId      @"zoCAUGD4Hi55CS6iW1OI77"
@@ -70,7 +73,7 @@
     [UMSocialData setAppKey:@"564572b9e0f55a38dd001e6c"];
     
     
-    [UMSocialWechatHandler setWXAppId:@"wx2dba3ddd59971960" appSecret:@"42debc338ace109597e5a3a514bbf4e5" url:@"http://hpecar.com:12345/shareA.html"];
+    [UMSocialWechatHandler setWXAppId:@"wx55cc20e910a128e5" appSecret:@"7ca03043095011790e0b9a6b9f498457" url:@"http://hpecar.com:12345/shareA.html"];
     
     [UMSocialQQHandler setQQWithAppId:@"1105263986" appKey:@"sjj2sjhLIqtjmcfL" url:@"http://hpecar.com:12345/shareA.html"];
     
@@ -88,7 +91,7 @@
     [userDefaults  removeObjectForKey:@"homeOrder"];
     
    
-    CLShareViewController *firstView = [[CLShareViewController alloc]init];
+//    CLShareViewController *firstView = [[CLShareViewController alloc]init];
 //    CLHomeOrderViewController *firstView = [[CLHomeOrderViewController alloc]init];
 //    CLAddOrderSuccessViewController *firstView = [[CLAddOrderSuccessViewController alloc]init];
 //    PoiSearchDemoViewController *firstView = [[PoiSearchDemoViewController alloc]init];
@@ -143,7 +146,15 @@
     
     
     
-   
+    NSError *configureError;
+    [[GGLContext sharedInstance] configureWithError:&configureError];
+    NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
+    
+    // Optional: configure GAI options.
+    GAI *gai = [GAI sharedInstance];
+    gai.trackUncaughtExceptions = YES;  // report uncaught exceptions
+    gai.logger.logLevel = kGAILogLevelVerbose;  // remove before app release
+
     
     
     return YES;
@@ -500,14 +511,16 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
     // 处理APNs代码，通过userInfo可以取到推送的信息（包括内容，角标，自定义参数等）。如果需要弹窗等其他操作，则需要自行编码。
 #pragma mark - 后台运行调用的方法
-//    NSLog(@"\n>>>[Receive ------ RemoteNotification - Background Fetch]:%@\n\n",userInfo);
+    NSLog(@"\n>>>[Receive ------ RemoteNotification - Background Fetch]:%@\n\n",userInfo);
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     completionHandler(UIBackgroundFetchResultNewData);
     
 //    NSLog(@"json----%@--",userInfo[@"json"]);
-    NSData *JSONData = [userInfo[@"json"] dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *apsDictionary = userInfo[@"aps"];
+    NSDictionary *alertDictionary = apsDictionary[@"alert"];
+    NSData *JSONData = [alertDictionary[@"payload"] dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:nil];
-//    NSLog(@"----responseJSON----%@---",responseJSON);
+    NSLog(@"----responseJSON----%@---",responseJSON);
     if ([responseJSON[@"action"] isEqualToString:@"NEW_ORDER"]||[responseJSON[@"action"]isEqualToString:@"INVITE_PARTNER"]) {
         if (![[userDefaults objectForKey:@"homeOrder"]isEqualToString:@"YES"]) {
             UIWindow *window = [UIApplication sharedApplication].delegate.window;
