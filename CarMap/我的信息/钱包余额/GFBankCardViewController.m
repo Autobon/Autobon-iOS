@@ -271,13 +271,14 @@
                 }else {
                     
 //                    NSLog(@"修改失败===========\n%@", responseObject);
+                    [self addAlertView:@"请求失败"];
                 }
                 
                 
             } failure:^(NSError *error) {
                 
 //                NSLog(@"提交失败++++++++++++++%@", error);
-                
+                [self addAlertView:@"请求失败"];
             }];
             
         }
@@ -294,6 +295,13 @@
     
     
 }
+
+#pragma mark - AlertView
+- (void)addAlertView:(NSString *)title{
+    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
+    [tipView tipViewShow];
+}
+
 
 //- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
 //    if (textField.tag == 5) {

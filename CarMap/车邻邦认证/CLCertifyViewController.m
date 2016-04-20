@@ -124,7 +124,7 @@
 
             }
         } failure:^(NSError *error) {
-            
+            [self addAlertView:@"请求失败"];
         }];
     }
     
@@ -406,6 +406,7 @@
                                         
                                         } failure:^(NSError *error) {
 //                                            NSLog(@"应该不会---%@--",error);
+                                            [self addAlertView:@"提交失败"];
                                         }];
                                     }
                                 }
@@ -686,7 +687,7 @@
                 [self addAlertView:@"头像上传失败"];
             }
         } failure:^(NSError *error) {
-            
+            [self addAlertView:@"头像上传失败"];
         }];
         
     }else{
@@ -710,7 +711,7 @@
                 [self addAlertView:@"证件照上传失败"];
             }
         } failure:^(NSError *error) {
-            
+            [self addAlertView:@"证件照上传失败"];
         }];
         
     }

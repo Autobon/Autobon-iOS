@@ -11,7 +11,7 @@
 #import "GFHttpTool.h"
 #import "UIImageView+WebCache.h"
 #import "CLHomeOrderViewController.h"
-
+#import "GFTipView.h"
 
 @interface CLCertifyingViewController ()
 {
@@ -84,12 +84,16 @@
             
         }
     } failure:^(NSError *error) {
-        
+        [self addAlertView:@"请求失败"];
     }];
     
     
 }
-
+#pragma mark - AlertView
+- (void)addAlertView:(NSString *)title{
+    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
+    [tipView tipViewShow];
+}
 
 
 - (void)setViewForCertify{

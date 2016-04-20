@@ -12,6 +12,6 @@
 
 @property (nonatomic ,strong) NSDictionary *orderDictionary;
 @property (nonatomic ,strong) UIButton *certifyButton;
-
+@property (nonatomic ,strong) UIButton *cancelButton;
 
 @end

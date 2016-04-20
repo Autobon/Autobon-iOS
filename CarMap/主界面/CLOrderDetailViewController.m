@@ -329,6 +329,7 @@
         
     } failure:^(NSError *error) {
 //        NSLog(@"----失败原因－－%@--",error);
+        [self addAlertView:@"请求失败"];
     }];
     
 }
@@ -390,6 +391,7 @@
         [self.navigationController popToRootViewControllerAnimated:YES];
     } failure:^(NSError *error) {
 //        NSLog(@"---error---%@--",error);
+        [self addAlertView:@"请求失败"];
     }];
 
 }

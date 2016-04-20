@@ -57,6 +57,7 @@
 		86B890F71C73355B0068B95D /* GFSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890EC1C73355B0068B95D /* GFSignInViewController.m */; };
 		86B890F81C73355B0068B95D /* GFSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890EE1C73355B0068B95D /* GFSignUpViewController.m */; };
 		86B890FA1C73355B0068B95D /* GFMyMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890F31C73355B0068B95D /* GFMyMessageViewController.m */; };
+		9B13D93B1CC75B4400078126 /* CLOrderForWaitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B13D93A1CC75B4400078126 /* CLOrderForWaitViewController.m */; };
 		9B3FCD071C925E6800E871C7 /* CLCooperateFailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3FCD061C925E6800E871C7 /* CLCooperateFailViewController.m */; };
 		9B3FCD0A1C92707D00E871C7 /* CLCooperatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3FCD091C92707D00E871C7 /* CLCooperatingViewController.m */; };
 		9B3FCD0F1C929FC300E871C7 /* GFNoIndentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3FCD0C1C929FC300E871C7 /* GFNoIndentTableViewCell.m */; };
@@ -226,6 +227,8 @@
 		86B890F21C73355B0068B95D /* GFMyMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFMyMessageViewController.h; sourceTree = "<group>"; };
 		86B890F31C73355B0068B95D /* GFMyMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFMyMessageViewController.m; sourceTree = "<group>"; };
 		9B02AF661C5A22CB0044FB71 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		9B13D9391CC75B4400078126 /* CLOrderForWaitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLOrderForWaitViewController.h; sourceTree = "<group>"; };
+		9B13D93A1CC75B4400078126 /* CLOrderForWaitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLOrderForWaitViewController.m; sourceTree = "<group>"; };
 		9B3FCD051C925E6800E871C7 /* CLCooperateFailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCooperateFailViewController.h; sourceTree = "<group>"; };
 		9B3FCD061C925E6800E871C7 /* CLCooperateFailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLCooperateFailViewController.m; sourceTree = "<group>"; };
 		9B3FCD081C92707D00E871C7 /* CLCooperatingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCooperatingViewController.h; sourceTree = "<group>"; };
@@ -795,6 +798,8 @@
 				9BA391711C843564002F30A7 /* CLAddPersonModel.m */,
 				9B771FA21C87E34C005E8567 /* CLAddOrderSuccessViewController.h */,
 				9B771FA31C87E34C005E8567 /* CLAddOrderSuccessViewController.m */,
+				9B13D9391CC75B4400078126 /* CLOrderForWaitViewController.h */,
+				9B13D93A1CC75B4400078126 /* CLOrderForWaitViewController.m */,
 			);
 			path = "主界面";
 			sourceTree = "<group>";
@@ -1048,6 +1053,7 @@
 				9B3FCD0F1C929FC300E871C7 /* GFNoIndentTableViewCell.m in Sources */,
 				865EB95E1C9A59D600B045C7 /* GFNothingView.m in Sources */,
 				86B890F41C73355B0068B95D /* GFForgetPwdViewController_1.m in Sources */,
+				9B13D93B1CC75B4400078126 /* CLOrderForWaitViewController.m in Sources */,
 				9B5FBC291CAE58D400A0BF96 /* CLLocationViewController.m in Sources */,
 				860A4CC41C7ED9780067FB70 /* UIView+MJExtension.m in Sources */,
 				860A4CB21C7ED9780067FB70 /* MJRefreshAutoFooter.m in Sources */,

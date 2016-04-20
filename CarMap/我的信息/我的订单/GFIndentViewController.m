@@ -402,6 +402,7 @@
 
         self.tableview.userInteractionEnabled = YES;
         [self.tableview.header endRefreshing];
+        [self addAlertView:@"请求失败"];
         
     }];
 
@@ -585,7 +586,7 @@
         
 //        NSLog(@"网络请求失败");
         
-        
+         [self addAlertView:@"请求失败"];
         [self.tableview.footer endRefreshing];
         
     }];

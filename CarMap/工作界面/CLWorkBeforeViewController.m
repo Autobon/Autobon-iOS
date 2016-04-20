@@ -317,11 +317,12 @@
             imageView.resultURL = responseObject[@"data"];
         }else{
 #warning --图片上传失败，从数组移走图片
-            
+            [self addAlertView:@"图片上传失败"];
         }
 
     } failure:^(NSError *error) {
 //        NSLog(@"上传失败原因－－%@--",error);
+        [self addAlertView:@"图片上传失败"];
     }];
     
 }

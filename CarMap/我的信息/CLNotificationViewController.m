@@ -70,7 +70,7 @@
         }
         
     } failure:^(NSError *error) {
-        
+        [self addAlertView:@"请求失败"];
     }];
 }
 

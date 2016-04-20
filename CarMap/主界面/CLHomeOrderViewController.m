@@ -26,6 +26,7 @@
 #import "CLCleanWorkViewController.h"
 #import "UIImageView+WebCache.h"
 #import <Google/Analytics.h>
+#import "CLOrderForWaitViewController.h"
 
 
 
@@ -228,6 +229,7 @@
         }
     } failure:^(NSError *error) {
 //        NSLog(@"-不知道为什么请求失败了－－error--%@---",error);
+        [self addAlertView:@"请求失败"];
     }];
 }
 
@@ -239,7 +241,7 @@
 #pragma mark - 接受通知消息
 -(void)receiveNotification:(NSNotification *)Notification
 {
-//    NSLog(@"receiveNotification---%@--",Notification.userInfo);
+    NSLog(@"receiveNotification---%@--",Notification.userInfo);
     
     
     if ([Notification.userInfo[@"action"] isEqualToString:@"NEW_ORDER"]) {
@@ -264,6 +266,9 @@
             NSDictionary *orderDic = Notification.userInfo[@"order"];
             _knockOrder.certifyButton.tag = [orderDic[@"id"] integerValue];
             [_knockOrder.certifyButton addTarget:self action:@selector(knockBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            [_knockOrder.cancelButton addTarget:self action:@selector(knockCancelClick) forControlEvents:UIControlEventTouchUpInside];
+        }else{
+            NSLog(@"没有显示订单");
         }
         
     }else if ([Notification.userInfo[@"action"] isEqualToString:@"INVITE_PARTNER"]){
@@ -320,6 +325,11 @@
 }
 
 
+#pragma mark - 移走推送订单
+- (void)knockCancelClick{
+     _knockOrder = nil;
+}
+
 #pragma mark - 立即抢单
 - (void)knockBtnClick:(UIButton *)button{
 
@@ -341,7 +351,7 @@
         if ([responseObject[@"result"]integerValue] == 1) {
             
             [[[button superview] superview]removeFromSuperview];
-            
+            _knockOrder = nil;
             CLAddOrderSuccessViewController *addSuccess = [[CLAddOrderSuccessViewController alloc]init];
             NSDictionary *dataDictionary = responseObject[@"data"];
             addSuccess.orderNum = dataDictionary[@"orderNum"];
@@ -361,6 +371,7 @@
         }
     } failure:^(NSError *error) {
 //        NSLog(@"----抢单结果-222-%@--",error);
+        [self addAlertView:@"请求失败"];
     }];
     
     
@@ -783,8 +794,8 @@
 - (void)setNavigation{
     
     
-    GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:nil withLeftImgHightName:nil withRightImgName:@"person" withRightImgHightName:@"personClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
-//    [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"waitOrder" withLeftImgHightName:@"waitOrder" withRightImgName:@"person" withRightImgHightName:@"personClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+    [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [navView.rightBut addTarget:navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:navView];
     
@@ -793,12 +804,10 @@
 }
 
 -(void)backBtnClick{
-//    NSLog(@"个人信息界面");
-    GFMyMessageViewController *myMsgVC = [[GFMyMessageViewController alloc] init];
-    [self.navigationController pushViewController:myMsgVC animated:YES];
+
+    CLOrderForWaitViewController *orderForWait = [[CLOrderForWaitViewController alloc]init];
+    [self.navigationController pushViewController:orderForWait animated:YES];
     
-   
-//    [self receiveNotification:nil];
 }
 
 

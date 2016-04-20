@@ -389,8 +389,8 @@
     if (payload) {
         payloadMsg = [[NSString alloc] initWithBytes:payload.bytes length:payload.length encoding:NSUTF8StringEncoding];
     }
-//    NSString *msg = [NSString stringWithFormat:@" payloadId=%@,taskId=%@,messageId:%@,payloadMsg:%@%@",payloadId,taskId,aMsgId,payloadMsg,offLine ? @"<离线消息>" : @""];
-//    NSLog(@"\n>前台>>[GexinSdk ReceivePayload]:%@\n\n", msg);
+    NSString *msg = [NSString stringWithFormat:@" payloadId=%@,taskId=%@,messageId:%@,payloadMsg:%@%@",payloadId,taskId,aMsgId,payloadMsg,offLine ? @"<离线消息>" : @""];
+    NSLog(@"\n>前台>>[GexinSdk ReceivePayload]:%@\n\n", msg);
     [GeTuiSdk sendFeedbackMessage:90001 taskId:taskId msgId:aMsgId];
     if (!offLine) {
         NSData *JSONData = [payloadMsg dataUsingEncoding:NSUTF8StringEncoding];
@@ -459,6 +459,19 @@
             UIWindow *window = [UIApplication sharedApplication].delegate.window;
             [window addSubview:_alertView];
             
+        }else if ([responseJSON[@"action"]isEqualToString:@"ASSIGN_ORDER"]){
+            UILocalNotification*notification = [[UILocalNotification alloc] init];
+            if (nil != notification)
+            {
+                notification.fireDate = [NSDate date];
+                _pushDate = [NSDate date];
+                notification.alertTitle = @"车邻邦";
+                notification.alertBody = responseJSON[@"title"];
+                 notification.userInfo = @{@"dictionary":payloadMsg};
+                AudioServicesPlaySystemSound(1307);
+//                NSLog(@"-----notification---%@---",notification);
+                [[UIApplication sharedApplication]scheduleLocalNotification:notification];
+            }
         }
     }
     
@@ -528,9 +541,12 @@
             UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeOrderView];
             navigation.navigationBarHidden = YES;
             window.rootViewController = navigation;
+            [self performSelector:@selector(after:) withObject:responseJSON afterDelay:1.0];
+        }else{
+            [self performSelector:@selector(after:) withObject:responseJSON afterDelay:1.0];
         }
-#warning --发通知
-        [self performSelector:@selector(after:) withObject:responseJSON afterDelay:1.0];
+
+        
     }else if ([responseJSON[@"action"]isEqualToString:@"NEW_MESSAGE"]){
         NSDictionary *messageDictionary = responseJSON[@"message"];
         
@@ -545,6 +561,12 @@
 //        UIWindow *window = [UIApplication sharedApplication].delegate.window;
         [window addSubview:_alertView];
         
+    }else if ([responseJSON[@"action"]isEqualToString:@"ASSIGN_ORDER"]){
+        UIWindow *window = [UIApplication sharedApplication].delegate.window;
+        CLHomeOrderViewController *homeOrderView = [[CLHomeOrderViewController alloc]init];
+        UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeOrderView];
+        navigation.navigationBarHidden = YES;
+        window.rootViewController = navigation;
     }
     
 
@@ -561,10 +583,10 @@
     
     
     long time = (long)[[NSDate date] timeIntervalSince1970] - [_pushDate timeIntervalSince1970];
-//    NSLog(@"---time--%@----",notification.userInfo);
+    NSLog(@"---time--%@---%@-",@(time),notification.userInfo);
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if (0 < time && notification.userInfo) {
-//         NSLog(@"消息来了a－－%@",notification.userInfo);
+         NSLog(@"消息来了a－－%@",notification.userInfo);
         NSData *JSONData = [notification.userInfo[@"dictionary"] dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:nil];
         
@@ -591,8 +613,12 @@
             UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:signin];
             navigation.navigationBarHidden = YES;
             window.rootViewController = navigation;
-            
-            
+        }else if ([responseJSON[@"action"]isEqualToString:@"ASSIGN_ORDER"]){
+            UIWindow *window = [UIApplication sharedApplication].delegate.window;
+            CLHomeOrderViewController *homeOrderView = [[CLHomeOrderViewController alloc]init];
+            UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeOrderView];
+            navigation.navigationBarHidden = YES;
+            window.rootViewController = navigation;
         }
         
         
