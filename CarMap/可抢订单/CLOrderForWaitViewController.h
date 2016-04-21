@@ -10,4 +10,7 @@
 
 @interface CLOrderForWaitViewController : UIViewController
 
+
+- (void)headRefresh;
+
 @end

@@ -16,5 +16,6 @@ typedef void (^addOrderBlock)();
 @property (nonatomic ,strong) NSString *orderNum;
 
 @property (nonatomic ,strong) NSDictionary *dataDictionary;
+@property (nonatomic ) BOOL isHome;
 
 @end

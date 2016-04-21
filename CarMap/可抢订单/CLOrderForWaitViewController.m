@@ -9,14 +9,16 @@
 #import "CLOrderForWaitViewController.h"
 #import "GFNavigationView.h"
 #import "CLTitleTableViewCell.h"
-#import "CLHomeTableViewCell.h"
+#import "CLNewOrderTableViewCell.h"
 #import "GFHttpTool.h"
-#import "CLHomeOrderCellModel.h"
 #import "GFAlertView.h"
 #import "CLAddOrderSuccessViewController.h"
 #import "MJRefresh.h"
 #import "GFTipView.h"
 #import "UIImageView+WebCache.h"
+#import "CLListNewModel.h"
+#import "CLNewOrderDetailViewController.h"
+
 
 
 
@@ -95,7 +97,7 @@
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *dictionary = @{@"page":@(_page),@"pageSize":@(_pageSize)};
-    [GFHttpTool getOrderListDictionary:dictionary Success:^(NSDictionary *responseObject) {
+    [GFHttpTool getOrderListNewDictionary:dictionary Success:^(NSDictionary *responseObject) {
         if ([responseObject[@"result"] integerValue] == 1) {
             //            NSLog(@"wangluoqingqiu");
             NSDictionary *dataDit = responseObject[@"data"];
@@ -107,61 +109,27 @@
                 [self addAlertView:@"已加载全部"];
             }
             [dataArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
-                //                NSLog(@"---obj---%@--",obj);
-                CLHomeOrderCellModel *cellModel = [[CLHomeOrderCellModel alloc]init];
-                cellModel.orderId = obj[@"id"];
-                cellModel.orderNumber = obj[@"orderNum"];
-                cellModel.orderType = obj[@"orderType"];
-                cellModel.orderPhotoURL = [NSString stringWithFormat:@"http://121.40.157.200:12345%@",obj[@"photo"]];
-                cellModel.customerLat = obj[@"positionLat"];
-                cellModel.customerLon = obj[@"positionLon"];
+                NSLog(@"---obj---%@--",obj);
+                CLListNewModel *model = [[CLListNewModel alloc]init];
+                model.orderId = obj[@"id"];
+                model.orderNumber = obj[@"orderNum"];
+                model.orderType = obj[@"orderType"];
+                model.orderPhoto = [NSString stringWithFormat:@"http://121.40.157.200:12345%@",obj[@"photo"]];
+                model.orderLat = obj[@"positionLat"];
+                model.orderLon = obj[@"positionLon"];
+                model.dataDictionary = obj;
                 if ([obj[@"remark"] isKindOfClass:[NSNull class]]) {
-                    cellModel.remark = @" ";
+                    model.orderRemark = @" ";
                 }else{
-                    cellModel.remark = obj[@"remark"];
+                    model.orderRemark = obj[@"remark"];
                 }
-                cellModel.status = obj[@"status"];
-                NSDictionary *mainTechDictionary = obj[@"mainTech"];
                 
-                if ([mainTechDictionary[@"id"] integerValue] == [[userDefaults objectForKey:@"userId"] integerValue]) {
-                    cellModel.mainTechId = mainTechDictionary[@"id"];
-                }
-                if ([[userDefaults objectForKey:@"userId"] integerValue] == [cellModel.mainTechId integerValue]) {
-                    //                    NSLog(@"我是主技师");
-                    if (![obj[@"mainConstruct"] isKindOfClass:[NSNull class]]) {
-                        NSDictionary *mainDictionary = obj[@"mainConstruct"];
-                        cellModel.startTime = mainDictionary[@"startTime"];
-                        cellModel.signinTime = mainDictionary[@"signinTime"];
-                        cellModel.beforePhotos = mainDictionary[@"beforePhotos"];
-                        cellModel.afterPhotos = mainDictionary[@"afterPhotos"];
-                        
-                    }
-                    if (![obj[@"secondTech"] isKindOfClass:[NSNull class]]) {
-                        //                        NSLog(@"有小伙伴");
-                        NSDictionary *secondDictionary = obj[@"secondTech"];
-                        cellModel.secondTechId = secondDictionary[@"name"];
-                        cellModel.mateName = secondDictionary[@"name"];
-                    }
-                    
-                }else{
-                    //                    NSLog(@"我是次技师");
-                    NSDictionary *secondDictionary = obj[@"mainTech"];
-                    cellModel.mateName = secondDictionary[@"name"];
-                    if (![obj[@"secondConstruct"] isKindOfClass:[NSNull class]]) {
-                        NSDictionary *mainDictionary = obj[@"secondConstruct"];
-                        cellModel.startTime = mainDictionary[@"startTime"];
-                        cellModel.signinTime = mainDictionary[@"signinTime"];
-                        cellModel.beforePhotos = mainDictionary[@"beforePhotos"];
-                        cellModel.afterPhotos = mainDictionary[@"afterPhotos"];
-                    }
-                    
-                    cellModel.secondTechId = secondDictionary[@"name"];
-                }
+            
                 
                 //                cellModel.secondTechId = obj[@"secondTechId"];
-                [_cellModelArray addObject:cellModel];
+                [_cellModelArray addObject:model];
                 NSDate *date = [NSDate dateWithTimeIntervalSince1970:[obj[@"orderTime"] floatValue]/1000];
-                cellModel.orderTime = [formatter stringFromDate:date];
+                model.orderTime = [formatter stringFromDate:date];
                 //                NSLog(@"cellModel.orderNumber:%@",cellModel.orderNumber);
                 
                 
@@ -195,27 +163,28 @@
 #pragma mark - 立即抢单
 - (void)knockBtnClick:(UIButton *)button{
     
-    [GFHttpTool postOrderId:button.tag Success:^(NSDictionary *responseObject) {
+    CLListNewModel *model = _cellModelArray[button.tag-1];
+    
+    [GFHttpTool postOrderId:[model.orderId integerValue] Success:^(NSDictionary *responseObject) {
         
         //        NSLog(@"----抢单结果--%@--",responseObject);
         if ([responseObject[@"result"]integerValue] == 1) {
             
-            [[[button superview] superview]removeFromSuperview];
             
             
             CLAddOrderSuccessViewController *addSuccess = [[CLAddOrderSuccessViewController alloc]init];
-            NSDictionary *dataDictionary = responseObject[@"data"];
-            addSuccess.orderNum = dataDictionary[@"orderNum"];
-            addSuccess.dataDictionary = dataDictionary;
+            
+            addSuccess.orderNum = model.orderNumber;
+            addSuccess.dataDictionary = model.dataDictionary;
             
             
             
-            addSuccess.addBlock = ^{
-                _noOrderImageView.hidden = YES;
-                _noOrderlabel.hidden = YES;
-                
-                //                [self headRefresh];
-            };
+//            addSuccess.addBlock = ^{
+//                _noOrderImageView.hidden = YES;
+//                _noOrderlabel.hidden = YES;
+//                
+//                //                [self headRefresh];
+//            };
             [self.navigationController pushViewController:addSuccess animated:NO];
         }else{
             [self addAlertView:responseObject[@"message"]];
@@ -313,10 +282,13 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    //    NSLog(@"dianjifangfa");
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    
+    CLNewOrderDetailViewController *newOrderDetail = [[CLNewOrderDetailViewController alloc]init];
+    newOrderDetail.model = _cellModelArray[indexPath.row - 1];
+//    NSLog(@"-----model -%@---cell--%@-",newOrderDetail.model,_cellModelArray[indexPath.row-1]);
+    [self.navigationController pushViewController:newOrderDetail animated:YES];
+//    NSLog(@"--------model.dictionary-----%@---",newOrderDetail.model.dataDictionary);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -329,31 +301,24 @@
         }
         return cell;
     }else{
-        CLHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"order"];
+        CLNewOrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"order"];
         if (cell == nil) {
-            cell = [[CLHomeTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"order"];
+            cell = [[CLNewOrderTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"order"];
             [cell initWithOrder];
         }
         if (indexPath.row <= _cellModelArray.count) {
-            CLHomeOrderCellModel *cellModer = _cellModelArray[indexPath.row-1];
+            CLListNewModel *cellModer = _cellModelArray[indexPath.row-1];
             cell.orderButton.tag = indexPath.row + 1;
+            NSArray *array = @[@"隔热层",@"隐形车衣",@"车身改色",@"美容清洁"];
+            cell.typeLabel.text = array[[cellModer.orderType integerValue]-1];
+//            cell.typeLabel.text = cellModer.orderType;
             cell.orderNumberLabel.text = [NSString stringWithFormat:@"订单编号%@",cellModer.orderNumber];
             cell.timeLabel.text = [NSString stringWithFormat:@"预约时间%@",cellModer.orderTime];
-            [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:cellModer.orderPhotoURL] placeholderImage:[UIImage imageNamed:@"orderImage"]];
-            [cell.orderButton setTitle:@"接单" forState:UIControlStateNormal];
+            [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:cellModer.orderPhoto] placeholderImage:[UIImage imageNamed:@"orderImage"]];
+            [cell.orderButton setTitle:@"抢单" forState:UIControlStateNormal];
+            cell.orderButton.tag = indexPath.row;
             [cell.orderButton addTarget:self action:@selector(knockBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-            
-//            if ([cellModer.status isEqualToString:@"IN_PROGRESS"]) {
-//                [cell.orderButton setTitle:@"进入订单" forState:UIControlStateNormal];
-//                [cell.orderButton addTarget:self action:@selector(orderBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//            }else{
-//                [cell.orderButton setTitle:@"开始工作" forState:UIControlStateNormal];
-//                [cell.orderButton addTarget:self action:@selector(workBegin:) forControlEvents:UIControlEventTouchUpInside];
-//                
-//            }
         }
-        //        cell.contentView.userInteractionEnabled = YES;
-        //        [cell.orderButton addTarget:self action:@selector(workBegin:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
     };
     

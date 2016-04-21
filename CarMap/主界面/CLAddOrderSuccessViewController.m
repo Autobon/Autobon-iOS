@@ -11,7 +11,7 @@
 #import "GFMyMessageViewController.h"
 #import "CLOrderDetailViewController.h"
 #import "CLHomeOrderViewController.h"
-
+#import "CLOrderForWaitViewController.h"
 
 
 
@@ -217,9 +217,18 @@
 
 
 - (void)backBtnClick{
-    CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
-    [homeOrder headRefresh];
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    
+    if (_isHome) {
+        CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
+        [homeOrder headRefresh];
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        CLOrderForWaitViewController *orderForWait = self.navigationController.viewControllers[1];
+        [orderForWait headRefresh];
+        [self.navigationController popToViewController:orderForWait animated:YES];
+    }
+    
 //    GFMyMessageViewController *myMessage = [[GFMyMessageViewController alloc]init];
 //    [self.navigationController pushViewController:myMessage animated:YES];
 }

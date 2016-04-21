@@ -356,7 +356,7 @@
             NSDictionary *dataDictionary = responseObject[@"data"];
             addSuccess.orderNum = dataDictionary[@"orderNum"];
             addSuccess.dataDictionary = dataDictionary;
-            
+            addSuccess.isHome = YES;
             
             
             addSuccess.addBlock = ^{

@@ -57,7 +57,6 @@
 		86B890F71C73355B0068B95D /* GFSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890EC1C73355B0068B95D /* GFSignInViewController.m */; };
 		86B890F81C73355B0068B95D /* GFSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890EE1C73355B0068B95D /* GFSignUpViewController.m */; };
 		86B890FA1C73355B0068B95D /* GFMyMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B890F31C73355B0068B95D /* GFMyMessageViewController.m */; };
-		9B13D93B1CC75B4400078126 /* CLOrderForWaitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B13D93A1CC75B4400078126 /* CLOrderForWaitViewController.m */; };
 		9B3FCD071C925E6800E871C7 /* CLCooperateFailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3FCD061C925E6800E871C7 /* CLCooperateFailViewController.m */; };
 		9B3FCD0A1C92707D00E871C7 /* CLCooperatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3FCD091C92707D00E871C7 /* CLCooperatingViewController.m */; };
 		9B3FCD0F1C929FC300E871C7 /* GFNoIndentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3FCD0C1C929FC300E871C7 /* GFNoIndentTableViewCell.m */; };
@@ -108,6 +107,10 @@
 		9BB940FA1C9FF30800A3FABC /* GFBankCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB940F91C9FF30800A3FABC /* GFBankCardViewController.m */; };
 		9BBA2BD21CBB727E00543004 /* CertifyDelegate.html in Resources */ = {isa = PBXBuildFile; fileRef = 9BBA2BD01CBB727E00543004 /* CertifyDelegate.html */; };
 		9BBA2BD61CBB72E500543004 /* servicedelegate.html in Resources */ = {isa = PBXBuildFile; fileRef = 9BBA2BD51CBB72E500543004 /* servicedelegate.html */; };
+		9BCC56F91CC8823C008B4144 /* CLListNewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BCC56F21CC8823C008B4144 /* CLListNewModel.m */; };
+		9BCC56FA1CC8823C008B4144 /* CLNewOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BCC56F41CC8823C008B4144 /* CLNewOrderDetailViewController.m */; };
+		9BCC56FB1CC8823C008B4144 /* CLNewOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BCC56F61CC8823C008B4144 /* CLNewOrderTableViewCell.m */; };
+		9BCC56FC1CC8823C008B4144 /* CLOrderForWaitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BCC56F81CC8823C008B4144 /* CLOrderForWaitViewController.m */; };
 		9BCFDC971C859397003A35A8 /* CLCleanWorkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BCFDC961C859397003A35A8 /* CLCleanWorkViewController.m */; };
 		9BCFDCA51C85B6CF003A35A8 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9BCFDCA21C85B6CF003A35A8 /* AppDelegate.mm */; };
 		9BD52BE71CC46C6E009FE948 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BD52BE61CC46C6E009FE948 /* GoogleService-Info.plist */; };
@@ -227,8 +230,6 @@
 		86B890F21C73355B0068B95D /* GFMyMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFMyMessageViewController.h; sourceTree = "<group>"; };
 		86B890F31C73355B0068B95D /* GFMyMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFMyMessageViewController.m; sourceTree = "<group>"; };
 		9B02AF661C5A22CB0044FB71 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		9B13D9391CC75B4400078126 /* CLOrderForWaitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLOrderForWaitViewController.h; sourceTree = "<group>"; };
-		9B13D93A1CC75B4400078126 /* CLOrderForWaitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLOrderForWaitViewController.m; sourceTree = "<group>"; };
 		9B3FCD051C925E6800E871C7 /* CLCooperateFailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCooperateFailViewController.h; sourceTree = "<group>"; };
 		9B3FCD061C925E6800E871C7 /* CLCooperateFailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLCooperateFailViewController.m; sourceTree = "<group>"; };
 		9B3FCD081C92707D00E871C7 /* CLCooperatingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCooperatingViewController.h; sourceTree = "<group>"; };
@@ -325,6 +326,14 @@
 		9BB940F91C9FF30800A3FABC /* GFBankCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFBankCardViewController.m; sourceTree = "<group>"; };
 		9BBA2BD01CBB727E00543004 /* CertifyDelegate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = CertifyDelegate.html; sourceTree = "<group>"; };
 		9BBA2BD51CBB72E500543004 /* servicedelegate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = servicedelegate.html; sourceTree = "<group>"; };
+		9BCC56F11CC8823C008B4144 /* CLListNewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLListNewModel.h; sourceTree = "<group>"; };
+		9BCC56F21CC8823C008B4144 /* CLListNewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLListNewModel.m; sourceTree = "<group>"; };
+		9BCC56F31CC8823C008B4144 /* CLNewOrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLNewOrderDetailViewController.h; sourceTree = "<group>"; };
+		9BCC56F41CC8823C008B4144 /* CLNewOrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLNewOrderDetailViewController.m; sourceTree = "<group>"; };
+		9BCC56F51CC8823C008B4144 /* CLNewOrderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLNewOrderTableViewCell.h; sourceTree = "<group>"; };
+		9BCC56F61CC8823C008B4144 /* CLNewOrderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLNewOrderTableViewCell.m; sourceTree = "<group>"; };
+		9BCC56F71CC8823C008B4144 /* CLOrderForWaitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLOrderForWaitViewController.h; sourceTree = "<group>"; };
+		9BCC56F81CC8823C008B4144 /* CLOrderForWaitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLOrderForWaitViewController.m; sourceTree = "<group>"; };
 		9BCFDC951C859397003A35A8 /* CLCleanWorkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCleanWorkViewController.h; sourceTree = "<group>"; };
 		9BCFDC961C859397003A35A8 /* CLCleanWorkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLCleanWorkViewController.m; sourceTree = "<group>"; };
 		9BCFDCA11C85B6CF003A35A8 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -725,6 +734,7 @@
 				86B890F11C73355B0068B95D /* 我的信息 */,
 				9BE53AE11C72ADB800BBB424 /* 车邻邦认证 */,
 				9BA3C8C51C759723007F730D /* 主界面 */,
+				9BCC56F01CC8823C008B4144 /* 可抢订单 */,
 				9B7C3FCF1C770F3200E3F53F /* 工作界面 */,
 				9BA9C8111C7D4ECC005CE1C0 /* 抢单 */,
 				9B95A7A11C7C5E9E0041C7BA /* 更多 */,
@@ -798,8 +808,6 @@
 				9BA391711C843564002F30A7 /* CLAddPersonModel.m */,
 				9B771FA21C87E34C005E8567 /* CLAddOrderSuccessViewController.h */,
 				9B771FA31C87E34C005E8567 /* CLAddOrderSuccessViewController.m */,
-				9B13D9391CC75B4400078126 /* CLOrderForWaitViewController.h */,
-				9B13D93A1CC75B4400078126 /* CLOrderForWaitViewController.m */,
 			);
 			path = "主界面";
 			sourceTree = "<group>";
@@ -811,6 +819,21 @@
 				9BA9C8131C7D4F13005CE1C0 /* CLKnockOrderViewController.m */,
 			);
 			path = "抢单";
+			sourceTree = "<group>";
+		};
+		9BCC56F01CC8823C008B4144 /* 可抢订单 */ = {
+			isa = PBXGroup;
+			children = (
+				9BCC56F11CC8823C008B4144 /* CLListNewModel.h */,
+				9BCC56F21CC8823C008B4144 /* CLListNewModel.m */,
+				9BCC56F31CC8823C008B4144 /* CLNewOrderDetailViewController.h */,
+				9BCC56F41CC8823C008B4144 /* CLNewOrderDetailViewController.m */,
+				9BCC56F51CC8823C008B4144 /* CLNewOrderTableViewCell.h */,
+				9BCC56F61CC8823C008B4144 /* CLNewOrderTableViewCell.m */,
+				9BCC56F71CC8823C008B4144 /* CLOrderForWaitViewController.h */,
+				9BCC56F81CC8823C008B4144 /* CLOrderForWaitViewController.m */,
+			);
+			path = "可抢订单";
 			sourceTree = "<group>";
 		};
 		9BE53AE11C72ADB800BBB424 /* 车邻邦认证 */ = {
@@ -1005,6 +1028,7 @@
 				860A4CCE1C7EF9580067FB70 /* GFIndentDetailsViewController.m in Sources */,
 				860A4CCB1C7EE4CB0067FB70 /* GFIndentTableViewCell.m in Sources */,
 				8655B0E51C76F15800D9FCB4 /* GFChangePwdViewController.m in Sources */,
+				9BCC56FC1CC8823C008B4144 /* CLOrderForWaitViewController.m in Sources */,
 				860A4CB71C7ED9780067FB70 /* MJRefreshAutoGifFooter.m in Sources */,
 				9B3FCD0A1C92707D00E871C7 /* CLCooperatingViewController.m in Sources */,
 				9B6925471CBCCDA30093B22C /* CLNotificationModel.m in Sources */,
@@ -1053,7 +1077,6 @@
 				9B3FCD0F1C929FC300E871C7 /* GFNoIndentTableViewCell.m in Sources */,
 				865EB95E1C9A59D600B045C7 /* GFNothingView.m in Sources */,
 				86B890F41C73355B0068B95D /* GFForgetPwdViewController_1.m in Sources */,
-				9B13D93B1CC75B4400078126 /* CLOrderForWaitViewController.m in Sources */,
 				9B5FBC291CAE58D400A0BF96 /* CLLocationViewController.m in Sources */,
 				860A4CC41C7ED9780067FB70 /* UIView+MJExtension.m in Sources */,
 				860A4CB21C7ED9780067FB70 /* MJRefreshAutoFooter.m in Sources */,
@@ -1061,15 +1084,18 @@
 				9B9515421C60503800445F93 /* GFAnnotationView.m in Sources */,
 				868B0F171C7EA63A00938665 /* GFBillDetailsViewController.m in Sources */,
 				9B95A7A01C7C46430041C7BA /* CLCertifyFailViewController.m in Sources */,
+				9BCC56F91CC8823C008B4144 /* CLListNewModel.m in Sources */,
 				865637E11C8424F100BE7D8D /* GFTrainViewController.m in Sources */,
 				9B9B5E7B1C7F07BD000D617E /* CLAddPersonViewController.m in Sources */,
 				9B6925441CBCC7C00093B22C /* CLNotificationViewController.m in Sources */,
+				9BCC56FA1CC8823C008B4144 /* CLNewOrderDetailViewController.m in Sources */,
 				9B9FCF081C8AA2DB0022F54E /* ViewController.m in Sources */,
 				9B9C259E1C75BF9C009A69D6 /* CLTitleTableViewCell.m in Sources */,
 				9BCFDC971C859397003A35A8 /* CLCleanWorkViewController.m in Sources */,
 				9BE665401C743E0800976E7D /* CLTouchScrollView.m in Sources */,
 				9BE53AF31C73406800BBB424 /* GFTextField.m in Sources */,
 				9B3FCD071C925E6800E871C7 /* CLCooperateFailViewController.m in Sources */,
+				9BCC56FB1CC8823C008B4144 /* CLNewOrderTableViewCell.m in Sources */,
 				9B7C3FCE1C7706D800E3F53F /* CLOrderDetailViewController.m in Sources */,
 				9B97543E1C5765B3004BDC7C /* main.m in Sources */,
 				868B0F1A1C7EA6FA00938665 /* GFBillDetailsTableViewCell.m in Sources */,

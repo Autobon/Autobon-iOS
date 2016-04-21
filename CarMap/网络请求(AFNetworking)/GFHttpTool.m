@@ -1394,12 +1394,63 @@ NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
 
 
 
-#pragma mark - 调用百度接口转换经纬度
-+ (void)getCoordsURLString:(NSString *)URLString success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+#pragma mark - 获取可接订单列表
++ (void)getOrderListNewDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
     
     if ([GFHttpTool isConnectionAvailable]) {
         
         
+        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        NSString *token = [userDefaultes objectForKey:@"autoken"];
+        
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/listNew",HOST];
+        //        NSLog(@"-请求没有成功程序挂掉啦--token---%@---%@---%@-",manager,URLString,dictionary);
+        //        [manager GET:URLString parameters:dictionary success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        //            NSLog(@"请求成功了－22－－");
+        //            if (success) {
+        //                success(responseObject);
+        //            }
+        //        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        //            NSLog(@"请求失败了－－－");
+        //            if (failure) {
+        //                failure(error);
+        //            }
+        //        }];
+        
+        [manager GET:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            //            NSLog(@"请求成功了－11－－");
+            if (success) {
+                success(responseObject);
+            }
+            
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            //            NSLog(@"请求失败了－－－");
+            if (failure) {
+                failure(error);
+            }
+        }];
+        
+        
+        
+        
+    }else{
+        
+        [GFHttpTool addAlertView:@"无网络连接"];
+    }
+    
+    
+}
+
+
+
+#pragma mark - 调用百度接口转换经纬度
++ (void)getCoordsURLString:(NSString *)URLString success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    if ([GFHttpTool isConnectionAvailable]) {
+
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         NSString *token = [userDefaultes objectForKey:@"autoken"];
