@@ -401,7 +401,7 @@
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             if ([[userDefaults objectForKey:@"homeOrder"]isEqualToString:@"YES"]) {
                 
-                
+                AudioServicesPlaySystemSound(1307);
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"NEW_ORDER" object:self userInfo:responseJSON];
                 
                 //            CLHomeOrderViewController *orderView = [[CLHomeOrderViewController alloc]init];
@@ -453,7 +453,7 @@
             [[NSNotificationCenter defaultCenter]postNotificationName:@"NEW_ORDER" object:self userInfo:@{@"INVITATION_REJECTED":@"INVITATION_REJECTED"}];
         }else if ([responseJSON[@"action"]isEqualToString:@"NEW_MESSAGE"]){
             NSDictionary *messageDictionary = responseJSON[@"message"];
-            
+            AudioServicesPlaySystemSound(1307);
             _alertView = [[GFAlertView alloc]initWithTitleString:messageDictionary[@"title"] withTipMessage:messageDictionary[@"content"] withButtonNameArray:@[@"确定"]];
             
             UIWindow *window = [UIApplication sharedApplication].delegate.window;

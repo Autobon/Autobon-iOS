@@ -482,8 +482,8 @@
         
     } failure:^(NSError *error) {
 //        NSLog(@"上传失败原因－－%@--",error);
-        
-    }];[self addAlertView:@"图片上传失败"];
+        [self addAlertView:@"图片上传失败"];
+    }];
     
 }
 

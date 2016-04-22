@@ -13,6 +13,7 @@
 #import "GFHttpTool.h"
 #import "GFMyMessageViewController.h"
 #import "GFTipView.h"
+#import "CLHomeOrderViewController.h"
 
 
 
@@ -199,6 +200,11 @@
     
 }
 - (void)backBtnClick{
+    
+    CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
+    [homeOrder headRefresh];
+    
+    
     [self.navigationController popToRootViewControllerAnimated:YES];
 //    GFMyMessageViewController *myMessage = [[GFMyMessageViewController alloc]init];
 //    [self.navigationController pushViewController:myMessage animated:YES];
