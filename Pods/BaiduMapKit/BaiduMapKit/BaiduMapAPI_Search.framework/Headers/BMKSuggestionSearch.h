@@ -32,7 +32,7 @@
 
 @protocol BMKSuggestionSearchDelegate;
 ///sug搜索服务
-@interface BMKSuggestionSearch : BMKSearchBase
+@interface BMKSuggestionSearch : NSObject
 /// 检索模块的Delegate，此处记得不用的时候需要置nil，否则影响内存的释放
 @property (nonatomic, weak) id<BMKSuggestionSearchDelegate> delegate;
 

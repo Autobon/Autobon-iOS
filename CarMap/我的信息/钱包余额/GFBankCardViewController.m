@@ -169,7 +169,8 @@
     CGFloat cardTxtH = kHeight * 0.0625;
     CGFloat cardTxtX = kWidth * 0.185;
     CGFloat cardTxtY = CGRectGetMaxY(self.bankBut.frame) + jiange1 + 10;
-    self.cardTxt = [[GFTextField alloc] initWithPlaceholder:self.bankCard withFrame:CGRectMake(cardTxtX, cardTxtY, cardTxtW, cardTxtH)];
+//    self.cardTxt = [[GFTextField alloc] initWithPlaceholder:self.bankCard withFrame:CGRectMake(cardTxtX, cardTxtY, cardTxtW, cardTxtH)];
+    self.cardTxt = [[GFTextField alloc] initWithPlaceholder:@"请填写本人银行卡" withFrame:CGRectMake(cardTxtX, cardTxtY, cardTxtW, cardTxtH)];
     [self.jvtiView addSubview:self.cardTxt];
     self.cardTxt.centerTxt.tag = 5;
     self.cardTxt.centerTxt.delegate = self;
