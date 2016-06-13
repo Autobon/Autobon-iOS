@@ -7,6 +7,7 @@
 //
 
 #import "CLHomeTableViewCell.h"
+#import "CLImageView.h"
 
 @implementation CLHomeTableViewCell
 
@@ -42,7 +43,9 @@
     [self addSubview:_orderButton];
         
 // 订单图片
-    _orderImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 60, [UIScreen mainScreen].bounds.size.width-20, [UIScreen mainScreen].bounds.size.width*5/12)];
+    _orderImageView = [[CLImageView alloc] init];
+    _orderImageView.frame = CGRectMake(10, 60, [UIScreen mainScreen].bounds.size.width-20, [UIScreen mainScreen].bounds.size.width*5/12);
+//    _orderImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 60, [UIScreen mainScreen].bounds.size.width-20, [UIScreen mainScreen].bounds.size.width*5/12)];
     _orderImageView.image = [UIImage imageNamed:@"orderImage"];
 //    orderImageView.backgroundColor = [[UIColor alloc]initWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
     _orderImageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -52,7 +55,7 @@
     view.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0];
     [self addSubview:view];
 
-    
+//    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 
