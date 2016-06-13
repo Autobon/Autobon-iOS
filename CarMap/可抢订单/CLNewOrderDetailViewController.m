@@ -14,6 +14,7 @@
 #import "GFHttpTool.h"
 #import "CLAddOrderSuccessViewController.h"
 #import "GFTipView.h"
+#import "CLImageView.h"
 
 
 @interface CLNewOrderDetailViewController ()
@@ -105,7 +106,7 @@
     [_orderView addSubview:lineView];
     
     // 订单图片
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, lineView.frame.origin.y + 7, _orderView.frame.size.width - 20, _orderView.frame.size.height/4)];
+    CLImageView *imageView = [[CLImageView alloc]initWithFrame:CGRectMake(10, lineView.frame.origin.y + 7, _orderView.frame.size.width - 20, _orderView.frame.size.height/4)];
     //    imageView.backgroundColor = [UIColor darkGrayColor];
     imageView.image = [UIImage imageNamed:@"orderImage"];
     imageView.contentMode = UIViewContentModeScaleAspectFit;

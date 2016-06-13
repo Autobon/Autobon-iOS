@@ -7,6 +7,7 @@
 //
 
 #import "CLImageView.h"
+#import "CLTouchImageView.h"
 
 @implementation CLImageView
 
@@ -26,27 +27,52 @@
     
     return self;
 }
-
+- (instancetype)initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.userInteractionEnabled = YES;
+        self.contentMode = UIViewContentModeScaleAspectFit;
+    }
+    
+    return self;
+}
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
 
-    static BOOL isTouch = YES;
-    self.userInteractionEnabled = NO;
+    CLTouchImageView *imageView = [CLTouchImageView sharedManager];
+    imageView.backgroundColor = [UIColor blackColor];
+   
+    imageView.alpha = 0;
+    imageView.image = self.image;
+    imageView.frame = CGRectMake([UIScreen mainScreen].bounds.size.width/2-self.frame.size.width/2, [UIScreen mainScreen].bounds.size.height/2-self.frame.size.height/2, self.frame.size.width, self.frame.size.height);
+    imageView.rect = self.frame;
+    UIWindow *window = [UIApplication sharedApplication].delegate.window;
+    [window addSubview:imageView];
+    imageView.userInteractionEnabled = YES;
+    
+//    static BOOL isTouch = YES;
+//    self.userInteractionEnabled = NO;
+//    self.backgroundColor = [UIColor redColor];
     [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:1.0];
-    if (isTouch) {
+    [UIView setAnimationDuration:0.3];
+//    if (isTouch) {
+    
         
-        UIViewController *viewController = [self getCurrentViewController];
-        [viewController.view bringSubviewToFront:self];
-        _rect = self.frame;
-        self.frame = [UIScreen mainScreen].bounds;
-    }else{
-        self.frame = _rect;
-    }
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)];
+        
+        
+        
+//        UIViewController *viewController = [self getCurrentViewController];
+//        [viewController.view bringSubviewToFront:self];
+//        _rect = self.frame;
+    imageView.frame = [UIScreen mainScreen].bounds;
+    imageView.alpha = 1;
+//    }else{
+//        self.frame = _rect;
+//    }
+//    [UIView setAnimationDelegate:self];
+//    [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)];
     [UIView commitAnimations];
-    isTouch = !isTouch;
+//    isTouch = !isTouch;
     
 
 }
@@ -61,6 +87,7 @@
 -(UIViewController *)getCurrentViewController{
     UIResponder *next = [self nextResponder];
     do {
+        NSLog(@"寻找视图控制器");
         if ([next isKindOfClass:[UIViewController class]]) {
             return (UIViewController *)next;
         }
