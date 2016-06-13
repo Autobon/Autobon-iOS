@@ -241,7 +241,7 @@
 #pragma mark - 接受通知消息
 -(void)receiveNotification:(NSNotification *)Notification
 {
-    NSLog(@"receiveNotification---%@--",Notification.userInfo);
+//    NSLog(@"receiveNotification---%@--",Notification.userInfo);
     
     
     if ([Notification.userInfo[@"action"] isEqualToString:@"NEW_ORDER"]) {

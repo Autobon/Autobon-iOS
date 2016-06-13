@@ -109,7 +109,7 @@
                 [self addAlertView:@"已加载全部"];
             }
             [dataArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
-                NSLog(@"---obj---%@--",obj);
+//                NSLog(@"---obj---%@--",obj);
                 CLListNewModel *model = [[CLListNewModel alloc]init];
                 model.orderId = obj[@"id"];
                 model.orderNumber = obj[@"orderNum"];
