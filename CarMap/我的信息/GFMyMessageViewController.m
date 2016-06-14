@@ -560,9 +560,9 @@
     
     
     // 数据请求
-    NSString *url = @"http://121.40.157.200:12345/api/mobile/technician";
+//    NSString *url = @"http://121.40.157.200:12345/api/mobile/technician";
     
-    [GFHttpTool messageGet:url parameters:nil success:^(id responseObject) {
+    [GFHttpTool messageGetWithParameters:nil success:^(id responseObject) {
         
         NSInteger flage = [responseObject[@"result"] integerValue];
         if(flage == 1) {

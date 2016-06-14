@@ -199,7 +199,7 @@
     
     }else {
         
-        NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/changePassword";
+//        NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/changePassword";
         NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
         parDic[@"autoken"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"autoken"];
         parDic[@"oldPassword"] = self.passWordTxt.centerTxt.text;
@@ -207,7 +207,7 @@
         
 //        NSLog(@"\n%@", parDic);
         
-        [GFHttpTool changePwdPost:url parameters:parDic success:^(id responseObject) {
+        [GFHttpTool changePwdPostWithParameters:parDic success:^(id responseObject) {
             
 //            NSLog(@"修改密码提交成功+++++++++++ \n %@", responseObject);
             

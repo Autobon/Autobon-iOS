@@ -154,7 +154,7 @@
     NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
     parDic[@"page"] = [NSString stringWithFormat:@"%ld", page];
     parDic[@"pageSize"] = [NSString stringWithFormat:@"%ld", pageSize];
-    [GFHttpTool billGet:url parameters:parDic success:^(id responseObject) {
+    [GFHttpTool billGetWithParameters:parDic success:^(id responseObject) {
         
         
         

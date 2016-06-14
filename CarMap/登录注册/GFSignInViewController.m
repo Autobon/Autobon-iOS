@@ -282,13 +282,14 @@
         [self tipShow:@"密码不能为空"];
         
     }else {
-        NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/login";
+//        NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/login";
         NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
         parDic[@"phone"] = self.userNameTxt.centerTxt.text;
         parDic[@"password"] = self.passWordTxt.centerTxt.text;
         
-        [GFHttpTool signInPost:url parameters:parDic success:^(id responseObject) {
-            
+        [GFHttpTool signInWithParameters:parDic success:^(id responseObject) {
+
+         
             // 判断是否登录成功
             if([responseObject[@"result"] integerValue] == 1) {
                

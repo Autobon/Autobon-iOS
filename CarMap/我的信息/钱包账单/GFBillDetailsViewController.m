@@ -120,7 +120,7 @@
 
     _tableview.userInteractionEnabled = NO;
 //    NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/bill/order";
-    NSString *url = [NSString stringWithFormat:@"http://121.40.157.200:12345/api/mobile/technician/bill/%@/order", self.model.billId];
+//    NSString *url = [NSString stringWithFormat:@"http://121.40.157.200:12345/api/mobile/technician/bill/%@/order", self.model.billId];
     NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
     parDic[@"billd"] = self.model.billId;
     parDic[@"page"] = @(_page);
@@ -131,7 +131,7 @@
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
     
-    [GFHttpTool billDetailsGet:url parameters:parDic success:^(id responseObject) {
+    [GFHttpTool billDetailsGetWithParameters:parDic success:^(id responseObject) {
         
         if ([responseObject[@"result"] integerValue] == 1) {
             NSDictionary *dataDictionary = responseObject[@"data"];

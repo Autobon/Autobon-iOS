@@ -10,6 +10,59 @@
 
 @implementation GFTipView
 
+
+/**
+ *  默认高度；添加到window上（“＋”方法）
+ *
+ *  @param messageStr 提示文本内容
+ *  @param times      显示时间
+ *  @补充：外部调用：   [tipView performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:times];
+ */
++ (instancetype)tipViewWithNormalHeightWithMessage:(NSString *)messageStr withShowTimw:(CGFloat)times{
+    
+    CGFloat kWidth = [UIScreen mainScreen].bounds.size.width;
+    CGFloat kHeight = [UIScreen mainScreen].bounds.size.height;
+    
+    GFTipView *baseView = [[GFTipView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    
+    NSString *str = messageStr;
+    NSMutableDictionary *attDic = [[NSMutableDictionary alloc] init];
+    attDic[NSFontAttributeName] = [UIFont systemFontOfSize:14 / 320.0 * kWidth];
+    attDic[NSForegroundColorAttributeName] = [UIColor whiteColor];
+    CGRect strRect = [str boundingRectWithSize:CGSizeMake(kWidth - 90, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attDic context:nil];
+    
+    CGFloat tipViewW = strRect.size.width;
+    CGFloat tipViewH = strRect.size.height + 10;
+    CGFloat tipViewX = (kWidth - tipViewW) / 2.0;
+    CGFloat tipViewY = kHeight * 0.8;
+    UIView *tipView = [[UIView alloc] initWithFrame:CGRectMake(tipViewX-20, tipViewY, tipViewW+40, tipViewH)];
+    tipView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    tipView.layer.cornerRadius = 7.5;
+    [baseView addSubview:tipView];
+    
+    CGFloat msgLabW = tipViewW;
+    CGFloat msgLabH = tipViewH;
+    CGFloat msgLabX = 0;
+    CGFloat msgLabY = 0;
+    UILabel *msgLab = [[UILabel alloc] initWithFrame:CGRectMake(msgLabX, msgLabY, msgLabW+40, msgLabH)];
+    
+    msgLab.text = messageStr;
+    [tipView addSubview:msgLab];
+    msgLab.textAlignment = NSTextAlignmentCenter;
+    msgLab.numberOfLines = 0;
+    msgLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
+    msgLab.textColor = [UIColor whiteColor];
+    
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    [window addSubview:baseView];
+    
+    
+    [baseView performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:times];
+    
+    return baseView;
+}
+
+
 - (instancetype)initWithHeight:(CGFloat)height WithMessage:(NSString *)messageStr withViewController:(UIViewController *)viewController withShowTimw:(CGFloat)times {
 
     self = [super init];

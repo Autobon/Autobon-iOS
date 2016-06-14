@@ -304,7 +304,7 @@
         NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
         parDic[@"phone"] = self.userNameTxt.centerTxt.text;
         
-        [GFHttpTool codeGet:url parameters:parDic success:^(id responseObject) {
+        [GFHttpTool codeGetWithParameters:parDic success:^(id responseObject) {
             
 //            NSLog(@"获取验证码成功======\n%@", responseObject);
             
@@ -408,7 +408,7 @@
                             parDic[@"verifySms"] = self.verifyTxt.centerTxt.text;
                             parDic[@"password"] = self.passWordTxt.centerTxt.text;
                             
-                            [GFHttpTool forgetPwdPost:url parameters:parDic success:^(id responseObject) {
+                            [GFHttpTool forgetPwdPostWithParameters:parDic success:^(id responseObject) {
                                 
 //                                NSLog(@"找回密码成功++++++++++%@", responseObject);
                                 

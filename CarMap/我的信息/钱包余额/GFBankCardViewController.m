@@ -224,7 +224,7 @@
     }else {
         // 提交修改银行卡信息按钮
         
-        NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/changeBankCard";
+//        NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/changeBankCard";
         NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
         parDic[@"name"] = self.nameLab.text;
         if(suo == 0) {
@@ -249,7 +249,7 @@
         }else {
             
             
-            [GFHttpTool bankCardPost:url parameters:parDic success:^(id responseObject) {
+            [GFHttpTool bankCardPostWithParameters:parDic success:^(id responseObject) {
                 
                 suo = 0;
                 

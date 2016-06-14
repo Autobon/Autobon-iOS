@@ -365,11 +365,11 @@
         
 
         
-        NSString *url = @"http://121.40.157.200:12345/api/pub/verifySms";
+//        NSString *url = @"http://121.40.157.200:12345/api/pub/verifySms";
         NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
         parDic[@"phone"] = self.userNameTxt.centerTxt.text;
         
-        [GFHttpTool codeGet:url parameters:parDic success:^(id responseObject) {
+        [GFHttpTool codeGetWithParameters:parDic success:^(id responseObject) {
             
             NSInteger flage = [responseObject[@"result"] integerValue];
             
@@ -478,12 +478,12 @@
                     /**
                      *  提交注册
                      */
-                    NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/register";
+//                    NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/register";
                     NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
                     parDic[@"phone"] = self.userNameTxt.centerTxt.text;
                     parDic[@"password"] = self.passWordTxt.centerTxt.text;
                     parDic[@"verifySms"] = self.verifyTxt.centerTxt.text;
-                    [GFHttpTool verifyPost:url parameters:parDic success:^(id responseObject) {
+                    [GFHttpTool verifyPostWithParameters:parDic success:^(id responseObject) {
                         
 //                        NSLog(@"注册提交成功======\n%@", responseObject);
                         

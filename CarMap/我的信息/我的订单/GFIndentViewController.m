@@ -36,6 +36,7 @@
     NSString *mainUrl;
     NSString *seconderUrl;
     NSString *curUrl;
+    NSInteger curUrlId;
 }
 
 
@@ -85,6 +86,7 @@
     mainUrl = @"http://121.40.157.200:12345/api/mobile/technician/order/listMain";
     seconderUrl = @"http://121.40.157.200:12345/api/mobile/technician/order/listSecond";
     curUrl = mainUrl;
+    curUrlId = 0;
     
     page = 1;
     pageSize = 2;
@@ -186,6 +188,7 @@
         sender.userInteractionEnabled = NO;
         
         curUrl = mainUrl;
+        curUrlId = 0;
         
     }else {
         
@@ -197,6 +200,7 @@
         sender.userInteractionEnabled = NO;
         
         curUrl = seconderUrl;
+        curUrlId = 1;
     
     }
 
@@ -225,10 +229,11 @@
     
     NSString *urlStr = curUrl;
     NSMutableDictionary *mDic = [[NSMutableDictionary alloc] init];
+    mDic[@"curUrlId"] = [NSString stringWithFormat:@"%ld", curUrlId];
     mDic[@"page"] = [NSString stringWithFormat:@"%ld", page];
     mDic[@"pageSize"] = [NSString stringWithFormat:@"%ld", pageSize];
     
-    [GFHttpTool indentGet:urlStr parameters:mDic success:^(id responseObject) {
+    [GFHttpTool indentGetWithParameters:mDic success:^(id responseObject) {
         
         NSInteger flage = [responseObject[@"result"] integerValue];
         
@@ -417,10 +422,11 @@
     pageSize = 2;
     NSString *urlStr = curUrl;
     NSMutableDictionary *mDic = [[NSMutableDictionary alloc] init];
+    mDic[@"curUrlId"] = [NSString stringWithFormat:@"%ld", curUrlId];
     mDic[@"page"] = [NSString stringWithFormat:@"%ld", ++page];
     mDic[@"pageSize"] = [NSString stringWithFormat:@"%ld", pageSize];
     
-    [GFHttpTool indentGet:urlStr parameters:mDic success:^(id responseObject) {
+    [GFHttpTool indentGetWithParameters:mDic success:^(id responseObject) {
         
         NSInteger flage = [responseObject[@"result"] integerValue];
         
