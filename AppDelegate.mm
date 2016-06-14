@@ -118,16 +118,23 @@
 //    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
 
 
-    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
-    if ([userDefaultes objectForKey:@"autoken"]) {
+//    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+//    if ([userDefaultes objectForKey:@"autoken"]) {
         //1.创建定位管理对象
         _manager=[[CLLocationManager alloc]init];
         _coder=[[CLGeocoder alloc]init];
+//        _manager.distanceFilter = 100;
         _manager.distanceFilter=kCLDistanceFilterNone;//实时更新定位位置
         _manager.desiredAccuracy=kCLLocationAccuracyBest;//定位精确度
         if([_manager respondsToSelector:@selector(requestAlwaysAuthorization)])
         {
+//            [_manager requestAlwaysAuthorization];
+#ifdef __IPHONE_8_0
+            //请求用户授权
             [_manager requestAlwaysAuthorization];
+            [_manager requestWhenInUseAuthorization];
+            
+#endif
         }
         //该模式是抵抗程序在后台被杀，申明不能够被暂停
         _manager.pausesLocationUpdatesAutomatically=NO;
@@ -135,7 +142,7 @@
         _manager.delegate=self;
         //4.开始定位
         [_manager startUpdatingLocation];
-    }
+//    }
 
     _window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     _window.backgroundColor = [UIColor whiteColor];
@@ -173,61 +180,69 @@
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     
-//    NSLog(@"－－－－－");
     
-    
-    if(locations.count>0)
-    {
-        //        获取位置信息
-        CLLocation *loc=[locations lastObject];
-        //        获取经纬度的结构体
-        CLLocationCoordinate2D coor=loc.coordinate;
-        CLLocation *location=[[CLLocation alloc]initWithLatitude:coor.latitude longitude:coor.longitude];
-        
-        NSString *URLString = [NSString stringWithFormat:@"http://api.map.baidu.com/geoconv/v1/?ak=FPzmlgz02SERkbPsRyGOiGfj&coords=%f,%f",coor.longitude,coor.latitude];
-        __block NSMutableDictionary *locationDictionary = [[NSMutableDictionary alloc]init];
-        [GFHttpTool getCoordsURLString:URLString success:^(id responseObject) {
-//            NSLog(@"－－－－请求成功－－－%@--",responseObject);
-            if ([responseObject[@"status"] integerValue] == 0) {
-                NSArray *resultArray = responseObject[@"result"];
-                NSDictionary *resultDictionary = resultArray[0];
-                locationDictionary[@"lng"] = resultDictionary[@"x"];
-                locationDictionary[@"lat"] = resultDictionary[@"y"];
-                [_coder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-                    CLPlacemark *pmark=[placemarks firstObject];
-                    NSString *state = pmark.addressDictionary[@"State"];
-                    NSString *city = pmark.addressDictionary[@"City"];
-                    NSString *subLocality = pmark.addressDictionary[@"SubLocality"];
-                    NSString *street = pmark.addressDictionary[@"Street"];
-                    
-                    locationDictionary[@"province"] = state;
-                    locationDictionary[@"city"] = city;
-                    locationDictionary[@"district"] = subLocality;
-                    locationDictionary[@"street"] = street;
-//                    NSLog(@"-----location---%@---",locationDictionary);
-                    [GFHttpTool PostReportLocation:locationDictionary success:^(id responseObject) {
-                        
-//                        NSLog(@"－－－－上传实时位置成功－－－%@－－－-----%@--",responseObject,responseObject[@"message"]);
-                        if ([responseObject[@"result"] integerValue] == 1) {
-                            [_manager stopUpdatingLocation];
-                            [_manager performSelector:@selector(startUpdatingLocation) withObject:nil afterDelay:300];
-                        }
-                        
-                        
-                    } failure:^(NSError *error) {
-                        
-//                        NSLog(@"上传实时位置失败---%@---",error);
-                        
-                    }];
-                }];
-            }
-        } failure:^(NSError *error) {
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    if ([userDefaultes objectForKey:@"autoken"]) {
+        if(locations.count>0)
+        {
+            //        获取位置信息
+            CLLocation *loc=[locations lastObject];
+            //        获取经纬度的结构体
+            CLLocationCoordinate2D coor=loc.coordinate;
+            CLLocation *location=[[CLLocation alloc]initWithLatitude:coor.latitude longitude:coor.longitude];
             
-        }];
-        
-        
-        
+//            NSLog(@"----location----%@--",location);
+            
+            NSString *URLString = [NSString stringWithFormat:@"http://api.map.baidu.com/geoconv/v1/?ak=FPzmlgz02SERkbPsRyGOiGfj&coords=%f,%f",coor.longitude,coor.latitude];
+            __block NSMutableDictionary *locationDictionary = [[NSMutableDictionary alloc]init];
+            [GFHttpTool getCoordsURLString:URLString success:^(id responseObject) {
+//                            NSLog(@"－－－－请求成功－－－%@--",responseObject);
+                if ([responseObject[@"status"] integerValue] == 0) {
+                    NSArray *resultArray = responseObject[@"result"];
+                    NSDictionary *resultDictionary = resultArray[0];
+                    locationDictionary[@"lng"] = resultDictionary[@"x"];
+                    locationDictionary[@"lat"] = resultDictionary[@"y"];
+                    [_coder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+                        CLPlacemark *pmark=[placemarks firstObject];
+                        NSString *state = pmark.addressDictionary[@"State"];
+                        NSString *city = pmark.addressDictionary[@"City"];
+                        NSString *subLocality = pmark.addressDictionary[@"SubLocality"];
+                        NSString *street = pmark.addressDictionary[@"Street"];
+                        
+                        locationDictionary[@"province"] = state;
+                        locationDictionary[@"city"] = city;
+                        locationDictionary[@"district"] = subLocality;
+                        locationDictionary[@"street"] = street;
+//                        NSLog(@"-----location---%@---",locationDictionary);
+                        [GFHttpTool PostReportLocation:locationDictionary success:^(id responseObject) {
+                            
+                            //                        NSLog(@"－－－－上传实时位置成功－－－%@－－－-----%@--",responseObject,responseObject[@"message"]);
+                            if ([responseObject[@"result"] integerValue] == 1) {
+                                [_manager stopUpdatingLocation];
+                                [_manager performSelector:@selector(startUpdatingLocation) withObject:nil afterDelay:300];
+                            }
+                            
+                            
+                        } failure:^(NSError *error) {
+                            
+                            //                        NSLog(@"上传实时位置失败---%@---",error);
+                            
+                        }];
+                    }];
+                }
+            } failure:^(NSError *error) {
+                
+            }];
     }
+    }else{
+        [_manager stopUpdatingLocation];
+        NSLog(@"－－－－－");
+    }
+    
+        
+        
+        
+    
 }
 
 
@@ -389,8 +404,8 @@
     if (payload) {
         payloadMsg = [[NSString alloc] initWithBytes:payload.bytes length:payload.length encoding:NSUTF8StringEncoding];
     }
-    NSString *msg = [NSString stringWithFormat:@" payloadId=%@,taskId=%@,messageId:%@,payloadMsg:%@%@",payloadId,taskId,aMsgId,payloadMsg,offLine ? @"<离线消息>" : @""];
-    NSLog(@"\n>前台>>[GexinSdk ReceivePayload]:%@\n\n", msg);
+//    NSString *msg = [NSString stringWithFormat:@" payloadId=%@,taskId=%@,messageId:%@,payloadMsg:%@%@",payloadId,taskId,aMsgId,payloadMsg,offLine ? @"<离线消息>" : @""];
+//    NSLog(@"\n>前台>>[GexinSdk ReceivePayload]:%@\n\n", msg);
     [GeTuiSdk sendFeedbackMessage:90001 taskId:taskId msgId:aMsgId];
     if (!offLine) {
         NSData *JSONData = [payloadMsg dataUsingEncoding:NSUTF8StringEncoding];
@@ -533,7 +548,7 @@
     NSDictionary *alertDictionary = apsDictionary[@"alert"];
     NSData *JSONData = [alertDictionary[@"payload"] dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:nil];
-    NSLog(@"----responseJSON----%@---",responseJSON);
+//    NSLog(@"----responseJSON----%@---",responseJSON);
     if ([responseJSON[@"action"] isEqualToString:@"NEW_ORDER"]||[responseJSON[@"action"]isEqualToString:@"INVITE_PARTNER"]) {
         if (![[userDefaults objectForKey:@"homeOrder"]isEqualToString:@"YES"]) {
             UIWindow *window = [UIApplication sharedApplication].delegate.window;

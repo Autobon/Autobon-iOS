@@ -129,7 +129,7 @@
     pageSize = 4;
     [self tableViewHttp];
     
-    [self.tableView.header endRefreshing];
+    
     
 }
 
@@ -143,7 +143,6 @@
     pageSize = 2;
     [self tableViewHttp];
     
-    [self.tableView.footer endRefreshing];
 }
 
 
@@ -354,15 +353,17 @@
            
             [self addAlertView:responseObject[@"message"]];
         }
-        
+        [self.tableView.header endRefreshing];
+        [self.tableView.footer endRefreshing];
     } failure:^(NSError *error) {
    
-        
+        [self.tableView.header endRefreshing];
+        [self.tableView.footer endRefreshing];
         [self addAlertView:@"请求失败"];
     }];
     
     
-    [self.tableView.header endRefreshing];
+    
     
 }
 

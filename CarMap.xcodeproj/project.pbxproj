@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		051271CC3537CA34173C6893 /* libPods-CarMap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3201A41DB27FF221123BB304 /* libPods-CarMap.a */; };
 		860904C61C8EAB8F00CC06C1 /* GFIndentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 860904C51C8EAB8F00CC06C1 /* GFIndentModel.m */; };
 		860A4CB21C7ED9780067FB70 /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 860A4C881C7ED9780067FB70 /* MJRefreshAutoFooter.m */; };
 		860A4CB31C7ED9780067FB70 /* MJRefreshBackFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 860A4C8A1C7ED9780067FB70 /* MJRefreshBackFooter.m */; };
@@ -78,6 +77,7 @@
 		9B7C3FD51C77179100E3F53F /* CLWorkBeforeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7C3FD41C77179100E3F53F /* CLWorkBeforeViewController.m */; };
 		9B7F4C691C8694BC007CF96C /* CLShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7F4C681C8694BC007CF96C /* CLShareViewController.m */; };
 		9B7F4C6B1C86CE14007CF96C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B7F4C6A1C86CE14007CF96C /* AudioToolbox.framework */; };
+		9B8297901D0EA822001D24B3 /* CLTouchImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B82978F1D0EA822001D24B3 /* CLTouchImageView.m */; };
 		9B8BA6DE1C7FF66000E90CB0 /* CLPersonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8BA6DD1C7FF66000E90CB0 /* CLPersonTableViewCell.m */; };
 		9B9515391C60501B00445F93 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9515381C60501B00445F93 /* TestViewController.m */; };
 		9B9515411C60503800445F93 /* GFAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95153C1C60503800445F93 /* GFAnnotation.m */; };
@@ -108,6 +108,7 @@
 		9BB940FA1C9FF30800A3FABC /* GFBankCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB940F91C9FF30800A3FABC /* GFBankCardViewController.m */; };
 		9BBA2BD21CBB727E00543004 /* CertifyDelegate.html in Resources */ = {isa = PBXBuildFile; fileRef = 9BBA2BD01CBB727E00543004 /* CertifyDelegate.html */; };
 		9BBA2BD61CBB72E500543004 /* servicedelegate.html in Resources */ = {isa = PBXBuildFile; fileRef = 9BBA2BD51CBB72E500543004 /* servicedelegate.html */; };
+		9BC99C731D0E9FE1001EF869 /* libPods-CarMap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BC99C721D0E9FE0001EF869 /* libPods-CarMap.a */; };
 		9BCC56F91CC8823C008B4144 /* CLListNewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BCC56F21CC8823C008B4144 /* CLListNewModel.m */; };
 		9BCC56FA1CC8823C008B4144 /* CLNewOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BCC56F41CC8823C008B4144 /* CLNewOrderDetailViewController.m */; };
 		9BCC56FB1CC8823C008B4144 /* CLNewOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BCC56F61CC8823C008B4144 /* CLNewOrderTableViewCell.m */; };
@@ -273,6 +274,8 @@
 		9B7F4C671C8694BC007CF96C /* CLShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLShareViewController.h; sourceTree = "<group>"; };
 		9B7F4C681C8694BC007CF96C /* CLShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLShareViewController.m; sourceTree = "<group>"; };
 		9B7F4C6A1C86CE14007CF96C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		9B82978E1D0EA822001D24B3 /* CLTouchImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLTouchImageView.h; sourceTree = "<group>"; };
+		9B82978F1D0EA822001D24B3 /* CLTouchImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLTouchImageView.m; sourceTree = "<group>"; };
 		9B8BA6DC1C7FF66000E90CB0 /* CLPersonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLPersonTableViewCell.h; sourceTree = "<group>"; };
 		9B8BA6DD1C7FF66000E90CB0 /* CLPersonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLPersonTableViewCell.m; sourceTree = "<group>"; };
 		9B93BE9A1C89509A00397078 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "usr/lib/libc++abi.tbd"; sourceTree = SDKROOT; };
@@ -330,6 +333,7 @@
 		9BB940F91C9FF30800A3FABC /* GFBankCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFBankCardViewController.m; sourceTree = "<group>"; };
 		9BBA2BD01CBB727E00543004 /* CertifyDelegate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = CertifyDelegate.html; sourceTree = "<group>"; };
 		9BBA2BD51CBB72E500543004 /* servicedelegate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = servicedelegate.html; sourceTree = "<group>"; };
+		9BC99C721D0E9FE0001EF869 /* libPods-CarMap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-CarMap.a"; path = "Pods/../build/Debug-iphoneos/libPods-CarMap.a"; sourceTree = "<group>"; };
 		9BCC56F11CC8823C008B4144 /* CLListNewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLListNewModel.h; sourceTree = "<group>"; };
 		9BCC56F21CC8823C008B4144 /* CLListNewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLListNewModel.m; sourceTree = "<group>"; };
 		9BCC56F31CC8823C008B4144 /* CLNewOrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLNewOrderDetailViewController.h; sourceTree = "<group>"; };
@@ -382,9 +386,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9BC99C731D0E9FE1001EF869 /* libPods-CarMap.a in Frameworks */,
 				9B7F4C6B1C86CE14007CF96C /* AudioToolbox.framework in Frameworks */,
 				9B9C25A61C75CC05009A69D6 /* StoreKit.framework in Frameworks */,
-				051271CC3537CA34173C6893 /* libPods-CarMap.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -597,6 +601,7 @@
 		909B27CA6FA162B8934C9008 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9BC99C721D0E9FE0001EF869 /* libPods-CarMap.a */,
 				9B93BE9A1C89509A00397078 /* libc++abi.tbd */,
 				9B7F4C6A1C86CE14007CF96C /* AudioToolbox.framework */,
 				9BFA80841C5F475B001651C3 /* libstdc++.6.0.9.tbd */,
@@ -639,6 +644,8 @@
 			children = (
 				86D6F0551D0E8C8200B2705F /* CLImageView.h */,
 				86D6F0561D0E8C8200B2705F /* CLImageView.m */,
+				9B82978E1D0EA822001D24B3 /* CLTouchImageView.h */,
+				9B82978F1D0EA822001D24B3 /* CLTouchImageView.m */,
 				9B3FCD141C92A09500E871C7 /* GFButton.h */,
 				9B3FCD151C92A09500E871C7 /* GFButton.m */,
 				9B3FCD1C1C92A09500E871C7 /* GFTitleView.h */,
@@ -875,6 +882,7 @@
 				9B9754371C5765B3004BDC7C /* Resources */,
 				48D8B19C1A5693EA3D11BA56 /* 📦 Embed Pods Frameworks */,
 				ED0E1D9EA864A45144CE78C8 /* 📦 Copy Pods Resources */,
+				5994DF3B1F9D056061EA1363 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -993,6 +1001,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CarMap/Pods-CarMap-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		5994DF3B1F9D056061EA1363 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CarMap/Pods-CarMap-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		ED0E1D9EA864A45144CE78C8 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1079,6 +1102,7 @@
 				860A4CB31C7ED9780067FB70 /* MJRefreshBackFooter.m in Sources */,
 				860A4CB51C7ED9780067FB70 /* MJRefreshFooter.m in Sources */,
 				860A4CC21C7ED9780067FB70 /* UIScrollView+MJExtension.m in Sources */,
+				9B8297901D0EA822001D24B3 /* CLTouchImageView.m in Sources */,
 				9B3FCD0F1C929FC300E871C7 /* GFNoIndentTableViewCell.m in Sources */,
 				865EB95E1C9A59D600B045C7 /* GFNothingView.m in Sources */,
 				86B890F41C73355B0068B95D /* GFForgetPwdViewController_1.m in Sources */,
@@ -1181,8 +1205,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Xiong Guanghua (T69DE3Y6T9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiong Guanghua (T69DE3Y6T9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
@@ -1206,7 +1230,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-all_load";
-				PROVISIONING_PROFILE = "d29d946a-e11c-4f51-a81a-b1fdbfe1df84";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1229,8 +1253,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Xiong Guanghua (T69DE3Y6T9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiong Guanghua (T69DE3Y6T9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
@@ -1247,7 +1271,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-all_load";
-				PROVISIONING_PROFILE = "d29d946a-e11c-4f51-a81a-b1fdbfe1df84";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1266,6 +1290,10 @@
 				INFOPLIST_FILE = CarMap/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = CarNeighbor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1286,6 +1314,10 @@
 				INFOPLIST_FILE = CarMap/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = CarNeighbor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

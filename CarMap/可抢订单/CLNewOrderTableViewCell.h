@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CLImageView.h"
 
 @interface CLNewOrderTableViewCell : UITableViewCell
 
@@ -14,7 +15,7 @@
 @property (nonatomic ,strong) UILabel *orderNumberLabel;
 @property (nonatomic ,strong) UILabel *timeLabel;
 @property (nonatomic ,strong) UIButton *orderButton;
-@property (nonatomic ,strong) UIImageView *orderImageView;
+@property (nonatomic ,strong) CLImageView *orderImageView;
 @property (nonatomic ,strong) UILabel *typeLabel;
 
 
