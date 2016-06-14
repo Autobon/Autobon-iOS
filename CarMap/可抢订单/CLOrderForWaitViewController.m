@@ -115,7 +115,8 @@
                 model.orderId = obj[@"id"];
                 model.orderNumber = obj[@"orderNum"];
                 model.orderType = obj[@"orderType"];
-                model.orderPhoto = [NSString stringWithFormat:@"http://121.40.157.200:12345%@",obj[@"photo"]];
+                extern NSString* const URLHOST;
+                model.orderPhoto = [NSString stringWithFormat:@"%@%@",URLHOST,obj[@"photo"]];
                 model.orderLat = obj[@"positionLat"];
                 model.orderLon = obj[@"positionLon"];
                 model.dataDictionary = obj;

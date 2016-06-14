@@ -204,7 +204,7 @@
     
     
     
-    CLTitleView *titleView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 40 + self.view.frame.size.width/3*2+30, self.view.frame.size.width, 45) Title:@"选择本次负责的工作项"];
+    CLTitleView *titleView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 40 + self.view.frame.size.width+30, self.view.frame.size.width, 45) Title:@"选择本次负责的工作项"];
     [_scrollView addSubview:titleView];
     
 
@@ -445,7 +445,7 @@
         imageView.image = image;
         [_scrollView addSubview:imageView];
         
-        if (_imageArray.count == 5) {
+        if (_imageArray.count == 8) {
             _cameraBtn.hidden = YES;
         }else{
             _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)%3),  _carImageButton.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
@@ -456,6 +456,7 @@
         UIButton *deleteBtn = [[UIButton alloc]initWithFrame:CGRectMake(imageView.frame.size.width-30, 0, 30, 30)];
         [deleteBtn setBackgroundImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
         [deleteBtn addTarget:self action:@selector(deleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        deleteBtn.alpha = 0.5;
         [imageView addSubview:deleteBtn];
         [_imageArray addObject:imageView];
     }
@@ -470,6 +471,8 @@
     }
     UIImage *imageNew = [self imageWithImage:image scaledToSize:imagesize];
     NSData *imageData = UIImageJPEGRepresentation(imageNew, 0.8);
+    
+    /*
     [GFHttpTool PostImageForWork:imageData success:^(NSDictionary *responseObject) {
 //        NSLog(@"上传成功－%@--－%@",responseObject,responseObject[@"message"]);
         if ([responseObject[@"result"] integerValue] == 1) {
@@ -485,6 +488,8 @@
         [self addAlertView:@"图片上传失败"];
     }];
     
+     */
+     
 }
 
 #pragma mark - 压缩图片尺寸
@@ -524,7 +529,7 @@
         obj.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*(idx%3),  _carImageButton.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*(idx/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
     }];
     
-    if (_imageArray.count == 5) {
+    if (_imageArray.count == 8) {
         _cameraBtn.hidden = NO;
     }else if (_imageArray.count == 0){
         _carImageButton.hidden = NO;

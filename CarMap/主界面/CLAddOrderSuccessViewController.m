@@ -183,7 +183,8 @@
     CLOrderDetailViewController *detailView = [[CLOrderDetailViewController alloc]init];
     detailView.customerLat = _dataDictionary[@"positionLat"];
     detailView.customerLon = _dataDictionary[@"positionLon"];
-    detailView.orderPhotoURL = [NSString stringWithFormat:@"http://121.40.157.200:12345%@",_dataDictionary[@"photo"]];
+    extern NSString* const URLHOST;
+    detailView.orderPhotoURL = [NSString stringWithFormat:@"%@%@",URLHOST,_dataDictionary[@"photo"]];
     
     
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];

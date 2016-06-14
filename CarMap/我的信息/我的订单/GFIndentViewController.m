@@ -82,9 +82,9 @@
 - (void)_setView {
     
     self.workItemArr = [[NSMutableArray alloc] init];
-    
-    mainUrl = @"http://121.40.157.200:12345/api/mobile/technician/order/listMain";
-    seconderUrl = @"http://121.40.157.200:12345/api/mobile/technician/order/listSecond";
+    extern NSString *const URLHOST;
+    mainUrl = [NSString stringWithFormat:@"%@/api/mobile/technician/order/listMain",URLHOST];
+    seconderUrl = [NSString stringWithFormat:@"%@/api/mobile/technician/order/listSecond",URLHOST];
     curUrl = mainUrl;
     curUrlId = 0;
     
@@ -252,12 +252,12 @@
             }
             
 //            NSLog(@"%@*******", listArr);
-            
+            extern NSString* const URLHOST;
             for(NSDictionary *dic in listArr) {
                 
                 GFIndentModel *listModel = [[GFIndentModel alloc] init];
                 listModel.orderNum = dic[@"orderNum"];
-                listModel.photo = [NSString stringWithFormat:@"http://121.40.157.200:12345%@",dic[@"photo"]];
+                listModel.photo = [NSString stringWithFormat:@"%@%@",URLHOST,dic[@"photo"]];
                 listModel.remark = dic[@"remark"];
                 listModel.commentDictionary = dic[@"comment"];
   
@@ -445,12 +445,12 @@
             }
             
 //            NSLog(@"%@*******", listArr);
-            
+            extern NSString* const URLHOST;
             for(NSDictionary *dic in listArr) {
                 
                 GFIndentModel *listModel = [[GFIndentModel alloc] init];
                 listModel.orderNum = dic[@"orderNum"];
-                listModel.photo = [NSString stringWithFormat:@"http://121.40.157.200:12345%@",dic[@"photo"]];
+                listModel.photo = [NSString stringWithFormat:@"%@%@",URLHOST,dic[@"photo"]];
                 listModel.remark = dic[@"remark"];
                 listModel.commentDictionary = dic[@"comment"];
                 if([curUrl isEqualToString:mainUrl]) {

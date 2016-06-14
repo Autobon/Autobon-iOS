@@ -251,7 +251,8 @@
     CLBillTableViewCellModel *model = _billDetailsArray[indexPath.row];
     cell.numberLab.text = [NSString stringWithFormat:@"订单编号%@",model.orderNumber];
     cell.moneyLab.text = model.orderPay;
-    [cell.photoImgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345%@",model.orderImage]] placeholderImage:[UIImage imageNamed:@"orderImage"]];
+    extern NSString* const URLHOST;
+    [cell.photoImgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",URLHOST,model.orderImage]] placeholderImage:[UIImage imageNamed:@"orderImage"]];
     cell.timeLab.text = [NSString stringWithFormat:@"施工时间：%@",model.orderTime];
     NSString *beizhuStr = [NSString stringWithFormat:@"%@", model.orderItem];
     NSMutableDictionary *bezhuDic = [[NSMutableDictionary alloc] init];

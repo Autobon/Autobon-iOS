@@ -76,8 +76,8 @@
     jianjv1 = kWidth * 0.116;
     
     time = 60;
-    
-    urlStr = @"http://121.40.157.200:12345";
+    extern NSString* const URLHOST;
+    urlStr = URLHOST;
     
     self.view.backgroundColor = [UIColor colorWithRed:252 / 255.0 green:252 / 255.0 blue:252 / 255.0 alpha:1];
 

@@ -158,7 +158,8 @@
                 cellModel.orderId = obj[@"id"];
                 cellModel.orderNumber = obj[@"orderNum"];
                 cellModel.orderType = obj[@"orderType"];
-                cellModel.orderPhotoURL = [NSString stringWithFormat:@"http://121.40.157.200:12345%@",obj[@"photo"]];
+                extern NSString* const URLHOST;
+                cellModel.orderPhotoURL = [NSString stringWithFormat:@"%@%@",URLHOST,obj[@"photo"]];
                 cellModel.customerLat = obj[@"positionLat"];
                 cellModel.customerLon = obj[@"positionLon"];
                 if ([obj[@"remark"] isKindOfClass:[NSNull class]]) {
@@ -302,7 +303,8 @@
 //    orderDetail.orderNumber = orderDic[@"orderNum"];
     orderDetail.customerLat = orderDic[@"positionLat"];
     orderDetail.customerLon = orderDic[@"positionLon"];
-    orderDetail.orderPhotoURL = [NSString stringWithFormat:@"http://121.40.157.200:12345%@",orderDic[@"photo"]];
+    extern NSString* const URLHOST;
+    orderDetail.orderPhotoURL = [NSString stringWithFormat:@"%@%@",URLHOST,orderDic[@"photo"]];
     if (![orderDic[@"remark"]isKindOfClass:[NSNull class]]) {
         orderDetail.remark = orderDic[@"remark"];
     }else{

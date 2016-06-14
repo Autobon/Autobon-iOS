@@ -23,6 +23,8 @@
         imageView.userInteractionEnabled = YES;
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         imageView.backgroundColor = [[UIColor alloc]initWithWhite:0.2 alpha:1];
+        UIWindow *window = [UIApplication sharedApplication].delegate.window;
+        [window addSubview:imageView];
     });
     
     return imageView;
