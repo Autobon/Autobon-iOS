@@ -105,9 +105,9 @@
     lineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [_orderView addSubview:lineView];
     
-    // 订单图片
+// 订单图片
     CLImageView *imageView = [[CLImageView alloc]initWithFrame:CGRectMake(10, lineView.frame.origin.y + 7, _orderView.frame.size.width - 20, _orderView.frame.size.height/4)];
-    //    imageView.backgroundColor = [UIColor darkGrayColor];
+//    imageView.backgroundColor = [UIColor darkGrayColor];
     imageView.image = [UIImage imageNamed:@"orderImage"];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     [imageView sd_setImageWithURL:[NSURL URLWithString:_model.orderPhoto] placeholderImage:[UIImage imageNamed:@"orderImage"]];
@@ -117,7 +117,7 @@
     lineView2.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [_orderView addSubview:lineView2];
     
-    // 施工时间
+// 施工时间
 //    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
 //    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
 //    [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
