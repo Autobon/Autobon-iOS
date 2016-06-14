@@ -18,6 +18,9 @@ NSString *const prefixURL = @"";
 
 NSString* const HOST = @"http://121.40.157.200:12345/api/mobile";
 NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
+//NSString* const HOST = @"http://10.0.14.148:12345/api/mobile";
+//NSString* const PUBHOST = @"http://10.0.14.148:12345/api";
+
 
 @implementation GFHttpTool
 

@@ -112,7 +112,7 @@
 //        NSLog(@"距离－－%f--",distance);
         
         signinView.distanceLabel.text = [NSString stringWithFormat:@"距离：%0.2fkm",distance/1000.0];
-        if (distance < 1000) {
+        if (distance < 500) {
             signinView.signinButton.userInteractionEnabled = YES;
             signinView.signinButton.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
 //            [signinView.signinButton setTitle:@"可以签到了" forState:UIControlStateNormal];
@@ -140,6 +140,24 @@
     [_signinButton addTarget:self action:@selector(signinBtnClick) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:_signinButton];
+    
+    
+    // 距离提示框
+    UILabel *tipLab = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_signinButton.frame), [UIScreen mainScreen].bounds.size.width, 35)];
+    tipLab.text = @"请在距离目标500米范围内进行提示";
+    tipLab.font = [UIFont systemFontOfSize:12];
+    tipLab.textAlignment = NSTextAlignmentCenter;
+    tipLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
+    [self.view addSubview:tipLab];
+    
+    // 室外提示框
+    UILabel *nothingLab = [[UILabel alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height - 35, [UIScreen mainScreen].bounds.size.width, 35)];
+    nothingLab.text = @"为了准确定位你的位置，请在室外无遮挡处定位";
+    nothingLab.font = [UIFont systemFontOfSize:10];
+    nothingLab.textAlignment = NSTextAlignmentCenter;
+    nothingLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
+    [self.view addSubview:nothingLab];
+    
     
     if (_timer == nil) {
         _timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(UserLocation) userInfo:nil repeats:YES];
