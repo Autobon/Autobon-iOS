@@ -602,7 +602,8 @@
 //            NSLog(@"\n%@\n%@\n%@\n%@\n%@\n%@\n", idPhoto, name, starRate, totalOrders, balance, unpaidOrders);
             
             // 头像
-            idPhoto = [NSString stringWithFormat:@"http://121.40.157.200:12345%@", idPhoto];
+            extern NSString* const URLHOST;
+            idPhoto = [NSString stringWithFormat:@"%@%@",URLHOST,idPhoto];
             NSURL *imgUrl = [NSURL URLWithString:idPhoto];
             [iconImgView sd_setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
             // 姓名

@@ -94,7 +94,8 @@
     //    imageView.backgroundColor = [UIColor darkGrayColor];
     imageView.image = [UIImage imageNamed:@"orderImage"];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345%@",orderDic[@"photo"]]] placeholderImage:[UIImage imageNamed:@"orderImage"]];
+    extern NSString* const URLHOST;
+    [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",URLHOST,orderDic[@"photo"]]] placeholderImage:[UIImage imageNamed:@"orderImage"]];
     [_orderView addSubview:imageView];
     
     UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(0, imageView.frame.origin.y+_orderView.frame.size.height/4+5, _orderView.frame.size.width, 1)];

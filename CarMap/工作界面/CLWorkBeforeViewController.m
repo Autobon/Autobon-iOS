@@ -187,8 +187,8 @@
     
     
     
-    UIButton *signinButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-60, 50)];
-    signinButton.center = CGPointMake(self.view.center.x, self.view.center.y+50+36+50);
+    UIButton *signinButton = [[UIButton alloc]initWithFrame:CGRectMake(30, self.view.frame.size.height-60, self.view.frame.size.width-60, 50)];
+//    signinButton.center = CGPointMake(self.view.center.x, self.view.frame.size.height-60);
     [signinButton setTitle:@"继续" forState:UIControlStateNormal];
     signinButton.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
     signinButton.layer.cornerRadius = 10;
@@ -284,7 +284,7 @@
         imageView.image = image;
         [self.view addSubview:imageView];
         
-        if (_imageArray.count == 2) {
+        if (_imageArray.count == 8) {
             _cameraBtn.hidden = YES;
         }else{
             _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)%3),  _carImageButton.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
@@ -295,6 +295,7 @@
         UIButton *deleteBtn = [[UIButton alloc]initWithFrame:CGRectMake(imageView.frame.size.width-30, 0, 30, 30)];
         [deleteBtn setBackgroundImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
         [deleteBtn addTarget:self action:@selector(deleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        deleteBtn.alpha = 0.5;
         [imageView addSubview:deleteBtn];
         [_imageArray addObject:imageView];
     }
@@ -313,13 +314,13 @@
     [GFHttpTool PostImageForWork:imageData success:^(NSDictionary *responseObject) {
 //        NSLog(@"上传成功－%@--－%@",responseObject,responseObject[@"message"]);
         if ([responseObject[@"result"] integerValue] == 1) {
-           
+//
             imageView.resultURL = responseObject[@"data"];
         }else{
 #warning --图片上传失败，从数组移走图片
             [self addAlertView:@"图片上传失败"];
         }
-
+//
     } failure:^(NSError *error) {
 //        NSLog(@"上传失败原因－－%@--",error);
         [self addAlertView:@"图片上传失败"];
@@ -363,7 +364,7 @@
         obj.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*(idx%3),  _carImageButton.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*(idx/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
     }];
     
-    if (_imageArray.count == 2) {
+    if (_imageArray.count == 8) {
         _cameraBtn.hidden = NO;
     }else if(_imageArray.count == 1){
         _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)%3),  _carImageButton.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);

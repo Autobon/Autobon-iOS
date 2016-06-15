@@ -300,7 +300,7 @@
         sender.userInteractionEnabled = NO;
         
         // 获取验证码
-        NSString *url = @"http://121.40.157.200:12345/api/pub/verifySms";
+//        NSString *url = @"http://121.40.157.200:12345/api/pub/verifySms";
         NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
         parDic[@"phone"] = self.userNameTxt.centerTxt.text;
         
@@ -402,7 +402,7 @@
                 if([regextestPwdStr evaluateWithObject:self.passWordTxt.centerTxt.text]) {
         
                     
-                            NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/resetPassword";
+//                            NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/resetPassword";
                             NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
                             parDic[@"phone"] = self.userNameTxt.centerTxt.text;
                             parDic[@"verifySms"] = self.verifyTxt.centerTxt.text;

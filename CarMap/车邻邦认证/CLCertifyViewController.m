@@ -116,10 +116,10 @@
                 }
                 
                 
+                extern NSString* const URLHOST;
+                [_headButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",URLHOST,dataDic[@"avatar"]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
                 
-                [_headButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345%@",dataDic[@"avatar"]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
-                
-                [_identityButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.157.200:12345/%@",dataDic[@"idPhoto"]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"userImage"]];
+                [_identityButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",URLHOST,dataDic[@"idPhoto"]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"userImage"]];
                 [_dataDictionary setObject:dataDic[@"idPhoto"] forKey:@"idPhoto"];
 
             }
@@ -339,7 +339,8 @@
     [self.view endEditing:YES];
 //    [self performSelector:@selector(success) withObject:nil afterDelay:1.5];
 // 判断头像
-    if (!_haveHeadImage) {
+//    if (!_haveHeadImage) {
+    if (NO) {
         [self addAlertView:@"请选择头像"];
     }else{
     // 判断姓名
@@ -679,7 +680,7 @@
         
         
         [GFHttpTool headImage:imageData success:^(NSDictionary *responseObject) {
-//            NSLog(@"-----responseObject---%@--",responseObject);
+            NSLog(@"-----responseObject---%@--",responseObject);
             if ([responseObject[@"result"]intValue] == 1) {
                 _haveHeadImage = YES;
                 [self addAlertView:@"头像上传成功"];
@@ -687,6 +688,8 @@
                 [self addAlertView:@"头像上传失败"];
             }
         } failure:^(NSError *error) {
+            NSLog(@"---请求失败－－%@－－",error);
+            
             [self addAlertView:@"头像上传失败"];
         }];
         

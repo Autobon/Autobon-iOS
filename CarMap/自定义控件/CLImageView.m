@@ -46,8 +46,6 @@
     imageView.image = self.image;
     imageView.frame = CGRectMake([UIScreen mainScreen].bounds.size.width/2-self.frame.size.width/2, [UIScreen mainScreen].bounds.size.height/2-self.frame.size.height/2, self.frame.size.width, self.frame.size.height);
     imageView.rect = self.frame;
-    UIWindow *window = [UIApplication sharedApplication].delegate.window;
-    [window addSubview:imageView];
     imageView.userInteractionEnabled = YES;
     
 //    static BOOL isTouch = YES;

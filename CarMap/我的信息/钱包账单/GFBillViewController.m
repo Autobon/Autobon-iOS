@@ -149,7 +149,7 @@
 - (void)tableViewHttp{
     
     // 网络请求数据
-    NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/bill";
+//    NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/bill";
     NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
     parDic[@"page"] = [NSString stringWithFormat:@"%ld", page];
     parDic[@"pageSize"] = [NSString stringWithFormat:@"%ld", pageSize];

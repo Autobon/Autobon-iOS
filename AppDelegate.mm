@@ -25,6 +25,9 @@
 #import <Google/Analytics.h>
 
 
+#import "CLWorkOverViewController.h"
+
+
 
 // 个推开发者网站中申请App时，注册的AppId、AppKey、AppSecret
 #define kGtAppId      @"zoCAUGD4Hi55CS6iW1OI77"
@@ -115,6 +118,7 @@
 //    GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
 //    CLMoreViewController *moreVC = [[CLMoreViewController alloc] init];
 
+//    CLWorkBeforeViewController *firstView = [[CLWorkBeforeViewController alloc]init];
 //    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
 
 
