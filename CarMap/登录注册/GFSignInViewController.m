@@ -151,7 +151,7 @@
     [self.view addSubview:self.userNameTxt];
     self.userNameTxt.centerTxt.delegate = self;
     self.userNameTxt.centerTxt.tag = 100;
-    self.userNameTxt.centerTxt.keyboardType = UIKeyboardTypeNumberPad;
+    self.userNameTxt.centerTxt.keyboardType = UIKeyboardTypePhonePad;
     self.userNameTxt.centerTxt.text = [userDefaults objectForKey:@"userName"];
     
     // 密码输入框

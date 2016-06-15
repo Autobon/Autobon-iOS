@@ -91,7 +91,7 @@
     [self.userNameTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
     [self.userNameTxt.centerTxt setValue:[UIFont boldSystemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
     [self.view addSubview:self.userNameTxt];
-    self.userNameTxt.centerTxt.keyboardType = UIKeyboardTypeNumberPad;
+    self.userNameTxt.centerTxt.keyboardType = UIKeyboardTypePhonePad;
     self.userNameTxt.centerTxt.delegate = self;
     self.userNameTxt.centerTxt.tag = 100;
     
@@ -117,7 +117,7 @@
     self.verifyTxt.centerTxt.placeholder = @"请输入验证码";
     [self.verifyTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
     [self.view addSubview:self.verifyTxt];
-    self.verifyTxt.centerTxt.keyboardType = UIKeyboardTypeNumberPad;
+    self.verifyTxt.centerTxt.keyboardType = UIKeyboardTypePhonePad;
     
     
     
