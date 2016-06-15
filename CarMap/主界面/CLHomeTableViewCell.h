@@ -14,6 +14,8 @@
 @property (nonatomic ,strong) UILabel *timeLabel;
 @property (nonatomic ,strong) UIButton *orderButton;
 @property (nonatomic ,strong) UIImageView *orderImageView;
+@property (nonatomic ,strong) UILabel *orderTypeLabel;
+
 
 
 - (void)initWithOrder;

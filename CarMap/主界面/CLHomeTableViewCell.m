@@ -23,13 +23,22 @@
     [self addSubview:_orderNumberLabel];
         
 // 预约时间
-    _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, 250, 30)];
+    _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 21, 250, 30)];
 //    _timeLabel.text = @"预约时间 今天 12:00";
     _timeLabel.textColor = [UIColor colorWithRed:157/255.0 green:157/255.0 blue:157/255.0 alpha:1.0];
-    _timeLabel.font = [UIFont systemFontOfSize:15.0];
+    _timeLabel.font = [UIFont systemFontOfSize:12.0];
 //    timeLabel.backgroundColor = [UIColor cyanColor];
     [self addSubview:_timeLabel];
-        
+    
+//订单类型
+    _orderTypeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 41, 250, 20)];
+    _orderTypeLabel.text = @"订单类型：车身改色";
+    _orderTypeLabel.textColor = [UIColor colorWithRed:157/255.0 green:157/255.0 blue:157/255.0 alpha:1.0];
+    _orderTypeLabel.font = [UIFont systemFontOfSize:12.0];
+    //    timeLabel.backgroundColor = [UIColor cyanColor];
+    [self addSubview:_orderTypeLabel];
+    
+    
 // 进入订单按钮
     _orderButton = [UIButton buttonWithType:UIButtonTypeSystem];
     _orderButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-80, 15, 70, 30);

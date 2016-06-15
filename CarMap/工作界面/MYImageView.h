@@ -11,6 +11,6 @@
 @interface MYImageView : UIImageView
 
 @property (nonatomic ,strong) NSString *resultURL;
-
+@property (nonatomic ,strong) NSMutableArray *imageArray;
 
 @end

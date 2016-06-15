@@ -152,8 +152,10 @@
             if (dataArray.count == 0 && _cellModelArray.count > 0) {
                 [self addAlertView:@"已加载全部"];
             }
+            
+            
             [dataArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
-//                NSLog(@"---obj---%@--",obj);
+                NSLog(@"---obj---%@--",obj);
                 CLHomeOrderCellModel *cellModel = [[CLHomeOrderCellModel alloc]init];
                 cellModel.orderId = obj[@"id"];
                 cellModel.orderNumber = obj[@"orderNum"];
@@ -498,6 +500,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
    
+    NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
+    
     if (indexPath.row == 0) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"title"];
         if (cell == nil) {
@@ -515,7 +519,9 @@
             CLHomeOrderCellModel *cellModer = _cellModelArray[indexPath.row-1];
             cell.orderButton.tag = indexPath.row + 1;
             cell.orderNumberLabel.text = [NSString stringWithFormat:@"订单编号%@",cellModer.orderNumber];
-            cell.timeLabel.text = [NSString stringWithFormat:@"预约时间%@",cellModer.orderTime];
+            cell.timeLabel.text = [NSString stringWithFormat:@"预约时间：%@",cellModer.orderTime];
+
+            cell.orderTypeLabel.text = [NSString stringWithFormat:@"订单类型：%@",array[[cellModer.orderType integerValue]-1]];
             [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:cellModer.orderPhotoURL] placeholderImage:[UIImage imageNamed:@"orderImage"]];
             if ([cellModer.status isEqualToString:@"IN_PROGRESS"]) {
                 [cell.orderButton setTitle:@"进入订单" forState:UIControlStateNormal];

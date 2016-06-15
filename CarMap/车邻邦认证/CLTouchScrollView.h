@@ -10,4 +10,6 @@
 
 @interface CLTouchScrollView : UIScrollView
 
+@property (nonatomic ,strong) NSMutableArray *imageArray;
+
 @end

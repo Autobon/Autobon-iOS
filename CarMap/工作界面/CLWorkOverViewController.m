@@ -54,7 +54,7 @@
     
     _scrollView = [[UIScrollView alloc]init];
     _scrollView.frame = CGRectMake(0, 64+36, self.view.frame.size.width, self.view.frame.size.height-64-38);
-    _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, 700);
+    
     [self.view addSubview:_scrollView];
     
     
@@ -245,7 +245,7 @@
     _sevenItemIdArray = [[NSMutableArray alloc]init];
     
     [GFHttpTool GetWorkItemsOrderTypeId:[_orderType integerValue] success:^(NSDictionary *responseObject) {
-//        NSLog(@"－－－%@---",responseObject);
+        NSLog(@"－－－%@---",responseObject);
         NSArray *dataArray = responseObject[@"data"];
         [dataArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
             if ([obj[@"seat"]integerValue] == 5) {
@@ -286,10 +286,10 @@
         [workOverButton addTarget:self action:@selector(workOverBtnClick) forControlEvents:UIControlEventTouchUpInside];
         
         [_scrollView addSubview:workOverButton];
-        
+        _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(workOverButton.frame)+20);
         
     } failure:^(NSError *error) {
-//        NSLog(@"失败了－－－%@---",error);
+        NSLog(@"失败了－－－%@---",error);
         [self addAlertView:@"请求失败"];
     }];
     
@@ -435,7 +435,12 @@
         UIButton *deleteBtn = [[UIButton alloc]initWithFrame:CGRectMake(imageView.frame.size.width-30, 0, 30, 30)];
         [deleteBtn setBackgroundImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
         [deleteBtn addTarget:self action:@selector(deleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        deleteBtn.alpha = 0.5;
         [imageView addSubview:deleteBtn];
+        
+        imageView.tag = _imageArray.count;
+        imageView.imageArray = _imageArray;
+        
         [_imageArray addObject:imageView];
         [_scrollView addSubview:imageView];
         
@@ -457,6 +462,10 @@
         [deleteBtn setBackgroundImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
         [deleteBtn addTarget:self action:@selector(deleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         deleteBtn.alpha = 0.5;
+        
+        imageView.tag = _imageArray.count;
+        imageView.imageArray = _imageArray;
+        
         [imageView addSubview:deleteBtn];
         [_imageArray addObject:imageView];
     }

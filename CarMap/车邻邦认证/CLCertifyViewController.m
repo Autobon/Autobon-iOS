@@ -167,7 +167,7 @@
     CLTitleView *skillView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 145, self.view.frame.size.width, 45) Title:@"技能项目"];
     [_scrollView addSubview:skillView];
     
-// 隔热层
+// 隔热膜
     UIButton *insulatingButton = [[UIButton alloc]initWithFrame:CGRectMake(8, 200, self.view.frame.size.width/4-10, 40)];
     [insulatingButton setTitle:@"隔热膜" forState:UIControlStateNormal];
     insulatingButton.titleLabel.font = [UIFont systemFontOfSize:16];

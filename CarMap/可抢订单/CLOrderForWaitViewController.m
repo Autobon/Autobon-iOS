@@ -311,7 +311,7 @@
         if (indexPath.row <= _cellModelArray.count) {
             CLListNewModel *cellModer = _cellModelArray[indexPath.row-1];
             cell.orderButton.tag = indexPath.row + 1;
-            NSArray *array = @[@"隔热层",@"隐形车衣",@"车身改色",@"美容清洁"];
+            NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
             cell.typeLabel.text = array[[cellModer.orderType integerValue]-1];
 //            cell.typeLabel.text = cellModer.orderType;
             cell.orderNumberLabel.text = [NSString stringWithFormat:@"订单编号%@",cellModer.orderNumber];
