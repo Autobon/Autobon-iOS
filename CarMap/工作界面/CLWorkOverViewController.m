@@ -54,7 +54,11 @@
     
     _scrollView = [[UIScrollView alloc]init];
     _scrollView.frame = CGRectMake(0, 64+36, self.view.frame.size.width, self.view.frame.size.height-64-38);
+<<<<<<< HEAD
+    _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, 1000);
+=======
     
+>>>>>>> ff353bf9c8ed402c2a1179ea539362e2a76e42db
     [self.view addSubview:_scrollView];
     
     

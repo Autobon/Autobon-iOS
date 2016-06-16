@@ -37,6 +37,8 @@
     NSString *seconderUrl;
     NSString *curUrl;
     NSInteger curUrlId;
+    
+    NSMutableArray *_workNameArr;
 }
 
 
@@ -80,7 +82,7 @@
 }
 
 - (void)_setView {
-    
+    _workNameArr = [[NSMutableArray alloc] init];
     self.workItemArr = [[NSMutableArray alloc] init];
     extern NSString *const URLHOST;
     mainUrl = [NSString stringWithFormat:@"%@/api/mobile/technician/order/listMain",URLHOST];
@@ -222,12 +224,13 @@
     self.modelArr = [[NSMutableArray alloc] init];
     _workItemArr = [[NSMutableArray alloc]init];
     
+    
 //    NSLog(@"脑袋刷新");
     self.tableview.userInteractionEnabled = NO;
     page = 1;
     pageSize = 4;
     
-    NSString *urlStr = curUrl;
+//    NSString *urlStr = curUrl;
     NSMutableDictionary *mDic = [[NSMutableDictionary alloc] init];
     mDic[@"curUrlId"] = [NSString stringWithFormat:@"%ld", curUrlId];
     mDic[@"page"] = [NSString stringWithFormat:@"%ld", page];
@@ -239,6 +242,7 @@
         
         if(flage == 1) {
             
+            NSLog(@"订单数据＝＝＝＝＝%@", responseObject);
             
             NSDictionary *dataDic = responseObject[@"data"];
             
@@ -255,11 +259,14 @@
             extern NSString* const URLHOST;
             for(NSDictionary *dic in listArr) {
                 
+                _workNameArr = [[NSMutableArray alloc] init];
+                
                 GFIndentModel *listModel = [[GFIndentModel alloc] init];
                 listModel.orderNum = dic[@"orderNum"];
                 listModel.photo = [NSString stringWithFormat:@"%@%@",URLHOST,dic[@"photo"]];
                 listModel.remark = dic[@"remark"];
                 listModel.commentDictionary = dic[@"comment"];
+                listModel.indentType = dic[@"orderType"];
   
                 if([curUrl isEqualToString:mainUrl]) {
                     NSDictionary *constructDic = dic[@"mainConstruct"];
@@ -268,9 +275,11 @@
                         if (![constructDic[@"workItems"] isKindOfClass:[NSNull class]]) {
                             listModel.workItems = constructDic[@"workItems"];
                         }
+
                         
                         listModel.signinTime = constructDic[@"signinTime"];
                         listModel.payStatus = constructDic[@"payStatus"];
+                        listModel.beforePhotos = constructDic[@"beforePhotos"];
                         
                         NSInteger startTime = [constructDic[@"startTime"] integerValue];
                         NSInteger endTime;
@@ -293,10 +302,28 @@
                         }else {
                             listModel.workTime = [NSString stringWithFormat:@"%ld分", (long)fenNum];
                         }
+                        
+                        
+
                     }else{
                         listModel.payment = @"0";
                         listModel.workTime = @"0分";
                     }
+                    
+                    
+                    // 员工姓名添加
+                    NSDictionary *tech = dic[@"mainTech"];
+                    NSDictionary *seTech = dic[@"secondTech"];
+                    if(![tech isKindOfClass:[NSNull class]]) {
+                        
+                        [_workNameArr addObject:tech[@"name"]];
+                    }
+                    
+                    if(![seTech isKindOfClass:[NSNull class]]) {
+                    
+                        [_workNameArr addObject:seTech[@"name"]];
+                    }
+                    
                 
                 }else if([curUrl isEqualToString:seconderUrl]) {
                     
@@ -306,6 +333,8 @@
                         listModel.workItems = constructDic[@"workItems"];
                         listModel.signinTime = constructDic[@"signinTime"];
                         listModel.payStatus = constructDic[@"payStatus"];
+                        listModel.indentType = dic[@"orderType"];
+                        listModel.beforePhotos = constructDic[@"beforePhotos"];
                         
                         NSInteger startTime = [constructDic[@"startTime"] integerValue];
 //                        NSInteger endTime = [constructDic[@"endTime"] integerValue];
@@ -332,12 +361,35 @@
                         }else {
                             listModel.workTime = [NSString stringWithFormat:@"%ld分", fenNum];
                         }
+                        
+
+                        
                     }else{
                         listModel.payment = @"0";
                         listModel.workTime = @"0分";
                     }
                     
+                    
+                    // 员工姓名添加
+                    NSDictionary *tech = dic[@"mainTech"];
+                    NSDictionary *seTech = dic[@"secondTech"];
+                    if(![tech isKindOfClass:[NSNull class]]) {
+                        
+                        [_workNameArr addObject:tech[@"name"]];
+                    }
+                    
+                    if(![seTech isKindOfClass:[NSNull class]]) {
+                        
+                        [_workNameArr addObject:seTech[@"name"]];
+                    }
+                    
                 }
+                
+                
+                
+                
+                
+                listModel.workerArr = _workNameArr;
                 
                 [self.modelArr addObject:listModel];
     
@@ -420,7 +472,7 @@
     }
 //    NSLog(@"大脚刷新");
     pageSize = 2;
-    NSString *urlStr = curUrl;
+//    NSString *urlStr = curUrl;
     NSMutableDictionary *mDic = [[NSMutableDictionary alloc] init];
     mDic[@"curUrlId"] = [NSString stringWithFormat:@"%ld", curUrlId];
     mDic[@"page"] = [NSString stringWithFormat:@"%ld", ++page];
@@ -448,11 +500,14 @@
             extern NSString* const URLHOST;
             for(NSDictionary *dic in listArr) {
                 
+                _workNameArr = [[NSMutableArray alloc] init];
+                
                 GFIndentModel *listModel = [[GFIndentModel alloc] init];
                 listModel.orderNum = dic[@"orderNum"];
                 listModel.photo = [NSString stringWithFormat:@"%@%@",URLHOST,dic[@"photo"]];
                 listModel.remark = dic[@"remark"];
                 listModel.commentDictionary = dic[@"comment"];
+                listModel.indentType = dic[@"orderType"];
                 if([curUrl isEqualToString:mainUrl]) {
                     NSDictionary *constructDic = dic[@"mainConstruct"];
                     if ([constructDic isKindOfClass:[NSNull class]]) {
@@ -486,6 +541,19 @@
                         }else {
                             listModel.workTime = [NSString stringWithFormat:@"%ld分", fenNum];
                         }
+                    }
+                    
+                    // 员工姓名添加
+                    NSDictionary *tech = dic[@"mainTech"];
+                    NSDictionary *seTech = dic[@"secondTech"];
+                    if(![tech isKindOfClass:[NSNull class]]) {
+                        
+                        [_workNameArr addObject:tech[@"name"]];
+                    }
+                    
+                    if(![seTech isKindOfClass:[NSNull class]]) {
+                        
+                        [_workNameArr addObject:seTech[@"name"]];
                     }
                     
                     
@@ -527,9 +595,23 @@
                             listModel.workTime = [NSString stringWithFormat:@"%ld分", (long)fenNum];
                         }
                     }
+                    
+                    // 员工姓名添加
+                    NSDictionary *tech = dic[@"mainTech"];
+                    NSDictionary *seTech = dic[@"secondTech"];
+                    if(![tech isKindOfClass:[NSNull class]]) {
+                        
+                        [_workNameArr addObject:tech[@"name"]];
+                    }
+                    
+                    if(![seTech isKindOfClass:[NSNull class]]) {
+                        
+                        [_workNameArr addObject:seTech[@"name"]];
+                    }
                 }
                 
                 
+                listModel.workerArr = _workNameArr;
                 [self.modelArr addObject:listModel];
                 
                 // 施工部位

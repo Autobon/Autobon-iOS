@@ -10,6 +10,7 @@
 
 @class GFIndentViewController;
 @class GFIndentModel;
+@class CLImageView;
 
 @interface GFIndentDetailsViewController : UIViewController
 
@@ -17,11 +18,13 @@
 @property (nonatomic, strong) UILabel *numberLab;
 @property (nonatomic, strong) UILabel *moneyLab;
 @property (nonatomic, strong) UIButton *tipBut;
-@property (nonatomic, strong) UIImageView *photoImgView;
+@property (nonatomic, strong) CLImageView *photoImgView;
 @property (nonatomic, strong) UILabel *beizhuLab;
 @property (nonatomic, strong) UILabel *workDayLab;
 @property (nonatomic, strong) UILabel *workTimeLab;
 @property (nonatomic, strong) UILabel *carPlaceLab;
+@property (nonatomic, strong) UILabel *indTypeLab;
+@property (nonatomic, strong) UILabel *workerLab;
 
 
 
