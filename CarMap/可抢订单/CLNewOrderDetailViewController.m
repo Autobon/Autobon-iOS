@@ -38,7 +38,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height/3+64+35, self.view.frame.size.width, self.view.frame.size.height*2/3-64-35)];
+    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height/3+64, self.view.frame.size.width, self.view.frame.size.height*2/3-64)];
     _scrollView.bounces = NO;
     [self.view addSubview:_scrollView];
 //    _scrollView.backgroundColor = [UIColor cyanColor];
@@ -70,10 +70,10 @@
 
 // 添加地图
 - (void)addMap{
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 5+64, 150, 30)];
-    NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
-    titleLabel.text = array[[_model.orderType integerValue]-1];
-    [self.view addSubview:titleLabel];
+//    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 5+64, 150, 30)];
+//    NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
+//    titleLabel.text = array[[_model.orderType integerValue]-1];
+//    [self.view addSubview:titleLabel];
     
     GFMapViewController *mapVC = [[GFMapViewController alloc] init];
     if (![_model.orderLat isKindOfClass:[NSNull class]] && ![_model.orderLon isKindOfClass:[NSNull class]]) {
@@ -92,7 +92,7 @@
     [self.view addSubview:mapVC.view];
     [self addChildViewController:mapVC];
     [mapVC didMoveToParentViewController:self];
-    mapVC.view.frame = CGRectMake(0, 35+64, self.view.frame.size.width, self.view.frame.size.height/3);
+    mapVC.view.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height/3);
     mapVC.mapView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height/3);
 }
 
