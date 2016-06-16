@@ -16,10 +16,10 @@
 #import "GFAlertView.h"
 #import "UIImageView+WebCache.h"
 #import "CLHomeOrderViewController.h"
+#import "CLImageView.h"
 
 
-
-@interface CLOrderDetailViewController ()<UIScrollViewDelegate>
+@interface CLOrderDetailViewController ()
 {
     
     UIScrollView *_scrollView;
@@ -40,9 +40,8 @@
     
     self.view.backgroundColor = [[UIColor alloc]initWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     
-    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, -20, self.view.frame.size.width, self.view.frame.size.height-20)];
+    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height/3+64, self.view.frame.size.width, self.view.frame.size.height*2/3-64-40)];
     _scrollView.bounces = NO;
-    _scrollView.delegate = self;
     [self.view addSubview:_scrollView];
 //    _scrollView.backgroundColor = [UIColor cyanColor];
     
@@ -80,7 +79,7 @@
 - (void)setViewForAutobon{
     
     // 距离label
-    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, self.view.frame.size.height/3+2+64, self.view.frame.size.width, self.view.frame.size.height/18)];
+    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, -10, self.view.frame.size.width, self.view.frame.size.height/18)];
     //    distanceLabel.backgroundColor = [UIColor cyanColor];
     _distanceLabel.text = @"距离：  1.3km";
     _distanceLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
@@ -91,7 +90,7 @@
     [_scrollView addSubview:lineView];
     
     // 订单图片
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, lineView.frame.origin.y + 7, self.view.frame.size.width - 20, self.view.frame.size.height/4)];
+    UIImageView *imageView = [[CLImageView alloc]initWithFrame:CGRectMake(10, lineView.frame.origin.y + 7, self.view.frame.size.width - 20, self.view.frame.size.height/4)];
     //    imageView.backgroundColor = [UIColor darkGrayColor];
 //    imageView.image = [UIImage imageNamed:@"orderImage"];
     [imageView sd_setImageWithURL:[NSURL URLWithString:_orderPhotoURL] placeholderImage:[UIImage imageNamed:@"orderImage"]];
@@ -103,9 +102,20 @@
     [_scrollView addSubview:lineView2];
     
     // 施工时间
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView2.frame.origin.y+4, self.view.frame.size.width, self.view.frame.size.height/18)];
+    [self setLineView:[NSString stringWithFormat:@"施工时间：%@",self.orderTime] maxY:lineView2.frame.origin.y];
+    
+    [self setLineView:[NSString stringWithFormat:@"订单类型：%@",@"汽车贴膜"] maxY:lineView2.frame.origin.y+self.view.frame.size.height/18+1];
+    
+    [self setLineView:[NSString stringWithFormat:@"下单人员：%@",@"王总"] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*2];
+    
+    [self setLineView:[NSString stringWithFormat:@"商户位置：%@",@"武汉软件园中路"] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*3];
+    
+//    [self setLineView:[NSString stringWithFormat:@"商户名称：%@",@"英卡科技"] maxY:lineView2.frame.origin.y];
+    
+    
+    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView2.frame.origin.y+4+(self.view.frame.size.height/18+1)*4, self.view.frame.size.width, self.view.frame.size.height/18)];
     //    timeLabel.backgroundColor = [UIColor cyanColor];
-    timeLabel.text = [NSString stringWithFormat:@"施工时间：%@",self.orderTime];
+    timeLabel.text = [NSString stringWithFormat:@"商户名称：%@",@"英卡科技"];
     timeLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [_scrollView addSubview:timeLabel];
     
@@ -119,7 +129,7 @@
     otherLabel.text = [NSString stringWithFormat:@"下单备注：%@",self.remark];
     otherLabel.numberOfLines = 0;
     CGSize detailSize = [otherLabel.text sizeWithFont:[UIFont systemFontOfSize:17] constrainedToSize:CGSizeMake(self.view.frame.size.width-30, MAXFLOAT)];
-    otherLabel.frame = CGRectMake(10, lineView3.frame.origin.y+4, self.view.frame.size.width-20, detailSize.height);
+    otherLabel.frame = CGRectMake(10, CGRectGetMaxY(lineView3.frame)+4, self.view.frame.size.width-20, detailSize.height);
     
     otherLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [_scrollView addSubview:otherLabel];
@@ -277,11 +287,18 @@
 }
 
 
-#pragma mark - 视图滑动的时候调用的方法
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+- (void)setLineView:(NSString *)title maxY:(float)maxY{
     
-    _mapVC.view.frame = CGRectMake(0, -scrollView.contentOffset.y+44, self.view.frame.size.width, _mapVC.view.frame.size.height);
+// 施工时间
+    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, maxY +4, self.view.frame.size.width, self.view.frame.size.height/18)];
+    //    timeLabel.backgroundColor = [UIColor cyanColor];
+    timeLabel.text = title;
+    timeLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
+    [_scrollView addSubview:timeLabel];
     
+    UIView *lineView3 = [[UIView alloc]initWithFrame:CGRectMake(0, timeLabel.frame.origin.y+self.view.frame.size.height/18, self.view.frame.size.width, 1)];
+    lineView3.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
+    [_scrollView addSubview:lineView3];
     
 }
 
@@ -366,7 +383,7 @@
     [GFHttpTool PostAcceptOrderId:[_orderId integerValue] accept:@"true" success:^(id responseObject) {
         if ([responseObject[@"result"]integerValue] == 1) {
             [self addAlertView:@"接受邀请成功"];
-            _scrollView.delegate = nil;
+//            _scrollView.delegate = nil;
             CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
             [homeOrder headRefresh];
             [self.navigationController popToRootViewControllerAnimated:YES];
@@ -385,7 +402,7 @@
     
     [GFHttpTool PostAcceptOrderId:[_orderId integerValue] accept:@"false" success:^(id responseObject) {
         [self addAlertView:@"已拒绝邀请"];
-        _scrollView.delegate = nil;
+//        _scrollView.delegate = nil;
         CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
         [homeOrder headRefresh];
         [self.navigationController popToRootViewControllerAnimated:YES];
@@ -415,7 +432,7 @@
     
 }
 - (void)backBtnClick{
-    _scrollView.delegate = nil;
+//    _scrollView.delegate = nil;
     if (_orderNumber==nil) {
         CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
         [homeOrder headRefresh];

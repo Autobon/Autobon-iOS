@@ -11,6 +11,7 @@
 #import "CLCertifyViewController.h"
 #import "GFNavigationView.h"
 #import "UIImageView+WebCache.h"
+#import "CLImageView.h"
 
 
 @interface CLKnockOrderViewController ()
@@ -48,7 +49,7 @@
 - (void)addMap{
     NSDictionary *orderDic = _orderDictionary[@"order"];
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 5, 150, 30)];
-    NSArray *array = @[@"隔热层",@"隐形车衣",@"车身改色",@"美容清洁"];
+    NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
     titleLabel.text = array[[orderDic[@"orderType"] integerValue]-1];
     [_orderView addSubview:titleLabel];
     
@@ -90,7 +91,7 @@
     [_orderView addSubview:lineView];
     
     // 订单图片
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, lineView.frame.origin.y + 7, _orderView.frame.size.width - 20, _orderView.frame.size.height/4)];
+    UIImageView *imageView = [[CLImageView alloc]initWithFrame:CGRectMake(10, lineView.frame.origin.y + 7, _orderView.frame.size.width - 20, _orderView.frame.size.height/4)];
     //    imageView.backgroundColor = [UIColor darkGrayColor];
     imageView.image = [UIImage imageNamed:@"orderImage"];
     imageView.contentMode = UIViewContentModeScaleAspectFit;

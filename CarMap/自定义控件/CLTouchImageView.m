@@ -31,6 +31,10 @@
 }
 
 
+
+
+
+
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     
     NSLog(@"支持放大的图片的点击方法");

@@ -10,6 +10,13 @@
 
 @implementation CLTouchScrollView
 
+
+
+
+
+
+
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     [self endEditing:YES];
 }
