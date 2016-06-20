@@ -11,6 +11,7 @@
 #import "GFTextField.h"
 #import "GFHttpTool.h"
 
+#import "MYImageView.h"
 #import "CLImageView.h"
 
 #import "GFIndentViewController.h"
@@ -37,6 +38,9 @@
     
     CGFloat beMaxY;
     CGFloat afMaxY;
+    
+    NSMutableArray *beforeImageArray;
+    NSMutableArray *afterImageArray;
     
 }
 
@@ -348,70 +352,81 @@
     lineView9.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
     [baseView addSubview:lineView9];
     
-    // 施工前照片
-    CGFloat beforeLabW = workDayLabW;
-    CGFloat beforeLabH = workDayLabH;
-    CGFloat beforeLabX = workDayLabX;
-    CGFloat beforeLabY = CGRectGetMaxY(self.workTimeLab.frame);
-    UILabel *beforeLab = [[UILabel alloc] initWithFrame:CGRectMake(beforeLabX, beforeLabY, beforeLabW, beforeLabH)];
-    beforeLab.text = @"施工前照片";
-    beforeLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
-    [baseView addSubview:beforeLab];
-    // 照片
-    NSString *bePhotoStr = self.model.beforePhotos;
-    if (bePhotoStr == nil) {
-        bePhotoStr = @"123531";
-    }
-    NSArray *bePhotoArr = [bePhotoStr componentsSeparatedByString:@","];
     
-    NSInteger num = bePhotoArr.count;
-    for(int i=0; i<num; i++) {
+    
+    
+    if (self.model.beforePhotos) {
+        // 施工前照片
+        CGFloat beforeLabW = workDayLabW;
+        CGFloat beforeLabH = workDayLabH;
+        CGFloat beforeLabX = workDayLabX;
+        CGFloat beforeLabY = CGRectGetMaxY(self.workTimeLab.frame);
+        UILabel *beforeLab = [[UILabel alloc] initWithFrame:CGRectMake(beforeLabX, beforeLabY, beforeLabW, beforeLabH)];
+        beforeLab.text = @"施工前照片";
+        beforeLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
+        [baseView addSubview:beforeLab];
         
-        [self addBeforImgView:[NSString stringWithFormat:@"http://hpecar.com:8012%@", bePhotoArr[i]] withPhotoIndex:i + 1 withFirstY:CGRectGetMaxY(beforeLab.frame) showInView:baseView];
-    }
-    
-    // 边线
-    UIView *lineView10 = [[UIView alloc] initWithFrame:CGRectMake(jiange1, beMaxY + 10 / 568.0 * kHeight, numberLabW, 1)];
-    lineView10.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
-    [baseView addSubview:lineView10];
-    
-    // 施工后照片
-    CGFloat afPhotoLabW = beforeLabW;
-    CGFloat afPhotoLabH = beforeLabH;
-    CGFloat afPhotoLabX = beforeLabX;
-    CGFloat afPhotoLabY = CGRectGetMaxY(lineView10.frame);
-    UILabel *afPhotoLab = [[UILabel alloc] initWithFrame:CGRectMake(afPhotoLabX, afPhotoLabY, afPhotoLabW, afPhotoLabH)];
-    afPhotoLab.text = @"施工后照片";
-    afPhotoLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
-    [baseView addSubview:afPhotoLab];
-    //照片
-    NSString *afPhotoStr = @"12356432135";
-    if (self.model.afterPhotos) {
-        afPhotoStr = self.model.afterPhotos;
-    }
-    
-    NSLog(@"----afPhotoStr-----%@---",afPhotoStr);
-    NSArray *afPhotoArr = [afPhotoStr componentsSeparatedByString:@","];
-    NSInteger sum = afPhotoArr.count;
-    for(int i=0; i<sum; i++) {
-    
-        [self addAfterImgView:[NSString stringWithFormat:@"http://hpecar.com:8012%@", afPhotoArr[i]] withPhotoIndex:i + 1 withFirstY:CGRectGetMaxY(afPhotoLab.frame) showInView:baseView];
+        NSString *bePhotoStr = self.model.beforePhotos;
+        if (bePhotoStr == nil) {
+            bePhotoStr = @"123531";
+        }
+        NSArray *bePhotoArr = [bePhotoStr componentsSeparatedByString:@","];
+        
+        NSInteger num = bePhotoArr.count;
+        beforeImageArray = [[NSMutableArray alloc]init];
+        for(int i=0; i<num; i++) {
+            
+            [self addBeforImgView:[NSString stringWithFormat:@"http://hpecar.com:8012%@", bePhotoArr[i]] withPhotoIndex:i + 1 withFirstY:CGRectGetMaxY(beforeLab.frame) showInView:baseView];
+        }
+        
+        // 边线
+        UIView *lineView10 = [[UIView alloc] initWithFrame:CGRectMake(jiange1, beMaxY + 10 / 568.0 * kHeight, numberLabW, 1)];
+        lineView10.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+        [baseView addSubview:lineView10];
+        
+        // 施工后照片
+        CGFloat afPhotoLabW = beforeLabW;
+        CGFloat afPhotoLabH = beforeLabH;
+        CGFloat afPhotoLabX = beforeLabX;
+        CGFloat afPhotoLabY = CGRectGetMaxY(lineView10.frame);
+        UILabel *afPhotoLab = [[UILabel alloc] initWithFrame:CGRectMake(afPhotoLabX, afPhotoLabY, afPhotoLabW, afPhotoLabH)];
+        afPhotoLab.text = @"施工后照片";
+        afPhotoLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
+        [baseView addSubview:afPhotoLab];
+        //照片
+        NSString *afPhotoStr = @"12356432135";
+        if (self.model.afterPhotos) {
+            afPhotoStr = self.model.afterPhotos;
+        }
+        
+        NSLog(@"----afPhotoStr-----%@---",afPhotoStr);
+        NSArray *afPhotoArr = [afPhotoStr componentsSeparatedByString:@","];
+        NSInteger sum = afPhotoArr.count;
+        afterImageArray = [[NSMutableArray alloc]init];
+        for(int i=0; i<sum; i++) {
+            
+            [self addAfterImgView:[NSString stringWithFormat:@"http://hpecar.com:8012%@", afPhotoArr[i]] withPhotoIndex:i + 1 withFirstY:CGRectGetMaxY(afPhotoLab.frame) showInView:baseView];
+            
+            
+        }
         
         
+        
+        // 设置baseView的最终尺寸
+        //    baseView.frame = CGRectMake(baseViewX, baseViewY, baseViewW, numberLabH + jianjv2 * 2 + photoImgViewH + beizhuRect.size.height - xiadanLabH + baseView1H + workDayLabH + workTimeLabH + carPlaceLabH - shigongLabH + baseView2H + jianjv1 + indTypeLabH + workerLabH + beforeLabH + (kWidth - jianjv1 * 4) / 3.0 + afPhotoLabH + 10 / 568.0 * kHeight);
+        baseView.frame = CGRectMake(baseViewX, baseViewY, baseViewW, afMaxY + 10 / 568.0 * kHeight);
+        
+        // 边线
+        UIView *lineView6 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(baseView.frame), numberLabW + jiange1 * 2, 1)];
+        lineView6.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+        [baseView addSubview:lineView6];
+        
+        //    baseView.backgroundColor = [UIColor redColor];
+        
+        
+    }else{
+         baseView.frame = CGRectMake(baseViewX, baseViewY, baseViewW, CGRectGetMaxY(lineView9.frame)+10);
     }
-    
-    
-    
-    // 设置baseView的最终尺寸
-//    baseView.frame = CGRectMake(baseViewX, baseViewY, baseViewW, numberLabH + jianjv2 * 2 + photoImgViewH + beizhuRect.size.height - xiadanLabH + baseView1H + workDayLabH + workTimeLabH + carPlaceLabH - shigongLabH + baseView2H + jianjv1 + indTypeLabH + workerLabH + beforeLabH + (kWidth - jianjv1 * 4) / 3.0 + afPhotoLabH + 10 / 568.0 * kHeight);
-    baseView.frame = CGRectMake(baseViewX, baseViewY, baseViewW, afMaxY + 10 / 568.0 * kHeight);
-    
-    // 边线
-    UIView *lineView6 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(baseView.frame), numberLabW + jiange1 * 2, 1)];
-    lineView6.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
-    [baseView addSubview:lineView6];
-    
-//    baseView.backgroundColor = [UIColor redColor];
     
     upBaseViewH = baseView.frame.size.height;
    
@@ -432,10 +447,13 @@
     CGFloat beforImgViewH = beforImgViewW;
     CGFloat beforImgViewX = jianjv1 * lie + beforImgViewW * (lie - 1);
     CGFloat beforImgViewY = Y + beforImgViewH * hang + jianjv1 * hang;
-    CLImageView *beforImgView = [[CLImageView alloc] init];
+    MYImageView *beforImgView = [[MYImageView alloc] init];
     beforImgView.frame = CGRectMake(beforImgViewX, beforImgViewY, beforImgViewW, beforImgViewH);
 //    beforImgView.backgroundColor = [UIColor redColor];
     [showView addSubview:beforImgView];
+    beforImgView.tag = beforeImageArray.count;
+    [beforeImageArray addObject:beforImgView];
+    beforImgView.imageArray = beforeImageArray;
     
     NSURL *imgURL = [NSURL URLWithString:imgUrl];
     [beforImgView sd_setImageWithURL:imgURL placeholderImage:[UIImage imageNamed:@"orderImage.png"]];
@@ -456,10 +474,14 @@
     CGFloat beforImgViewH = beforImgViewW;
     CGFloat beforImgViewX = jianjv1 * lie + beforImgViewW * (lie - 1);
     CGFloat beforImgViewY = Y + beforImgViewH * hang + jianjv1 * hang;
-    CLImageView *beforImgView = [[CLImageView alloc] init];
+    MYImageView *beforImgView = [[MYImageView alloc] init];
     beforImgView.frame = CGRectMake(beforImgViewX, beforImgViewY, beforImgViewW, beforImgViewH);
 //    beforImgView.backgroundColor = [UIColor redColor];
     [showView addSubview:beforImgView];
+    beforImgView.tag = afterImageArray.count;
+    [afterImageArray addObject:beforImgView];
+    beforImgView.imageArray = afterImageArray;
+    
     
     NSURL *imgURL = [NSURL URLWithString:imgUrl];
     [beforImgView sd_setImageWithURL:imgURL placeholderImage:[UIImage imageNamed:@"orderImage.png"]];

@@ -335,7 +335,7 @@
                         listModel.payStatus = constructDic[@"payStatus"];
                         listModel.indentType = dic[@"orderType"];
                         listModel.beforePhotos = constructDic[@"beforePhotos"];
-                        
+                        listModel.afterPhotos = constructDic[@"afterPhotos"];
                         NSInteger startTime = [constructDic[@"startTime"] integerValue];
 //                        NSInteger endTime = [constructDic[@"endTime"] integerValue];
                         NSInteger endTime;
@@ -486,7 +486,7 @@
             
 //            NSLog(@"请求成功+++++++++++%@", responseObject);
             
-//            NSLog(@"请求成功+++++++++++%@", responseObject);
+            NSLog(@"请求成功+++++++++++%@", responseObject);
             
             NSDictionary *dataDic = responseObject[@"data"];
             
@@ -520,7 +520,8 @@
                         listModel.workItems = constructDic[@"workItems"];
                         listModel.signinTime = constructDic[@"signinTime"];
                         listModel.payStatus = constructDic[@"payStatus"];
-                        
+                        listModel.beforePhotos = constructDic[@"beforePhotos"];
+                        listModel.afterPhotos = constructDic[@"afterPhotos"];
                         NSInteger startTime = [constructDic[@"startTime"] integerValue];
                         NSInteger endTime;
                         NSInteger chaTime;
@@ -571,7 +572,8 @@
                         listModel.workItems = constructDic[@"workItems"];
                         listModel.signinTime = constructDic[@"signinTime"];
                         listModel.payStatus = constructDic[@"payStatus"];
-                        
+                        listModel.beforePhotos = constructDic[@"beforePhotos"];
+                        listModel.afterPhotos = constructDic[@"afterPhotos"];
                         NSInteger startTime = [constructDic[@"startTime"] integerValue];
                         
                         NSInteger endTime;
