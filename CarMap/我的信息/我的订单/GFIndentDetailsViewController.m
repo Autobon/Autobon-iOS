@@ -359,7 +359,11 @@
     [baseView addSubview:beforeLab];
     // 照片
     NSString *bePhotoStr = self.model.beforePhotos;
+    if (bePhotoStr == nil) {
+        bePhotoStr = @"123531";
+    }
     NSArray *bePhotoArr = [bePhotoStr componentsSeparatedByString:@","];
+    
     NSInteger num = bePhotoArr.count;
     for(int i=0; i<num; i++) {
         
@@ -381,7 +385,7 @@
     afPhotoLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
     [baseView addSubview:afPhotoLab];
     //照片
-    NSString *afPhotoStr = @"/uploads/order/c-160615094650-ELGG8RV4.jpg,/uploads/order/c-160615094655-W8UU67YS.jpg,/uploads/order/c-160615094701-PLW9V4H7.jpg,/uploads/order/c-160615094650-ELGG8RV4.jpg,/uploads/order/c-160615094655-W8UU67YS.jpg,/uploads/order/c-160615094701-PLW9V4H7.jpg,/uploads/order/c-160615094655-W8UU67YS.jpg,/uploads/order/c-160615094655-W8UU67YS.jpg,/uploads/order/c-160615094655-W8UU67YS.jpg";
+    NSString *afPhotoStr = @"12356432135";
     if (self.model.afterPhotos) {
         afPhotoStr = self.model.afterPhotos;
     }
