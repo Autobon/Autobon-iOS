@@ -454,7 +454,7 @@
                 
             }
         } failure:^(NSError *error) {
-//            NSLog(@"－－－失败了--%@",error);
+            NSLog(@"－－－失败了--%@",error);
             [self addAlertView:@"提交失败"];
         }];
         

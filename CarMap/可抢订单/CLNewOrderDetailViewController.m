@@ -234,7 +234,7 @@
     
     [GFHttpTool postOrderId:[_model.orderId integerValue] Success:^(NSDictionary *responseObject) {
         
-        //        NSLog(@"----抢单结果--%@--",responseObject);
+//        NSLog(@"----抢单结果--%@--",responseObject);
         if ([responseObject[@"result"]integerValue] == 1) {
             
             

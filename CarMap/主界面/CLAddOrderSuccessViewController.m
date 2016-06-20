@@ -179,7 +179,11 @@
     
     CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
     [homeOrder headRefresh];
-    _dataDictionary = _dataDictionary[@"order"];
+    
+    if (_dataDictionary[@"orderType"] == nil) {
+        _dataDictionary = _dataDictionary[@"order"];
+    }
+    
     NSLog(@"--收到推送消息的字典---_dataDictionary-----%@---",_dataDictionary);
     CLOrderDetailViewController *detailView = [[CLOrderDetailViewController alloc]init];
     detailView.customerLat = _dataDictionary[@"positionLat"];

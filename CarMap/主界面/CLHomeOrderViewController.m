@@ -853,10 +853,10 @@
     
 //    [self receiveNotification:nil];
 
-//    CLOrderForWaitViewController *orderForWait = [[CLOrderForWaitViewController alloc]init];
-//    [self.navigationController pushViewController:orderForWait animated:YES];
+    CLOrderForWaitViewController *orderForWait = [[CLOrderForWaitViewController alloc]init];
+    [self.navigationController pushViewController:orderForWait animated:YES];
 
-    [self knockBtnClick:nil];
+//    [self knockBtnClick:nil];
     
 }
 

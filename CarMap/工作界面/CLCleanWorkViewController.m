@@ -308,6 +308,7 @@
         UIButton *deleteBtn = [[UIButton alloc]initWithFrame:CGRectMake(imageView.frame.size.width-30, 0, 30, 30)];
         [deleteBtn setBackgroundImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
         [deleteBtn addTarget:self action:@selector(deleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        deleteBtn.alpha = 0.5;
         [imageView addSubview:deleteBtn];
         
         imageView.tag = _imageArray.count;
@@ -332,7 +333,7 @@
         UIButton *deleteBtn = [[UIButton alloc]initWithFrame:CGRectMake(imageView.frame.size.width-30, 0, 30, 30)];
         [deleteBtn setBackgroundImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
         [deleteBtn addTarget:self action:@selector(deleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        
+        deleteBtn.alpha = 0.5;
         imageView.tag = _imageArray.count;
         imageView.imageArray = _imageArray;
         
