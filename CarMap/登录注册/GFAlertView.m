@@ -611,7 +611,7 @@
         _rightButton.layer.borderColor = [[UIColor colorWithRed:221/255.0 green:221/255.0 blue:221/255.0 alpha:1.0] CGColor];
         [_rightButton setTitleColor:[UIColor colorWithRed:255/255.0 green:142/255.0 blue:79/255.0 alpha:1.0] forState:UIControlStateNormal];
         _rightButton.layer.cornerRadius = 7;
-        
+        [_rightButton addTarget:self action:@selector(leftButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [bgView addSubview:_rightButton];
         
         

@@ -144,7 +144,7 @@
     [_cameraBtn addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:_cameraBtn];
     
-    CLTitleView *titleView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 40 + self.view.frame.size.width/3*2+30, self.view.frame.size.width, 45) Title:@"选择本次负责的工作项"];
+    CLTitleView *titleView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 40 + self.view.frame.size.width+30, self.view.frame.size.width, 45) Title:@"选择本次负责的工作项"];
     [_scrollView addSubview:titleView];
     
     
@@ -309,6 +309,10 @@
         [deleteBtn setBackgroundImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
         [deleteBtn addTarget:self action:@selector(deleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [imageView addSubview:deleteBtn];
+        
+        imageView.tag = _imageArray.count;
+        imageView.imageArray = _imageArray;
+        
         [_imageArray addObject:imageView];
         [_scrollView addSubview:imageView];
         
@@ -317,7 +321,7 @@
         imageView.image = image;
         [_scrollView addSubview:imageView];
         
-        if (_imageArray.count == 5) {
+        if (_imageArray.count == 8) {
             _cameraBtn.hidden = YES;
         }else{
             _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)%3),  _carImageButton.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
@@ -328,6 +332,10 @@
         UIButton *deleteBtn = [[UIButton alloc]initWithFrame:CGRectMake(imageView.frame.size.width-30, 0, 30, 30)];
         [deleteBtn setBackgroundImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
         [deleteBtn addTarget:self action:@selector(deleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        imageView.tag = _imageArray.count;
+        imageView.imageArray = _imageArray;
+        
         [imageView addSubview:deleteBtn];
         [_imageArray addObject:imageView];
     }
@@ -498,7 +506,7 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
     _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, _scrollView.contentSize.height + 300);
-    _scrollView.contentOffset = CGPointMake(0, 350);
+    _scrollView.contentOffset = CGPointMake(0, 400);
 }
 
 

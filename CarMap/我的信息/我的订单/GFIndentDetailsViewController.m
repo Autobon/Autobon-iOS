@@ -228,7 +228,7 @@
     CGFloat indTypeLabX = baseView1X;
     CGFloat indTypeLabY = CGRectGetMaxY(lineView3.frame);
     self.indTypeLab = [[UILabel alloc] initWithFrame:CGRectMake(indTypeLabX, indTypeLabY, indTypeLabW, indTypeLabH)];
-    NSInteger index = [self.model.indentType integerValue];
+    NSInteger index = [self.model.indentType integerValue]-1;
     self.indTypeLab.text = [NSString stringWithFormat:@"订单类型：%@", type[index]];
     self.indTypeLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
     [baseView addSubview:self.indTypeLab];
@@ -382,11 +382,18 @@
     [baseView addSubview:afPhotoLab];
     //照片
     NSString *afPhotoStr = @"/uploads/order/c-160615094650-ELGG8RV4.jpg,/uploads/order/c-160615094655-W8UU67YS.jpg,/uploads/order/c-160615094701-PLW9V4H7.jpg,/uploads/order/c-160615094650-ELGG8RV4.jpg,/uploads/order/c-160615094655-W8UU67YS.jpg,/uploads/order/c-160615094701-PLW9V4H7.jpg,/uploads/order/c-160615094655-W8UU67YS.jpg,/uploads/order/c-160615094655-W8UU67YS.jpg,/uploads/order/c-160615094655-W8UU67YS.jpg";
+    if (self.model.afterPhotos) {
+        afPhotoStr = self.model.afterPhotos;
+    }
+    
+    NSLog(@"----afPhotoStr-----%@---",afPhotoStr);
     NSArray *afPhotoArr = [afPhotoStr componentsSeparatedByString:@","];
     NSInteger sum = afPhotoArr.count;
     for(int i=0; i<sum; i++) {
     
         [self addAfterImgView:[NSString stringWithFormat:@"http://hpecar.com:8012%@", afPhotoArr[i]] withPhotoIndex:i + 1 withFirstY:CGRectGetMaxY(afPhotoLab.frame) showInView:baseView];
+        
+        
     }
     
     

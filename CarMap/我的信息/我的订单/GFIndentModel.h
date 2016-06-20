@@ -23,6 +23,6 @@
 @property (nonatomic, copy) NSString *indentType;   // 订单类型
 @property (nonatomic, copy) NSMutableArray *workerArr;      // 施工人员
 @property (nonatomic, copy) NSString *beforePhotos; //施工前照片
-
+@property (nonatomic, copy) NSString *afterPhotos; //施工后照片
 
 @end

@@ -153,11 +153,13 @@
     // 施工时间
     [self setLineView:[NSString stringWithFormat:@"施工时间：%@",_model.orderTime] maxY:lineView2.frame.origin.y];
     
-    [self setLineView:[NSString stringWithFormat:@"订单类型：%@",@"汽车贴膜"] maxY:lineView2.frame.origin.y+self.view.frame.size.height/18+1];
+    NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
     
-    [self setLineView:[NSString stringWithFormat:@"下单人员：%@",@"王总"] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*2];
+    [self setLineView:[NSString stringWithFormat:@"订单类型：%@",array[[_model.orderType integerValue]-1]] maxY:lineView2.frame.origin.y+self.view.frame.size.height/18+1];
     
-    [self setLineView:[NSString stringWithFormat:@"商户位置：%@",@"武汉软件园中路"] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*3];
+    [self setLineView:[NSString stringWithFormat:@"下单人员：%@",_model.cooperatorName] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*2];
+    
+    [self setLineView:[NSString stringWithFormat:@"商户位置：%@",_model.cooperatorAddress] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*3];
     
     
     
@@ -165,7 +167,7 @@
     UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView2.frame.origin.y+4+(self.view.frame.size.height/18+1)*4, self.view.frame.size.width-20 ,self.view.frame.size.height/18)];
     //    timeLabel.backgroundColor = [UIColor cyanColor];
     //    timeLabel.text = @"工作时间： 今天14:30";
-    timeLabel.text = [NSString stringWithFormat:@"商户名称：%@",@"武汉英卡科技"];
+    timeLabel.text = [NSString stringWithFormat:@"商户名称：%@",_model.cooperatorFullname];
 //    timeLabel.font = [UIFont systemFontOfSize:14];
     timeLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [_scrollView addSubview:timeLabel];

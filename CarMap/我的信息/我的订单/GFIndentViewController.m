@@ -280,7 +280,7 @@
                         listModel.signinTime = constructDic[@"signinTime"];
                         listModel.payStatus = constructDic[@"payStatus"];
                         listModel.beforePhotos = constructDic[@"beforePhotos"];
-                        
+                        listModel.afterPhotos = constructDic[@"afterPhotos"];
                         NSInteger startTime = [constructDic[@"startTime"] integerValue];
                         NSInteger endTime;
                         NSInteger fenNum;
