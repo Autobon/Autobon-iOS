@@ -14,8 +14,21 @@
 - (void)initWithOrder{
 //    if (self = [super init]) {
 //    self.backgroundColor = [UIColor cyanColor];
+    
+    _orderTypeLabel = [[UILabel alloc]init];
+    _orderTypeLabel.frame = CGRectMake(10, 5, 250, 30);
+    //    _typeLabel.text = @"美容清洁";
+    _orderTypeLabel.font = [UIFont systemFontOfSize:14.0];
+    _orderTypeLabel.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+    [self addSubview:_orderTypeLabel];
+    
+    
+    
+    
+    
+    
 // 订单编号
-    _orderNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 250, 30)];
+    _orderNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, 250, 30)];
 //     orderNumberLabel.textAlignment = NSTextAlignmentCenter;
 //    _orderNumberLabel.text = @"订单编号CLB280050900001";
     _orderNumberLabel.font = [UIFont systemFontOfSize:14.0];
@@ -23,20 +36,14 @@
     [self addSubview:_orderNumberLabel];
         
 // 预约时间
-    _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 21, 250, 30)];
+    _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 45, 250, 30)];
 //    _timeLabel.text = @"预约时间 今天 12:00";
     _timeLabel.textColor = [UIColor colorWithRed:157/255.0 green:157/255.0 blue:157/255.0 alpha:1.0];
     _timeLabel.font = [UIFont systemFontOfSize:12.0];
 //    timeLabel.backgroundColor = [UIColor cyanColor];
     [self addSubview:_timeLabel];
     
-//订单类型
-    _orderTypeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 41, 250, 20)];
-    _orderTypeLabel.text = @"订单类型：车身改色";
-    _orderTypeLabel.textColor = [UIColor colorWithRed:157/255.0 green:157/255.0 blue:157/255.0 alpha:1.0];
-    _orderTypeLabel.font = [UIFont systemFontOfSize:12.0];
-    //    timeLabel.backgroundColor = [UIColor cyanColor];
-    [self addSubview:_orderTypeLabel];
+
     
     
 // 进入订单按钮
@@ -53,7 +60,7 @@
         
 // 订单图片
     _orderImageView = [[CLImageView alloc] init];
-    _orderImageView.frame = CGRectMake(10, 60, [UIScreen mainScreen].bounds.size.width-20, [UIScreen mainScreen].bounds.size.width*5/12);
+    _orderImageView.frame = CGRectMake(10, 80, [UIScreen mainScreen].bounds.size.width-20, [UIScreen mainScreen].bounds.size.width*5/12-20);
 //    _orderImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 60, [UIScreen mainScreen].bounds.size.width-20, [UIScreen mainScreen].bounds.size.width*5/12)];
     _orderImageView.image = [UIImage imageNamed:@"orderImage"];
 //    orderImageView.backgroundColor = [[UIColor alloc]initWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];

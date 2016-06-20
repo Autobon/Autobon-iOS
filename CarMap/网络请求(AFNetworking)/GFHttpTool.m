@@ -904,7 +904,7 @@ NSString* const PUBHOST = @"http://hpecar.com:8012/api";
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/%@/invite/%@",HOST,orderDic[@"orderId"],orderDic[@"partnerId"]];
         
-        
+        NSLog(@"URLString-----%@--",URLString);
         [manager POST:URLString parameters:orderDic progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
             if(success) {
                 

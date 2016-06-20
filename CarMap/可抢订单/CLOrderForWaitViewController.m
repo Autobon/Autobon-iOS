@@ -110,8 +110,14 @@
                 [self addAlertView:@"已加载全部"];
             }
             [dataArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
-//                NSLog(@"---obj---%@--",obj);
+                NSLog(@"---obj---%@--",obj);
                 CLListNewModel *model = [[CLListNewModel alloc]init];
+                
+                NSDictionary *cooperatorDictionary = obj[@"cooperator"];
+                model.cooperatorName = cooperatorDictionary[@"corporationName"];
+                model.cooperatorAddress = cooperatorDictionary[@"address"];
+                model.cooperatorFullname = cooperatorDictionary[@"fullname"];
+                
                 model.orderId = obj[@"id"];
                 model.orderNumber = obj[@"orderNum"];
                 model.orderType = obj[@"orderType"];
@@ -169,7 +175,7 @@
     
     [GFHttpTool postOrderId:[model.orderId integerValue] Success:^(NSDictionary *responseObject) {
         
-        //        NSLog(@"----抢单结果--%@--",responseObject);
+        NSLog(@"----抢单结果--%@--",responseObject);
         if ([responseObject[@"result"]integerValue] == 1) {
             
             

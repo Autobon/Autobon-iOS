@@ -155,8 +155,12 @@
             
             
             [dataArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
-                NSLog(@"---obj---%@--",obj);
+//                NSLog(@"---obj---%@--",obj);
                 CLHomeOrderCellModel *cellModel = [[CLHomeOrderCellModel alloc]init];
+                NSDictionary *cooperatorDictionary = obj[@"cooperator"];
+                cellModel.cooperatorName = cooperatorDictionary[@"corporationName"];
+                cellModel.cooperatorAddress = cooperatorDictionary[@"address"];
+                cellModel.cooperatorFullname = cooperatorDictionary[@"fullname"];
                 cellModel.orderId = obj[@"id"];
                 cellModel.orderNumber = obj[@"orderNum"];
                 cellModel.orderType = obj[@"orderType"];
@@ -244,9 +248,13 @@
 #pragma mark - 接受通知消息
 -(void)receiveNotification:(NSNotification *)Notification
 {
-//    NSLog(@"receiveNotification---%@--",Notification.userInfo);
+    NSLog(@"receiveNotification---%@--",Notification.userInfo);
     
+//    Notification.userInfo
+//    NSDictionary *dictionary = @{@"action":@"NEW_ORDER",@"title":@"你收到新订单推送消息",@"order":@{@"id":@17,@"orderNum":@"16062009Y2QL2Y",@"orderType":@3,@"photo":@"/uploads/order/photo/20160620090744887326.jpg",@"orderTime":@1467162420000,@"addTime":@1466384882000,@"finishTime":@"",@"creatorName":@"inCar",@"contactPhone":@"18672944895",@"positionLon":@"114.4093395620251",@"positionLat":@"30.48100019068421",@"remark":@"英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单",@"mainTech":@"",@"secondTech":@"",@"mainConstruct":@"",@"secondConstruct":@"",@"comment":@"",@"cooperator":@{@"id":@2,@"fullname":@"英卡科技",@"businessLicense":@"526448668512568",@"corporationName":@"王老板",@"corporationIdNo":@"412723199307061610",@"bussinessLicensePic":@"/uploads/coop/bussinessLicensePic/20160615093059426216.jpg",@"corporationIdPicA":@"/uploads/coop/corporationIdPicA/20160615093107410738.jpg",@"corporationIdPicB":@"",@"longitude":@"114.4093395620251",@"latitude":@"30.48100019068421",@"invoiceHeader":@"武汉英卡科技",@"taxIdNo":@"6546685234",@"postcode":@"466144",@"province":@"湖北省",@"city":@"武汉市",@"district":@"洪山区",@"address":@"光谷软件园",@"contact":@"王总",@"contactPhone":@"18672944895",@"createTime":@1465954349000,@"statusCode":@1,@"orderNum":@14},@"creator":@{@"id":@2,@"cooperatorId":@2,@"fired":@NO,@"shortname":@"inCar",@"phone":@"18672944895",@"name":@"",@"gender":@NO,@"lastLoginTime":@1466153887000,@"lastLoginIp":@"10.168.2.245",@"createTime":@"",@"pushId":@"188d7242c1d435a9ddf026864cc5b5a5",@"main":@YES},@"status":@"NEWLY_CREATED"}};
+
     
+    _inviteDictionary = [[NSDictionary alloc]initWithDictionary:Notification.userInfo];
     if ([Notification.userInfo[@"action"] isEqualToString:@"NEW_ORDER"]) {
         
         
@@ -283,7 +291,7 @@
         GFAlertView *alertView = [[GFAlertView alloc]initWithHeadImageURL:dictionary[@"avatar"] name:dictionary[@"name"] mark:[dictionary[@"starRate"] floatValue] orderNumber:[dictionary[@"unpaidOrders"] integerValue] goodNumber:1.0 order:orderDetail];
         [alertView.okBut addTarget:self action:@selector(OrderDetailBtnClick) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:alertView];
-        _inviteDictionary = [[NSDictionary alloc]initWithDictionary:Notification.userInfo];
+        
 
     }else{
         [self headRefresh];
@@ -348,10 +356,33 @@
 //    [self.navigationController pushViewController:addSuccess animated:NO];
 
     
+/*
+    
+    _knockOrder = nil;
+    CLAddOrderSuccessViewController *addSuccess = [[CLAddOrderSuccessViewController alloc]init];
+//    NSDictionary *dataDictionary = responseObject[@"data"];
+    addSuccess.orderNum = @"123546825131584";
+    addSuccess.dataDictionary = @{@"action":@"NEW_ORDER",@"title":@"你收到新订单推送消息",@"order":@{@"id":@17,@"orderNum":@"16062009Y2QL2Y",@"orderType":@1,@"photo":@"/uploads/order/photo/20160620090744887326.jpg",@"orderTime":@1467162420000,@"addTime":@1466384882000,@"finishTime":@"",@"creatorName":@"inCar",@"contactPhone":@"18672944895",@"positionLon":@"114.4093395620251",@"positionLat":@"30.48100019068421",@"remark":@"英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单",@"mainTech":@"",@"secondTech":@"",@"mainConstruct":@"",@"secondConstruct":@"",@"comment":@"",@"cooperator":@{@"id":@2,@"fullname":@"英卡科技",@"businessLicense":@"526448668512568",@"corporationName":@"王老板",@"corporationIdNo":@"412723199307061610",@"bussinessLicensePic":@"/uploads/coop/bussinessLicensePic/20160615093059426216.jpg",@"corporationIdPicA":@"/uploads/coop/corporationIdPicA/20160615093107410738.jpg",@"corporationIdPicB":@"",@"longitude":@"114.4093395620251",@"latitude":@"30.48100019068421",@"invoiceHeader":@"武汉英卡科技",@"taxIdNo":@"6546685234",@"postcode":@"466144",@"province":@"湖北省",@"city":@"武汉市",@"district":@"洪山区",@"address":@"光谷软件园",@"contact":@"王总",@"contactPhone":@"18672944895",@"createTime":@1465954349000,@"statusCode":@1,@"orderNum":@14},@"creator":@{@"id":@2,@"cooperatorId":@2,@"fired":@NO,@"shortname":@"inCar",@"phone":@"18672944895",@"name":@"",@"gender":@NO,@"lastLoginTime":@1466153887000,@"lastLoginIp":@"10.168.2.245",@"createTime":@"",@"pushId":@"188d7242c1d435a9ddf026864cc5b5a5",@"main":@YES},@"status":@"NEWLY_CREATED"}};
+    addSuccess.isHome = YES;
+    
+    
+    addSuccess.addBlock = ^{
+        _noOrderImageView.hidden = YES;
+        _noOrderlabel.hidden = YES;
+        
+        //                [self headRefresh];
+    };
+    [self.navigationController pushViewController:addSuccess animated:NO];
+    
+ */
+    
+ 
+    
+    
     
     [GFHttpTool postOrderId:button.tag Success:^(NSDictionary *responseObject) {
         
-//        NSLog(@"----抢单结果--%@--",responseObject);
+        NSLog(@"----抢单结果--%@--",responseObject);
         if ([responseObject[@"result"]integerValue] == 1) {
             
             [[[button superview] superview]removeFromSuperview];
@@ -359,9 +390,8 @@
             CLAddOrderSuccessViewController *addSuccess = [[CLAddOrderSuccessViewController alloc]init];
             NSDictionary *dataDictionary = responseObject[@"data"];
             addSuccess.orderNum = dataDictionary[@"orderNum"];
-            addSuccess.dataDictionary = dataDictionary;
+            addSuccess.dataDictionary = _inviteDictionary;
             addSuccess.isHome = YES;
-            
             
             addSuccess.addBlock = ^{
                 _noOrderImageView.hidden = YES;
@@ -521,7 +551,7 @@
             cell.orderNumberLabel.text = [NSString stringWithFormat:@"订单编号%@",cellModer.orderNumber];
             cell.timeLabel.text = [NSString stringWithFormat:@"预约时间：%@",cellModer.orderTime];
 
-            cell.orderTypeLabel.text = [NSString stringWithFormat:@"订单类型：%@",array[[cellModer.orderType integerValue]-1]];
+            cell.orderTypeLabel.text = array[[cellModer.orderType integerValue]-1];
             [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:cellModer.orderPhotoURL] placeholderImage:[UIImage imageNamed:@"orderImage"]];
             if ([cellModer.status isEqualToString:@"IN_PROGRESS"]) {
                 [cell.orderButton setTitle:@"进入订单" forState:UIControlStateNormal];
@@ -608,6 +638,9 @@
                 orderDetail.remark = cellModel.remark;
                 orderDetail.orderType = cellModel.orderType;
                 orderDetail.orderNumber = cellModel.orderNumber;
+                orderDetail.cooperatorName = cellModel.cooperatorName;
+                orderDetail.cooperatorAddress = cellModel.cooperatorAddress;
+                orderDetail.cooperatorFullname = cellModel.cooperatorFullname;
 //                NSLog(@"我还没有开始啊--%@--",cellModel.mateName);
                 if (cellModel.mateName) {
                     
@@ -749,6 +782,11 @@
     orderDetail.secondId = cellModel.secondTechId;
     orderDetail.orderType = cellModel.orderType;
     orderDetail.orderNumber = cellModel.orderNumber;
+        orderDetail.cooperatorName = cellModel.cooperatorName;
+        orderDetail.cooperatorAddress = cellModel.cooperatorAddress;
+        orderDetail.cooperatorFullname = cellModel.cooperatorFullname;
+        
+        
 //    NSLog(@"---orderDetail.remark---%@--",orderDetail.action);
     [self.navigationController pushViewController:orderDetail animated:YES];
     }
@@ -812,9 +850,13 @@
 }
 
 -(void)backBtnClick{
+    
+//    [self receiveNotification:nil];
 
     CLOrderForWaitViewController *orderForWait = [[CLOrderForWaitViewController alloc]init];
     [self.navigationController pushViewController:orderForWait animated:YES];
+
+//    [self knockBtnClick:nil];
     
 }
 

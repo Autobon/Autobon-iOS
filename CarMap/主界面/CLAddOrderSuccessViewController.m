@@ -180,6 +180,11 @@
     CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
     [homeOrder headRefresh];
     
+    if (_dataDictionary[@"orderType"] == nil) {
+        _dataDictionary = _dataDictionary[@"order"];
+    }
+    
+    NSLog(@"--收到推送消息的字典---_dataDictionary-----%@---",_dataDictionary);
     CLOrderDetailViewController *detailView = [[CLOrderDetailViewController alloc]init];
     detailView.customerLat = _dataDictionary[@"positionLat"];
     detailView.customerLon = _dataDictionary[@"positionLon"];
@@ -202,10 +207,21 @@
     }else{
         detailView.remark = @"";
     }
+    
     detailView.orderId = _dataDictionary[@"id"];
     detailView.orderType = _dataDictionary[@"orderType"];
+    NSLog(@"orderType----%@--",_dataDictionary[@"orderType"]);
     detailView.action = _dataDictionary[@"status"];
     detailView.orderNumber = _dataDictionary[@"orderNum"];
+    
+    NSDictionary *cooperatorDictionary = _dataDictionary[@"cooperator"];
+    detailView.cooperatorName = cooperatorDictionary[@"corporationName"];
+    detailView.cooperatorAddress = cooperatorDictionary[@"address"];
+    detailView.cooperatorFullname = cooperatorDictionary[@"fullname"];
+    
+    
+    
+    
     
     [self.navigationController pushViewController:detailView animated:YES];
     

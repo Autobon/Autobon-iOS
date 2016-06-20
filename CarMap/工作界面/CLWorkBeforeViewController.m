@@ -320,7 +320,7 @@
     UIImage *imageNew = [self imageWithImage:image scaledToSize:imagesize];
     NSData *imageData = UIImageJPEGRepresentation(imageNew, 0.8);
     MYImageView *imageView = [_imageArray objectAtIndex:_imageArray.count-1];
-/*
+
     [GFHttpTool PostImageForWork:imageData success:^(NSDictionary *responseObject) {
 //        NSLog(@"上传成功－%@--－%@",responseObject,responseObject[@"message"]);
         if ([responseObject[@"result"] integerValue] == 1) {
@@ -335,7 +335,7 @@
 //        NSLog(@"上传失败原因－－%@--",error);
         [self addAlertView:@"图片上传失败"];
     }];
-    */
+    
 }
 
 #pragma mark - 压缩图片尺寸
@@ -454,7 +454,7 @@
                 
             }
         } failure:^(NSError *error) {
-//            NSLog(@"－－－失败了--%@",error);
+            NSLog(@"－－－失败了--%@",error);
             [self addAlertView:@"提交失败"];
         }];
         

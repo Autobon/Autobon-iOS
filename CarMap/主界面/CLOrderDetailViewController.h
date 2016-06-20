@@ -22,4 +22,13 @@
 @property (nonatomic ,strong) NSString *secondId;
 @property (nonatomic ,strong) NSString *orderType;
 
+@property (nonatomic ,strong) NSString *cooperatorName;
+@property (nonatomic ,strong) NSString *cooperatorAddress;
+@property (nonatomic ,strong) NSString *cooperatorFullname;
+
+
+
+
+
+
 @end

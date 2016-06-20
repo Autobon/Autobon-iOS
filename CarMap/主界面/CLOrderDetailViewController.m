@@ -101,21 +101,46 @@
     lineView2.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [_scrollView addSubview:lineView2];
     
-    // 施工时间
-    [self setLineView:[NSString stringWithFormat:@"施工时间：%@",self.orderTime] maxY:lineView2.frame.origin.y];
     
-    [self setLineView:[NSString stringWithFormat:@"订单类型：%@",@"汽车贴膜"] maxY:lineView2.frame.origin.y+self.view.frame.size.height/18+1];
     
-    [self setLineView:[NSString stringWithFormat:@"下单人员：%@",@"王总"] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*2];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if ([[userDefaults objectForKey:@"userId"] integerValue] == [_mainTechId integerValue] || [_action isEqualToString:@"INVITATION_ACCEPTED"]||[_action isEqualToString:@"NEWLY_CREATED"]){
+        // 施工时间
+        [self setLineView:[NSString stringWithFormat:@"施工时间：%@",self.orderTime] maxY:lineView2.frame.origin.y];
+        
+        NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
+        [self setLineView:[NSString stringWithFormat:@"订单类型：%@",array[[self.orderType integerValue]-1]] maxY:lineView2.frame.origin.y+self.view.frame.size.height/18+1];
+        
+        [self setLineView:[NSString stringWithFormat:@"下单人员：%@",self.cooperatorName] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*2];
+        
+        [self setLineView:[NSString stringWithFormat:@"商户位置：%@",self.cooperatorAddress] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*3];
+    }else{
+        
+        UIView *timeLineView = [[UIView alloc]initWithFrame:CGRectMake(0, lineView2.frame.origin.y+self.view.frame.size.height/18, self.view.frame.size.width, 1)];
+        timeLineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
+        [_scrollView addSubview:timeLineView];
+        
+        
+        // 施工时间
+        [self setLineView:[NSString stringWithFormat:@"施工时间：%@",self.orderTime] maxY:lineView2.frame.origin.y+self.view.frame.size.height/18+1];
+        
+        NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
+        [self setLineView:[NSString stringWithFormat:@"订单类型：%@",array[[self.orderType integerValue]-1]] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*2];
+        
+        [self setLineView:[NSString stringWithFormat:@"下单人员：%@",self.cooperatorName] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*3];
+        
+        [self setLineView:[NSString stringWithFormat:@"商户位置：%@",self.cooperatorAddress] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*4];
+        
+        [_scrollView bringSubviewToFront:timeLineView];
+    }
     
-    [self setLineView:[NSString stringWithFormat:@"商户位置：%@",@"武汉软件园中路"] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*3];
     
 //    [self setLineView:[NSString stringWithFormat:@"商户名称：%@",@"英卡科技"] maxY:lineView2.frame.origin.y];
     
     
     UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView2.frame.origin.y+4+(self.view.frame.size.height/18+1)*4, self.view.frame.size.width, self.view.frame.size.height/18)];
     //    timeLabel.backgroundColor = [UIColor cyanColor];
-    timeLabel.text = [NSString stringWithFormat:@"商户名称：%@",@"英卡科技"];
+    timeLabel.text = [NSString stringWithFormat:@"商户名称：%@",self.cooperatorFullname];
     timeLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [_scrollView addSubview:timeLabel];
     
@@ -205,7 +230,7 @@
             
             label1.frame = CGRectMake(10, lineView2.frame.origin.y+4, 85, 30);
             label1.text = @"主 技 师 ：";
-            label2.frame = CGRectMake(95, lineView2.frame.origin.y+4, 200, 30);
+            label2.frame = CGRectMake(95, lineView2.frame.origin.y+9, 200, 20);
             label2.backgroundColor = [UIColor whiteColor];
             label2.textAlignment = NSTextAlignmentLeft;
             label2.textColor = [UIColor blackColor];
@@ -424,6 +449,13 @@
 - (void)setNavigation{
     
     GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+    
+    UIButton *removeOrderButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 60, 20, 40, 44)];
+    [removeOrderButton setTitle:@"放弃" forState:UIControlStateNormal];
+    [removeOrderButton setTitleColor:[UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0] forState:UIControlStateHighlighted];
+    [removeOrderButton addTarget:self action:@selector(removeOrderBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [navView addSubview:removeOrderButton];
+    
     [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
 //    [navView.rightBut addTarget:navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -431,6 +463,18 @@
     
     
 }
+
+#pragma mark - 弃单提示和请求
+- (void)removeOrderBtnClick{
+    GFAlertView *alertView = [[GFAlertView alloc]initWithTitle:@"确认要放弃此单吗？" leftBtn:@"取消" rightBtn:@"确定"];
+    [alertView.rightButton addTarget:self action:@selector(removeOrder) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:alertView];
+}
+- (void)removeOrder{
+    NSLog(@"确认放弃订单，订单ID为 －－%@--- ",_orderId);
+}
+
+
 - (void)backBtnClick{
 //    _scrollView.delegate = nil;
     if (_orderNumber==nil) {

@@ -16,7 +16,7 @@
 
 @interface CLKnockOrderViewController ()
 {
-    UIView *_orderView;
+    UIScrollView *_scrollView;
     UILabel *_distanceLabel; // 距离label
 }
 @end
@@ -27,14 +27,14 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [[UIColor alloc]initWithWhite:0.1 alpha:0.5];
-    _orderView = [[UIView alloc]initWithFrame:CGRectMake(10, 70, self.view.frame.size.width-20, self.view.frame.size.height-70)];
-    _orderView.backgroundColor = [UIColor whiteColor];
-    _orderView.layer.borderWidth = 1.0f;
-    _orderView.layer.borderColor = [[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1]CGColor];
-    _orderView.layer.cornerRadius = 10;
+    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(10, 64+self.view.frame.size.height/3+10, self.view.frame.size.width-20, self.view.frame.size.height-74-5-self.view.frame.size.height/3)];
+    _scrollView.backgroundColor = [UIColor whiteColor];
+    _scrollView.layer.borderWidth = 1.0f;
+    _scrollView.layer.borderColor = [[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1]CGColor];
+//    _scrollView.layer.cornerRadius = 10;
     
     
-    [self.view addSubview:_orderView];
+    [self.view addSubview:_scrollView];
     
     
     [self addMap];
@@ -48,10 +48,10 @@
 // 添加地图
 - (void)addMap{
     NSDictionary *orderDic = _orderDictionary[@"order"];
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 5, 150, 30)];
+//    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 5, 150, 30)];
     NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
-    titleLabel.text = array[[orderDic[@"orderType"] integerValue]-1];
-    [_orderView addSubview:titleLabel];
+//    titleLabel.text = array[[orderDic[@"orderType"] integerValue]-1];
+//    [_orderView addSubview:titleLabel];
     
     GFMapViewController *mapVC = [[GFMapViewController alloc] init];
     if (![orderDic[@"positionLat"] isKindOfClass:[NSNull class]] && ![orderDic[@"positionLon"] isKindOfClass:[NSNull class]]) {
@@ -67,11 +67,11 @@
         _distanceLabel.text = [NSString stringWithFormat:@"距离：  %0.2fkm",distance/1000.0];
     };
     
-    [_orderView addSubview:mapVC.view];
+    [self.view addSubview:mapVC.view];
     [self addChildViewController:mapVC];
     [mapVC didMoveToParentViewController:self];
-    mapVC.view.frame = CGRectMake(0, 35, _orderView.frame.size.width, _orderView.frame.size.height/3);
-    mapVC.mapView.frame = CGRectMake(0, 0, _orderView.frame.size.width, _orderView.frame.size.height/3);
+    mapVC.view.frame = CGRectMake(10, 74, self.view.frame.size.width-20, self.view.frame.size.height/3);
+    mapVC.mapView.frame = CGRectMake(0, 0, self.view.frame.size.width-20, self.view.frame.size.height/3);
 }
 
 - (void)setViewForAutobon{
@@ -79,29 +79,29 @@
     NSDictionary *orderDic = _orderDictionary[@"order"];
     
     // 距离label
-    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, _orderView.frame.size.height/3+30, self.view.frame.size.width, self.view.frame.size.height/18)];
+    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, self.view.frame.size.width, self.view.frame.size.height/18)];
     //    distanceLabel.backgroundColor = [UIColor cyanColor];
     _distanceLabel.text = @"距离：  0km";
     _distanceLabel.font = [UIFont systemFontOfSize:14];
     _distanceLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
-    [_orderView addSubview:_distanceLabel];
+    [_scrollView addSubview:_distanceLabel];
     
-    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, _distanceLabel.frame.origin.y+self.view.frame.size.height/18, _orderView.frame.size.width, 1)];
+    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, _distanceLabel.frame.origin.y+self.view.frame.size.height/18, _scrollView.frame.size.width, 1)];
     lineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
-    [_orderView addSubview:lineView];
+    [_scrollView addSubview:lineView];
     
     // 订单图片
-    UIImageView *imageView = [[CLImageView alloc]initWithFrame:CGRectMake(10, lineView.frame.origin.y + 7, _orderView.frame.size.width - 20, _orderView.frame.size.height/4)];
+    UIImageView *imageView = [[CLImageView alloc]initWithFrame:CGRectMake(10, lineView.frame.origin.y + 7, _scrollView.frame.size.width - 20, self.view.frame.size.height/4)];
     //    imageView.backgroundColor = [UIColor darkGrayColor];
     imageView.image = [UIImage imageNamed:@"orderImage"];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     extern NSString* const URLHOST;
     [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",URLHOST,orderDic[@"photo"]]] placeholderImage:[UIImage imageNamed:@"orderImage"]];
-    [_orderView addSubview:imageView];
+    [_scrollView addSubview:imageView];
     
-    UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(0, imageView.frame.origin.y+_orderView.frame.size.height/4+5, _orderView.frame.size.width, 1)];
+    UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(imageView.frame)+5, _scrollView.frame.size.width, 1)];
     lineView2.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
-    [_orderView addSubview:lineView2];
+    [_scrollView addSubview:lineView2];
     
     // 施工时间
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
@@ -112,17 +112,36 @@
     
     
     
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView2.frame.origin.y, _orderView.frame.size.width, _orderView.frame.size.height/18)];
+    
+    
+    // 施工时间
+    [self setLineView:[NSString stringWithFormat:@"施工时间：%@",timeString] maxY:lineView2.frame.origin.y];
+    
+    NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
+    [self setLineView:[NSString stringWithFormat:@"订单类型：%@",array[[orderDic[@"orderType"] integerValue]-1]] maxY:lineView2.frame.origin.y+self.view.frame.size.height/18+1];
+    
+    NSDictionary *cooperatorDictionary = orderDic[@"cooperator"];
+
+    [self setLineView:[NSString stringWithFormat:@"下单人员：%@",cooperatorDictionary[@"corporationName"]] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*2];
+    
+    [self setLineView:[NSString stringWithFormat:@"商户位置：%@",cooperatorDictionary[@"address"]] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*3];
+    
+    
+    
+    
+    
+    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*4, _scrollView.frame.size.width, self.view.frame.size.height/18)];
     //    timeLabel.backgroundColor = [UIColor cyanColor];
 //    timeLabel.text = @"工作时间： 今天14:30";
-    timeLabel.text = [NSString stringWithFormat:@"工作时间：%@",timeString];
+    timeLabel.text = [NSString stringWithFormat:@"商户名称：%@",cooperatorDictionary[@"fullname"]];
     timeLabel.font = [UIFont systemFontOfSize:14];
     timeLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
-    [_orderView addSubview:timeLabel];
+    timeLabel.font = [UIFont systemFontOfSize:14];
+    [_scrollView addSubview:timeLabel];
     
-    UIView *lineView3 = [[UIView alloc]initWithFrame:CGRectMake(0, timeLabel.frame.origin.y+self.view.frame.size.height/18-5, _orderView.frame.size.width, 1)];
+    UIView *lineView3 = [[UIView alloc]initWithFrame:CGRectMake(0, timeLabel.frame.origin.y+self.view.frame.size.height/18-5, _scrollView.frame.size.width, 1)];
     lineView3.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
-    [_orderView addSubview:lineView3];
+    [_scrollView addSubview:lineView3];
     
     
     // 备注
@@ -140,38 +159,60 @@
     }
     
     CGSize detailSize = [otherLabel.text sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(self.view.frame.size.width-30, MAXFLOAT)];
-    if (_orderView.frame.size.height-lineView3.frame.origin.y-2-self.view.frame.size.height/18-7 > detailSize.height) {
-        otherLabel.frame = CGRectMake(10, lineView3.frame.origin.y+2, self.view.frame.size.width-40, detailSize.height);
-    }else{
-        otherLabel.frame = CGRectMake(10, lineView3.frame.origin.y+2, self.view.frame.size.width-40, _orderView.frame.size.height-lineView3.frame.origin.y-2-self.view.frame.size.height/18-7);
-    }
+    
+    
+    otherLabel.frame = CGRectMake(10, CGRectGetMaxY(timeLabel.frame)+5, self.view.frame.size.width-40, detailSize.height);
+    
     
     otherLabel.font = [UIFont systemFontOfSize:14];
 //    otherLabel.textAlignment = NSTextAlignmentRight;
     
     otherLabel.numberOfLines = 0;
     otherLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
-    [_orderView addSubview:otherLabel];
+    [_scrollView addSubview:otherLabel];
     
     
     // 立即抢单
-    _certifyButton = [[UIButton alloc]initWithFrame:CGRectMake(_orderView.frame.size.width/4, _orderView.frame.size.height-_orderView.frame.size.height/18-10, _orderView.frame.size.width/2, self.view.frame.size.height/18)];
+    _certifyButton = [[UIButton alloc]initWithFrame:CGRectMake(_scrollView.frame.size.width/4, CGRectGetMaxY(otherLabel.frame)+10, _scrollView.frame.size.width/2, self.view.frame.size.height/18)];
     [_certifyButton setBackgroundImage:[UIImage imageNamed:@"button"] forState:UIControlStateNormal];
     [_certifyButton setBackgroundImage:[UIImage imageNamed:@"buttonClick"] forState:UIControlStateHighlighted];
     [_certifyButton setTitle:@"立即抢单" forState:UIControlStateNormal];
     [_certifyButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_orderView addSubview:_certifyButton];
+    [_scrollView addSubview:_certifyButton];
+    
     
     
 // 取消按钮
-    _cancelButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 35, _orderView.frame.origin.y-5, 30, 30)];
+    _cancelButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 35, _scrollView.frame.origin.y-5-self.view.frame.size.height/3, 30, 30)];
     [_cancelButton setBackgroundImage:[UIImage imageNamed:@"deleteOrder"] forState:UIControlStateNormal];
     [_cancelButton setBackgroundImage:[UIImage imageNamed:@"delete"] forState:UIControlStateHighlighted];
     [_cancelButton addTarget:self action:@selector(deleteBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_cancelButton];
     
     
+    _scrollView.contentSize = CGSizeMake(_scrollView.frame.size.width, CGRectGetMaxY(_certifyButton.frame)+20);
 }
+
+
+- (void)setLineView:(NSString *)title maxY:(float)maxY{
+    
+    // 施工时间
+    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, maxY +4, self.view.frame.size.width, self.view.frame.size.height/18)];
+    //    timeLabel.backgroundColor = [UIColor cyanColor];
+    timeLabel.text = title;
+    timeLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
+    timeLabel.font = [UIFont systemFontOfSize:14];
+    [_scrollView addSubview:timeLabel];
+    
+    UIView *lineView3 = [[UIView alloc]initWithFrame:CGRectMake(0, timeLabel.frame.origin.y+self.view.frame.size.height/18, self.view.frame.size.width, 1)];
+    lineView3.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
+    [_scrollView addSubview:lineView3];
+    
+}
+
+
+
+
 -(void)deleteBtnClick{
     
     NSUserDefaults *userDefalts = [NSUserDefaults standardUserDefaults];
