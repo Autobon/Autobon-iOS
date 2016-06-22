@@ -284,13 +284,33 @@
         
     }else if ([Notification.userInfo[@"action"] isEqualToString:@"INVITE_PARTNER"]){
 //        NSLog(@"有人邀请");
-        NSDictionary *dictionary = Notification.userInfo[@"owner"];
-        NSDictionary *orderDictionary = Notification.userInfo[@"order"];
-        NSArray *skillArray = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
-        NSString *orderDetail = [NSString stringWithFormat:@"邀请你参与%@的订单，订单号%@",skillArray[[orderDictionary[@"orderType"] integerValue] - 1],orderDictionary[@"orderNum"]];
-        GFAlertView *alertView = [[GFAlertView alloc]initWithHeadImageURL:dictionary[@"avatar"] name:dictionary[@"name"] mark:[dictionary[@"starRate"] floatValue] orderNumber:[dictionary[@"unpaidOrders"] integerValue] goodNumber:1.0 order:orderDetail];
-        [alertView.okBut addTarget:self action:@selector(OrderDetailBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:alertView];
+        [GFHttpTool getOrderDetailOrderId:[Notification.userInfo[@"order"] integerValue] success:^(id responseObject) {
+            
+            NSLog(@"--拉取订单详情--responseObject----%@---",responseObject);
+            
+            
+            
+            
+            NSDictionary *dictionary = Notification.userInfo[@"owner"];
+            NSDictionary *orderDictionary = responseObject[@"data"];
+            NSArray *skillArray = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
+            NSString *orderDetail = [NSString stringWithFormat:@"邀请你参与%@的订单，订单号%@",skillArray[[orderDictionary[@"orderType"] integerValue] - 1],orderDictionary[@"orderNum"]];
+            GFAlertView *alertView = [[GFAlertView alloc]initWithHeadImageURL:dictionary[@"avatar"] name:dictionary[@"name"] mark:[dictionary[@"starRate"] floatValue] orderNumber:[dictionary[@"unpaidOrders"] integerValue] goodNumber:1.0 order:orderDetail];
+            [alertView.okBut addTarget:self action:@selector(OrderDetailBtnClick) forControlEvents:UIControlEventTouchUpInside];
+            [self.view addSubview:alertView];
+            
+            _inviteDictionary = [[NSDictionary alloc]initWithDictionary:orderDictionary];
+            
+        } failure:^(NSError *error) {
+            
+            NSLog(@"----拉取失败－－－%@--",error);
+            
+        }];
+        
+        NSLog(@"-----Notification.userInfo----%@--",Notification.userInfo);
+        
+        
+        
         
 
     }else{
@@ -306,9 +326,9 @@
 #pragma mark - 收到推送消息查看邀请订单详情
 - (void)OrderDetailBtnClick{
 
-//    NSLog(@"----orderDic--%@--",_inviteDictionary);
+    NSLog(@"----orderDic--%@--",_inviteDictionary);
     CLOrderDetailViewController *orderDetail = [[CLOrderDetailViewController alloc]init];
-    NSDictionary *orderDic = _inviteDictionary[@"order"];
+    NSDictionary *orderDic = _inviteDictionary;
     orderDetail.orderId = orderDic[@"id"];
 //    orderDetail.orderNumber = orderDic[@"orderNum"];
     orderDetail.customerLat = orderDic[@"positionLat"];
@@ -322,7 +342,7 @@
     }
     
     orderDetail.mainTechId = @"2";
-    NSDictionary *mainTechDictionary = _inviteDictionary[@"owner"];
+    NSDictionary *mainTechDictionary = _inviteDictionary[@"mainTech"];
     orderDetail.secondId = mainTechDictionary[@"name"];
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
@@ -331,6 +351,12 @@
     orderDetail.orderTime = [formatter stringFromDate:date];
     
     orderDetail.action = @"SEND_INVITATION";
+    orderDetail.orderType = orderDic[@"orderType"];
+    
+    NSDictionary *cooperatorDictionary = orderDic[@"cooperator"];
+    orderDetail.cooperatorName = cooperatorDictionary[@"corporationName"];
+    orderDetail.cooperatorAddress = cooperatorDictionary[@"address"];
+    orderDetail.cooperatorFullname = cooperatorDictionary[@"fullname"];
     
 //    NSLog(@"---orderDetail.remark----%@---%@--",_inviteDictionary[@"action"],orderDetail.customerLon);
     [self.navigationController pushViewController:orderDetail animated:YES];
