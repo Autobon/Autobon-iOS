@@ -1499,7 +1499,38 @@ NSString* const PUBHOST = @"http://hpecar.com:8012/api";
 }
 
 
-
+#pragma mark - 放弃订单
++ (void)postCancelOrder:(NSString *)orderId Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    
+    if ([GFHttpTool isConnectionAvailable]) {
+        
+        
+        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        NSString *token = [userDefaultes objectForKey:@"autoken"];
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/%@/cancel",HOST,orderId];
+        
+        NSLog(@"URLString-----%@--",URLString);
+        [manager POST:URLString parameters:nil progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            if(success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            if(failure) {
+                failure(error);
+            }
+        }];
+        
+        
+    }else{
+        
+        [GFHttpTool addAlertView:@"无网络连接"];
+    }
+    
+    
+}
 
 
 

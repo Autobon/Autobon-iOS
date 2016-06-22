@@ -374,9 +374,10 @@
         
         NSInteger num = bePhotoArr.count;
         beforeImageArray = [[NSMutableArray alloc]init];
+        extern NSString* const URLHOST;
         for(int i=0; i<num; i++) {
             
-            [self addBeforImgView:[NSString stringWithFormat:@"http://hpecar.com:8012%@", bePhotoArr[i]] withPhotoIndex:i + 1 withFirstY:CGRectGetMaxY(beforeLab.frame) showInView:baseView];
+            [self addBeforImgView:[NSString stringWithFormat:@"%@%@", URLHOST, bePhotoArr[i]] withPhotoIndex:i + 1 withFirstY:CGRectGetMaxY(beforeLab.frame) showInView:baseView];
         }
         
         // 边线
@@ -405,7 +406,7 @@
         afterImageArray = [[NSMutableArray alloc]init];
         for(int i=0; i<sum; i++) {
             
-            [self addAfterImgView:[NSString stringWithFormat:@"http://hpecar.com:8012%@", afPhotoArr[i]] withPhotoIndex:i + 1 withFirstY:CGRectGetMaxY(afPhotoLab.frame) showInView:baseView];
+            [self addAfterImgView:[NSString stringWithFormat:@"%@%@", URLHOST, afPhotoArr[i]] withPhotoIndex:i + 1 withFirstY:CGRectGetMaxY(afPhotoLab.frame) showInView:baseView];
             
             
         }

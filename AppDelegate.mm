@@ -491,6 +491,22 @@
 //                NSLog(@"-----notification---%@---",notification);
                 [[UIApplication sharedApplication]scheduleLocalNotification:notification];
             }
+        }else if ([responseJSON[@"action"]isEqualToString:@"ORDER_CANCELED"]){
+            
+            UILocalNotification*notification = [[UILocalNotification alloc] init];
+            if (nil != notification)
+            {
+                notification.fireDate = [NSDate date];
+                _pushDate = [NSDate date];
+                //                NSLog(@"----_pushDate-%@--%@-----",_pushDate,[NSDate date]);
+                notification.alertTitle = responseJSON[@"title"];
+                NSDictionary *orderDictionary = responseJSON[@"order"];
+                notification.alertBody = [NSString stringWithFormat:@"订单编号:%@ 已被商户撤销",orderDictionary[@"orderNum"]];
+                notification.userInfo = @{@"dictionary":payloadMsg};
+                AudioServicesPlaySystemSound(1307);
+                [[UIApplication sharedApplication]scheduleLocalNotification:notification];
+            }
+            
         }
     }
     

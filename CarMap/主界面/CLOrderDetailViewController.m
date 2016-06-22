@@ -472,7 +472,36 @@
 }
 - (void)removeOrder{
     NSLog(@"确认放弃订单，订单ID为 －－%@--- ",_orderId);
+    
+    
+   [GFHttpTool postCancelOrder:_orderId Success:^(id responseObject) {
+      
+       if ([responseObject[@"result"] integerValue] == 1) {
+           
+           [GFTipView tipViewWithNormalHeightWithMessage:@"弃单成功" withShowTimw:1.5];
+           [self performSelector:@selector(removeOrderSuccess) withObject:nil afterDelay:1.5];
+       }else{
+           
+           [GFTipView tipViewWithNormalHeightWithMessage:responseObject[@"message"] withShowTimw:1.5];
+           
+       }
+       
+   } failure:^(NSError *error) {
+       
+       NSLog(@"放弃订单失败----%@---",error);
+       
+   }];
+    
+    
 }
+
+- (void)removeOrderSuccess{
+    CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
+    [homeOrder headRefresh];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+
 
 
 - (void)backBtnClick{
