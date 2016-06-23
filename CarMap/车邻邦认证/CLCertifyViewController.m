@@ -117,7 +117,7 @@
                 
                 
                 extern NSString* const URLHOST;
-                [_headButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",URLHOST,dataDic[@"avatar"]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
+                [_headButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",URLHOST,dataDic[@"avatar"]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
                 
                 [_identityButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",URLHOST,dataDic[@"idPhoto"]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"userImage"]];
                 [_dataDictionary setObject:dataDic[@"idPhoto"] forKey:@"idPhoto"];
@@ -686,12 +686,12 @@
                 [self addAlertView:@"头像上传成功"];
             }else{
                 [self addAlertView:@"头像上传失败"];
-//                [_headButton setImage:nil forState:UIControlStateNormal];
+                [_headButton setImage:nil forState:UIControlStateNormal];
             }
         } failure:^(NSError *error) {
 //            NSLog(@"---请求失败－－%@－－",error);
             [self addAlertView:@"头像上传失败"];
-//            [_headButton setImage:nil forState:UIControlStateNormal];
+            [_headButton setImage:nil forState:UIControlStateNormal];
         }];
         
     }else{
@@ -713,9 +713,11 @@
                 
             }else{
                 [self addAlertView:@"证件照上传失败"];
+                [_identityButton setImage:nil forState:UIControlStateNormal];
             }
         } failure:^(NSError *error) {
             [self addAlertView:@"证件照上传失败"];
+            [_identityButton setImage:nil forState:UIControlStateNormal];
         }];
         
     }

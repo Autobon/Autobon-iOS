@@ -27,6 +27,7 @@ NSString* const PUBHOST = @"http://hpecar.com:8012/api";
 
 @implementation GFHttpTool
 
+// 模版
 + (void)getWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
     
     if ([GFHttpTool isConnectionAvailable]) {
@@ -169,7 +170,7 @@ NSString* const PUBHOST = @"http://hpecar.com:8012/api";
 + (void)codeGetWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
 
     if ([GFHttpTool isConnectionAvailable]) {
-        
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"请求中..."];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
         manager.requestSerializer.timeoutInterval = 30.0;
@@ -178,10 +179,12 @@ NSString* const PUBHOST = @"http://hpecar.com:8012/api";
         NSString *url = [NSString stringWithFormat:@"%@/pub/verifySms", PUBHOST];
         
         [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            [aView removeFromSuperview];
             if(success) {
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            [aView removeFromSuperview];
             // 判断请求超时
             NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
             if([errorStr isEqualToString:@"The request timed out."]) {
@@ -663,6 +666,9 @@ NSString* const PUBHOST = @"http://hpecar.com:8012/api";
         
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        
+
+        
         NSString *token = [userDefaultes objectForKey:@"autoken"];
         
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
@@ -825,19 +831,7 @@ NSString* const PUBHOST = @"http://hpecar.com:8012/api";
         
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/listUnfinished",HOST];
-        //        NSLog(@"-请求没有成功程序挂掉啦--token---%@---%@---%@-",manager,URLString,dictionary);
-        //        [manager GET:URLString parameters:dictionary success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        //            NSLog(@"请求成功了－22－－");
-        //            if (success) {
-        //                success(responseObject);
-        //            }
-        //        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        //            NSLog(@"请求失败了－－－");
-        //            if (failure) {
-        //                failure(error);
-        //            }
-        //        }];
-        
+
         [manager GET:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
             //            NSLog(@"请求成功了－11－－");
             if (success) {
@@ -875,7 +869,7 @@ NSString* const PUBHOST = @"http://hpecar.com:8012/api";
     
     
     if ([GFHttpTool isConnectionAvailable]) {
-        
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
         
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -887,10 +881,12 @@ NSString* const PUBHOST = @"http://hpecar.com:8012/api";
         NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/signIn",HOST];
         
         [manager POST:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * task, NSDictionary *responseObject) {
+            [aView removeFromSuperview];
             if (success) {
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            [aView removeFromSuperview];
             // 判断请求超时
             NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
             if([errorStr isEqualToString:@"The request timed out."]) {
@@ -1144,7 +1140,7 @@ NSString* const PUBHOST = @"http://hpecar.com:8012/api";
     
     
     if ([GFHttpTool isConnectionAvailable]) {
-        
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
         
         
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
@@ -1159,10 +1155,12 @@ NSString* const PUBHOST = @"http://hpecar.com:8012/api";
         
         
         [manager POST:URLString parameters:orderId progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            [aView removeFromSuperview];
             if(success) {
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            [aView removeFromSuperview];
             // 判断请求超时
             NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
             if([errorStr isEqualToString:@"The request timed out."]) {
@@ -1255,6 +1253,9 @@ NSString* const PUBHOST = @"http://hpecar.com:8012/api";
         
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        
+        
+        
         NSString *token = [userDefaultes objectForKey:@"autoken"];
         
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
@@ -1308,7 +1309,7 @@ NSString* const PUBHOST = @"http://hpecar.com:8012/api";
     
     
     if ([GFHttpTool isConnectionAvailable]) {
-        
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
         
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -1322,11 +1323,13 @@ NSString* const PUBHOST = @"http://hpecar.com:8012/api";
         //        NSLog(@"token-可能是这里错了-%@-－－URLString--%@-",token,URLString);
         [manager POST:URLString parameters:@{@"accepted":accept} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
             //            NSLog(@"走出来了");
+            [aView removeFromSuperview];
             if(success) {
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             //            NSLog(@"没有走出来－－－%@--",error);
+            [aView removeFromSuperview];
             // 判断请求超时
             NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
             if([errorStr isEqualToString:@"The request timed out."]) {
@@ -1467,7 +1470,7 @@ NSString* const PUBHOST = @"http://hpecar.com:8012/api";
     
     
     if ([GFHttpTool isConnectionAvailable]) {
-        
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
         
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -1480,10 +1483,12 @@ NSString* const PUBHOST = @"http://hpecar.com:8012/api";
         
         
         [manager GET:URLString parameters:nil progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            [aView removeFromSuperview];
             if(success) {
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            [aView removeFromSuperview];
             // 判断请求超时
             NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
             if([errorStr isEqualToString:@"The request timed out."]) {
@@ -1739,7 +1744,7 @@ NSString* const PUBHOST = @"http://hpecar.com:8012/api";
     
     if ([GFHttpTool isConnectionAvailable]) {
         
-        
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
@@ -1751,10 +1756,12 @@ NSString* const PUBHOST = @"http://hpecar.com:8012/api";
         
         NSLog(@"URLString-----%@--",URLString);
         [manager POST:URLString parameters:nil progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            [aView removeFromSuperview];
             if(success) {
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            [aView removeFromSuperview];
             // 判断请求超时
             NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
             if([errorStr isEqualToString:@"The request timed out."]) {

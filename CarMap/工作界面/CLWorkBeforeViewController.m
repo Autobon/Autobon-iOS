@@ -329,11 +329,18 @@
         }else{
 #warning --图片上传失败，从数组移走图片
             [self addAlertView:@"图片上传失败"];
+            _cameraBtn.frame = imageView.frame;
+            [_imageArray removeLastObject];
+            [imageView removeFromSuperview];
         }
 //
     } failure:^(NSError *error) {
 //        NSLog(@"上传失败原因－－%@--",error);
         [self addAlertView:@"图片上传失败"];
+        _cameraBtn.frame = imageView.frame;
+        [imageView removeFromSuperview];
+        [_imageArray removeLastObject];
+        
     }];
     
 }

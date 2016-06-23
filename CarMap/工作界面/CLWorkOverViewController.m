@@ -481,20 +481,26 @@
     UIImage *imageNew = [self imageWithImage:image scaledToSize:imagesize];
     NSData *imageData = UIImageJPEGRepresentation(imageNew, 0.8);
     
-   
+   MYImageView *imageView = [_imageArray objectAtIndex:_imageArray.count-1];
     [GFHttpTool PostImageForWork:imageData success:^(NSDictionary *responseObject) {
 //        NSLog(@"上传成功－%@--－%@",responseObject,responseObject[@"message"]);
         if ([responseObject[@"result"] integerValue] == 1) {
-            MYImageView *imageView = [_imageArray objectAtIndex:_imageArray.count-1];
+            
             imageView.resultURL = responseObject[@"data"];
         }else{
-#warning --图片上传失败，从数组移走图片
+
             [self addAlertView:@"图片上传失败"];
+            _cameraBtn.frame = imageView.frame;
+            [_imageArray removeLastObject];
+            [imageView removeFromSuperview];
         }
         
     } failure:^(NSError *error) {
 //        NSLog(@"上传失败原因－－%@--",error);
         [self addAlertView:@"图片上传失败"];
+        _cameraBtn.frame = imageView.frame;
+        [_imageArray removeLastObject];
+        [imageView removeFromSuperview];
     }];
     
     
