@@ -184,8 +184,8 @@
     [self.view addSubview:agreeLab];
     agreeLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
     agreeLab.textAlignment = NSTextAlignmentCenter;
-    NSMutableAttributedString *MAStr = [[NSMutableAttributedString alloc] initWithString:@"点击“提交”代表本人已阅读并同意《车邻邦技师服务协议》"];
-    [MAStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] range:NSMakeRange(16, 11)];
+    NSMutableAttributedString *MAStr = [[NSMutableAttributedString alloc] initWithString:@"点击按钮代表本人已阅读并同意《车邻邦技师服务协议》"];
+    [MAStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] range:NSMakeRange(14, 11)];
     agreeLab.attributedText = MAStr;
     agreeLab.font = [UIFont systemFontOfSize:10.5 / 320.0 * kWidth];
     agreeLab.userInteractionEnabled = YES;
@@ -388,7 +388,7 @@
             
         } failure:^(NSError *error) {
             sender.userInteractionEnabled = YES;
-            [self tipShow:@"获取验证码失败"];    
+//            [self tipShow:@"获取验证码失败"];    
         }];
     }else {
     
@@ -510,7 +510,7 @@
                         
                         
                     } failure:^(NSError *error) {
-                        [self tipShow:@"注册失败，请重试"];
+//                        [self tipShow:@"注册失败，请重试"];
                     }];
                     
                 }else {

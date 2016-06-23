@@ -471,7 +471,7 @@
                 
             } failure:^(NSError *error) {
 //                NSLog(@"--请求失败了--%@--",error);
-                [self addAlertView:@"提交失败"];
+//                [self addAlertView:@"提交失败"];
             }];
         }else{
             [self addAlertView:@"请填写完成工作的百分比"];

@@ -279,7 +279,7 @@
             } failure:^(NSError *error) {
                 
 //                NSLog(@"提交失败++++++++++++++%@", error);
-                [self addAlertView:@"请求失败"];
+//                [self addAlertView:@"请求失败"];
             }];
             
         }

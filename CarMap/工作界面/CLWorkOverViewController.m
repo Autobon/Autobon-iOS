@@ -245,7 +245,7 @@
     _sevenItemIdArray = [[NSMutableArray alloc]init];
     
     [GFHttpTool GetWorkItemsOrderTypeId:[_orderType integerValue] success:^(NSDictionary *responseObject) {
-        NSLog(@"－－－%@---",responseObject);
+//        NSLog(@"－－－%@---",responseObject);
         NSArray *dataArray = responseObject[@"data"];
         [dataArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
             if ([obj[@"seat"]integerValue] == 5) {
@@ -289,8 +289,8 @@
         _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(workOverButton.frame)+20);
         
     } failure:^(NSError *error) {
-        NSLog(@"失败了－－－%@---",error);
-        [self addAlertView:@"请求失败"];
+//        NSLog(@"失败了－－－%@---",error);
+//        [self addAlertView:@"请求失败"];
     }];
     
 //
@@ -651,7 +651,7 @@
                 
             } failure:^(NSError *error) {
 //                NSLog(@"----请求失败了--%@--",error);
-                [self addAlertView:@"提交失败"];
+//                [self addAlertView:@"提交失败"];
             }];
             
             

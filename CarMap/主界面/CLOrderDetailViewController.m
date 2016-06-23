@@ -371,7 +371,7 @@
         
     } failure:^(NSError *error) {
 //        NSLog(@"----失败原因－－%@--",error);
-        [self addAlertView:@"请求失败"];
+//        [self addAlertView:@"请求失败"];
     }];
     
 }
@@ -399,7 +399,7 @@
         }
         
     } failure:^(NSError *error) {
-        [self addAlertView:@"请求失败"];
+//        [self addAlertView:@"请求失败"];
     }];
 }
 
@@ -418,7 +418,7 @@
         
         
     } failure:^(NSError *error) {
-        [self addAlertView:@"请求失败"];
+//        [self addAlertView:@"请求失败"];
     }];
 }
 
@@ -433,7 +433,7 @@
         [self.navigationController popToRootViewControllerAnimated:YES];
     } failure:^(NSError *error) {
 //        NSLog(@"---error---%@--",error);
-        [self addAlertView:@"请求失败"];
+//        [self addAlertView:@"请求失败"];
     }];
 
 }
@@ -488,7 +488,7 @@
        
    } failure:^(NSError *error) {
        
-       NSLog(@"放弃订单失败----%@---",error);
+//       NSLog(@"放弃订单失败----%@---",error);
        
    }];
     

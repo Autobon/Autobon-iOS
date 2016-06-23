@@ -326,7 +326,7 @@
             
         } failure:^(NSError *error) {
             sender.userInteractionEnabled = YES;
-            [self tipShow:@"获取验证码失败"];
+//            [self tipShow:@"获取验证码失败"];
             
         }];
         
@@ -440,7 +440,7 @@
                             } failure:^(NSError *error) {
                                 
                                 
-                                [self tipShow:@"找回密码失败"];
+//                                [self tipShow:@"找回密码失败"];
                             }];
 
                     

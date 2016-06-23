@@ -124,7 +124,7 @@
 
             }
         } failure:^(NSError *error) {
-            [self addAlertView:@"请求失败"];
+//            [self addAlertView:@"请求失败"];
         }];
     }
     
@@ -301,8 +301,8 @@
     [_submitButton addTarget:self action:@selector(submitBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:_submitButton];
     
-    UILabel *submitLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-156, lineView.frame.origin.y+2+50, 180, 30)];
-    submitLabel.text = @"点击\"提交\"代表本人已阅读并同意";
+    UILabel *submitLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-156+18, lineView.frame.origin.y+2+50, 180, 30)];
+    submitLabel.text = @"点击按钮代表本人已阅读并同意";
 //    submitLabel.backgroundColor = [UIColor cyanColor];
     submitLabel.font = [UIFont systemFontOfSize:12];
     [_scrollView addSubview:submitLabel];
@@ -407,7 +407,7 @@
                                         
                                         } failure:^(NSError *error) {
 //                                            NSLog(@"应该不会---%@--",error);
-                                            [self addAlertView:@"提交失败"];
+//                                            [self addAlertView:@"提交失败"];
                                         }];
                                     }
                                 }
@@ -680,17 +680,18 @@
         
         
         [GFHttpTool headImage:imageData success:^(NSDictionary *responseObject) {
-            NSLog(@"-----responseObject---%@--",responseObject);
+//            NSLog(@"-----responseObject---%@--",responseObject);
             if ([responseObject[@"result"]intValue] == 1) {
                 _haveHeadImage = YES;
                 [self addAlertView:@"头像上传成功"];
             }else{
                 [self addAlertView:@"头像上传失败"];
+//                [_headButton setImage:nil forState:UIControlStateNormal];
             }
         } failure:^(NSError *error) {
-            NSLog(@"---请求失败－－%@－－",error);
-            
+//            NSLog(@"---请求失败－－%@－－",error);
             [self addAlertView:@"头像上传失败"];
+//            [_headButton setImage:nil forState:UIControlStateNormal];
         }];
         
     }else{

@@ -204,12 +204,11 @@
             CLLocationCoordinate2D coor=loc.coordinate;
             CLLocation *location=[[CLLocation alloc]initWithLatitude:coor.latitude longitude:coor.longitude];
             
-//            NSLog(@"----location----%@--",location);
             
             NSString *URLString = [NSString stringWithFormat:@"http://api.map.baidu.com/geoconv/v1/?ak=FPzmlgz02SERkbPsRyGOiGfj&coords=%f,%f",coor.longitude,coor.latitude];
             __block NSMutableDictionary *locationDictionary = [[NSMutableDictionary alloc]init];
             [GFHttpTool getCoordsURLString:URLString success:^(id responseObject) {
-//                            NSLog(@"－－－－请求成功－－－%@--",responseObject);
+
                 if ([responseObject[@"status"] integerValue] == 0) {
                     NSArray *resultArray = responseObject[@"result"];
                     NSDictionary *resultDictionary = resultArray[0];
@@ -226,10 +225,9 @@
                         locationDictionary[@"city"] = city;
                         locationDictionary[@"district"] = subLocality;
                         locationDictionary[@"street"] = street;
-//                        NSLog(@"-----location---%@---",locationDictionary);
                         [GFHttpTool PostReportLocation:locationDictionary success:^(id responseObject) {
                             
-                            //                        NSLog(@"－－－－上传实时位置成功－－－%@－－－-----%@--",responseObject,responseObject[@"message"]);
+
                             if ([responseObject[@"result"] integerValue] == 1) {
                                 [_manager stopUpdatingLocation];
                                 [_manager performSelector:@selector(startUpdatingLocation) withObject:nil afterDelay:300];
@@ -238,7 +236,6 @@
                             
                         } failure:^(NSError *error) {
                             
-                            //                        NSLog(@"上传实时位置失败---%@---",error);
                             
                         }];
                     }];
@@ -249,7 +246,6 @@
     }
     }else{
         [_manager stopUpdatingLocation];
-        NSLog(@"－－－－－");
     }
     
         

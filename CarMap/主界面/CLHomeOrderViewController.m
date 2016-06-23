@@ -236,7 +236,7 @@
         }
     } failure:^(NSError *error) {
 //        NSLog(@"-不知道为什么请求失败了－－error--%@---",error);
-        [self addAlertView:@"请求失败"];
+//        [self addAlertView:@"请求失败"];
     }];
 }
 
@@ -286,7 +286,7 @@
 //        NSLog(@"有人邀请");
         [GFHttpTool getOrderDetailOrderId:[Notification.userInfo[@"order"] integerValue] success:^(id responseObject) {
             
-            NSLog(@"--拉取订单详情--responseObject----%@---",responseObject);
+//            NSLog(@"--拉取订单详情--responseObject----%@---",responseObject);
             
             
             
@@ -303,11 +303,11 @@
             
         } failure:^(NSError *error) {
             
-            NSLog(@"----拉取失败－－－%@--",error);
+//            NSLog(@"----拉取失败－－－%@--",error);
             
         }];
         
-        NSLog(@"-----Notification.userInfo----%@--",Notification.userInfo);
+//        NSLog(@"-----Notification.userInfo----%@--",Notification.userInfo);
         
         
         
@@ -408,7 +408,7 @@
     
     [GFHttpTool postOrderId:button.tag Success:^(NSDictionary *responseObject) {
         
-        NSLog(@"----抢单结果--%@--",responseObject);
+//        NSLog(@"----抢单结果--%@--",responseObject);
         if ([responseObject[@"result"]integerValue] == 1) {
             
             [[[button superview] superview]removeFromSuperview];
@@ -431,7 +431,7 @@
         }
     } failure:^(NSError *error) {
 //        NSLog(@"----抢单结果-222-%@--",error);
-        [self addAlertView:@"请求失败"];
+//        [self addAlertView:@"请求失败"];
     }];
     
     

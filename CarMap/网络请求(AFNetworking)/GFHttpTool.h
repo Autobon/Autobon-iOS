@@ -84,7 +84,6 @@
 // 报告实时位置
 + (void)PostReportLocation:(NSDictionary *)dictionary success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
-
 // 调用百度接口转换经纬度
 + (void)getCoordsURLString:(NSString *)URLString success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 

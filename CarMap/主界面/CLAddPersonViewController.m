@@ -117,7 +117,7 @@
             [self addAlertView:responseObject[@"message"]];
         }
     } failure:^(NSError *error) {
-        [self addAlertView:@"请求失败"];
+//        [self addAlertView:@"请求失败"];
     }];
 }
 
@@ -156,9 +156,9 @@
 //    NSLog(@"添加合伙技师");
     CLAddPersonModel *person = _addPersonArray[button.tag];
     NSDictionary *dic = @{@"orderId":_orderId,@"partnerId":person.personId};
-    NSLog(@"---添加合伙人dic--%@--",dic);
+//    NSLog(@"---添加合伙人dic--%@--",dic);
     [GFHttpTool postAddPerson:dic Success:^(NSDictionary *responseObject) {
-         NSLog(@"－－－%@--",responseObject);
+//         NSLog(@"－－－%@--",responseObject);
         if ([responseObject[@"result"]integerValue]==1) {
             [self addAlertView:@"邀请已发送"];
             _isAdd = YES;
@@ -166,8 +166,7 @@
             [self addAlertView:responseObject[@"message"]];
         }
     } failure:^(NSError *error) {
-        NSLog(@"----请求失败了----%@--",error);
-       [self addAlertView:@"请求失败"];
+
     }];
 }
 

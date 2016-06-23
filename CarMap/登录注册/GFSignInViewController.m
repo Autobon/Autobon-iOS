@@ -431,7 +431,7 @@
             
         } failure:^(NSError *error) {
             
-            [self tipShow:@"登录失败，请重试"];
+//            [self tipShow:@"登录失败，请重试"];
             
         }];
     

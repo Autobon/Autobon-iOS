@@ -258,7 +258,7 @@
         }
     } failure:^(NSError *error) {
         //        NSLog(@"----抢单结果-222-%@--",error);
-        [self addAlertView:@"请求失败"];
+//        [self addAlertView:@"请求失败"];
     }];
 }
 

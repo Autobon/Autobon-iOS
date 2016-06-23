@@ -159,7 +159,7 @@
         }
     } failure:^(NSError *error) {
         //        NSLog(@"-不知道为什么请求失败了－－error--%@---",error);
-        [self addAlertView:@"请求失败"];
+//        [self addAlertView:@"请求失败"];
     }];
 }
 
@@ -199,7 +199,7 @@
         }
     } failure:^(NSError *error) {
         //        NSLog(@"----抢单结果-222-%@--",error);
-        [self addAlertView:@"请求失败"];
+//        [self addAlertView:@"请求失败"];
     }];
     
     

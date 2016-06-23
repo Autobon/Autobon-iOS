@@ -224,7 +224,7 @@
     } failure:^(NSError *error) {
         
         _tableview.userInteractionEnabled = YES;
-        [self addAlertView:@"请求失败"];
+//        [self addAlertView:@"请求失败"];
     }];
     
     

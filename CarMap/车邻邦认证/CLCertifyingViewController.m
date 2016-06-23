@@ -85,7 +85,7 @@
             
         }
     } failure:^(NSError *error) {
-        [self addAlertView:@"请求失败"];
+//        [self addAlertView:@"请求失败"];
     }];
     
     

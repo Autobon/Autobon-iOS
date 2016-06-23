@@ -359,7 +359,7 @@
    
         [self.tableView.header endRefreshing];
         [self.tableView.footer endRefreshing];
-        [self addAlertView:@"请求失败"];
+//        [self addAlertView:@"请求失败"];
     }];
     
     
