@@ -26,8 +26,8 @@
 
 
 #import "CLWorkBeforeViewController.h"
-
-
+#import "GFIndentDetailsViewController.h"
+#import "GFIndentModel.h"
 
 // 个推开发者网站中申请App时，注册的AppId、AppKey、AppSecret
 #define kGtAppId      @"zoCAUGD4Hi55CS6iW1OI77"
@@ -81,8 +81,8 @@
     [UMSocialQQHandler setQQWithAppId:@"1105263986" appKey:@"sjj2sjhLIqtjmcfL" url:@"http://hpecar.com:12345/shareA.html"];
     
 //    [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
-    
-//    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:@"439118116" RedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
+//
+//    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:@"3285914881" RedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
 
     _mapManager = [[BMKMapManager alloc]init];
     BOOL ret = [_mapManager start:@"qQxUcaGNCZfeFmhB8EHWVvgt" generalDelegate:self];
@@ -171,6 +171,15 @@
     return YES;
 }
 
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    BOOL result = [UMSocialSnsService handleOpenURL:url];
+    if (result == FALSE) {
+        //调用其他SDK，例如支付宝SDK等
+    }
+    return result;
+}
 
 
 
@@ -602,6 +611,57 @@
         UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeOrderView];
         navigation.navigationBarHidden = YES;
         window.rootViewController = navigation;
+    }else if ([responseJSON[@"action"]isEqualToString:@"ORDER_CANCELED"]){
+        
+        UIWindow *window = [UIApplication sharedApplication].delegate.window;
+        CLHomeOrderViewController *homeOrderView = [[CLHomeOrderViewController alloc]init];
+        UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeOrderView];
+        navigation.navigationBarHidden = YES;
+        window.rootViewController = navigation;
+        
+        GFIndentDetailsViewController *indentDetailsView = [[GFIndentDetailsViewController alloc]init];
+        
+        NSDictionary *orderDictionary = responseJSON[@"order"];
+        
+        [GFHttpTool getOrderDetailOrderId:[orderDictionary[@"id"] integerValue] success:^(id responseObject) {
+            extern NSString* const URLHOST;
+            indentDetailsView.model = [[GFIndentModel alloc]init];
+            NSDictionary *dataDictionary = responseObject[@"data"];
+            indentDetailsView.model.orderNum = dataDictionary[@"orderNum"];
+            indentDetailsView.model.photo = [NSString stringWithFormat:@"%@%@",URLHOST,dataDictionary[@"photo"]];
+            indentDetailsView.model.remark = dataDictionary[@"remark"];
+            indentDetailsView.model.commentDictionary = dataDictionary[@"comment"];
+            indentDetailsView.model.indentType = dataDictionary[@"orderType"];
+            indentDetailsView.model.orderStatus = dataDictionary[@"status"];
+            indentDetailsView.model.payment = @"0";
+            indentDetailsView.model.workTime = @"无";
+            indentDetailsView.workItems = @"无";
+            //            NSDictionary *tech = dic[@"mainTech"];
+            
+            // 员工姓名添加
+            NSDictionary *tech = dataDictionary[@"mainTech"];
+            NSDictionary *seTech = dataDictionary[@"secondTech"];
+            indentDetailsView.model.workerArr = [[NSMutableArray alloc]init];
+            if(![tech isKindOfClass:[NSNull class]]) {
+                [indentDetailsView.model.workerArr addObject:tech[@"name"]];
+            }
+            
+            if(![seTech isKindOfClass:[NSNull class]]) {
+                
+                [indentDetailsView.model.workerArr addObject:seTech[@"name"]];
+            }
+            
+            
+            
+            [navigation pushViewController:indentDetailsView animated:YES];
+            
+        } failure:^(NSError *error) {
+            
+            
+            
+        }];
+        
+        
     }
     
 
@@ -654,6 +714,57 @@
             UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeOrderView];
             navigation.navigationBarHidden = YES;
             window.rootViewController = navigation;
+        }else if ([responseJSON[@"action"]isEqualToString:@"ORDER_CANCELED"]){
+            
+            UIWindow *window = [UIApplication sharedApplication].delegate.window;
+            CLHomeOrderViewController *homeOrderView = [[CLHomeOrderViewController alloc]init];
+            UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeOrderView];
+            navigation.navigationBarHidden = YES;
+            window.rootViewController = navigation;
+            
+            GFIndentDetailsViewController *indentDetailsView = [[GFIndentDetailsViewController alloc]init];
+            
+            NSDictionary *orderDictionary = responseJSON[@"order"];
+            
+            [GFHttpTool getOrderDetailOrderId:[orderDictionary[@"id"] integerValue] success:^(id responseObject) {
+                extern NSString* const URLHOST;
+                indentDetailsView.model = [[GFIndentModel alloc]init];
+                NSDictionary *dataDictionary = responseObject[@"data"];
+                indentDetailsView.model.orderNum = dataDictionary[@"orderNum"];
+                indentDetailsView.model.photo = [NSString stringWithFormat:@"%@%@",URLHOST,dataDictionary[@"photo"]];
+                indentDetailsView.model.remark = dataDictionary[@"remark"];
+                indentDetailsView.model.commentDictionary = dataDictionary[@"comment"];
+                indentDetailsView.model.indentType = dataDictionary[@"orderType"];
+                indentDetailsView.model.orderStatus = dataDictionary[@"status"];
+                indentDetailsView.model.payment = @"0";
+                indentDetailsView.model.workTime = @"无";
+                indentDetailsView.workItems = @"无";
+                //            NSDictionary *tech = dic[@"mainTech"];
+                
+                // 员工姓名添加
+                NSDictionary *tech = dataDictionary[@"mainTech"];
+                NSDictionary *seTech = dataDictionary[@"secondTech"];
+                indentDetailsView.model.workerArr = [[NSMutableArray alloc]init];
+                if(![tech isKindOfClass:[NSNull class]]) {
+                    [indentDetailsView.model.workerArr addObject:tech[@"name"]];
+                }
+                
+                if(![seTech isKindOfClass:[NSNull class]]) {
+                    
+                    [indentDetailsView.model.workerArr addObject:seTech[@"name"]];
+                }
+                
+                
+                
+                [navigation pushViewController:indentDetailsView animated:YES];
+                
+            } failure:^(NSError *error) {
+                
+                
+                
+            }];
+            
+            
         }
         
         

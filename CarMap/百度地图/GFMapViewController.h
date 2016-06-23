@@ -17,6 +17,8 @@ typedef void (^DistanceBlock)(double distance);
 
 @interface GFMapViewController : UIViewController
 
+
+
 @property (nonatomic ,copy) DistanceBlock distanceBlock;
 
 @property (nonatomic ,strong) FirstViewController *first;

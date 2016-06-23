@@ -68,15 +68,16 @@
         CGFloat tipButH = moneyLabH;
         CGFloat tipButX = moneyLabX;
         CGFloat tipButY = CGRectGetMaxY(self.moneyLab.frame) - 6 / 568.0 * kHeight;
-        self.tipBut = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.tipBut.frame = CGRectMake(tipButX, tipButY, tipButW, tipButH);
-        [self.tipBut setTitle:@"未结算" forState:UIControlStateNormal];
-        [self.tipBut setTitle:@"已结算" forState:UIControlStateSelected];
-        [self.tipBut setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [self.tipBut setTitleColor:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] forState:UIControlStateSelected];
-        self.tipBut.titleLabel.font = [UIFont systemFontOfSize:12 / 320.0 * kWidth];
-        self.tipBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-        [baseView addSubview:self.tipBut];
+        self.tipLabel = [[UILabel alloc]init];
+        self.tipLabel.frame = CGRectMake(tipButX, tipButY, tipButW, tipButH);
+//        [self.tipBut setTitle:@"未结算" forState:UIControlStateNormal];
+//        [self.tipBut setTitle:@"已结算" forState:UIControlStateSelected];
+//        [self.tipLabel setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//        [self.tipBut setTitleColor:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] forState:UIControlStateSelected];
+        self.tipLabel.font = [UIFont systemFontOfSize:12 / 320.0 * kWidth];
+//        self.tipBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+        self.tipLabel.textAlignment = NSTextAlignmentRight;
+        [baseView addSubview:self.tipLabel];
         
         // 订单图片
         CGFloat photoImgViewW = kWidth - jiange * 2;

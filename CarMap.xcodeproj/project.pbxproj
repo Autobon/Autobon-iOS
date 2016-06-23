@@ -79,6 +79,7 @@
 		9B7F4C6B1C86CE14007CF96C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B7F4C6A1C86CE14007CF96C /* AudioToolbox.framework */; };
 		9B8297901D0EA822001D24B3 /* CLTouchImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B82978F1D0EA822001D24B3 /* CLTouchImageView.m */; };
 		9B8BA6DE1C7FF66000E90CB0 /* CLPersonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8BA6DD1C7FF66000E90CB0 /* CLPersonTableViewCell.m */; };
+		9B8C7ED21D1B87B200408942 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B8C7ED11D1B87B200408942 /* ImageIO.framework */; };
 		9B9515391C60501B00445F93 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9515381C60501B00445F93 /* TestViewController.m */; };
 		9B9515411C60503800445F93 /* GFAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95153C1C60503800445F93 /* GFAnnotation.m */; };
 		9B9515421C60503800445F93 /* GFAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B95153E1C60503800445F93 /* GFAnnotationView.m */; };
@@ -277,6 +278,7 @@
 		9B82978F1D0EA822001D24B3 /* CLTouchImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLTouchImageView.m; sourceTree = "<group>"; };
 		9B8BA6DC1C7FF66000E90CB0 /* CLPersonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLPersonTableViewCell.h; sourceTree = "<group>"; };
 		9B8BA6DD1C7FF66000E90CB0 /* CLPersonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLPersonTableViewCell.m; sourceTree = "<group>"; };
+		9B8C7ED11D1B87B200408942 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		9B93BE9A1C89509A00397078 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "usr/lib/libc++abi.tbd"; sourceTree = SDKROOT; };
 		9B9515371C60501B00445F93 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		9B9515381C60501B00445F93 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
@@ -386,6 +388,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B8C7ED21D1B87B200408942 /* ImageIO.framework in Frameworks */,
 				9B7F4C6B1C86CE14007CF96C /* AudioToolbox.framework in Frameworks */,
 				9B9C25A61C75CC05009A69D6 /* StoreKit.framework in Frameworks */,
 				BF71DD21E9CF382FC1DA7F81 /* libPods-CarMap.a in Frameworks */,
@@ -601,6 +604,7 @@
 		909B27CA6FA162B8934C9008 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9B8C7ED11D1B87B200408942 /* ImageIO.framework */,
 				9BC99C721D0E9FE0001EF869 /* libPods-CarMap.a */,
 				9B93BE9A1C89509A00397078 /* libc++abi.tbd */,
 				9B7F4C6A1C86CE14007CF96C /* AudioToolbox.framework */,

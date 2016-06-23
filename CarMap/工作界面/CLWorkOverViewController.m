@@ -481,7 +481,7 @@
     UIImage *imageNew = [self imageWithImage:image scaledToSize:imagesize];
     NSData *imageData = UIImageJPEGRepresentation(imageNew, 0.8);
     
-    /*
+   
     [GFHttpTool PostImageForWork:imageData success:^(NSDictionary *responseObject) {
 //        NSLog(@"上传成功－%@--－%@",responseObject,responseObject[@"message"]);
         if ([responseObject[@"result"] integerValue] == 1) {
@@ -497,7 +497,7 @@
         [self addAlertView:@"图片上传失败"];
     }];
     
-     */
+    
      
 }
 

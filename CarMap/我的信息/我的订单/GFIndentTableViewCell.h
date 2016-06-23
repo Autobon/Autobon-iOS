@@ -13,7 +13,7 @@
 
 @property (nonatomic, strong) UILabel *numberLab;
 @property (nonatomic, strong) UILabel *moneyLab;
-@property (nonatomic, strong) UIButton *tipBut;
+@property (nonatomic, strong) UILabel *tipLabel;
 @property (nonatomic, strong) UIImageView *photoImgView;
 @property (nonatomic, strong) UILabel *timeLab;
 @property (nonatomic, strong) UILabel *placeLab;

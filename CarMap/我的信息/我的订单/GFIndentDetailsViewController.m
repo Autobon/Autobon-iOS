@@ -143,21 +143,30 @@
     CGFloat tipButH = moneyLabH;
     CGFloat tipButX = moneyLabX;
     CGFloat tipButY = CGRectGetMaxY(self.moneyLab.frame) - 6 / 568.0 * kHeight;
-    self.tipBut = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.tipBut.frame = CGRectMake(tipButX, tipButY, tipButW, tipButH);
-    [self.tipBut setTitle:@"未结算" forState:UIControlStateNormal];
-    [self.tipBut setTitle:@"已结算" forState:UIControlStateSelected];
-    [self.tipBut setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.tipBut setTitleColor:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] forState:UIControlStateSelected];
-    self.tipBut.titleLabel.font = [UIFont systemFontOfSize:12 / 320.0 * kWidth];
-    self.tipBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    [baseView addSubview:self.tipBut];
+    self.tipLabel = [[UILabel alloc]init];
+    self.tipLabel.frame = CGRectMake(tipButX, tipButY, tipButW, tipButH);
+//    [self.tipBut setTitle:@"未结算" forState:UIControlStateNormal];
+//    [self.tipBut setTitle:@"已结算" forState:UIControlStateSelected];
+//    [self.tipBut setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    [self.tipBut setTitleColor:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] forState:UIControlStateSelected];
+    self.tipLabel.font = [UIFont systemFontOfSize:12 / 320.0 * kWidth];
+    self.tipLabel.textAlignment = NSTextAlignmentRight;
+    [baseView addSubview:self.tipLabel];
     // 判断订单是否结算
-    NSInteger jisuanNum = (NSInteger)[self.model.payStatus integerValue];
-    if(jisuanNum == 0 || jisuanNum == 1) {
-        self.tipBut.selected = NO;
-    }else {
-        self.tipBut.selected = YES;
+    if ([_model.orderStatus isEqualToString:@"FINISHED"]) {
+        // 是否结算
+        NSInteger jisuanNum = (NSInteger)[_model.payStatus integerValue];
+        if(jisuanNum == 0 || jisuanNum == 1) {
+            _tipLabel.text = @"未结算";
+        }else {
+            _tipLabel.text = @"已结算";
+        }
+    }else if([_model.orderStatus isEqualToString:@"CANCELED"]){
+        _tipLabel.text = @"已撤消";
+    }else if([_model.orderStatus isEqualToString:@"GIVEN_UP"]){
+        _tipLabel.text = @"已放弃";
+    }else if([_model.orderStatus isEqualToString:@"EXPIRED"]){
+        _tipLabel.text = @"已超时";
     }
     
     // 边线

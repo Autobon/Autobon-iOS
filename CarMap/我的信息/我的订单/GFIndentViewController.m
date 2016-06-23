@@ -242,7 +242,7 @@
         
         if(flage == 1) {
             
-            NSLog(@"订单数据＝＝＝＝＝%@", responseObject);
+//            NSLog(@"订单数据＝＝＝＝＝%@", responseObject);
             
             NSDictionary *dataDic = responseObject[@"data"];
             
@@ -259,6 +259,7 @@
             extern NSString* const URLHOST;
             for(NSDictionary *dic in listArr) {
                 
+                
                 _workNameArr = [[NSMutableArray alloc] init];
                 
                 GFIndentModel *listModel = [[GFIndentModel alloc] init];
@@ -267,7 +268,7 @@
                 listModel.remark = dic[@"remark"];
                 listModel.commentDictionary = dic[@"comment"];
                 listModel.indentType = dic[@"orderType"];
-  
+                listModel.orderStatus = dic[@"status"];
                 if([curUrl isEqualToString:mainUrl]) {
                     NSDictionary *constructDic = dic[@"mainConstruct"];
                     if (![constructDic isKindOfClass:[NSNull class]]) {
@@ -508,6 +509,7 @@
                 listModel.remark = dic[@"remark"];
                 listModel.commentDictionary = dic[@"comment"];
                 listModel.indentType = dic[@"orderType"];
+                listModel.orderStatus = dic[@"status"];
                 if([curUrl isEqualToString:mainUrl]) {
                     NSDictionary *constructDic = dic[@"mainConstruct"];
                     if ([constructDic isKindOfClass:[NSNull class]]) {
@@ -701,36 +703,49 @@
         cell = [[GFIndentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
     
-    GFIndentModel *model = self.modelArr[indexPath.row];
-    
-    // 订单编号
-    cell.numberLab.text = [NSString stringWithFormat:@"订单编号%@", model.orderNum];
-    // 加载图片
-//    model.photo = [NSString stringWithFormat:@"http://121.40.157.200:12345%@", model.photo];
-    NSURL *imgUrl = [NSURL URLWithString:model.photo];
-    [cell.photoImgView sd_setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"orderImage.png"]];
-    // 金额
-    cell.moneyLab.text = [NSString stringWithFormat:@"￥%@", model.payment];
-    // 是否结算
-    NSInteger jisuanNum = (NSInteger)[model.payStatus integerValue];
-    if(jisuanNum == 0 || jisuanNum == 1) {
-        cell.tipBut.selected = NO;
-    }else {
-        cell.tipBut.selected = YES;
-    }
-    if ([cell.moneyLab.text isEqualToString:@"￥0"]) {
-        cell.timeLab.text = @"施工时间：无";
-    }else{
-        // 开始时间
-        NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-        [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
-        NSDate *date = [NSDate dateWithTimeIntervalSince1970:[model.signinTime floatValue]/1000];
-        cell.timeLab.text = [NSString stringWithFormat:@"施工时间：%@", [formatter stringFromDate:date]];
-    }
-    
-    cell.placeLab.text = [NSString stringWithFormat:@"施工部位：%@", _workItemArr[indexPath.row]];
+    if (self.modelArr.count > indexPath.row) {
+        GFIndentModel *model = self.modelArr[indexPath.row];
+        
+        // 订单编号
+        cell.numberLab.text = [NSString stringWithFormat:@"订单编号%@", model.orderNum];
+        // 加载图片
+        //    model.photo = [NSString stringWithFormat:@"http://121.40.157.200:12345%@", model.photo];
+        NSURL *imgUrl = [NSURL URLWithString:model.photo];
+        [cell.photoImgView sd_setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"orderImage.png"]];
+        // 金额
+        cell.moneyLab.text = [NSString stringWithFormat:@"￥%@", model.payment];
+        if ([model.orderStatus isEqualToString:@"FINISHED"]) {
+            // 是否结算
+            NSInteger jisuanNum = (NSInteger)[model.payStatus integerValue];
+            if(jisuanNum == 0 || jisuanNum == 1) {
+                cell.tipLabel.text = @"未结算";
+            }else {
+                cell.tipLabel.text = @"已结算";
+            }
+        }else if([model.orderStatus isEqualToString:@"CANCELED"]){
+            cell.tipLabel.text = @"已撤消";
+        }else if([model.orderStatus isEqualToString:@"GIVEN_UP"]){
+            cell.tipLabel.text = @"已放弃";
+        }else if([model.orderStatus isEqualToString:@"EXPIRED"]){
+            cell.tipLabel.text = @"已超时";
+        }
+        
+        if ([cell.moneyLab.text isEqualToString:@"￥0"]) {
+            cell.timeLab.text = @"施工时间：无";
+        }else{
+            // 开始时间
+            NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+            [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
+            NSDate *date = [NSDate dateWithTimeIntervalSince1970:[model.signinTime floatValue]/1000];
+            cell.timeLab.text = [NSString stringWithFormat:@"施工时间：%@", [formatter stringFromDate:date]];
+        }
+        
+        cell.placeLab.text = [NSString stringWithFormat:@"施工部位：%@", _workItemArr[indexPath.row]];
+        
 
+    }
+    
     
 
 

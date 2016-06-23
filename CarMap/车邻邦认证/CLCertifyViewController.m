@@ -274,7 +274,7 @@
     
 // 银行卡号
     _bankNumberTextField = [[GFTextField alloc]initWithPlaceholder:@"请填写本人银行卡" withFrame:CGRectMake(40, bankView.frame.origin.y+45+15+60, self.view.frame.size.width-80, 40)];
-    _bankNumberTextField.centerTxt.keyboardType = UIKeyboardTypeNumberPad;
+    _bankNumberTextField.centerTxt.keyboardType = UIKeyboardTypePhonePad;
     _bankNumberTextField.centerTxt.delegate = self;
     _bankNumberTextField.centerTxt.tag = 5;
     [_scrollView addSubview:_bankNumberTextField];

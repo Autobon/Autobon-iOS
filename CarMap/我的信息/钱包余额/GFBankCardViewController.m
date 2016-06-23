@@ -175,7 +175,7 @@
     self.cardTxt.centerTxt.tag = 5;
     self.cardTxt.centerTxt.delegate = self;
     self.cardTxt.centerTxt.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
-    self.cardTxt.centerTxt.keyboardType = UIKeyboardTypeNumberPad;
+    self.cardTxt.centerTxt.keyboardType = UIKeyboardTypePhonePad;
     // 边线
     UIView *line3 = [[UIView alloc] initWithFrame:CGRectMake(0, jvtiViewH - 1, kWidth, 1)];
     line3.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];

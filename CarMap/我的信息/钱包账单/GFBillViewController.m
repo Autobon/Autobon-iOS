@@ -406,17 +406,19 @@
     
     }
 
-    
+    if (_yearArr.count > indexPath.section) {
+        NSString *year = _yearArr[indexPath.section];
+        NSArray *billArray = _listDictionary[year];
+        GFBillModel *billModel = billArray[indexPath.row];
+        //    NSLog(@"-----month---%@--payed---%@--%@-",billModel.month,billModel.payed,indexPath);
+        cell.jiesuanBut.selected = [billModel.payed integerValue];
+        
+        
+        cell.monthLab.text = self.monthDic[billModel.billMonth];
+        cell.sumMoneyLab.text = [NSString stringWithFormat:@"￥ %@",billModel.sum];
+    }
 
-    NSString *year = _yearArr[indexPath.section];
-    NSArray *billArray = _listDictionary[year];
-    GFBillModel *billModel = billArray[indexPath.row];
-//    NSLog(@"-----month---%@--payed---%@--%@-",billModel.month,billModel.payed,indexPath);
-    cell.jiesuanBut.selected = [billModel.payed integerValue];
     
-    
-    cell.monthLab.text = self.monthDic[billModel.billMonth];
-    cell.sumMoneyLab.text = [NSString stringWithFormat:@"￥ %@",billModel.sum];
     
 
     

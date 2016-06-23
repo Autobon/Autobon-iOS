@@ -21,8 +21,10 @@
 @property (nonatomic, copy) NSString *workTime;     // 施工时间
 @property (nonatomic, copy) NSDictionary *commentDictionary;     // 评论字典
 @property (nonatomic, copy) NSString *indentType;   // 订单类型
-@property (nonatomic, copy) NSMutableArray *workerArr;      // 施工人员
+@property (nonatomic, strong) NSMutableArray *workerArr;      // 施工人员
 @property (nonatomic, copy) NSString *beforePhotos; //施工前照片
 @property (nonatomic, copy) NSString *afterPhotos; //施工后照片
+@property (nonatomic ,copy) NSString *orderStatus; //订单状态
+
 
 @end

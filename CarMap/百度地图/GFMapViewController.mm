@@ -27,6 +27,7 @@
 {
     int _type; ///<0:起点 1：终点 2：公交 3：地铁 4:驾乘 5:途经点
     int _degree;
+    
 }
 
 @property (nonatomic) int type;
@@ -45,6 +46,7 @@
     NSInteger num;
     UILabel *_distanceLabel;
     UILabel *_timeLabel;
+    UIView *_baseView;
 }
 
 
@@ -579,9 +581,53 @@
  */
 - (void)didFailToLocateUserWithError:(NSError *)error {
     
-//    NSLog(@"获取当前位置失败，请检查您的网络－－%@",error);
+    NSLog(@"获取当前位置失败，请检查您的网络－－%@",error);
+    static BOOL first = YES;
+    if (first) {
+        first = NO;
+        _baseView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        _baseView.backgroundColor = [UIColor colorWithRed:0 / 255.0 green:0 blue:0 alpha:0.65];
+        UIWindow *window = [UIApplication sharedApplication].delegate.window;
+        [window addSubview:_baseView];
+        
+        [self _setTapGest];
+        
+        UIButton *changBut = [UIButton buttonWithType:UIButtonTypeCustom];
+        changBut.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 0.125, [UIScreen mainScreen].bounds.size.height * 0.4, [UIScreen mainScreen].bounds.size.width - ([UIScreen mainScreen].bounds.size.width * 0.100 * 2), [UIScreen mainScreen].bounds.size.height * 0.09);
+        changBut.backgroundColor = [UIColor whiteColor];
+        [changBut setTitle:@"无法获取用户定位信息或定位权限被禁" forState:UIControlStateNormal];
+        [changBut setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        changBut.titleLabel.font = [UIFont systemFontOfSize:14 / 320.0 * [UIScreen mainScreen].bounds.size.width];
+//        changBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+//        changBut.contentEdgeInsets = UIEdgeInsetsMake(0, 15, 0, 0);
+        changBut.layer.cornerRadius = 7.5;
+        [_baseView addSubview:changBut];
+//        [changBut addTarget:self action:@selector(changeButClick) forControlEvents:UIControlEventTouchUpInside];
+        
+    }
+    
+    
+    
+    
 }
 
+
+
+- (void)_setTapGest {
+    
+    UITapGestureRecognizer *tapGest = [[UITapGestureRecognizer alloc] init];
+    
+    [_baseView addGestureRecognizer:tapGest];
+    
+    [tapGest addTarget:self action:@selector(tapGestDone:)];
+    
+}
+- (void)tapGestDone:(UITapGestureRecognizer *)tapGest {
+    
+    [_baseView removeFromSuperview];
+    
+    
+}
 
 #pragma mark - ***** 地图协议 *****
 /**
