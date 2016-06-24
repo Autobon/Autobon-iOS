@@ -248,7 +248,7 @@
 #pragma mark - 接受通知消息
 -(void)receiveNotification:(NSNotification *)Notification
 {
-    NSLog(@"receiveNotification---%@--",Notification.userInfo);
+//    NSLog(@"receiveNotification---%@--",Notification.userInfo);
     
 //    Notification.userInfo
 //    NSDictionary *dictionary = @{@"action":@"NEW_ORDER",@"title":@"你收到新订单推送消息",@"order":@{@"id":@17,@"orderNum":@"16062009Y2QL2Y",@"orderType":@3,@"photo":@"/uploads/order/photo/20160620090744887326.jpg",@"orderTime":@1467162420000,@"addTime":@1466384882000,@"finishTime":@"",@"creatorName":@"inCar",@"contactPhone":@"18672944895",@"positionLon":@"114.4093395620251",@"positionLat":@"30.48100019068421",@"remark":@"英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单英卡测试订单",@"mainTech":@"",@"secondTech":@"",@"mainConstruct":@"",@"secondConstruct":@"",@"comment":@"",@"cooperator":@{@"id":@2,@"fullname":@"英卡科技",@"businessLicense":@"526448668512568",@"corporationName":@"王老板",@"corporationIdNo":@"412723199307061610",@"bussinessLicensePic":@"/uploads/coop/bussinessLicensePic/20160615093059426216.jpg",@"corporationIdPicA":@"/uploads/coop/corporationIdPicA/20160615093107410738.jpg",@"corporationIdPicB":@"",@"longitude":@"114.4093395620251",@"latitude":@"30.48100019068421",@"invoiceHeader":@"武汉英卡科技",@"taxIdNo":@"6546685234",@"postcode":@"466144",@"province":@"湖北省",@"city":@"武汉市",@"district":@"洪山区",@"address":@"光谷软件园",@"contact":@"王总",@"contactPhone":@"18672944895",@"createTime":@1465954349000,@"statusCode":@1,@"orderNum":@14},@"creator":@{@"id":@2,@"cooperatorId":@2,@"fired":@NO,@"shortname":@"inCar",@"phone":@"18672944895",@"name":@"",@"gender":@NO,@"lastLoginTime":@1466153887000,@"lastLoginIp":@"10.168.2.245",@"createTime":@"",@"pushId":@"188d7242c1d435a9ddf026864cc5b5a5",@"main":@YES},@"status":@"NEWLY_CREATED"}};
@@ -279,7 +279,7 @@
             [_knockOrder.certifyButton addTarget:self action:@selector(knockBtnClick:) forControlEvents:UIControlEventTouchUpInside];
             [_knockOrder.cancelButton addTarget:self action:@selector(knockCancelClick) forControlEvents:UIControlEventTouchUpInside];
         }else{
-            NSLog(@"没有显示订单");
+//            NSLog(@"没有显示订单");
         }
         
     }else if ([Notification.userInfo[@"action"] isEqualToString:@"INVITE_PARTNER"]){
@@ -326,7 +326,7 @@
 #pragma mark - 收到推送消息查看邀请订单详情
 - (void)OrderDetailBtnClick{
 
-    NSLog(@"----orderDic--%@--",_inviteDictionary);
+//    NSLog(@"----orderDic--%@--",_inviteDictionary);
     CLOrderDetailViewController *orderDetail = [[CLOrderDetailViewController alloc]init];
     NSDictionary *orderDic = _inviteDictionary;
     orderDetail.orderId = orderDic[@"id"];

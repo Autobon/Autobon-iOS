@@ -471,7 +471,7 @@
     [self.view addSubview:alertView];
 }
 - (void)removeOrder{
-    NSLog(@"确认放弃订单，订单ID为 －－%@--- ",_orderId);
+//    NSLog(@"确认放弃订单，订单ID为 －－%@--- ",_orderId);
     
     
    [GFHttpTool postCancelOrder:_orderId Success:^(id responseObject) {

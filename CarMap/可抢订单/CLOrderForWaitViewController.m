@@ -96,7 +96,7 @@
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
     
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *dictionary = @{@"page":@(_page),@"pageSize":@(_pageSize)};
     [GFHttpTool getOrderListNewDictionary:dictionary Success:^(NSDictionary *responseObject) {
         if ([responseObject[@"result"] integerValue] == 1) {
@@ -110,7 +110,7 @@
                 [self addAlertView:@"已加载全部"];
             }
             [dataArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
-                NSLog(@"---obj---%@--",obj);
+//                NSLog(@"---obj---%@--",obj);
                 CLListNewModel *model = [[CLListNewModel alloc]init];
                 
                 NSDictionary *cooperatorDictionary = obj[@"cooperator"];
@@ -175,7 +175,7 @@
     
     [GFHttpTool postOrderId:[model.orderId integerValue] Success:^(NSDictionary *responseObject) {
         
-        NSLog(@"----抢单结果--%@--",responseObject);
+//        NSLog(@"----抢单结果--%@--",responseObject);
         if ([responseObject[@"result"]integerValue] == 1) {
             
             

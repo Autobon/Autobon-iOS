@@ -1754,7 +1754,7 @@ NSString* const PUBHOST = @"http://hpecar.com:8012/api";
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/%@/cancel",HOST,orderId];
         
-        NSLog(@"URLString-----%@--",URLString);
+//        NSLog(@"URLString-----%@--",URLString);
         [manager POST:URLString parameters:nil progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
             [aView removeFromSuperview];
             if(success) {

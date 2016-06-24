@@ -581,7 +581,7 @@
  */
 - (void)didFailToLocateUserWithError:(NSError *)error {
     
-    NSLog(@"获取当前位置失败，请检查您的网络－－%@",error);
+//    NSLog(@"获取当前位置失败，请检查您的网络－－%@",error);
     static BOOL first = YES;
     if (first) {
         first = NO;

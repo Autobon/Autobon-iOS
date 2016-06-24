@@ -258,6 +258,7 @@
             extern NSString* const URLHOST;
             for(NSDictionary *dic in listArr) {
                 
+                NSLog(@"dictionary---%@---",dic);
                 
                 _workNameArr = [[NSMutableArray alloc] init];
                 
@@ -332,6 +333,7 @@
                         listModel.payment = constructDic[@"payment"];
                         listModel.workItems = constructDic[@"workItems"];
                         listModel.signinTime = constructDic[@"signinTime"];
+                        
                         listModel.payStatus = constructDic[@"payStatus"];
                         listModel.indentType = dic[@"orderType"];
                         listModel.beforePhotos = constructDic[@"beforePhotos"];
@@ -503,13 +505,13 @@
                 
                 GFIndentModel *listModel = [[GFIndentModel alloc] init];
                 listModel.orderNum = dic[@"orderNum"];
-                NSLog(@"---orderNumber----%@－－－",listModel.orderNum);
+//                NSLog(@"---orderNumber----%@－－－",listModel.orderNum);
                 listModel.photo = [NSString stringWithFormat:@"%@%@",URLHOST,dic[@"photo"]];
                 listModel.remark = dic[@"remark"];
                 listModel.commentDictionary = dic[@"comment"];
                 listModel.indentType = dic[@"orderType"];
                 listModel.orderStatus = dic[@"status"];
-                NSLog(@"---orderStatus----%@－－－",dic[@"status"]);
+//                NSLog(@"---orderStatus----%@－－－",dic[@"status"]);
                 if([curUrl isEqualToString:mainUrl]) {
                     NSDictionary *constructDic = dic[@"mainConstruct"];
                     if ([constructDic isKindOfClass:[NSNull class]]) {
@@ -725,27 +727,31 @@
             }else {
                 cell.tipLabel.text = @"已结算";
             }
-        }else if([model.orderStatus isEqualToString:@"CANCELED"]){
-            cell.tipLabel.text = @"已撤消";
-            cell.placeLab.text = @"施工部位：无";
-        }else if([model.orderStatus isEqualToString:@"GIVEN_UP"]){
-            cell.tipLabel.text = @"已放弃";
-            cell.placeLab.text = @"施工部位：无";
-        }else if([model.orderStatus isEqualToString:@"EXPIRED"]){
-            cell.tipLabel.text = @"已超时";
-            cell.placeLab.text = @"施工部位：无";
-        }
-        
-        if ([cell.moneyLab.text isEqualToString:@"￥0"]) {
-            cell.timeLab.text = @"施工时间：无";
-        }else{
-            // 开始时间
             NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
             [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
             [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
             NSDate *date = [NSDate dateWithTimeIntervalSince1970:[model.signinTime floatValue]/1000];
             cell.timeLab.text = [NSString stringWithFormat:@"施工时间：%@", [formatter stringFromDate:date]];
+        }else if([model.orderStatus isEqualToString:@"CANCELED"]){
+            cell.tipLabel.text = @"已撤消";
+            cell.placeLab.text = @"施工部位：无";
+            cell.timeLab.text = @"施工时间：无";
+        }else if([model.orderStatus isEqualToString:@"GIVEN_UP"]){
+            cell.tipLabel.text = @"已放弃";
+            cell.placeLab.text = @"施工部位：无";
+            cell.timeLab.text = @"施工时间：无";
+        }else if([model.orderStatus isEqualToString:@"EXPIRED"]){
+            cell.tipLabel.text = @"已超时";
+            cell.placeLab.text = @"施工部位：无";
+            cell.timeLab.text = @"施工时间：无";
         }
+        
+//        if ([cell.moneyLab.text isEqualToString:@"￥0"]) {
+//            
+//        }else{
+//            // 开始时间
+//            
+//        }
         
         
         

@@ -15,6 +15,7 @@
 #import "MYImageView.h"
 #import "GFTipView.h"
 #import "CLHomeOrderViewController.h"
+#import "GFAlertView.h"
 
 
 
@@ -663,7 +664,11 @@
             
             
         }else{
-            [self addAlertView:@"请选择工作项"];
+//            [self addAlertView:@"请选择工作项"];
+            
+            [self removeOrderBtnClick];
+            
+            
         }
         
         
@@ -683,6 +688,73 @@
 //    [self.navigationController pushViewController:shareView animated:YES];
     
 }
+
+#pragma mark - 确定不选择工作项提示框
+- (void)removeOrderBtnClick{
+    GFAlertView *alertView = [[GFAlertView alloc]initWithTitle:@"确认不选择工作项吗？" leftBtn:@"取消" rightBtn:@"确定"];
+    [alertView.rightButton addTarget:self action:@selector(workOver) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:alertView];
+}
+
+- (void)workOver{
+    
+    
+    NSString *carSeat;
+    if (_workItemarray.count < _sevenItemArray.count) {
+        //        NSLog(@"五座车");
+        carSeat = @"5";
+    }else{
+        //        NSLog(@"七座车");
+        carSeat = @"7";
+    }
+    
+    
+    __block NSString *URLString;
+    // 判断图片个数
+    if (_imageArray.count > 2) {
+        [_imageArray enumerateObjectsUsingBlock:^(MYImageView *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            //            NSLog(@"imageURL---%@--",obj.resultURL);
+            if (idx == 0) {
+                URLString = obj.resultURL;
+            }else{
+                URLString = [NSString stringWithFormat:@"%@,%@",URLString,obj.resultURL];
+            }
+        }];
+    }
+    NSDictionary *dictionary = @{@"orderId":_orderId,@"afterPhotos":URLString,@"workItems":@"",@"carSeat":carSeat};
+//    NSLog(@"----dictionary---%@--",dictionary);
+    
+    [GFHttpTool PostOverDictionary:dictionary success:^(NSDictionary *responseObject) {
+        //                NSLog(@"请求成功--%@--",responseObject);
+        if ([responseObject[@"result"] integerValue] == 1) {
+            [_timer invalidate];
+            _timer = nil;
+             
+            CLShareViewController *homeOrder = [[CLShareViewController alloc]init];
+            homeOrder.orderNumber = self.orderNumber;
+            //                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+            //                    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeOrder];
+            //                    navigation.navigationBarHidden = YES;
+            //                    window.rootViewController = navigation;
+            [self.navigationController pushViewController:homeOrder animated:YES];
+            
+            
+            
+        }else{
+            [self addAlertView:responseObject[@"message"]];
+        }
+        
+        
+        
+    } failure:^(NSError *error) {
+        //                NSLog(@"----请求失败了--%@--",error);
+        //                [self addAlertView:@"提交失败"];
+    }];
+    
+    
+}
+
+
 
 #pragma mark - AlertView
 - (void)addAlertView:(NSString *)title{
