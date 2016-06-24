@@ -152,22 +152,7 @@
     self.tipLabel.font = [UIFont systemFontOfSize:12 / 320.0 * kWidth];
     self.tipLabel.textAlignment = NSTextAlignmentRight;
     [baseView addSubview:self.tipLabel];
-    // 判断订单是否结算
-    if ([_model.orderStatus isEqualToString:@"FINISHED"]) {
-        // 是否结算
-        NSInteger jisuanNum = (NSInteger)[_model.payStatus integerValue];
-        if(jisuanNum == 0 || jisuanNum == 1) {
-            _tipLabel.text = @"未结算";
-        }else {
-            _tipLabel.text = @"已结算";
-        }
-    }else if([_model.orderStatus isEqualToString:@"CANCELED"]){
-        _tipLabel.text = @"已撤消";
-    }else if([_model.orderStatus isEqualToString:@"GIVEN_UP"]){
-        _tipLabel.text = @"已放弃";
-    }else if([_model.orderStatus isEqualToString:@"EXPIRED"]){
-        _tipLabel.text = @"已超时";
-    }
+    
     
     // 边线
     UIView *lineView1 = [[UIView alloc] initWithFrame:CGRectMake(jiange1, CGRectGetMaxY(self.numberLab.frame) - 1, numberLabW, 1)];
@@ -283,6 +268,27 @@
     self.carPlaceLab.text = buweiStr;
     [baseView2 addSubview:self.carPlaceLab];
     baseView2.frame = CGRectMake(baseView2X, baseView2Y, baseView2W, carPlaceLabH - shigongLabH + baseView2H);
+    
+    // 判断订单是否结算
+    if ([_model.orderStatus isEqualToString:@"FINISHED"]) {
+        // 是否结算
+        NSInteger jisuanNum = (NSInteger)[_model.payStatus integerValue];
+        if(jisuanNum == 0 || jisuanNum == 1) {
+            _tipLabel.text = @"未结算";
+        }else {
+            _tipLabel.text = @"已结算";
+        }
+    }else if([_model.orderStatus isEqualToString:@"CANCELED"]){
+        _tipLabel.text = @"已撤消";
+        self.carPlaceLab.text = @"无";
+    }else if([_model.orderStatus isEqualToString:@"GIVEN_UP"]){
+        _tipLabel.text = @"已放弃";
+        self.carPlaceLab.text = @"无";
+    }else if([_model.orderStatus isEqualToString:@"EXPIRED"]){
+        _tipLabel.text = @"已超时";
+        self.carPlaceLab.text = @"无";
+    }
+    
     
     // 边线
     UIView *lineView7 = [[UIView alloc] initWithFrame:CGRectMake(jiange1, CGRectGetMaxY(baseView2.frame), numberLabW, 1)];

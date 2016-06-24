@@ -121,6 +121,7 @@
 		9BE53AF31C73406800BBB424 /* GFTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE53AF21C73406800BBB424 /* GFTextField.m */; };
 		9BE665401C743E0800976E7D /* CLTouchScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE6653F1C743E0800976E7D /* CLTouchScrollView.m */; };
 		9BEE38BD1C8EBBE000A698A8 /* MYImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BEE38BC1C8EBBE000A698A8 /* MYImageView.m */; };
+		9BF871BE1D1CC77400B830C6 /* CLTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF871BD1D1CC77400B830C6 /* CLTouchView.m */; };
 		BF71DD21E9CF382FC1DA7F81 /* libPods-CarMap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E35E041E0DC0947B718BCC81 /* libPods-CarMap.a */; };
 /* End PBXBuildFile section */
 
@@ -358,6 +359,8 @@
 		9BE6653F1C743E0800976E7D /* CLTouchScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLTouchScrollView.m; sourceTree = "<group>"; };
 		9BEE38BB1C8EBBE000A698A8 /* MYImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYImageView.h; sourceTree = "<group>"; };
 		9BEE38BC1C8EBBE000A698A8 /* MYImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYImageView.m; sourceTree = "<group>"; };
+		9BF871BC1D1CC77400B830C6 /* CLTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLTouchView.h; sourceTree = "<group>"; };
+		9BF871BD1D1CC77400B830C6 /* CLTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLTouchView.m; sourceTree = "<group>"; };
 		9BFA805A1C5F4009001651C3 /* BaiduMapAPI_Base.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Base.framework; path = "../../Downloads/BaiduMap_IOSSDK_v2.10-2.0/BaiduMap_IOSSDK_v2.10.0_Sample/BMKOCDemo/BaiduMapAPI/BaiduMapAPI_Base.framework"; sourceTree = "<group>"; };
 		9BFA805B1C5F4009001651C3 /* BaiduMapAPI_Cloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Cloud.framework; path = "../../Downloads/BaiduMap_IOSSDK_v2.10-2.0/BaiduMap_IOSSDK_v2.10.0_Sample/BMKOCDemo/BaiduMapAPI/BaiduMapAPI_Cloud.framework"; sourceTree = "<group>"; };
 		9BFA805C1C5F4009001651C3 /* BaiduMapAPI_Location.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Location.framework; path = "../../Downloads/BaiduMap_IOSSDK_v2.10-2.0/BaiduMap_IOSSDK_v2.10.0_Sample/BMKOCDemo/BaiduMapAPI/BaiduMapAPI_Location.framework"; sourceTree = "<group>"; };
@@ -645,6 +648,8 @@
 				9B3FCD151C92A09500E871C7 /* GFButton.m */,
 				9B3FCD1C1C92A09500E871C7 /* GFTitleView.h */,
 				9B3FCD1D1C92A09500E871C7 /* GFTitleView.m */,
+				9BF871BC1D1CC77400B830C6 /* CLTouchView.h */,
+				9BF871BD1D1CC77400B830C6 /* CLTouchView.m */,
 			);
 			path = "自定义控件";
 			sourceTree = "<group>";
@@ -1134,6 +1139,7 @@
 				86B890F81C73355B0068B95D /* GFSignUpViewController.m in Sources */,
 				9BA391721C843564002F30A7 /* CLAddPersonModel.m in Sources */,
 				9BAF986A1CA2761700CFD9F3 /* CLDelegateViewController.m in Sources */,
+				9BF871BE1D1CC77400B830C6 /* CLTouchView.m in Sources */,
 				860904C61C8EAB8F00CC06C1 /* GFIndentModel.m in Sources */,
 				860A4CC11C7ED9780067FB70 /* MJRefreshConst.m in Sources */,
 				868B0F111C7EA5AE00938665 /* GFBalanceViewController.m in Sources */,

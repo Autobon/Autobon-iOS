@@ -123,6 +123,7 @@
 
 //    NSLog(@"脑袋刷新");
     // 数组初始化并清空数组的元素
+    _tableView.userInteractionEnabled = NO;
     self.yearArr = [[NSMutableArray alloc] init];
     _listDictionary = [[NSMutableDictionary alloc]init];
     page = 1;
@@ -135,6 +136,7 @@
 
 - (void)footRefresh {
 
+    _tableView.userInteractionEnabled = NO;
 //    NSLog(@"账单大脚刷新");
     if (page == 1) {
         page = 2;
@@ -353,10 +355,12 @@
            
             [self addAlertView:responseObject[@"message"]];
         }
+        _tableView.userInteractionEnabled = YES;
         [self.tableView.header endRefreshing];
         [self.tableView.footer endRefreshing];
     } failure:^(NSError *error) {
    
+        _tableView.userInteractionEnabled = YES;
         [self.tableView.header endRefreshing];
         [self.tableView.footer endRefreshing];
 //        [self addAlertView:@"请求失败"];
