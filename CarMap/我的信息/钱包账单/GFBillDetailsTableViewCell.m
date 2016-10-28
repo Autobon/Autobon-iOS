@@ -7,6 +7,7 @@
 //
 
 #import "GFBillDetailsTableViewCell.h"
+#import "CLImageView.h"
 
 @implementation GFBillDetailsTableViewCell
 
@@ -64,7 +65,7 @@
         CGFloat photoImgViewH = kHeight * 0.2344;
         CGFloat photoImgViewX = jiange;
         CGFloat photoImgViewY = CGRectGetMaxY(self.numberLab.frame) + kHeight * 0.013;
-        self.photoImgView = [[UIImageView alloc] initWithFrame:CGRectMake(photoImgViewX, photoImgViewY, photoImgViewW, photoImgViewH)];
+        self.photoImgView = [[CLImageView alloc] initWithFrame:CGRectMake(photoImgViewX, photoImgViewY, photoImgViewW, photoImgViewH)];
         self.photoImgView.contentMode = UIViewContentModeScaleAspectFit;
         self.photoImgView.image = [UIImage imageNamed:@"orderImage.png"];
         [self.baseView addSubview:self.photoImgView];

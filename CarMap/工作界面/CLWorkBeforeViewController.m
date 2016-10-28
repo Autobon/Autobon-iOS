@@ -262,8 +262,6 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo{
     [self dismissViewControllerAnimated:YES completion:nil];
     
-    
-    
     if (_imageArray.count == 0) {
         _carImageButton.hidden = YES;
         MYImageView *imageView = [[MYImageView alloc]init];
@@ -319,6 +317,8 @@
     }
     UIImage *imageNew = [self imageWithImage:image scaledToSize:imagesize];
     NSData *imageData = UIImageJPEGRepresentation(imageNew, 0.8);
+
+    
     MYImageView *imageView = [_imageArray objectAtIndex:_imageArray.count-1];
 
     [GFHttpTool PostImageForWork:imageData success:^(NSDictionary *responseObject) {

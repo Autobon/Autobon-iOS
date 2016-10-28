@@ -258,7 +258,7 @@
             extern NSString* const URLHOST;
             for(NSDictionary *dic in listArr) {
                 
-                NSLog(@"dictionary---%@---",dic);
+//                NSLog(@"dictionary---%@---",dic);
                 
                 _workNameArr = [[NSMutableArray alloc] init];
                 

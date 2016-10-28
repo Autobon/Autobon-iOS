@@ -15,7 +15,12 @@
 
 
 @interface CLAutobonViewController ()
-
+{
+    
+    UIScrollView *_scrollView;
+    
+    
+}
 @end
 
 @implementation CLAutobonViewController
@@ -30,6 +35,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [[UIColor alloc]initWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
+    
+    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height/3+64, self.view.frame.size.width, self.view.frame.size.height*2/3-64-self.view.frame.size.height/18)];
+    _scrollView.bounces = NO;
+//    _scrollView.backgroundColor = [UIColor cyanColor];
+    [self.view addSubview:_scrollView];
     
     [self setNavigation];
     
@@ -58,25 +68,27 @@
 - (void)setViewForAutobon{
     
 // 距离label
-    UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, self.view.frame.size.height/3+2+64, self.view.frame.size.width, self.view.frame.size.height/18)];
+    UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, -5, self.view.frame.size.width, self.view.frame.size.height/18)];
 //    distanceLabel.backgroundColor = [UIColor cyanColor];
     distanceLabel.text = @"距离：  ";
     distanceLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
-    [self.view addSubview:distanceLabel];
+    [_scrollView addSubview:distanceLabel];
     
     UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, distanceLabel.frame.origin.y+self.view.frame.size.height/18, self.view.frame.size.width, 1)];
     lineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
-    [self.view addSubview:lineView];
+    [_scrollView addSubview:lineView];
     
 // 订单图片
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, lineView.frame.origin.y + 7, self.view.frame.size.width - 20, self.view.frame.size.height/4)];
 //    imageView.backgroundColor = [UIColor darkGrayColor];
     imageView.image = [UIImage imageNamed:@"orderImage"];
-    [self.view addSubview:imageView];
+    [_scrollView addSubview:imageView];
     
     UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(0, imageView.frame.origin.y+self.view.frame.size.height/4+5, self.view.frame.size.width, 1)];
     lineView2.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
-    [self.view addSubview:lineView2];
+    [_scrollView addSubview:lineView2];
+    
+    
     
 // 施工时间
     UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView2.frame.origin.y+4, self.view.frame.size.width, self.view.frame.size.height/18)];
@@ -87,24 +99,35 @@
     NSString *dateString = [formatter stringFromDate:[NSDate date]];
     timeLabel.text = [NSString stringWithFormat:@"工作时间：%@",dateString];
     timeLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
-    [self.view addSubview:timeLabel];
+    [_scrollView addSubview:timeLabel];
     
     UIView *lineView3 = [[UIView alloc]initWithFrame:CGRectMake(0, timeLabel.frame.origin.y+self.view.frame.size.height/18, self.view.frame.size.width, 1)];
     lineView3.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
-    [self.view addSubview:lineView3];
+    [_scrollView addSubview:lineView3];
+    
+    
+    
+    
+    [self setLineView:[NSString stringWithFormat:@"订单类型：%@",@""] maxY:lineView2.frame.origin.y+self.view.frame.size.height/18+1];
+    
+    [self setLineView:[NSString stringWithFormat:@"下单人员：%@",@""] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*2];
+    
+    [self setLineView:[NSString stringWithFormat:@"商户位置：%@",@""] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*3];
+
     
     
 // 备注
-    UILabel *otherLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView3.frame.origin.y+4, self.view.frame.size.width, self.view.frame.size.height/18)];
+    UILabel *otherLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*4, self.view.frame.size.width, self.view.frame.size.height/18)];
 //    otherLabel.backgroundColor = [UIColor cyanColor];
     otherLabel.text = @"工作备注：";
     otherLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
-    [self.view addSubview:otherLabel];
+    [_scrollView addSubview:otherLabel];
     
     UIView *lineView4 = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-self.view.frame.size.height/18-2, self.view.frame.size.width, 1)];
     lineView4.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [self.view addSubview:lineView4];
 
+    _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(otherLabel.frame));
 // 我要接单
     UILabel *orderLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-self.view.frame.size.height/18, self.view.frame.size.width/2, self.view.frame.size.height/18)];
     orderLabel.text = @"我要接单";
@@ -125,6 +148,22 @@
     [self.view addSubview:lineView5];
     
 }
+
+- (void)setLineView:(NSString *)title maxY:(float)maxY{
+    
+    // 施工时间
+    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, maxY +4, self.view.frame.size.width, self.view.frame.size.height/18)];
+    //    timeLabel.backgroundColor = [UIColor cyanColor];
+    timeLabel.text = title;
+    timeLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
+    [_scrollView addSubview:timeLabel];
+    
+    UIView *lineView3 = [[UIView alloc]initWithFrame:CGRectMake(0, timeLabel.frame.origin.y+self.view.frame.size.height/18, self.view.frame.size.width, 1)];
+    lineView3.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
+    [_scrollView addSubview:lineView3];
+    
+}
+
 
 
 - (void)certifyBtnClick{

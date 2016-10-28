@@ -81,6 +81,7 @@
     
     if (_isFail) {
         [GFHttpTool getCertificateSuccess:^(id responseObject) {
+//            NSLog(@"---dictionary---%@--",responseObject);
             _haveHeadImage = YES;
             _isIdNumber = YES;
             _haveIdentityImage = YES;

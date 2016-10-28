@@ -313,11 +313,11 @@
     CGFloat workDayLabX = baseView1X;
     CGFloat workDayLabY = CGRectGetMaxY(self.workerLab.frame);
     self.workDayLab = [[UILabel alloc] initWithFrame:CGRectMake(workDayLabX, workDayLabY, workDayLabW, workDayLabH)];
+//    self.workDayLab.backgroundColor = [UIColor redColor];
     
-    
-    
+//    NSLog(@"-----%@－－－－",_model.orderStatus);
     // 判断订单是否结算
-    if ([_model.orderStatus isEqualToString:@"FINISHED"]) {
+    if ([_model.orderStatus isEqualToString:@"FINISHED"]||[_model.orderStatus isEqualToString:@"COMMENTED"]) {
         // 是否结算
         NSInteger jisuanNum = (NSInteger)[_model.payStatus integerValue];
         if(jisuanNum == 0 || jisuanNum == 1) {
@@ -383,7 +383,7 @@
     
     
     
-    if (self.model.beforePhotos) {
+    if (self.model.beforePhotos && ![self.model.beforePhotos isKindOfClass:[NSNull class]]) {
         // 施工前照片
         CGFloat beforeLabW = workDayLabW;
         CGFloat beforeLabH = workDayLabH;
@@ -395,9 +395,11 @@
         [baseView addSubview:beforeLab];
         
         NSString *bePhotoStr = self.model.beforePhotos;
-        if (bePhotoStr == nil) {
-            bePhotoStr = @"123531";
+//        NSLog(@"--111---bePhotoStr---%@---",bePhotoStr);
+        if (bePhotoStr == nil ||[bePhotoStr isKindOfClass:[NSNull class]]) {
+            bePhotoStr = nil;
         }
+//        NSLog(@"--222---bePhotoStr---%@---",bePhotoStr);
         NSArray *bePhotoArr = [bePhotoStr componentsSeparatedByString:@","];
         
         NSInteger num = bePhotoArr.count;
@@ -423,8 +425,10 @@
         afPhotoLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
         [baseView addSubview:afPhotoLab];
         //照片
-        NSString *afPhotoStr = @"12356432135";
-        if (self.model.afterPhotos) {
+        NSString *afPhotoStr = nil;
+        if ([self.model.afterPhotos isKindOfClass:[NSNull class]]||self.model.afterPhotos == nil) {
+            
+        }else{
             afPhotoStr = self.model.afterPhotos;
         }
         

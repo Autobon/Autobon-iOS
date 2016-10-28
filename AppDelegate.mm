@@ -27,6 +27,8 @@
 
 #import "CLWorkBeforeViewController.h"
 #import "GFIndentDetailsViewController.h"
+#import "CLAutobonViewController.h"
+
 #import "GFIndentModel.h"
 
 // 个推开发者网站中申请App时，注册的AppId、AppKey、AppSecret
@@ -105,9 +107,11 @@
 //    CLCooperatingViewController *firstView = [[CLCooperatingViewController alloc]init];
 //    GFNoIndentViewController *firstView = [[GFNoIndentViewController alloc]init];
     
+//    CLAutobonViewController *firstView = [[CLAutobonViewController alloc]init];
 //    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
     //********************* 光法页面 **********************
 //    GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
+    
     
     GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
 //    CLMoreViewController *moreVC = [[CLMoreViewController alloc] init];
@@ -610,6 +614,7 @@
         window.rootViewController = navigation;
     }else if ([responseJSON[@"action"]isEqualToString:@"ORDER_CANCELED"]){
         
+        /*
         UIWindow *window = [UIApplication sharedApplication].delegate.window;
         CLHomeOrderViewController *homeOrderView = [[CLHomeOrderViewController alloc]init];
         UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeOrderView];
@@ -658,7 +663,7 @@
             
         }];
         
-        
+        */
     }
     
 
@@ -713,6 +718,7 @@
             window.rootViewController = navigation;
         }else if ([responseJSON[@"action"]isEqualToString:@"ORDER_CANCELED"]){
             
+            /*
             UIWindow *window = [UIApplication sharedApplication].delegate.window;
             CLHomeOrderViewController *homeOrderView = [[CLHomeOrderViewController alloc]init];
             UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeOrderView];
@@ -761,6 +767,7 @@
                 
             }];
             
+             */
             
         }
         
