@@ -677,6 +677,7 @@
         }
         UIImage *imageNew = [self imageWithImage:image scaledToSize:imagesize];
         NSData *imageData = UIImageJPEGRepresentation(imageNew, 0.8);
+    
         
         
         [GFHttpTool headImage:imageData success:^(NSDictionary *responseObject) {
