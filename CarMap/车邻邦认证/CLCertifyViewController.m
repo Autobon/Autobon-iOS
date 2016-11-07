@@ -19,7 +19,7 @@
 #import "UIButton+WebCache.h"
 #import "CLAutobonViewController.h"
 #import "CLDelegateViewController.h"
-
+#import "CLTouchView.h"
 
 
 @interface CLCertifyViewController ()<UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITableViewDataSource,UITableViewDelegate>
@@ -81,6 +81,7 @@
     
     if (_isFail) {
         [GFHttpTool getCertificateSuccess:^(id responseObject) {
+//            NSLog(@"---dictionary---%@--",responseObject);
             _haveHeadImage = YES;
             _isIdNumber = YES;
             _haveIdentityImage = YES;
@@ -601,40 +602,47 @@
 #pragma mark - 相机按钮的实现方法
 - (void)cameraHeadBtnClick:(UIButton *)button{
     [self.view endEditing:YES];
-    _scrollView.userInteractionEnabled = NO;
+//    _scrollView.userInteractionEnabled = NO;
     if (button.tag == 1) {
         _isHeadImage = YES;
     }else{
         _isHeadImage = NO;
     }
-    _chooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-100, 80)];
-    _chooseView.center = self.view.center;
-    _chooseView.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-    _chooseView.layer.cornerRadius = 15;
-    _chooseView.clipsToBounds = YES;
-    [self.view addSubview:_chooseView];
+    if (_chooseView == nil) {
+        _chooseView = [[CLTouchView alloc]initWithFrame:self.view.bounds];
+//        _chooseView.backgroundColor = [UIColor cyanColor];
+        [self.view addSubview:_chooseView];
+        
+        UIView *chooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-100, 80)];
+        chooseView.center = self.view.center;
+        chooseView.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+        chooseView.layer.cornerRadius = 15;
+        chooseView.clipsToBounds = YES;
+        [_chooseView addSubview:chooseView];
+        
+        // 相机和相册按钮
+        UIButton *cameraButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-100, 40)];
+        [cameraButton setTitle:@"相册" forState:UIControlStateNormal];
+        [cameraButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
+        cameraButton.tag = 1;
+        [chooseView addSubview:cameraButton];
+        
+        UIButton *photoButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 40, self.view.frame.size.width-100, 40)];
+        [photoButton setTitle:@"相机" forState:UIControlStateNormal];
+        [photoButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
+        photoButton.tag = 2;
+        [chooseView addSubview:photoButton];
+    }
+
     
-// 相机和相册按钮
-    UIButton *cameraButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-100, 40)];
-    [cameraButton setTitle:@"相册" forState:UIControlStateNormal];
-    [cameraButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
-    cameraButton.tag = 1;
-    [_chooseView addSubview:cameraButton];
-    
-    UIButton *photoButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 40, self.view.frame.size.width-100, 40)];
-    [photoButton setTitle:@"相机" forState:UIControlStateNormal];
-    [photoButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
-    photoButton.tag = 2;
-    [_chooseView addSubview:photoButton];
-    
-    
+    _chooseView.hidden = NO;
 }
 
 
 #pragma mark - 选择照片
 - (void)userHeadChoose:(UIButton *)button{
-    [_chooseView removeFromSuperview];
-    _scrollView.userInteractionEnabled = YES;
+    _chooseView.hidden = YES;
+//    _scrollView.userInteractionEnabled = YES;
     if (button.tag == 1) {
         UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
         imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;

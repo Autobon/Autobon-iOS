@@ -85,7 +85,7 @@
 -(UIViewController *)getCurrentViewController{
     UIResponder *next = [self nextResponder];
     do {
-        NSLog(@"寻找视图控制器");
+//        NSLog(@"寻找视图控制器");
         if ([next isKindOfClass:[UIViewController class]]) {
             return (UIViewController *)next;
         }

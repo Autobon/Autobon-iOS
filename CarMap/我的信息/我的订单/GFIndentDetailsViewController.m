@@ -152,22 +152,7 @@
     self.tipLabel.font = [UIFont systemFontOfSize:12 / 320.0 * kWidth];
     self.tipLabel.textAlignment = NSTextAlignmentRight;
     [baseView addSubview:self.tipLabel];
-    // 判断订单是否结算
-    if ([_model.orderStatus isEqualToString:@"FINISHED"]) {
-        // 是否结算
-        NSInteger jisuanNum = (NSInteger)[_model.payStatus integerValue];
-        if(jisuanNum == 0 || jisuanNum == 1) {
-            _tipLabel.text = @"未结算";
-        }else {
-            _tipLabel.text = @"已结算";
-        }
-    }else if([_model.orderStatus isEqualToString:@"CANCELED"]){
-        _tipLabel.text = @"已撤消";
-    }else if([_model.orderStatus isEqualToString:@"GIVEN_UP"]){
-        _tipLabel.text = @"已放弃";
-    }else if([_model.orderStatus isEqualToString:@"EXPIRED"]){
-        _tipLabel.text = @"已超时";
-    }
+    
     
     // 边线
     UIView *lineView1 = [[UIView alloc] initWithFrame:CGRectMake(jiange1, CGRectGetMaxY(self.numberLab.frame) - 1, numberLabW, 1)];
@@ -284,6 +269,9 @@
     [baseView2 addSubview:self.carPlaceLab];
     baseView2.frame = CGRectMake(baseView2X, baseView2Y, baseView2W, carPlaceLabH - shigongLabH + baseView2H);
     
+   
+    
+    
     // 边线
     UIView *lineView7 = [[UIView alloc] initWithFrame:CGRectMake(jiange1, CGRectGetMaxY(baseView2.frame), numberLabW, 1)];
     lineView7.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
@@ -325,16 +313,47 @@
     CGFloat workDayLabX = baseView1X;
     CGFloat workDayLabY = CGRectGetMaxY(self.workerLab.frame);
     self.workDayLab = [[UILabel alloc] initWithFrame:CGRectMake(workDayLabX, workDayLabY, workDayLabW, workDayLabH)];
+//    self.workDayLab.backgroundColor = [UIColor redColor];
     
-    if ([self.moneyLab.text isEqualToString:@"￥0"]) {
-        self.workDayLab.text = @"签到时间：无";
-    }else{
+//    NSLog(@"-----%@－－－－",_model.orderStatus);
+    // 判断订单是否结算
+    if ([_model.orderStatus isEqualToString:@"FINISHED"]||[_model.orderStatus isEqualToString:@"COMMENTED"]) {
+        // 是否结算
+        NSInteger jisuanNum = (NSInteger)[_model.payStatus integerValue];
+        if(jisuanNum == 0 || jisuanNum == 1) {
+            _tipLabel.text = @"未结算";
+        }else {
+            _tipLabel.text = @"已结算";
+        }
         NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
         [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:[self.model.signinTime floatValue]/1000];
         self.workDayLab.text = [NSString stringWithFormat:@"施工时间：%@", [formatter stringFromDate:date]];
+    }else if([_model.orderStatus isEqualToString:@"CANCELED"]){
+        _tipLabel.text = @"已撤消";
+        self.carPlaceLab.text = @"无";
+        self.workDayLab.text = @"签到时间：无";
+    }else if([_model.orderStatus isEqualToString:@"GIVEN_UP"]){
+        _tipLabel.text = @"已放弃";
+        self.carPlaceLab.text = @"无";
+        self.workDayLab.text = @"签到时间：无";
+    }else if([_model.orderStatus isEqualToString:@"EXPIRED"]){
+        _tipLabel.text = @"已超时";
+        self.carPlaceLab.text = @"无";
+        self.workDayLab.text = @"签到时间：无";
     }
+    
+    
+//    if ([self.moneyLab.text isEqualToString:@"￥0"]) {
+//        self.workDayLab.text = @"签到时间：无";
+//    }else{
+//        NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+//        [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+//        [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
+//        NSDate *date = [NSDate dateWithTimeIntervalSince1970:[self.model.signinTime floatValue]/1000];
+//        self.workDayLab.text = [NSString stringWithFormat:@"施工时间：%@", [formatter stringFromDate:date]];
+//    }
     
     
     self.workDayLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
@@ -364,7 +383,7 @@
     
     
     
-    if (self.model.beforePhotos) {
+    if (self.model.beforePhotos && ![self.model.beforePhotos isKindOfClass:[NSNull class]]) {
         // 施工前照片
         CGFloat beforeLabW = workDayLabW;
         CGFloat beforeLabH = workDayLabH;
@@ -376,9 +395,11 @@
         [baseView addSubview:beforeLab];
         
         NSString *bePhotoStr = self.model.beforePhotos;
-        if (bePhotoStr == nil) {
-            bePhotoStr = @"123531";
+//        NSLog(@"--111---bePhotoStr---%@---",bePhotoStr);
+        if (bePhotoStr == nil ||[bePhotoStr isKindOfClass:[NSNull class]]) {
+            bePhotoStr = nil;
         }
+//        NSLog(@"--222---bePhotoStr---%@---",bePhotoStr);
         NSArray *bePhotoArr = [bePhotoStr componentsSeparatedByString:@","];
         
         NSInteger num = bePhotoArr.count;
@@ -404,12 +425,14 @@
         afPhotoLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
         [baseView addSubview:afPhotoLab];
         //照片
-        NSString *afPhotoStr = @"12356432135";
-        if (self.model.afterPhotos) {
+        NSString *afPhotoStr = nil;
+        if ([self.model.afterPhotos isKindOfClass:[NSNull class]]||self.model.afterPhotos == nil) {
+            
+        }else{
             afPhotoStr = self.model.afterPhotos;
         }
         
-        NSLog(@"----afPhotoStr-----%@---",afPhotoStr);
+//        NSLog(@"----afPhotoStr-----%@---",afPhotoStr);
         NSArray *afPhotoArr = [afPhotoStr componentsSeparatedByString:@","];
         NSInteger sum = afPhotoArr.count;
         afterImageArray = [[NSMutableArray alloc]init];
@@ -555,7 +578,7 @@
         
         self.scrollView.contentSize = CGSizeMake(0, CGRectGetMaxY(baseView.frame)+30);
         
-        NSLog(@"为评论的滚动高度：%f", CGRectGetMaxY(baseView.frame)+30);
+//        NSLog(@"为评论的滚动高度：%f", CGRectGetMaxY(baseView.frame)+30);
     }else{
         // 星星
         for(int i=0; i<5; i++) {
@@ -633,7 +656,7 @@
         
         self.scrollView.contentSize = CGSizeMake(0, CGRectGetMaxY(baseView.frame)+30);
         
-        NSLog(@"为评论的滚动高度：%f", CGRectGetMaxY(baseView.frame)+30);
+//        NSLog(@"为评论的滚动高度：%f", CGRectGetMaxY(baseView.frame)+30);
     }
     
     

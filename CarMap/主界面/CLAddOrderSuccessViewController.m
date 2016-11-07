@@ -184,7 +184,7 @@
         _dataDictionary = _dataDictionary[@"order"];
     }
     
-    NSLog(@"--收到推送消息的字典---_dataDictionary-----%@---",_dataDictionary);
+//    NSLog(@"--收到推送消息的字典---_dataDictionary-----%@---",_dataDictionary);
     CLOrderDetailViewController *detailView = [[CLOrderDetailViewController alloc]init];
     detailView.customerLat = _dataDictionary[@"positionLat"];
     detailView.customerLon = _dataDictionary[@"positionLon"];
@@ -210,7 +210,7 @@
     
     detailView.orderId = _dataDictionary[@"id"];
     detailView.orderType = _dataDictionary[@"orderType"];
-    NSLog(@"orderType----%@--",_dataDictionary[@"orderType"]);
+//    NSLog(@"orderType----%@--",_dataDictionary[@"orderType"]);
     detailView.action = _dataDictionary[@"status"];
     detailView.orderNumber = _dataDictionary[@"orderNum"];
     

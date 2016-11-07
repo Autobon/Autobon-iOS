@@ -27,6 +27,8 @@
 
 #import "CLWorkBeforeViewController.h"
 #import "GFIndentDetailsViewController.h"
+#import "CLAutobonViewController.h"
+
 #import "GFIndentModel.h"
 
 // 个推开发者网站中申请App时，注册的AppId、AppKey、AppSecret
@@ -82,13 +84,14 @@
     
 //    [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
 //
-//    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:@"3285914881" RedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
+    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:@"3285914881" RedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
 
     _mapManager = [[BMKMapManager alloc]init];
     BOOL ret = [_mapManager start:@"qQxUcaGNCZfeFmhB8EHWVvgt" generalDelegate:self];
     if (!ret) {
 //        NSLog(@"manager start failed!");
     }
+    
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults  removeObjectForKey:@"homeOrder"];
@@ -104,9 +107,11 @@
 //    CLCooperatingViewController *firstView = [[CLCooperatingViewController alloc]init];
 //    GFNoIndentViewController *firstView = [[GFNoIndentViewController alloc]init];
     
+//    CLAutobonViewController *firstView = [[CLAutobonViewController alloc]init];
 //    _navigation = [[UINavigationController alloc]initWithRootViewController:firstView];
     //********************* 光法页面 **********************
 //    GFMyMessageViewController *messageVC = [[GFMyMessageViewController alloc] init];
+    
     
     GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
 //    CLMoreViewController *moreVC = [[CLMoreViewController alloc] init];
@@ -413,8 +418,8 @@
     if (payload) {
         payloadMsg = [[NSString alloc] initWithBytes:payload.bytes length:payload.length encoding:NSUTF8StringEncoding];
     }
-    NSString *msg = [NSString stringWithFormat:@" payloadId=%@,taskId=%@,messageId:%@,payloadMsg:%@%@",payloadId,taskId,aMsgId,payloadMsg,offLine ? @"<离线消息>" : @""];
-    NSLog(@"\n>前台>>[GexinSdk ReceivePayload]:%@\n\n", msg);
+//    NSString *msg = [NSString stringWithFormat:@" payloadId=%@,taskId=%@,messageId:%@,payloadMsg:%@%@",payloadId,taskId,aMsgId,payloadMsg,offLine ? @"<离线消息>" : @""];
+//    NSLog(@"\n>前台>>[GexinSdk ReceivePayload]:%@\n\n", msg);
     [GeTuiSdk sendFeedbackMessage:90001 taskId:taskId msgId:aMsgId];
     if (!offLine) {
         NSData *JSONData = [payloadMsg dataUsingEncoding:NSUTF8StringEncoding];
@@ -564,7 +569,7 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
     // 处理APNs代码，通过userInfo可以取到推送的信息（包括内容，角标，自定义参数等）。如果需要弹窗等其他操作，则需要自行编码。
 #pragma mark - 后台运行调用的方法
-    NSLog(@"\n>>>[Receive ------ RemoteNotification - Background Fetch]:%@\n\n",userInfo);
+//    NSLog(@"\n>>>[Receive ------ RemoteNotification - Background Fetch]:%@\n\n",userInfo);
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     completionHandler(UIBackgroundFetchResultNewData);
     
@@ -609,6 +614,7 @@
         window.rootViewController = navigation;
     }else if ([responseJSON[@"action"]isEqualToString:@"ORDER_CANCELED"]){
         
+        /*
         UIWindow *window = [UIApplication sharedApplication].delegate.window;
         CLHomeOrderViewController *homeOrderView = [[CLHomeOrderViewController alloc]init];
         UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeOrderView];
@@ -657,7 +663,7 @@
             
         }];
         
-        
+        */
     }
     
 
@@ -674,10 +680,10 @@
     
     
     long time = (long)[[NSDate date] timeIntervalSince1970] - [_pushDate timeIntervalSince1970];
-    NSLog(@"---time--%@---%@-",@(time),notification.userInfo);
+//    NSLog(@"---time--%@---%@-",@(time),notification.userInfo);
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if (0 < time && notification.userInfo) {
-         NSLog(@"消息来了a－－%@",notification.userInfo);
+//         NSLog(@"消息来了a－－%@",notification.userInfo);
         NSData *JSONData = [notification.userInfo[@"dictionary"] dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:nil];
         
@@ -712,6 +718,7 @@
             window.rootViewController = navigation;
         }else if ([responseJSON[@"action"]isEqualToString:@"ORDER_CANCELED"]){
             
+            /*
             UIWindow *window = [UIApplication sharedApplication].delegate.window;
             CLHomeOrderViewController *homeOrderView = [[CLHomeOrderViewController alloc]init];
             UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeOrderView];
@@ -760,6 +767,7 @@
                 
             }];
             
+             */
             
         }
         

@@ -17,11 +17,16 @@ NSString *const prefixURL = @"";
 
 
 
+<<<<<<< HEAD
 //NSString* const HOST = @"http://10.0.12.221:12345/api/mobile";
 //NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
+=======
+NSString* const HOST = @"http://121.40.219.58/api/mobile";
+NSString* const PUBHOST = @"http://121.40.219.58/api";
+>>>>>>> 6759271502736c0f76a3fa10c930ae17aeca102a
 
-NSString* const HOST = @"http://hpecar.com:8012/api/mobile";
-NSString* const PUBHOST = @"http://hpecar.com:8012/api";
+//NSString* const HOST = @"http://hpecar.com:8012/api/mobile";
+//NSString* const PUBHOST = @"http://hpecar.com:8012/api";
 
 
 
@@ -1754,7 +1759,7 @@ NSString* const PUBHOST = @"http://hpecar.com:8012/api";
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/%@/cancel",HOST,orderId];
         
-        NSLog(@"URLString-----%@--",URLString);
+//        NSLog(@"URLString-----%@--",URLString);
         [manager POST:URLString parameters:nil progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
             [aView removeFromSuperview];
             if(success) {

@@ -121,6 +121,7 @@
 		9BE53AF31C73406800BBB424 /* GFTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE53AF21C73406800BBB424 /* GFTextField.m */; };
 		9BE665401C743E0800976E7D /* CLTouchScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE6653F1C743E0800976E7D /* CLTouchScrollView.m */; };
 		9BEE38BD1C8EBBE000A698A8 /* MYImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BEE38BC1C8EBBE000A698A8 /* MYImageView.m */; };
+		9BF871BE1D1CC77400B830C6 /* CLTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF871BD1D1CC77400B830C6 /* CLTouchView.m */; };
 		BF71DD21E9CF382FC1DA7F81 /* libPods-CarMap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E35E041E0DC0947B718BCC81 /* libPods-CarMap.a */; };
 /* End PBXBuildFile section */
 
@@ -358,6 +359,8 @@
 		9BE6653F1C743E0800976E7D /* CLTouchScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLTouchScrollView.m; sourceTree = "<group>"; };
 		9BEE38BB1C8EBBE000A698A8 /* MYImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYImageView.h; sourceTree = "<group>"; };
 		9BEE38BC1C8EBBE000A698A8 /* MYImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYImageView.m; sourceTree = "<group>"; };
+		9BF871BC1D1CC77400B830C6 /* CLTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLTouchView.h; sourceTree = "<group>"; };
+		9BF871BD1D1CC77400B830C6 /* CLTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLTouchView.m; sourceTree = "<group>"; };
 		9BFA805A1C5F4009001651C3 /* BaiduMapAPI_Base.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Base.framework; path = "../../Downloads/BaiduMap_IOSSDK_v2.10-2.0/BaiduMap_IOSSDK_v2.10.0_Sample/BMKOCDemo/BaiduMapAPI/BaiduMapAPI_Base.framework"; sourceTree = "<group>"; };
 		9BFA805B1C5F4009001651C3 /* BaiduMapAPI_Cloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Cloud.framework; path = "../../Downloads/BaiduMap_IOSSDK_v2.10-2.0/BaiduMap_IOSSDK_v2.10.0_Sample/BMKOCDemo/BaiduMapAPI/BaiduMapAPI_Cloud.framework"; sourceTree = "<group>"; };
 		9BFA805C1C5F4009001651C3 /* BaiduMapAPI_Location.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Location.framework; path = "../../Downloads/BaiduMap_IOSSDK_v2.10-2.0/BaiduMap_IOSSDK_v2.10.0_Sample/BMKOCDemo/BaiduMapAPI/BaiduMapAPI_Location.framework"; sourceTree = "<group>"; };
@@ -645,6 +648,8 @@
 				9B3FCD151C92A09500E871C7 /* GFButton.m */,
 				9B3FCD1C1C92A09500E871C7 /* GFTitleView.h */,
 				9B3FCD1D1C92A09500E871C7 /* GFTitleView.m */,
+				9BF871BC1D1CC77400B830C6 /* CLTouchView.h */,
+				9BF871BD1D1CC77400B830C6 /* CLTouchView.m */,
 			);
 			path = "自定义控件";
 			sourceTree = "<group>";
@@ -926,6 +931,7 @@
 					9B9754381C5765B3004BDC7C = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = EXB4V929SQ;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1134,6 +1140,7 @@
 				86B890F81C73355B0068B95D /* GFSignUpViewController.m in Sources */,
 				9BA391721C843564002F30A7 /* CLAddPersonModel.m in Sources */,
 				9BAF986A1CA2761700CFD9F3 /* CLDelegateViewController.m in Sources */,
+				9BF871BE1D1CC77400B830C6 /* CLTouchView.m in Sources */,
 				860904C61C8EAB8F00CC06C1 /* GFIndentModel.m in Sources */,
 				860A4CC11C7ED9780067FB70 /* MJRefreshConst.m in Sources */,
 				868B0F111C7EA5AE00938665 /* GFBalanceViewController.m in Sources */,
@@ -1193,8 +1200,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Xiong Guanghua (EXB4V929SQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiong Guanghua (T69DE3Y6T9)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
@@ -1218,7 +1225,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-all_load";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "29d67e9b-2cc1-42d1-8d95-7d0f57d1d731";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1241,8 +1248,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Xiong Guanghua (EXB4V929SQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Xiong Guanghua (EXB4V929SQ)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
@@ -1259,7 +1266,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-all_load";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "29d67e9b-2cc1-42d1-8d95-7d0f57d1d731";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1272,7 +1279,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xiong Guanghua (T69DE3Y6T9)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = CarMap/Info.plist;
@@ -1296,7 +1303,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xiong Guanghua (T69DE3Y6T9)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = CarMap/Info.plist;

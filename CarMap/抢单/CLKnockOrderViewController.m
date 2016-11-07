@@ -49,7 +49,7 @@
 - (void)addMap{
     NSDictionary *orderDic = _orderDictionary[@"order"];
 //    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 5, 150, 30)];
-    NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
+//    NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
 //    titleLabel.text = array[[orderDic[@"orderType"] integerValue]-1];
 //    [_orderView addSubview:titleLabel];
     

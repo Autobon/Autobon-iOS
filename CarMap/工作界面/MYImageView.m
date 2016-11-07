@@ -41,12 +41,12 @@
     if (self.imageArray == nil) {
         scrollView.hidden = YES;
     }else{
-        NSLog(@"---imageView.tag----%ld---",self.tag);
-        NSLog(@"---imageView.imageArray----%@--",self.imageArray);
+//        NSLog(@"---imageView.tag----%ld---",self.tag);
+//        NSLog(@"---imageView.imageArray----%@--",self.imageArray);
         
         scrollView.hidden = NO;
         
-        NSLog(@"------scrollView---%@---scrollView.imageArray--%@--",scrollView,scrollView.imageArray);
+//        NSLog(@"------scrollView---%@---scrollView.imageArray--%@--",scrollView,scrollView.imageArray);
         
         
         scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width*self.imageArray.count, [UIScreen mainScreen].bounds.size.height);

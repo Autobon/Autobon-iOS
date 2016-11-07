@@ -37,7 +37,7 @@
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     
-    NSLog(@"支持放大的图片的点击方法");
+//    NSLog(@"支持放大的图片的点击方法");
     CLTouchImageView *imageView = [CLTouchImageView sharedManager];
     imageView.backgroundColor = [UIColor clearColor];
     [UIView beginAnimations:nil context:nil];
