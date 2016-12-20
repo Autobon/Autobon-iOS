@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GFButton : UIButton
+@interface GFButtonRight : UIButton
 
 
 @property (nonatomic, assign) CGFloat imgLabMargin;

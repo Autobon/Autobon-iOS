@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@class CLHomeOrderCellModel;
 
 @interface GFOrderForWaitTableViewCell : UITableViewCell
+
+
+@property (nonatomic, strong) CLHomeOrderCellModel *model;
 
 @end

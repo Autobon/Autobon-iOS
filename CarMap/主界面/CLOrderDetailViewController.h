@@ -8,25 +8,29 @@
 
 #import <UIKit/UIKit.h>
 
+
+@class CLHomeOrderCellModel;
+
 @interface CLOrderDetailViewController : UIViewController
 
-@property (nonatomic ,strong) NSString *customerLat;
-@property (nonatomic ,strong) NSString *customerLon;
-@property (nonatomic ,strong) NSString *orderPhotoURL;
-@property (nonatomic ,strong) NSString *orderTime;
-@property (nonatomic ,strong) NSString *remark;
-@property (nonatomic ,strong) NSString *orderId;
-@property (nonatomic ,strong) NSString *orderNumber;
-@property (nonatomic ,strong) NSString *action;
-@property (nonatomic ,strong) NSString *mainTechId;
-@property (nonatomic ,strong) NSString *secondId;
-@property (nonatomic ,strong) NSString *orderType;
+@property (nonatomic ,copy) NSString *customerLat;
+@property (nonatomic ,copy) NSString *customerLon;
+@property (nonatomic ,copy) NSString *orderPhotoURL;
+@property (nonatomic ,copy) NSString *orderTime;
+@property (nonatomic ,copy) NSString *remark;
+@property (nonatomic ,copy) NSString *orderId;
+@property (nonatomic ,copy) NSString *orderNumber;
+@property (nonatomic ,copy) NSString *action;
+@property (nonatomic ,copy) NSString *mainTechId;
+@property (nonatomic ,copy) NSString *secondId;
+@property (nonatomic ,copy) NSString *orderType;
+@property (nonatomic, copy) NSString *startTime;
 
-@property (nonatomic ,strong) NSString *cooperatorName;
-@property (nonatomic ,strong) NSString *cooperatorAddress;
-@property (nonatomic ,strong) NSString *cooperatorFullname;
+@property (nonatomic ,copy) NSString *cooperatorName;
+@property (nonatomic ,copy) NSString *cooperatorAddress;
+@property (nonatomic ,copy) NSString *cooperatorFullname;
 
-
+@property (nonatomic, strong) CLHomeOrderCellModel *model;
 
 
 

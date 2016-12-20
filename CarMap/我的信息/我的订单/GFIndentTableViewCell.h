@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+//@class GFIndentModel;
+@class GFNewOrderModel;
+
 @interface GFIndentTableViewCell : UITableViewCell
 
 
@@ -17,6 +20,12 @@
 @property (nonatomic, strong) UIImageView *photoImgView;
 @property (nonatomic, strong) UILabel *timeLab;
 @property (nonatomic, strong) UILabel *placeLab;
+
+
+
+//@property (nonatomic, strong) GFIndentModel *model;
+@property (nonatomic, strong) GFNewOrderModel *model;
+
 
 
 @property (nonatomic, strong) NSString *workItems;

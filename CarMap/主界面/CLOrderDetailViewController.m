@@ -17,9 +17,19 @@
 #import "UIImageView+WebCache.h"
 #import "CLHomeOrderViewController.h"
 #import "CLImageView.h"
+#import "UIButton+WebCache.h"
+
+#import "CLHomeOrderCellModel.h"
+
+#import "HZPhotoBrowser.h"
+
+#import "CLWorkOverViewController.h"
+#import "CLWorkBeforeViewController.h"
+
+#import "GFFangqiViewController.h"
 
 
-@interface CLOrderDetailViewController ()
+@interface CLOrderDetailViewController () <HZPhotoBrowserDelegate>
 {
     
     UIScrollView *_scrollView;
@@ -27,6 +37,8 @@
 }
 
 @property (nonatomic ,strong) UILabel *distanceLabel;
+
+@property (nonatomic, strong) NSArray *photoArr;
 
 
 @end
@@ -36,16 +48,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-//     NSLog(@"orderNumber--%@--",self.orderNumber);
-    
     self.view.backgroundColor = [[UIColor alloc]initWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
-    
+
     _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height/3+64, self.view.frame.size.width, self.view.frame.size.height*2/3-64-40)];
     _scrollView.bounces = NO;
     [self.view addSubview:_scrollView];
-//    _scrollView.backgroundColor = [UIColor cyanColor];
-    
-    
     
     [self addMap];
     [self setNavigation];
@@ -80,7 +87,6 @@
     
     // 距离label
     _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, -10, self.view.frame.size.width, self.view.frame.size.height/18)];
-    //    distanceLabel.backgroundColor = [UIColor cyanColor];
     _distanceLabel.text = @"距离：  1.3km";
     _distanceLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [_scrollView addSubview:_distanceLabel];
@@ -90,229 +96,108 @@
     [_scrollView addSubview:lineView];
     
     // 订单图片
-    UIImageView *imageView = [[CLImageView alloc]initWithFrame:CGRectMake(10, lineView.frame.origin.y + 7, self.view.frame.size.width - 20, self.view.frame.size.height/4)];
-    //    imageView.backgroundColor = [UIColor darkGrayColor];
-//    imageView.image = [UIImage imageNamed:@"orderImage"];
-    [imageView sd_setImageWithURL:[NSURL URLWithString:_orderPhotoURL] placeholderImage:[UIImage imageNamed:@"orderImage"]];
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [_scrollView addSubview:imageView];
+    _photoArr = [_orderPhotoURL componentsSeparatedByString:@","];
+//    NSLog(@"照片地址数组：%ld：：：%@", _photoArr.count, _photoArr);
+    CGFloat butW = ([UIScreen mainScreen].bounds.size.width - 40) / 3.0;
+    CGFloat butH = butW;
+    CGFloat maxY = 0;
+    for(int i=0; i<_photoArr.count; i++) {
     
-    UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(0, imageView.frame.origin.y+self.view.frame.size.height/4+5, self.view.frame.size.width, 1)];
+        UIButton *but = [UIButton buttonWithType:UIButtonTypeCustom];
+        but.backgroundColor = [UIColor redColor];
+        but.frame = CGRectMake(10 + (butW + 10) * (i % 3), lineView.frame.origin.y + 7 + (butH + 10) * (i / 3), butW, butH);
+        [but sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.219.58:8000%@", _photoArr[i]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"orderImage"]];
+        but.clipsToBounds = YES;
+        but.tag = i + 1;
+        [_scrollView addSubview:but];
+        [but addTarget:self action:@selector(imgViewButClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        if(i == _photoArr.count - 1) {
+        
+            maxY = CGRectGetMaxY(but.frame);
+        }
+    }
+
+    
+    UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(0, maxY + 5, self.view.frame.size.width, 1)];
     lineView2.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [_scrollView addSubview:lineView2];
     
-    
-    
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    if ([[userDefaults objectForKey:@"userId"] integerValue] == [_mainTechId integerValue] || [_action isEqualToString:@"INVITATION_ACCEPTED"]||[_action isEqualToString:@"NEWLY_CREATED"]){
-        // 施工时间
-        [self setLineView:[NSString stringWithFormat:@"施工时间：%@",self.orderTime] maxY:lineView2.frame.origin.y];
-        
-        NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
-        [self setLineView:[NSString stringWithFormat:@"订单类型：%@",array[[self.orderType integerValue]-1]] maxY:lineView2.frame.origin.y+self.view.frame.size.height/18+1];
-        
-        [self setLineView:[NSString stringWithFormat:@"下单人员：%@",self.cooperatorName] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*2];
-        
-        [self setLineView:[NSString stringWithFormat:@"商户位置：%@",self.cooperatorAddress] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*3];
-    }else{
-        
-        UIView *timeLineView = [[UIView alloc]initWithFrame:CGRectMake(0, lineView2.frame.origin.y+self.view.frame.size.height/18, self.view.frame.size.width, 1)];
-        timeLineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
-        [_scrollView addSubview:timeLineView];
-        
-        
-        // 施工时间
-        [self setLineView:[NSString stringWithFormat:@"施工时间：%@",self.orderTime] maxY:lineView2.frame.origin.y+self.view.frame.size.height/18+1];
-        
-        NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
-        [self setLineView:[NSString stringWithFormat:@"订单类型：%@",array[[self.orderType integerValue]-1]] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*2];
-        
-        [self setLineView:[NSString stringWithFormat:@"下单人员：%@",self.cooperatorName] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*3];
-        
-        [self setLineView:[NSString stringWithFormat:@"商户位置：%@",self.cooperatorAddress] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*4];
-        
-        [_scrollView bringSubviewToFront:timeLineView];
-    }
-    
-    
-//    [self setLineView:[NSString stringWithFormat:@"商户名称：%@",@"英卡科技"] maxY:lineView2.frame.origin.y];
-    
-    
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView2.frame.origin.y+4+(self.view.frame.size.height/18+1)*4, self.view.frame.size.width, self.view.frame.size.height/18)];
-    //    timeLabel.backgroundColor = [UIColor cyanColor];
-    timeLabel.text = [NSString stringWithFormat:@"商户名称：%@",self.cooperatorFullname];
-    timeLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
-    [_scrollView addSubview:timeLabel];
-    
-    UIView *lineView3 = [[UIView alloc]initWithFrame:CGRectMake(0, timeLabel.frame.origin.y+self.view.frame.size.height/18, self.view.frame.size.width, 1)];
-    lineView3.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
-    [_scrollView addSubview:lineView3];
+    [self setLineView:[NSString stringWithFormat:@"订单类型：%@",self.orderType] maxY:lineView2.frame.origin.y];
+    [self setLineView:[NSString stringWithFormat:@"预约施工时间：%@",self.orderTime] maxY:lineView2.frame.origin.y+self.view.frame.size.height/18+1];
+    [self setLineView:[NSString stringWithFormat:@"最晚交车时间：%@",_model.agreedEndTime] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*2];
+    [self setLineView:[NSString stringWithFormat:@"下单人员：%@",_model.creatorName] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*3];
+    [self setLineView:[NSString stringWithFormat:@"下单时间：%@",_model.createTime] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*4];
+    [self setLineView:[NSString stringWithFormat:@"商户名称：%@",self.cooperatorName] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*5];
+    UILabel *lastLab = [self setLineView:[NSString stringWithFormat:@"商户位置：%@",self.cooperatorAddress] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*6];
 
     // 备注
     UILabel *otherLabel = [[UILabel alloc]init];
-    //    otherLabel.backgroundColor = [UIColor cyanColor];
     otherLabel.text = [NSString stringWithFormat:@"下单备注：%@",self.remark];
     otherLabel.numberOfLines = 0;
-    CGSize detailSize = [otherLabel.text sizeWithFont:[UIFont systemFontOfSize:17] constrainedToSize:CGSizeMake(self.view.frame.size.width-30, MAXFLOAT)];
-    otherLabel.frame = CGRectMake(10, CGRectGetMaxY(lineView3.frame)+4, self.view.frame.size.width-20, detailSize.height);
-    
+    CGRect detailSize = [otherLabel.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width-30, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17]} context:nil];
+    otherLabel.frame = CGRectMake(10, CGRectGetMaxY(lastLab.frame)+4, self.view.frame.size.width-20, detailSize.size.height);
     otherLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [_scrollView addSubview:otherLabel];
     
-    UIView *lineView4 = [[UIView alloc]initWithFrame:CGRectMake(0, otherLabel.frame.size.height + otherLabel.frame.origin.y, self.view.frame.size.width, 1)];
-    lineView4.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
-    lineView4.hidden = YES;
-    [_scrollView addSubview:lineView4];
-    
-    
-    UIView *lineView5 = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 41, self.view.frame.size.width, 1)];
-    lineView5.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
-    [self.view addSubview:lineView5];
-    
-    
-// 添加小伙伴
-    UIButton *addButton = [[UIButton alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-40 ,self.view.frame.size.width/2, 40)];
-    
-    [addButton setTitleColor:[[UIColor alloc]initWithRed:163/255.0 green:163/255.0 blue:163/255.0 alpha:1.0] forState:UIControlStateNormal];
-    
-    [self.view addSubview:addButton];
-    
-    
 // 开始工作
-    UIButton *workButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2, self.view.frame.size.height-40, self.view.frame.size.width/2, 40)];
+    UIButton *workButton = [[UIButton alloc]initWithFrame:CGRectMake(25, self.view.frame.size.height-60, self.view.frame.size.width - 50, 40)];
     [workButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     workButton.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
     [self.view addSubview:workButton];
+    [workButton addTarget:self action:@selector(workBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [workButton setTitle:@"开始工作" forState:UIControlStateNormal];
+    workButton.layer.cornerRadius = 7.5;
+// 进入订单
+    UIButton *jinruButton = [[UIButton alloc]initWithFrame:CGRectMake(25, self.view.frame.size.height-60, self.view.frame.size.width - 50, 40)];
+    [jinruButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    jinruButton.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+    [self.view addSubview:jinruButton];
+    [jinruButton addTarget:self action:@selector(jinruButClick) forControlEvents:UIControlEventTouchUpInside];
+    [jinruButton setTitle:@"进入订单" forState:UIControlStateNormal];
+    jinruButton.hidden = YES;
+    jinruButton.layer.cornerRadius = 7.5;
     
-    if ([_action isEqualToString:@"TAKEN_UP"] || [_action isEqualToString:@"INVITATION_REJECTED"]||[_action isEqualToString:@"NEWLY_CREATED"]){
-        [addButton setTitle:@"+合作人" forState:UIControlStateNormal];
-        [addButton addTarget:self action:@selector(addBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    if([_model.status isEqualToString:@"IN_PROGRESS"] || [_model.status isEqualToString:@"SIGNED_IN"] || [_model.status isEqualToString:@"AT_WORK"]) {
         
-        [workButton addTarget:self action:@selector(workBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        [workButton setTitle:@"开始工作" forState:UIControlStateNormal];
-
-    }else if ([_action isEqualToString:@"SEND_INVITATION"]){
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        UILabel *label3 = [[UILabel alloc]init];
-        lineView4.frame = CGRectMake(0, otherLabel.frame.origin.y + otherLabel.frame.size.height+3, self.view.frame.size.width, 1);
-        UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView4.frame.origin.y + 4, 85, 30)];
-        label1.text = @"合 作 人 ：";
-        [_scrollView addSubview:label1];
-        UILabel *label2 = [[UILabel alloc]init];
-        label2.text = _secondId;
-        CGSize nameSize = [_secondId sizeWithFont:[UIFont systemFontOfSize:17] constrainedToSize:CGSizeMake(MAXFLOAT, 30)];
-        label2.frame = CGRectMake(90, lineView4.frame.origin.y + 4, nameSize.width+10, 30);
-        label2.textAlignment = NSTextAlignmentCenter;
-        label2.textColor = [UIColor whiteColor];
-        label2.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-        label2.layer.cornerRadius = 10;
-        label2.clipsToBounds = YES;
-        [_scrollView addSubview:label2];
-        
-        
-        label3.frame = CGRectMake(self.view.frame.size.width-80, lineView4.frame.origin.y + 4, 70, 30);
-        label3.textAlignment = NSTextAlignmentLeft;
-        label3.textColor = [UIColor colorWithRed:152/255.0 green:152/255.0 blue:152/255.0 alpha:1.0];
-        [_scrollView addSubview:label3];
-        lineView4.hidden = NO;
-        
-        
-        
-        if ([[userDefaults objectForKey:@"userId"] integerValue] == [_mainTechId integerValue]) {
-            [addButton setTitle:@"+合作人" forState:UIControlStateNormal];
-            [addButton addTarget:self action:@selector(addBtnClick) forControlEvents:UIControlEventTouchUpInside];
-            
-            [workButton addTarget:self action:@selector(workBtnClick) forControlEvents:UIControlEventTouchUpInside];
-            [workButton setTitle:@"开始工作" forState:UIControlStateNormal];
-            label3.text = @"待确认";
-        }else{
-            
-            
-            label1.frame = CGRectMake(10, lineView2.frame.origin.y+4, 85, 30);
-            label1.text = @"主 技 师 ：";
-            label2.frame = CGRectMake(95, lineView2.frame.origin.y+9, 200, 20);
-            label2.backgroundColor = [UIColor whiteColor];
-            label2.textAlignment = NSTextAlignmentLeft;
-            label2.textColor = [UIColor blackColor];
-            timeLabel.frame = CGRectMake(10, lineView3.frame.origin.y+4, self.view.frame.size.width, self.view.frame.size.height/18);
-            lineView4.frame = CGRectMake(0, timeLabel.frame.size.height + timeLabel.frame.origin.y, self.view.frame.size.width, 1);
-            otherLabel.frame = CGRectMake(10, lineView4.frame.origin.y+4, self.view.frame.size.width-20, detailSize.height);
-            
-            [addButton addTarget:self action:@selector(orderDisagree) forControlEvents:UIControlEventTouchUpInside];
-            [addButton setTitle:@"拒绝" forState:UIControlStateNormal];
-            
-            [workButton addTarget:self action:@selector(orderAgree) forControlEvents:UIControlEventTouchUpInside];
-            [workButton setTitle:@"接受" forState:UIControlStateNormal];
-        
-        }
-        
-        
-    }else if ([_action isEqualToString:@"INVITATION_ACCEPTED"]){
-        UILabel *label3 = [[UILabel alloc]init];
-        addButton.hidden = YES;
-        lineView4.frame = CGRectMake(0, otherLabel.frame.origin.y + otherLabel.frame.size.height+3, self.view.frame.size.width, 1);
-        UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView4.frame.origin.y + 4, 85, 30)];
-        label1.text = @"合 作 人 ：";
-        [_scrollView addSubview:label1];
-        
-        if (_mainTechId) {
-            
-                UILabel *label2 = [[UILabel alloc]init];
-                label2.text = _secondId;
-            CGSize nameSize = [_secondId sizeWithFont:[UIFont systemFontOfSize:17] constrainedToSize:CGSizeMake(MAXFLOAT, 30)];
-            label2.frame = CGRectMake(90, lineView4.frame.origin.y + 4, nameSize.width+10, 30);
-                label2.textAlignment = NSTextAlignmentCenter;
-                label2.textColor = [UIColor whiteColor];
-                label2.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-                label2.layer.cornerRadius = 10;
-                label2.clipsToBounds = YES;
-                [_scrollView addSubview:label2];
-            label3.text = @"已接单";
-
-        }else{
-            UILabel *label2 = [[UILabel alloc]init];
-            label2.text = _secondId;
-            CGSize nameSize = [_secondId sizeWithFont:[UIFont systemFontOfSize:17] constrainedToSize:CGSizeMake(MAXFLOAT, 30)];
-            label2.frame = CGRectMake(90, lineView4.frame.origin.y + 4, nameSize.width+10, 30);
-            label2.textAlignment = NSTextAlignmentCenter;
-            label2.textColor = [UIColor whiteColor];
-            label2.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-            label2.layer.cornerRadius = 10;
-            label2.clipsToBounds = YES;
-            [_scrollView addSubview:label2];
-//            label3.text = @"已接单";
-            label3.hidden = YES;
-        }
-        
-        
-        
-        
-//        UILabel *label3 = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width-80, lineView4.frame.origin.y + 4, 70, 30)];
-        label3.frame = CGRectMake(self.view.frame.size.width-80, lineView4.frame.origin.y + 4, 70, 30);
-        
-        label3.textAlignment = NSTextAlignmentLeft;
-        label3.textColor = [UIColor colorWithRed:152/255.0 green:152/255.0 blue:152/255.0 alpha:1.0];
-        [_scrollView addSubview:label3];
-        
-        lineView4.hidden = NO;
-//        lineView4.frame = CGRectMake(0, label1.frame.origin.y + 39, self.view.frame.size.width, 1);
-        workButton.frame = CGRectMake(0, self.view.frame.size.height - 40, self.view.frame.size.width, 40);
-        
-        [workButton addTarget:self action:@selector(workBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        [workButton setTitle:@"开始工作" forState:UIControlStateNormal];
-        
-
-    }
-    if (lineView4.hidden) {
-        _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, lineView3.frame.origin.y+1+detailSize.height+self.view.frame.size.height/18);
-    }else{
-        _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, lineView3.frame.origin.y+1+detailSize.height+self.view.frame.size.height/18+15);
+        jinruButton.hidden = NO;
+        workButton.hidden = YES;
     }
     
+
+    _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(lastLab.frame)+1+detailSize.size.height+self.view.frame.size.height/18 + 20);
 }
 
+- (void)imgViewButClick:(UIButton *)sender {
+    
+//    NSLog(@"---tupiande de index %ld", sender.tag - 1);
+    
+    HZPhotoBrowser *browser = [[HZPhotoBrowser alloc] init];
+    
+    browser.sourceImagesContainerView = _scrollView;
+    
+    browser.imageCount = _photoArr.count;
+    
+    browser.currentImageIndex = sender.tag - 1;
+    
+    browser.delegate = self;
+    
+    [browser show]; // 展示图片浏览器
+}
+- (UIImage *)photoBrowser:(HZPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index {
+    
+    UIImage *img = [UIImage imageNamed:@"orderImage"];
+    
+    return img;
+}
+- (NSURL *)photoBrowser:(HZPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index {
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.219.58:8000%@", _photoArr[index]]];
+    
+    return url;
+}
 
-- (void)setLineView:(NSString *)title maxY:(float)maxY{
+- (UILabel *)setLineView:(NSString *)title maxY:(float)maxY{
     
 // 施工时间
     UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, maxY +4, self.view.frame.size.width, self.view.frame.size.height/18)];
@@ -321,13 +206,52 @@
     timeLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [_scrollView addSubview:timeLabel];
     
-    UIView *lineView3 = [[UIView alloc]initWithFrame:CGRectMake(0, timeLabel.frame.origin.y+self.view.frame.size.height/18, self.view.frame.size.width, 1)];
+    UIView *lineView3 = [[UIView alloc]initWithFrame:CGRectMake(0, timeLabel.frame.origin.y+self.view.frame.size.height/18 - 1, self.view.frame.size.width, 1)];
     lineView3.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [_scrollView addSubview:lineView3];
     
+    return timeLabel;
 }
 
 
+- (void)jinruButClick {
+    
+    
+    NSString *statusStr = _model.status;
+    
+    
+    if([statusStr isEqualToString:@"IN_PROGRESS"]) {
+        // 订单已进入施工环节 跳转到“签到页面”
+        CLSigninViewController *signinView = [[CLSigninViewController alloc]init];
+        signinView.customerLat = _model.customerLat;
+        signinView.customerLon = _model.customerLon;
+        signinView.orderId = _model.orderId;
+        signinView.orderType = _model.orderType;
+        signinView.startTime = _model.startTime;
+        signinView.orderNumber = _model.orderNumber;
+        signinView.model = _model;
+        [self.navigationController pushViewController:signinView animated:YES];
+    }else if([statusStr isEqualToString:@"SIGNED_IN"]) {
+        // 已经签到  跳转到“上传施工前照片页面”
+        CLWorkBeforeViewController *workBefore = [[CLWorkBeforeViewController alloc]init];
+        workBefore.orderId = _model.orderId;
+        workBefore.orderType = _model.orderType;
+        workBefore.startTime = _model.startTime;
+        workBefore.orderNumber = _model.orderNumber;
+        workBefore.model = _model;
+        [self.navigationController pushViewController:workBefore animated:YES];
+    }else if([statusStr isEqualToString:@"AT_WORK"]) {
+        // 签到后  跳转到“完成工作页面”
+        CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
+        workOver.startTime = _model.startTime;
+        //                        NSLog(@"---workOver---%@--",self.navigationController);
+        workOver.orderId = _model.orderId;
+        workOver.orderType = _model.orderType;
+        workOver.orderNumber = _model.orderNumber;
+        workOver.model = _model;
+        [self.navigationController pushViewController:workOver animated:YES];
+    }
+}
 
 #pragma mark - 添加合作小伙伴的响应方法
 - (void)addBtnClick{
@@ -342,31 +266,28 @@
    
     
     [GFHttpTool postOrderStart:@{@"orderId":_orderId} Success:^(NSDictionary *responseObject) {
+        
 //        NSLog(@"----responseObject--%@",responseObject);
-        if ([responseObject[@"result"]integerValue] == 1) {
+        if ([responseObject[@"status"]integerValue] == 1) {
             CLSigninViewController *signinView = [[CLSigninViewController alloc]init];
             signinView.customerLat = self.customerLat;
             signinView.customerLon = self.customerLon;
             signinView.orderId = self.orderId;
             signinView.orderType = self.orderType;
-            NSDictionary *dataDictionary = responseObject[@"data"];
-            signinView.startTime = dataDictionary[@"startTime"];
+//            NSDictionary *dataDictionary = responseObject[@"message"];
+            signinView.startTime = self.startTime;
             signinView.orderNumber = self.orderNumber;
-            
-//            UIWindow *window = [UIApplication sharedApplication].keyWindow;
-//            UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:signinView];
-//            navigation.navigationBarHidden = YES;
-//            window.rootViewController = navigation;
+            signinView.model = _model;
             
             [self.navigationController pushViewController:signinView animated:YES];
         }else{
-            if ([responseObject[@"error"] isEqualToString:@"INVITATION_NOT_FINISH"]) {
-                GFAlertView *alertView = [[GFAlertView alloc]initWithTitle:@"合作人暂无回应" leftBtn:@"继续等待" rightBtn:@"强制开始"];
-                [alertView.rightButton addTarget:self action:@selector(rightButtonClick) forControlEvents:UIControlEventTouchUpInside];
-                [self.view addSubview:alertView];
-            }else{
-                [self addAlertView:responseObject[@"message"]];
-            }
+//            if ([responseObject[@"error"] isEqualToString:@"INVITATION_NOT_FINISH"]) {
+//                GFAlertView *alertView = [[GFAlertView alloc]initWithTitle:@"合作人暂无回应" leftBtn:@"继续等待" rightBtn:@"强制开始"];
+//                [alertView.rightButton addTarget:self action:@selector(rightButtonClick) forControlEvents:UIControlEventTouchUpInside];
+//                [self.view addSubview:alertView];
+//            }else{
+//                [self addAlertView:responseObject[@"message"]];
+//            }
         }
         
     } failure:^(NSError *error) {
@@ -450,8 +371,18 @@
     
     GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
     
-    UIButton *removeOrderButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 60, 20, 40, 44)];
+    UIButton *removeOrderButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 60, 20, 40, 40)];
+    removeOrderButton.titleLabel.font = [UIFont systemFontOfSize:16];
+//    removeOrderButton.backgroundColor = [UIColor grayColor];
+//    removeOrderButton.layer.borderColor = [[UIColor whiteColor] CGColor];
+//    removeOrderButton.layer.borderWidth = 1;
+//    removeOrderButton.layer.cornerRadius = 20;
     [removeOrderButton setTitle:@"放弃" forState:UIControlStateNormal];
+    if([_model.status isEqualToString:@"IN_PROGRESS"] || [_model.status isEqualToString:@"SIGNED_IN"] || [_model.status isEqualToString:@"AT_WORK"]) {
+    
+        [removeOrderButton setTitle:@"改派" forState:UIControlStateNormal];
+    }
+    
     [removeOrderButton setTitleColor:[UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0] forState:UIControlStateHighlighted];
     [removeOrderButton addTarget:self action:@selector(removeOrderBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [navView addSubview:removeOrderButton];
@@ -473,10 +404,15 @@
 - (void)removeOrder{
 //    NSLog(@"确认放弃订单，订单ID为 －－%@--- ",_orderId);
     
+    GFFangqiViewController *vc = [[GFFangqiViewController alloc] init];
+    vc.model = _model;
+    [self.navigationController pushViewController:vc animated:YES];
     
-   [GFHttpTool postCancelOrder:_orderId Success:^(id responseObject) {
+    /*
+   [GFHttpTool postCancelOrder:_model.orderId Success:^(id responseObject) {
       
-       if ([responseObject[@"result"] integerValue] == 1) {
+       NSLog(@"--放弃订单--%@", responseObject);
+       if ([responseObject[@"status"] integerValue] == 1) {
            
            [GFTipView tipViewWithNormalHeightWithMessage:@"弃单成功" withShowTimw:1.5];
            [self performSelector:@selector(removeOrderSuccess) withObject:nil afterDelay:1.5];
@@ -491,7 +427,7 @@
 //       NSLog(@"放弃订单失败----%@---",error);
        
    }];
-    
+    */
     
 }
 

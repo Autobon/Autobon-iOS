@@ -55,7 +55,7 @@
             [listArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
                 CLNotificationModel *model = [[CLNotificationModel alloc]init];
                 model.titleString = obj[@"title"];
-                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[obj[@"publishTime"] floatValue]/1000];
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[obj[@"publishTime"] doubleValue]/1000];
                 model.timeString = [formatter stringFromDate:date];
 //                model.timeString = obj[@"publishTime"];
                 model.contentString = obj[@"content"];

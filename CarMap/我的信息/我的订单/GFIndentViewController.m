@@ -161,12 +161,12 @@
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     self.nothingView = [[GFNothingView alloc] initWithImageName:@"NoOrder" withTipString:@"暂无订单" withSubtipString:nil];
-//    UIWindow *window = [UIApplication sharedApplication].delegate.window;
+    UIWindow *window = [UIApplication sharedApplication].delegate.window;
     [self.view addSubview:self.nothingView];
-//    [self.tableview addSubview:self.nothingView];
+    [self.tableview addSubview:self.nothingView];
     
     self.tableview.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
-    self.tableview.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+    self.tableview.footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     
     [self.tableview.header beginRefreshing];
 //    [self.tableview.footer beginRefreshing];
@@ -219,11 +219,33 @@
     
 }
 
+- (void)httpWorkForOrder {
+    
+    
+    NSMutableDictionary *mDic= [[NSMutableDictionary alloc] init];
+    mDic[@"status"] = @"3";
+    
+    [GFHttpTool orderGetWithParameters:nil success:^(id responseObject) {
+        
+//        NSLog(@"====我的订单=====%@", responseObject);
+    } failure:^(NSError *error) {
+        
+        
+    }];
+    
+}
+
+//- (void)headRefresh {
+//    
+//    [self httpWorkForOrder];
+//}
+
+
 - (void)headRefresh {
+    
     
     self.modelArr = [[NSMutableArray alloc] init];
     _workItemArr = [[NSMutableArray alloc]init];
-    
     
 //    NSLog(@"脑袋刷新");
     self.tableview.userInteractionEnabled = NO;
@@ -240,8 +262,9 @@
         
         NSInteger flage = [responseObject[@"result"] integerValue];
         
+//        NSLog(@"==%ld===%@", NSIntegerMax, responseObject);
+        
         if(flage == 1) {
-            
             
             NSDictionary *dataDic = responseObject[@"data"];
             
@@ -277,12 +300,12 @@
                             listModel.workItems = constructDic[@"workItems"];
                         }
 
-                        
                         listModel.signinTime = constructDic[@"signinTime"];
                         listModel.payStatus = constructDic[@"payStatus"];
                         listModel.beforePhotos = constructDic[@"beforePhotos"];
                         listModel.afterPhotos = constructDic[@"afterPhotos"];
-                        NSInteger startTime = [constructDic[@"startTime"] integerValue];
+//                        NSInteger startTime = [constructDic[@"startTime"] integerValue];
+                        NSInteger startTime = 1478507848000;
                         NSInteger endTime;
                         NSInteger fenNum;
                         NSInteger shiNum;
@@ -304,8 +327,6 @@
                             listModel.workTime = [NSString stringWithFormat:@"%ld分", (long)fenNum];
                         }
                         
-                        
-
                     }else{
                         listModel.payment = @"0";
                         listModel.workTime = @"0分";
@@ -364,8 +385,6 @@
                             listModel.workTime = [NSString stringWithFormat:@"%ld分", fenNum];
                         }
                         
-
-                        
                     }else{
                         listModel.payment = @"0";
                         listModel.workTime = @"0分";
@@ -386,16 +405,11 @@
                     }
                     
                 }
-                
-                
-                
-                
-                
+
                 listModel.workerArr = _workNameArr;
                 
                 [self.modelArr addObject:listModel];
     
-                
                 // 施工部位
                 NSString *path = [[NSBundle mainBundle] pathForResource:@"WorkItemDic" ofType:@"plist"];
                 NSDictionary *itemDic = [NSDictionary dictionaryWithContentsOfFile:path];
@@ -692,7 +706,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     
-    return self.modelArr.count;
+//    return self.modelArr.count;
+    return 20;
     
 }
 
@@ -705,6 +720,7 @@
         cell = [[GFIndentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
     
+    /*
     if (self.modelArr.count > indexPath.row) {
         GFIndentModel *model = self.modelArr[indexPath.row];
         
@@ -757,7 +773,7 @@
         
 
     }
-    
+    */
     
 
 
@@ -769,7 +785,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
-    return kHeight * 0.464 + kHeight * 0.0183;
+//    return kHeight * 0.464  - kHeight * 0.2344 + kHeight * 0.0183;
+    return 105;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

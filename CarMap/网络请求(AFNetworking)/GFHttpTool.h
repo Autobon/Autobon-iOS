@@ -35,8 +35,12 @@
 // 订单列表
 + (void)indentGetWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
-
-
+// 我的订单
+// 二期
++ (void)orderGetWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+// 订单详情
+// 二期
++ (void)orderDDGetWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
 
 
@@ -97,5 +101,12 @@
 + (void)postCancelOrder:(NSString *)orderId Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
 
-
+// 订单详情（二期）
++ (void)oederDDGetWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+// 合伙人列表
+// 二期
++ (void)addPeoListGetWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+// 搜索合伙人
+// 二期
++ (void)searPeoGetWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 @end

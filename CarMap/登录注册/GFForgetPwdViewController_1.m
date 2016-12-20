@@ -12,6 +12,7 @@
 #import "GFForgetPwdViewController_2.h"
 #import "GFHttpTool.h"
 #import "GFAlertView.h"
+#import "GFSignInViewController.h"
 
 
 @interface GFForgetPwdViewController_1 () {
@@ -308,7 +309,7 @@
             
 //            NSLog(@"获取验证码成功======\n%@", responseObject);
             
-            NSInteger flage = [responseObject[@"result"] integerValue];
+            NSInteger flage = [responseObject[@"status"] integerValue];
             
             if(flage == 1) {
                 // 计时器
@@ -412,7 +413,7 @@
                                 
 //                                NSLog(@"找回密码成功++++++++++%@", responseObject);
                                 
-                                NSInteger flage = [responseObject[@"result"] integerValue];
+                                NSInteger flage = [responseObject[@"status"] integerValue];
                                 
                                 if(flage == 1) {
                                     [UIView animateWithDuration:2 animations:^{
@@ -421,6 +422,18 @@
                                         
                                         
                                     } completion:^(BOOL finished) {
+                                        
+                                        
+                                        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                                        [userDefaults setObject:self.userNameTxt.centerTxt.text forKey:@"userName"];
+                                        [userDefaults setObject:self.passWordTxt.centerTxt.text forKey:@"userPassword"];
+                                        
+                                        UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                                        UINavigationController *navVC = (UINavigationController *)window.rootViewController;
+                                        GFSignInViewController *vc = (GFSignInViewController *)navVC.childViewControllers[0];
+                                        vc.userNameTxt.centerTxt.text = self.userNameTxt.centerTxt.text;
+                                        vc.passWordTxt.centerTxt.text = self.passWordTxt.centerTxt.text;
+                                        
                                         
                                         [self.navigationController popViewControllerAnimated:YES];
                                         

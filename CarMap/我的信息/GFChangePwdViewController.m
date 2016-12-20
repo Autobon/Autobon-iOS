@@ -213,7 +213,7 @@
             
 //            NSLog(@"#####%@  \n####%@", responseObject[@"result"], responseObject[@"message"]);
             
-            NSInteger result = [responseObject[@"result"] integerValue];
+            NSInteger result = [responseObject[@"status"] integerValue];
             
             if(result == 1) {
             
@@ -222,6 +222,11 @@
                 } completion:^(BOOL finished) {
                     [self.tipView removeFromSuperview];
                     [self.navigationController popViewControllerAnimated:YES];
+                    
+                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//                    [userDefaults setObject:self.userNameTxt.centerTxt.text forKey:@"userName"];
+                    [userDefaults setObject:self.passwordTxt.centerTxt.text forKey:@"userPassword"];
+                    
                 }];
             }else {
                 
@@ -231,7 +236,7 @@
 
             
         } failure:^(NSError *error) {
-//            NSLog(@"修改密码提交失败");
+//            NSLog(@"修改密码提交失败---%@", error);
 //            [self tipShow:@"修改密码失败"];
         }];
     

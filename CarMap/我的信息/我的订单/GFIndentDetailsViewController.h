@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class GFIndentViewController;
-@class GFIndentModel;
+@class GFNewOrderModel;
 //@class MYImageView;
 
 @interface GFIndentDetailsViewController : UIViewController
@@ -39,7 +39,7 @@
 @property (nonatomic, strong) UIButton *haoBut;
 
 @property (nonatomic, strong) GFIndentViewController *indentVC;
-@property (nonatomic, strong) GFIndentModel *model;
+@property (nonatomic, strong) GFNewOrderModel *model;
 @property (nonatomic, strong) NSString *workItems;
 
 

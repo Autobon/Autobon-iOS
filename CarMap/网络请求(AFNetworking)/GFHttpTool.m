@@ -13,17 +13,32 @@
 #import "GFAlertView.h"
 
 
-NSString *const prefixURL = @"";
+
+NSString *const prefixURL = @"http://121.40.219.58:8000/api/mobile";
+
+NSString* const HOST = @"http://121.40.219.58:8000/api/mobile";
+NSString* const PUBHOST = @"http://121.40.219.58:8000/api";
 
 
 
-<<<<<<< HEAD
-//NSString* const HOST = @"http://10.0.12.221:12345/api/mobile";
-//NSString* const PUBHOST = @"http://121.40.157.200:12345/api";
-=======
-NSString* const HOST = @"http://121.40.219.58/api/mobile";
-NSString* const PUBHOST = @"http://121.40.219.58/api";
->>>>>>> 6759271502736c0f76a3fa10c930ae17aeca102a
+//NSString *const prefixURL = @"http://dev.incardata.com.cn:12345/api/mobile";
+//
+//NSString* const HOST = @"http://dev.incardata.com.cn:12345/api/mobile";
+//NSString* const PUBHOST = @"http://dev.incardata.com.cn:12345/api";
+
+
+
+//NSString *const prefixURL = @"http://10.0.12.225：12345/api/mobile";
+//
+//
+//
+//
+//NSString* const HOST = @"http:/10.0.12.225:12345/api/mobile";
+//NSString* const PUBHOST = @"http://10.0.12.225:12345/api";
+
+
+//NSString* const HOST = @"http://121.40.219.58/api/mobile";
+//NSString* const PUBHOST = @"http://121.40.219.58/api";
 
 //NSString* const HOST = @"http://hpecar.com:8012/api/mobile";
 //NSString* const PUBHOST = @"http://hpecar.com:8012/api";
@@ -106,6 +121,7 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
 //++++++++++++++++++++++++++++++++++  陈光法网络请求  ++++++++++++++++++++++++++++++++++++++++
 //------------------------------------------------------------------------------------------
 // 登录
+// 二期
 + (void)signInWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
 
     if ([GFHttpTool isConnectionAvailable]) {
@@ -114,9 +130,7 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
         GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"正在登陆..."];
         
         // 拼接地址
-        NSString *url = [NSString stringWithFormat:@"%@/technician/login", HOST];
-        
-        
+        NSString *url = [NSString stringWithFormat:@"%@/technician/v2/login", HOST];
         
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         //        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -130,19 +144,25 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
                 [aView removeFromSuperview];
                 
                 success(responseObject);
+                
+//                NSLog(@"===%@", responseObject);
+                
+                if([responseObject[@"status"] integerValue] == 1) {
+                
+                    // 更新个推ID
+                    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+                    AFHTTPSessionManager *manager2 = [AFHTTPSessionManager manager];
+                    NSString *token = [userDefaultes objectForKey:@"autoken"];
+                    [manager2.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+                    NSString *URLString = [NSString stringWithFormat:@"%@/technician/v2/pushId",HOST];
+                    NSString *pushId = [userDefaultes objectForKey:@"clientId"];
+                    [manager2 POST:URLString parameters:@{@"pushId":pushId} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+//                        NSLog(@"个推ID更新成功－－%@",responseObject);
+                    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+//                        NSLog(@"---更新失败了－－%@",error);
+                    }];
+                }
             }
-            
-            NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
-            AFHTTPSessionManager *manager2 = [AFHTTPSessionManager manager];
-            NSString *token = [userDefaultes objectForKey:@"autoken"];
-            [manager2.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-            NSString *URLString = [NSString stringWithFormat:@"%@/technician/pushId",HOST];
-            NSString *pushId = [userDefaultes objectForKey:@"clientId"];
-            [manager2 POST:URLString parameters:@{@"pushId":pushId} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
-                //                NSLog(@"个推ID更新成功－－%@",responseObject);
-            } failure:^(NSURLSessionDataTask *task, NSError *error) {
-                //                NSLog(@"---更新失败了－－%@",error);
-            }];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
             [aView removeFromSuperview];
@@ -172,6 +192,7 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
     }
 }
 // 获取验证码
+// 二期
 + (void)codeGetWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
 
     if ([GFHttpTool isConnectionAvailable]) {
@@ -181,9 +202,9 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
         manager.requestSerializer.timeoutInterval = 30.0;
         [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
         // 拼接地址
-        NSString *url = [NSString stringWithFormat:@"%@/pub/verifySms", PUBHOST];
+        NSString *url = [NSString stringWithFormat:@"%@/pub/v2/verifySms", PUBHOST];
         
-        [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             [aView removeFromSuperview];
             if(success) {
                 success(responseObject);
@@ -208,6 +229,7 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
     }
 }
 // 注册
+// 二期
 + (void)verifyPostWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
     if ([GFHttpTool isConnectionAvailable]) {
         
@@ -220,7 +242,7 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
         manager.requestSerializer.timeoutInterval = 30.0;
         [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
         // 拼接地址
-        NSString *url = [NSString stringWithFormat:@"%@/technician/register", HOST];
+        NSString *url = [NSString stringWithFormat:@"%@/technician/v2/register", HOST];
         
         [manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
@@ -257,6 +279,7 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
     }
 }
 // 忘记秘密
+// 二期
 + (void)forgetPwdPostWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
 
     if ([GFHttpTool isConnectionAvailable]) {
@@ -269,10 +292,9 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
         manager.requestSerializer.timeoutInterval = 30.0;
         [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
         // 拼接地址
-        NSString *url = [NSString stringWithFormat:@"%@/technician/resetPassword", HOST];
+        NSString *url = [NSString stringWithFormat:@"%@/technician/v2/resetPassword?phone=%@&password=%@&verifySms=%@", HOST, parameters[@"phone"], parameters[@"password"], parameters[@"verifySms"]];
         
-        [manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            
+        [manager PUT:url parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
             if(success) {
                 
@@ -296,15 +318,13 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
                 failure(error);
             }
         }];
-        
-        
-        
     }else{
         
         [GFHttpTool addAlertView:@"无网络连接"];
     }
 }
 // 更改密码
+// 二期
 + (void)changePwdPostWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
 
     if ([GFHttpTool isConnectionAvailable]) {
@@ -316,9 +336,13 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
         manager.requestSerializer.timeoutInterval = 30.0;
         [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
         // 拼接地址
-        NSString *url = [NSString stringWithFormat:@"%@/technician/changePassword", HOST];
+        NSString *url = [NSString stringWithFormat:@"%@/technician/v2/changePassword?oldPassword=%@&newPassword=%@", HOST, parameters[@"oldPassword"], parameters[@"newPassword"]];
         
-        [manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"autoken"];
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        
+//        NSLog(@"修改密码的请求地址：%@", url);
+        [manager PUT:url parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
             if(success) {
                 
@@ -342,14 +366,13 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
             }
         }];
         
-        
-        
     }else{
         
         [GFHttpTool addAlertView:@"无网络连接"];
     }
 }
 // 个人信息
+// 二期
 + (void)messageGetWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
 
     if ([GFHttpTool isConnectionAvailable]) {
@@ -360,8 +383,13 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
         [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
         manager.requestSerializer.timeoutInterval = 30.0;
         [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+        
+        NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"autoken"];
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        
         // 拼接地址
-        NSString *url = [NSString stringWithFormat:@"%@/technician", HOST];
+        //        NSString *url = [NSString stringWithFormat:@"%@/technician", HOST];
+        NSString *url = [NSString stringWithFormat:@"%@/technician/v2/me", HOST];
         
         [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if(success) {
@@ -407,13 +435,22 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"autoken"];
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        
         [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
         manager.requestSerializer.timeoutInterval = 30.0;
         [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
-        // 拼接地址
-        NSString *url = [NSString stringWithFormat:@"%@/technician/changeBankCard", HOST];
         
-        [manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//        NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"autoken"];
+//        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        
+        // 拼接地址
+        NSString *url = [NSString stringWithFormat:@"%@/technician/v2/changeBankCard?bank=%@&bankAddress=%@&bankCardNo=%@", HOST, parameters[@"bank"], parameters[@"bankAddress"], parameters[@"bankCardNo"]];
+//        NSLog(@"====%@", url);
+        
+        url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
+        [manager PUT:url parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
             if(success) {
                 
                 [aView removeFromSuperview];
@@ -422,6 +459,7 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
             // 判断请求超时
             NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
             if([errorStr isEqualToString:@"The request timed out."]) {
@@ -437,14 +475,13 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
             }
         }];
         
-        
-        
     }else{
         
         [GFHttpTool addAlertView:@"无网络连接"];
     }
 }
 // 账单
+// 二期
 + (void)billGetWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
 
     if ([GFHttpTool isConnectionAvailable]) {
@@ -464,6 +501,7 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
         manager.requestSerializer.timeoutInterval = 30.0;
         [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
         
+//        NSLog(@"--账单列表字典--%@", parameters);
         [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if(success) {
                 
@@ -499,8 +537,8 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
     
     
 }
-
 // 账单详情
+// 二期
 + (void)billDetailsGetWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
 
     if ([GFHttpTool isConnectionAvailable]) {
@@ -512,9 +550,15 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
         [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
         manager.requestSerializer.timeoutInterval = 30.0;
         [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
-        // 拼接地址
-        NSString *url = [NSString stringWithFormat:@"%@/technician/bill/%@/order", HOST, parameters[@"billd"]];
         
+//        NSLog(@"-parameters[@\"billd\"]---%@", parameters[@"billd"]);
+        NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"autoken"];
+        //        NSLog(@"----token---%@--",token);
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        
+        // 拼接地址
+        NSString *url = [NSString stringWithFormat:@"%@/technician/bill/v2/%@/order", HOST, parameters[@"billd"]];
+//        NSLog(@"-parameters[@\"billd\"]---%@---%@", parameters[@"billd"], url);
         [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if(success) {
                 //                [aView removeFromSuperview];
@@ -595,12 +639,90 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
     }
 }
 
+// 我的订单
+// 二期
++ (void)orderGetWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
+    
+    if ([GFHttpTool isConnectionAvailable]) {
+        
+        NSString *suffixURL = parameters[@"url"];
+        NSString *url = [NSString stringWithFormat:@"%@%@", prefixURL, suffixURL];
+        
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        
+        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+        manager.requestSerializer.timeoutInterval = 30.0;
+        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+        
+        // 清除NULL
+        AFJSONResponseSerializer *response = (AFJSONResponseSerializer *)manager.responseSerializer;
+        response.removesKeysWithNullValues = YES;
+        
+        [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            if(success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            if(failure) {
+                
+                // 判断请求超时
+                NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+                if([errorStr isEqualToString:@"The request timed out."]) {
+                    [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+                }else {
+                    [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+                }
+                failure(error);
+            }
+        }];
+        
+    }else {
+        
+        [GFHttpTool addAlertView:@"网络无链接，请检查网络"];
+    }
+}
+// 订单详情
+// 二期
++ (void)orderDDGetWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
 
+    if ([GFHttpTool isConnectionAvailable]) {
+        
+        NSString *suffixURL = @"/technician/v2/order/";
+        NSString *url = [NSString stringWithFormat:@"%@%@%@", prefixURL, suffixURL, parameters[@"id"]];
+        
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+        manager.requestSerializer.timeoutInterval = 30.0;
+        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+        [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            if(success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            if(failure) {
+                
+                // 判断请求超时
+                NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+                if([errorStr isEqualToString:@"The request timed out."]) {
+                    [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+                }else {
+                    [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+                }
+                failure(error);
+            }
+        }];
+        
+    }else {
+        
+        [GFHttpTool addAlertView:@"网络无链接，请检查网络"];
+    }
+}
 
 //------------------------------------------------------------------------------------------
 //++++++++++++++++++++++++++++++++++  李孟龙网络请求  ++++++++++++++++++++++++++++++++++++++++
 //------------------------------------------------------------------------------------------
 #pragma mark - 上传认证信息
+// 二期
 + (void)certifyPostParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
     
     
@@ -614,12 +736,14 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
         
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        //申明请求的数据是json类型
+        manager.requestSerializer = [AFJSONRequestSerializer serializer];
         [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
         manager.requestSerializer.timeoutInterval = 30.0;
         [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
         NSString *token = [userDefaultes objectForKey:@"autoken"];
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-        NSString *URLString = [NSString stringWithFormat:@"%@/technician/certificate",HOST];
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/v2/certificate",HOST];
         [manager POST:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * task, NSDictionary *responseObject) {
             if(success) {
                 [aView removeFromSuperview];
@@ -654,9 +778,8 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
     
     
 }
-
-
 // 上传头像
+// 二期
 + (void)headImage:(NSData *)image success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
     
     
@@ -679,7 +802,7 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         
         
-        NSString *URLString = [NSString stringWithFormat:@"%@/technician/avatar",HOST];
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/v2/avatar",HOST];
         
         
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -756,8 +879,8 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
     
     
 }
-
 #pragma mark - 上传证件照
+// 二期
 + (void)idPhotoImage:(NSData *)image success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
     
     
@@ -776,7 +899,7 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
         NSString *token = [userDefaultes objectForKey:@"autoken"];
         
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-        NSString *URLString = [NSString stringWithFormat:@"%@/technician/idPhoto",HOST];
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/v2/idPhoto",HOST];
         
         
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -813,111 +936,8 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
     
     
 }
-
-
-
-
-+ (void)getOrderListDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
-    
-    
-    
-    
-    if ([GFHttpTool isConnectionAvailable]) {
-        
-        
-        
-        
-        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
-        manager.requestSerializer.timeoutInterval = 30.0;
-        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
-        NSString *token = [userDefaultes objectForKey:@"autoken"];
-        
-        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-        NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/listUnfinished",HOST];
-
-        [manager GET:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
-            //            NSLog(@"请求成功了－11－－");
-            if (success) {
-                success(responseObject);
-            }
-            
-        } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            //            NSLog(@"请求失败了－－－");
-            // 判断请求超时
-            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
-            if([errorStr isEqualToString:@"The request timed out."]) {
-                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
-            }else {
-                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
-            }
-            if (failure) {
-                failure(error);
-            }
-        }];
-        
-        
-        
-        
-    }else{
-        
-        [GFHttpTool addAlertView:@"无网络连接"];
-    }
-    
-}
-
-
-+ (void)signinParameters:(NSDictionary *)parameters Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
-    
-    
-    
-    
-    if ([GFHttpTool isConnectionAvailable]) {
-        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
-        
-        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
-        manager.requestSerializer.timeoutInterval = 30.0;
-        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
-        NSString *token = [userDefaultes objectForKey:@"autoken"];
-        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-        NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/signIn",HOST];
-        
-        [manager POST:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * task, NSDictionary *responseObject) {
-            [aView removeFromSuperview];
-            if (success) {
-                success(responseObject);
-            }
-        } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            [aView removeFromSuperview];
-            // 判断请求超时
-            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
-            if([errorStr isEqualToString:@"The request timed out."]) {
-                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
-            }else {
-                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
-            }
-            if (failure) {
-                failure(error);
-            }
-        }];
-        
-        
-        
-        
-    }else{
-        
-        [GFHttpTool addAlertView:@"无网络连接"];
-    }
-    
-    
-    
-    
-}
-
 #pragma mark - 获取认证信息
+// 二期
 + (void)getCertificateSuccess:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
     
     
@@ -929,13 +949,22 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
         
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        
         [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
         manager.requestSerializer.timeoutInterval = 30.0;
         [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+        
         NSString *token = [userDefaultes objectForKey:@"autoken"];
         //        NSLog(@"token--%@--",token);
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-        NSString *URLString = [NSString stringWithFormat:@"%@/technician",HOST];
+        
+        // 清除NULL
+        AFJSONResponseSerializer *response = (AFJSONResponseSerializer *)manager.responseSerializer;
+        response.removesKeysWithNullValues = YES;
+        
+        
+//        NSString *URLString = [NSString stringWithFormat:@"%@/technician",HOST];
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/v2/me", HOST];
         
         
         [manager GET:URLString parameters:nil progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
@@ -973,6 +1002,509 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
     
 }
 
+
+// 获取主页未完成订单列表
+// 二期
++ (void)getOrderListDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    
+    
+    
+    if ([GFHttpTool isConnectionAvailable]) {
+        
+        
+        
+        
+        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+        manager.requestSerializer.timeoutInterval = 30.0;
+        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+        NSString *token = [userDefaultes objectForKey:@"autoken"];
+        
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/v2/order",HOST];
+
+        [manager GET:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            //            NSLog(@"请求成功了－11－－");
+            if (success) {
+                success(responseObject);
+            }
+            
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            //            NSLog(@"请求失败了－－－");
+            // 判断请求超时
+            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+            if([errorStr isEqualToString:@"The request timed out."]) {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+            }else {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+            }
+            if (failure) {
+                failure(error);
+            }
+        }];
+        
+        
+        
+        
+    }else{
+        
+        [GFHttpTool addAlertView:@"无网络连接"];
+    }
+    
+}
+
+
+#pragma mark - 抢单
+// 二期
++ (void)postOrderId:(NSInteger )orderId Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    if ([GFHttpTool isConnectionAvailable]) {
+        
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
+        
+        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+        manager.requestSerializer.timeoutInterval = 30.0;
+        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+        NSString *token = [userDefaultes objectForKey:@"autoken"];
+//                NSLog(@"token--%@--",token);
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/v2/order/take",HOST];
+        
+        
+        [manager POST:URLString parameters:@{@"orderId":@(orderId)} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            [aView removeFromSuperview];
+            if(success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            // 判断请求超时
+            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+            if([errorStr isEqualToString:@"The request timed out."]) {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+            }else {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+            }
+            [aView removeFromSuperview];
+            if(failure) {
+                failure(error);
+            }
+        }];
+        
+        
+        
+    }else{
+        
+        [GFHttpTool addAlertView:@"无网络连接"];
+    }
+    
+    
+    
+    
+    
+    
+    
+}
+//#pragma mark - 开始工作＊＊＊
+// 二期
++ (void)workstartPostWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
+    
+    if ([GFHttpTool isConnectionAvailable]) {
+        
+        NSString *suffixURL = @"/api/mobile/technician/construct/v2/start";
+        NSString *url = [NSString stringWithFormat:@"%@%@", HOST, suffixURL];
+        
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        
+        [manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            if(success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            if(failure) {
+                
+                // 判断请求超时
+                NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+                if([errorStr isEqualToString:@"The request timed out."]) {
+                    [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+                }else {
+                    [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+                }
+                
+                failure(error);
+            }
+        }];
+        
+    }else {
+        
+        [GFHttpTool addAlertView:@"网络无链接，请检查网络"];
+    }
+    
+}
+#pragma mark - 订单的详情
+// 二期
++ (void)oederDDGetWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
+    
+    if ([GFHttpTool isConnectionAvailable]) {
+        
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
+        
+        NSString *suffixURL = @"/technician/v2/order/";
+        NSString *url = [NSString stringWithFormat:@"%@%@%@", prefixURL, suffixURL,parameters[@"orderId"]];
+//        NSLog(@"--请求的地址---%@", url);
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+        manager.requestSerializer.timeoutInterval = 30.0;
+        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+        
+        NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"autoken"];
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        
+        // 清除NULL
+        AFJSONResponseSerializer *response = (AFJSONResponseSerializer *)manager.responseSerializer;
+        response.removesKeysWithNullValues = YES;
+        
+//        NSLog(@"---%@", url);
+        [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            [aView removeFromSuperview];
+            if(success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            [aView removeFromSuperview];
+            if(failure) {
+                
+                // 判断请求超时
+                NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+                if([errorStr isEqualToString:@"The request timed out."]) {
+                    [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+                }else {
+                    [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+                }
+                failure(error);
+            }
+        }];
+        
+    }else {
+//        [aView removeFromSuperview];
+        [GFHttpTool addAlertView:@"网络无链接，请检查网络"];
+    }
+}
+#pragma mark - 工作开始
+// 二期
++ (void)postOrderStart:(NSDictionary *)orderId Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    
+    
+    if ([GFHttpTool isConnectionAvailable]) {
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
+        
+        
+        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+        manager.requestSerializer.timeoutInterval = 30.0;
+        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+        NSString *token = [userDefaultes objectForKey:@"autoken"];
+        //        NSLog(@"token--%@--",token);
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+//        NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/start",HOST];
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/v2/start",HOST];
+        
+        
+        [manager POST:URLString parameters:orderId progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            [aView removeFromSuperview];
+            if(success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            [aView removeFromSuperview];
+            // 判断请求超时
+            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+            if([errorStr isEqualToString:@"The request timed out."]) {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+            }else {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+            }
+            if(failure) {
+                failure(error);
+            }
+        }];
+        
+        
+    }else{
+        
+        [GFHttpTool addAlertView:@"无网络连接"];
+    }
+    
+    
+    
+    
+    
+}
+#pragma mark - 签到接口
+// 二期
++ (void)signinParameters:(NSDictionary *)parameters Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    if ([GFHttpTool isConnectionAvailable]) {
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
+        
+        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+        manager.requestSerializer.timeoutInterval = 30.0;
+        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+        NSString *token = [userDefaultes objectForKey:@"autoken"];
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/v2/signIn",HOST];
+        
+        [manager POST:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * task, NSDictionary *responseObject) {
+            [aView removeFromSuperview];
+            if (success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            [aView removeFromSuperview];
+            // 判断请求超时
+            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+            if([errorStr isEqualToString:@"The request timed out."]) {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+            }else {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+            }
+            if (failure) {
+                failure(error);
+            }
+        }];
+        
+        
+        
+        
+    }else{
+        
+        [GFHttpTool addAlertView:@"无网络连接"];
+    }
+    
+    
+    
+    
+}
+#pragma mark - 提交工作前照片
+// 二期
++ (void)PostPhotoForBeforeOrderId:(NSInteger )orderId URLs:(NSString *)URLs success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    
+    
+    
+    if ([GFHttpTool isConnectionAvailable]) {
+        
+        
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"上传中..."];
+        
+        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+        manager.requestSerializer.timeoutInterval = 30.0;
+        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+        NSString *token = [userDefaultes objectForKey:@"autoken"];
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+//        NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/beforePhoto",HOST];
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/v2/beforePhoto",HOST];
+        [manager POST:URLString parameters:@{@"orderId":@(orderId),@"urls":URLs} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            //            NSLog(@"-----%@－－－－",responseObject[@"message"]);
+            if(success) {
+                
+                [aView removeFromSuperview];
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            //            NSLog(@"－－－－%@----",error);
+            // 判断请求超时
+            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+            if([errorStr isEqualToString:@"The request timed out."]) {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+            }else {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+            }
+            if(failure) {
+                
+                [aView removeFromSuperview];
+                failure(error);
+            }
+        }];
+        
+        
+        
+    }else{
+        
+        [GFHttpTool addAlertView:@"无网络连接"];
+    }
+    
+    
+    
+    
+    
+}
+#pragma mark - 上传所有施工照片
+// 二期
++ (void)PostImageForWork:(NSData *)image success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    
+    
+    
+    if ([GFHttpTool isConnectionAvailable]) {
+        
+        
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"上传中..."];
+        
+        
+        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        
+        
+        
+        NSString *token = [userDefaultes objectForKey:@"autoken"];
+        
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+//        NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/uploadPhoto",HOST];
+        
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/v2/uploadPhoto",HOST];
+
+        
+        
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+        
+        [manager POST:URLString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            [formData appendPartWithFileData:image name:@"file" fileName:@"1235.jpg" mimeType:@"JPEG"];
+            
+        } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSData *responseObject) {
+            
+            NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+            if(success) {
+                
+                [aView removeFromSuperview];
+                success(dictionary);
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            [aView removeFromSuperview];
+            if(failure) {
+                
+                
+                failure(error);
+            }
+        }];
+        
+        
+        
+        
+    }else{
+        
+        [GFHttpTool addAlertView:@"无网络连接"];
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+}
+#pragma mark - 施工完成的请求接口
+// 二期
++ (void)PostOverDictionary:(NSDictionary *)dictionary success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    if ([GFHttpTool isConnectionAvailable]) {
+        
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"提交中..."];
+        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+        manager.requestSerializer.timeoutInterval = 30.0;
+        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+        NSString *token = [userDefaultes objectForKey:@"autoken"];
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        // 请求
+        manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        
+//        NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/finish",HOST];
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/v2/order/finish",HOST];
+        
+//        NSString *URLString = [NSString stringWithFormat:@"http://10.0.12.225/technician/v2/order/finish"];
+        
+        // 返回
+//        manager.responseSerializer = [AFJSONResponseSerializer serializer];
+//        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+        
+        [manager PUT:URLString parameters:dictionary success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable responseObject) {
+            
+            NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage]; // 获得响应头
+//            NSLog(@"####################################\n---%@--",[cookieJar cookies]); // 获取响应头的数组
+            
+            [aView removeFromSuperview];
+            if(success) {
+                success(responseObject);
+            }
+        
+
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+            NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage]; // 获得响应头
+//            NSLog(@"####################################\n---%@--",[cookieJar cookies]); // 获取响应头的数组
+            
+//            NSLog(@"^^^^^++++^^^^^%@", task);
+            
+            // 判断请求超时
+            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+            if([errorStr isEqualToString:@"The request timed out."]) {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+            }else {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+            }
+            [aView removeFromSuperview];
+            if(failure) {
+                failure(error);
+            }
+        }];
+        
+        /*
+        [manager POST:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            [aView removeFromSuperview];
+            if(success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            // 判断请求超时
+            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+            if([errorStr isEqualToString:@"The request timed out."]) {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+            }else {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+            }
+            [aView removeFromSuperview];
+            if(failure) {
+                failure(error);
+            }
+        }];
+    */
+    
+    }else{
+        
+        [GFHttpTool addAlertView:@"无网络连接"];
+    }
+    
+
+    
+
+    
+    
+    
+}
 
 
 
@@ -1027,7 +1559,6 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
     }
     
 }
-
 #pragma mark - 添加小伙伴
 + (void)postAddPerson:(NSDictionary *)orderDic Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
     
@@ -1049,7 +1580,7 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/%@/invite/%@",HOST,orderDic[@"orderId"],orderDic[@"partnerId"]];
         
-        NSLog(@"URLString-----%@--",URLString);
+//        NSLog(@"URLString-----%@--",URLString);
         [manager POST:URLString parameters:orderDic progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
             if(success) {
                 
@@ -1084,294 +1615,13 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
     
 }
 
-#pragma mark - 抢单
-+ (void)postOrderId:(NSInteger )orderId Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
-    
-    
-    
-    
-    if ([GFHttpTool isConnectionAvailable]) {
-        
-        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
-        
-        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
-        manager.requestSerializer.timeoutInterval = 30.0;
-        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
-        NSString *token = [userDefaultes objectForKey:@"autoken"];
-        //        NSLog(@"token--%@--",token);
-        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-        NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/takeup",HOST];
-        
-        
-        [manager POST:URLString parameters:@{@"orderId":@(orderId)} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
-            [aView removeFromSuperview];
-            if(success) {
-                success(responseObject);
-            }
-        } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            // 判断请求超时
-            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
-            if([errorStr isEqualToString:@"The request timed out."]) {
-                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
-            }else {
-                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
-            }
-            [aView removeFromSuperview];
-            if(failure) {
-                failure(error);
-            }
-        }];
-        
-        
-        
-    }else{
-        
-        [GFHttpTool addAlertView:@"无网络连接"];
-    }
-    
-    
-    
-    
-    
-    
-    
-}
-
-#pragma mark - 工作开始
-+ (void)postOrderStart:(NSDictionary *)orderId Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
-    
-    
-    
-    if ([GFHttpTool isConnectionAvailable]) {
-        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
-        
-        
-        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
-        manager.requestSerializer.timeoutInterval = 30.0;
-        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
-        NSString *token = [userDefaultes objectForKey:@"autoken"];
-        //        NSLog(@"token--%@--",token);
-        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-        NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/start",HOST];
-        
-        
-        [manager POST:URLString parameters:orderId progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
-            [aView removeFromSuperview];
-            if(success) {
-                success(responseObject);
-            }
-        } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            [aView removeFromSuperview];
-            // 判断请求超时
-            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
-            if([errorStr isEqualToString:@"The request timed out."]) {
-                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
-            }else {
-                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
-            }
-            if(failure) {
-                failure(error);
-            }
-        }];
-        
-        
-    }else{
-        
-        [GFHttpTool addAlertView:@"无网络连接"];
-    }
-    
-    
-    
-    
-    
-}
-
-
-#pragma mark - 上传工作前照片
-+ (void)PostImageWorkBefore:(NSData *)image orderId:(NSInteger )orderId imageNumber:(NSInteger)imageNumber success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
-    
-    
-    
-    
-    if ([GFHttpTool isConnectionAvailable]) {
-        
-        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"正在上传..."];
-        
-        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        NSString *token = [userDefaultes objectForKey:@"autoken"];
-        
-        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-        NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/uploadPhoto",HOST];
-        
-        
-        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-        
-        
-        [manager POST:URLString parameters:@{@"no":@(imageNumber),@"orderId":@(orderId),@"isBefore":@"true"} constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-            [formData appendPartWithFileData:image name:@"file" fileName:@"1235.jpg" mimeType:@"JPEG"];
-            
-        } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSData *responseObject) {
-            
-            NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-            if(success) {
-                
-                [aView removeFromSuperview];
-                success(dictionary);
-            }
-        } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            if(failure) {
-                [aView removeFromSuperview];
-                failure(error);
-            }
-        }];
-        
-        
-        
-    }else{
-        
-        [GFHttpTool addAlertView:@"无网络连接"];
-    }
-    
-    
-    
-    
-    
-    
-    
-}
-
-+ (void)PostImageForWork:(NSData *)image success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
-    
-    
-    
-    
-    if ([GFHttpTool isConnectionAvailable]) {
-        
-        
-        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"上传中..."];
-        
-        
-        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        
-        
-        
-        NSString *token = [userDefaultes objectForKey:@"autoken"];
-        
-        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-        NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/uploadPhoto",HOST];
-        
-        
-        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-        
-        
-        [manager POST:URLString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-            [formData appendPartWithFileData:image name:@"file" fileName:@"1235.jpg" mimeType:@"JPEG"];
-            
-        } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSData *responseObject) {
-            
-            NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-            if(success) {
-                
-                [aView removeFromSuperview];
-                success(dictionary);
-            }
-        } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            [aView removeFromSuperview];
-            if(failure) {
-                
-                
-                failure(error);
-            }
-        }];
-        
-        
-        
-        
-    }else{
-        
-        [GFHttpTool addAlertView:@"无网络连接"];
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-}
-
-#pragma mark - 接受或者拒绝接受邀请的方法
-+ (void)PostAcceptOrderId:(NSInteger )orderId accept:(NSString *)accept success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
-    
-    
-    
-    
-    if ([GFHttpTool isConnectionAvailable]) {
-        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
-        
-        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
-        manager.requestSerializer.timeoutInterval = 30.0;
-        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
-        NSString *token = [userDefaultes objectForKey:@"autoken"];
-        
-        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-        NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/%ld/invitation",HOST,(long)orderId];
-        //        NSLog(@"token-可能是这里错了-%@-－－URLString--%@-",token,URLString);
-        [manager POST:URLString parameters:@{@"accepted":accept} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
-            //            NSLog(@"走出来了");
-            [aView removeFromSuperview];
-            if(success) {
-                success(responseObject);
-            }
-        } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            //            NSLog(@"没有走出来－－－%@--",error);
-            [aView removeFromSuperview];
-            // 判断请求超时
-            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
-            if([errorStr isEqualToString:@"The request timed out."]) {
-                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
-            }else {
-                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
-            }
-            if(failure) {
-                failure(error);
-            }
-        }];
-        
-        
-        
-    }else{
-        
-        [GFHttpTool addAlertView:@"无网络连接"];
-    }
-    
-    
-    
-    
-    
-    
-    
-}
 
 
 #pragma mark - 获取订单的工作项目
-+ (void)GetWorkItemsOrderTypeId:(NSInteger )TypeId success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
-    
-    
-    
+// 二期
++ (void)GetWorkItemsOrderTypeId:(NSInteger)orderId success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
     
     if ([GFHttpTool isConnectionAvailable]) {
-        
-        
         
         //    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -1381,8 +1631,10 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
         //    NSString *token = [userDefaultes objectForKey:@"autoken"];
         //    NSLog(@"token--%@--",token);
         //    [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-        NSString *URLString = [NSString stringWithFormat:@"%@/pub/technician/workItems",PUBHOST];
-        [manager GET:URLString parameters:@{@"orderType":@(TypeId)} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+//        NSString *URLString = [NSString stringWithFormat:@"%@/pub/technician/workItems",PUBHOST];
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/v2/order/project/position/%ld",HOST, orderId];
+        
+        [manager GET:URLString parameters:nil progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
             if(success) {
                 success(responseObject);
             }
@@ -1413,62 +1665,9 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
     
 }
 
-#pragma mark - 提交工作前照片
-+ (void)PostPhotoForBeforeOrderId:(NSInteger )orderId URLs:(NSString *)URLs success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
-    
-    
-    
-    
-    if ([GFHttpTool isConnectionAvailable]) {
-        
-        
-        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"上传中..."];
-        
-        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
-        manager.requestSerializer.timeoutInterval = 30.0;
-        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
-        NSString *token = [userDefaultes objectForKey:@"autoken"];
-        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-        NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/beforePhoto",HOST];
-        [manager POST:URLString parameters:@{@"orderId":@(orderId),@"urls":URLs} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
-            //            NSLog(@"-----%@－－－－",responseObject[@"message"]);
-            if(success) {
-                
-                [aView removeFromSuperview];
-                success(responseObject);
-            }
-        } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            //            NSLog(@"－－－－%@----",error);
-            // 判断请求超时
-            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
-            if([errorStr isEqualToString:@"The request timed out."]) {
-                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
-            }else {
-                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
-            }
-            if(failure) {
-                
-                [aView removeFromSuperview];
-                failure(error);
-            }
-        }];
-        
-        
-        
-    }else{
-        
-        [GFHttpTool addAlertView:@"无网络连接"];
-    }
-    
-    
-    
-    
-    
-}
 
 
+// 获取订单详情
 + (void)getOrderDetailOrderId:(NSInteger )orderId success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
     
     
@@ -1522,58 +1721,84 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
 }
 
 
-#pragma mark - 施工完成的请求接口
-+ (void)PostOverDictionary:(NSDictionary *)dictionary success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
-    
-    
-    
-    
+// 合伙人列表
+// 二期
++ (void)addPeoListGetWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
     
     if ([GFHttpTool isConnectionAvailable]) {
         
-        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"提交中..."];
-        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        NSString *suffixURL = @"/technician/v2";
+        NSString *url = [NSString stringWithFormat:@"%@%@", prefixURL, suffixURL];
+        
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
         manager.requestSerializer.timeoutInterval = 30.0;
         [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
-        NSString *token = [userDefaultes objectForKey:@"autoken"];
-        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-        //    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-        NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/finish",HOST];
-        [manager POST:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
-            [aView removeFromSuperview];
+        
+        
+        
+        [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if(success) {
                 success(responseObject);
             }
-        } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            // 判断请求超时
-            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
-            if([errorStr isEqualToString:@"The request timed out."]) {
-                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
-            }else {
-                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
-            }
-            [aView removeFromSuperview];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             if(failure) {
+                
+                // 判断请求超时
+                NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+                if([errorStr isEqualToString:@"The request timed out."]) {
+                    [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+                }else {
+                    [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+                }
                 failure(error);
             }
         }];
         
+    }else {
         
-    }else{
-        
-        [GFHttpTool addAlertView:@"无网络连接"];
+        [GFHttpTool addAlertView:@"网络无链接，请检查网络"];
     }
-    
-    
-    
-    
-    
-    
-    
 }
-
+// 搜索合伙人
+// 二期
++ (void)searPeoGetWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
+    
+    if ([GFHttpTool isConnectionAvailable]) {
+        
+        NSString *suffixURL = @"/technician/v2";
+        NSString *url = [NSString stringWithFormat:@"%@%@", prefixURL, suffixURL];
+        
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+        manager.requestSerializer.timeoutInterval = 30.0;
+        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+        
+        
+        
+        [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            if(success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            if(failure) {
+                
+                // 判断请求超时
+                NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+                if([errorStr isEqualToString:@"The request timed out."]) {
+                    [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+                }else {
+                    [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+                }
+                failure(error);
+            }
+        }];
+        
+    }else {
+        
+        [GFHttpTool addAlertView:@"网络无链接，请检查网络"];
+    }
+}
 
 #pragma mark - 报告实时位置的方法
 + (void)PostReportLocation:(NSDictionary *)dictionary success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
@@ -1611,6 +1836,7 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
 
 
 #pragma mark - 获取可接订单列表
+// 二期
 + (void)getOrderListNewDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
     
     
@@ -1618,14 +1844,17 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
         
         
         NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        
         [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
         manager.requestSerializer.timeoutInterval = 30.0;
         [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
-        NSString *token = [userDefaultes objectForKey:@"autoken"];
         
+        NSString *token = [userDefaultes objectForKey:@"autoken"];
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-        NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/listNew",HOST];
+        
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/v2/order/listNew",HOST];
         //        NSLog(@"-请求没有成功程序挂掉啦--token---%@---%@---%@-",manager,URLString,dictionary);
         //        [manager GET:URLString parameters:dictionary success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         //            NSLog(@"请求成功了－22－－");
@@ -1744,6 +1973,7 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
 
 
 #pragma mark - 放弃订单
+// 二期
 + (void)postCancelOrder:(NSString *)orderId Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
     
     
@@ -1757,9 +1987,36 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
         [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
         NSString *token = [userDefaultes objectForKey:@"autoken"];
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-        NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/%@/cancel",HOST,orderId];
         
-//        NSLog(@"URLString-----%@--",URLString);
+        NSArray *arr = [orderId componentsSeparatedByString:@","];
+        
+        NSString *URLStrings = [NSString stringWithFormat:@"%@/technician/v2/order/%@/cancel%@",HOST,arr[0], arr[1]];
+        
+//        NSLog(@"URLString-----%@--",URLStrings);
+        NSString *str = [URLStrings stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+        [manager PUT:str parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
+            [aView removeFromSuperview];
+            if(success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+            [aView removeFromSuperview];
+            // 判断请求超时
+            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+            if([errorStr isEqualToString:@"The request timed out."]) {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+            }else {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+            }
+            if(failure) {
+                failure(error);
+            }
+        }];
+        
+        
+        /*
         [manager POST:URLString parameters:nil progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
             [aView removeFromSuperview];
             if(success) {
@@ -1778,7 +2035,7 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
                 failure(error);
             }
         }];
-        
+        */
         
     }else{
         
@@ -1789,9 +2046,114 @@ NSString* const PUBHOST = @"http://121.40.219.58/api";
 }
 
 
+//#pragma mark - 接受或者拒绝接受邀请的方法，，，没用了
++ (void)PostAcceptOrderId:(NSInteger )orderId accept:(NSString *)accept success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    
+    
+    
+    if ([GFHttpTool isConnectionAvailable]) {
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
+        
+        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+        manager.requestSerializer.timeoutInterval = 30.0;
+        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+        NSString *token = [userDefaultes objectForKey:@"autoken"];
+        
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/order/%ld/invitation",HOST,(long)orderId];
+        //        NSLog(@"token-可能是这里错了-%@-－－URLString--%@-",token,URLString);
+        [manager POST:URLString parameters:@{@"accepted":accept} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            //            NSLog(@"走出来了");
+            [aView removeFromSuperview];
+            if(success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            //            NSLog(@"没有走出来－－－%@--",error);
+            [aView removeFromSuperview];
+            // 判断请求超时
+            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+            if([errorStr isEqualToString:@"The request timed out."]) {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+            }else {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+            }
+            if(failure) {
+                failure(error);
+            }
+        }];
+        
+        
+        
+    }else{
+        
+        [GFHttpTool addAlertView:@"无网络连接"];
+    }
+    
+    
+    
+    
+    
+    
+    
+}
 
-
-
+//#pragma mark - 上传工作前照片，，，没用
++ (void)PostImageWorkBefore:(NSData *)image orderId:(NSInteger )orderId imageNumber:(NSInteger)imageNumber success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    
+    
+    
+    if ([GFHttpTool isConnectionAvailable]) {
+        
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"正在上传..."];
+        
+        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        NSString *token = [userDefaultes objectForKey:@"autoken"];
+        
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/uploadPhoto",HOST];
+        
+        
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+        
+        [manager POST:URLString parameters:@{@"no":@(imageNumber),@"orderId":@(orderId),@"isBefore":@"true"} constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            [formData appendPartWithFileData:image name:@"file" fileName:@"1235.jpg" mimeType:@"JPEG"];
+            
+        } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSData *responseObject) {
+            
+            NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+            if(success) {
+                
+                [aView removeFromSuperview];
+                success(dictionary);
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            if(failure) {
+                [aView removeFromSuperview];
+                failure(error);
+            }
+        }];
+        
+        
+        
+    }else{
+        
+        [GFHttpTool addAlertView:@"无网络连接"];
+    }
+    
+    
+    
+    
+    
+    
+    
+}
 
 
 #pragma mark - 判断网络连接情况

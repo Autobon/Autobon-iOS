@@ -10,6 +10,9 @@
 
 typedef void (^addOrderBlock)();
 
+@class CLHomeOrderCellModel;
+
+
 @interface CLAddOrderSuccessViewController : UIViewController
 
 @property (nonatomic ,copy) addOrderBlock addBlock;
@@ -17,5 +20,8 @@ typedef void (^addOrderBlock)();
 
 @property (nonatomic ,strong) NSDictionary *dataDictionary;
 @property (nonatomic ) BOOL isHome;
+
+
+@property (nonatomic, strong) CLHomeOrderCellModel *model;
 
 @end

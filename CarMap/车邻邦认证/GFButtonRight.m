@@ -6,9 +6,9 @@
 //  Copyright © 2016年 mll. All rights reserved.
 //
 
-#import "GFButton.h"
+#import "GFButtonRight.h"
 
-@implementation GFButton
+@implementation GFButtonRight
 
 
 - (void)layoutSubviews {

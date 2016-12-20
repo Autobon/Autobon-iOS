@@ -10,4 +10,10 @@
 
 @interface GFBuweiModel : NSObject
 
+@property (nonatomic, strong) NSMutableArray *buweiDicArr;
+@property (nonatomic, copy) NSString *proId;
+@property (nonatomic, copy) NSString *proName;
+
+- (instancetype)initWithDictionary:(NSDictionary *)dic;
+
 @end

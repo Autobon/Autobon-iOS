@@ -96,7 +96,7 @@
     
     
     page = 1;
-    pageSize = 4;
+    pageSize = 60;
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kWidth, kHeight - 64) style:UITableViewStylePlain];
     [self.view addSubview:self.tableView];
@@ -107,12 +107,12 @@
     
     
     self.tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
-    self.tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+    self.tableView.footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     
     
     
     [self.tableView.header beginRefreshing];
-    [self.tableView.footer beginRefreshing];
+//    [self.tableView.footer beginRefreshing];
     
     
     
@@ -127,7 +127,6 @@
     self.yearArr = [[NSMutableArray alloc] init];
     _listDictionary = [[NSMutableDictionary alloc]init];
     page = 1;
-    pageSize = 4;
     [self tableViewHttp];
     
     
@@ -138,11 +137,10 @@
 
     _tableView.userInteractionEnabled = NO;
 //    NSLog(@"账单大脚刷新");
-    if (page == 1) {
-        page = 2;
-    }
+//    if (page == 1) {
+//        page = 2;
+//    }
     page = page + 1;
-    pageSize = 2;
     [self tableViewHttp];
     
 }
@@ -151,13 +149,12 @@
 - (void)tableViewHttp{
     
     // 网络请求数据
-//    NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/bill";
     NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
     parDic[@"page"] = [NSString stringWithFormat:@"%ld", page];
-    parDic[@"pageSize"] = [NSString stringWithFormat:@"%ld", pageSize];
+    parDic[@"pageSize"] = [NSString stringWithFormat:@"2"];
     [GFHttpTool billGetWithParameters:parDic success:^(id responseObject) {
         
-        
+//        NSLog(@"请求返回%@", responseObject);
         
         NSInteger flage = [responseObject[@"result"] integerValue];
         if(flage == 1) {
@@ -184,7 +181,7 @@
                 NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
                 [formatter setDateFormat:@"yyyy-MM"];
                 [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
-                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[time floatValue]/1000];
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[time doubleValue]/1000];
                 NSString *str = [formatter stringFromDate:date];
 
                 NSArray *stringArray = [str componentsSeparatedByString:@"-"];
@@ -194,7 +191,7 @@
                 self.billModel.techId = dic[@"techId"];
                 self.billModel.billMonth = stringArray[1];
                 self.billModel.sum = dic[@"sum"];
-                self.billModel.payed = dic[@"payed"];
+                self.billModel.payed = dic[@"paid"];
                 
 
                 
@@ -392,7 +389,7 @@
 
     NSString *year = _yearArr[section];
     NSArray *monthArray = _listDictionary[year];
-    
+//    NSLog(@"\\\\\\\\\\\\/////////////%ld", monthArray.count);
     return monthArray.count;
     
 }
@@ -422,11 +419,6 @@
         cell.sumMoneyLab.text = [NSString stringWithFormat:@"￥ %@",billModel.sum];
     }
 
-    
-    
-
-    
-    
     return cell;
 }
 

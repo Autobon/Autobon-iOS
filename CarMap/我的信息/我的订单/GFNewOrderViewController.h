@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GFNewOrderViewController : UIViewController
+@interface GFNewOrderViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @end

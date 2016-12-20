@@ -10,4 +10,8 @@
 
 @interface GFImageView : UIImageView
 
+@property (nonatomic, strong) NSMutableArray *imageArray;
+
+@property (nonatomic, copy) NSString *resultURL;
+
 @end

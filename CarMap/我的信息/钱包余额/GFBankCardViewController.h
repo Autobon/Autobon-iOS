@@ -29,6 +29,7 @@
 @property (nonatomic, copy) NSString *bankStr;
 @property (nonatomic, copy) NSString *bankCard;
 @property (nonatomic, strong) GFTextField *cardTxt;
+@property (nonatomic, strong) GFTextField *cardTxt2;
 
 
 @property (nonatomic, strong) NSString *name;

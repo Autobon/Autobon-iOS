@@ -31,10 +31,7 @@
 @property (nonatomic, strong) UIButton *languageBut;
 // 中间标题“车邻邦”
 @property (nonatomic, strong) UILabel *centerLab;
-// 账号输入框
-@property (nonatomic, strong) GFTextField *userNameTxt;
-// 密码输入框
-@property (nonatomic, strong) GFTextField *passWordTxt;
+
 // 登录按钮
 @property (nonatomic, strong) UIButton *signInBut;
 // 忘记密码按钮
@@ -284,17 +281,20 @@
         [self tipShow:@"密码不能为空"];
         
     }else {
-//        NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/login";
+        
         NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
         parDic[@"phone"] = self.userNameTxt.centerTxt.text;
         parDic[@"password"] = self.passWordTxt.centerTxt.text;
         
         [GFHttpTool signInWithParameters:parDic success:^(id responseObject) {
 
-         
+//            NSLog(@"登录后，，，，%@", responseObject);
+            
             // 判断是否登录成功
-            if([responseObject[@"result"] integerValue] == 1) {
-               
+            if([responseObject[@"status"] integerValue] == 1) {
+                NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"autoken"];
+//                NSLog(@"token--%@--",token);
+                
                 NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
                 [userDefaults setObject:self.userNameTxt.centerTxt.text forKey:@"userName"];
                 [userDefaults setObject:self.passWordTxt.centerTxt.text forKey:@"userPassword"];
@@ -307,40 +307,25 @@
                     NSHTTPCookie *cookie = [cookieJar cookies][i]; // 实例化响应头数组对象
                     
                     if ([cookie.name isEqualToString:@"autoken"]) { // 获取响应头数组对象里地名字为autoken的对象
-                        
-                        // 提示语
-//                        [UIView animateWithDuration:1.2 animations:^{
-//                            
-//                            [self tipView:CGRectGetMinY(self.userNameTxt.frame) + kHeight * 0.4 withTipmessage:responseObject[@"message"]];
-//                            self.signInBut.userInteractionEnabled = NO;
-//                            
-//                        } completion:^(BOOL finished) {
-//                            
-//                            [self.tipView removeFromSuperview];
-//                            self.signInBut.userInteractionEnabled = YES;
-//                            
-//                        }];
 //                        NSLog(@"############%@", [NSString stringWithFormat:@"%@=%@",[cookie name],[cookie value]]); //获取响应头数组对象里地名字为autoken的对象的数据，这个数据是用来验证用户身份相当于“key”
-                        
-                        
-                        
-                        
                         [autokenValue setObject:[NSString stringWithFormat:@"%@=%@", cookie.name, cookie.value] forKey:@"autoken"];
                         break;
                     }
                 }
-                
-                
-                NSDictionary *dataDic = responseObject[@"data"];
-                
+                NSDictionary *dataDic = responseObject[@"message"];
+                [userDefaults setObject:dataDic[@"id"] forKey:@"jishiID"];
 #pragma mark - 个人信息持久化
-                
+                if(![dataDic[@"name"] isKindOfClass:[NSNull class]]) {
+                    
+                    [userDefaults setObject:dataDic[@"name"] forKey:@"name"];
+                }
+                if(![dataDic[@"id"] isKindOfClass:[NSNull class]]) {
+                    
+                    [userDefaults setObject:dataDic[@"id"] forKey:@"mainTechId"];
+                }
 //                NSLog(@"---dataDic---%@-",dataDic);
 // 判断 responseObject[@"status"] 的状态进行相应的页面跳转
                 UIWindow *window = [UIApplication sharedApplication].delegate.window;
-                
-                
-                
                 
                 if ([dataDic[@"status"]isEqualToString:@"VERIFIED"]){
                     CLHomeOrderViewController *homeVC = [[CLHomeOrderViewController alloc] init];
@@ -363,53 +348,16 @@
                     }else{
                         [autobonView.certifyButton setTitle:@"查看进度" forState:UIControlStateNormal];
                     }
+                    UINavigationController *mavVC = [[UINavigationController alloc] initWithRootViewController:autobonView];
+                    mavVC.navigationBarHidden = YES;
+                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                    window.rootViewController = mavVC;
                     
-                [self.navigationController pushViewController:autobonView animated:YES];
+                    
+//                [self.navigationController pushViewController:autobonView animated:YES];
                 }
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-//                    if ([dataDic[@"status"]isEqualToString:@"VERIFIED"]) {
-//                        CLHomeOrderViewController *homeVC = [[CLHomeOrderViewController alloc] init];
-//                        UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
-//                        window.rootViewController = navigation;
-//                        navigation.navigationBarHidden = YES;
-//                    }else {
-//                        if([dataDic[@"status"]isEqualToString:@"NEWLY_CREATED"]){
-//                            CLAutobonViewController *autobonView = [[CLAutobonViewController alloc]init];
-//                            UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:autobonView];
-//                            window.rootViewController = navigation;
-//                            navigation.navigationBarHidden = YES;
-//                        }else if ([dataDic[@"status"]isEqualToString:@"REJECTED"]){
-//                            CLCertifyFailViewController *homeVC = [[CLCertifyFailViewController alloc] init];
-//                            UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
-//                            window.rootViewController = navigation;
-//                            navigation.navigationBarHidden = YES;
-//                        }else if ([dataDic[@"status"]isEqualToString:@"IN_VERIFICATION"]){
-//                            CLCertifyingViewController *homeVC = [[CLCertifyingViewController alloc] init];
-//                            UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:homeVC];
-//                            window.rootViewController = navigation;
-//                            navigation.navigationBarHidden = YES;
-//                            [userDefaults setObject:dataDic[@"avatar"] forKey:@"userHeadImage"];
-//                            [userDefaults setObject:dataDic[@"bank"] forKey:@"userBank"];
-//                            [userDefaults setObject:dataDic[@"bankCardNo"] forKey:@"userBankCardNo"];
-//
-//                        }
-//                    }
-                
                     
-            }else if([responseObject[@"result"] isEqual:@0]) {
-                
-//                NSLog(@"登录失败==========%@", responseObject);
+            }else if([responseObject[@"status"] integerValue] == 0) {
                 
                 [UIView animateWithDuration:1.2 animations:^{
                     
@@ -421,24 +369,13 @@
                     [self.tipView removeFromSuperview];
                     
                     self.signInBut.userInteractionEnabled = YES;
-                    
                 }];
-                
             }
-            
-
-            
-            
         } failure:^(NSError *error) {
             
 //            [self tipShow:@"登录失败，请重试"];
-            
         }];
-    
     }
-    
-    
-    
 }
 
 - (void)jiazaiWithStr:(NSString *)strText {

@@ -138,7 +138,7 @@
     }
     CLAddPersonModel *person = _addPersonArray[indexPath.row];
     [cell.headImage sd_setImageWithURL:[NSURL URLWithString:person.headImageURL] placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
-    
+
     cell.userNameLabel.text = person.nameString;
     cell.identityLabel.text = person.phoneString;
     cell.button.tag = indexPath.row;

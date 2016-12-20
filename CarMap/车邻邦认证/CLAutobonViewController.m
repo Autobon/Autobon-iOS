@@ -13,6 +13,15 @@
 #import "CLCertifyingViewController.h"
 #import "CLCertifyFailViewController.h"
 
+#import "GFFCertifyViewController.h"
+#import "GFCertifyFaileViewController.h"
+
+#import "GFHttpTool.h"
+
+#import "GFCertifyModel.h"
+
+#import "GFSignInViewController.h"
+
 
 @interface CLAutobonViewController ()
 {
@@ -21,6 +30,9 @@
     
     
 }
+
+@property (nonatomic, strong) UIButton *shuomingView;
+
 @end
 
 @implementation CLAutobonViewController
@@ -63,6 +75,40 @@
     mapVC.view.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height/3);
     mapVC.mapView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height/3);
 //
+}
+
+- (UIButton *)shuomingView {
+    
+    if(_shuomingView == nil) {
+        
+        UIButton *vv = [[UIButton alloc] init];
+        vv.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+        vv.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+        [self.view addSubview:vv];
+        [vv addTarget:self action:@selector(vvbutClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        NSString *str = @"认证通过后才能接单赚钱，快去认证吧！";
+        CGRect strRect = [str boundingRectWithSize:CGSizeMake([UIScreen mainScreen].bounds.size.width - 40, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]} context:nil];
+        
+        UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(20, 200, [UIScreen mainScreen].bounds.size.width - 40 , strRect.size.height + 100)];
+        lab.backgroundColor = [UIColor whiteColor];
+        lab.textAlignment = NSTextAlignmentCenter;
+        lab.text = str;
+        lab.font = [UIFont systemFontOfSize:16];
+        lab.textColor = [UIColor darkGrayColor];
+        [vv addSubview:lab];
+        lab.numberOfLines = 0;
+        
+        
+        
+        _shuomingView = vv;
+    }
+    
+    return _shuomingView;
+}
+- (void)vvbutClick:(UIButton *)sender {
+    
+    self.shuomingView.hidden = YES;
 }
 
 - (void)setViewForAutobon{
@@ -129,11 +175,11 @@
 
     _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(otherLabel.frame));
 // 我要接单
-    UILabel *orderLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-self.view.frame.size.height/18, self.view.frame.size.width/2, self.view.frame.size.height/18)];
-    orderLabel.text = @"我要接单";
-    orderLabel.textColor = [[UIColor alloc]initWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1.0];
-    orderLabel.textAlignment = NSTextAlignmentCenter;
+    UIButton *orderLabel = [[UIButton alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-self.view.frame.size.height/18, self.view.frame.size.width/2, self.view.frame.size.height/18)];
+    [orderLabel setTitle:@"我要接单" forState:UIControlStateNormal];
+    [orderLabel setTitleColor:[[UIColor alloc]initWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1.0] forState:UIControlStateNormal];
     [self.view addSubview:orderLabel];
+    [orderLabel addTarget:self action:@selector(jiedanButClick) forControlEvents:UIControlEventTouchUpInside];
     
 // 我要认证
     _certifyButton.frame = CGRectMake(self.view.frame.size.width/2, self.view.frame.size.height-self.view.frame.size.height/18, self.view.frame.size.width/2, self.view.frame.size.height/18);
@@ -147,6 +193,11 @@
     lineView5.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [self.view addSubview:lineView5];
     
+}
+
+- (void)jiedanButClick {
+    
+    self.shuomingView.hidden = NO;
 }
 
 - (void)setLineView:(NSString *)title maxY:(float)maxY{
@@ -169,19 +220,71 @@
 - (void)certifyBtnClick{
 //    NSLog(@"认证按钮的响应方法");
     if ([_status isEqualToString:@"NEWLY_CREATED"]) {
-        CLCertifyViewController *certify = [[CLCertifyViewController alloc]init];
-        [certify.submitButton setTitle:@"提交" forState:UIControlStateNormal];
+        // 未认证
+        GFFCertifyViewController *certify = [[GFFCertifyViewController alloc] init];
         [self.navigationController pushViewController:certify animated:YES];
     }else if ([_status isEqualToString:@"REJECTED"]){
-        CLCertifyFailViewController *homeVC = [[CLCertifyFailViewController alloc] init];
-        [self.navigationController pushViewController:homeVC animated:YES];
+        // 认证未通过
+        [GFHttpTool getCertificateSuccess:^(id responseObject) {
+            
+            if([responseObject[@"status"] integerValue] == 1) {
+//                NSLog(@"===认证界面＝＝＝%@", responseObject);
+                NSDictionary *dicc = responseObject[@"message"];
+                NSDictionary *dic = dicc[@"technician"];
+                if([dic[@"status"] isEqualToString:@"REJECTED"]) {
+                
+                    GFCertifyModel *model = [[GFCertifyModel alloc] initWithDictionary:dic];
+                    GFCertifyFaileViewController *homeVC = [[GFCertifyFaileViewController alloc] init];
+                    homeVC.model = model;
+                    [self.navigationController pushViewController:homeVC animated:YES];
+                }else {
+                
+                    GFCertifyModel *model = [[GFCertifyModel alloc] initWithDictionary:dic];
+                    CLCertifyingViewController *homeVC = [[CLCertifyingViewController alloc] init];
+                    homeVC.model = model;
+                    [self.navigationController pushViewController:homeVC animated:YES];
+                }
+                
+//                GFCertifyModel *model = [[GFCertifyModel alloc] initWithDictionary:responseObject[@"message"]];
+//                GFCertifyFaileViewController *homeVC = [[GFCertifyFaileViewController alloc] init];
+//                homeVC.model = model;
+//                [self.navigationController pushViewController:homeVC animated:YES];
+            }
+        } failure:^(NSError *error) {
+            
+            
+        }];
     }else{
-        CLCertifyingViewController *homeVC = [[CLCertifyingViewController alloc] init];
-        [self.navigationController pushViewController:homeVC animated:YES];
+        // 正在认证
+        
+        [GFHttpTool getCertificateSuccess:^(id responseObject) {
+            
+            if([responseObject[@"status"] integerValue] == 1) {
+                
+                NSDictionary *dicc = responseObject[@"message"];
+                NSDictionary *dic = dicc[@"technician"];
+                if([dic[@"status"] isEqualToString:@"REJECTED"]) {
+                
+                    GFCertifyModel *model = [[GFCertifyModel alloc] initWithDictionary:dic];
+                    GFCertifyFaileViewController *homeVC = [[GFCertifyFaileViewController alloc] init];
+                    homeVC.model = model;
+                    [self.navigationController pushViewController:homeVC animated:YES];
+                }else {
+//                    NSLog(@"===认证界面＝＝＝%@", responseObject);
+                    GFCertifyModel *model = [[GFCertifyModel alloc] initWithDictionary:dic];
+                    CLCertifyingViewController *homeVC = [[CLCertifyingViewController alloc] init];
+                    homeVC.model = model;
+                    [self.navigationController pushViewController:homeVC animated:YES];
+                }
+            }
+        } failure:^(NSError *error) {
+            
+            
+        }];
+        
+//        CLCertifyingViewController *homeVC = [[CLCertifyingViewController alloc] init];
+//        [self.navigationController pushViewController:homeVC animated:YES];
     }
-    
-    
-    
 }
 
 
@@ -200,7 +303,13 @@
 }
 
 - (void)backBtnClick{
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
+    
+    UINavigationController *mavVC = [[UINavigationController alloc] initWithRootViewController:[[GFSignInViewController alloc] init]];
+    mavVC.navigationBarHidden = YES;
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    window.rootViewController = mavVC;
+    
     
 //    CLHomeOrderViewController *home = [[CLHomeOrderViewController alloc]init];
 //    [self.navigationController pushViewController:home animated:YES];

@@ -30,8 +30,18 @@
 @implementation ViewController
 
 
+
+
+
 - (void)viewDidLoad{
     [super viewDidLoad];
+    
+    
+    
+    
+    
+    
+    
     
 //    CLHomeOrderViewController *homeView = [[CLHomeOrderViewController alloc]init];
 //    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:homeView];
@@ -44,8 +54,6 @@
     tableView.delegate = self;
     tableView.dataSource = self;
     [self.view addSubview:tableView];
-    
-    
 }
 
 

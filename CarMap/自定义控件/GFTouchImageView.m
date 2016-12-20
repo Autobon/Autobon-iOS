@@ -122,7 +122,7 @@ static NSInteger tuoFlage = 0;
         
             imageView.transform = CGAffineTransformScale(tt, ss, ss);
             
-            NSLog(@"----%f---%f", gesture.scale, imageView.frame.size.width);
+//            NSLog(@"----%f---%f", gesture.scale, imageView.frame.size.width);
         }
     }
     // 手势结束后

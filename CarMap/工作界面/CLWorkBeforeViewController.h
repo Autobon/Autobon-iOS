@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-
+@class CLHomeOrderCellModel;
 
 @interface CLWorkBeforeViewController : UIViewController
 
@@ -17,5 +17,7 @@
 @property (nonatomic ,strong) NSString *orderNumber;
 @property (nonatomic ,strong) NSString *orderType;
 @property (nonatomic ,strong) NSString *startTime;
+
+@property (nonatomic, strong) CLHomeOrderCellModel *model;
 
 @end

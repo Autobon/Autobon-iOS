@@ -14,7 +14,10 @@
 #import "GFMyMessageViewController.h"
 #import "GFTipView.h"
 #import "CLHomeOrderViewController.h"
+#import "CLHomeOrderCellModel.h"
 
+#import "GFAlertView.h"
+#import "GFFangqiViewController.h"
 
 
 @interface CLSigninViewController ()
@@ -180,12 +183,13 @@
     NSDictionary *dic = @{@"positionLon":_customerLon,@"positionLat":_customerLat,@"orderId":_orderId};
     [GFHttpTool signinParameters:dic Success:^(NSDictionary *responseObject) {
 //        NSLog(@"－－－－－%@---",responseObject);
-        if ([responseObject[@"result"]integerValue] == 1) {
+        if ([responseObject[@"status"]integerValue] == 1) {
             CLWorkBeforeViewController *workBefore = [[CLWorkBeforeViewController alloc]init];
             workBefore.orderId = _orderId;
             workBefore.orderType = _orderType;
-            workBefore.startTime = _startTime;
+            workBefore.startTime = @"未开始";
             workBefore.orderNumber = self.orderNumber;
+            workBefore.model = _model;
             [self.navigationController pushViewController:workBefore animated:YES];
 //            [_timer invalidate];
 //            _timer = nil;
@@ -213,10 +217,71 @@
     [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [navView.rightBut addTarget:navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
+    
+    UIButton *removeOrderButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 85, 20, 40, 40)];
+    removeOrderButton.titleLabel.font = [UIFont systemFontOfSize:16];
+    //    removeOrderButton.backgroundColor = [UIColor grayColor];
+//    removeOrderButton.layer.borderColor = [[UIColor whiteColor] CGColor];
+//    removeOrderButton.layer.borderWidth = 1;
+//    removeOrderButton.layer.cornerRadius = 20;
+    [removeOrderButton setTitle:@"改派" forState:UIControlStateNormal];
+    if([_model.status isEqualToString:@"IN_PROGRESS"] || [_model.status isEqualToString:@"SIGNED_IN"] || [_model.status isEqualToString:@"AT_WORK"]) {
+        
+        [removeOrderButton setTitle:@"改派" forState:UIControlStateNormal];
+    }
+    [removeOrderButton setTitleColor:[UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0] forState:UIControlStateHighlighted];
+    [removeOrderButton addTarget:self action:@selector(removeOrderBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [navView addSubview:removeOrderButton];
+    
+    
+    
     [self.view addSubview:navView];
     
     
 }
+
+#pragma mark - 弃单提示和请求
+- (void)removeOrderBtnClick{
+    GFAlertView *alertView = [[GFAlertView alloc]initWithTitle:@"确认要放弃此单吗？" leftBtn:@"取消" rightBtn:@"确定"];
+    [alertView.rightButton addTarget:self action:@selector(removeOrder) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:alertView];
+}
+- (void)removeOrder{
+    //    NSLog(@"确认放弃订单，订单ID为 －－%@--- ",_orderId);
+    
+    GFFangqiViewController *vc = [[GFFangqiViewController alloc] init];
+    vc.model = _model;
+    [self.navigationController pushViewController:vc animated:YES];
+    
+    /*
+     [GFHttpTool postCancelOrder:_model.orderId Success:^(id responseObject) {
+     
+     NSLog(@"--放弃订单--%@", responseObject);
+     if ([responseObject[@"status"] integerValue] == 1) {
+     
+     [GFTipView tipViewWithNormalHeightWithMessage:@"弃单成功" withShowTimw:1.5];
+     [self performSelector:@selector(removeOrderSuccess) withObject:nil afterDelay:1.5];
+     }else{
+     
+     [GFTipView tipViewWithNormalHeightWithMessage:responseObject[@"message"] withShowTimw:1.5];
+     
+     }
+     
+     } failure:^(NSError *error) {
+     
+     //       NSLog(@"放弃订单失败----%@---",error);
+     
+     }];
+     */
+    
+}
+
+- (void)removeOrderSuccess{
+    CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
+    [homeOrder headRefresh];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 - (void)backBtnClick{
     
     CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];

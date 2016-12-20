@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 //#import "CLImageView.h"
 
+@class CLListNewModel;
+
 @interface CLNewOrderTableViewCell : UITableViewCell
 
 
@@ -17,11 +19,11 @@
 @property (nonatomic ,strong) UIButton *orderButton;
 @property (nonatomic ,strong) UIImageView *orderImageView;
 @property (nonatomic ,strong) UILabel *typeLabel;
-
+@property (nonatomic, copy) NSString *orderTypeLabelText;
 
 - (void)initWithOrder;
 
 
-
+@property (nonatomic, strong) CLListNewModel *model;
 
 @end

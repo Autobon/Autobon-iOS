@@ -10,4 +10,12 @@
 
 @interface GFAddpeoModel : NSObject
 
+@property (nonatomic, copy) NSString *avatar;
+@property (nonatomic, copy) NSString *jishiId;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *phone;
+
+
+- (instancetype)initWithdictionary:(NSDictionary *)dic;
+
 @end

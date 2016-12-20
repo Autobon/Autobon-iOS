@@ -10,4 +10,7 @@
 
 @interface GFOrderForWaitViewController : UIViewController
 
+- (void)headRefresh;
+
+
 @end

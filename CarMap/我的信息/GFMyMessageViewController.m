@@ -22,6 +22,12 @@
 #import "GFTransformViewController.h"
 #import "GFServeViewController.h"
 
+#import "GFNewOrderViewController.h"
+#import "GFCertifyFaileViewController.h"
+#import "GFCertifyModel.h"
+
+#import "GFDDMessageViewController.h"
+
 
 
 @interface GFMyMessageViewController () {
@@ -39,7 +45,7 @@
 
 @property (nonatomic, strong) GFNavigationView *navView;
 
-
+@property (nonatomic, strong) GFCertifyModel *model;
 
 
 @end
@@ -159,18 +165,18 @@
     
     NSString *fenStr = @"0";
     NSMutableDictionary *fenDic = [[NSMutableDictionary alloc] init];
-    fenDic[NSFontAttributeName] = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
+    fenDic[NSFontAttributeName] = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
     fenDic[NSForegroundColorAttributeName] = [UIColor blackColor];
     CGRect fenRect = [fenStr boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:fenDic context:nil];
     CGFloat fenLabW = fenRect.size.width + 10;
     CGFloat fenLabH = strRect.size.height;
     CGFloat fenLabX = CGRectGetMaxX(nameLab.frame) + strRect.size.height * 5 + jianjv1;
-    CGFloat fenLabY = numLabY + 3.5 / 568 * kHeight;
+    CGFloat fenLabY = numLabY + 3.5 / 568 * kHeight + 1;
     UILabel *fenLab = [[UILabel alloc] initWithFrame:CGRectMake(fenLabX, fenLabY, fenLabW, fenLabH)];
     fenLab.textColor = [UIColor whiteColor];
     fenLab.textAlignment = NSTextAlignmentCenter;
     fenLab.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-    fenLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
+    fenLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
     fenLab.text = fenStr;
     fenLab.layer.cornerRadius = 7.5;
     fenLab.clipsToBounds = YES;
@@ -529,17 +535,7 @@
     serveBut.frame = CGRectMake(serveButX, serveButY, serveButW, serveButH);
     [serveView addSubview:serveBut];
     [serveBut addTarget:self action:@selector(serveButClick) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     // 退出登录
     CGFloat exitButW = msgViewW;
     CGFloat exitButH = indentViewH;
@@ -564,16 +560,22 @@
     
     [GFHttpTool messageGetWithParameters:nil success:^(id responseObject) {
         
-        NSInteger flage = [responseObject[@"result"] integerValue];
+        
+//        NSLog(@"个人信息数据＝＝＝＝＝＝＝＝＝%@", responseObject);
+        
+        NSInteger flage = [responseObject[@"status"] integerValue];
         if(flage == 1) {
             
-//            NSLog(@"请求成功+++++++++++++%@", responseObject);
+//            NSLog(@"请求成功++++++个人信息+++++++%@", responseObject);
+            NSDictionary *dic = responseObject[@"message"];
             
-            NSDictionary *dataDic = responseObject[@"data"];
+            NSDictionary *dataDic = dic[@"technician"];
+            
+            self.model = [[GFCertifyModel alloc] initWithDictionary:dataDic];
             
             NSString *idPhoto = dataDic[@"avatar"];
             NSString *name = dataDic[@"name"];
-            NSString *starRate = dataDic[@"starRate"];
+            NSString *starRate = dic[@"starRate"];
             if([name isKindOfClass:[NSNull class]]) {
                 name = [NSString stringWithFormat:@""];
             }
@@ -581,18 +583,29 @@
             if([starRate isKindOfClass:[NSNull class]]) {
                 starRate = [NSString stringWithFormat:@"0"];
             }
-            NSString *totalOrders = dataDic[@"totalOrders"];
+            NSString *totalOrders = dic[@"totalOrders"];
             if([totalOrders isKindOfClass:[NSNull class]]) {
                 totalOrders = [NSString stringWithFormat:@"0"];
             }
-            NSString *balance = dataDic[@"balance"];
+            NSString *balance = dic[@"balance"];
             if([balance isKindOfClass:[NSNull class]]) {
                 balance = [NSString stringWithFormat:@"0"];
             }
-            NSString *unpaidOrders = dataDic[@"unpaidOrders"];
+            NSString *unpaidOrders = dic[@"unpaidOrders"];
             if([unpaidOrders isKindOfClass:[NSNull class]]) {
                 unpaidOrders = [NSString stringWithFormat:@"0"];
             }
+            
+            if([dataDic[@"reference"] isKindOfClass:[NSNull class]]) {
+            
+                self.model.reference = @"无";
+            }else {
+            
+                self.model.reference = [NSString stringWithFormat:@"%@", dataDic[@"reference"]];
+            }
+            
+            
+
             
             
             self.bank = dataDic[@"bank"];
@@ -603,7 +616,8 @@
             
             // 头像
             extern NSString* const URLHOST;
-            idPhoto = [NSString stringWithFormat:@"%@%@",URLHOST,idPhoto];
+//            idPhoto = [NSString stringWithFormat:@"%@%@",URLHOST,idPhoto];
+            idPhoto = [NSString stringWithFormat:@"http://121.40.219.58:8000%@", idPhoto];
             NSURL *imgUrl = [NSURL URLWithString:idPhoto];
             [iconImgView sd_setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
             // 姓名
@@ -629,7 +643,7 @@
                 
             }
             CGFloat starF = [starRate floatValue];
-            CGFloat star = round(starF);
+            NSInteger star = (NSInteger)starF;
             for(int i=0; i<star; i++) {
                 
                 CGFloat starImgViewW = strRect.size.height;
@@ -644,7 +658,7 @@
             // 评分
             NSString *fenStr1 = [NSString stringWithFormat:@"%@", starRate];
             NSMutableDictionary *fenDic = [[NSMutableDictionary alloc] init];
-            fenDic[NSFontAttributeName] = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
+            fenDic[NSFontAttributeName] = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
             fenDic[NSForegroundColorAttributeName] = [UIColor blackColor];
 //            NSLog(@"\n%@", fenDic);
 //            NSLog(@"%@", fenStr1);
@@ -666,6 +680,15 @@
             balanceLabUp.text = [NSString stringWithFormat:@"%@", balance];
             // 账单
             billLabUp.text = [NSString stringWithFormat:@"%@", unpaidOrders];
+            
+            
+            if([dataDic[@"resume"] isKindOfClass:[NSNull class]]) {
+                
+                self.model.resume = @"无";
+            }else {
+                
+                self.model.resume = [NSString stringWithFormat:@"%@", dataDic[@"resume"]];
+            }
             
         }else {
         
@@ -710,10 +733,15 @@
 // 信息界面按钮跳转
 - (void)msgButClick {
 
-    CLCertifyViewController *certify = [[CLCertifyViewController alloc]init];
-    certify.isFail = YES;
-    [certify.submitButton setTitle:@"再次认证" forState:UIControlStateNormal];
-    [self.navigationController pushViewController:certify animated:YES];
+//    CLCertifyViewController *certify = [[CLCertifyViewController alloc]init];
+//    certify.isFail = YES;
+//    [certify.submitButton setTitle:@"再次认证" forState:UIControlStateNormal];
+//    [self.navigationController pushViewController:certify animated:YES];
+    
+
+    GFDDMessageViewController *homeVC = [[GFDDMessageViewController alloc] init];
+    homeVC.model = self.model;
+    [self.navigationController pushViewController:homeVC animated:YES];
     
 }
 // 余额界面跳转
@@ -743,7 +771,8 @@
 - (void)indentButClick {
     
 //    NSLog(@"我的订单界面");
-    GFIndentViewController *indentVC = [[GFIndentViewController alloc] init];
+//    GFIndentViewController *indentVC = [[GFIndentViewController alloc] init];
+    GFNewOrderViewController *indentVC = [[GFNewOrderViewController alloc] init];
     
     [self.navigationController pushViewController:indentVC animated:YES];
 }

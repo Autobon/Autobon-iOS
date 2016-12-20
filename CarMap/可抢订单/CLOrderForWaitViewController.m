@@ -19,7 +19,9 @@
 #import "CLListNewModel.h"
 #import "CLNewOrderDetailViewController.h"
 
+#import "GFKeqiangDDViewController.h"
 
+#import "CLHomeOrderCellModel.h"
 
 
 
@@ -41,18 +43,11 @@
 @property (nonatomic ,strong) UITableView *tableView;
 @property (nonatomic) NSInteger rowNumber;
 
+@property (nonatomic, strong) NSMutableArray *newsModelArr;
+
 @end
 
 @implementation CLOrderForWaitViewController
-
-
-
-
-
-
-
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -64,6 +59,8 @@
     [self setNavigation];
     
     [self setTableView];
+    
+    self.newsModelArr = [[NSMutableArray alloc] init];
     
     _noOrderImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 57, 57)];
     _noOrderImageView.center = _tableView.center;
@@ -79,29 +76,24 @@
     [self.view addSubview:_noOrderlabel];
     [self.view bringSubviewToFront:_noOrderImageView];
 
-    _tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
-    _tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+    
     
     [self.tableView.header beginRefreshing];
-    
-    
 }
-
-
-
 - (void)httpWorkForTableView{
-    
-    
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
     
-//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    //    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *dictionary = @{@"page":@(_page),@"pageSize":@(_pageSize)};
     [GFHttpTool getOrderListNewDictionary:dictionary Success:^(NSDictionary *responseObject) {
-        if ([responseObject[@"result"] integerValue] == 1) {
+        
+//        NSLog(@"==可抢订单列表==%@", responseObject);
+        
+        if ([responseObject[@"status"] integerValue] == 1) {
             //            NSLog(@"wangluoqingqiu");
-            NSDictionary *dataDit = responseObject[@"data"];
+            NSDictionary *dataDit = responseObject[@"message"];
             NSArray *dataArray = dataDit[@"list"];
             if (_page == 1) {
                 _cellModelArray = [[NSMutableArray alloc]init];
@@ -110,21 +102,42 @@
                 [self addAlertView:@"已加载全部"];
             }
             [dataArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
-//                NSLog(@"---obj---%@--",obj);
+                //                NSLog(@"---obj---%@--",obj);
                 CLListNewModel *model = [[CLListNewModel alloc]init];
                 
-                NSDictionary *cooperatorDictionary = obj[@"cooperator"];
-                model.cooperatorName = cooperatorDictionary[@"corporationName"];
-                model.cooperatorAddress = cooperatorDictionary[@"address"];
-                model.cooperatorFullname = cooperatorDictionary[@"fullname"];
+                //                NSDictionary *cooperatorDictionary = obj[@"cooperator"];
+                
+                CLHomeOrderCellModel *model1 = [[CLHomeOrderCellModel alloc] initWithDictionary:obj];
+                [self.newsModelArr addObject:model1];
+                
+                model.cooperatorName = obj[@"coopName"];
+                model.cooperatorAddress = obj[@"address"];
+                model.cooperatorFullname = obj[@"coopName"];
                 
                 model.orderId = obj[@"id"];
                 model.orderNumber = obj[@"orderNum"];
-                model.orderType = obj[@"orderType"];
+                
+                NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
+                NSString *str = obj[@"type"];
+                NSArray *arr = [str componentsSeparatedByString:@","];
+                NSString *ss = @"";
+                for(int i=0; i<arr.count; i++) {
+                    
+                    NSInteger index = [arr[i] integerValue] - 1;
+                    if([ss isEqualToString:@""]) {
+                        
+                        ss = array[index];
+                    }else {
+                        
+                        ss = [NSString stringWithFormat:@"%@,%@", ss, array[index]];
+                    }
+                }
+                
+                model.orderType = ss;
                 extern NSString* const URLHOST;
-                model.orderPhoto = [NSString stringWithFormat:@"%@%@",URLHOST,obj[@"photo"]];
-                model.orderLat = obj[@"positionLat"];
-                model.orderLon = obj[@"positionLon"];
+                model.orderPhoto = obj[@"photo"];
+                model.orderLat = obj[@"latitude"];
+                model.orderLon = obj[@"longitude"];
                 model.dataDictionary = obj;
                 if ([obj[@"remark"] isKindOfClass:[NSNull class]]) {
                     model.orderRemark = @" ";
@@ -132,11 +145,11 @@
                     model.orderRemark = obj[@"remark"];
                 }
                 
-            
+                
                 
                 //                cellModel.secondTechId = obj[@"secondTechId"];
                 [_cellModelArray addObject:model];
-                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[obj[@"orderTime"] floatValue]/1000];
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[obj[@"agreedEndTime"] doubleValue]/1000];
                 model.orderTime = [formatter stringFromDate:date];
                 //                NSLog(@"cellModel.orderNumber:%@",cellModel.orderNumber);
                 
@@ -159,24 +172,42 @@
         }
     } failure:^(NSError *error) {
         //        NSLog(@"-不知道为什么请求失败了－－error--%@---",error);
-//        [self addAlertView:@"请求失败"];
+        //        [self addAlertView:@"请求失败"];
+        
+        [self.tableView.header endRefreshing];
+        [self.tableView.footer endRefreshing];
+        
     }];
 }
-
-
-
-
-
 
 #pragma mark - 立即抢单
 - (void)knockBtnClick:(UIButton *)button{
     
-    CLListNewModel *model = _cellModelArray[button.tag-1];
+    CLHomeOrderCellModel *_model = (CLHomeOrderCellModel *)_newsModelArr[button.tag-1];
     
+    [GFHttpTool postOrderId:[_model.orderId integerValue] Success:^(NSDictionary *responseObject) {
+        
+//        NSLog(@"----抢单结果--%@--",responseObject);
+        if ([responseObject[@"status"]integerValue] == 1) {
+            
+            CLAddOrderSuccessViewController *addSuccess = [[CLAddOrderSuccessViewController alloc]init];
+            addSuccess.model = _model;
+            
+            [self.navigationController pushViewController:addSuccess animated:NO];
+        }else{
+            [self addAlertView:responseObject[@"message"]];
+        }
+    } failure:^(NSError *error) {
+        //        NSLog(@"----抢单结果-222-%@--",error);
+        //        [self addAlertView:@"请求失败"];
+    }];
+    
+    
+    /*
     [GFHttpTool postOrderId:[model.orderId integerValue] Success:^(NSDictionary *responseObject) {
         
 //        NSLog(@"----抢单结果--%@--",responseObject);
-        if ([responseObject[@"result"]integerValue] == 1) {
+        if ([responseObject[@"status"]integerValue] == 1) {
             
             
             
@@ -201,29 +232,25 @@
         //        NSLog(@"----抢单结果-222-%@--",error);
 //        [self addAlertView:@"请求失败"];
     }];
-    
+    */
     
     
 }
-
-
 
 - (void)headRefresh {
     
     _page = 1;
     _pageSize = 4;
-    
+    self.cellModelArray = [[NSMutableArray alloc] init];
     
     [self httpWorkForTableView];
     
 }
 
 - (void)footRefresh {
-    if (_page == 1) {
-        _page = 2;
-    }
+
     _page = _page + 1;
-    _pageSize = 2;
+    _pageSize = 4;
     
     [self httpWorkForTableView];
 }
@@ -233,22 +260,22 @@
 #pragma mark - 订单表格
 - (void)setTableView{
     
-    
-    
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64)];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
+    _tableView.footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+    _tableView.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:1];
     
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
-    
-    
-    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return _cellModelArray.count+1;
+//    return _cellModelArray.count+1;
+//    return _cellModelArray.count;
+    return self.newsModelArr.count;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
@@ -280,58 +307,89 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0) {
-        return 0;
-    }else{
-        return 75 + [UIScreen mainScreen].bounds.size.width*5/12;
-    }
-    
-    return 0;
+//    if (indexPath.row == 0) {
+//        return 0;
+//    }else{
+        return 140;
+//    }
+//    
+//    return 0;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    CLNewOrderDetailViewController *newOrderDetail = [[CLNewOrderDetailViewController alloc]init];
-    newOrderDetail.model = _cellModelArray[indexPath.row - 1];
+    CLHomeOrderCellModel *cellModel = (CLHomeOrderCellModel *)self.newsModelArr[indexPath.row];
+    
+//    NSLog(@"第几个数据模型；；；；%ld", indexPath.row);
+    
+    GFKeqiangDDViewController *orderDetail = [[GFKeqiangDDViewController alloc]init];
+    orderDetail.model = cellModel;
+    orderDetail.startTime = cellModel.startTime;
+    orderDetail.orderId = cellModel.orderId;
+    orderDetail.customerLat = cellModel.customerLat;
+    orderDetail.customerLon = cellModel.customerLon;
+    orderDetail.orderPhotoURL = cellModel.orderPhotoURL;
+    orderDetail.orderTime = cellModel.orderTime;
+    orderDetail.remark = cellModel.remark;
+    orderDetail.action = cellModel.status;
+    orderDetail.orderType = cellModel.orderType;
+    orderDetail.orderNumber = cellModel.orderNumber;
+    orderDetail.cooperatorName = cellModel.cooperatorFullname;
+    orderDetail.cooperatorAddress = cellModel.address;
+    orderDetail.cooperatorFullname = cellModel.cooperatorFullname;
+    
+//    CLNewOrderDetailViewController *newOrderDetail = [[CLNewOrderDetailViewController alloc]init];
+//    newOrderDetail.model = _cellModelArray[indexPath.row - 1];
 //    NSLog(@"-----model -%@---cell--%@-",newOrderDetail.model,_cellModelArray[indexPath.row-1]);
-    [self.navigationController pushViewController:newOrderDetail animated:YES];
+    [self.navigationController pushViewController:orderDetail animated:YES];
 //    NSLog(@"--------model.dictionary-----%@---",newOrderDetail.model.dataDictionary);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.row == 0) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"title"];
+//    if (indexPath.row == 0) {
+//        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"title"];
+//        if (cell == nil) {
+//            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"title"];
+//            //            [cell initWithTitle];
+//        }
+//        return cell;
+//    }else{
+    
+        static NSString *ID = @"order";
+        CLNewOrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
         if (cell == nil) {
-            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"title"];
-            //            [cell initWithTitle];
+            
+            cell = [[CLNewOrderTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+//            [cell initWithOrder];
         }
-        return cell;
-    }else{
-        CLNewOrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"order"];
-        if (cell == nil) {
-            cell = [[CLNewOrderTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"order"];
-            [cell initWithOrder];
-        }
-        if (indexPath.row <= _cellModelArray.count) {
-            CLListNewModel *cellModer = _cellModelArray[indexPath.row-1];
+    
+        if (_cellModelArray.count > indexPath.row) {
+            
+            CLHomeOrderCellModel *model = (CLHomeOrderCellModel *)self.newsModelArr[indexPath.row];
             cell.orderButton.tag = indexPath.row + 1;
-            NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
-            cell.typeLabel.text = array[[cellModer.orderType integerValue]-1];
+            
+            
+            CLListNewModel *cellModer = _cellModelArray[indexPath.row];
+            cell.orderButton.tag = indexPath.row + 1;
+            
+            cell.typeLabel.text = cellModer.orderType;
+            cell.orderTypeLabelText = cellModer.orderType;
 //            cell.typeLabel.text = cellModer.orderType;
-            cell.orderNumberLabel.text = [NSString stringWithFormat:@"订单编号%@",cellModer.orderNumber];
-            cell.timeLabel.text = [NSString stringWithFormat:@"预约时间%@",cellModer.orderTime];
+            cell.orderNumberLabel.text = [NSString stringWithFormat:@"订单编号：%@",cellModer.orderNumber];
+            cell.timeLabel.text = [NSString stringWithFormat:@"预约时间：%@",cellModer.orderTime];
             [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:cellModer.orderPhoto] placeholderImage:[UIImage imageNamed:@"orderImage"]];
             [cell.orderButton setTitle:@"抢单" forState:UIControlStateNormal];
             cell.orderButton.tag = indexPath.row;
             [cell.orderButton addTarget:self action:@selector(knockBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         }
+    
         return cell;
-    };
-    
-    
-    return nil;
+//    };
+//    
+//    
+//    return nil;
 }
 #pragma mark - 获取周几
 - (NSString *)weekdayString{

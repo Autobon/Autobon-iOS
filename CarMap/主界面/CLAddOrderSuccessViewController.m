@@ -12,8 +12,8 @@
 #import "CLOrderDetailViewController.h"
 #import "CLHomeOrderViewController.h"
 #import "CLOrderForWaitViewController.h"
-
-
+#import "GFOrderForWaitViewController.h"
+#import "CLHomeOrderCellModel.h"
 
 @interface CLAddOrderSuccessViewController ()
 {
@@ -153,7 +153,7 @@
     [self.view addSubview:label];
     
     UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 180, self.view.frame.size.width-20, 30)];
-    label2.text = [NSString stringWithFormat:@"订单编号：%@",_orderNum];
+    label2.text = [NSString stringWithFormat:@"订单编号：%@", _model.orderNumber];
     label2.textColor = [UIColor colorWithRed:155/255.0 green:155/255.0 blue:155/255.0 alpha:1.0];
     label2.textAlignment = NSTextAlignmentCenter;
     label2.font = [UIFont systemFontOfSize:16];
@@ -178,13 +178,36 @@
     _timer = nil;
     
     CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
+    homeOrder.knockOrder = nil;
     [homeOrder headRefresh];
     
+    
+    CLHomeOrderCellModel *cellModel = _model;
+    
+    CLOrderDetailViewController *orderDetail = [[CLOrderDetailViewController alloc]init];
+    orderDetail.orderId = cellModel.orderId;
+    orderDetail.customerLat = cellModel.customerLat;
+    orderDetail.customerLon = cellModel.customerLon;
+    orderDetail.orderPhotoURL = cellModel.orderPhotoURL;
+    orderDetail.orderTime = cellModel.orderTime;
+    orderDetail.remark = cellModel.remark;
+    orderDetail.action = cellModel.status;
+    orderDetail.orderType = cellModel.orderType;
+    orderDetail.orderNumber = cellModel.orderNumber;
+    orderDetail.cooperatorName = cellModel.cooperatorFullname;
+    orderDetail.cooperatorAddress = cellModel.address;
+    orderDetail.cooperatorFullname = cellModel.cooperatorFullname;
+    orderDetail.model = cellModel;
+    
+    [self.navigationController pushViewController:orderDetail animated:YES];
+    
+    
+    /*
     if (_dataDictionary[@"orderType"] == nil) {
         _dataDictionary = _dataDictionary[@"order"];
     }
     
-//    NSLog(@"--收到推送消息的字典---_dataDictionary-----%@---",_dataDictionary);
+    NSLog(@"--收到推送消息的字典---_dataDictionary-----%@---",_dataDictionary);
     CLOrderDetailViewController *detailView = [[CLOrderDetailViewController alloc]init];
     detailView.customerLat = _dataDictionary[@"positionLat"];
     detailView.customerLon = _dataDictionary[@"positionLon"];
@@ -224,7 +247,7 @@
     
     
     [self.navigationController pushViewController:detailView animated:YES];
-    
+    */
     
     
 }
@@ -239,9 +262,10 @@
     if (_isHome) {
         CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
         [homeOrder headRefresh];
+        homeOrder.knockOrder = nil;
         [self.navigationController popViewControllerAnimated:YES];
     }else{
-        CLOrderForWaitViewController *orderForWait = self.navigationController.viewControllers[1];
+        GFOrderForWaitViewController *orderForWait = self.navigationController.viewControllers[1];
         [orderForWait headRefresh];
         [self.navigationController popToViewController:orderForWait animated:YES];
     }

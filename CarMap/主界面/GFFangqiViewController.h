@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class CLHomeOrderCellModel;
+
 @interface GFFangqiViewController : UIViewController
+
+@property (nonatomic, strong) CLHomeOrderCellModel *model;
 
 @end

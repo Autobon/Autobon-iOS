@@ -125,7 +125,7 @@
     
     // 具体信息与更改
     CGFloat jvtiViewW = kWidth;
-    CGFloat jvtiViewH = kHeight * 0.248;
+    CGFloat jvtiViewH = kHeight * 0.348;
     CGFloat jvtiViewX = 0;
     CGFloat jvtiViewY = CGRectGetMaxY(nameView.frame);
     self.jvtiView = [[UIView alloc] initWithFrame:CGRectMake(jvtiViewX, jvtiViewY, jvtiViewW, jvtiViewH)];
@@ -151,7 +151,7 @@
 //    // 开户地点
 //    CGFloat placeButW = (kWidth - 3 * jiange1 - 10) / 2.0;
 //    CGFloat placeButH = kHeight * 0.052;
-//    CGFloat placeButX = CGRectGetMaxX(bankBut.frame) + 10;
+//    CGFloat placeButX = CGRectGetMaxX(self.bankBut.frame) + 10;
 //    CGFloat placeButY = jiange1;
 //    UIButton *placeBut = [UIButton buttonWithType:UIButtonTypeCustom];
 //    placeBut.frame = CGRectMake(placeButX, placeButY, placeButW, placeButH);
@@ -161,7 +161,7 @@
 //    [placeBut setTitle:@"开户地点" forState:UIControlStateNormal];
 //    [placeBut setTitleColor:[UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1] forState:UIControlStateNormal];
 //    placeBut.titleLabel.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
-//    [jvtiView addSubview:placeBut];
+//    [self.jvtiView addSubview:placeBut];
 //    [placeBut addTarget:self action:@selector(placeButClick) forControlEvents:UIControlEventTouchDragInside];
     
     // 银行卡号
@@ -170,7 +170,7 @@
     CGFloat cardTxtX = kWidth * 0.185;
     CGFloat cardTxtY = CGRectGetMaxY(self.bankBut.frame) + jiange1 + 10;
 //    self.cardTxt = [[GFTextField alloc] initWithPlaceholder:self.bankCard withFrame:CGRectMake(cardTxtX, cardTxtY, cardTxtW, cardTxtH)];
-    self.cardTxt = [[GFTextField alloc] initWithPlaceholder:@"请填写本人银行卡" withFrame:CGRectMake(cardTxtX, cardTxtY, cardTxtW, cardTxtH)];
+    self.cardTxt = [[GFTextField alloc] initWithPlaceholder:@"请填写本人银行卡号" withFrame:CGRectMake(cardTxtX, cardTxtY, cardTxtW, cardTxtH)];
     [self.jvtiView addSubview:self.cardTxt];
     self.cardTxt.centerTxt.tag = 5;
     self.cardTxt.centerTxt.delegate = self;
@@ -180,6 +180,24 @@
     UIView *line3 = [[UIView alloc] initWithFrame:CGRectMake(0, jvtiViewH - 1, kWidth, 1)];
     line3.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
     [self.jvtiView addSubview:line3];
+    
+    
+    // 开户行地址
+    CGFloat cardTxtW2 = kWidth - 0.185 * kWidth * 2;
+    CGFloat cardTxtH2 = kHeight * 0.0625;
+    CGFloat cardTxtX2 = kWidth * 0.185;
+    CGFloat cardTxtY2 = CGRectGetMaxY(self.cardTxt.frame) + jiange1 + 10;
+    //    self.cardTxt = [[GFTextField alloc] initWithPlaceholder:self.bankCard withFrame:CGRectMake(cardTxtX, cardTxtY, cardTxtW, cardTxtH)];
+    self.cardTxt2 = [[GFTextField alloc] initWithPlaceholder:@"请填写开户行地址" withFrame:CGRectMake(cardTxtX2, cardTxtY2, cardTxtW2, cardTxtH2)];
+    [self.jvtiView addSubview:self.cardTxt2];
+    self.cardTxt2.centerTxt.tag = 5;
+//    self.cardTxt2.centerTxt.delegate = self;
+    self.cardTxt2.centerTxt.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
+//    self.cardTxt2.centerTxt.keyboardType = UIKeyboardTypePhonePad;
+    // 边线
+    UIView *line33 = [[UIView alloc] initWithFrame:CGRectMake(0, jvtiViewH - 1, kWidth, 1)];
+    line33.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+    [self.jvtiView addSubview:line33];
     
     
     // 银行tableView
@@ -244,18 +262,24 @@
         BOOL cardFlage = [self checkCardNo:self.cardTxt.centerTxt.text];
         if(cardFlage == NO) {
             
-            GFTipView *tipView = [[GFTipView alloc] initWithNormalHeightWithMessage:@"请输入正确地银行卡号" withViewController:self withShowTimw:1.5];
+            GFTipView *tipView = [[GFTipView alloc] initWithNormalHeightWithMessage:@"请输入正确的银行卡号" withViewController:self withShowTimw:1.5];
+            [tipView tipViewShow];
+        }else if(self.cardTxt2.centerTxt.text.length == 0){
+        
+            GFTipView *tipView = [[GFTipView alloc] initWithNormalHeightWithMessage:@"请输入开户行地址" withViewController:self withShowTimw:1.5];
             [tipView tipViewShow];
         }else {
             
+            parDic[@"bankAddress"] = self.cardTxt2.centerTxt.text;
             
+//            NSLog(@"-------%@", parDic);
             [GFHttpTool bankCardPostWithParameters:parDic success:^(id responseObject) {
                 
                 suo = 0;
                 
 //                NSLog(@"提交成功++++++++++++++");
                 
-                NSInteger flage = [responseObject[@"result"] integerValue];
+                NSInteger flage = [responseObject[@"status"] integerValue];
                 
                 if(flage == 1) {
                     
@@ -272,7 +296,7 @@
                 }else {
                     
 //                    NSLog(@"修改失败===========\n%@", responseObject);
-                    [self addAlertView:@"请求失败"];
+                    [self addAlertView:responseObject[@"message"]];
                 }
                 
                 

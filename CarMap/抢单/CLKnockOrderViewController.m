@@ -12,13 +12,27 @@
 #import "GFNavigationView.h"
 #import "UIImageView+WebCache.h"
 #import "CLImageView.h"
+#import "GFHttpTool.h"
+#import "CLHomeOrderCellModel.h"
 
+#import "UIButton+WebCache.h"
 
-@interface CLKnockOrderViewController ()
+#import "HZPhotoBrowser.h"
+
+#import "CLAddOrderSuccessViewController.h"
+#import "GFTipView.h"
+#import "CLHomeOrderViewController.h"
+
+@interface CLKnockOrderViewController () <HZPhotoBrowserDelegate>
 {
     UIScrollView *_scrollView;
     UILabel *_distanceLabel; // 距离label
 }
+
+@property (nonatomic, strong) CLHomeOrderCellModel *model;
+
+@property (nonatomic, strong) NSArray *photoArr;
+
 @end
 
 @implementation CLKnockOrderViewController
@@ -34,12 +48,39 @@
 //    _scrollView.layer.cornerRadius = 10;
     
     
-    [self.view addSubview:_scrollView];
+//    NSLog(@"==返回字典===%@===%@", _orderDictionary, _orderDictionary[@"status"]);
+    NSDictionary *dic = _orderDictionary[@"order"];
+    NSMutableDictionary *mDic= [[NSMutableDictionary alloc] init];
+    mDic[@"orderId"] = dic[@"id"];
+//    NSLog(@"===请求的数据==%@", mDic);
+    [GFHttpTool oederDDGetWithParameters:mDic success:^(id responseObject) {
+        
+//        NSLog(@"----%@-", responseObject);
+        if([responseObject[@"status"] integerValue] == 1) {
+        
+            CLHomeOrderCellModel *model = [[CLHomeOrderCellModel alloc] initWithDictionary:responseObject[@"message"]];
+            _model = model;
+            
+//            NSLog(@"===%@", _model.cooperatorAddress);
+            
+            [self.view addSubview:_scrollView];
+            
+            
+            [self addMap];
+            
+            [self setViewForAutobon];
+        }else {
+        
+            
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+        
+    }];
     
     
-    [self addMap];
-    
-    [self setViewForAutobon];
     
     
     
@@ -76,7 +117,7 @@
 
 - (void)setViewForAutobon{
     
-    NSDictionary *orderDic = _orderDictionary[@"order"];
+//    NSDictionary *orderDic = _orderDictionary[@"order"];
     
     // 距离label
     _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, self.view.frame.size.width, self.view.frame.size.height/18)];
@@ -90,24 +131,81 @@
     lineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [_scrollView addSubview:lineView];
     
-    // 订单图片
-    UIImageView *imageView = [[CLImageView alloc]initWithFrame:CGRectMake(10, lineView.frame.origin.y + 7, _scrollView.frame.size.width - 20, self.view.frame.size.height/4)];
-    //    imageView.backgroundColor = [UIColor darkGrayColor];
-    imageView.image = [UIImage imageNamed:@"orderImage"];
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
-    extern NSString* const URLHOST;
-    [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",URLHOST,orderDic[@"photo"]]] placeholderImage:[UIImage imageNamed:@"orderImage"]];
-    [_scrollView addSubview:imageView];
+//    // 订单图片
+//    UIImageView *imageView = [[CLImageView alloc]initWithFrame:CGRectMake(10, lineView.frame.origin.y + 7, _scrollView.frame.size.width - 20, self.view.frame.size.height/4)];
+//    //    imageView.backgroundColor = [UIColor darkGrayColor];
+//    imageView.image = [UIImage imageNamed:@"orderImage"];
+//    imageView.contentMode = UIViewContentModeScaleAspectFit;
+//    extern NSString* const URLHOST;
+//    [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",URLHOST,orderDic[@"photo"]]] placeholderImage:[UIImage imageNamed:@"orderImage"]];
+//    [_scrollView addSubview:imageView];
     
-    UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(imageView.frame)+5, _scrollView.frame.size.width, 1)];
+    // 订单图片
+    _photoArr = [_model.orderPhotoURL componentsSeparatedByString:@","];
+//    NSLog(@"照片地址数组：%ld：：：%@", _photoArr.count, _photoArr);
+    CGFloat butW = (_scrollView.frame.size.width - 40) / 3.0;
+    CGFloat butH = butW;
+    CGFloat maxY = 0;
+    for(int i=0; i<_photoArr.count; i++) {
+        
+        UIButton *but = [UIButton buttonWithType:UIButtonTypeCustom];
+        but.backgroundColor = [UIColor redColor];
+        but.frame = CGRectMake(10 + (butW + 10) * (i % 3), lineView.frame.origin.y + 7 + (butH + 10) * (i / 3), butW, butH);
+        [but sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.219.58:8000%@", _photoArr[i]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"orderImage"]];
+        but.clipsToBounds = YES;
+        but.tag = i + 1;
+        [_scrollView addSubview:but];
+        [but addTarget:self action:@selector(imgViewButClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        if(i == _photoArr.count - 1) {
+            
+            maxY = CGRectGetMaxY(but.frame);
+        }
+    }
+    
+    
+    
+    
+    UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(0, maxY+5, _scrollView.frame.size.width, 1)];
     lineView2.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [_scrollView addSubview:lineView2];
     
+    
+    
+    [self setLineView:[NSString stringWithFormat:@"订单类型：%@", _model.orderType] maxY:lineView2.frame.origin.y];
+    [self setLineView:[NSString stringWithFormat:@"预约施工时间：%@",_model.orderTime] maxY:lineView2.frame.origin.y+_scrollView.frame.size.height/18+10 + 10];
+    [self setLineView:[NSString stringWithFormat:@"最晚交车时间：%@",_model.agreedEndTime] maxY:lineView2.frame.origin.y+(_scrollView.frame.size.height/18+10 + 10)*2];
+    [self setLineView:[NSString stringWithFormat:@"下单人员：%@",_model.creatorName] maxY:lineView2.frame.origin.y+(_scrollView.frame.size.height/18+10 + 10)*3];
+    [self setLineView:[NSString stringWithFormat:@"下单时间：%@",_model.createTime] maxY:lineView2.frame.origin.y+(_scrollView.frame.size.height/18+10 + 10)*4];
+    [self setLineView:[NSString stringWithFormat:@"商户名称：%@",_model.cooperatorFullname] maxY:lineView2.frame.origin.y+(_scrollView.frame.size.height/18+10 + 10)*5];
+    UILabel *lastLab = [self setLineView:[NSString stringWithFormat:@"商户位置：%@",_model.address] maxY:lineView2.frame.origin.y+(_scrollView.frame.size.height/18+10 + 10)*6];
+    // 备注
+    UILabel *otherLabel = [[UILabel alloc]init];
+    otherLabel.text = [NSString stringWithFormat:@"下单备注：%@",_model.remark];
+    otherLabel.numberOfLines = 0;
+    CGRect detailSize = [otherLabel.text boundingRectWithSize:CGSizeMake(_scrollView.frame.size.width-30, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17]} context:nil];
+    otherLabel.frame = CGRectMake(10, CGRectGetMaxY(lastLab.frame)+16, _scrollView.frame.size.width-20, detailSize.size.height);
+    otherLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
+    [_scrollView addSubview:otherLabel];
+    
+    // 抢单
+    UIButton *workButton = [[UIButton alloc]initWithFrame:CGRectMake(25, [UIScreen mainScreen].bounds.size.height-60, _scrollView.frame.size.width - 50, 40)];
+    [workButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    workButton.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+    [self.view addSubview:workButton];
+    [workButton addTarget:self action:@selector(workBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [workButton setTitle:@"抢单" forState:UIControlStateNormal];
+    workButton.layer.cornerRadius = 7.5;
+    
+    
+    _scrollView.contentSize = CGSizeMake(_scrollView.frame.size.width, CGRectGetMaxY(lastLab.frame)+1+detailSize.size.height+_scrollView.frame.size.height/18 + 70);
+    
+    /*
     // 施工时间
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[orderDic[@"orderTime"] floatValue]/1000];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[orderDic[@"agreedEndTime"] floatValue]/1000];
     NSString *timeString = [formatter stringFromDate:date];
     
     
@@ -118,22 +216,36 @@
     [self setLineView:[NSString stringWithFormat:@"施工时间：%@",timeString] maxY:lineView2.frame.origin.y];
     
     NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
-    [self setLineView:[NSString stringWithFormat:@"订单类型：%@",array[[orderDic[@"orderType"] integerValue]-1]] maxY:lineView2.frame.origin.y+self.view.frame.size.height/18+1];
+    NSArray *typeArr = [orderDic[@"type"] componentsSeparatedByString:@","];
+    NSString *ss = @"";
+    for(int i=0; i<typeArr.count; i++) {
+    
+        NSInteger j = [typeArr[i] integerValue] - 1;
+        if([ss isEqualToString:@""]) {
+        
+            ss = array[j];
+        }else {
+            
+            ss = [NSString stringWithFormat:@"%@,%@", ss, array[j]];
+        }
+        
+        NSLog(@"===%@", ss);
+    }
+    
+    [self setLineView:[NSString stringWithFormat:@"订单类型：%@",ss] maxY:lineView2.frame.origin.y+self.view.frame.size.height/18+1];
     
     NSDictionary *cooperatorDictionary = orderDic[@"cooperator"];
 
-    [self setLineView:[NSString stringWithFormat:@"下单人员：%@",cooperatorDictionary[@"corporationName"]] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*2];
+    [self setLineView:[NSString stringWithFormat:@"下单人员：%@",cooperatorDictionary[@"creatorName"]] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*2];
     
     [self setLineView:[NSString stringWithFormat:@"商户位置：%@",cooperatorDictionary[@"address"]] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*3];
-    
-    
     
     
     
     UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*4, _scrollView.frame.size.width, self.view.frame.size.height/18)];
     //    timeLabel.backgroundColor = [UIColor cyanColor];
 //    timeLabel.text = @"工作时间： 今天14:30";
-    timeLabel.text = [NSString stringWithFormat:@"商户名称：%@",cooperatorDictionary[@"fullname"]];
+    timeLabel.text = [NSString stringWithFormat:@"商户名称：%@",cooperatorDictionary[@"coopName"]];
     timeLabel.font = [UIFont systemFontOfSize:14];
     timeLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     timeLabel.font = [UIFont systemFontOfSize:14];
@@ -179,7 +291,7 @@
     [_certifyButton setTitle:@"立即抢单" forState:UIControlStateNormal];
     [_certifyButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_scrollView addSubview:_certifyButton];
-    
+    */
     
     
 // 取消按钮
@@ -190,25 +302,104 @@
     [self.view addSubview:_cancelButton];
     
     
-    _scrollView.contentSize = CGSizeMake(_scrollView.frame.size.width, CGRectGetMaxY(_certifyButton.frame)+20);
+//    _scrollView.contentSize = CGSizeMake(_scrollView.frame.size.width, CGRectGetMaxY(_certifyButton.frame)+20);
 }
 
-
-- (void)setLineView:(NSString *)title maxY:(float)maxY{
+- (UILabel *)setLineView:(NSString *)title maxY:(float)maxY{
     
     // 施工时间
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, maxY +4, self.view.frame.size.width, self.view.frame.size.height/18)];
+    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, maxY + 10, _scrollView.frame.size.width, _scrollView.frame.size.height/18)];
     //    timeLabel.backgroundColor = [UIColor cyanColor];
     timeLabel.text = title;
     timeLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
-    timeLabel.font = [UIFont systemFontOfSize:14];
     [_scrollView addSubview:timeLabel];
     
-    UIView *lineView3 = [[UIView alloc]initWithFrame:CGRectMake(0, timeLabel.frame.origin.y+self.view.frame.size.height/18, self.view.frame.size.width, 1)];
+    UIView *lineView3 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(timeLabel.frame) + 10, _scrollView.frame.size.width, 1)];
     lineView3.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [_scrollView addSubview:lineView3];
     
+    return timeLabel;
 }
+
+#pragma mark - 抢单按钮的响应方法
+- (void)workBtnClick{
+    
+    
+    [GFHttpTool postOrderId:[_model.orderId integerValue] Success:^(NSDictionary *responseObject) {
+        
+//        NSLog(@"----抢单结果--%@--",responseObject);
+        if ([responseObject[@"status"]integerValue] == 1) {
+            
+            CLAddOrderSuccessViewController *addSuccess = [[CLAddOrderSuccessViewController alloc]init];
+            addSuccess.model = _model;
+            CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
+            homeOrder.knockOrder = nil;
+            [self.view removeFromSuperview];
+            //            addSuccess.orderNum = _model.orderNumber;
+            //            addSuccess.dataDictionary = _model.dataDictionary;
+            addSuccess.isHome = YES;
+            [self.navigationController pushViewController:addSuccess animated:NO];
+        }else{
+            [self addAlertView:responseObject[@"message"]];
+        }
+    } failure:^(NSError *error) {
+        //        NSLog(@"----抢单结果-222-%@--",error);
+        //        [self addAlertView:@"请求失败"];
+    }];
+    
+}
+
+#pragma mark - AlertView
+- (void)addAlertView:(NSString *)title{
+    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
+    [tipView tipViewShow];
+}
+
+- (void)imgViewButClick:(UIButton *)sender {
+    
+//    NSLog(@"---tupiande de index %ld", sender.tag - 1);
+    
+    HZPhotoBrowser *browser = [[HZPhotoBrowser alloc] init];
+    
+    browser.sourceImagesContainerView = _scrollView;
+    
+    browser.imageCount = _photoArr.count;
+    
+    browser.currentImageIndex = sender.tag - 1;
+    
+    browser.delegate = self;
+    
+    [browser show]; // 展示图片浏览器
+}
+- (UIImage *)photoBrowser:(HZPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index {
+    
+    UIImage *img = [UIImage imageNamed:@"orderImage"];
+    
+    return img;
+}
+- (NSURL *)photoBrowser:(HZPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index {
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.219.58:8000%@", _photoArr[index]]];
+    
+    return url;
+}
+
+
+//- (void)setLineView:(NSString *)title maxY:(CGFloat)maxY{
+//    
+//    // 施工时间
+//    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, maxY +4, self.view.frame.size.width, self.view.frame.size.height/18)];
+//    //    timeLabel.backgroundColor = [UIColor cyanColor];
+//    timeLabel.text = title;
+//    timeLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
+//    timeLabel.font = [UIFont systemFontOfSize:14];
+//    [_scrollView addSubview:timeLabel];
+//    
+//    UIView *lineView3 = [[UIView alloc]initWithFrame:CGRectMake(0, timeLabel.frame.origin.y+self.view.frame.size.height/18, self.view.frame.size.width, 1)];
+//    lineView3.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
+//    [_scrollView addSubview:lineView3];
+//    
+//}
 
 
 
@@ -218,7 +409,8 @@
     NSUserDefaults *userDefalts = [NSUserDefaults standardUserDefaults];
     [userDefalts setObject:@"YES" forKey:@"homeOrder"];
     [userDefalts synchronize];
-    
+    CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
+    homeOrder.knockOrder = nil;
     [self.view removeFromSuperview];
     
 }

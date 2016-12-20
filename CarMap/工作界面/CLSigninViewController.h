@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class CLHomeOrderCellModel;
+
 @interface CLSigninViewController : UIViewController
 
 @property (nonatomic ,strong) NSString *customerLat;
@@ -17,5 +19,6 @@
 @property (nonatomic ,strong) NSString *orderType;
 @property (nonatomic ,strong) NSString *startTime;
 
+@property (nonatomic, strong) CLHomeOrderCellModel *model;
 
 @end

@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class CLKnockOrderViewController;
+
 @interface CLHomeOrderViewController : UIViewController
 
 
+@property (nonatomic, strong) CLKnockOrderViewController *knockOrder;
 
 - (void)headRefresh;
 

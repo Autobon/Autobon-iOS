@@ -19,6 +19,7 @@
 @interface GFProjectView : UIView
 
 @property (nonatomic, strong) NSArray *prArr;
+@property (nonatomic, strong) NSMutableArray *buweiIdArr;
 @property (nonatomic, strong) NSMutableArray *idArr;
 @property (nonatomic, strong) NSMutableArray *disableArr;
 

@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class GFAddpeoModel;
+
 @interface GFAddPeoTableViewCell : UITableViewCell
 
+@property (nonatomic, strong) GFAddpeoModel *model;
+
+@property (nonatomic, strong) UIButton *addBut;
 @end

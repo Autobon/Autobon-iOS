@@ -10,4 +10,20 @@
 
 @implementation GFBuweiModel
 
+
+
+- (instancetype)initWithDictionary:(NSDictionary *)dic {
+
+    self = [super init];
+    
+    if(self != nil) {
+        
+        _buweiDicArr = dic[@"constructionPositions"];
+        _proId = [NSString stringWithFormat:@"%@", dic[@"id"]];
+        _proName = dic[@"name"];
+    }
+    
+    return self;
+}
+
 @end

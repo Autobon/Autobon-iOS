@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+@class GFCertifyModel;
+
 @interface GFDDMessageViewController : UIViewController
 
+@property (nonatomic, strong) GFCertifyModel *model;
 @end

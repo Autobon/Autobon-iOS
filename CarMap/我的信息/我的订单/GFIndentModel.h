@@ -27,4 +27,7 @@
 @property (nonatomic ,copy) NSString *orderStatus; //订单状态
 
 
+- (instancetype)initWithDictionary:(NSDictionary *)dic;
+
+
 @end

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class GFCertifyModel;
 @interface GFCertifyFaileViewController : UIViewController
-
+@property (nonatomic, strong) GFCertifyModel *model;
 @end

@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class GFCertifyModel;
+
 @interface CLCertifyingViewController : UIViewController
+
+@property (nonatomic, strong) GFCertifyModel *model;
 
 @end

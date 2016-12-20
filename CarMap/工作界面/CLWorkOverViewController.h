@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class CLHomeOrderCellModel;
+
 @interface CLWorkOverViewController : UIViewController
 
 
@@ -16,6 +18,6 @@
 @property (nonatomic ,strong) NSString *orderType;
 @property (nonatomic ,strong) NSString *startTime;
 
-
+@property (nonatomic, strong) CLHomeOrderCellModel *model;
 
 @end

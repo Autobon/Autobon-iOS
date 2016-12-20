@@ -16,10 +16,12 @@
 #import "MYImageView.h"
 #import "CLCleanWorkViewController.h"
 #import "CLHomeOrderViewController.h"
+#import "CLHomeOrderCellModel.h"
 
+#import "GFAlertView.h"
+#import "GFFangqiViewController.h"
 
-
-
+#import "GFImageView.h"
 
 
 
@@ -53,7 +55,7 @@
     
     [self titleView];
     
-    [self startTimeForNows];
+//    [self startTimeForNows];
     
 }
 
@@ -116,6 +118,7 @@
     
     NSInteger time = (NSInteger)[[NSDate date] timeIntervalSince1970] - [_startTime integerValue]/1000;
     
+//    NSLog(@"--时间戳-%ld", time);
     
     NSInteger minute = time/60;
     if (minute > 60) {
@@ -161,28 +164,28 @@
 
 - (void)titleView{
     
-    CLTitleView *titleView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 64+36+40, self.view.frame.size.width, 45) Title:@"上传未开始工作车辆照片"];
+    CLTitleView *titleView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 64+36, self.view.frame.size.width, 45) Title:@"上传未开始工作车辆照片"];
     [self.view addSubview:titleView];
     
     
     
-    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 101, self.view.frame.size.width, 40)];
-    _distanceLabel.text = @"已用时：15分28秒";
-    _distanceLabel.backgroundColor = [UIColor whiteColor];
-    _distanceLabel.font = [UIFont systemFontOfSize:15];
-    _distanceLabel.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:_distanceLabel];
+//    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 101, self.view.frame.size.width, 40)];
+//    _distanceLabel.text = @"已用时：15分28秒";
+//    _distanceLabel.backgroundColor = [UIColor whiteColor];
+//    _distanceLabel.font = [UIFont systemFontOfSize:15];
+//    _distanceLabel.textAlignment = NSTextAlignmentCenter;
+//    [self.view addSubview:_distanceLabel];
     
     
     
-    _carImageButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/7, 200, self.view.frame.size.width*5/7, self.view.frame.size.width*27/70)];
+    _carImageButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/7, 150, self.view.frame.size.width*5/7, self.view.frame.size.width*27/70)];
 //    _carImageView.image = [UIImage imageNamed:@"carImage"];
     [_carImageButton setBackgroundImage:[UIImage imageNamed:@"carImage"] forState:UIControlStateNormal];
     [_carImageButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
 //    _carImageButton.backgroundColor = [UIColor cyanColor];
     [self.view addSubview:_carImageButton];
     
-    _cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*6/7-15, 200+self.view.frame.size.width*27/70-25, 30, 30)];
+    _cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*6/7-15, 150+self.view.frame.size.width*27/70-25, 30, 30)];
     [_cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
     [_cameraBtn addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_cameraBtn];
@@ -190,7 +193,7 @@
     
     
     
-    UIButton *signinButton = [[UIButton alloc]initWithFrame:CGRectMake(30, self.view.frame.size.height-60, self.view.frame.size.width-60, 50)];
+    UIButton *signinButton = [[UIButton alloc]initWithFrame:CGRectMake(30, self.view.frame.size.height-75, self.view.frame.size.width-60, 50)];
 //    signinButton.center = CGPointMake(self.view.center.x, self.view.frame.size.height-60);
     [signinButton setTitle:@"继续" forState:UIControlStateNormal];
     signinButton.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
@@ -268,8 +271,12 @@
     
     if (_imageArray.count == 0) {
         _carImageButton.hidden = YES;
-        MYImageView *imageView = [[MYImageView alloc]init];
+//        MYImageView *imageView = [[MYImageView alloc]init];
+        GFImageView *imageView = [[GFImageView alloc]init];
         imageView.image = image;
+        
+        imageView.clipsToBounds = YES;
+        
         imageView.frame = CGRectMake(10, _carImageButton.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
         _cameraBtn.frame = CGRectMake(20+(self.view.frame.size.width-40)/3, _carImageButton.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
         [_cameraBtn setImage:[UIImage imageNamed:@"addImage"] forState:UIControlStateNormal];
@@ -289,8 +296,11 @@
         
     }else{
 //        NSLog(@"小车不存在---%@--",@(_imageArray.count));
-        MYImageView *imageView = [[MYImageView alloc]initWithFrame:CGRectMake(_cameraBtn.frame.origin.x, _cameraBtn.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3)];
+        GFImageView *imageView = [[GFImageView alloc]initWithFrame:CGRectMake(_cameraBtn.frame.origin.x, _cameraBtn.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3)];
         imageView.image = image;
+        
+        imageView.clipsToBounds = YES;
+        
         [self.view addSubview:imageView];
         
         if (_imageArray.count == 8) {
@@ -323,13 +333,13 @@
     NSData *imageData = UIImageJPEGRepresentation(imageNew, 0.8);
 
     
-    MYImageView *imageView = [_imageArray objectAtIndex:_imageArray.count-1];
+    GFImageView *imageView = [_imageArray objectAtIndex:_imageArray.count-1];
 
     [GFHttpTool PostImageForWork:imageData success:^(NSDictionary *responseObject) {
 //        NSLog(@"上传成功－%@--－%@",responseObject,responseObject[@"message"]);
-        if ([responseObject[@"result"] integerValue] == 1) {
+        if ([responseObject[@"status"] integerValue] == 1) {
 //
-            imageView.resultURL = responseObject[@"data"];
+            imageView.resultURL = responseObject[@"message"];
         }else{
 #warning --图片上传失败，从数组移走图片
             [self addAlertView:@"图片上传失败"];
@@ -411,8 +421,8 @@
     if (_imageArray.count > 0) {
         
         __block NSString *URLString;
-        [_imageArray enumerateObjectsUsingBlock:^(MYImageView *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//            NSLog(@"imageURL---%@--",obj.resultURL);
+        [_imageArray enumerateObjectsUsingBlock:^(GFImageView *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+
             if (idx == 0) {
                 URLString = obj.resultURL;
             }else{
@@ -422,66 +432,44 @@
         
         
         [GFHttpTool PostPhotoForBeforeOrderId:[_orderId integerValue] URLs:URLString success:^(NSDictionary *responseObject) {
-            if ([responseObject[@"result"] integerValue] == 1) {
-                
-//                CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
-//                workOver.orderId = _orderId;
-//                workOver.orderType = _orderType;
-//                [self.navigationController pushViewController:workOver animated:YES];
+            
+//            NSLog(@"---继续---%@", responseObject);
+            
+            if ([responseObject[@"status"] integerValue] == 1) {
                 
                 [_timer invalidate];
                 _timer = nil;
                 
-                if ([_orderType integerValue] == 4) {
-                    
-                    CLCleanWorkViewController *cleanWork = [[CLCleanWorkViewController alloc]init];
-                    cleanWork.orderId = _orderId;
-                    cleanWork.startTime = _startTime;
-//                    [self.navigationController pushViewController:cleanWork animated:YES];
-                    cleanWork.orderNumber = self.orderNumber;
-//                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-//                    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:cleanWork];
-//                    navigation.navigationBarHidden = YES;
-//                    window.rootViewController = navigation;
-                    [self.navigationController pushViewController:cleanWork animated:YES];
-                    
-                    
-                }else{
-                    CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
-                    workOver.orderId = _orderId;
-                    workOver.orderType = _orderType;
-                    workOver.startTime = _startTime;
-                    workOver.orderNumber = self.orderNumber;
-//                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-//                    UINavigationController *navigation = [[UINavigationController alloc]initWithRootViewController:workOver];
-//                    navigation.navigationBarHidden = YES;
-//                    window.rootViewController = navigation;
-                    
-                    
-                    [self.navigationController pushViewController:workOver animated:YES];
+                if([_startTime isEqualToString:@"未开始"]) {
+                
+                    _startTime = [NSString stringWithFormat:@"%ld", (NSInteger)[[NSDate date] timeIntervalSince1970] * 1000];
                 }
                 
+//                if ([_orderType integerValue] == 4) {
+//                    
+//                    CLCleanWorkViewController *cleanWork = [[CLCleanWorkViewController alloc]init];
+//                    cleanWork.orderId = _orderId;
+//                    cleanWork.startTime = _startTime;
+//                    cleanWork.orderNumber = self.orderNumber;
+//                    [self.navigationController pushViewController:cleanWork animated:YES];
                 
-                
+//                }else{
+                CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
+                workOver.orderId = _orderId;
+                workOver.orderType = _orderType;
+                workOver.startTime = _startTime;
+                workOver.orderNumber = self.orderNumber;
+                workOver.model = _model;
+                [self.navigationController pushViewController:workOver animated:YES];
+//                }
             }
         } failure:^(NSError *error) {
-//            NSLog(@"－－－失败了--%@",error);
-//            [self addAlertView:@"提交失败"];
+            
         }];
-        
-        
-        
-        
-        
         
         }else{
         [self addAlertView:@"至少上传一张照片照片"];
     }
-    
-    
-    
-    
-    
 }
 
 
@@ -499,10 +487,69 @@
     [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [navView.rightBut addTarget:navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.view addSubview:navView];
+    UIButton *removeOrderButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 85, 20, 40, 40)];
+    removeOrderButton.titleLabel.font = [UIFont systemFontOfSize:16];
+    //    removeOrderButton.backgroundColor = [UIColor grayColor];
+//    removeOrderButton.layer.borderColor = [[UIColor whiteColor] CGColor];
+//    removeOrderButton.layer.borderWidth = 1;
+//    removeOrderButton.layer.cornerRadius = 20;
+    [removeOrderButton setTitle:@"改派" forState:UIControlStateNormal];
+    if([_model.status isEqualToString:@"IN_PROGRESS"] || [_model.status isEqualToString:@"SIGNED_IN"] || [_model.status isEqualToString:@"AT_WORK"]) {
+        
+        [removeOrderButton setTitle:@"改派" forState:UIControlStateNormal];
+    }
+    [removeOrderButton setTitleColor:[UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0] forState:UIControlStateHighlighted];
+    [removeOrderButton addTarget:self action:@selector(removeOrderBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [navView addSubview:removeOrderButton];
     
+    [self.view addSubview:navView];
+}
+
+
+#pragma mark - 弃单提示和请求
+- (void)removeOrderBtnClick{
+    GFAlertView *alertView = [[GFAlertView alloc]initWithTitle:@"确认要放弃此单吗？" leftBtn:@"取消" rightBtn:@"确定"];
+    [alertView.rightButton addTarget:self action:@selector(removeOrder) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:alertView];
+}
+- (void)removeOrder{
+    //    NSLog(@"确认放弃订单，订单ID为 －－%@--- ",_orderId);
+    
+    GFFangqiViewController *vc = [[GFFangqiViewController alloc] init];
+    vc.model = _model;
+    [self.navigationController pushViewController:vc animated:YES];
+    
+    /*
+     [GFHttpTool postCancelOrder:_model.orderId Success:^(id responseObject) {
+     
+     NSLog(@"--放弃订单--%@", responseObject);
+     if ([responseObject[@"status"] integerValue] == 1) {
+     
+     [GFTipView tipViewWithNormalHeightWithMessage:@"弃单成功" withShowTimw:1.5];
+     [self performSelector:@selector(removeOrderSuccess) withObject:nil afterDelay:1.5];
+     }else{
+     
+     [GFTipView tipViewWithNormalHeightWithMessage:responseObject[@"message"] withShowTimw:1.5];
+     
+     }
+     
+     } failure:^(NSError *error) {
+     
+     //       NSLog(@"放弃订单失败----%@---",error);
+     
+     }];
+     */
     
 }
+
+- (void)removeOrderSuccess{
+    CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
+    [homeOrder headRefresh];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+
+
 - (void)backBtnClick{
     
     [_timer invalidate];

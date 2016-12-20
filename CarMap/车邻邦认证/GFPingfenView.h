@@ -10,4 +10,7 @@
 
 @interface GFPingfenView : UIView
 
+@property (nonatomic, copy) NSString *xingjiStr;
+
+
 @end

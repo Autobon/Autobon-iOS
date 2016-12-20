@@ -12,6 +12,7 @@
 #import "GFHttpTool.h"
 #import "GFAlertView.h"
 #import "CLDelegateViewController.h"
+#import "GFSignInViewController.h"
 
 
 @interface GFSignUpViewController () {
@@ -221,9 +222,6 @@
 //    rightBut.titleLabel.font = [UIFont systemFontOfSize:11 / 320.0 * kWidth];
 //    rightBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
 //    [self.view addSubview:rightBut];
-
-
-    
 }
 
 
@@ -371,7 +369,9 @@
         
         [GFHttpTool codeGetWithParameters:parDic success:^(id responseObject) {
             
-            NSInteger flage = [responseObject[@"result"] integerValue];
+//            NSLog(@"++++++++=======%@", responseObject);
+            
+            NSInteger flage = [responseObject[@"status"] integerValue];
             
             if(flage == 1) {
                 // 计时器
@@ -487,7 +487,7 @@
                         
 //                        NSLog(@"注册提交成功======\n%@", responseObject);
                         
-                        NSInteger flage = [responseObject[@"result"] integerValue];
+                        NSInteger flage = [responseObject[@"status"] integerValue];
                         
                         if(flage == 0) {
                             
@@ -500,6 +500,16 @@
                                 [self tipView:kHeight * 0.8 withTipmessage:@"注册成功"];
                                 
                             } completion:^(BOOL finished) {
+                                
+                                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                                [userDefaults setObject:self.userNameTxt.centerTxt.text forKey:@"userName"];
+                                [userDefaults setObject:self.passWordTxt.centerTxt.text forKey:@"userPassword"];
+                                
+                                UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                                UINavigationController *navVC = (UINavigationController *)window.rootViewController;
+                                GFSignInViewController *vc = (GFSignInViewController *)navVC.childViewControllers[0];
+                                vc.userNameTxt.centerTxt.text = self.userNameTxt.centerTxt.text;
+                                vc.passWordTxt.centerTxt.text = self.passWordTxt.centerTxt.text;
                                 
                                 // 返回登录界面
                                 [self.navigationController popToRootViewControllerAnimated:YES];

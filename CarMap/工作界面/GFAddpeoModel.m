@@ -10,4 +10,25 @@
 
 @implementation GFAddpeoModel
 
+
+
+
+
+
+- (instancetype)initWithdictionary:(NSDictionary *)dic {
+    
+    self = [super init];
+    
+    if(self != nil) {
+        
+        self.name = [NSString stringWithFormat:@"%@", dic[@"name"]];
+        self.avatar = [NSString stringWithFormat:@"%@", dic[@"avatar"]];
+        self.jishiId = [NSString stringWithFormat:@"%@", dic[@"id"]];
+        self.phone = [NSString stringWithFormat:@"%@", dic[@"phone"]];
+    }
+    
+    return self;
+}
+
+
 @end

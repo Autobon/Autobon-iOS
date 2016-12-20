@@ -82,15 +82,9 @@
     
     
     self.tableview.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
-    self.tableview.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+    self.tableview.footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     
     [self.tableview.header beginRefreshing];
-//    [self.tableview.footer beginRefreshing];
-    
-    
-   
-    
-    
 }
 
 - (void)headRefresh {
@@ -106,12 +100,12 @@
 }
 
 - (void)footRefresh {
-    if (_page == 1) {
-        _page = 2;
-    }
+//    if (_page == 1) {
+//        _page = 2;
+//    }
 //    NSLog(@"大脚刷新");
     _page = _page+1;
-    _pageSize = 2;
+    _pageSize = 4;
     [self http];
     
 }
@@ -119,34 +113,95 @@
 - (void)http {
 
     _tableview.userInteractionEnabled = NO;
-//    NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/bill/order";
-//    NSString *url = [NSString stringWithFormat:@"http://121.40.157.200:12345/api/mobile/technician/bill/%@/order", self.model.billId];
     NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
     parDic[@"billd"] = self.model.billId;
     parDic[@"page"] = @(_page);
     parDic[@"pageSize"] = @(_pageSize);
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"WorkItemDic" ofType:@"plist"];
-    NSDictionary *itemDic = [NSDictionary dictionaryWithContentsOfFile:path];
+//    NSString *path = [[NSBundle mainBundle] pathForResource:@"WorkItemDic" ofType:@"plist"];
+//    NSDictionary *itemDic = [NSDictionary dictionaryWithContentsOfFile:path];
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
     
     [GFHttpTool billDetailsGetWithParameters:parDic success:^(id responseObject) {
         
+//        NSLog(@"===----====%@", responseObject);
         if ([responseObject[@"result"] integerValue] == 1) {
             NSDictionary *dataDictionary = responseObject[@"data"];
             NSArray *listArray = dataDictionary[@"list"];
             if (listArray.count == 0 && _billDetailsArray.count > 0) {
                 [self addAlertView:@"已加载全部"];
             }
-            [listArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            for(int i=0; i<listArray.count; i++) {
 //                NSLog(@"----listDictionary---obj--%@--",obj);
+                NSDictionary *obj = listArray[i];
+                
                 CLBillTableViewCellModel *cellModel = [[CLBillTableViewCellModel alloc]init];
                 cellModel.orderNumber = obj[@"orderNum"];
-                cellModel.orderImage = obj[@"photo"];
+//                cellModel.orderImage = obj[@"photo"];
                 
-                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[obj[@"finishTime"] floatValue]/1000];
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[obj[@"createDate"] doubleValue]/1000];
                 cellModel.orderTime = [formatter stringFromDate:date];
+                cellModel.orderPay = [NSString stringWithFormat:@"￥%@",obj[@"payment"]];
+                
+                
+                NSString *ss = @"";
+                if(![obj[@"project1"] isKindOfClass:[NSNull class]]) {
+                    
+                    ss = [NSString stringWithFormat:@"%@", obj[@"project1"]];
+                    if(![obj[@"project2"] isKindOfClass:[NSNull class]]) {
+                    
+                        ss = [NSString stringWithFormat:@"%@,%@", ss, obj[@"project2"]];
+                        if(![obj[@"project3"] isKindOfClass:[NSNull class]]) {
+                        
+                            ss = [NSString stringWithFormat:@"%@,%@", ss, obj[@"project3"]];
+                            if(![obj[@"project4"] isKindOfClass:[NSNull class]]) {
+                            
+                                ss = [NSString stringWithFormat:@"%@,%@", ss, obj[@"project4"]];
+                            }
+                        }
+                    }
+                }
+//                NSLog(@"%@", ss);
+                NSString *sss = @"";
+                if([ss isEqualToString:@""]) {
+                
+                    sss = @"无";
+                    cellModel.orderItem = [NSString stringWithFormat:@"%@", sss];
+
+                }else {
+                
+                    NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
+                    NSString *str = [NSString stringWithFormat:@"%@", ss];
+                    NSArray *arr = [str componentsSeparatedByString:@","];
+                    
+//                    NSLog(@"-------%@", arr);
+                    if(arr.count > 0) {
+                        
+                        for(int i=0; i<arr.count; i++) {
+                            NSInteger index = [arr[i] integerValue] - 1;
+                            if([sss isEqualToString:@""]) {
+//                                NSLog(@"----%ld", index);
+                                sss = array[index];
+                            }else {
+                                
+                                sss = [NSString stringWithFormat:@"%@,%@", sss, array[index]];
+                            }
+                        }
+                    }
+                    
+                    cellModel.orderItem = [NSString stringWithFormat:@"%@", sss];
+//                    if([sss isEqualToString:@""]) {
+//                        
+//                        sss = @"无";
+//                        cellModel.orderItem = [NSString stringWithFormat:@"%@", sss];
+//                    }else {
+//                        
+//                        cellModel.orderItem = [NSString stringWithFormat:@"%@", sss];
+//                    }
+                }
+                
+                /*
                 if ([obj[@"secondTech"]isKindOfClass:[NSNull class]]) {
                     NSDictionary *mainConstructDictionary = obj[@"mainConstruct"];
                     cellModel.orderPay = [NSString stringWithFormat:@"￥%@",mainConstructDictionary[@"payment"]];
@@ -210,21 +265,23 @@
                         }
                     }
                 }
-                
+                */
                 
                 
                 [_billDetailsArray addObject:cellModel];
-            }];
+//                NSLog(@"-%@--- -%@--%@---%@", ss, cellModel.orderNumber, sss, cellModel.orderItem);
+            }
         }
+        [_tableview reloadData];
         [self.tableview.header endRefreshing];
         [self.tableview.footer endRefreshing];
-        [_tableview reloadData];
         _tableview.userInteractionEnabled = YES;
-//>>>>>>> CLmaster
+
     } failure:^(NSError *error) {
         
         _tableview.userInteractionEnabled = YES;
-//        [self addAlertView:@"请求失败"];
+        
+//        NSLog(@"!!!!!!!!!!!!!!%@", error);
     }];
     
     
@@ -235,9 +292,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-
+//    NSLog(@"=====%ld", _billDetailsArray.count);
     return _billDetailsArray.count;
-
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -248,34 +304,39 @@
         
         cell = [[GFBillDetailsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
-    CLBillTableViewCellModel *model = _billDetailsArray[indexPath.row];
-    cell.numberLab.text = [NSString stringWithFormat:@"订单编号%@",model.orderNumber];
-    cell.moneyLab.text = model.orderPay;
-    extern NSString* const URLHOST;
-    [cell.photoImgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",URLHOST,model.orderImage]] placeholderImage:[UIImage imageNamed:@"orderImage"]];
-    cell.timeLab.text = [NSString stringWithFormat:@"施工时间：%@",model.orderTime];
-    NSString *beizhuStr = [NSString stringWithFormat:@"%@", model.orderItem];
-    NSMutableDictionary *bezhuDic = [[NSMutableDictionary alloc] init];
-    bezhuDic[NSFontAttributeName] = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
-    bezhuDic[NSForegroundColorAttributeName] = [UIColor blackColor];
-    CGRect beizhuRect = [beizhuStr boundingRectWithSize:CGSizeMake(kWidth - kWidth * 0.056 * 2 - kWidth * 0.21, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:bezhuDic context:nil];
-    cell.placeLab.text = beizhuStr;
-    cell.placeLabH = beizhuRect.size.height;
-    cell.placeLab.frame = CGRectMake(cell.placeLabX, cell.placeLabY, cell.placeLabW, cell.placeLabH);
-    _cellhh = CGRectGetMaxY(cell.placeLab.frame) + 10.5 / 568.0 * kHeight;
-    CGFloat baseViewW = kWidth;
-    CGFloat baseViewH = _cellhh;
-    CGFloat baseViewX = 0;
-    CGFloat baseViewY = kHeight * 0.0183;
-    cell.baseView.frame = CGRectMake(baseViewX, baseViewY, baseViewW, baseViewH);
-    cell.downLine.frame = CGRectMake(0, baseViewH - 1, kWidth, 1);
+    
+    if(_billDetailsArray.count > indexPath.row) {
+    
+        CLBillTableViewCellModel *model = (CLBillTableViewCellModel *)_billDetailsArray[indexPath.row];
+        cell.numberLab.text = [NSString stringWithFormat:@"订单编号：%@",model.orderNumber];
+        cell.moneyLab.text = model.orderPay;
+        cell.timeLab.text = [NSString stringWithFormat:@"施工时间：%@",model.orderTime];
+        cell.placeText = model.orderItem;
+//        NSLog(@"------%@", model.orderItem);
+//        NSString *beizhuStr = [NSString stringWithFormat:@"%@", model.orderItem];
+//        NSMutableDictionary *bezhuDic = [[NSMutableDictionary alloc] init];
+//        bezhuDic[NSFontAttributeName] = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
+//        bezhuDic[NSForegroundColorAttributeName] = [UIColor blackColor];
+//        CGRect beizhuRect = [beizhuStr boundingRectWithSize:CGSizeMake(kWidth - kWidth * 0.056 * 2 - kWidth * 0.21, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:bezhuDic context:nil];
+//        cell.placeLab.text = beizhuStr;
+//        cell.placeLabH = beizhuRect.size.height;
+//        cell.placeLab.frame = CGRectMake(cell.placeLabX, cell.placeLabY, cell.placeLabW, cell.placeLabH);
+//        _cellhh = CGRectGetMaxY(cell.placeLab.frame) + 10.5 / 568.0 * kHeight;
+//        CGFloat baseViewW = kWidth;
+//        CGFloat baseViewH = _cellhh;
+//        CGFloat baseViewX = 0;
+//        CGFloat baseViewY = kHeight * 0.0183;
+//        cell.baseView.frame = CGRectMake(baseViewX, baseViewY, baseViewW, baseViewH);
+//        cell.downLine.frame = CGRectMake(0, baseViewH - 1, kWidth, 1);
+    }
+    
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     
-    return _cellhh + kHeight * 0.0183;
+    return 140;
 }
 #pragma mark - AlertView
 - (void)addAlertView:(NSString *)title{

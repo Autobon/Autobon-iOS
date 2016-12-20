@@ -34,16 +34,18 @@
     
     _prArr = prArr;
     
-    CGFloat vvH = 40;
+    CGFloat vvH = 30;
     UILabel *vv = [[UILabel alloc] init];
-    vv.backgroundColor = [UIColor brownColor];
-    vv.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, vvH);
+    vv.font = [UIFont systemFontOfSize:15];
+    vv.backgroundColor = [UIColor whiteColor];
+    vv.textColor = [UIColor darkGrayColor];
+    vv.frame = CGRectMake(15, 0, [UIScreen mainScreen].bounds.size.width - 15, vvH);
     [self addSubview:vv];
     _nameLab = vv;
     
-    CGFloat w = ([UIScreen mainScreen].bounds.size.width - 20 * 5) / 4;
+    CGFloat w = ([UIScreen mainScreen].bounds.size.width - 10 * 5) / 4;
     CGFloat h = 30;
-    CGFloat y = 15;
+    CGFloat y = 10;
     
     NSInteger allNum = prArr.count;
     
@@ -55,14 +57,14 @@
         
         UIButton *but = [UIButton buttonWithType:UIButtonTypeCustom];
         but.tag = i + 1;
-        but.titleLabel.font = [UIFont systemFontOfSize:16];
+        but.titleLabel.font = [UIFont systemFontOfSize:10];
         [but setTitle:prArr[i] forState:UIControlStateNormal];
-        [but setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [but setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
         [but setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-        [but setBackgroundImage:[UIImage imageNamed:@"qq"] forState:UIControlStateNormal];
-        [but setBackgroundImage:[UIImage imageNamed:@"ww"] forState:UIControlStateSelected];
-        [but setBackgroundImage:[UIImage imageNamed:@"gg"] forState:UIControlStateDisabled];
-        but.frame = CGRectMake((20 + w) * (i % 4) + 20, y + (i / 4) * (h + y) + vvH, w, h);
+        [but setBackgroundImage:[UIImage imageNamed:@"but_normal"] forState:UIControlStateNormal];
+        [but setBackgroundImage:[UIImage imageNamed:@"but_selected"] forState:UIControlStateSelected];
+        [but setBackgroundImage:[UIImage imageNamed:@"but_disable"] forState:UIControlStateDisabled];
+        but.frame = CGRectMake((10 + w) * (i % 4) + 10, y + (i / 4) * (h + y) + vvH, w, h);
         [self addSubview:but];
         [but addTarget:self action:@selector(butClick:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -77,6 +79,12 @@
     
         _vvHeight = y + (prArr.count / 4 + 1) * (h + y) + vvH;
     }
+    
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, _vvHeight, [UIScreen mainScreen].bounds.size.width, 1)];
+    lineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
+    [self addSubview:lineView];
+    
+    _vvHeight = _vvHeight + 2;
 }
 
 - (NSMutableArray *)selArr {
@@ -99,22 +107,19 @@
 
     for(NSString *idStr in self.selArr) {
     
-        
-        if(![idStr isEqualToString:@"name"]) {
+//        NSLog(@"====%@", self.selArr);
+        NSString *str = [NSString stringWithFormat:@"%@", idStr];
+        if(![str isEqualToString:@"name"]) {
             
-            [_idArr addObject:idStr];
+            [_idArr addObject:str];
         }
     }
+
+//    NSLog(@"--ididididdidid---%@", _idArr);
     
     return _idArr;
 }
 
-//- (NSMutableArray *)disableArr {
-//    
-//    
-//    
-//    return _disableArr;
-//}
 
 - (void)setDisableArr:(NSMutableArray *)disableArr {
     
@@ -138,9 +143,11 @@
     
     sender.selected = !sender.selected;
     
+//    NSLog(@"=====%@", self.selArr);
     if(sender.selected) {
     
-        self.selArr[sender.tag - 1] = self.prArr[sender.tag - 1];
+//        self.selArr[sender.tag - 1] = self.prArr[sender.tag - 1];
+        self.selArr[sender.tag - 1] = self.buweiIdArr[sender.tag - 1];
         self.disableArr[sender.tag - 1] = @"NO";
     }else {
         

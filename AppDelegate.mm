@@ -31,6 +31,10 @@
 
 #import "GFIndentModel.h"
 
+#import "GFFCertifyViewController.h"
+#import "CLWorkOverViewController.h"
+#import "GFIndentViewController.h"
+
 // 个推开发者网站中申请App时，注册的AppId、AppKey、AppSecret
 #define kGtAppId      @"zoCAUGD4Hi55CS6iW1OI77"
 #define kGtAppKey     @"ESlofHVour7DmT7xy7cnJ9"
@@ -64,6 +68,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 //    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
+//    NSLog(@"佛祖保佑，没有BUG");
+    
     _launchDict = [[NSDictionary alloc]initWithDictionary:launchOptions];
     // 通过个推平台分配的appId、 appKey 、appSecret 启动SDK，注：该方法需要在主线程中调用
     [GeTuiSdk startSdkWithAppId:kGtAppId appKey:kGtAppKey appSecret:kGtAppSecret delegate:self];
@@ -74,17 +80,16 @@
     // 注册APNS
     [self registerUserNotification];
     
-    
     [UMSocialData setAppKey:@"564572b9e0f55a38dd001e6c"];
     
     
-    [UMSocialWechatHandler setWXAppId:@"wx55cc20e910a128e5" appSecret:@"7ca03043095011790e0b9a6b9f498457" url:@"http://hpecar.com:12345/shareA.html"];
+    [UMSocialWechatHandler setWXAppId:@"wx55cc20e910a128e5" appSecret:@"7ca03043095011790e0b9a6b9f498457" url:@"http://121.40.219.58:8000/shareA.html"];
     
-    [UMSocialQQHandler setQQWithAppId:@"1105263986" appKey:@"sjj2sjhLIqtjmcfL" url:@"http://hpecar.com:12345/shareA.html"];
+    [UMSocialQQHandler setQQWithAppId:@"1105263986" appKey:@"sjj2sjhLIqtjmcfL" url:@"http://121.40.219.58:8000/shareA.html"];
     
 //    [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
 //
-    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:@"3285914881" RedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
+    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:@"3285914881" RedirectURL:@"http://121.40.219.58:8000/shareA.html"];
 
     _mapManager = [[BMKMapManager alloc]init];
     BOOL ret = [_mapManager start:@"qQxUcaGNCZfeFmhB8EHWVvgt" generalDelegate:self];
@@ -114,6 +119,7 @@
     
     
     GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
+//    CLWorkOverViewController *signInVC = [[CLWorkOverViewController alloc] init];
 //    CLMoreViewController *moreVC = [[CLMoreViewController alloc] init];
 
     _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
@@ -321,6 +327,8 @@
 /** 注册用户通知 */
 - (void)registerUserNotification {
     
+    
+    
     /*
      注册通知(推送)
      申请App需要接受来自服务商提供推送消息
@@ -511,7 +519,7 @@
                 //                NSLog(@"----_pushDate-%@--%@-----",_pushDate,[NSDate date]);
                 notification.alertTitle = responseJSON[@"title"];
                 NSDictionary *orderDictionary = responseJSON[@"order"];
-                notification.alertBody = [NSString stringWithFormat:@"订单编号:%@ 已被商户撤销",orderDictionary[@"orderNum"]];
+                notification.alertBody = [NSString stringWithFormat:@"订单编号：%@ 已被商户撤销",orderDictionary[@"orderNum"]];
                 notification.userInfo = @{@"dictionary":payloadMsg};
                 AudioServicesPlaySystemSound(1307);
                 [[UIApplication sharedApplication]scheduleLocalNotification:notification];
@@ -690,6 +698,8 @@
         if ([responseJSON[@"action"]isEqualToString:@"NEW_ORDER"] || [responseJSON[@"action"]isEqualToString:@"INVITE_PARTNER"]) {
         
             if ([userDefaults objectForKey:@"autoken"]) {
+                
+//                NSLog(@"===+++++++++++++ %@", [userDefaults objectForKey:@"homeOrder"]);
                 if (![[userDefaults objectForKey:@"homeOrder"]isEqualToString:@"YES"]) {
                     UIWindow *window = [UIApplication sharedApplication].delegate.window;
                     

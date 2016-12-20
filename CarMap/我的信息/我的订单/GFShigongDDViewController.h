@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class GFNewOrderModel;
+
 @interface GFShigongDDViewController : UIViewController
+
+@property (nonatomic, strong) GFNewOrderModel *model;
 
 @end
