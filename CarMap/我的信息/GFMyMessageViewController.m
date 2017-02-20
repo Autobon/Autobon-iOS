@@ -27,7 +27,7 @@
 #import "GFCertifyModel.h"
 
 #import "GFDDMessageViewController.h"
-
+#import "CLCommissionViewController.h"
 
 
 @interface GFMyMessageViewController () {
@@ -256,6 +256,17 @@
     UILabel *moneyLab = [[UILabel alloc] initWithFrame:CGRectMake(moneyLabX, moneyLabY, moneyLabW, moneyLabH)];
     moneyLab.text = @"钱包";
     [moneyView addSubview:moneyLab];
+    
+#pragma mark - 佣金标准
+    UIButton *commissionButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [commissionButton setTitle:@"佣金标准" forState:UIControlStateNormal];
+    [commissionButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    commissionButton.frame = CGRectMake(self.view.frame.size.width - 110, moneyImgViewY, 100, moneyImgViewH);
+//    commissionButton.backgroundColor = [UIColor cyanColor];
+    [commissionButton addTarget:self action:@selector(commissionBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [moneyView addSubview:commissionButton];
+    
+    
     // 余额栏界面
     CGFloat balanceLabUpW = (kWidth - 1) / 2.0;
     CGFloat balanceLabUpH = moneyLineShu.frame.size.height / 2.0;
@@ -700,6 +711,15 @@
         [self addAlertView:@"信息请求失败"];
     }];
     
+    
+    
+}
+
+
+#pragma mark - 佣金标准
+- (void)commissionBtnClick{
+    CLCommissionViewController *commissionVC = [[CLCommissionViewController alloc]init];
+    [self.navigationController pushViewController:commissionVC animated:YES];
     
     
 }

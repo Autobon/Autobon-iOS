@@ -147,6 +147,7 @@
 		9BE665401C743E0800976E7D /* CLTouchScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE6653F1C743E0800976E7D /* CLTouchScrollView.m */; };
 		9BEE38BD1C8EBBE000A698A8 /* MYImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BEE38BC1C8EBBE000A698A8 /* MYImageView.m */; };
 		9BF871BE1D1CC77400B830C6 /* CLTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF871BD1D1CC77400B830C6 /* CLTouchView.m */; };
+		B0F229EF1E5B104200C39D60 /* CLCommissionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F229EE1E5B104200C39D60 /* CLCommissionViewController.m */; };
 		BF71DD21E9CF382FC1DA7F81 /* libPods-CarMap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E35E041E0DC0947B718BCC81 /* libPods-CarMap.a */; };
 /* End PBXBuildFile section */
 
@@ -457,6 +458,8 @@
 		9BFA807F1C5F4596001651C3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9BFA80811C5F4744001651C3 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		9BFA80841C5F475B001651C3 /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
+		B0F229ED1E5B104200C39D60 /* CLCommissionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCommissionViewController.h; sourceTree = "<group>"; };
+		B0F229EE1E5B104200C39D60 /* CLCommissionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLCommissionViewController.m; sourceTree = "<group>"; };
 		C556065AF15E40152FD98C94 /* Pods-CarMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarMap.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CarMap/Pods-CarMap.debug.xcconfig"; sourceTree = "<group>"; };
 		E35E041E0DC0947B718BCC81 /* libPods-CarMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CarMap.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF869A2F92518C9D8E77AF74 /* Pods-CarMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarMap.release.xcconfig"; path = "Pods/Target Support Files/Pods-CarMap/Pods-CarMap.release.xcconfig"; sourceTree = "<group>"; };
@@ -821,6 +824,8 @@
 				865637E31C8425A100BE7D8D /* GFTransformViewController.m */,
 				865637EB1C84265E00BE7D8D /* GFTransformTableViewCell.h */,
 				865637EC1C84265E00BE7D8D /* GFTransformTableViewCell.m */,
+				B0F229ED1E5B104200C39D60 /* CLCommissionViewController.h */,
+				B0F229EE1E5B104200C39D60 /* CLCommissionViewController.m */,
 			);
 			path = "更多";
 			sourceTree = "<group>";
@@ -1143,7 +1148,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		B86038204FB88F512154B8FC /* [CP] Embed Pods Frameworks */ = {
@@ -1221,6 +1226,7 @@
 				9B7AEEC71C740992003B1126 /* CLTitleView.m in Sources */,
 				860A4CBB1C7ED9780067FB70 /* MJRefreshBackNormalFooter.m in Sources */,
 				8673FDBA1C98F33900666634 /* GFBillModel.m in Sources */,
+				B0F229EF1E5B104200C39D60 /* CLCommissionViewController.m in Sources */,
 				86B890F51C73355B0068B95D /* GFForgetPwdViewController_2.m in Sources */,
 				9BA9C8171C7DB3CC005CE1C0 /* CLWorkOverViewController.m in Sources */,
 				86D7D46D1DF7B4B400723CC5 /* GFNewOrderModel.m in Sources */,
