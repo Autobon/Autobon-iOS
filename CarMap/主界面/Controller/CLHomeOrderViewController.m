@@ -142,7 +142,7 @@
     NSDictionary *dictionary = @{@"page":@(_page),@"pageSize":@(_pageSize), @"status":@"2"};
     [GFHttpTool getOrderListDictionary:dictionary Success:^(NSDictionary *responseObject) {
         
-//        NSLog(@"===++==%@", responseObject);
+        NSLog(@"===++==%@", responseObject);
         
         
         
@@ -182,11 +182,13 @@
             
             [_tableView reloadData];
             
-            [self.tableView.header endRefreshing];
-            [self.tableView.footer endRefreshing];
+            
+        }else{
+            [self addAlertView:responseObject[@"message"]];
+            
         }
-        
-        
+        [self.tableView.header endRefreshing];
+        [self.tableView.footer endRefreshing];
         
         /*
         if ([responseObject[@"result"] integerValue] == 1) {
