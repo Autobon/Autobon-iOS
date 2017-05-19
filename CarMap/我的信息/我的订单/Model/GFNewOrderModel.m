@@ -59,6 +59,12 @@
             self.coopName = dic[@"coopName"];
         }
         
+        if(dic[@"coopId"] == nil) {
+            self.coopId = @"无";
+        }else {
+            self.coopId = dic[@"coopId"];
+        }
+        
         if(dic[@"createTime"] == nil) {
             self.createTime = @"无";
         }else {

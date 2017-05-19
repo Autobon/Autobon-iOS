@@ -16,6 +16,7 @@
 @property (nonatomic, copy) NSString *agreedStartTime;  // 最迟交车时间
 @property (nonatomic, copy) NSString *beforePhotos;     // 施工前照片
 @property (nonatomic, copy) NSString *coopName;         // 商户名字
+@property (nonatomic, copy) NSString *coopId;         // 商户ID
 @property (nonatomic, copy) NSString *createTime;       // 订单创建时间
 @property (nonatomic, copy) NSString *creatorName;      // 下单人姓名
 @property (nonatomic, copy) NSString *orderID;          // 订单ID

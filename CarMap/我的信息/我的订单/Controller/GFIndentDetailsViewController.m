@@ -364,7 +364,19 @@
     [baseView2 addSubview:self.carPlaceLab];
     baseView2.frame = CGRectMake(baseView2X, baseView2Y, baseView2W, carPlaceLabH - shigongLabH + baseView2H);
     
-   
+// 收藏按钮
+    UIButton *collectButton = [[UIButton alloc]init];
+    [collectButton setTitle:@"收藏" forState:UIControlStateNormal];
+    [collectButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [baseView2 addSubview:collectButton];
+    collectButton.frame = CGRectMake(baseView1W - 50, 10, 50, kHeight * 0.068 - 20 );
+    [collectButton addTarget:self action:@selector(collectBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    collectButton.titleLabel.font = [UIFont systemFontOfSize:12];
+    collectButton.layer.cornerRadius = 3;
+    collectButton.layer.borderWidth = 1;
+    collectButton.layer.borderColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1].CGColor;
+    
+    
     
     
     // 边线
@@ -553,6 +565,22 @@
    
 //    NSLog(@"=upBaseViewH===%f", upBaseViewH);
 }
+
+#pragma mark 收藏按钮响应方法
+- (void)collectBtnClick{
+    
+    
+    [GFHttpTool favoriteCooperatorPostWithParameters:@{@"cooperatorId":_model.coopId} success:^(id responseObject) {
+        NSLog(@"responseObject---%@--",responseObject);
+        
+    } failure:^(NSError *error) {
+        NSLog(@"error--%@--",error);
+    }];
+    
+    
+    
+}
+
 
 - (void)chakanButClick {
     

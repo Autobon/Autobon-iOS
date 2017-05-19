@@ -28,6 +28,7 @@
 
 #import "GFDDMessageViewController.h"
 #import "CLCommissionViewController.h"
+#import "CLCollectViewController.h"
 
 
 @interface GFMyMessageViewController () {
@@ -182,29 +183,6 @@
     fenLab.clipsToBounds = YES;
     [msgView addSubview:fenLab];
     
-    //好评率
-//    CGFloat goodLabW = indentLabW;
-//    CGFloat goodLabH = indentLabH;
-//    CGFloat goodLabX = CGRectGetMaxX(numLab.frame) + jianjv1;
-//    CGFloat goodLabY = indentLabY;
-//    UILabel *goodLab = [[UILabel alloc] initWithFrame:CGRectMake(goodLabX, goodLabY, goodLabW, goodLabH)];
-//    goodLab.text = @"好评率";
-//    goodLab.font = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
-//    [msgView addSubview:goodLab];
-//    NSString *proStr = @"99.99%";
-//    NSMutableDictionary *proDic = [[NSMutableDictionary alloc] init];
-//    proDic[NSFontAttributeName] = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
-//    proDic[NSForegroundColorAttributeName] = [UIColor blackColor];
-//    CGRect proRect = [proStr boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:proDic context:nil];
-//    CGFloat proLabW = proRect.size.width;
-//    CGFloat proLabH = goodLabH;
-//    CGFloat proLabX = CGRectGetMaxX(goodLab.frame) - 3;
-//    CGFloat proLabY = goodLabY;
-//    UILabel *proLab = [[UILabel alloc] initWithFrame:CGRectMake(proLabX, proLabY, proLabW, proLabH)];
-//    proLab.text = proStr;
-//    proLab.font = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
-//    proLab.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-//    [msgView addSubview:proLab];
     // 页面按钮
     CGFloat msgButW = msgViewW;
     CGFloat msgButH = msgViewH;
@@ -334,7 +312,7 @@
     CGFloat indentViewW = msgViewW;
     CGFloat indentViewH = kHeight * 0.078;
     CGFloat indentViewX = msgViewX;
-    CGFloat indentViewY = CGRectGetMaxY(moneyView.frame) + jiange1;
+    CGFloat indentViewY = CGRectGetMaxY(moneyView.frame) + jiange1/2;
     UIView *indentView = [[UIView alloc] initWithFrame:CGRectMake(indentViewX, indentViewY, indentViewW, indentViewH)];
     indentView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:indentView];
@@ -381,6 +359,58 @@
     [indentBut addTarget:self action:@selector(indentButClick) forControlEvents:UIControlEventTouchUpInside];
     
     
+    // 我的收藏
+    CGFloat collectViewW = msgViewW;
+    CGFloat collectViewH = indentViewH;
+    CGFloat collectViewX = msgViewX;
+    CGFloat collectViewY = CGRectGetMaxY(indentView.frame) + jiange1/2;
+    UIView *collectView = [[UIView alloc] initWithFrame:CGRectMake(collectViewX, collectViewY, collectViewW, collectViewH)];
+    collectView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:collectView];
+    // 边线
+    UIView *collectLineUp = [[UIView alloc] initWithFrame:CGRectMake(0, 0, collectViewW, 1)];
+    collectLineUp.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+    [collectView addSubview:collectLineUp];
+    UIView *collectLineDown = [[UIView alloc] initWithFrame:CGRectMake(0, collectViewH - 1, collectViewW, 1)];
+    collectLineDown.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+    [collectView addSubview:collectLineUp];
+    // 界面
+    CGFloat collectImgViewW = kWidth * 0.075;
+    CGFloat collectImgViewH = collectImgViewW;
+    CGFloat collectImgViewX = jianjv1;
+    CGFloat collectImgViewY = (collectViewH - collectImgViewH) / 2.0;
+    UIImageView *collectImgView = [[UIImageView alloc] initWithFrame:CGRectMake(collectImgViewX, collectImgViewY, collectImgViewW, collectImgViewH)];
+    collectImgView.image = [UIImage imageNamed:@"information-2"];
+    [collectView addSubview:collectImgView];
+    CGFloat collectLabW = 150;
+    CGFloat collectLabH = collectImgViewH;
+    CGFloat collectLabX = CGRectGetMaxX(collectImgView.frame) + jianjv1;
+    CGFloat collectLabY = collectImgViewY;
+    UILabel *collectLab = [[UILabel alloc] initWithFrame:CGRectMake(collectLabX, collectLabY, collectLabW, collectLabH)];
+    collectLab.text = @"我的收藏";
+    //    notificationLab.backgroundColor = [UIColor redColor];
+    [collectView addSubview:collectLab];
+    // 右边箭头
+    CGFloat collectRightButW = kWidth * 0.08;
+    CGFloat collectRightButH = indentViewH;
+    CGFloat collectRightButX = kWidth * 0.92;
+    CGFloat collectRightButY = 0;
+    UIButton *collectRightBut = [UIButton buttonWithType:UIButtonTypeCustom];
+    collectRightBut.frame = CGRectMake(collectRightButX, collectRightButY, collectRightButW, collectRightButH);
+    [collectRightBut setImage:[UIImage imageNamed:@"right"] forState:UIControlStateNormal];
+    collectRightBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [collectView addSubview:collectRightBut];
+    // 修改密码界面按钮
+    CGFloat collectButW = collectViewW;
+    CGFloat collectButH = collectViewH;
+    CGFloat collectButX = 0;
+    CGFloat collectButY = 0;
+    UIButton *collectBut = [UIButton buttonWithType:UIButtonTypeCustom];
+    collectBut.frame = CGRectMake(collectButX, collectButY, collectButW, collectButH);
+    [collectView addSubview:collectBut];
+    [collectBut addTarget:self action:@selector(collectButClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    
     
     
     
@@ -389,7 +419,7 @@
     CGFloat notificationViewW = msgViewW;
     CGFloat notificationViewH = indentViewH;
     CGFloat notificationViewX = msgViewX;
-    CGFloat notificationViewY = CGRectGetMaxY(indentView.frame) + jiange1;
+    CGFloat notificationViewY = CGRectGetMaxY(collectView.frame) + jiange1/2;
     UIView *notificationView = [[UIView alloc] initWithFrame:CGRectMake(notificationViewX, notificationViewY, notificationViewW, notificationViewH)];
     notificationView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:notificationView];
@@ -445,7 +475,7 @@
     CGFloat changePwdViewW = msgViewW;
     CGFloat changePwdViewH = indentViewH;
     CGFloat changePwdViewX = msgViewX;
-    CGFloat changePwdViewY = CGRectGetMaxY(notificationView.frame) + jiange1;
+    CGFloat changePwdViewY = CGRectGetMaxY(notificationView.frame) + jiange1/2;
     UIView *changePwdView = [[UIView alloc] initWithFrame:CGRectMake(changePwdViewX, changePwdViewY, changePwdViewW, changePwdViewH)];
     changePwdView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:changePwdView];
@@ -497,11 +527,11 @@
     
     
     
-    // 英卡服务项
+    // 服务中心
     CGFloat serveViewW = msgViewW;
     CGFloat serveViewH = indentViewH;
     CGFloat serveViewX = msgViewX;
-    CGFloat serveViewY = CGRectGetMaxY(changePwdView.frame) + jiange1;
+    CGFloat serveViewY = CGRectGetMaxY(changePwdView.frame) + jiange1/2;
     UIView *serveView = [[UIView alloc] initWithFrame:CGRectMake(serveViewX, serveViewY, serveViewW, serveViewH)];
 //    serveView.backgroundColor = [UIColor redColor];
     [self.view addSubview:serveView];
@@ -730,6 +760,13 @@
     GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
     [tipView tipViewShow];
 }
+
+#pragma mark - 我的收藏按钮响应方法
+- (void)collectButClick{
+    CLCollectViewController *collectVC = [[CLCollectViewController alloc]init];
+    [self.navigationController pushViewController:collectVC animated:YES];
+}
+
 
 #pragma mark - 通知列表按钮的响应方法
 - (void)notificationButClick{

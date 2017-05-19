@@ -109,4 +109,37 @@
 // 搜索合伙人
 // 二期
 + (void)searPeoGetWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+
+
+
+#pragma mark - 技师收藏商户
++ (void)favoriteCooperatorPostWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+
+
+#pragma mark - 技师移除收藏商户
++ (void)favoriteCooperatorDeleteWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+
+
+#pragma mark - 技师查询收藏商户列表
++ (void)favoriteCooperatorGetWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @end
