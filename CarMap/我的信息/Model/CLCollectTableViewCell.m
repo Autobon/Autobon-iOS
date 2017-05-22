@@ -35,50 +35,49 @@
         baseView.backgroundColor = [UIColor whiteColor];
         [self.contentView addSubview:baseView];
         
+// 商户名称
+        CGFloat nameLabW = kWidth - jiange * 2;
+        CGFloat nameLabH = 25;
+        CGFloat nameLabX = jiange;
+        CGFloat nameLabY = 10;
+        _nameLab = [[UILabel alloc] initWithFrame:CGRectMake(nameLabX, nameLabY-5, nameLabW, nameLabH)];
+        _nameLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
+//        _nameLab.text = @"商户名称：测试商户";
+        [baseView addSubview:_nameLab];
         
-        CGFloat numberLabW = kWidth - jiange * 2;
-        CGFloat numberLabH = 25;
-        CGFloat numberLabX = jiange;
-        CGFloat numberLabY = 10;
-        UILabel *numberLab = [[UILabel alloc] initWithFrame:CGRectMake(numberLabX, numberLabY-5, numberLabW, numberLabH)];
-        numberLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
-        numberLab.text = @"商户名称：测试商户";
-        [baseView addSubview:numberLab];
+// 商户法人
+        CGFloat peopleLabW = 240 / 375.0 * kWidth;
+        CGFloat peopleLabH = 25;
+        CGFloat peopleLabX = jiange;
+        CGFloat peopleLabY = CGRectGetMaxY(_nameLab.frame);
+        _peopleLab = [[UILabel alloc] initWithFrame:CGRectMake(peopleLabX, peopleLabY, peopleLabW, peopleLabH)];
+        _peopleLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
+        _peopleLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
+//        _peopleLab.text = @"商户法人：王老板";
+        [baseView addSubview:_peopleLab];
         
-        // 工作内容
-        CGFloat tipLabW = 240 / 375.0 * kWidth;
-        CGFloat tipLabH = 25;
-        CGFloat tipLabX = jiange;
-        CGFloat tipLabY = CGRectGetMaxY(numberLab.frame);
-        UILabel *timeLab = [[UILabel alloc] initWithFrame:CGRectMake(tipLabX, tipLabY, tipLabW, tipLabH)];
-//        timeLab.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-        timeLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
-        timeLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
-        timeLab.text = @"商户法人：王老板";
-        [baseView addSubview:timeLab];
-        
-        // 预约时间
-        CGFloat timeLabW = numberLabW;
-        CGFloat timeLabH = 25;
-        CGFloat timeLabX = numberLabX;
-        CGFloat timeLabY = CGRectGetMaxY(timeLab.frame);
-        UILabel *yuyueTimeLab = [[UILabel alloc] initWithFrame:CGRectMake(timeLabX, timeLabY, timeLabW, timeLabH)];
-        yuyueTimeLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
-        yuyueTimeLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
-        yuyueTimeLab.text = @"联系方式：18672944895";
-        [baseView addSubview:yuyueTimeLab];
+// 联系方式
+        CGFloat phoneLabW = nameLabW;
+        CGFloat phoneLabH = 25;
+        CGFloat phoneLabX = nameLabX;
+        CGFloat phoneLabY = CGRectGetMaxY(_peopleLab.frame);
+        _phoneLab = [[UILabel alloc] initWithFrame:CGRectMake(phoneLabX, phoneLabY, phoneLabW, phoneLabH)];
+        _phoneLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
+        _phoneLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
+//        _phoneLab.text = @"联系方式：18672944895";
+        [baseView addSubview:_phoneLab];
         
         
         // 移除
-        UIButton *pingjiaBut = [UIButton buttonWithType:UIButtonTypeCustom];
-        pingjiaBut.frame = CGRectMake(kWidth - jiange - kWidth * 0.185, 15, kWidth * 0.185, kHeight * 0.044);
-        pingjiaBut.layer.borderColor = [[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] CGColor];
-        pingjiaBut.layer.borderWidth = 1;
-        pingjiaBut.layer.cornerRadius = 5;
-        [pingjiaBut setTitle:@"移除" forState:UIControlStateNormal];
-        pingjiaBut.titleLabel.font = [UIFont systemFontOfSize:14 / 320.0 * kWidth];
-        [pingjiaBut setTitleColor:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] forState:UIControlStateNormal];
-        [baseView addSubview:pingjiaBut];
+        _removeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _removeButton.frame = CGRectMake(kWidth - jiange - kWidth * 0.185, 15, kWidth * 0.185, kHeight * 0.044);
+        _removeButton.layer.borderColor = [[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] CGColor];
+        _removeButton.layer.borderWidth = 1;
+        _removeButton.layer.cornerRadius = 5;
+        [_removeButton setTitle:@"移除" forState:UIControlStateNormal];
+        _removeButton.titleLabel.font = [UIFont systemFontOfSize:14 / 320.0 * kWidth];
+        [_removeButton setTitleColor:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] forState:UIControlStateNormal];
+        [baseView addSubview:_removeButton];
 //        [pingjiaBut addTarget:self action:@selector(pingjiaButClick:) forControlEvents:UIControlEventTouchUpInside];
         
         
@@ -95,6 +94,12 @@
     return self;
 }
 
+
+- (void)setModel:(CLCooperatorModel *)model{
+    _nameLab.text = [NSString stringWithFormat:@"商户名称：%@",model.fullname];
+    _peopleLab.text = [NSString stringWithFormat:@"商户法人：%@",model.corporationName];
+    _phoneLab.text = [NSString stringWithFormat:@"联系方式：%@",model.contactPhone];
+}
 
 
 - (void)awakeFromNib {

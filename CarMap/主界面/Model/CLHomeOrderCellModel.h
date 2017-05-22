@@ -30,6 +30,7 @@
 @property (nonatomic ,copy) NSString *cooperatorName;     //订单下单人
 @property (nonatomic ,copy) NSString *cooperatorAddress;  //订单下单商户位置
 @property (nonatomic ,copy) NSString *cooperatorFullname; //订单下单商户名称
+@property (nonatomic ,copy) NSString *cooperatorId;         //订单下单商户id
 @property (nonatomic, copy) NSString *address;            //商户地址
 @property (nonatomic, copy) NSString *agreedEndTime;        // 最晚交车时间
 @property (nonatomic, copy) NSString *createTime;           // 下单时间

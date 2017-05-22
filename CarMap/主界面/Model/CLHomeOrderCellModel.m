@@ -68,7 +68,7 @@
         _status = dic[@"status"];
         // 商户名字
         _cooperatorFullname = [NSString stringWithFormat:@"%@", dic[@"coopName"]];
-        
+        _cooperatorId = [NSString stringWithFormat:@"%@",dic[@"coopId"]];
         // 施工前照片
         if([dic[@"beforePhotos"] isKindOfClass:[NSNull class]]) {
             

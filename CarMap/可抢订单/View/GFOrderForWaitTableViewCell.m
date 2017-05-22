@@ -141,6 +141,20 @@
         //    timeLabel.backgroundColor = [UIColor cyanColor];
         [self.contentView addSubview:_timeLabel];
         
+        
+        
+        
+        _collectImageView = [[UIImageView alloc]init];
+        [self.contentView addSubview:_collectImageView];
+        _collectImageView.frame = CGRectMake([UIScreen mainScreen].bounds.size.width - 45, CGRectGetMaxY(lineView.frame) + 8, 25, 25);
+        _collectImageView.image = [UIImage imageNamed:@"detailsStarDark"];
+        
+        
+        
+        
+        
+        
+        
         // 进入订单按钮
         _orderButton = [UIButton buttonWithType:UIButtonTypeSystem];
         _orderButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width - 80, 15, 70, 28);

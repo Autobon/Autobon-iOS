@@ -26,6 +26,9 @@
 @interface GFOrderForWaitViewController () <UITableViewDelegate, UITableViewDataSource> {
     
     NSInteger _page;
+    
+    NSMutableArray *_collectArray;
+    
 }
 
 @property (nonatomic, strong) NSMutableArray *modelArr;
@@ -42,9 +45,26 @@
     // Do any additional setup after loading the view.
     self.modelArr = [[NSMutableArray alloc] init];
     
+    [self getCollectList];
+    
     [self setNavigation];
     
     [self _setView];
+    
+}
+
+- (void)getCollectList{
+    _collectArray = [[NSMutableArray alloc]init];
+    [GFHttpTool favoriteCooperatorGetWithParameters:@{@"pageSize":@(200)} success:^(id responseObject) {
+        NSArray *listArray = responseObject[@"list"];
+        [listArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSDictionary *cooperatorDic = obj[@"cooperator"];
+            [_collectArray addObject:[NSString stringWithFormat:@"%@",cooperatorDic[@"id"]]];
+            [self.tableView.header beginRefreshing];
+        }];
+    } failure:^(NSError *error) {
+        
+    }];
     
 }
 
@@ -57,7 +77,7 @@
     NSDictionary *dictionary = @{@"page":@(_page),@"pageSize":@(5)};
     [GFHttpTool getOrderListNewDictionary:dictionary Success:^(NSDictionary *responseObject) {
         
-//        NSLog(@"==可抢订单列表==%@", responseObject);
+        ICLog(@"==可抢订单列表==%@", responseObject);
         
         if([responseObject[@"status"] integerValue] == 1) {
         
@@ -144,7 +164,7 @@
     
     
     
-    [self.tableView.header beginRefreshing];
+    
 }
 
 
@@ -226,6 +246,13 @@
         
         CLHomeOrderCellModel *model = (CLHomeOrderCellModel *)self.modelArr[indexPath.row];
         cell.model = model;
+        
+        if ([_collectArray containsObject:model.cooperatorId]) {
+            cell.collectImageView.image = [UIImage imageNamed:@"detailsStar"];
+        }else{
+            cell.collectImageView.image = [UIImage imageNamed:@"detailsStarDark"];
+        }
+        
     }
     
     return cell;

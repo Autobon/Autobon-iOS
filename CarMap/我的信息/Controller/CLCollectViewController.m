@@ -12,6 +12,7 @@
 #import "GFHttpTool.h"
 #import "CLCooperatorModel.h"
 #import "CLCollectTableViewCell.h"
+#import "GFTipView.h"
 
 @interface CLCollectViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -79,20 +80,19 @@
 
 
 - (void)getFavoriteList{
-    NSDictionary *dictionary = @{@"pageNo":@(_pageNo),@"pageSize":@(_pageSize)};
+    NSDictionary *dictionary = @{@"page":@(_pageNo),@"pageSize":@(_pageSize)};
     
     [GFHttpTool favoriteCooperatorGetWithParameters:dictionary success:^(id responseObject) {
         ICLog(@"--responseObject--%@--",responseObject);
-        if ([responseObject[@"count"] integerValue] == 1) {
-            NSArray *listArray = responseObject[@"list"];
-            [listArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                CLCooperatorModel *model = [[CLCooperatorModel alloc]init];
-                [model setModelForData:obj[@"cooperator"]];
-                [_dataArray addObject:model];
-                
-                
-            }];
-        }
+
+        NSArray *listArray = responseObject[@"list"];
+        [listArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            CLCooperatorModel *model = [[CLCooperatorModel alloc]init];
+            [model setModelForData:obj[@"cooperator"]];
+            [_dataArray addObject:model];
+            
+        }];
+        
         
         [_tableView reloadData];
         [_tableView.header endRefreshing];
@@ -114,9 +114,34 @@
         cell = [[CLCollectTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
 //    cell.backgroundColor = [UIColor cyanColor];
+    cell.model = _dataArray[indexPath.row];
+    cell.removeButton.tag = indexPath.row;
+    [cell.removeButton addTarget:self action:@selector(removeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
     return cell;
 }
 
+#pragma mark - 移除收藏响应方法
+- (void)removeBtnClick:(UIButton *)button{
+    if (_dataArray.count > button.tag) {
+        CLCooperatorModel *model = _dataArray[button.tag];
+        
+        [GFHttpTool favoriteCooperatorDeleteWithParameters:@{@"cooperatorId":model.idString} success:^(id responseObject) {
+            ICLog(@"删除成功--%@--",responseObject);
+            if ([responseObject[@"result"] integerValue] == 1) {
+                [self addAlertView:@"操作成功"];
+                [_tableView.header beginRefreshing];
+            }else{
+                [self addAlertView:responseObject[@"message"]];
+            }
+            
+            
+        } failure:^(NSError *error) {
+            ICLog(@"删除失败--%@--",error);
+        }];
+    }
+
+}
 
 - (NSInteger )tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
@@ -126,17 +151,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-//    if (_dataArray.count > indexPath.row) {
-//        CLCooperatorModel *model = _dataArray[indexPath.row];
-//        
-//        [GFHttpTool favoriteCooperatorDeleteWithParameters:@{@"cooperatorId":model.idString} success:^(id responseObject) {
-//            ICLog(@"删除成功--%@--",responseObject);
-//            
-//            [_tableView.header beginRefreshing];
-//        } failure:^(NSError *error) {
-//            ICLog(@"删除失败--%@--",error);
-//        }];
-//    }
     
 }
 
@@ -161,6 +175,13 @@
 - (void)leftButClick {
     
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - AlertView
+- (void)addAlertView:(NSString *)title{
+    
+    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
+    [tipView tipViewShow];
 }
 
 - (void)didReceiveMemoryWarning {

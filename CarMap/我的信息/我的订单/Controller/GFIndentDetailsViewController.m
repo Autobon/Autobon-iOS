@@ -21,6 +21,8 @@
 #import "GFNewOrderModel.h"
 #import "HZPhotoBrowser.h"
 #import "GFShigongDDViewController.h"
+#import "GFTipView.h"
+
 
 @interface GFIndentDetailsViewController ()<HZPhotoBrowserDelegate> {
     
@@ -372,10 +374,12 @@
     collectButton.frame = CGRectMake(baseView1W - 50, 10, 50, kHeight * 0.068 - 20 );
     [collectButton addTarget:self action:@selector(collectBtnClick) forControlEvents:UIControlEventTouchUpInside];
     collectButton.titleLabel.font = [UIFont systemFontOfSize:12];
-    collectButton.layer.cornerRadius = 3;
-    collectButton.layer.borderWidth = 1;
-    collectButton.layer.borderColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1].CGColor;
     
+    
+    [collectButton setTitleColor:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] forState:UIControlStateNormal];
+    collectButton.layer.borderWidth = 1;
+    collectButton.layer.borderColor = [[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] CGColor];
+    collectButton.layer.cornerRadius = 3;
     
     
     
@@ -572,6 +576,12 @@
     
     [GFHttpTool favoriteCooperatorPostWithParameters:@{@"cooperatorId":_model.coopId} success:^(id responseObject) {
         NSLog(@"responseObject---%@--",responseObject);
+        if ([responseObject[@"result"] integerValue] == 1) {
+            [self addAlertView:@"操作成功"];
+        }else{
+            [self addAlertView:responseObject[@"message"]];
+        }
+        
         
     } failure:^(NSError *error) {
         NSLog(@"error--%@--",error);
@@ -841,6 +851,13 @@
     
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+#pragma mark - AlertView
+- (void)addAlertView:(NSString *)title{
+    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
+    [tipView tipViewShow];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

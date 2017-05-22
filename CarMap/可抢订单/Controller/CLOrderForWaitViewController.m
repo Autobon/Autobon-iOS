@@ -89,10 +89,9 @@
     NSDictionary *dictionary = @{@"page":@(_page),@"pageSize":@(_pageSize)};
     [GFHttpTool getOrderListNewDictionary:dictionary Success:^(NSDictionary *responseObject) {
         
-//        NSLog(@"==可抢订单列表==%@", responseObject);
+        ICLog(@"==可抢订单列表==%@", responseObject);
         
         if ([responseObject[@"status"] integerValue] == 1) {
-            //            NSLog(@"wangluoqingqiu");
             NSDictionary *dataDit = responseObject[@"message"];
             NSArray *dataArray = dataDit[@"list"];
             if (_page == 1) {
@@ -348,14 +347,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-//    if (indexPath.row == 0) {
-//        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"title"];
-//        if (cell == nil) {
-//            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"title"];
-//            //            [cell initWithTitle];
-//        }
-//        return cell;
-//    }else{
     
         static NSString *ID = @"order";
         CLNewOrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
@@ -367,8 +358,8 @@
     
         if (_cellModelArray.count > indexPath.row) {
             
-            CLHomeOrderCellModel *model = (CLHomeOrderCellModel *)self.newsModelArr[indexPath.row];
-            cell.orderButton.tag = indexPath.row + 1;
+//            CLHomeOrderCellModel *model = (CLHomeOrderCellModel *)self.newsModelArr[indexPath.row];
+//            cell.orderButton.tag = indexPath.row + 1;
             
             
             CLListNewModel *cellModer = _cellModelArray[indexPath.row];
@@ -383,6 +374,9 @@
             [cell.orderButton setTitle:@"抢单" forState:UIControlStateNormal];
             cell.orderButton.tag = indexPath.row;
             [cell.orderButton addTarget:self action:@selector(knockBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            
+            
+            
         }
     
         return cell;

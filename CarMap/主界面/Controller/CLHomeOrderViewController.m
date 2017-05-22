@@ -554,7 +554,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     CLHomeTableViewCell *cell = (CLHomeTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    NSString *cellID = cell.reuseIdentifier;
+//    NSString *cellID = cell.reuseIdentifier;
 //    NSLog(@"单元格ID＝＝＝＝＝%@", cellID);
     
     CLHomeOrderCellModel *cellModel = _cellModelArray[indexPath.row - 1];

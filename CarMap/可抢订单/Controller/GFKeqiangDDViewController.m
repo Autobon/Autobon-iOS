@@ -249,13 +249,12 @@
     GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
     
     UIButton *removeOrderButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 60, 20, 40, 44)];
-    [removeOrderButton setTitle:@"放弃" forState:UIControlStateNormal];
+    [removeOrderButton setTitle:@"收藏" forState:UIControlStateNormal];
     [removeOrderButton setTitleColor:[UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0] forState:UIControlStateHighlighted];
-    [removeOrderButton addTarget:self action:@selector(removeOrderBtnClick) forControlEvents:UIControlEventTouchUpInside];
-//    [navView addSubview:removeOrderButton];
+    [navView addSubview:removeOrderButton];
     
     [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    //    [navView.rightBut addTarget:navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [removeOrderButton addTarget:self action:@selector(collect) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:navView];
     
@@ -270,6 +269,26 @@
     [userDefalts synchronize];
     
     [self.view removeFromSuperview];
+    
+}
+
+
+#pragma mark - 收藏商户
+- (void)collect{
+    
+    [GFHttpTool favoriteCooperatorPostWithParameters:@{@"cooperatorId":_model.cooperatorId} success:^(id responseObject) {
+        NSLog(@"responseObject---%@--",responseObject);
+        if ([responseObject[@"result"] integerValue] == 1) {
+            [self addAlertView:@"操作成功"];
+        }else{
+            [self addAlertView:responseObject[@"message"]];
+        }
+        
+        
+    } failure:^(NSError *error) {
+        NSLog(@"error--%@--",error);
+    }];
+    
     
 }
 

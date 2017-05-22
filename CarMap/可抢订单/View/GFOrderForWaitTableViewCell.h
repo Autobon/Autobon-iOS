@@ -13,5 +13,7 @@
 
 
 @property (nonatomic, strong) CLHomeOrderCellModel *model;
+@property (nonatomic, strong) UIImageView *collectImageView;
+
 
 @end
