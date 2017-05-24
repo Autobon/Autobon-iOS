@@ -73,6 +73,7 @@
         
     }
     _mapVC.bossPointAnno.iconImgName = @"location";
+    _mapVC.bossPointAnno.title = _cooperatorName;
     __weak GFKeqiangDDViewController *weakOrder = self;
     _mapVC.distanceBlock = ^(double distance) {
         //        NSLog(@"距离－－%f--",distance);
@@ -110,7 +111,7 @@
         UIButton *but = [UIButton buttonWithType:UIButtonTypeCustom];
         but.backgroundColor = [UIColor redColor];
         but.frame = CGRectMake(10 + (butW + 10) * (i % 3), lineView.frame.origin.y + 7 + (butH + 10) * (i / 3), butW, butH);
-        [but sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.219.58:8000%@", _photoArr[i]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"orderImage"]];
+        [but sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",BaseHttp ,_photoArr[i]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"orderImage"]];
         but.clipsToBounds = YES;
         but.tag = i + 1;
         [_scrollView addSubview:but];
@@ -181,7 +182,7 @@
 }
 - (NSURL *)photoBrowser:(HZPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index {
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.219.58:8000%@", _photoArr[index]]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",BaseHttp, _photoArr[index]]];
     
     return url;
 }
@@ -279,7 +280,7 @@
     [GFHttpTool favoriteCooperatorPostWithParameters:@{@"cooperatorId":_model.cooperatorId} success:^(id responseObject) {
         NSLog(@"responseObject---%@--",responseObject);
         if ([responseObject[@"result"] integerValue] == 1) {
-            [self addAlertView:@"操作成功"];
+            [self addAlertView:@"收藏商户成功"];
         }else{
             [self addAlertView:responseObject[@"message"]];
         }

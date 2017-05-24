@@ -109,6 +109,7 @@
         _mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([self.customerLat floatValue],[self.customerLon floatValue]);
     }
     _mapVC.bossPointAnno.iconImgName = @"location";
+    _mapVC.bossPointAnno.title = _model.cooperatorFullname;
     __weak CLSigninViewController *signinView = self;
     
     _mapVC.distanceBlock = ^(double distance) {

@@ -84,9 +84,9 @@
 - (void)_setView {
     _workNameArr = [[NSMutableArray alloc] init];
     self.workItemArr = [[NSMutableArray alloc] init];
-    extern NSString *const URLHOST;
-    mainUrl = [NSString stringWithFormat:@"%@/api/mobile/technician/order/listMain",URLHOST];
-    seconderUrl = [NSString stringWithFormat:@"%@/api/mobile/technician/order/listSecond",URLHOST];
+
+    mainUrl = [NSString stringWithFormat:@"%@/api/mobile/technician/order/listMain",BaseHttp];
+    seconderUrl = [NSString stringWithFormat:@"%@/api/mobile/technician/order/listSecond",BaseHttp];
     curUrl = mainUrl;
     curUrlId = 0;
     
@@ -278,7 +278,6 @@
             }
             
 //            NSLog(@"%@*******", listArr);
-            extern NSString* const URLHOST;
             for(NSDictionary *dic in listArr) {
                 
 //                NSLog(@"dictionary---%@---",dic);
@@ -287,7 +286,7 @@
                 
                 GFIndentModel *listModel = [[GFIndentModel alloc] init];
                 listModel.orderNum = dic[@"orderNum"];
-                listModel.photo = [NSString stringWithFormat:@"%@%@",URLHOST,dic[@"photo"]];
+                listModel.photo = [NSString stringWithFormat:@"%@%@",BaseHttp,dic[@"photo"]];
                 listModel.remark = dic[@"remark"];
                 listModel.commentDictionary = dic[@"comment"];
                 listModel.indentType = dic[@"orderType"];
@@ -512,7 +511,6 @@
             }
             
 //            NSLog(@"%@*******", listArr);
-            extern NSString* const URLHOST;
             for(NSDictionary *dic in listArr) {
                 
                 _workNameArr = [[NSMutableArray alloc] init];
@@ -520,7 +518,7 @@
                 GFIndentModel *listModel = [[GFIndentModel alloc] init];
                 listModel.orderNum = dic[@"orderNum"];
 //                NSLog(@"---orderNumber----%@－－－",listModel.orderNum);
-                listModel.photo = [NSString stringWithFormat:@"%@%@",URLHOST,dic[@"photo"]];
+                listModel.photo = [NSString stringWithFormat:@"%@%@",BaseHttp,dic[@"photo"]];
                 listModel.remark = dic[@"remark"];
                 listModel.commentDictionary = dic[@"comment"];
                 listModel.indentType = dic[@"orderType"];

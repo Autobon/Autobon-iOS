@@ -28,8 +28,8 @@
     
     self.nameLab.text = model.name;
     self.phoneLab.text = model.phone;
-    NSString *str = [NSString stringWithFormat:@"http://121.40.219.58:8000%@", model.avatar];
-//    NSLog(@"--------%@====", str);
+    NSString *str = [NSString stringWithFormat:@"%@%@",BaseHttp,model.avatar];
+    ICLog(@"--------%@====", str);
     [self.iconView sd_setImageWithURL:[NSURL URLWithString:str] placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
 //    self.addBut.tag = [model.jishiId integerValue];
 }

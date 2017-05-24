@@ -151,7 +151,7 @@
         UIButton *but = [UIButton buttonWithType:UIButtonTypeCustom];
         but.backgroundColor = [UIColor redColor];
         but.frame = CGRectMake(10 + (butW + 10) * (i % 3), lineView.frame.origin.y + 7 + (butH + 10) * (i / 3), butW, butH);
-        [but sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.219.58:8000%@", _photoArr[i]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"orderImage"]];
+        [but sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",BaseHttp, _photoArr[i]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"orderImage"]];
         but.clipsToBounds = YES;
         but.tag = i + 1;
         [_scrollView addSubview:but];
@@ -379,7 +379,7 @@
 }
 - (NSURL *)photoBrowser:(HZPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index {
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.219.58:8000%@", _photoArr[index]]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",BaseHttp ,_photoArr[index]]];
     
     return url;
 }

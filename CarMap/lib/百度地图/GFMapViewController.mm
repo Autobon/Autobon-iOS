@@ -41,12 +41,13 @@
 @end
 //#import <BaiduMapAPI_Map/BMKMapComponent.h>
 
-@interface GFMapViewController () <BMKMapViewDelegate, BMKShareURLSearchDelegate,BMKGeoCodeSearchDelegate,BMKPoiSearchDelegate,BMKRouteSearchDelegate,BMKLocationServiceDelegate> {
+@interface GFMapViewController () <BMKMapViewDelegate, BMKShareURLSearchDelegate,BMKGeoCodeSearchDelegate,BMKPoiSearchDelegate,BMKRouteSearchDelegate,BMKLocationServiceDelegate,UIAlertViewDelegate> {
 
     NSInteger num;
     UILabel *_distanceLabel;
     UILabel *_timeLabel;
     UIView *_baseView;
+    
 }
 
 
@@ -92,13 +93,13 @@
     [self _setBase];
 
     // 创建地图管理者
-    [self _setMapManager];
-    
-    // 进行定位
-    [self _setLocationService];
+//    [self _setMapManager];
     
     // 添加地图
     [self _setMapView];
+    
+    // 进行定位
+    [self _setLocationService];
     
     // 添加大头针
     [self _setAnnonation];
@@ -189,7 +190,7 @@
     
     // 技师大头针
     self.workerPointAnno = [[GFAnnotation alloc] init];
-//    self.workerPointAnno.title = @"我是技师";
+    self.workerPointAnno.title = @"我";
 //    self.workerPointAnno.subtitle = @"天赐我一个单吧";
     self.workerPointAnno.iconImgName = @"me-1";
     [self.mapView addAnnotation:self.workerPointAnno];
@@ -201,6 +202,7 @@
 //    self.bossPointAnno.subtitle = @"派活啦，赶紧抢吧";
 //    self.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30.4,114.4);
 //    self.bossPointAnno.iconImgName = @"location";
+//    self.bossPointAnno.title
     [self.mapView addAnnotation:self.bossPointAnno];
 //    NSLog(@"加载地图");
     
@@ -666,12 +668,47 @@
         GFAnnotationView *annView = [GFAnnotationView annotationWithMapView:mapView];
         
         annView.annotation = annotation;
+        if (![annotation.title isEqualToString:@"我"]){
+            annView.tag = 5;
+        }
         return annView;
     }
 
     
     return nil;
 }
+
+
+/**
+ *当选中一个annotation views时，调用此接口
+ *@param mapView 地图View
+ *@param views 选中的annotation views
+ */
+- (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view{
+    ICLog(@"点击标注的方法调用了--%ld--",view.tag);
+    if (view.tag == 5 && [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"baidumap://"]]) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否进入百度地图导航导航" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"导航", nil];
+        [alertView show];
+    }
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    [_mapView deselectAnnotation:_bossPointAnno animated:YES];
+    if (buttonIndex == 1) {
+//        百度地图
+        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"baidumap://"]]) {
+
+            NSString *urlString = [[NSString stringWithFormat:@"baidumap://map/direction?origin={{我的位置}}&destination=latlng:%f,%f|name=商户&mode=driving",_bossPointAnno.coordinate.latitude,_bossPointAnno.coordinate.longitude] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            ICLog(@"URLString----%@--",urlString);
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+            
+        }
+
+        
+    }
+}
+
 
 
 //*******************  自定义封装方法  **********************

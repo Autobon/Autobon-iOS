@@ -159,7 +159,7 @@
 }
 - (NSURL *)photoBrowser:(HZPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index {
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.219.58:8000%@", self.curPhoto[index]]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",BaseHttp, self.curPhoto[index]]];
     
     return url;
 }
@@ -247,7 +247,7 @@
         UIButton *but = [UIButton buttonWithType:UIButtonTypeCustom];
         but.backgroundColor = [UIColor redColor];
         but.frame = CGRectMake(10 + (butW + 10) * (i % 3), lineView1.frame.origin.y + 7 + (butH + 10) * (i / 3), butW, butH);
-        [but sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.219.58:8000%@", _photoArr[i]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"orderImage"]];
+        [but sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BaseHttp,_photoArr[i]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"orderImage"]];
         but.clipsToBounds = YES;
         but.tag = i + 1;
         [but setTitle:@"订单" forState:UIControlStateNormal];
@@ -507,11 +507,10 @@
         
         NSInteger num = bePhotoArr.count;
         beforeImageArray = [[NSMutableArray alloc]init];
-        extern NSString* const URLHOST;
         for(int i=0; i<num; i++) {
             
 //            [self addBeforImgView:[NSString stringWithFormat:@"%@%@", URLHOST, bePhotoArr[i]] withPhotoIndex:i + 1 withFirstY:CGRectGetMaxY(beforeLab.frame) showInView:baseView];
-            [self addBeforImgView:[NSString stringWithFormat:@"http://121.40.219.58:8000%@", bePhotoArr[i]] withPhotoIndex:i + 1 withFirstY:CGRectGetMaxY(beforeLab.frame) showInView:baseView];
+            [self addBeforImgView:[NSString stringWithFormat:@"%@%@", BaseHttp,bePhotoArr[i]] withPhotoIndex:i + 1 withFirstY:CGRectGetMaxY(beforeLab.frame) showInView:baseView];
         }
         
         // 边线
@@ -542,7 +541,7 @@
         afterImageArray = [[NSMutableArray alloc]init];
         for(int i=0; i<sum; i++) {
             
-            [self addAfterImgView:[NSString stringWithFormat:@"http://121.40.219.58:8000%@", afPhotoArr[i]] withPhotoIndex:i + 1 withFirstY:CGRectGetMaxY(afPhotoLab.frame) showInView:baseView];
+            [self addAfterImgView:[NSString stringWithFormat:@"%@%@",BaseHttp ,afPhotoArr[i]] withPhotoIndex:i + 1 withFirstY:CGRectGetMaxY(afPhotoLab.frame) showInView:baseView];
             
             
         }
@@ -577,7 +576,7 @@
     [GFHttpTool favoriteCooperatorPostWithParameters:@{@"cooperatorId":_model.coopId} success:^(id responseObject) {
         NSLog(@"responseObject---%@--",responseObject);
         if ([responseObject[@"result"] integerValue] == 1) {
-            [self addAlertView:@"操作成功"];
+            [self addAlertView:@"收藏商户成功"];
         }else{
             [self addAlertView:responseObject[@"message"]];
         }

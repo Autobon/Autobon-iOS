@@ -362,8 +362,7 @@
         iconImgView.clipsToBounds = YES;
         iconImgView.contentMode = UIViewContentModeScaleAspectFill;
 //        iconImgView.image = [UIImage imageNamed:@"11.png"];
-        extern NSString* const URLHOST;
-        [iconImgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",URLHOST,imageURL]] placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
+        [iconImgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",BaseHttp,imageURL]] placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
 //        NSLog(@"---imageUrl---%@----",[NSString stringWithFormat:@"http://121.40.157.200:12345%@",imageURL]);
         [baseView addSubview:iconImgView];
         // 姓名

@@ -380,7 +380,7 @@
     CGFloat collectImgViewX = jianjv1;
     CGFloat collectImgViewY = (collectViewH - collectImgViewH) / 2.0;
     UIImageView *collectImgView = [[UIImageView alloc] initWithFrame:CGRectMake(collectImgViewX, collectImgViewY, collectImgViewW, collectImgViewH)];
-    collectImgView.image = [UIImage imageNamed:@"information-2"];
+    collectImgView.image = [UIImage imageNamed:@"order"];
     [collectView addSubview:collectImgView];
     CGFloat collectLabW = 150;
     CGFloat collectLabH = collectImgViewH;
@@ -656,9 +656,8 @@
 //            NSLog(@"\n%@\n%@\n%@\n%@\n%@\n%@\n", idPhoto, name, starRate, totalOrders, balance, unpaidOrders);
             
             // 头像
-            extern NSString* const URLHOST;
 //            idPhoto = [NSString stringWithFormat:@"%@%@",URLHOST,idPhoto];
-            idPhoto = [NSString stringWithFormat:@"http://121.40.219.58:8000%@", idPhoto];
+            idPhoto = [NSString stringWithFormat:@"%@%@",BaseHttp, idPhoto];
             NSURL *imgUrl = [NSURL URLWithString:idPhoto];
             [iconImgView sd_setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
             // 姓名

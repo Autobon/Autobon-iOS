@@ -83,13 +83,13 @@
     [UMSocialData setAppKey:@"564572b9e0f55a38dd001e6c"];
     
     
-    [UMSocialWechatHandler setWXAppId:@"wx55cc20e910a128e5" appSecret:@"7ca03043095011790e0b9a6b9f498457" url:@"http://121.40.219.58:8000/shareA.html"];
+    [UMSocialWechatHandler setWXAppId:@"wx55cc20e910a128e5" appSecret:@"7ca03043095011790e0b9a6b9f498457" url:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];
     
-    [UMSocialQQHandler setQQWithAppId:@"1105263986" appKey:@"sjj2sjhLIqtjmcfL" url:@"http://121.40.219.58:8000/shareA.html"];
+    [UMSocialQQHandler setQQWithAppId:@"1105263986" appKey:@"sjj2sjhLIqtjmcfL" url:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];
     
 //    [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
 //
-    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:@"3285914881" RedirectURL:@"http://121.40.219.58:8000/shareA.html"];
+    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:@"3285914881" RedirectURL:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];
 
     _mapManager = [[BMKMapManager alloc]init];
     BOOL ret = [_mapManager start:@"qQxUcaGNCZfeFmhB8EHWVvgt" generalDelegate:self];

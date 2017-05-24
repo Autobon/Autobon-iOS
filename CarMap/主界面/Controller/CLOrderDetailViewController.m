@@ -65,10 +65,12 @@
     if ([self.customerLon isKindOfClass:[NSNull class]]) {
         _mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake(30.4,114.4);
     }else{
-        _mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([self.customerLat floatValue],[self.customerLon floatValue]);
-        
+        _mapVC.bossPointAnno.coordinate = CLLocationCoordinate2DMake([self.customerLat doubleValue],[self.customerLon doubleValue]);
+        ICLog(@"---%@---%f---%@--%f--",self.customerLat,[self.customerLat doubleValue],self.customerLon,[self.customerLon doubleValue]);
     }
     _mapVC.bossPointAnno.iconImgName = @"location";
+//    _mapVC.bossPointAnno.title = @"发单商户";
+    _mapVC.bossPointAnno.title = _cooperatorName;
     __weak CLOrderDetailViewController *weakOrder = self;
     _mapVC.distanceBlock = ^(double distance) {
 //        NSLog(@"距离－－%f--",distance);
@@ -106,7 +108,7 @@
         UIButton *but = [UIButton buttonWithType:UIButtonTypeCustom];
         but.backgroundColor = [UIColor redColor];
         but.frame = CGRectMake(10 + (butW + 10) * (i % 3), lineView.frame.origin.y + 7 + (butH + 10) * (i / 3), butW, butH);
-        [but sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.219.58:8000%@", _photoArr[i]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"orderImage"]];
+        [but sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",BaseHttp, _photoArr[i]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"orderImage"]];
         but.clipsToBounds = YES;
         but.tag = i + 1;
         [_scrollView addSubview:but];
@@ -192,7 +194,7 @@
 }
 - (NSURL *)photoBrowser:(HZPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index {
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.219.58:8000%@", _photoArr[index]]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BaseHttp,_photoArr[index]]];
     
     return url;
 }

@@ -167,7 +167,7 @@
     _headImage.layer.cornerRadius = 40;
     _headImage.clipsToBounds = YES;
     //    NSLog(@"===%@", _model.avatar);
-    [_headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.219.58:8000%@", _model.avatar]] placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
+    [_headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BaseHttp , _model.avatar]] placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
     [_scView addSubview:_headImage];
     
     
@@ -253,7 +253,7 @@
     
     // 证件照
     _identityImageView = [[UIImageView alloc]initWithFrame:CGRectMake(60, CGRectGetMaxY(idImageLabel22.frame) + 15, self.view.frame.size.width-120, (self.view.frame.size.width-120)*2/3)];
-    [_identityImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://121.40.219.58:8000%@", _model.idPhoto]] placeholderImage:[UIImage imageNamed:@"userImage"]];
+    [_identityImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",BaseHttp, _model.idPhoto]] placeholderImage:[UIImage imageNamed:@"userImage"]];
     [_scView addSubview:_identityImageView];
     
     // 更改认证信息

@@ -142,7 +142,7 @@
     NSDictionary *dictionary = @{@"page":@(_page),@"pageSize":@(_pageSize), @"status":@"2"};
     [GFHttpTool getOrderListDictionary:dictionary Success:^(NSDictionary *responseObject) {
         
-        NSLog(@"===++==%@", responseObject);
+        ICLog(@"===++==%@", responseObject);
         
         
         
@@ -371,8 +371,7 @@
 //    orderDetail.orderNumber = orderDic[@"orderNum"];
     orderDetail.customerLat = orderDic[@"positionLat"];
     orderDetail.customerLon = orderDic[@"positionLon"];
-    extern NSString* const URLHOST;
-    orderDetail.orderPhotoURL = [NSString stringWithFormat:@"%@%@",URLHOST,orderDic[@"photo"]];
+    orderDetail.orderPhotoURL = [NSString stringWithFormat:@"%@%@",BaseHttp,orderDic[@"photo"]];
     if (![orderDic[@"remark"]isKindOfClass:[NSNull class]]) {
         orderDetail.remark = orderDic[@"remark"];
     }else{

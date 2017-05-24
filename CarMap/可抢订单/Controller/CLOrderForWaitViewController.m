@@ -133,7 +133,6 @@
                 }
                 
                 model.orderType = ss;
-                extern NSString* const URLHOST;
                 model.orderPhoto = obj[@"photo"];
                 model.orderLat = obj[@"latitude"];
                 model.orderLon = obj[@"longitude"];

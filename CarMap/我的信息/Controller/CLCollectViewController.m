@@ -129,7 +129,7 @@
         [GFHttpTool favoriteCooperatorDeleteWithParameters:@{@"cooperatorId":model.idString} success:^(id responseObject) {
             ICLog(@"删除成功--%@--",responseObject);
             if ([responseObject[@"result"] integerValue] == 1) {
-                [self addAlertView:@"操作成功"];
+                [self addAlertView:@"移除商户成功"];
                 [_tableView.header beginRefreshing];
             }else{
                 [self addAlertView:responseObject[@"message"]];

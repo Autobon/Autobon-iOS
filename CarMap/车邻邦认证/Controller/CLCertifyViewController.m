@@ -81,7 +81,6 @@
     
     if (_isFail) {
         [GFHttpTool getCertificateSuccess:^(id responseObject) {
-//            NSLog(@"---dictionary---%@--",responseObject);
             _haveHeadImage = YES;
             _isIdNumber = YES;
             _haveIdentityImage = YES;
@@ -117,10 +116,10 @@
                 }
                 
                 
-                extern NSString* const URLHOST;
-                [_headButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",URLHOST,dataDic[@"avatar"]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
                 
-                [_identityButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",URLHOST,dataDic[@"idPhoto"]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"userImage"]];
+                [_headButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",BaseHttp,dataDic[@"avatar"]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"userHeadImage"]];
+                
+                [_identityButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",BaseHttp,dataDic[@"idPhoto"]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"userImage"]];
                 [_dataDictionary setObject:dataDic[@"idPhoto"] forKey:@"idPhoto"];
 
             }
