@@ -51,6 +51,7 @@
     
     [self _setView];
     
+    [_tableView.header beginRefreshing];
 }
 
 - (void)getCollectList{
