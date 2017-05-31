@@ -380,7 +380,7 @@
     CGFloat collectImgViewX = jianjv1;
     CGFloat collectImgViewY = (collectViewH - collectImgViewH) / 2.0;
     UIImageView *collectImgView = [[UIImageView alloc] initWithFrame:CGRectMake(collectImgViewX, collectImgViewY, collectImgViewW, collectImgViewH)];
-    collectImgView.image = [UIImage imageNamed:@"order"];
+    collectImgView.image = [UIImage imageNamed:@"collection"];
     [collectView addSubview:collectImgView];
     CGFloat collectLabW = 150;
     CGFloat collectLabH = collectImgViewH;

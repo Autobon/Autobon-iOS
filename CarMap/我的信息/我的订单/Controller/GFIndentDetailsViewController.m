@@ -22,6 +22,7 @@
 #import "HZPhotoBrowser.h"
 #import "GFShigongDDViewController.h"
 #import "GFTipView.h"
+#import "ACETelPrompt.h"
 
 
 @interface GFIndentDetailsViewController ()<HZPhotoBrowserDelegate> {
@@ -389,20 +390,44 @@
     [baseView addSubview:lineView7];
 
     
+    // 联系方式
+    CGFloat phoneLabW = baseView1W;
+    CGFloat phoneLabH = baseView1H;
+    CGFloat phoneLabX = baseView1X;
+    CGFloat phoneLabY = CGRectGetMaxY(baseView2.frame);
+    UILabel *phoneLab = [[UILabel alloc] initWithFrame:CGRectMake(phoneLabX, phoneLabY, phoneLabW, phoneLabH)];
+    phoneLab.text = [NSString stringWithFormat:@"联系方式：%@", _model.contactPhone];
+    phoneLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
+    [baseView addSubview:phoneLab];
+    
+    // 边线
+    UIView *lineView5 = [[UIView alloc] initWithFrame:CGRectMake(jiange1, CGRectGetMaxY(phoneLab.frame), numberLabW, 1)];
+    lineView5.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+    [baseView addSubview:lineView5];
+    
+    
+    UIButton *phoneButton = [[UIButton alloc]init];
+    [phoneButton setImage:[UIImage imageNamed:@"dianhua"] forState:UIControlStateNormal];
+    [_scrollView addSubview:phoneButton];
+    [phoneButton addTarget:self action:@selector(phoneBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    phoneButton.frame = CGRectMake(self.view.frame.size.width - baseView1H *2 , phoneLabY , baseView1H *2 , baseView1H);
+    
+    
+    
     // 施工人员
     CGFloat workerLabW = baseView1W;
     CGFloat workerLabH = baseView1H;
     CGFloat workerLabX = baseView1X;
-    CGFloat workerLabY = CGRectGetMaxY(baseView2.frame);
+    CGFloat workerLabY = CGRectGetMaxY(lineView5.frame);
     self.workerLab = [[UILabel alloc] initWithFrame:CGRectMake(workerLabX, workerLabY, workerLabW, workerLabH)];
     self.workerLab.text = [NSString stringWithFormat:@"施工人员：%@", _model.jishiAllName];
     self.workerLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
     [baseView addSubview:self.workerLab];
     
     // 边线
-    UIView *lineView5 = [[UIView alloc] initWithFrame:CGRectMake(jiange1, CGRectGetMaxY(self.workerLab.frame), numberLabW, 1)];
-    lineView5.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
-    [baseView addSubview:lineView5];
+    UIView *lineView6 = [[UIView alloc] initWithFrame:CGRectMake(jiange1, CGRectGetMaxY(self.workerLab.frame), numberLabW, 1)];
+    lineView6.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+    [baseView addSubview:lineView6];
 
     
     
@@ -845,6 +870,15 @@
 
     return baseView;
 }
+
+- (void)phoneBtnClick{
+    [ACETelPrompt callPhoneNumber:_model.contactPhone call:^(NSTimeInterval duration) {
+        
+    } cancel:^{
+        
+    }];
+}
+
 
 - (void)leftButClick {
     

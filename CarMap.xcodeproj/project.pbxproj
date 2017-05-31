@@ -149,6 +149,7 @@
 		B02292491ECD50390022D34F /* GFTrainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B022923F1ECD50390022D34F /* GFTrainTableViewCell.m */; };
 		B022924A1ECD50390022D34F /* GFTransformTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B02292411ECD50390022D34F /* GFTransformTableViewCell.m */; };
 		B081E7571ECEA337003558DC /* CLCollectTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B081E7561ECEA337003558DC /* CLCollectTableViewCell.m */; };
+		B0C913921ED58B130054A755 /* ACETelPrompt.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C913911ED58B130054A755 /* ACETelPrompt.m */; };
 		B0F8BBC51ECD77A800F00FC9 /* CLCollectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F8BBC41ECD77A800F00FC9 /* CLCollectViewController.m */; };
 		B0F8BBC81ECD8B8E00F00FC9 /* CLCooperatorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F8BBC71ECD8B8E00F00FC9 /* CLCooperatorModel.m */; };
 		BF71DD21E9CF382FC1DA7F81 /* libPods-CarMap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E35E041E0DC0947B718BCC81 /* libPods-CarMap.a */; };
@@ -465,6 +466,8 @@
 		B02292411ECD50390022D34F /* GFTransformTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFTransformTableViewCell.m; sourceTree = "<group>"; };
 		B081E7551ECEA337003558DC /* CLCollectTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCollectTableViewCell.h; sourceTree = "<group>"; };
 		B081E7561ECEA337003558DC /* CLCollectTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLCollectTableViewCell.m; sourceTree = "<group>"; };
+		B0C913901ED58B130054A755 /* ACETelPrompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACETelPrompt.h; sourceTree = "<group>"; };
+		B0C913911ED58B130054A755 /* ACETelPrompt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACETelPrompt.m; sourceTree = "<group>"; };
 		B0F8BBC31ECD77A800F00FC9 /* CLCollectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCollectViewController.h; sourceTree = "<group>"; };
 		B0F8BBC41ECD77A800F00FC9 /* CLCollectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLCollectViewController.m; sourceTree = "<group>"; };
 		B0F8BBC61ECD8B8E00F00FC9 /* CLCooperatorModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCooperatorModel.h; sourceTree = "<group>"; };
@@ -611,6 +614,8 @@
 		B02290771ECD4BB40022D34F /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				B0C913901ED58B130054A755 /* ACETelPrompt.h */,
+				B0C913911ED58B130054A755 /* ACETelPrompt.m */,
 				B02290781ECD4BB40022D34F /* MJRefresh */,
 				B02290A51ECD4BB40022D34F /* Reachability.h */,
 				B02290A61ECD4BB40022D34F /* Reachability.m */,
@@ -1544,6 +1549,7 @@
 				B02290DA1ECD4BB40022D34F /* UIView+MJExtension.m in Sources */,
 				B02292421ECD50390022D34F /* CLCommissionViewController.m in Sources */,
 				B02290E31ECD4BB40022D34F /* GFButton.m in Sources */,
+				B0C913921ED58B130054A755 /* ACETelPrompt.m in Sources */,
 				B022917D1ECD4D570022D34F /* CLCertifyingViewController.m in Sources */,
 				B02290E11ECD4BB40022D34F /* CLTouchImageView.m in Sources */,
 				B022917F1ECD4D570022D34F /* CLDelegateViewController.m in Sources */,

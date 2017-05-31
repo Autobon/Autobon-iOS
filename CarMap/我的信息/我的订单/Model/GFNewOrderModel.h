@@ -19,6 +19,7 @@
 @property (nonatomic, copy) NSString *coopId;         // 商户ID
 @property (nonatomic, copy) NSString *createTime;       // 订单创建时间
 @property (nonatomic, copy) NSString *creatorName;      // 下单人姓名
+@property (nonatomic, copy) NSString *contactPhone;     //联系方式
 @property (nonatomic, copy) NSString *orderID;          // 订单ID
 @property (nonatomic, copy) NSString *latitude;         // 商户维度
 @property (nonatomic, copy) NSString *longitude;        // 商户经度

@@ -27,6 +27,7 @@
 #import "CLWorkBeforeViewController.h"
 
 #import "GFFangqiViewController.h"
+#import "ACETelPrompt.h"
 
 
 @interface CLOrderDetailViewController () <HZPhotoBrowserDelegate>
@@ -129,9 +130,20 @@
     [self setLineView:[NSString stringWithFormat:@"预约施工时间：%@",self.orderTime] maxY:lineView2.frame.origin.y+self.view.frame.size.height/18+1];
     [self setLineView:[NSString stringWithFormat:@"最晚交车时间：%@",_model.agreedEndTime] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*2];
     [self setLineView:[NSString stringWithFormat:@"下单人员：%@",_model.creatorName] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*3];
-    [self setLineView:[NSString stringWithFormat:@"下单时间：%@",_model.createTime] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*4];
-    [self setLineView:[NSString stringWithFormat:@"商户名称：%@",self.cooperatorName] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*5];
-    UILabel *lastLab = [self setLineView:[NSString stringWithFormat:@"商户位置：%@",self.cooperatorAddress] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*6];
+    [self setLineView:[NSString stringWithFormat:@"联系方式：%@",_model.contactPhone] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*4];
+    
+    UIButton *phoneButton = [[UIButton alloc]init];
+    [phoneButton setImage:[UIImage imageNamed:@"dianhua"] forState:UIControlStateNormal];
+    [_scrollView addSubview:phoneButton];
+    [phoneButton addTarget:self action:@selector(phoneBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    phoneButton.frame = CGRectMake(self.view.frame.size.width - self.view.frame.size.height/9 - 20, lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*4 +3 , self.view.frame.size.height/9, self.view.frame.size.height/18);
+//    phoneButton.backgroundColor = [UIColor cyanColor];
+    
+    
+    
+    [self setLineView:[NSString stringWithFormat:@"下单时间：%@",_model.createTime] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*5];
+    [self setLineView:[NSString stringWithFormat:@"商户名称：%@",self.cooperatorName] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*6];
+    UILabel *lastLab = [self setLineView:[NSString stringWithFormat:@"商户位置：%@",self.cooperatorAddress] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*7];
 
     // 备注
     UILabel *otherLabel = [[UILabel alloc]init];
@@ -169,6 +181,15 @@
 
     _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(lastLab.frame)+1+detailSize.size.height+self.view.frame.size.height/18 + 20);
 }
+
+- (void)phoneBtnClick{
+    [ACETelPrompt callPhoneNumber:_model.contactPhone call:^(NSTimeInterval duration) {
+        
+    } cancel:^{
+        
+    }];
+}
+
 
 - (void)imgViewButClick:(UIButton *)sender {
     

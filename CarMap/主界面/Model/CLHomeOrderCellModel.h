@@ -35,7 +35,7 @@
 @property (nonatomic, copy) NSString *agreedEndTime;        // 最晚交车时间
 @property (nonatomic, copy) NSString *createTime;           // 下单时间
 @property (nonatomic, copy) NSString *creatorName;          // 下单人
-
+@property (nonatomic, copy) NSString *contactPhone;         //联系方式
 
 @property (nonatomic, copy) NSString *jjjj;
 

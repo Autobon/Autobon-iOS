@@ -78,6 +78,12 @@
             self.creatorName = dic[@"creatorName"];
         }
         
+        if(dic[@"contactPhone"] == nil) {
+            self.contactPhone = @"无";
+        }else {
+            self.contactPhone = dic[@"contactPhone"];
+        }
+        
         if(dic[@"id"] == nil) {
             self.orderID = @"无";
         }else {

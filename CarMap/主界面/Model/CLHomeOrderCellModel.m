@@ -69,6 +69,7 @@
         // 商户名字
         _cooperatorFullname = [NSString stringWithFormat:@"%@", dic[@"coopName"]];
         _cooperatorId = [NSString stringWithFormat:@"%@",dic[@"coopId"]];
+        _contactPhone = dic[@"contactPhone"];
         // 施工前照片
         if([dic[@"beforePhotos"] isKindOfClass:[NSNull class]]) {
             
