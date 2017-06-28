@@ -293,7 +293,7 @@
             // 判断是否登录成功
             if([responseObject[@"status"] integerValue] == 1) {
                 NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"autoken"];
-//                NSLog(@"token--%@--",token);
+                NSLog(@"token--%@--",token);
                 
                 NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
                 [userDefaults setObject:self.userNameTxt.centerTxt.text forKey:@"userName"];
@@ -307,7 +307,7 @@
                     NSHTTPCookie *cookie = [cookieJar cookies][i]; // 实例化响应头数组对象
                     
                     if ([cookie.name isEqualToString:@"autoken"]) { // 获取响应头数组对象里地名字为autoken的对象
-//                        NSLog(@"############%@", [NSString stringWithFormat:@"%@=%@",[cookie name],[cookie value]]); //获取响应头数组对象里地名字为autoken的对象的数据，这个数据是用来验证用户身份相当于“key”
+                        ICLog(@"############%@", [NSString stringWithFormat:@"%@=%@",[cookie name],[cookie value]]); //获取响应头数组对象里地名字为autoken的对象的数据，这个数据是用来验证用户身份相当于“key”
                         [autokenValue setObject:[NSString stringWithFormat:@"%@=%@", cookie.name, cookie.value] forKey:@"autoken"];
                         break;
                     }

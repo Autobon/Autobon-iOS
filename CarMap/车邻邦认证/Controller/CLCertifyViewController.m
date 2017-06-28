@@ -609,7 +609,7 @@
     }
     if (_chooseView == nil) {
         _chooseView = [[CLTouchView alloc]initWithFrame:self.view.bounds];
-//        _chooseView.backgroundColor = [UIColor cyanColor];
+        _chooseView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.3];
         [self.view addSubview:_chooseView];
         
         UIView *chooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-100, 80)];

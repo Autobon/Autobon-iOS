@@ -32,9 +32,12 @@
     
     
     UIWebView *webView = [[UIWebView alloc]initWithFrame:CGRectMake(-20, 44, self.view.frame.size.width+40, self.view.frame.size.height- 44)];
+//    webView.scalesPageToFit = YES;
     NSString* path = [[NSBundle mainBundle] pathForResource:_delegateTitle ofType:@"html"];
     NSURL* url = [NSURL fileURLWithPath:path];
-    NSURLRequest* request = [NSURLRequest requestWithURL:url] ;
+//    NSURL* url = [[NSURL alloc] initWithString:@"http://10.0.12.182:12345/api/web/admin/study/download?path=/uploads/study/20170619150545DX5WL3.xlsx"];
+    NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
+//    [request setValue:@"autoken=\"staff:ssEoVBwJ3rSYnidORQUvhQ==@L8MUYS\"" forHTTPHeaderField:@"Cookie"];
     [webView loadRequest:request];
     
 //    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];

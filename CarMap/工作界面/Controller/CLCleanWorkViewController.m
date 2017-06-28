@@ -16,10 +16,13 @@
 #import "CLTouchScrollView.h"
 #import "CLShareViewController.h"
 #import "CLHomeOrderViewController.h"
+#import "CLTouchView.h"
 
 
 @interface CLCleanWorkViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextFieldDelegate>
 {
+    UIView *_chooseView;
+    
     UIButton *_carImageButton;
     UIButton *_cameraBtn;
     NSMutableArray *_imageArray;
@@ -136,12 +139,12 @@
     _carImageButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/7, CGRectGetMaxY(photoTitle.frame)+10, self.view.frame.size.width*5/7, self.view.frame.size.width*27/70)];
 //    _carImageView.image = [UIImage imageNamed:@"carImage"];
     [_carImageButton setBackgroundImage:[UIImage imageNamed:@"carImage"] forState:UIControlStateNormal];
-    [_carImageButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
+    [_carImageButton addTarget:self action:@selector(userChoosePhoto) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:_carImageButton];
     
     _cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_carImageButton.frame)-15, CGRectGetMaxY(_carImageButton.frame)-20, 30, 30)];
     [_cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
-    [_cameraBtn addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
+    [_cameraBtn addTarget:self action:@selector(userChoosePhoto) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:_cameraBtn];
     
     CLTitleView *titleView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 40 + self.view.frame.size.width+30, self.view.frame.size.width, 45) Title:@"选择本次负责的工作项"];
@@ -274,21 +277,69 @@
 
 
 #pragma mark - 选择照片
-- (void)userHeadChoose:(UIButton *)button{
+- (void)userChoosePhoto{
     
-//    NSLog(@"打开相机");
-    BOOL result = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
-    if (result) {
-//        NSLog(@"---支持使用相机---");
-        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        imagePicker.delegate = self;
+    
+    
+    if (_chooseView == nil) {
+        _chooseView = [[CLTouchView alloc]initWithFrame:self.view.bounds];
+        _chooseView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.3];
+        [self.view addSubview:_chooseView];
         
-        [self  presentViewController:imagePicker animated:YES completion:^{
-        }];
-    }else{
-//        NSLog(@"----不支持使用相机----");
+        UIView *chooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-100, 80)];
+        chooseView.center = self.view.center;
+        chooseView.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+        chooseView.layer.cornerRadius = 15;
+        chooseView.clipsToBounds = YES;
+        [_chooseView addSubview:chooseView];
+        
+        // 相机和相册按钮
+        UIButton *cameraButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-100, 40)];
+        [cameraButton setTitle:@"相册" forState:UIControlStateNormal];
+        [cameraButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
+        cameraButton.tag = 1;
+        [chooseView addSubview:cameraButton];
+        
+        UIButton *photoButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 40, self.view.frame.size.width-100, 40)];
+        [photoButton setTitle:@"相机" forState:UIControlStateNormal];
+        [photoButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
+        photoButton.tag = 2;
+        [chooseView addSubview:photoButton];
     }
+    
+    
+    _chooseView.hidden = NO;
+    
+}
+
+#pragma mark - 选择照片
+- (void)userHeadChoose:(UIButton *)button{
+    _chooseView.hidden = YES;
+    //    _scrollView.userInteractionEnabled = YES;
+    if (button.tag == 1) {
+        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
+        imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+        //        imagePickerController.allowsEditing = YES;
+        imagePickerController.delegate =self;
+        [self presentViewController:imagePickerController animated:YES completion:nil];
+    }else{
+        //        NSLog(@"打开相机");
+        BOOL result = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
+        if (result) {
+            //            NSLog(@"---支持使用相机---");
+            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            imagePicker.delegate = self;
+            // 编辑模式
+            //            imagePicker.allowsEditing = YES;
+            [self  presentViewController:imagePicker animated:YES completion:^{
+            }];
+        }else{
+            //            NSLog(@"----不支持使用相机----");
+        }
+        
+    }
+    
     
 }
 

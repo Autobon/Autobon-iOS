@@ -22,7 +22,7 @@
 #import "GFFangqiViewController.h"
 
 #import "GFImageView.h"
-
+#import "CLTouchView.h"
 
 
 
@@ -181,13 +181,13 @@
     _carImageButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/7, 150, self.view.frame.size.width*5/7, self.view.frame.size.width*27/70)];
 //    _carImageView.image = [UIImage imageNamed:@"carImage"];
     [_carImageButton setBackgroundImage:[UIImage imageNamed:@"carImage"] forState:UIControlStateNormal];
-    [_carImageButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
+    [_carImageButton addTarget:self action:@selector(userChoosePhoto) forControlEvents:UIControlEventTouchUpInside];
 //    _carImageButton.backgroundColor = [UIColor cyanColor];
     [self.view addSubview:_carImageButton];
     
     _cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*6/7-15, 150+self.view.frame.size.width*27/70-25, 30, 30)];
     [_cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
-    [_cameraBtn addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
+    [_cameraBtn addTarget:self action:@selector(userChoosePhoto) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_cameraBtn];
     
     
@@ -206,63 +206,73 @@
     
 }
 
-#pragma mark - 相机按钮的实现方法
-- (void)cameraHeadBtnClick:(UIButton *)button{
-    [self.view endEditing:YES];
+#pragma mark - 选择照片
+- (void)userChoosePhoto{
     
     
-    _chooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-100, 80)];
-    _chooseView.center = self.view.center;
-    _chooseView.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-    _chooseView.layer.cornerRadius = 15;
-    _chooseView.clipsToBounds = YES;
-    [self.view addSubview:_chooseView];
     
-    // 相机和相册按钮
-    UIButton *cameraButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-100, 40)];
-    [cameraButton setTitle:@"相册" forState:UIControlStateNormal];
-    [cameraButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
-    cameraButton.tag = 1;
-    [_chooseView addSubview:cameraButton];
+    if (_chooseView == nil) {
+        _chooseView = [[CLTouchView alloc]initWithFrame:self.view.bounds];
+        _chooseView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.3];
+        [self.view addSubview:_chooseView];
+        
+        UIView *chooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-100, 80)];
+        chooseView.center = self.view.center;
+        chooseView.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+        chooseView.layer.cornerRadius = 15;
+        chooseView.clipsToBounds = YES;
+        [_chooseView addSubview:chooseView];
+        
+        // 相机和相册按钮
+        UIButton *cameraButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-100, 40)];
+        [cameraButton setTitle:@"相册" forState:UIControlStateNormal];
+        [cameraButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
+        cameraButton.tag = 1;
+        [chooseView addSubview:cameraButton];
+        
+        UIButton *photoButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 40, self.view.frame.size.width-100, 40)];
+        [photoButton setTitle:@"相机" forState:UIControlStateNormal];
+        [photoButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
+        photoButton.tag = 2;
+        [chooseView addSubview:photoButton];
+    }
     
-    UIButton *_photoButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 40, self.view.frame.size.width-100, 40)];
-    [_photoButton setTitle:@"相机" forState:UIControlStateNormal];
-    [_photoButton addTarget:self action:@selector(userHeadChoose:) forControlEvents:UIControlEventTouchUpInside];
-    _photoButton.tag = 2;
-    [_chooseView addSubview:_photoButton];
     
+    _chooseView.hidden = NO;
     
 }
+
 #pragma mark - 选择照片
 - (void)userHeadChoose:(UIButton *)button{
-//    [_chooseView removeFromSuperview];
-//    
-//    if (button.tag == 1) {
-//        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
-//        imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-//        imagePickerController.allowsEditing = YES;
-//        imagePickerController.delegate =self;
-//        [self presentViewController:imagePickerController animated:YES completion:nil];
-//    }else{
-//        NSLog(@"打开相机");
+    _chooseView.hidden = YES;
+    //    _scrollView.userInteractionEnabled = YES;
+    if (button.tag == 1) {
+        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
+        imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+        //        imagePickerController.allowsEditing = YES;
+        imagePickerController.delegate =self;
+        [self presentViewController:imagePickerController animated:YES completion:nil];
+    }else{
+        //        NSLog(@"打开相机");
         BOOL result = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
         if (result) {
-//            NSLog(@"---支持使用相机---");
+            //            NSLog(@"---支持使用相机---");
             UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
             imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
             imagePicker.delegate = self;
             // 编辑模式
             //            imagePicker.allowsEditing = YES;
-            [self presentViewController:imagePicker animated:YES completion:^{
+            [self  presentViewController:imagePicker animated:YES completion:^{
             }];
         }else{
-//            NSLog(@"----不支持使用相机----");
+            //            NSLog(@"----不支持使用相机----");
         }
         
-//    }
+    }
     
     
 }
+
 
 #pragma mark - 图片协议方法
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo{

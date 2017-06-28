@@ -1841,18 +1841,6 @@ NSString* const PUBHOST = @"http://47.93.17.218:12345/api";
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
         
         NSString *URLString = [NSString stringWithFormat:@"%@/technician/v2/order/listNew",HOST];
-        //        NSLog(@"-请求没有成功程序挂掉啦--token---%@---%@---%@-",manager,URLString,dictionary);
-        //        [manager GET:URLString parameters:dictionary success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        //            NSLog(@"请求成功了－22－－");
-        //            if (success) {
-        //                success(responseObject);
-        //            }
-        //        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        //            NSLog(@"请求失败了－－－");
-        //            if (failure) {
-        //                failure(error);
-        //            }
-        //        }];
         
         [manager GET:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
             //            NSLog(@"请求成功了－11－－");
