@@ -37,6 +37,7 @@
     NSURL* url = [NSURL fileURLWithPath:path];
 //    NSURL* url = [[NSURL alloc] initWithString:@"http://10.0.12.182:12345/api/web/admin/study/download?path=/uploads/study/20170619150545DX5WL3.xlsx"];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
+    
 //    [request setValue:@"autoken=\"staff:ssEoVBwJ3rSYnidORQUvhQ==@L8MUYS\"" forHTTPHeaderField:@"Cookie"];
     [webView loadRequest:request];
     

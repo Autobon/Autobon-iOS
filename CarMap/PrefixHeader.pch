@@ -28,8 +28,8 @@
 
 
 
-#define BaseHttp @"http://47.93.17.218:12345"
-
+//#define BaseHttp @"http://47.93.17.218:12345"
+#define BaseHttp @"http://10.0.12.62:12345"
 
 
 #ifdef DEBUG

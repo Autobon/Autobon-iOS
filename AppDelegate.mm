@@ -10,18 +10,13 @@
 #import "AppDelegate.h"
 #import "GeTuiSdk.h"
 #import "FirstViewController.h"
-#import "UMSocial.h"
-#import "UMSocialWechatHandler.h"
-#import "UMSocialSinaHandler.h"
-#import "UMSocialQQHandler.h"
-#import "UMSocialSinaSSOHandler.h"
+
 #import <BaiduMapAPI_Base/BMKBaseComponent.h>
 #import "CLHomeOrderViewController.h"
 #import "GFSignInViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import "GFHttpTool.h"
 #import "GFAlertView.h"
-#import "CLShareViewController.h"
 #import <Google/Analytics.h>
 
 
@@ -35,7 +30,8 @@
 #import "CLWorkOverViewController.h"
 #import "GFIndentViewController.h"
 
-
+#import <UMSocialCore/UMSocialCore.h>
+#import "CLShareViewController.h"
 // 个推开发者网站中申请App时，注册的AppId、AppKey、AppSecret
 #define kGtAppId      @"zoCAUGD4Hi55CS6iW1OI77"
 #define kGtAppKey     @"ESlofHVour7DmT7xy7cnJ9"
@@ -81,16 +77,26 @@
     // 注册APNS
     [self registerUserNotification];
     
-    [UMSocialData setAppKey:@"564572b9e0f55a38dd001e6c"];
+//    [UMSocialData setAppKey:@"564572b9e0f55a38dd001e6c"];
     
+    /* 设置友盟appkey */
+    [[UMSocialManager defaultManager] setUmSocialAppkey:@"564572b9e0f55a38dd001e6c"];
     
-    [UMSocialWechatHandler setWXAppId:@"wx55cc20e910a128e5" appSecret:@"7ca03043095011790e0b9a6b9f498457" url:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wx55cc20e910a128e5" appSecret:@"7ca03043095011790e0b9a6b9f498457" redirectURL:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];
     
-    [UMSocialQQHandler setQQWithAppId:@"1105263986" appKey:@"sjj2sjhLIqtjmcfL" url:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];
+//    [UMSocialWechatHandler setWXAppId:@"wx55cc20e910a128e5" appSecret:@"7ca03043095011790e0b9a6b9f498457" url:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];
+    
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"1105263986"/*设置QQ平台的appID*/  appSecret:nil redirectURL:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];
+    
+//    [UMSocialQQHandler setQQWithAppId:@"1105263986" appKey:@"sjj2sjhLIqtjmcfL" url:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];
     
 //    [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
 //
-    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:@"3285914881" RedirectURL:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];
+    
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@"3285914881"/*设置QQ平台的appID*/  appSecret:@"25a0f37f0b56dbc93cae8271d65e895d" redirectURL:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];
+    
+    
+//    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:@"3285914881" RedirectURL:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];
 
     _mapManager = [[BMKMapManager alloc]init];
     BOOL ret = [_mapManager start:@"qQxUcaGNCZfeFmhB8EHWVvgt" generalDelegate:self];
@@ -122,7 +128,8 @@
     GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
 //    CLWorkOverViewController *signInVC = [[CLWorkOverViewController alloc] init];
 //    CLMoreViewController *moreVC = [[CLMoreViewController alloc] init];
-
+//    CLShareViewController *signInVC = [[CLShareViewController alloc] init];
+    
     _navigation = [[UINavigationController alloc]initWithRootViewController:signInVC];
 
 
@@ -160,7 +167,7 @@
         [_manager startUpdatingLocation];
 //    }
 
-    _window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
+//    _window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     _window.backgroundColor = [UIColor whiteColor];
 
     _navigation.navigationBarHidden = YES;
@@ -186,7 +193,7 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    BOOL result = [UMSocialSnsService handleOpenURL:url];
+    BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url];
     if (result == FALSE) {
         //调用其他SDK，例如支付宝SDK等
     }

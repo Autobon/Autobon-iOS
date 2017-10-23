@@ -9,12 +9,12 @@
 #import "CLShareViewController.h"
 #import "GFNavigationView.h"
 #import "GFMyMessageViewController.h"
-#import "UMSocial.h"
 #import "CLHomeOrderViewController.h"
 
+#import <UShareUI/UShareUI.h>
+#import <UMSocialCore/UMSocialCore.h>
 
-
-@interface CLShareViewController ()
+@interface CLShareViewController ()<UMSocialShareMenuViewDelegate>
 
 @end
 
@@ -60,19 +60,57 @@
 
 - (void)shareBtnClick{
     
-    
-    
-//    [[UMSocialData defaultData].urlResource setResourceType:UMSocialUrlResourceTypeImage url:@"http://media.incardata.com.cn/others%2f512-512.png"];
-    [UMSocialData defaultData].extConfig.wechatSessionData.title = @"车邻邦";
-    [UMSocialData defaultData].extConfig.qqData.title = @"车邻邦";
-    [UMSocialData defaultData].extConfig.qzoneData.title = @"车邻邦";
-    [UMSocialSnsService presentSnsIconSheetView:self appKey:@"564572b9e0f55a38dd001e6c" shareText:@"车邻邦专业的汽车保养团队" shareImage:[UIImage imageNamed:@"logoImage"] shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQzone,UMShareToQQ,UMShareToSina,nil] delegate:self];
-        
-        
-    
+    [UMSocialUIManager setPreDefinePlatforms:@[@(UMSocialPlatformType_WechatSession),@(UMSocialPlatformType_WechatTimeLine),@(UMSocialPlatformType_Qzone),@(UMSocialPlatformType_QQ),@(UMSocialPlatformType_Sina)]];
+    [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+        [self shareWebPageToPlatformType:platformType];
+    }];
     
     
 }
+
+
+- (void)shareWebPageToPlatformType:(UMSocialPlatformType)platformType
+{
+    
+    
+    //    [[UMSocialData defaultData].urlResource setResourceType:UMSocialUrlResourceTypeImage url:@"http://media.incardata.com.cn/others%2f512-512.png"];
+    //    [UMSocialData defaultData].extConfig.wechatSessionData.title = @"车邻邦";
+    //    [UMSocialData defaultData].extConfig.qqData.title = @"车邻邦";
+    //    [UMSocialData defaultData].extConfig.qzoneData.title = @"车邻邦";
+    //    [UMSocialSnsService presentSnsIconSheetView:self appKey:@"564572b9e0f55a38dd001e6c" shareText:@"车邻邦专业的汽车保养团队" shareImage:[UIImage imageNamed:@"logoImage"] shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQzone,UMShareToQQ,UMShareToSina,nil] delegate:self];
+    
+    //创建分享消息对象
+    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+    
+    //创建网页内容对象
+//    NSString* thumbURL =  @"http://media.incardata.com.cn/others%2f512-512.png";
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"车邻邦" descr:@"车邻邦专业的汽车保养团队" thumImage:[UIImage imageNamed:@"logoImage"]];
+    //设置网页地址
+    shareObject.webpageUrl = [NSString stringWithFormat:@"%@/shareA.html",BaseHttp];
+    
+    //分享消息对象设置分享内容对象
+    messageObject.shareObject = shareObject;
+    
+    [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
+        
+        if (error) {
+            ICLog(@"************Share fail with error %@*********",error);
+        }else{
+//            if ([data isKindOfClass:[UMSocialShareResponse class]]) {
+//                UMSocialShareResponse *resp = data;
+//                //分享结果消息
+//                ICLog(@"response message is %@",resp.message);
+//                //第三方原始返回的数据
+//                ICLog(@"response originalResponse data is %@",resp.originalResponse);
+//
+//            }else{
+//                ICLog(@"response data is %@",data);
+//            }
+        }
+        //        [self alertWithError:error];
+    }];
+}
+
 
 
 #pragma mark - 设置日期和状态
