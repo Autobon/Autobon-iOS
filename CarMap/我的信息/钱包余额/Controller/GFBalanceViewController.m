@@ -11,15 +11,17 @@
 #import "GFTextField.h"
 #import "GFHttpTool.h"
 #import "GFBankCardViewController.h"
-
 #import "GFIndentModel.h"
+#import "GFTipView.h"
 
-@interface GFBalanceViewController () <GFBankCardViewControllerDelegate> {
+@interface GFBalanceViewController () <GFBankCardViewControllerDelegate,UITextFieldDelegate> {
     
     CGFloat kWidth;
     CGFloat kHeight;
     
     CGFloat jianjv1;
+    
+    GFTextField *_cashTextField;  //提现金额
 }
 
 @property (nonatomic, strong) GFNavigationView *navView;
@@ -144,7 +146,89 @@
     timeLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
     timeLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
     [self.view addSubview:timeLab];
+    
+    
+    
+    
+    
+    // 提现金额
+    _cashTextField = [[GFTextField alloc]initWithPlaceholder:@"请输入提现金额" withFrame:CGRectMake(100, CGRectGetMaxY(timeLab.frame) + 30, self.view.frame.size.width - 120, 40)];
+    _cashTextField.centerTxt.keyboardType = UIKeyboardTypeDecimalPad;
+    _cashTextField.centerTxt.delegate = self;
+//    _cashTextField.centerTxt.tag = 5;
+    [self.view addSubview:_cashTextField];
+    
+    
+    UILabel *cashLabel = [[UILabel alloc]init];
+    cashLabel.text = @"提现金额:";
+    cashLabel.font = [UIFont systemFontOfSize:15];
+    [self.view addSubview:cashLabel];
+    cashLabel.frame = CGRectMake(20, CGRectGetMaxY(timeLab.frame) + 23, 80, 40);
+    
+    
+    
+//    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, _cashTextField.frame.origin.y+40+40, self.view.frame.size.width, 1)];
+//    lineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
+//    [self.view addSubview:lineView];
+    
+    
+    
+    
+    
+    //提现按钮
+    UIButton *cashButton = [[UIButton alloc]init];
+    [cashButton setBackgroundImage:[UIImage imageNamed:@"button.png"] forState:UIControlStateNormal];
+    [cashButton setBackgroundImage:[UIImage imageNamed:@"buttonClick.png"] forState:UIControlStateHighlighted];
+    [cashButton setTitle:@"提现" forState:UIControlStateNormal];
+    [cashButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    cashButton.titleLabel.font = [UIFont systemFontOfSize:19 / 320.0 * kWidth];
+    [self.view addSubview:cashButton];
+    [cashButton addTarget:self action:@selector(cashBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    cashButton.frame = CGRectMake(20, CGRectGetMaxY(_cashTextField.frame) + 60, self.view.frame.size.width - 40, 40);
+    
+    if([_balance floatValue] == 0){
+        _cashTextField.userInteractionEnabled = false;
+        cashButton.userInteractionEnabled = false;
+        cashButton.alpha = 0.5;
+    }
+    
 }
+
+//MARK:体现按钮相应方法
+- (void)cashBtnClick{
+    if (_cashTextField.centerTxt.text.length == 0) {
+        [GFTipView tipViewWithNormalHeightWithMessage:@"请输入提现金额" withShowTimw:1.5];
+        return;
+    }else if ([_cashTextField.centerTxt.text floatValue] == 0) {
+        [GFTipView tipViewWithNormalHeightWithMessage:@"提现金额不能为0" withShowTimw:1.5];
+        return;
+    }else if ([_cashTextField.centerTxt.text floatValue] > [_balance floatValue]) {
+        [GFTipView tipViewWithNormalHeightWithMessage:@"余额不足" withShowTimw:1.5];
+        return;
+    }
+    
+    NSDate *date = [NSDate date];
+    long time = (long)[date timeIntervalSince1970] * 1000;
+    ICLog(@"---time----%ld--",time);
+    NSDictionary *dataDictionary = @{@"applyMoney":_cashTextField.centerTxt.text,@"techId":_idString,@"applyDate":@(time)};
+    ICLog(@"dataDictionary--%@--",dataDictionary);
+    [GFHttpTool cashApplyPostWithParameters:dataDictionary success:^(id responseObject) {
+        ICLog(@"请求成功---%@--",responseObject);
+        if ([[NSString stringWithFormat:@"%@",responseObject[@"status"]]isEqualToString:@"1"]) {
+            [GFTipView tipViewWithNormalHeightWithMessage:@"操作成功" withShowTimw:1.5];
+            _cashTextField.centerTxt.text = nil;
+        }else{
+            [GFTipView tipViewWithNormalHeightWithMessage:responseObject[@"message"] withShowTimw:1.5];
+        }
+    } failure:^(NSError *error) {
+        ICLog(@"请求失败----%@--",error);
+        
+    }];
+    
+    
+}
+
 
 - (void)bankButClick {
 
@@ -170,6 +254,21 @@
     
     
 }
+
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if (range.length == 1) {
+        return YES;
+    }
+    
+    if ([string isEqualToString:@"."]) {
+        return [Commom validateInt:textField.text];
+    }
+    NSString *textString = [NSString stringWithFormat:@"%@%@",textField.text,string];
+    return [Commom validateIntAndFloat:textString];
+    
+}
+
 
 - (void)_setTapGest {
     
@@ -219,6 +318,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
 }
 
 /*

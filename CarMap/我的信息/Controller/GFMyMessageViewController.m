@@ -252,7 +252,7 @@
     CGFloat balanceLabUpY = moneyLineShu.frame.origin.y - 2;
     UILabel *balanceLabUp = [[UILabel alloc] initWithFrame:CGRectMake(balanceLabUpX, balanceLabUpY, balanceLabUpW, balanceLabUpH)];
     balanceLabUp.textAlignment = NSTextAlignmentCenter;
-    balanceLabUp.text = @"100.32";
+    balanceLabUp.text = @"0";
     balanceLabUp.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
     [moneyView addSubview:balanceLabUp];
     CGFloat balanceLabDownW = balanceLabUpW;
@@ -602,7 +602,7 @@
     [GFHttpTool messageGetWithParameters:nil success:^(id responseObject) {
         
         
-//        NSLog(@"个人信息数据＝＝＝＝＝＝＝＝＝%@", responseObject);
+        ICLog(@"个人信息数据＝＝＝＝＝＝＝＝＝%@", responseObject);
         
         NSInteger flage = [responseObject[@"status"] integerValue];
         if(flage == 1) {
@@ -653,6 +653,7 @@
             self.bankCardNo = dataDic[@"bankCardNo"];
             self.balance = balance;
             self.name = name;
+            self.idString = dataDic[@"id"];
 //            NSLog(@"\n%@\n%@\n%@\n%@\n%@\n%@\n", idPhoto, name, starRate, totalOrders, balance, unpaidOrders);
             
             // 头像
@@ -811,6 +812,7 @@
         balVC.bankCardNo = self.bankCardNo;
         balVC.balance = self.balance;
         balVC.name = self.name;
+        balVC.idString = self.idString;
     }else{
         
     }

@@ -35,7 +35,26 @@ PODS:
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
-  - UMengSocial (4.4)
+  - UMengUShare/Core (6.4.5):
+    - UMengUShare/Network
+  - UMengUShare/Network (6.4.5)
+  - UMengUShare/Social/QQ (6.4.5):
+    - UMengUShare/Core
+    - UMengUShare/Social/ReducedQQ
+  - UMengUShare/Social/ReducedQQ (6.4.5):
+    - UMengUShare/Core
+  - UMengUShare/Social/ReducedSina (6.4.5):
+    - UMengUShare/Core
+  - UMengUShare/Social/ReducedWeChat (6.4.5):
+    - UMengUShare/Core
+  - UMengUShare/Social/Sina (6.4.5):
+    - UMengUShare/Core
+    - UMengUShare/Social/ReducedSina
+  - UMengUShare/Social/WeChat (6.4.5):
+    - UMengUShare/Core
+    - UMengUShare/Social/ReducedWeChat
+  - UMengUShare/UI (6.4.5):
+    - UMengUShare/Core
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0.4)
@@ -43,12 +62,15 @@ DEPENDENCIES:
   - Google/Analytics
   - GTSDK (~> 1.3.2)
   - SDWebImage (~> 3.7.5)
-  - UMengSocial (~> 4.4)
+  - UMengUShare/Social/QQ
+  - UMengUShare/Social/Sina
+  - UMengUShare/Social/WeChat
+  - UMengUShare/UI
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
   BaiduMapKit: 97d2d44b41a876de2371fb91ddf78cdf84dafa05
-  Google: d0932824c5b97c96be489aa6f4e8cd6c294d637d
+  Google: d536877ec602555b755cc28ce6fed104825c693c
   GoogleAnalytics: 9be1afdb8deeac4bb5f13ca7f7d3b9db2a1f43dc
   GoogleInterchangeUtilities: 427382e42d8a340038bec37c6fdfd316e14b5fa2
   GoogleNetworkingUtilities: ec1e9911aca811eb18b7144394fee6168b607785
@@ -56,8 +78,8 @@ SPEC CHECKSUMS:
   GoogleUtilities: 5c653f7df2eedf0ce0efdfe5afe4f831f375fd7a
   GTSDK: 9ea284237331495fd76a71088bfd2da30981d510
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
-  UMengSocial: aba7296602310385114d82c255539a7bef3b7ab0
+  UMengUShare: a5711c54e640b04e3048e931d2b88d50f9cfa55c
 
-PODFILE CHECKSUM: 7b6f3ffbbce16fb134abaef0d97892b736788a4d
+PODFILE CHECKSUM: 2f13c484a7c60467b6dd1f21b258263739c17ddf
 
-COCOAPODS: 1.2.0.beta.1
+COCOAPODS: 1.3.1

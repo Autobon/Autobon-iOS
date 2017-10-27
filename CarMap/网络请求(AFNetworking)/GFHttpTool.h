@@ -124,7 +124,8 @@
 + (void)favoriteCooperatorGetWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
 
-
+#pragma mark - 技师新增提现申请
++ (void)cashApplyPostWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
 
 

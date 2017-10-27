@@ -20,9 +20,9 @@
 
 
 
-//NSString *const prefixURL = @"http://10.0.12.168:12345/api/mobile";
-//NSString* const HOST = @"http://10.0.12.168:12345/api/mobile";
-//NSString* const PUBHOST = @"http://10.0.12.168:12345/api";
+//NSString *const prefixURL = @"http://10.0.12.62:12345/api/mobile";
+//NSString* const HOST = @"http://10.0.12.62:12345/api/mobile";
+//NSString* const PUBHOST = @"http://10.0.12.62:12345/api";
 
 //新的正式服务器
 NSString *const prefixURL = @"http://47.93.17.218:12345/api/mobile";
@@ -828,8 +828,8 @@ NSString* const PUBHOST = @"http://47.93.17.218:12345/api";
         //    NSLog(@"－Cookie－%@--",token);
         
         //    NSDictionary *dictionary = @{@"file":image};
-        //    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-        //    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+//            manager.requestSerializer = [AFJSONRequestSerializer serializer];
+//            manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         //    NSLog(@"--URLString--%@---headData--%@--",URLString,image);
         //    manager.requestSerializer = [AFJSONRequestSerializer serializer];
         
@@ -838,7 +838,7 @@ NSString* const PUBHOST = @"http://47.93.17.218:12345/api";
         //    UIImage *imageName = [UIImage imageNamed:@"icon.png"];
         //    NSData *imageData = UIImageJPEGRepresentation(imageName, 0.3);
         //     NSDictionary *dictionary = @{@"file":imageData};
-        //    [manager.requestSerializer setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
+//            [manager.requestSerializer setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
         
         //    UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"icon.png"]];
         //    [manager POST:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask * task, NSDictionary *responseObject) {
@@ -2299,7 +2299,81 @@ NSString* const PUBHOST = @"http://47.93.17.218:12345/api";
 
 
 
+#pragma mark - 技师新增提现申请
++ (void)cashApplyPostWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    
+    
+    
+    
+    if ([GFHttpTool isConnectionAvailable]) {
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
+        
+        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.requestSerializer = [AFJSONRequestSerializer serializer];
+//        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+//        [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 
+        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+        manager.requestSerializer.timeoutInterval = 30.0;
+        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+        NSString *token = [userDefaultes objectForKey:@"autoken"];
+        
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        
+
+        ICLog(@"-token--%@---",token);
+        
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/v2/cash/apply",HOST];
+        //        NSLog(@"token-可能是这里错了-%@-－－URLString--%@-",token,URLString);
+//        NSString *jsonString = @"{\"tech_id\":0,\"applyMoney\":0,\"applyDate\":\"2017-10-24 11:45:52\"}";
+        [manager POST:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            //            NSLog(@"走出来了");
+            [aView removeFromSuperview];
+            if(success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+//            ICLog(@"---error.userInfo--%@--",error.userInfo);
+            
+            NSData *data = error.userInfo[@"com.alamofire.serialization.response.error.data"];
+            NSString *dataString = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+            ICLog(@"dataString---%@",dataString);
+            
+//            let data = error._userInfo!["com.alamofire.serialization.response.error.data"]
+//            let dataString = NSString.init(data: data as! Data, encoding: String.Encoding.utf8.rawValue)
+//            let dictionary = Commom.JSONStringToDictionary(JSONString: dataString! as String)
+            
+            
+            
+            [aView removeFromSuperview];
+            // 判断请求超时
+            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+            if([errorStr isEqualToString:@"The request timed out."]) {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+            }else {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+            }
+            if(failure) {
+                failure(error);
+            }
+        }];
+        
+        
+        
+    }else{
+        
+        [GFHttpTool addAlertView:@"无网络连接"];
+    }
+    
+    
+    
+    
+    
+    
+    
+}
 
 
 

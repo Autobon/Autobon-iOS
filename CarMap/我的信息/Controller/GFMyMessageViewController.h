@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSString *bankCardNo;
 @property (nonatomic, strong) NSString *balance;
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *idString;
 
 
 @end

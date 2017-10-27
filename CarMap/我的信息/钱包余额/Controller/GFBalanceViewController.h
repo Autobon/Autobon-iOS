@@ -21,6 +21,8 @@
 @property (nonatomic, strong) NSString *balance;
 @property (nonatomic, strong) NSString *name;
 
+@property (nonatomic, strong) NSString *idString;
+
 //@property (nonatomic, strong) NSString 
 
 @end

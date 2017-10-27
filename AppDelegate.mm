@@ -29,6 +29,8 @@
 #import "GFFCertifyViewController.h"
 #import "CLWorkOverViewController.h"
 #import "GFIndentViewController.h"
+#import "GFBalanceViewController.h"
+
 
 #import <UMSocialCore/UMSocialCore.h>
 #import "CLShareViewController.h"
@@ -126,7 +128,7 @@
     
     
     GFSignInViewController *signInVC = [[GFSignInViewController alloc] init];
-//    CLWorkOverViewController *signInVC = [[CLWorkOverViewController alloc] init];
+//    GFBalanceViewController *signInVC = [[GFBalanceViewController alloc] init];
 //    CLMoreViewController *moreVC = [[CLMoreViewController alloc] init];
 //    CLShareViewController *signInVC = [[CLShareViewController alloc] init];
     
