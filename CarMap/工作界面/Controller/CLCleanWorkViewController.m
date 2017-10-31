@@ -118,7 +118,7 @@
 
 - (void)titleView{
     
-    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, -10, self.view.frame.size.width, 20)];
+    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, self.view.frame.size.width, 20)];
     _distanceLabel.text = @"已用时：";
     _distanceLabel.backgroundColor = [UIColor whiteColor];
     _distanceLabel.font = [UIFont systemFontOfSize:15];

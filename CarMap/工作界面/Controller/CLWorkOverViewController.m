@@ -406,7 +406,7 @@
     
 //    NSLog(@"－1457600262000－－已用时－－%@--",_startTime);
     
-    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, -10, self.view.frame.size.width, 20)];
+    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, self.view.frame.size.width, 20)];
 //    _distanceLabel.text = @"已用时：15分28秒";
     _distanceLabel.backgroundColor = [UIColor whiteColor];
     _distanceLabel.font = [UIFont systemFontOfSize:15];
