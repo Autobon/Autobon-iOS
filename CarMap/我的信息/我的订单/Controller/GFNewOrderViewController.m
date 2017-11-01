@@ -82,11 +82,16 @@
     CGFloat baseViewH = kHeight * 0.0651;
     CGFloat baseViewX = 0;
     CGFloat baseViewY = 64;
-    UIView *baseView = [[UIView alloc] initWithFrame:CGRectMake(baseViewX, baseViewY, baseViewW, baseViewH)];
+    UIView *baseView = [[UIView alloc] init];
     baseView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:baseView];
     
-    
+    [baseView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.top.equalTo(_navView.mas_bottom);
+        make.right.equalTo(self.view);
+        make.height.mas_equalTo(64);
+    }];
     
     // 主负责人
     UIButton *mainBut = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -137,6 +142,14 @@
     self.tableview.dataSource = self;
     [self.view addSubview:self.tableview];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    [self.tableview mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.top.equalTo(baseView.mas_bottom);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+    }];
+    
     
     self.nothingView = [[GFNothingView alloc] initWithImageName:@"NoOrder" withTipString:@"暂无订单" withSubtipString:nil];
     self.nothingView.hidden = YES;

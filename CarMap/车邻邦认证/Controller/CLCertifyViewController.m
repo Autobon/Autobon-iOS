@@ -45,6 +45,8 @@
     UITableView *_tableView;
     NSArray *_skillBtnArray;
     NSMutableDictionary *_dataDictionary;
+    
+    GFNavigationView *_navView;
 }
 @end
 
@@ -131,10 +133,15 @@
 }
 
 - (void)setViewForCertify{
-    _scrollView = [[CLTouchScrollView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64)];
+    _scrollView = [[CLTouchScrollView alloc]init];
 //    scrollView.backgroundColor = [UIColor cyanColor];
     
     [self.view addSubview:_scrollView];
+    
+    [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.equalTo(self.view);
+        make.top.equalTo(_navView.mas_bottom);
+    }];
     
 //头像
     _headButton = [[UIButton alloc]initWithFrame:CGRectMake(10, 20, 80, 80)];
@@ -762,10 +769,10 @@
 - (void)setNavigation{
     
     
-    GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"我要认证" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
-    [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    _navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"我要认证" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+    [_navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
 //    [navView.rightBut addTarget:navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:navView];
+    [self.view addSubview:_navView];
     
     
     

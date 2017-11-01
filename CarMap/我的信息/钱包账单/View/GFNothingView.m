@@ -25,7 +25,7 @@
     
     if(self != nil) {
     
-        self.frame = CGRectMake(0, 100, kWidth, kHeight - 64);
+        self.frame = CGRectMake(0, 100 + 24, kWidth, kHeight - 100 - 24);
         
         CGFloat imgViewW = 50 / 320.0 * kWidth;
         CGFloat imgViewH = imgViewW;

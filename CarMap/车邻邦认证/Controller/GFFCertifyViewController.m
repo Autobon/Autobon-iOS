@@ -30,6 +30,9 @@
 
 @interface GFFCertifyViewController ()<UITextViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UINavigationControllerDelegate,UIImagePickerControllerDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
+{
+    GFNavigationView *_navView;
+}
 
 @property (nonatomic, strong) CLTouchScrollView *scView;
 @property (nonatomic, strong) UIButton *iconBut;    // 技师头像
@@ -75,6 +78,9 @@
 @property (nonatomic, copy) NSString *idPhoto;
 
 @property (nonatomic, strong) UIButton *shuomingView;
+
+
+
 @end
 
 @implementation GFFCertifyViewController
@@ -177,8 +183,15 @@
     
     _dataDictionary = [[NSMutableDictionary alloc] init];
     
-    _scView = [[CLTouchScrollView alloc] initWithFrame:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 64)];
+    _scView = [[CLTouchScrollView alloc] init];
     [self.view addSubview:_scView];
+    
+    [_scView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.equalTo(self.view);
+        make.top.equalTo(_navView.mas_bottom);
+    }];
+    
+    
     // 技师头像
     _iconBut = [UIButton buttonWithType:UIButtonTypeCustom];
     _iconBut.frame = CGRectMake(10, 10, 90, 90);
@@ -657,10 +670,10 @@
 - (void)setNavigation{
     
     
-    GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"我要认证" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
-    [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    _navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"我要认证" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+    [_navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
     //    [navView.rightBut addTarget:navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:navView];
+    [self.view addSubview:_navView];
     
     
     

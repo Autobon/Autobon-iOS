@@ -95,13 +95,32 @@
     CGFloat msgViewH = kHeight * 0.162;
     CGFloat msgViewX = 0;
     CGFloat msgViewY = 64;
-    UIView *msgView = [[UIView alloc] initWithFrame:CGRectMake(msgViewX, msgViewY, msgViewW, msgViewH)];
+    UIView *msgView = [[UIView alloc] init];
     msgView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:msgView];
+    
+    
+    [msgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.top.equalTo(_navView.mas_bottom);
+        make.right.equalTo(self.view);
+        make.height.mas_offset(kHeight * 0.162);
+    }];
+    
+    
+    
+    
     // 边线
-    UIView *msgLine = [[UIView alloc] initWithFrame:CGRectMake(0, msgViewH - 1, msgViewW, 1)];
+    UIView *msgLine = [[UIView alloc] init];
     msgLine.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
     [msgView addSubview:msgLine];
+    [msgLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.height.mas_offset(1);
+        make.bottom.equalTo(msgView);
+    }];
+    
+    
     // 右边箭头
     CGFloat msgRightButW = kWidth * 0.08;
     CGFloat msgRightButH = msgViewH;
@@ -139,6 +158,7 @@
     nameLab.text = nameStr;
     [msgView addSubview:nameLab];
 
+    
     
     // 订单数
     CGFloat indentLabW = kWidth * 0.16;
@@ -202,9 +222,16 @@
     CGFloat moneyViewH = kHeight * (0.078 + 0.104);
     CGFloat moneyViewX = msgViewX;
     CGFloat moneyViewY = CGRectGetMaxY(msgView.frame) + jiange1;
-    UIView *moneyView = [[UIView alloc] initWithFrame:CGRectMake(moneyViewX, moneyViewY, moneyViewW, moneyViewH)];
+    UIView *moneyView = [[UIView alloc] init];
     moneyView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:moneyView];
+    
+    [moneyView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(msgView.mas_bottom).offset(jiange1);
+        make.height.mas_equalTo(kHeight*(0.078 + 0.104));
+    }];
+    
     // 边线
     UIView *moneyLineUp = [[UIView alloc] initWithFrame:CGRectMake(0, 0, moneyViewW, 1)];
     moneyLineUp.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
@@ -313,9 +340,14 @@
     CGFloat indentViewH = kHeight * 0.078;
     CGFloat indentViewX = msgViewX;
     CGFloat indentViewY = CGRectGetMaxY(moneyView.frame) + jiange1/2;
-    UIView *indentView = [[UIView alloc] initWithFrame:CGRectMake(indentViewX, indentViewY, indentViewW, indentViewH)];
+    UIView *indentView = [[UIView alloc] init];
     indentView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:indentView];
+    [indentView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(moneyView.mas_bottom);
+        make.height.mas_offset(kHeight * 0.078);
+    }];
     // 边线
     UIView *indentLineUp = [[UIView alloc] initWithFrame:CGRectMake(0, 0, indentViewW, 1)];
     indentLineUp.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
@@ -338,6 +370,9 @@
     UILabel *billLab = [[UILabel alloc] initWithFrame:CGRectMake(billLabX, billLabY, billLabW, billLabH)];
     billLab.text = @"我的订单";
     [indentView addSubview:billLab];
+    
+    
+    
     // 右边箭头
     CGFloat indentRightButW = kWidth * 0.08;
     CGFloat indentRightButH = indentViewH;
@@ -364,9 +399,15 @@
     CGFloat collectViewH = indentViewH;
     CGFloat collectViewX = msgViewX;
     CGFloat collectViewY = CGRectGetMaxY(indentView.frame) + jiange1/2;
-    UIView *collectView = [[UIView alloc] initWithFrame:CGRectMake(collectViewX, collectViewY, collectViewW, collectViewH)];
+    UIView *collectView = [[UIView alloc] init];
     collectView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:collectView];
+    [collectView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(indentView.mas_bottom);
+        make.height.mas_offset(kHeight * 0.078);
+    }];
+    
     // 边线
     UIView *collectLineUp = [[UIView alloc] initWithFrame:CGRectMake(0, 0, collectViewW, 1)];
     collectLineUp.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
@@ -420,9 +461,15 @@
     CGFloat notificationViewH = indentViewH;
     CGFloat notificationViewX = msgViewX;
     CGFloat notificationViewY = CGRectGetMaxY(collectView.frame) + jiange1/2;
-    UIView *notificationView = [[UIView alloc] initWithFrame:CGRectMake(notificationViewX, notificationViewY, notificationViewW, notificationViewH)];
+    UIView *notificationView = [[UIView alloc] init];
     notificationView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:notificationView];
+    [notificationView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(collectView.mas_bottom);
+        make.height.mas_offset(kHeight * 0.078);
+    }];
+    
     // 边线
     UIView *notificationLineUp = [[UIView alloc] initWithFrame:CGRectMake(0, 0, notificationViewW, 1)];
     notificationLineUp.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
@@ -476,9 +523,15 @@
     CGFloat changePwdViewH = indentViewH;
     CGFloat changePwdViewX = msgViewX;
     CGFloat changePwdViewY = CGRectGetMaxY(notificationView.frame) + jiange1/2;
-    UIView *changePwdView = [[UIView alloc] initWithFrame:CGRectMake(changePwdViewX, changePwdViewY, changePwdViewW, changePwdViewH)];
+    UIView *changePwdView = [[UIView alloc] init];
     changePwdView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:changePwdView];
+    [changePwdView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(notificationView.mas_bottom);
+        make.height.mas_offset(kHeight * 0.078);
+    }];
+    
     // 边线
     UIView *changePwdLineUp = [[UIView alloc] initWithFrame:CGRectMake(0, 0, changePwdViewW, 1)];
     changePwdLineUp.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
@@ -532,9 +585,15 @@
     CGFloat serveViewH = indentViewH;
     CGFloat serveViewX = msgViewX;
     CGFloat serveViewY = CGRectGetMaxY(changePwdView.frame) + jiange1/2;
-    UIView *serveView = [[UIView alloc] initWithFrame:CGRectMake(serveViewX, serveViewY, serveViewW, serveViewH)];
+    UIView *serveView = [[UIView alloc] init];
 //    serveView.backgroundColor = [UIColor redColor];
     [self.view addSubview:serveView];
+    [serveView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(changePwdView.mas_bottom);
+        make.height.mas_offset(kHeight * 0.078);
+    }];
+    
     // 边线
     UIView *serveLineUp = [[UIView alloc] initWithFrame:CGRectMake(0, 0, serveViewW, 1)];
     serveLineUp.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];

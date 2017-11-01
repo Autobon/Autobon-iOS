@@ -115,7 +115,7 @@
 
 #pragma mark - 设置日期和状态
 - (void)setDate{
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 36)];
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 94, self.view.frame.size.width, 36)];
     headerView.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     
     
@@ -132,12 +132,17 @@
 //    NSLog(@"设置日期和时间");
     //    headerView.backgroundColor = [UIColor cyanColor];
     [self.view addSubview:headerView];
+    
+    
+    
+    
+    
 }
 
 #pragma mark - 设置界面
 
 - (void)setViewForShare{
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(30, 140, self.view.frame.size.width-60, 80)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(30, 170, self.view.frame.size.width-60, 80)];
     label.text = [NSString stringWithFormat:@"恭喜，您已经顺利完成本次编号为%@的订单，分享可获得奖励啊！",_orderNumber];
 //    label.textAlignment = NSTextAlignmentCenter;
     label.font = [UIFont systemFontOfSize:20];
@@ -147,7 +152,7 @@
     
     // 提交按钮
     UIButton *submitButton = [[UIButton alloc]init];
-    submitButton.frame = CGRectMake(30, 250, self.view.frame.size.width-60, 40);
+    submitButton.frame = CGRectMake(30, 280, self.view.frame.size.width-60, 40);
     [submitButton setTitle:@"继续接单" forState:UIControlStateNormal];
     [submitButton setBackgroundImage:[UIImage imageNamed:@"button"] forState:UIControlStateNormal];
     [submitButton setBackgroundImage:[UIImage imageNamed:@"buttonClick"] forState:UIControlStateHighlighted];

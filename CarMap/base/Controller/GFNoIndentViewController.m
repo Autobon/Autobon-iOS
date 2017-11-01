@@ -52,12 +52,17 @@
 - (void)_setView {
     
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kWidth, kHeight - 64) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] init];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
     
-    
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.top.equalTo(_navView.mas_bottom);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+    }];
     
     
     

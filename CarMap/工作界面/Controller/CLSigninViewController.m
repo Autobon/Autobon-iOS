@@ -26,6 +26,8 @@
     GFMapViewController *_mapVC;
     NSTimer *_timer;
     
+    GFNavigationView *_navView;
+    UIView *_headerView;
     
     
 }
@@ -47,9 +49,9 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self setDate];
-    
     [self setNavigation];
+    
+    [self setDate];
     
     [self addMap];
     _signinButton.userInteractionEnabled = NO;
@@ -58,23 +60,31 @@
 
 // 设置日期和状态
 - (void)setDate{
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 36)];
-    headerView.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
+    _headerView = [[UIView alloc]init];
+    _headerView.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     
     UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 8, 200, 20)];
     timeLabel.text = [self weekdayString];
     timeLabel.font = [UIFont systemFontOfSize:14];
-    [headerView addSubview:timeLabel];
+    [_headerView addSubview:timeLabel];
     
     UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width-100, 8, 80, 20)];
     stateLabel.text = @"工作模式";
     stateLabel.textAlignment = NSTextAlignmentRight;
     stateLabel.font = [UIFont systemFontOfSize:14];
-    [headerView addSubview:stateLabel];
+    [_headerView addSubview:stateLabel];
     
 //    NSLog(@"设置日期和时间");
 //    headerView.backgroundColor = [UIColor cyanColor];
-    [self.view addSubview:headerView];
+    [self.view addSubview:_headerView];
+    
+    [_headerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(_navView.mas_bottom);
+        make.height.mas_offset(36);
+    }];
+    
+    
 }
 #pragma mark - 获取周几
 - (NSString *)weekdayString{
@@ -127,11 +137,17 @@
     [self.view addSubview:_mapVC.view];
     [self addChildViewController:_mapVC];
     [_mapVC didMoveToParentViewController:self];
-    _mapVC.view.frame = CGRectMake(0, 64+36, self.view.frame.size.width, self.view.frame.size.height/3);
+//    _mapVC.view.frame = CGRectMake(0, 64+36, self.view.frame.size.width, self.view.frame.size.height/3);
     _mapVC.mapView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height/3);
     
+    [_mapVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(_headerView.mas_bottom);
+        make.height.mas_offset(self.view.frame.size.height/3);
+    }];
     
-    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height/3+64+36, self.view.frame.size.width, 60)];
+    
+    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height/3+64+36+24, self.view.frame.size.width, 60)];
     _distanceLabel.text = @"距离门店   m";
     _distanceLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_distanceLabel];
@@ -214,12 +230,12 @@
 // 添加导航
 - (void)setNavigation{
     
-    GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:@"person" withRightImgHightName:@"personClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
-    [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [navView.rightBut addTarget:navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    _navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:@"person" withRightImgHightName:@"personClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+    [_navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [_navView.rightBut addTarget:_navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     
-    UIButton *removeOrderButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 85, 20, 40, 40)];
+    UIButton *removeOrderButton = [[UIButton alloc]init];
     removeOrderButton.titleLabel.font = [UIFont systemFontOfSize:16];
     //    removeOrderButton.backgroundColor = [UIColor grayColor];
 //    removeOrderButton.layer.borderColor = [[UIColor whiteColor] CGColor];
@@ -232,11 +248,16 @@
     }
     [removeOrderButton setTitleColor:[UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0] forState:UIControlStateHighlighted];
     [removeOrderButton addTarget:self action:@selector(removeOrderBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [navView addSubview:removeOrderButton];
+    [_navView addSubview:removeOrderButton];
     
+    [removeOrderButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(_navView).offset(-4);
+        make.right.equalTo(_navView).offset(-45);
+        make.width.mas_offset(40);
+        make.height.mas_offset(40);
+    }];
     
-    
-    [self.view addSubview:navView];
+    [self.view addSubview:_navView];
     
     
 }

@@ -32,6 +32,7 @@
     
     NSTimer *_timer;
     UILabel *_distanceLabel;
+    GFNavigationView *_navView;
     
 }
 
@@ -46,20 +47,26 @@
     self.view.backgroundColor = [UIColor whiteColor];
     _imageArray = [[NSMutableArray alloc]init];
 
+    [self setDate];
+    
+    [self setNavigation];
     
     _scrollView = [[CLTouchScrollView alloc]init];
     _scrollView.frame = CGRectMake(0, 64+36, self.view.frame.size.width, self.view.frame.size.height-64-38);
     
     [self.view addSubview:_scrollView];
     
+    [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.top.equalTo(_navView.mas_bottom);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+    }];
     
     
     
     
     
-    [self setDate];
-    
-    [self setNavigation];
     
     [self titleView];
     
@@ -484,11 +491,11 @@
 // 添加导航
 - (void)setNavigation{
     
-    GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:@"person" withRightImgHightName:@"personClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
-    [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [navView.rightBut addTarget:navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    _navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:@"person" withRightImgHightName:@"personClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+    [_navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [_navView.rightBut addTarget:_navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.view addSubview:navView];
+    [self.view addSubview:_navView];
     
     
 }

@@ -108,14 +108,17 @@
     [self.allPhotoUrlArr addObject:beforePhoto];
     [self.allPhotoUrlArr addObject:afterPhoto];
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, kWidth, kHeight - 64)];
+    self.scrollView = [[UIScrollView alloc] init];
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
 //    self.scrollView.pagingEnabled = YES;
     self.scrollView.bounces = NO;
     [self.view addSubview:self.scrollView];
     
-    
+    [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.bottom.right.equalTo(self.view);
+        make.top.equalTo(self.navView.mas_bottom);
+    }];
     
     // 订单信息
     [self _setIndentMessage];

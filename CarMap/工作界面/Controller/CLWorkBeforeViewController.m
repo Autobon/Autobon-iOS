@@ -36,6 +36,8 @@
     UILabel *_distanceLabel;
     NSTimer *_timer;
     
+    GFNavigationView *_navView;
+    
 }
 
 
@@ -49,9 +51,9 @@
     self.view.backgroundColor = [UIColor whiteColor];
     _imageArray = [[NSMutableArray alloc]init];
     
-    [self setDate];
-    
     [self setNavigation];
+    
+    [self setDate];
     
     [self titleView];
     
@@ -61,7 +63,7 @@
 
 // 设置日期和状态
 - (void)setDate{
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 36)];
+    UIView *headerView = [[UIView alloc]init];
     headerView.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     
     UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 8, 200, 20)];
@@ -82,6 +84,13 @@
 //    NSLog(@"设置日期和时间");
     //    headerView.backgroundColor = [UIColor cyanColor];
     [self.view addSubview:headerView];
+    
+    [headerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(_navView.mas_bottom);
+        make.height.mas_offset(36);
+    }];
+    
 }
 #pragma mark - 获取周几
 - (NSString *)weekdayString{
@@ -167,6 +176,11 @@
     CLTitleView *titleView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 64+36, self.view.frame.size.width, 45) Title:@"上传未开始工作车辆照片"];
     [self.view addSubview:titleView];
     
+    [titleView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(_navView.mas_bottom).offset(36);
+        make.height.mas_offset(45);
+    }];
     
     
 //    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 101, self.view.frame.size.width, 40)];
@@ -178,14 +192,14 @@
     
     
     
-    _carImageButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/7, 150, self.view.frame.size.width*5/7, self.view.frame.size.width*27/70)];
+    _carImageButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/7, 150 + 24, self.view.frame.size.width*5/7, self.view.frame.size.width*27/70)];
 //    _carImageView.image = [UIImage imageNamed:@"carImage"];
     [_carImageButton setBackgroundImage:[UIImage imageNamed:@"carImage"] forState:UIControlStateNormal];
     [_carImageButton addTarget:self action:@selector(userChoosePhoto) forControlEvents:UIControlEventTouchUpInside];
 //    _carImageButton.backgroundColor = [UIColor cyanColor];
     [self.view addSubview:_carImageButton];
     
-    _cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*6/7-15, 150+self.view.frame.size.width*27/70-25, 30, 30)];
+    _cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*6/7-15, 150+self.view.frame.size.width*27/70-25 + 24, 30, 30)];
     [_cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
     [_cameraBtn addTarget:self action:@selector(userChoosePhoto) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_cameraBtn];
@@ -493,11 +507,11 @@
 // 添加导航
 - (void)setNavigation{
     
-    GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:@"person" withRightImgHightName:@"personClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
-    [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [navView.rightBut addTarget:navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    _navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:@"person" withRightImgHightName:@"personClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+    [_navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [_navView.rightBut addTarget:_navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *removeOrderButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 85, 20, 40, 40)];
+    UIButton *removeOrderButton = [[UIButton alloc]init];
     removeOrderButton.titleLabel.font = [UIFont systemFontOfSize:16];
     //    removeOrderButton.backgroundColor = [UIColor grayColor];
 //    removeOrderButton.layer.borderColor = [[UIColor whiteColor] CGColor];
@@ -510,9 +524,17 @@
     }
     [removeOrderButton setTitleColor:[UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0] forState:UIControlStateHighlighted];
     [removeOrderButton addTarget:self action:@selector(removeOrderBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [navView addSubview:removeOrderButton];
+    [_navView addSubview:removeOrderButton];
     
-    [self.view addSubview:navView];
+    
+    [removeOrderButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(_navView).offset(-4);
+        make.right.equalTo(_navView).offset(-45);
+        make.width.mas_offset(40);
+        make.height.mas_offset(40);
+    }];
+    
+    [self.view addSubview:_navView];
 }
 
 

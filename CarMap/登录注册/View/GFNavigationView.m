@@ -17,6 +17,10 @@
 
 - (instancetype)initWithLeftImgName:(NSString *)leftImgName withLeftImgHightName:(NSString *)leftImgHightName withRightImgName:(NSString *)rightImgName withRightImgHightName:(NSString *)rightImgHightName withCenterTitle:(NSString *)titleName withFrame:(CGRect)frame {
 
+    if([UIScreen mainScreen].bounds.size.height > 80){
+        frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 88);
+    }
+    
     self = [super initWithFrame:frame];
     
     if(self != nil) {
@@ -29,7 +33,7 @@
         CGFloat leftButW = 44;
         CGFloat leftButH = 44;
         CGFloat leftButX = 0;
-        CGFloat leftButY = 20;
+        CGFloat leftButY = frame.size.height - 44;
         self.leftBut = [UIButton buttonWithType:UIButtonTypeCustom];
         self.leftBut.frame = CGRectMake(leftButX, leftButY, leftButW, leftButH);
         [self.leftBut setImage:[UIImage imageNamed:leftImgName] forState:UIControlStateNormal];

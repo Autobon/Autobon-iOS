@@ -52,10 +52,16 @@
     CGFloat baseViewH = 0.2 * kHeight;
     CGFloat baseViewX = 0;
     CGFloat baseViewY = 64 + kHeight * 0.024;
-    UIView *baseView = [[UIView alloc] initWithFrame:CGRectMake(baseViewX, baseViewY, baseViewW, baseViewH)];
+    UIView *baseView = [[UIView alloc] init];
     baseView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:baseView];
     
+    [baseView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.top.equalTo(_navView.mas_bottom);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+    }];
     
     CGFloat photoLabW = kWidth - kWidth * 0.06;
     CGFloat photoLabH = baseViewH / 3.0;

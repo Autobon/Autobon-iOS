@@ -42,12 +42,14 @@
     
 //    _notificationModelArray = [[NSMutableArray alloc]init];
     
-    // 界面搭建
-    [self _setView];
+    
     
     // 基础设置
     [self _setBase];
     
+    
+    // 界面搭建
+    [self _setView];
     
     
 //    [self getNotification];
@@ -70,11 +72,19 @@
     
     kWidth = [UIScreen mainScreen].bounds.size.width;
     kHeight = [UIScreen mainScreen].bounds.size.height;
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, kWidth, kHeight - 44) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] init];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
+    
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.top.equalTo(_navView.mas_bottom);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+    }];
+    
     
     self.tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
     self.tableView.footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];

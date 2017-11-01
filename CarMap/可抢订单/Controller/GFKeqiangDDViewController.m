@@ -267,13 +267,21 @@
     
     GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
     
-    UIButton *removeOrderButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 60, 20, 40, 44)];
+    UIButton *removeOrderButton = [[UIButton alloc]init];
     [removeOrderButton setTitle:@"收藏" forState:UIControlStateNormal];
     [removeOrderButton setTitleColor:[UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0] forState:UIControlStateHighlighted];
     [navView addSubview:removeOrderButton];
     
     [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [removeOrderButton addTarget:self action:@selector(collect) forControlEvents:UIControlEventTouchUpInside];
+    
+    [removeOrderButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(navView).offset(-4);
+        make.right.equalTo(navView).offset(-20);
+        make.width.mas_offset(40);
+        make.height.mas_offset(40);
+    }];
+    
     
     [self.view addSubview:navView];
     

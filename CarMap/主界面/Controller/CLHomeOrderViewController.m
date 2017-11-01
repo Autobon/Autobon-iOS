@@ -45,6 +45,8 @@
     NSInteger _pageSize;
 //    CLKnockOrderViewController *_knockOrder;
     
+    GFNavigationView *_navView;
+    
 }
 @property (nonatomic ,strong) NSMutableArray *cellModelArray;
 @property (nonatomic ,strong) UITableView *tableView;
@@ -114,6 +116,10 @@
     _noOrderlabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_noOrderlabel];
     [self.view bringSubviewToFront:_noOrderImageView];
+    
+    _noOrderlabel.hidden = YES;
+    _noOrderImageView.hidden = YES;
+    
     
 //    [self httpWorkForTableView];
 //
@@ -467,7 +473,7 @@
     
     
     
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64)];
+    _tableView = [[UITableView alloc]init];
     _tableView.delegate = self;
     _tableView.dataSource = self;
    
@@ -493,7 +499,12 @@
     
     [self.view addSubview:_tableView];
     
-    
+    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.top.equalTo(_navView.mas_bottom);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+    }];
     
 }
 
@@ -722,7 +733,6 @@
             CLHomeOrderCellModel *cellModel = _cellModelArray[button.tag-2];
             NSString *statusStr = cellModel.status;
             
-            
             if([statusStr isEqualToString:@"IN_PROGRESS"]) {
                 // 订单已进入施工环节 跳转到“签到页面”
                 CLSigninViewController *signinView = [[CLSigninViewController alloc]init];
@@ -874,10 +884,10 @@
 - (void)setNavigation{
     
     
-    GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"waitOrder" withLeftImgHightName:@"waitOrder" withRightImgName:@"person" withRightImgHightName:@"personClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
-    [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [navView.rightBut addTarget:navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:navView];
+    _navView = [[GFNavigationView alloc] initWithLeftImgName:@"waitOrder" withLeftImgHightName:@"waitOrder" withRightImgName:@"person" withRightImgHightName:@"personClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+    [_navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [_navView.rightBut addTarget:_navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_navView];
     
  
 //    navView.hidden = YES;

@@ -35,6 +35,8 @@
     
     UIScrollView *_scrollView;
     GFMapViewController *_mapVC;
+    
+    GFNavigationView *_navView;
 }
 
 @property (nonatomic ,strong) UILabel *distanceLabel;
@@ -50,13 +52,21 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.view.backgroundColor = [[UIColor alloc]initWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
-
+    
+    [self setNavigation];
+    
+    [self addMap];
+    
     _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height/3+64, self.view.frame.size.width, self.view.frame.size.height*2/3-64-40)];
     _scrollView.bounces = NO;
     [self.view addSubview:_scrollView];
     
-    [self addMap];
-    [self setNavigation];
+    [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(_mapVC.view.mas_bottom);
+        make.bottom.equalTo(self.view).offset(-40);
+    }];
+    
     [self setViewForAutobon];
 }
 
@@ -82,8 +92,15 @@
     [self.view addSubview:_mapVC.view];
     [self addChildViewController:_mapVC];
     [_mapVC didMoveToParentViewController:self];
-    _mapVC.view.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height/3);
+//    _mapVC.view.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height/3);
     _mapVC.mapView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height/3);
+
+    [_mapVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(_navView.mas_bottom);
+        make.height.mas_offset(self.view.frame.size.height/3);
+    }];
+
 }
 
 - (void)setViewForAutobon{
@@ -392,9 +409,9 @@
 // 添加导航
 - (void)setNavigation{
     
-    GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+    _navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
     
-    UIButton *removeOrderButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 60, 20, 40, 40)];
+    UIButton *removeOrderButton = [[UIButton alloc]init];
     removeOrderButton.titleLabel.font = [UIFont systemFontOfSize:16];
 //    removeOrderButton.backgroundColor = [UIColor grayColor];
 //    removeOrderButton.layer.borderColor = [[UIColor whiteColor] CGColor];
@@ -408,12 +425,21 @@
     
     [removeOrderButton setTitleColor:[UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0] forState:UIControlStateHighlighted];
     [removeOrderButton addTarget:self action:@selector(removeOrderBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [navView addSubview:removeOrderButton];
+    [_navView addSubview:removeOrderButton];
     
-    [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [_navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
 //    [navView.rightBut addTarget:navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.view addSubview:navView];
+    
+    [removeOrderButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(_navView).offset(-4);
+        make.right.equalTo(_navView).offset(-20);
+        make.width.mas_offset(40);
+        make.height.mas_offset(40);
+    }];
+    
+    
+    [self.view addSubview:_navView];
     
     
 }

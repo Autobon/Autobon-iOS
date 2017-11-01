@@ -74,7 +74,7 @@
     CGFloat upMoneyLabW = kWidth;
     CGFloat upMoneyLabH = kHeight * 0.162;
     CGFloat upMoneyLabX = 0;
-    CGFloat upMoneyLabY = 64;
+    CGFloat upMoneyLabY = 94;
     self.upMoneyLab = [[UILabel alloc] initWithFrame:CGRectMake(upMoneyLabX, upMoneyLabY, upMoneyLabW, upMoneyLabH)];
     self.upMoneyLab.backgroundColor = [UIColor whiteColor];
     self.upMoneyLab.textAlignment = NSTextAlignmentCenter;
