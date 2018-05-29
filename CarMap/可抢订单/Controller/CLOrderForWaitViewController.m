@@ -78,7 +78,7 @@
 
     
     
-    [self.tableView.header beginRefreshing];
+    [self.tableView.mj_header beginRefreshing];
 }
 - (void)httpWorkForTableView{
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
@@ -165,15 +165,15 @@
             
             [_tableView reloadData];
             
-            [self.tableView.header endRefreshing];
-            [self.tableView.footer endRefreshing];
+            [self.tableView.mj_header endRefreshing];
+            [self.tableView.mj_footer endRefreshing];
         }
     } failure:^(NSError *error) {
         //        NSLog(@"-不知道为什么请求失败了－－error--%@---",error);
         //        [self addAlertView:@"请求失败"];
         
-        [self.tableView.header endRefreshing];
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
         
     }];
 }
@@ -261,8 +261,8 @@
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
-    _tableView.footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
+    _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     _tableView.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:1];
     
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;

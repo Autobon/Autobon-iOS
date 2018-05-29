@@ -43,7 +43,7 @@
     
     [self setTableViewForFavorite];
     
-    [_tableView.header beginRefreshing];
+    [_tableView.mj_header beginRefreshing];
 }
 
 - (void)setTableViewForFavorite{
@@ -55,8 +55,8 @@
     _tableView.separatorColor = [UIColor clearColor];
     
 //    _tableView.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64);
-    _tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
-    _tableView.footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
+    _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view);
         make.top.equalTo(_navView.mas_bottom);
@@ -100,13 +100,13 @@
         
         
         [_tableView reloadData];
-        [_tableView.header endRefreshing];
-        [_tableView.footer endRefreshing];
+        [_tableView.mj_header endRefreshing];
+        [_tableView.mj_footer endRefreshing];
         
     } failure:^(NSError *error) {
         NSLog(@"--error--%@--",error);
-        [_tableView.header endRefreshing];
-        [_tableView.footer endRefreshing];
+        [_tableView.mj_header endRefreshing];
+        [_tableView.mj_footer endRefreshing];
     }];
     
 }
@@ -135,7 +135,7 @@
             ICLog(@"删除成功--%@--",responseObject);
             if ([responseObject[@"result"] integerValue] == 1) {
                 [self addAlertView:@"移除商户成功"];
-                [_tableView.header beginRefreshing];
+                [_tableView.mj_header beginRefreshing];
             }else{
                 [self addAlertView:responseObject[@"message"]];
             }

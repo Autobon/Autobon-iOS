@@ -56,7 +56,7 @@
     self.noOrderlabel.hidden = YES;
     self.noOrderImageView.hidden = YES;
     
-    [_tableView.header beginRefreshing];
+    [_tableView.mj_header beginRefreshing];
 }
 
 - (void)getCollectList{
@@ -66,7 +66,7 @@
         [listArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSDictionary *cooperatorDic = obj[@"cooperator"];
             [_collectArray addObject:[NSString stringWithFormat:@"%@",cooperatorDic[@"id"]]];
-            [self.tableView.header beginRefreshing];
+            [self.tableView.mj_header beginRefreshing];
         }];
     } failure:^(NSError *error) {
         
@@ -116,14 +116,14 @@
         }
             
         [_tableView reloadData];
-        [self.tableView.header endRefreshing];
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
     } failure:^(NSError *error) {
         //        NSLog(@"-不知道为什么请求失败了－－error--%@---",error);
         //        [self addAlertView:@"请求失败"];
         
-        [self.tableView.header endRefreshing];
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
         
     }];
 }
@@ -146,8 +146,8 @@
     _tableView = [[UITableView alloc]init];
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
-    _tableView.footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
+    _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     _tableView.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:1];
     
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;

@@ -109,13 +109,13 @@
         make.top.equalTo(_navView.mas_bottom);
     }];
     
-    self.tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
-    self.tableView.footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     
     
     
-    [self.tableView.header beginRefreshing];
-//    [self.tableView.footer beginRefreshing];
+    [self.tableView.mj_header beginRefreshing];
+//    [self.tableView.mj_footer beginRefreshing];
     
     
     
@@ -356,13 +356,13 @@
             [self addAlertView:responseObject[@"message"]];
         }
         _tableView.userInteractionEnabled = YES;
-        [self.tableView.header endRefreshing];
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
     } failure:^(NSError *error) {
    
         _tableView.userInteractionEnabled = YES;
-        [self.tableView.header endRefreshing];
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
 //        [self addAlertView:@"请求失败"];
     }];
     

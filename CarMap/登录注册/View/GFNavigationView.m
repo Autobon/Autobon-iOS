@@ -17,7 +17,7 @@
 
 - (instancetype)initWithLeftImgName:(NSString *)leftImgName withLeftImgHightName:(NSString *)leftImgHightName withRightImgName:(NSString *)rightImgName withRightImgHightName:(NSString *)rightImgHightName withCenterTitle:(NSString *)titleName withFrame:(CGRect)frame {
 
-    if([UIScreen mainScreen].bounds.size.height > 80){
+    if([UIScreen mainScreen].bounds.size.height > 800){
         frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 88);
     }
     

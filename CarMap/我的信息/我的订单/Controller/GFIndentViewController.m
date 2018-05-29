@@ -165,11 +165,11 @@
     [self.view addSubview:self.nothingView];
     [self.tableview addSubview:self.nothingView];
     
-    self.tableview.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
-    self.tableview.footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+    self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
+    self.tableview.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     
-    [self.tableview.header beginRefreshing];
-//    [self.tableview.footer beginRefreshing];
+    [self.tableview.mj_header beginRefreshing];
+//    [self.tableview.mj_footer beginRefreshing];
     
     
     
@@ -214,7 +214,7 @@
     }];
     
     
-    [self.tableview.header beginRefreshing];
+    [self.tableview.mj_header beginRefreshing];
     
     
 }
@@ -466,14 +466,14 @@
         }
         [self.tableview reloadData];
         self.tableview.userInteractionEnabled = YES;
-        [self.tableview.header endRefreshing];
+        [self.tableview.mj_header endRefreshing];
         
     } failure:^(NSError *error) {
         
 //        NSLog(@"网络请求失败－－－%@--",error);
 
         self.tableview.userInteractionEnabled = YES;
-        [self.tableview.header endRefreshing];
+        [self.tableview.mj_header endRefreshing];
 //        [self addAlertView:@"请求失败"];
         
     }];
@@ -686,14 +686,14 @@
             
         }
         
-        [self.tableview.footer endRefreshing];
+        [self.tableview.mj_footer endRefreshing];
         
     } failure:^(NSError *error) {
         
 //        NSLog(@"网络请求失败");
         
 //         [self addAlertView:@"请求失败"];
-        [self.tableview.footer endRefreshing];
+        [self.tableview.mj_footer endRefreshing];
         
     }];
 

@@ -84,10 +84,10 @@
         make.top.equalTo(_navView.mas_bottom);
     }];
     
-    self.tableview.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
-    self.tableview.footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+    self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
+    self.tableview.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     
-    [self.tableview.header beginRefreshing];
+    [self.tableview.mj_header beginRefreshing];
 }
 
 - (void)headRefresh {
@@ -276,8 +276,8 @@
             }
         }
         [_tableview reloadData];
-        [self.tableview.header endRefreshing];
-        [self.tableview.footer endRefreshing];
+        [self.tableview.mj_header endRefreshing];
+        [self.tableview.mj_footer endRefreshing];
         _tableview.userInteractionEnabled = YES;
 
     } failure:^(NSError *error) {

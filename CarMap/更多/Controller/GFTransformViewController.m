@@ -86,10 +86,10 @@
     }];
     
     
-    self.tableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
-    self.tableView.footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     
-    [self.tableView.header beginRefreshing];
+    [self.tableView.mj_header beginRefreshing];
     
     
 }
@@ -145,8 +145,8 @@
                 [_tableView reloadData];
             }
 
-            [_tableView.header endRefreshing];
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_header endRefreshing];
+            [_tableView.mj_footer endRefreshing];
             if (_notificationModelArray.count == 0) {
                 _tableView.userInteractionEnabled = NO;
                 GFNothingView *nothingView = [[GFNothingView alloc] initWithImageName:@"NoOrder" withTipString:@"暂无数据" withSubtipString:nil];

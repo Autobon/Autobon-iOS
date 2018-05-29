@@ -156,11 +156,11 @@
     [self.view addSubview:self.nothingView];
 
     
-    self.tableview.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
-    self.tableview.footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+    self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
+    self.tableview.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
     
-    [self.tableview.header beginRefreshing];
-    //    [self.tableview.footer beginRefreshing];
+    [self.tableview.mj_header beginRefreshing];
+    //    [self.tableview.mj_footer beginRefreshing];
     
     
     
@@ -201,7 +201,7 @@
         self.lineView.center = oriPoint;
     }];
     
-    [self.tableview.header beginRefreshing];
+    [self.tableview.mj_header beginRefreshing];
 }
 
 - (void)httpWorkForOrder {
@@ -244,12 +244,12 @@
 //        NSLog(@"------%@", self.modelArr);
         
         [self.tableview reloadData];
-        [self.tableview.header endRefreshing];
-        [self.tableview.footer endRefreshing];
+        [self.tableview.mj_header endRefreshing];
+        [self.tableview.mj_footer endRefreshing];
     } failure:^(NSError *error) {
         
-        [self.tableview.header endRefreshing];
-        [self.tableview.footer endRefreshing];
+        [self.tableview.mj_header endRefreshing];
+        [self.tableview.mj_footer endRefreshing];
     }];
 }
 
