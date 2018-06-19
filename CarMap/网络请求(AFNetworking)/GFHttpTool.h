@@ -128,7 +128,8 @@
 + (void)cashApplyPostWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
 
-
+#pragma mark - 获取学习园地文件列表
++ (void)adminStudyListGetWithParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
 
 

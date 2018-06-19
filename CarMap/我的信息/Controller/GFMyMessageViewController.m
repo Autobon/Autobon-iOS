@@ -29,6 +29,10 @@
 #import "GFDDMessageViewController.h"
 #import "CLCommissionViewController.h"
 #import "CLCollectViewController.h"
+#import "CLStudyViewController.h"
+#import "CLTeamManagerViewController.h"
+#import "CLMyTeamViewController.h"
+
 
 
 @interface GFMyMessageViewController () {
@@ -41,7 +45,7 @@
     CGFloat jianjv1;
     CGFloat jianjv2;
 
-    
+    UIView *_contentView;
 }
 
 @property (nonatomic, strong) GFNavigationView *navView;
@@ -90,6 +94,25 @@
 
 - (void)_setView {
     
+    
+    UIScrollView *scrollView = [[UIScrollView alloc]init];
+    [self.view addSubview:scrollView];
+    [scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_navView.mas_bottom).offset(0);
+        make.left.bottom.right.equalTo(self.view).offset(0);
+    }];
+    
+    _contentView = [[UIView alloc]init];
+    [scrollView addSubview:_contentView];
+    [_contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(scrollView);
+        make.edges.equalTo(scrollView);
+    }];
+    
+    
+    
+    
+    
     // 个人基本信息
     CGFloat msgViewW = kWidth;
     CGFloat msgViewH = kHeight * 0.162;
@@ -97,13 +120,13 @@
     CGFloat msgViewY = 64;
     UIView *msgView = [[UIView alloc] init];
     msgView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:msgView];
+    [_contentView addSubview:msgView];
     
     
     [msgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view);
-        make.top.equalTo(_navView.mas_bottom);
-        make.right.equalTo(self.view);
+        make.left.equalTo(_contentView);
+        make.top.equalTo(_contentView);
+        make.right.equalTo(_contentView);
         make.height.mas_offset(kHeight * 0.162);
     }];
     
@@ -115,7 +138,7 @@
     msgLine.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
     [msgView addSubview:msgLine];
     [msgLine mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
+        make.left.right.equalTo(_contentView);
         make.height.mas_offset(1);
         make.bottom.equalTo(msgView);
     }];
@@ -224,10 +247,10 @@
     CGFloat moneyViewY = CGRectGetMaxY(msgView.frame) + jiange1;
     UIView *moneyView = [[UIView alloc] init];
     moneyView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:moneyView];
+    [_contentView addSubview:moneyView];
     
     [moneyView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
+        make.left.right.equalTo(_contentView);
         make.top.equalTo(msgView.mas_bottom).offset(jiange1);
         make.height.mas_equalTo(kHeight*(0.078 + 0.104));
     }];
@@ -266,7 +289,7 @@
     UIButton *commissionButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [commissionButton setTitle:@"佣金标准" forState:UIControlStateNormal];
     [commissionButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    commissionButton.frame = CGRectMake(self.view.frame.size.width - 110, moneyImgViewY, 100, moneyImgViewH);
+    commissionButton.frame = CGRectMake(_contentView.frame.size.width - 110, moneyImgViewY, 100, moneyImgViewH);
 //    commissionButton.backgroundColor = [UIColor cyanColor];
     [commissionButton addTarget:self action:@selector(commissionBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [moneyView addSubview:commissionButton];
@@ -333,326 +356,87 @@
 
     
     
+    NSArray *imageArray = @[@"order",@"collection",@"information-2",@"editPassword",@"centre",@"centre",@"centre",@"centre"];
+    NSArray *titleArray = @[@"我的订单",@"我的收藏",@"通知列表",@"修改密码",@"服务中心",@"团队管理",@"我的团队",@"学习园地"];
+    
+    for (int i = 0; i < 8; i++) {
+        // baseView
+        UIView *baseView = [[UIView alloc] init];
+        baseView.backgroundColor = [UIColor whiteColor];
+        [_contentView addSubview:baseView];
+        [baseView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.equalTo(self.view);
+            make.top.equalTo(moneyView.mas_bottom).offset(20 + 45*i);
+            make.height.mas_offset(45);
+        }];
+        
+        // 边线
+        UIView *lineUpView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
+        lineUpView.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+        [baseView addSubview:lineUpView];
+        UIView *collectLineDown = [[UIView alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, 1)];
+        collectLineDown.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+        [baseView addSubview:lineUpView];
+        // 界面
+        CGFloat imgViewW = kWidth * 0.075;
+        CGFloat imgViewH = imgViewW;
+        CGFloat imgViewX = jianjv1;
+        CGFloat imgViewY = (45 - imgViewH) / 2.0;
+        UIImageView *collectImgView = [[UIImageView alloc] initWithFrame:CGRectMake(imgViewX, imgViewY, imgViewW, imgViewH)];
+        collectImgView.image = [UIImage imageNamed:imageArray[i]];
+        [baseView addSubview:collectImgView];
+        CGFloat labW = 150;
+        CGFloat collectLabH = imgViewH;
+        CGFloat collectLabX = CGRectGetMaxX(collectImgView.frame) + jianjv1;
+        CGFloat collectLabY = imgViewY;
+        UILabel *collectLab = [[UILabel alloc] initWithFrame:CGRectMake(collectLabX, collectLabY, labW, collectLabH)];
+        collectLab.text = titleArray[i];
+        //    notificationLab.backgroundColor = [UIColor redColor];
+        [baseView addSubview:collectLab];
+        // 右边箭头
+        CGFloat collectRightButW = kWidth * 0.08;
+        CGFloat collectRightButH = 45;
+        CGFloat collectRightButX = kWidth * 0.92;
+        CGFloat collectRightButY = 0;
+        UIButton *collectRightBut = [UIButton buttonWithType:UIButtonTypeCustom];
+        collectRightBut.frame = CGRectMake(collectRightButX, collectRightButY, collectRightButW, collectRightButH);
+        [collectRightBut setImage:[UIImage imageNamed:@"right"] forState:UIControlStateNormal];
+        collectRightBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        [baseView addSubview:collectRightBut];
+        // 修改密码界面按钮
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [baseView addSubview:button];
+        button.tag = i + 1;
+        [button addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [button mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.right.bottom.left.equalTo(baseView).offset(0);
+        }];
+    }
     
     
-    // 我的订单
-    CGFloat indentViewW = msgViewW;
-    CGFloat indentViewH = kHeight * 0.078;
-    CGFloat indentViewX = msgViewX;
-    CGFloat indentViewY = CGRectGetMaxY(moneyView.frame) + jiange1/2;
-    UIView *indentView = [[UIView alloc] init];
-    indentView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:indentView];
-    [indentView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
-        make.top.equalTo(moneyView.mas_bottom);
-        make.height.mas_offset(kHeight * 0.078);
-    }];
-    // 边线
-    UIView *indentLineUp = [[UIView alloc] initWithFrame:CGRectMake(0, 0, indentViewW, 1)];
-    indentLineUp.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
-    [indentView addSubview:indentLineUp];
-    UIView *indentLineDown  = [[UIView alloc] initWithFrame:CGRectMake(0, indentViewH - 1, indentViewW, 1)];
-    indentLineDown.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
-    [indentView addSubview:indentLineDown];
-    // 界面
-    CGFloat indentImgViewW = kWidth * 0.075;
-    CGFloat indentImgViewH = indentImgViewW;
-    CGFloat indentImgViewX = jianjv1;
-    CGFloat indentImgViewY = (indentViewH - indentImgViewH) / 2.0;
-    UIImageView *indentImgView = [[UIImageView alloc] initWithFrame:CGRectMake(indentImgViewX, indentImgViewY, indentImgViewW, indentImgViewH)];
-    indentImgView.image = [UIImage imageNamed:@"order"];
-    [indentView addSubview:indentImgView];
-    CGFloat billLabW = 150;
-    CGFloat billLabH = indentImgViewH;
-    CGFloat billLabX = CGRectGetMaxX(indentImgView.frame) + jianjv1;
-    CGFloat billLabY = indentImgViewY;
-    UILabel *billLab = [[UILabel alloc] initWithFrame:CGRectMake(billLabX, billLabY, billLabW, billLabH)];
-    billLab.text = @"我的订单";
-    [indentView addSubview:billLab];
-    
-    
-    
-    // 右边箭头
-    CGFloat indentRightButW = kWidth * 0.08;
-    CGFloat indentRightButH = indentViewH;
-    CGFloat indentRightButX = kWidth * 0.92;
-    CGFloat indentRightButY = 0;
-    UIButton *indentRightBut = [UIButton buttonWithType:UIButtonTypeCustom];
-    indentRightBut.frame = CGRectMake(indentRightButX, indentRightButY, indentRightButW, indentRightButH);
-    [indentRightBut setImage:[UIImage imageNamed:@"right"] forState:UIControlStateNormal];
-    indentRightBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [indentView addSubview:indentRightBut];
-    // 订单界面按钮
-    CGFloat indentButW = indentViewW;
-    CGFloat indentButH = indentViewH;
-    CGFloat indentButX = 0;
-    CGFloat indentButY = 0;
-    UIButton *indentBut = [UIButton buttonWithType:UIButtonTypeCustom];
-    indentBut.frame = CGRectMake(indentButX, indentButY, indentButW, indentButH);
-    [indentView addSubview:indentBut];
-    [indentBut addTarget:self action:@selector(indentButClick) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    // 我的收藏
-    CGFloat collectViewW = msgViewW;
-    CGFloat collectViewH = indentViewH;
-    CGFloat collectViewX = msgViewX;
-    CGFloat collectViewY = CGRectGetMaxY(indentView.frame) + jiange1/2;
-    UIView *collectView = [[UIView alloc] init];
-    collectView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:collectView];
-    [collectView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
-        make.top.equalTo(indentView.mas_bottom);
-        make.height.mas_offset(kHeight * 0.078);
-    }];
-    
-    // 边线
-    UIView *collectLineUp = [[UIView alloc] initWithFrame:CGRectMake(0, 0, collectViewW, 1)];
-    collectLineUp.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
-    [collectView addSubview:collectLineUp];
-    UIView *collectLineDown = [[UIView alloc] initWithFrame:CGRectMake(0, collectViewH - 1, collectViewW, 1)];
-    collectLineDown.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
-    [collectView addSubview:collectLineUp];
-    // 界面
-    CGFloat collectImgViewW = kWidth * 0.075;
-    CGFloat collectImgViewH = collectImgViewW;
-    CGFloat collectImgViewX = jianjv1;
-    CGFloat collectImgViewY = (collectViewH - collectImgViewH) / 2.0;
-    UIImageView *collectImgView = [[UIImageView alloc] initWithFrame:CGRectMake(collectImgViewX, collectImgViewY, collectImgViewW, collectImgViewH)];
-    collectImgView.image = [UIImage imageNamed:@"collection"];
-    [collectView addSubview:collectImgView];
-    CGFloat collectLabW = 150;
-    CGFloat collectLabH = collectImgViewH;
-    CGFloat collectLabX = CGRectGetMaxX(collectImgView.frame) + jianjv1;
-    CGFloat collectLabY = collectImgViewY;
-    UILabel *collectLab = [[UILabel alloc] initWithFrame:CGRectMake(collectLabX, collectLabY, collectLabW, collectLabH)];
-    collectLab.text = @"我的收藏";
-    //    notificationLab.backgroundColor = [UIColor redColor];
-    [collectView addSubview:collectLab];
-    // 右边箭头
-    CGFloat collectRightButW = kWidth * 0.08;
-    CGFloat collectRightButH = indentViewH;
-    CGFloat collectRightButX = kWidth * 0.92;
-    CGFloat collectRightButY = 0;
-    UIButton *collectRightBut = [UIButton buttonWithType:UIButtonTypeCustom];
-    collectRightBut.frame = CGRectMake(collectRightButX, collectRightButY, collectRightButW, collectRightButH);
-    [collectRightBut setImage:[UIImage imageNamed:@"right"] forState:UIControlStateNormal];
-    collectRightBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [collectView addSubview:collectRightBut];
-    // 修改密码界面按钮
-    CGFloat collectButW = collectViewW;
-    CGFloat collectButH = collectViewH;
-    CGFloat collectButX = 0;
-    CGFloat collectButY = 0;
-    UIButton *collectBut = [UIButton buttonWithType:UIButtonTypeCustom];
-    collectBut.frame = CGRectMake(collectButX, collectButY, collectButW, collectButH);
-    [collectView addSubview:collectBut];
-    [collectBut addTarget:self action:@selector(collectButClick) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    
-    
-    
-    
-    // 通知列表
-    CGFloat notificationViewW = msgViewW;
-    CGFloat notificationViewH = indentViewH;
-    CGFloat notificationViewX = msgViewX;
-    CGFloat notificationViewY = CGRectGetMaxY(collectView.frame) + jiange1/2;
-    UIView *notificationView = [[UIView alloc] init];
-    notificationView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:notificationView];
-    [notificationView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
-        make.top.equalTo(collectView.mas_bottom);
-        make.height.mas_offset(kHeight * 0.078);
-    }];
-    
-    // 边线
-    UIView *notificationLineUp = [[UIView alloc] initWithFrame:CGRectMake(0, 0, notificationViewW, 1)];
-    notificationLineUp.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
-    [notificationView addSubview:notificationLineUp];
-    UIView *notificationLineDown = [[UIView alloc] initWithFrame:CGRectMake(0, notificationViewH - 1, notificationViewW, 1)];
-    notificationLineDown.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
-    [notificationView addSubview:notificationLineDown];
-    // 界面
-    CGFloat notificationImgViewW = kWidth * 0.075;
-    CGFloat notificationImgViewH = notificationImgViewW;
-    CGFloat notificationImgViewX = jianjv1;
-    CGFloat notificationImgViewY = (notificationViewH - notificationImgViewH) / 2.0;
-    UIImageView *notificationImgView = [[UIImageView alloc] initWithFrame:CGRectMake(notificationImgViewX, notificationImgViewY, notificationImgViewW, notificationImgViewH)];
-    notificationImgView.image = [UIImage imageNamed:@"information-2"];
-    [notificationView addSubview:notificationImgView];
-    CGFloat notificationLabW = 150;
-    CGFloat notificationLabH = notificationImgViewH;
-    CGFloat notificationLabX = CGRectGetMaxX(notificationImgView.frame) + jianjv1;
-    CGFloat notificationLabY = notificationImgViewY;
-    UILabel *notificationLab = [[UILabel alloc] initWithFrame:CGRectMake(notificationLabX, notificationLabY, notificationLabW, notificationLabH)];
-    notificationLab.text = @"通知列表";
-//    notificationLab.backgroundColor = [UIColor redColor];
-    [notificationView addSubview:notificationLab];
-    // 右边箭头
-    CGFloat notificationRightButW = kWidth * 0.08;
-    CGFloat notificationRightButH = indentViewH;
-    CGFloat notificationRightButX = kWidth * 0.92;
-    CGFloat notificationRightButY = 0;
-    UIButton *notificationRightBut = [UIButton buttonWithType:UIButtonTypeCustom];
-    notificationRightBut.frame = CGRectMake(notificationRightButX, notificationRightButY, notificationRightButW, notificationRightButH);
-    [notificationRightBut setImage:[UIImage imageNamed:@"right"] forState:UIControlStateNormal];
-    notificationRightBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [notificationView addSubview:notificationRightBut];
-    // 修改密码界面按钮
-    CGFloat notificationButW = notificationViewW;
-    CGFloat notificationButH = notificationViewH;
-    CGFloat notificationButX = 0;
-    CGFloat notificationButY = 0;
-    UIButton *notificationBut = [UIButton buttonWithType:UIButtonTypeCustom];
-    notificationBut.frame = CGRectMake(notificationButX, notificationButY, notificationButW, notificationButH);
-    [notificationView addSubview:notificationBut];
-    [notificationBut addTarget:self action:@selector(notificationButClick) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    
-    
-    
-    
-    // 修改密码
-    CGFloat changePwdViewW = msgViewW;
-    CGFloat changePwdViewH = indentViewH;
-    CGFloat changePwdViewX = msgViewX;
-    CGFloat changePwdViewY = CGRectGetMaxY(notificationView.frame) + jiange1/2;
-    UIView *changePwdView = [[UIView alloc] init];
-    changePwdView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:changePwdView];
-    [changePwdView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
-        make.top.equalTo(notificationView.mas_bottom);
-        make.height.mas_offset(kHeight * 0.078);
-    }];
-    
-    // 边线
-    UIView *changePwdLineUp = [[UIView alloc] initWithFrame:CGRectMake(0, 0, changePwdViewW, 1)];
-    changePwdLineUp.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
-    [changePwdView addSubview:changePwdLineUp];
-    UIView *changePwdLineDown = [[UIView alloc] initWithFrame:CGRectMake(0, changePwdViewH - 1, changePwdViewW, 1)];
-    changePwdLineDown.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
-    [changePwdView addSubview:changePwdLineDown];
-    // 界面
-    CGFloat changPwdImgViewW = kWidth * 0.075;
-    CGFloat changPwdImgViewH = changPwdImgViewW;
-    CGFloat changPwdImgViewX = jianjv1;
-    CGFloat changPwdImgViewY = (changePwdViewH - changPwdImgViewH) / 2.0;
-    UIImageView *changPwdImgView = [[UIImageView alloc] initWithFrame:CGRectMake(changPwdImgViewX, changPwdImgViewY, changPwdImgViewW, changPwdImgViewH)];
-    changPwdImgView.image = [UIImage imageNamed:@"editPassword"];
-    [changePwdView addSubview:changPwdImgView];
-    CGFloat changgePwdLabW = 150;
-    CGFloat changgePwdLabH = changPwdImgViewH;
-    CGFloat changgePwdLabX = CGRectGetMaxX(changPwdImgView.frame) + jianjv1;
-    CGFloat changgePwdLabY = changPwdImgViewY;
-    UILabel *changgePwdLab = [[UILabel alloc] initWithFrame:CGRectMake(changgePwdLabX, changgePwdLabY, changgePwdLabW, changgePwdLabH)];
-    changgePwdLab.text = @"修改密码";
-    [changePwdView addSubview:changgePwdLab];
-    // 右边箭头
-    CGFloat changePwdRightButW = kWidth * 0.08;
-    CGFloat changePwdRightButH = indentViewH;
-    CGFloat changePwdRightButX = kWidth * 0.92;
-    CGFloat changePwdRightButY = 0;
-    UIButton *changePwdRightBut = [UIButton buttonWithType:UIButtonTypeCustom];
-    changePwdRightBut.frame = CGRectMake(changePwdRightButX, changePwdRightButY, changePwdRightButW, changePwdRightButH);
-    [changePwdRightBut setImage:[UIImage imageNamed:@"right"] forState:UIControlStateNormal];
-    changePwdRightBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [changePwdView addSubview:changePwdRightBut];
-    // 修改密码界面按钮
-    CGFloat changePwdButW = changePwdViewW;
-    CGFloat changePwdButH = changePwdViewH;
-    CGFloat changePwdButX = 0;
-    CGFloat changePwdButY = 0;
-    UIButton *changePwdBut = [UIButton buttonWithType:UIButtonTypeCustom];
-    changePwdBut.frame = CGRectMake(changePwdButX, changePwdButY, changePwdButW, changePwdButH);
-    [changePwdView addSubview:changePwdBut];
-    [changePwdBut addTarget:self action:@selector(changePwdButClick) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    
-    
-    
-    
-    
-    // 服务中心
-    CGFloat serveViewW = msgViewW;
-    CGFloat serveViewH = indentViewH;
-    CGFloat serveViewX = msgViewX;
-    CGFloat serveViewY = CGRectGetMaxY(changePwdView.frame) + jiange1/2;
-    UIView *serveView = [[UIView alloc] init];
-//    serveView.backgroundColor = [UIColor redColor];
-    [self.view addSubview:serveView];
-    [serveView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
-        make.top.equalTo(changePwdView.mas_bottom);
-        make.height.mas_offset(kHeight * 0.078);
-    }];
-    
-    // 边线
-    UIView *serveLineUp = [[UIView alloc] initWithFrame:CGRectMake(0, 0, serveViewW, 1)];
-    serveLineUp.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
-    [serveView addSubview:serveLineUp];
-    UIView *serveLineDown = [[UIView alloc] initWithFrame:CGRectMake(0, serveViewH - 1, serveViewW, 1)];
-    serveLineDown.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
-    [serveView addSubview:serveLineDown];
-    // 界面
-    CGFloat serveImgViewW = kWidth * 0.075;
-    CGFloat serveImgViewH = serveImgViewW;
-    CGFloat serveImgViewX = jianjv1;
-    CGFloat serveImgViewY = (serveViewH - serveImgViewH) / 2.0;
-    UIImageView *serveImgView = [[UIImageView alloc] initWithFrame:CGRectMake(serveImgViewX, serveImgViewY, serveImgViewW, serveImgViewH)];
-    serveImgView.image = [UIImage imageNamed:@"centre"];
-    [serveView addSubview:serveImgView];
-    CGFloat serveLabW = 150;
-    CGFloat serveLabH = serveImgViewH;
-    CGFloat serveLabX = CGRectGetMaxX(serveImgView.frame) + jianjv1;
-    CGFloat serveLabY = changPwdImgViewY;
-    UILabel *serveLab = [[UILabel alloc] initWithFrame:CGRectMake(serveLabX, serveLabY, serveLabW, serveLabH)];
-    serveLab.text = @"服务中心";
-    [serveView addSubview:serveLab];
-    // 右边箭头
-    CGFloat serveRightButW = kWidth * 0.08;
-    CGFloat serveRightButH = indentViewH;
-    CGFloat serveRightButX = kWidth * 0.92;
-    CGFloat serveRightButY = 0;
-    UIButton *serveRightBut = [UIButton buttonWithType:UIButtonTypeCustom];
-    serveRightBut.frame = CGRectMake(serveRightButX, serveRightButY, serveRightButW, serveRightButH);
-    [serveRightBut setImage:[UIImage imageNamed:@"right"] forState:UIControlStateNormal];
-    serveRightBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [serveView addSubview:serveRightBut];
-    // 修改密码界面按钮
-    CGFloat serveButW = serveViewW;
-    CGFloat serveButH = serveViewH;
-    CGFloat serveButX = 0;
-    CGFloat serveButY = 0;
-    UIButton *serveBut = [UIButton buttonWithType:UIButtonTypeCustom];
-    serveBut.frame = CGRectMake(serveButX, serveButY, serveButW, serveButH);
-    [serveView addSubview:serveBut];
-    [serveBut addTarget:self action:@selector(serveButClick) forControlEvents:UIControlEventTouchUpInside];
-
     // 退出登录
-    CGFloat exitButW = msgViewW;
-    CGFloat exitButH = indentViewH;
-    CGFloat exitButX = msgViewX;
-    CGFloat exitButY = kHeight - exitButH;
     UIButton *exitBut = [UIButton buttonWithType:UIButtonTypeCustom];
-    exitBut.frame = CGRectMake(exitButX, exitButY, exitButW, exitButH);
     [exitBut setBackgroundColor:[UIColor whiteColor]];
     [exitBut setTitle:@"退出登录" forState:UIControlStateNormal];
     [exitBut setTitleColor:[UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1] forState:UIControlStateNormal];
-    exitBut.titleLabel.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
-    [self.view addSubview:exitBut];
+    exitBut.titleLabel.font = [UIFont systemFontOfSize:16];
+//    exitBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    [_contentView addSubview:exitBut];
     [exitBut addTarget:self action:@selector(exitButClick) forControlEvents:UIControlEventTouchUpInside];
+    [exitBut mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(moneyView.mas_bottom).offset(60 + 45*9);
+        make.left.equalTo(self.view).offset(0);
+        make.right.equalTo(self.view).offset(0);
+        make.height.mas_offset(45);
+
+        make.bottom.equalTo(_contentView).offset(-20);
+    }];
+    
     // 边线
-    UIView *exitLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, exitButW, 1)];
-    exitLine.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
-    [exitBut addSubview:exitLine];
+//    UIView *exitLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
+//    exitLine.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+//    [exitBut addSubview:exitLine];
+    
     
     
     // 数据请求
@@ -805,6 +589,48 @@
 }
 
 
+- (void)btnClick:(UIButton *)button{
+    switch (button.tag) {
+        case 1:
+            ICLog(@"我的订单");
+            [self indentButClick];
+            break;
+        case 2:
+            ICLog(@"我的收藏");
+            [self collectButClick];
+            break;
+        case 3:
+            ICLog(@"通知列表");
+            [self notificationButClick];
+            break;
+        case 4:
+            ICLog(@"修改密码");
+            [self changePwdButClick];
+            break;
+        case 5:
+            ICLog(@"服务中心");
+            [self serveButClick];
+            break;
+        case 6:
+            ICLog(@"团队管理");
+            [self teamManagerBtnClick];
+            break;
+        case 7:
+            ICLog(@"我的团队");
+            [self myTeamBtnClick];
+            break;
+        case 8:
+            ICLog(@"学习园地");
+            [self studyBtnClick];
+            break;
+        default:
+            break;
+    }
+    
+    
+}
+
+
 #pragma mark - 佣金标准
 - (void)commissionBtnClick{
     CLCommissionViewController *commissionVC = [[CLCommissionViewController alloc]init];
@@ -844,6 +670,26 @@
     
 }
 
+#pragma mark - 团队管理
+- (void)teamManagerBtnClick{
+    CLTeamManagerViewController *teamManagerVC = [[CLTeamManagerViewController alloc]init];
+    [self.navigationController pushViewController:teamManagerVC animated:YES];
+    
+}
+
+#pragma mark - 我的团队
+- (void)myTeamBtnClick{
+    CLMyTeamViewController *myTeamVC = [[CLMyTeamViewController alloc]init];
+    [self.navigationController pushViewController:myTeamVC animated:YES];
+    
+}
+
+#pragma mark - 学习园地
+- (void)studyBtnClick{
+    CLStudyViewController *studyVC = [[CLStudyViewController alloc]init];
+    [self.navigationController pushViewController:studyVC animated:YES];
+    
+}
 
 
 // 信息界面按钮跳转
