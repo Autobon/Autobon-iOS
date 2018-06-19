@@ -68,7 +68,7 @@
     CGFloat photoLabX = kWidth * 0.06;
     CGFloat photoLabY = 0;
     UILabel *photoLab = [[UILabel alloc] initWithFrame:CGRectMake(photoLabX, photoLabY, photoLabW, photoLabH)];
-    photoLab.text = @"电话：4001871500";
+    photoLab.text = @"电话：18201306715";
     photoLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
     [baseView addSubview:photoLab];
     

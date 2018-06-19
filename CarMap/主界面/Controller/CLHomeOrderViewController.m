@@ -117,6 +117,15 @@
     [self.view addSubview:_noOrderlabel];
     [self.view bringSubviewToFront:_noOrderImageView];
     
+    [_noOrderImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.view);
+    }];
+    
+    [_noOrderlabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(_noOrderImageView.mas_bottom).offset(10);
+    }];
+    
     _noOrderlabel.hidden = YES;
     _noOrderImageView.hidden = YES;
     

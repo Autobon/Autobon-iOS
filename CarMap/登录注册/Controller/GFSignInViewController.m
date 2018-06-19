@@ -288,7 +288,7 @@
         
         [GFHttpTool signInWithParameters:parDic success:^(id responseObject) {
 
-//            NSLog(@"登录后，，，，%@", responseObject);
+            ICLog(@"登录后，，，，%@", responseObject);
             
             // 判断是否登录成功
             if([responseObject[@"status"] integerValue] == 1) {
@@ -372,7 +372,7 @@
                 }];
             }
         } failure:^(NSError *error) {
-            
+            ICLog(@"errorerror，，，，%@", error);
 //            [self tipShow:@"登录失败，请重试"];
         }];
     }

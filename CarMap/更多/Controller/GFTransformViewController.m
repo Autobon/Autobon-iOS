@@ -52,12 +52,14 @@
     [self _setView];
     
     
-//    [self getNotification];
+    [self getNotification];
     
 }
 
 - (void)_setBase {
     
+    kWidth = [UIScreen mainScreen].bounds.size.width;
+    kHeight = [UIScreen mainScreen].bounds.size.height;
     
     
     self.view.backgroundColor = [UIColor colorWithRed:252 / 255.0 green:252 / 255.0 blue:252 / 255.0 alpha:1];
@@ -70,8 +72,7 @@
 
 - (void)_setView {
     
-    kWidth = [UIScreen mainScreen].bounds.size.width;
-    kHeight = [UIScreen mainScreen].bounds.size.height;
+    
     self.tableView = [[UITableView alloc] init];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.delegate = self;

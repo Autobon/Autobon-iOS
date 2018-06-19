@@ -19,10 +19,11 @@
 //NSString* const PUBHOST = @"http://121.40.219.58:8000/api";
 
 
+//测试服务器
+//NSString *const prefixURL = @"http://10.0.12.184:12345/api/mobile";
+//NSString* const HOST = @"http://10.0.12.184:12345/api/mobile";
+//NSString* const PUBHOST = @"http://10.0.12.184:12345/api";
 
-//NSString *const prefixURL = @"http://10.0.12.62:12345/api/mobile";
-//NSString* const HOST = @"http://10.0.12.62:12345/api/mobile";
-//NSString* const PUBHOST = @"http://10.0.12.62:12345/api";
 
 //新的正式服务器
 NSString *const prefixURL = @"http://47.93.17.218:12345/api/mobile";
@@ -117,6 +118,7 @@ NSString* const PUBHOST = @"http://47.93.17.218:12345/api";
         
         // 拼接地址
         NSString *url = [NSString stringWithFormat:@"%@/technician/v2/login", HOST];
+        ICLog(@"url----%@------paramenters---%@---",url,parameters);
         
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         //        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
