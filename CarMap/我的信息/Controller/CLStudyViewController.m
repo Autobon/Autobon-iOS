@@ -9,12 +9,19 @@
 #import "CLStudyViewController.h"
 #import "GFNavigationView.h"
 #import "GFHttpTool.h"
+#import "CLStudyModel.h"
+#import "Masonry.h"
+#import "CLStudyTableViewCell.h"
+#import "CLStudyDetailWebViewController.h"
 
 
-@interface CLStudyViewController ()
+@interface CLStudyViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     CGFloat kWidth;
     CGFloat kHeight;
+    
+    NSMutableArray *_dataArray;
+    UITableView *_tableVIew;
 }
 @property (nonatomic, strong) GFNavigationView *navView;
 @end
@@ -27,14 +34,32 @@
     
     [self _setBase];
     
+    _dataArray = [[NSMutableArray alloc]init];
+    
+    [self setViewForTableView];
+    
+    
     
     [GFHttpTool adminStudyListGetWithParameters:nil success:^(id responseObject) {
         ICLog(@"获取学习园地列表成功----%@---",responseObject);
-        
+        BOOL status = responseObject[@"status"];
+        if(status == YES){
+            NSDictionary *messageDictionary = responseObject[@"message"];
+            NSArray *listArray = messageDictionary[@"list"];
+            [listArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                CLStudyModel *studyModel = [[CLStudyModel alloc]init];
+                [studyModel setModelForDataWithDictionary:obj];
+                [_dataArray addObject:studyModel];
+            }];
+            
+            [_tableVIew reloadData];
+        }
+
+
     } failure:^(NSError *error) {
         ICLog(@"---获取学习园地列表失败---%@---",error);
-        
-        
+
+
     }];
     
     
@@ -42,9 +67,59 @@
 }
 
 
+- (void)setViewForTableView{
+    
+    _tableVIew = [[UITableView alloc]init];
+    _tableVIew.delegate = self;
+    _tableVIew.dataSource = self;
+    [self.view addSubview:_tableVIew];
+    [_tableVIew mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_navView.mas_bottom).offset(0);
+        make.left.bottom.right.equalTo(self.view).offset(0);
+    }];
+    
+    _tableVIew.backgroundColor = [UIColor clearColor];
+    _tableVIew.separatorColor = [UIColor clearColor];
+    
+}
 
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    CLStudyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if(cell == nil){
+        cell = [[CLStudyTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    }
+    
+    if(_dataArray.count > indexPath.row){
+        [cell setDataForStudyModel:_dataArray[indexPath.row]];
+    }
+    
+    
+    return cell;
+}
 
+
+- (NSInteger )tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    return 3;
+    return _dataArray.count;
+}
+
+- (CGFloat )tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 90;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if(_dataArray.count > indexPath.row){
+        CLStudyDetailWebViewController *studyDetailWebVC = [[CLStudyDetailWebViewController alloc]init];
+        CLStudyModel *studyModel = _dataArray[indexPath.row];
+        studyDetailWebVC.pathString = studyModel.path;
+        [self.navigationController pushViewController:studyDetailWebVC animated:true];
+    }
+    
+}
 
 
 - (void)_setBase {

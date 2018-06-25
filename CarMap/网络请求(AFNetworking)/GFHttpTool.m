@@ -20,15 +20,15 @@
 
 
 //测试服务器
-//NSString *const prefixURL = @"http://10.0.12.184:12345/api/mobile";
-//NSString* const HOST = @"http://10.0.12.184:12345/api/mobile";
-//NSString* const PUBHOST = @"http://10.0.12.184:12345/api";
+NSString *const prefixURL = @"http://10.0.12.111:12345/api/mobile";
+NSString* const HOST = @"http://10.0.12.111:12345/api/mobile";
+NSString* const PUBHOST = @"http://10.0.12.111:12345/api";
 
 
 //新的正式服务器
-NSString *const prefixURL = @"http://47.93.17.218:12345/api/mobile";
-NSString* const HOST = @"http://47.93.17.218:12345/api/mobile";
-NSString* const PUBHOST = @"http://47.93.17.218:12345/api";
+//NSString *const prefixURL = @"http://47.93.17.218:12345/api/mobile";
+//NSString* const HOST = @"http://47.93.17.218:12345/api/mobile";
+//NSString* const PUBHOST = @"http://47.93.17.218:12345/api";
 
 
 
@@ -2395,7 +2395,7 @@ NSString* const PUBHOST = @"http://47.93.17.218:12345/api";
         NSString *token = [userDefaultes objectForKey:@"autoken"];
         
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-        NSString *URLString = [NSString stringWithFormat:@"%@/web/admin/study",PUBHOST];
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/v2/study",HOST];
         //        NSLog(@"token-可能是这里错了-%@-－－URLString--%@-",token,URLString);
         [manager GET:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
             //            NSLog(@"走出来了");
