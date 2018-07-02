@@ -33,7 +33,7 @@
     
     UIWebView *webView = [[UIWebView alloc]init];
     //    webView.scalesPageToFit = YES;
-    NSURL* url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@/api/web/admin/study/download?path=%@",BaseHttp,_pathString]];
+    NSURL* url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@/api/mobile/admin/study/download?path=%@",BaseHttp,_pathString]];
     //    NSURL* url = [[NSURL alloc] initWithString:@"https://dev.markd.cn"];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
     

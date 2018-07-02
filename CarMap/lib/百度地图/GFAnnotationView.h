@@ -9,8 +9,10 @@
 //#import "BaiduMapKit/BaiduMapKit.h"
 //#import <BaiduMapAPI/BMapKit.h>
 //#import <BaiduMapAPI_Map/BaiduMapAPI_Map.h>
-#import "BMKAnnotationView.h"
-#import "BMKMapView.h"
+//#import "BMKAnnotationView.h"
+#import <BaiduMapAPI_Map/BMKAnnotationView.h>
+#import <BaiduMapAPI_Map/BMKMapView.h>
+//#import "BMKMapView.h"
 
 @interface GFAnnotationView : BMKAnnotationView
 

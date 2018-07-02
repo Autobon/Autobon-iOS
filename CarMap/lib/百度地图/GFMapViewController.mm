@@ -12,10 +12,14 @@
 
 
 // 百度地图类库
-#import "BMKMapManager.h"
-#import "BMKLocationService.h"
-#import "BMKMapView.h"
-#import "BMKPoiSearch.h"
+#import <BaiduMapAPI_Base/BMKMapManager.h>
+//#import "BMKMapManager.h"
+#import <BaiduMapAPI_Location/BMKLocationService.h>
+//#import "BMKLocationService.h"
+#import <BaiduMapAPI_Map/BMKMapView.h>
+//#import "BMKMapView.h"
+#import <BaiduMapAPI_Search/BMKPoiSearch.h>
+//#import "BMKPoiSearch.h"
 #import "GFAnnotationView.h"
 #import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
 

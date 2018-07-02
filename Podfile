@@ -1,4 +1,4 @@
-platform :ios, '7.0'
+platform :ios, '8.0'
 target "CarMap" do
 pod 'BaiduMapKit', '~> 2.9.1’
 pod 'GTSDK', '~> 1.3.2'
@@ -19,4 +19,7 @@ pod 'UMengUShare/Social/WeChat'
 # 集成QQ/QZone/TIM
 pod 'UMengUShare/Social/QQ'
 
+
 end
+
+

@@ -12,6 +12,7 @@
 #import "CLAddOrderSuccessViewController.h"
 #import "GFTipView.h"
 
+
 @interface GFOrderForWaitTableViewCell()
 
 @property (nonatomic ,strong) UILabel *orderNumberLabel;

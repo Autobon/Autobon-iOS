@@ -23,6 +23,7 @@
 #import "CLHomeOrderCellModel.h"
 #import "GFOrderForWaitTableViewCell.h"
 
+
 @interface GFOrderForWaitViewController () <UITableViewDelegate, UITableViewDataSource> {
     
     NSInteger _page;
@@ -30,6 +31,10 @@
     NSMutableArray *_collectArray;
     
     GFNavigationView *_navView;
+    
+    NSMutableDictionary *_dataDictionary;
+    
+    NSMutableArray *_titleButtonArray;
     
 }
 
@@ -46,10 +51,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.modelArr = [[NSMutableArray alloc] init];
+    _dataDictionary = [[NSMutableDictionary alloc]init];
+    [self setNavigation];
+    
+    [self selectHeaderView];
     
     [self getCollectList];
     
-    [self setNavigation];
+    
     
     [self _setView];
     
@@ -59,8 +68,98 @@
     [_tableView.mj_header beginRefreshing];
 }
 
+- (void)selectHeaderView{
+    
+    UIView *buttonSelectBaseView = [[UIView alloc]init];
+    buttonSelectBaseView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:buttonSelectBaseView];
+    [buttonSelectBaseView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_navView.mas_bottom).offset(0);
+        make.left.equalTo(self.view).offset(0);
+        make.height.mas_equalTo(40);
+        make.right.equalTo(self.view).offset(0);
+    }];
+    
+    
+    _titleButtonArray = [[NSMutableArray alloc]init];
+    NSArray *titleArray = @[@"全部",@"施工项目",@"距离",@"施工时间",@"排序"];
+    for (int i = 0; i < titleArray.count; i++) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        NSInteger x = i * self.view.frame.size.width/5.0;
+        button.frame = CGRectMake(x, 0, self.view.frame.size.width/5.0, 40);
+        [button setTitle:titleArray[i] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor colorWithRed:236/255.0 green:135/255.0 blue:12/255.0 alpha:1.0] forState:UIControlStateSelected];
+        button.titleLabel.font = [UIFont systemFontOfSize:14];
+        button.tag = i + 1;
+        [buttonSelectBaseView addSubview:button];
+        [button addTarget:self action:@selector(titleBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [_titleButtonArray addObject:button];
+    }
+    
+}
+
+
+- (void)titleBtnClick:(UIButton *)button{
+    [_titleButtonArray enumerateObjectsUsingBlock:^(UIButton *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        obj.selected = NO;
+        obj.titleLabel.font = [UIFont systemFontOfSize:14];
+    }];
+    button.selected = YES;
+    button.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:16];
+    
+    switch (button.tag) {
+        case 1:     //全部
+            ICLog(@"全部");
+            [_dataDictionary removeAllObjects];
+            
+            break;
+        case 2:     //项目
+        {
+            ICLog(@"项目项目");
+            NSArray *titleArray = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
+            [self setSearchViewWithTitleArray:titleArray];
+        }
+            break;
+        case 3:     //时间
+            ICLog(@"距离");
+            
+            break;
+        case 4:     //距离
+            ICLog(@"施工时间");
+            
+            break;
+        case 5:     //排序
+            ICLog(@"排序");
+            
+            break;
+        default:
+            break;
+    }
+    
+    
+}
+
+
+- (void)setSearchViewWithTitleArray:(NSArray *)titleArray{
+//    CLAUTouchView *chooseTouchView = [[CLAUTouchView alloc]init];
+//    [chooseTouchView setChooseViewWithTitleArray:titleArray];
+//    
+//    [self.view addSubview:chooseTouchView];
+//    [chooseTouchView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(_navView.mas_bottom).offset(50);
+//        make.left.equalTo(self.view);
+//        make.bottom.equalTo(self.view);
+//        make.right.equalTo(self.view);
+//    }];
+}
+
+
+
 - (void)getCollectList{
     _collectArray = [[NSMutableArray alloc]init];
+    
     [GFHttpTool favoriteCooperatorGetWithParameters:@{@"pageSize":@(200)} success:^(id responseObject) {
         NSArray *listArray = responseObject[@"list"];
         [listArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -155,7 +254,7 @@
     
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view);
-        make.top.equalTo(_navView.mas_bottom);
+        make.top.equalTo(_navView.mas_bottom).offset(45);
         make.right.equalTo(self.view);
         make.bottom.equalTo(self.view);
     }];
@@ -185,6 +284,8 @@
     
     return self.modelArr.count;
 }
+
+/*
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 38)];
@@ -213,6 +314,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 38;
 }
+*/
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
 

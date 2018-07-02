@@ -36,7 +36,7 @@
         
         
         _titleLabel = [[UILabel alloc]init];
-//        _titleLabel.text = @"贴膜前检查事项";
+        _titleLabel.text = @"贴膜前检查事项";
         _titleLabel.font = [UIFont systemFontOfSize:14];
         [baseView addSubview:_titleLabel];
         [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -47,7 +47,7 @@
         }];
         
         _typeLabel = [[UILabel alloc]init];
-//        _typeLabel.text = @"培训资料";
+        _typeLabel.text = @"培训资料";
         _typeLabel.font = [UIFont systemFontOfSize:14];
         [baseView addSubview:_typeLabel];
         [_typeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -58,7 +58,7 @@
         }];
         
         _remarkLabel = [[UILabel alloc]init];
-//        _remarkLabel.text = @"测试--车邻邦";
+        _remarkLabel.text = @"测试--车邻邦";
         _remarkLabel.font = [UIFont systemFontOfSize:12];
         [baseView addSubview:_remarkLabel];
         [_remarkLabel mas_makeConstraints:^(MASConstraintMaker *make) {

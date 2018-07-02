@@ -71,6 +71,21 @@ DEPENDENCIES:
   - UMengUShare/Social/WeChat
   - UMengUShare/UI
 
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - AFNetworking
+    - BaiduMapKit
+    - Google
+    - GoogleAnalytics
+    - GoogleInterchangeUtilities
+    - GoogleNetworkingUtilities
+    - GoogleSymbolUtilities
+    - GoogleUtilities
+    - GTSDK
+    - Masonry
+    - SDWebImage
+    - UMengUShare
+
 EXTERNAL SOURCES:
   MJRefresh:
     :git: https://github.com/CoderMJLee/MJRefresh.git
@@ -95,6 +110,6 @@ SPEC CHECKSUMS:
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
   UMengUShare: a5711c54e640b04e3048e931d2b88d50f9cfa55c
 
-PODFILE CHECKSUM: 998f05eb54d42ae40bfa53e91e8146bbba1f457a
+PODFILE CHECKSUM: b16f00809acd9ea13b28eacf067ef76ece2194f6
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.5.0
