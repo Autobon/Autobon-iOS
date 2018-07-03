@@ -24,7 +24,9 @@
 @property (nonatomic ,copy) NSString *mainTechId;
 @property (nonatomic ,copy) NSString *secondId;
 @property (nonatomic ,copy) NSString *orderType;
-@property (nonatomic, copy) NSString *startTime;
+@property (nonatomic ,copy) NSString *startTime;
+
+
 
 @property (nonatomic ,copy) NSString *cooperatorName;
 @property (nonatomic ,copy) NSString *cooperatorAddress;

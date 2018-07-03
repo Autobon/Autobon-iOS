@@ -12,6 +12,8 @@
 #import "FirstViewController.h"
 
 #import <BaiduMapAPI_Base/BMKBaseComponent.h>
+#import <BaiduMapAPI_Utils/BMKGeometry.h>
+
 #import "CLHomeOrderViewController.h"
 #import "GFSignInViewController.h"
 #import <CoreLocation/CoreLocation.h>
@@ -226,43 +228,43 @@
             CLLocation *location=[[CLLocation alloc]initWithLatitude:coor.latitude longitude:coor.longitude];
             
             
-            NSString *URLString = [NSString stringWithFormat:@"http://api.map.baidu.com/geoconv/v1/?ak=FPzmlgz02SERkbPsRyGOiGfj&coords=%f,%f",coor.longitude,coor.latitude];
-            __block NSMutableDictionary *locationDictionary = [[NSMutableDictionary alloc]init];
-            [GFHttpTool getCoordsURLString:URLString success:^(id responseObject) {
-
-                if ([responseObject[@"status"] integerValue] == 0) {
-                    NSArray *resultArray = responseObject[@"result"];
-                    NSDictionary *resultDictionary = resultArray[0];
-                    locationDictionary[@"lng"] = resultDictionary[@"x"];
-                    locationDictionary[@"lat"] = resultDictionary[@"y"];
-                    [_coder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-                        CLPlacemark *pmark=[placemarks firstObject];
-                        NSString *state = pmark.addressDictionary[@"State"];
-                        NSString *city = pmark.addressDictionary[@"City"];
-                        NSString *subLocality = pmark.addressDictionary[@"SubLocality"];
-                        NSString *street = pmark.addressDictionary[@"Street"];
-                        
-                        locationDictionary[@"province"] = state;
-                        locationDictionary[@"city"] = city;
-                        locationDictionary[@"district"] = subLocality;
-                        locationDictionary[@"street"] = street;
-                        [GFHttpTool PostReportLocation:locationDictionary success:^(id responseObject) {
-                            
-
-                            if ([responseObject[@"result"] integerValue] == 1) {
-                                [_manager stopUpdatingLocation];
-                                [_manager performSelector:@selector(startUpdatingLocation) withObject:nil afterDelay:300];
-                            }
-                            
-                            
-                        } failure:^(NSError *error) {
-                            
-                            
-                        }];
-                    }];
-                }
-            } failure:^(NSError *error) {
+            
+            
+            //转换国测局坐标（google地图、soso地图、aliyun地图、mapabc地图和amap地图所用坐标）至百度坐标
+            NSDictionary* testdic = BMKConvertBaiduCoorFrom(coor,BMK_COORDTYPE_COMMON);
+            //转换WGS84坐标至百度坐标(加密后的坐标)
+            testdic = BMKConvertBaiduCoorFrom(coor,BMK_COORDTYPE_GPS);
+            ICLog(@"x=%@,y=%@",[testdic objectForKey:@"x"],[testdic objectForKey:@"y"]);
+            //解密加密后的坐标字典
+            CLLocationCoordinate2D baiduCoor = BMKCoorDictionaryDecode(testdic);//转换后的百度坐标
+            
+            _locationDictionary = [[NSMutableDictionary alloc]init];
+            _locationDictionary[@"lng"] = [NSString stringWithFormat:@"%f",baiduCoor.longitude];
+            _locationDictionary[@"lat"] = [NSString stringWithFormat:@"%f",baiduCoor.latitude];
+            [_coder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+                CLPlacemark *pmark=[placemarks firstObject];
+                NSString *state = pmark.addressDictionary[@"State"];
+                NSString *city = pmark.addressDictionary[@"City"];
+                NSString *subLocality = pmark.addressDictionary[@"SubLocality"];
+                NSString *street = pmark.addressDictionary[@"Street"];
                 
+                _locationDictionary[@"province"] = state;
+                _locationDictionary[@"city"] = city;
+                _locationDictionary[@"district"] = subLocality;
+                _locationDictionary[@"street"] = street;
+                [GFHttpTool PostReportLocation:_locationDictionary success:^(id responseObject) {
+                    
+                    
+                    if ([responseObject[@"result"] integerValue] == 1) {
+                        [_manager stopUpdatingLocation];
+                        [_manager performSelector:@selector(startUpdatingLocation) withObject:nil afterDelay:300];
+                    }
+                    
+                    
+                } failure:^(NSError *error) {
+                    
+                    
+                }];
             }];
     }
     }else{

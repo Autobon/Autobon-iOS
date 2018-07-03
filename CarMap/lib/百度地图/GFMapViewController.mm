@@ -729,6 +729,17 @@
     return distance;
 }
 
++ (double)calculatorWithCoordinate1:(CLLocationCoordinate2D)coordinate1 withCoordinate2:(CLLocationCoordinate2D)coordinate2 {
+    //    NSLog(@"----dian-%f----diandian--%f--",coordinate1.latitude,coordinate2.longitude);
+    
+    CLLocation *location1 = [[CLLocation alloc] initWithLatitude:coordinate1.latitude longitude:coordinate1.longitude];
+    CLLocation *location2 = [[CLLocation alloc] initWithLatitude:coordinate2.latitude longitude:coordinate2.longitude];
+    
+    double distance = [location1 distanceFromLocation:location2];
+    
+    return distance;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

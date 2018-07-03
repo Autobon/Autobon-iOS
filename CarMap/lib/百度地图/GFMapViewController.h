@@ -35,4 +35,8 @@ typedef void (^DistanceBlock)(double distance);
 
 - (void)userLocationService;
 
+
++ (double)calculatorWithCoordinate1:(CLLocationCoordinate2D)coordinate1 withCoordinate2:(CLLocationCoordinate2D)coordinate2;
+
+
 @end

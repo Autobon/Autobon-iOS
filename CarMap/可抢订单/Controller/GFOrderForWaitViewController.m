@@ -21,8 +21,11 @@
 #import "CLNewOrderDetailViewController.h"
 #import "GFKeqiangDDViewController.h"
 #import "CLHomeOrderCellModel.h"
-#import "GFOrderForWaitTableViewCell.h"
+//#import "GFOrderForWaitTableViewCell.h"
+#import "CLOrderForWaitNewTableViewCell.h"
+#import "CLAUTouchView.h"
 
+#import "AppDelegate.h"
 
 @interface GFOrderForWaitViewController () <UITableViewDelegate, UITableViewDataSource> {
     
@@ -35,6 +38,7 @@
     NSMutableDictionary *_dataDictionary;
     
     NSMutableArray *_titleButtonArray;
+    CLAUTouchView *_chooseTouchView;
     
 }
 
@@ -52,6 +56,7 @@
     // Do any additional setup after loading the view.
     self.modelArr = [[NSMutableArray alloc] init];
     _dataDictionary = [[NSMutableDictionary alloc]init];
+    _dataDictionary[@"order"] = @"1";
     [self setNavigation];
     
     [self selectHeaderView];
@@ -108,31 +113,46 @@
     }];
     button.selected = YES;
     button.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:16];
-    
+    [_chooseTouchView removeFromSuperview];
     switch (button.tag) {
         case 1:     //全部
             ICLog(@"全部");
             [_dataDictionary removeAllObjects];
-            
+            [_tableView.mj_header beginRefreshing];
             break;
         case 2:     //项目
         {
             ICLog(@"项目项目");
             NSArray *titleArray = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
-            [self setSearchViewWithTitleArray:titleArray];
+            [self setSearchViewWithTitleArray:titleArray chooseTouchViewTag:2];
         }
             break;
-        case 3:     //时间
+        case 3:     //距离
+        {
             ICLog(@"距离");
+             AppDelegate * appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+            _dataDictionary[@"longitude"] = appDelegate.locationDictionary[@"lng"];
+            _dataDictionary[@"latitude"] = appDelegate.locationDictionary[@"lat"];
+            _dataDictionary[@"orderType"] = @"2";
+            [_tableView.mj_header beginRefreshing];
+        }
             
             break;
-        case 4:     //距离
+        case 4:     //时间
+        {
             ICLog(@"施工时间");
+            _dataDictionary[@"orderType"] = @"1";
+            [_tableView.mj_header beginRefreshing];
+        }
             
             break;
         case 5:     //排序
+        {
             ICLog(@"排序");
-            
+            NSArray *titleArray = @[@"倒序",@"正序"];
+            [self setSearchViewWithTitleArray:titleArray chooseTouchViewTag:5];
+            _dataDictionary[@"order"] = @(button.tag);
+        }
             break;
         default:
             break;
@@ -142,18 +162,37 @@
 }
 
 
-- (void)setSearchViewWithTitleArray:(NSArray *)titleArray{
-//    CLAUTouchView *chooseTouchView = [[CLAUTouchView alloc]init];
-//    [chooseTouchView setChooseViewWithTitleArray:titleArray];
-//    
-//    [self.view addSubview:chooseTouchView];
-//    [chooseTouchView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(_navView.mas_bottom).offset(50);
-//        make.left.equalTo(self.view);
-//        make.bottom.equalTo(self.view);
-//        make.right.equalTo(self.view);
-//    }];
+- (void)setSearchViewWithTitleArray:(NSArray *)titleArray chooseTouchViewTag:(NSInteger )tag{
+    _chooseTouchView = [[CLAUTouchView alloc]init];
+    _chooseTouchView.tag = tag;
+    [_chooseTouchView setChooseViewWithTitleArray:titleArray];
+    [_chooseTouchView.trueButton addTarget:self action:@selector(chooseTouchTrueBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_chooseTouchView];
+    [_chooseTouchView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_navView.mas_bottom).offset(50);
+        make.left.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+        make.right.equalTo(self.view);
+    }];
 }
+
+- (void)chooseTouchTrueBtnClick:(UIButton *)button{
+    ICLog(@"button.tag------%ld--",button.tag);
+    if(button.tag != 0){
+        if(_chooseTouchView.tag == 2){          //施工项目
+            _dataDictionary[@"workType"] = @(button.tag);
+        }else if(_chooseTouchView.tag == 5){    //排序
+            _dataDictionary[@"order"] = @(button.tag);
+        }
+        
+        [_tableView.mj_header beginRefreshing];
+    }
+    
+    
+    
+    [_chooseTouchView removeFromSuperview];
+}
+
 
 
 
@@ -179,8 +218,10 @@
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
     
-    NSDictionary *dictionary = @{@"page":@(_page),@"pageSize":@(5)};
-    [GFHttpTool getOrderListNewDictionary:dictionary Success:^(NSDictionary *responseObject) {
+//    NSDictionary *dictionary = @{@"page":@(_page),@"pageSize":@(5)};
+    _dataDictionary[@"page"] = @(_page);
+    _dataDictionary[@"pageSize"] = @(5);
+    [GFHttpTool getOrderListNewDictionary:_dataDictionary Success:^(NSDictionary *responseObject) {
         
         ICLog(@"==可抢订单列表==%@", responseObject);
         
@@ -319,7 +360,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    return 140;
+    return 115;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -352,10 +393,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     static NSString *ID = @"order";
-    GFOrderForWaitTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    CLOrderForWaitNewTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
     if (cell == nil) {
         
-        cell = [[GFOrderForWaitTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+        cell = [[CLOrderForWaitNewTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
     
     if (self.modelArr.count > indexPath.row) {
@@ -363,11 +404,11 @@
         CLHomeOrderCellModel *model = (CLHomeOrderCellModel *)self.modelArr[indexPath.row];
         cell.model = model;
         
-        if ([_collectArray containsObject:model.cooperatorId]) {
-            cell.collectImageView.image = [UIImage imageNamed:@"detailsStar"];
-        }else{
-            cell.collectImageView.image = [UIImage imageNamed:@"detailsStarDark"];
-        }
+//        if ([_collectArray containsObject:model.cooperatorId]) {
+//            cell.collectImageView.image = [UIImage imageNamed:@"detailsStar"];
+//        }else{
+//            cell.collectImageView.image = [UIImage imageNamed:@"detailsStarDark"];
+//        }
         
     }
     

@@ -23,7 +23,6 @@
 		9BCFDCA51C85B6CF003A35A8 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9BCFDCA21C85B6CF003A35A8 /* AppDelegate.mm */; };
 		9BD52BE71CC46C6E009FE948 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BD52BE61CC46C6E009FE948 /* GoogleService-Info.plist */; };
 		B02290DB1ECD4BB40022D34F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B02290A61ECD4BB40022D34F /* Reachability.m */; };
-		B02290DC1ECD4BB40022D34F /* CLLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B02290A91ECD4BB40022D34F /* CLLocationViewController.m */; };
 		B02290DD1ECD4BB40022D34F /* GFAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = B02290AB1ECD4BB40022D34F /* GFAnnotation.m */; };
 		B02290DE1ECD4BB40022D34F /* GFAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = B02290AD1ECD4BB40022D34F /* GFAnnotationView.m */; };
 		B02290DF1ECD4BB40022D34F /* GFMapViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B02290AF1ECD4BB40022D34F /* GFMapViewController.mm */; };
@@ -135,7 +134,9 @@
 		B04AF16D20D8F95F007EFCB3 /* CLStudyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B04AF16C20D8F95F007EFCB3 /* CLStudyModel.m */; };
 		B04AF17420D90FE8007EFCB3 /* CLStudyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B04AF17320D90FE8007EFCB3 /* CLStudyTableViewCell.m */; };
 		B052E66620E0E50C00F2B1D8 /* CLStudyDetailWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B052E66520E0E50C00F2B1D8 /* CLStudyDetailWebViewController.m */; };
+		B080C87120EB263700AE7609 /* CLOrderForWaitNewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B080C87020EB263700AE7609 /* CLOrderForWaitNewTableViewCell.m */; };
 		B081E7571ECEA337003558DC /* CLCollectTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B081E7561ECEA337003558DC /* CLCollectTableViewCell.m */; };
+		B088ADF020EA1F3500BCEEC9 /* CLAUTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = B088ADEF20EA1F3500BCEEC9 /* CLAUTouchView.m */; };
 		B09341251F9F411B00DC2A94 /* Commom.m in Sources */ = {isa = PBXBuildFile; fileRef = B09341241F9F411B00DC2A94 /* Commom.m */; };
 		B0C913921ED58B130054A755 /* ACETelPrompt.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C913911ED58B130054A755 /* ACETelPrompt.m */; };
 		B0F8BBC51ECD77A800F00FC9 /* CLCollectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F8BBC41ECD77A800F00FC9 /* CLCollectViewController.m */; };
@@ -203,8 +204,6 @@
 		A08ADB78524ACF43A63B9DF3 /* libPods-CarMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CarMap.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B02290A51ECD4BB40022D34F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		B02290A61ECD4BB40022D34F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		B02290A81ECD4BB40022D34F /* CLLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLLocationViewController.h; sourceTree = "<group>"; };
-		B02290A91ECD4BB40022D34F /* CLLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLLocationViewController.m; sourceTree = "<group>"; };
 		B02290AA1ECD4BB40022D34F /* GFAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFAnnotation.h; sourceTree = "<group>"; };
 		B02290AB1ECD4BB40022D34F /* GFAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFAnnotation.m; sourceTree = "<group>"; };
 		B02290AC1ECD4BB40022D34F /* GFAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFAnnotationView.h; sourceTree = "<group>"; };
@@ -427,8 +426,12 @@
 		B04AF17320D90FE8007EFCB3 /* CLStudyTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLStudyTableViewCell.m; sourceTree = "<group>"; };
 		B052E66420E0E50C00F2B1D8 /* CLStudyDetailWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLStudyDetailWebViewController.h; sourceTree = "<group>"; };
 		B052E66520E0E50C00F2B1D8 /* CLStudyDetailWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLStudyDetailWebViewController.m; sourceTree = "<group>"; };
+		B080C86F20EB263700AE7609 /* CLOrderForWaitNewTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLOrderForWaitNewTableViewCell.h; sourceTree = "<group>"; };
+		B080C87020EB263700AE7609 /* CLOrderForWaitNewTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLOrderForWaitNewTableViewCell.m; sourceTree = "<group>"; };
 		B081E7551ECEA337003558DC /* CLCollectTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCollectTableViewCell.h; sourceTree = "<group>"; };
 		B081E7561ECEA337003558DC /* CLCollectTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLCollectTableViewCell.m; sourceTree = "<group>"; };
+		B088ADEE20EA1F3500BCEEC9 /* CLAUTouchView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLAUTouchView.h; sourceTree = "<group>"; };
+		B088ADEF20EA1F3500BCEEC9 /* CLAUTouchView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLAUTouchView.m; sourceTree = "<group>"; };
 		B09341231F9F411B00DC2A94 /* Commom.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Commom.h; sourceTree = "<group>"; };
 		B09341241F9F411B00DC2A94 /* Commom.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Commom.m; sourceTree = "<group>"; };
 		B0C913901ED58B130054A755 /* ACETelPrompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACETelPrompt.h; sourceTree = "<group>"; };
@@ -593,8 +596,6 @@
 		B02290A71ECD4BB40022D34F /* 百度地图 */ = {
 			isa = PBXGroup;
 			children = (
-				B02290A81ECD4BB40022D34F /* CLLocationViewController.h */,
-				B02290A91ECD4BB40022D34F /* CLLocationViewController.m */,
 				B02290AA1ECD4BB40022D34F /* GFAnnotation.h */,
 				B02290AB1ECD4BB40022D34F /* GFAnnotation.m */,
 				B02290AC1ECD4BB40022D34F /* GFAnnotationView.h */,
@@ -1028,6 +1029,10 @@
 				B02291BB1ECD4DF40022D34F /* CLNewOrderTableViewCell.m */,
 				B02291BC1ECD4DF40022D34F /* GFOrderForWaitTableViewCell.h */,
 				B02291BD1ECD4DF40022D34F /* GFOrderForWaitTableViewCell.m */,
+				B088ADEE20EA1F3500BCEEC9 /* CLAUTouchView.h */,
+				B088ADEF20EA1F3500BCEEC9 /* CLAUTouchView.m */,
+				B080C86F20EB263700AE7609 /* CLOrderForWaitNewTableViewCell.h */,
+				B080C87020EB263700AE7609 /* CLOrderForWaitNewTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1455,6 +1460,7 @@
 				B02291531ECD4CFC0022D34F /* GFIndentModel.m in Sources */,
 				B02291A11ECD4DA80022D34F /* CLAddOrderSuccessViewController.m in Sources */,
 				B02291861ECD4D570022D34F /* GFPingfenView.m in Sources */,
+				B088ADF020EA1F3500BCEEC9 /* CLAUTouchView.m in Sources */,
 				B09341251F9F411B00DC2A94 /* Commom.m in Sources */,
 				B02291E71ECD4E4F0022D34F /* GFBaofeiView.m in Sources */,
 				B022914A1ECD4CFC0022D34F /* GFDDMessageViewController.m in Sources */,
@@ -1529,6 +1535,7 @@
 				B02291C21ECD4DF40022D34F /* CLListNewModel.m in Sources */,
 				B02292481ECD50390022D34F /* GFQualifieTableViewCell.m in Sources */,
 				B022915B1ECD4CFC0022D34F /* GFBillModel.m in Sources */,
+				B080C87120EB263700AE7609 /* CLOrderForWaitNewTableViewCell.m in Sources */,
 				B02291851ECD4D570022D34F /* GFButtonRight.m in Sources */,
 				B02291A81ECD4DA80022D34F /* CLHomeTableViewCell.m in Sources */,
 				B022914C1ECD4CFC0022D34F /* GFMyMessageViewController.m in Sources */,
@@ -1545,7 +1552,6 @@
 				B02291A41ECD4DA80022D34F /* CLOrderDetailViewController.m in Sources */,
 				B02291AA1ECD4DA80022D34F /* CLTitleTableViewCell.m in Sources */,
 				B022915C1ECD4CFC0022D34F /* GFBillDetailsTableViewCell.m in Sources */,
-				B02290DC1ECD4BB40022D34F /* CLLocationViewController.m in Sources */,
 				B02291E21ECD4E4F0022D34F /* CLWorkBeforeViewController.m in Sources */,
 				B02291541ECD4CFC0022D34F /* GFNewOrderModel.m in Sources */,
 				B02290E71ECD4BB40022D34F /* HZIndicatorView.m in Sources */,

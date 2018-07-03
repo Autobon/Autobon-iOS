@@ -90,15 +90,28 @@
 
 - (void)setViewForAutobon{
     
+    
+    // 订单编号
+    UILabel *orderNumberLabel = [[UILabel alloc]init];
+    orderNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, self.view.frame.size.width, self.view.frame.size.height/18)];
+    orderNumberLabel.text = [NSString stringWithFormat:@"订单编号：%@",_model.orderNumber];
+    orderNumberLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
+    [_scrollView addSubview:orderNumberLabel];
+    
+    UIView *orderNumberLineView = [[UIView alloc]initWithFrame:CGRectMake(-10, CGRectGetMaxY(orderNumberLabel.frame) - 10, self.view.frame.size.width, 1)];
+    orderNumberLineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
+    [orderNumberLabel addSubview:orderNumberLineView];
+    
+    
     // 距离label
-    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, -10, self.view.frame.size.width, self.view.frame.size.height/18)];
+    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(orderNumberLineView.frame) + 7, self.view.frame.size.width, self.view.frame.size.height/18)];
     _distanceLabel.text = @"距离：  1.3km";
     _distanceLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [_scrollView addSubview:_distanceLabel];
     
-    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, _distanceLabel.frame.origin.y+self.view.frame.size.height/18, self.view.frame.size.width, 1)];
-    lineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
-    [_scrollView addSubview:lineView];
+    UIView *distanceLineView = [[UIView alloc]initWithFrame:CGRectMake(0, _distanceLabel.frame.origin.y+self.view.frame.size.height/18, self.view.frame.size.width, 1)];
+    distanceLineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
+    [_scrollView addSubview:distanceLineView];
     
     // 订单图片
     _photoArr = [_orderPhotoURL componentsSeparatedByString:@","];
@@ -110,7 +123,7 @@
         
         UIButton *but = [UIButton buttonWithType:UIButtonTypeCustom];
         but.backgroundColor = [UIColor redColor];
-        but.frame = CGRectMake(10 + (butW + 10) * (i % 3), lineView.frame.origin.y + 7 + (butH + 10) * (i / 3), butW, butH);
+        but.frame = CGRectMake(10 + (butW + 10) * (i % 3), distanceLineView.frame.origin.y + 7 + (butH + 10) * (i / 3), butW, butH);
         [but sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",BaseHttp ,_photoArr[i]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"orderImage"]];
         but.clipsToBounds = YES;
         but.tag = i + 1;

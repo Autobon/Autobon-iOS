@@ -55,8 +55,18 @@
         _orderType = str;
         
         _orderPhotoURL = [NSString stringWithFormat:@"%@", dic[@"photo"]];
-        _customerLat = dic[@"latitude"];
-        _customerLon = dic[@"longitude"];
+        if([dic[@"latitude"] isKindOfClass:[NSNull class]]){
+            _customerLon = @"0";
+        }else{
+            _customerLat = dic[@"latitude"];
+        }
+        if([dic[@"longitude"] isKindOfClass:[NSNull class]]){
+            _customerLon = @"0";
+        }else{
+            _customerLon = dic[@"longitude"];
+        }
+        
+        
     
         // 备注
         _remark = dic[@"remark"];
