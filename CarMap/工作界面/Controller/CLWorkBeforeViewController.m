@@ -23,8 +23,7 @@
 
 #import "GFImageView.h"
 #import "CLTouchView.h"
-
-
+#import "CLTouchScrollView.h"
 
 @interface CLWorkBeforeViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
@@ -38,6 +37,9 @@
     
     GFNavigationView *_navView;
     
+    
+    UIView *_contentView;
+    UITextView *_textView;
 }
 
 
@@ -63,6 +65,25 @@
 
 // 设置日期和状态
 - (void)setDate{
+    
+    CLTouchScrollView *scrollView = [[CLTouchScrollView alloc]init];
+    [self.view addSubview:scrollView];
+    [scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_navView.mas_bottom).offset(5);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+        make.left.equalTo(self.view);
+    }];
+    
+    _contentView = [[UIView alloc]init];
+    [scrollView addSubview:_contentView];
+    [_contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(scrollView);
+        make.edges.equalTo(scrollView);
+    }];
+    
+    
+    
     UIView *headerView = [[UIView alloc]init];
     headerView.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     
@@ -83,11 +104,11 @@
     
 //    NSLog(@"设置日期和时间");
     //    headerView.backgroundColor = [UIColor cyanColor];
-    [self.view addSubview:headerView];
+    [_contentView addSubview:headerView];
     
     [headerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
-        make.top.equalTo(_navView.mas_bottom);
+        make.left.right.equalTo(_contentView);
+        make.top.equalTo(_contentView);
         make.height.mas_offset(36);
     }];
     
@@ -174,11 +195,11 @@
 - (void)titleView{
     
     CLTitleView *titleView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 64+36, self.view.frame.size.width, 45) Title:@"上传未开始工作车辆照片"];
-    [self.view addSubview:titleView];
+    [_contentView addSubview:titleView];
     
     [titleView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
-        make.top.equalTo(_navView.mas_bottom).offset(36);
+        make.top.equalTo(_contentView).offset(36);
         make.height.mas_offset(45);
     }];
     
@@ -197,13 +218,54 @@
     [_carImageButton setBackgroundImage:[UIImage imageNamed:@"carImage"] forState:UIControlStateNormal];
     [_carImageButton addTarget:self action:@selector(userChoosePhoto) forControlEvents:UIControlEventTouchUpInside];
 //    _carImageButton.backgroundColor = [UIColor cyanColor];
-    [self.view addSubview:_carImageButton];
+    [_contentView addSubview:_carImageButton];
     
     _cameraBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*6/7-15, 150+self.view.frame.size.width*27/70-25 + 24, 30, 30)];
     [_cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
     [_cameraBtn addTarget:self action:@selector(userChoosePhoto) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_cameraBtn];
+    [_contentView addSubview:_cameraBtn];
     
+    
+    
+    
+    CLTitleView *remarkTitleView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, 64+36, self.view.frame.size.width, 45) Title:@"订单备注"];
+    [_contentView addSubview:remarkTitleView];
+    
+    [remarkTitleView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(_cameraBtn.mas_bottom).offset(36);
+        make.height.mas_offset(45);
+    }];
+    
+    
+    UIButton *submitRemarkButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [submitRemarkButton setTitle:@"提交" forState:UIControlStateNormal];
+    submitRemarkButton.titleLabel.font = [UIFont systemFontOfSize:15];
+    [submitRemarkButton setTitleColor:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] forState:UIControlStateNormal];
+    [submitRemarkButton addTarget:self action:@selector(submitRemarkBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    submitRemarkButton.layer.cornerRadius = 5;
+    submitRemarkButton.layer.borderWidth = 1;
+    submitRemarkButton.layer.borderColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1].CGColor;
+    [_contentView addSubview:submitRemarkButton];
+    [submitRemarkButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(remarkTitleView);
+        make.right.equalTo(_contentView).offset(-20);
+        make.width.mas_offset(60);
+        make.height.mas_offset(25);
+    }];
+    
+    _textView = [[UITextView alloc]init];
+    _textView.layer.borderWidth = 1;
+    _textView.layer.borderColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0].CGColor;
+    _textView.layer.cornerRadius = 5;
+    _textView.font = [UIFont systemFontOfSize:14];
+    [_contentView addSubview:_textView];
+    [_textView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_contentView).offset(20);
+        make.top.equalTo(remarkTitleView.mas_bottom).offset(20);
+        make.right.equalTo(_contentView).offset(-20);
+        make.height.mas_offset(100);
+    }];
     
     
     
@@ -215,10 +277,48 @@
     
     [signinButton addTarget:self action:@selector(nextBtnClick) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.view addSubview:signinButton];
+    [_contentView addSubview:signinButton];
+    
+    [signinButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_contentView).offset(30);
+        make.top.equalTo(_textView.mas_bottom).offset(80);
+        make.right.equalTo(_contentView).offset(-30);
+        make.height.mas_offset(50);
+        
+        make.bottom.equalTo(_contentView).offset(-150);
+    }];
     
     
 }
+
+#pragma mark - 提交备注
+- (void)submitRemarkBtnClick{
+    ICLog(@"---提交备注---");
+    if(_textView.text.length < 1){
+        [self addAlertView:@"请填写订单备注"];
+        return;
+    }
+    NSMutableDictionary *dataDictionary = [[NSMutableDictionary alloc]init];
+    dataDictionary[@"remark"] = _textView.text;
+    dataDictionary[@"orderId"] = @"4769";
+//    dataDictionary[@"orderId"] = @"qqq";
+//    NSDictionary *dataDictionary = @{@"orderId":[NSString stringWithFormat:@"%@",_model.orderId],@"remark":_textView.text};
+    [GFHttpTool postOrderRemarkWithDictionary:dataDictionary Success:^(id responseObject) {
+        ICLog(@"responseObject------%@---",responseObject);
+        BOOL status = [responseObject[@"status"] boolValue];
+        if (status == YES) {
+            [self addAlertView:@"操作成功"];
+            _textView.text = nil;
+        }else{
+            [self addAlertView:@"请求失败，请重试"];
+        }
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
+
 
 #pragma mark - 选择照片
 - (void)userChoosePhoto{
@@ -253,7 +353,8 @@
     
     
     _chooseView.hidden = NO;
-    
+//    [_chooseView bringSubviewToFront:self.view];
+    [self.view bringSubviewToFront:_chooseView];
 }
 
 #pragma mark - 选择照片
@@ -301,8 +402,8 @@
         
         imageView.clipsToBounds = YES;
         
-        imageView.frame = CGRectMake(10, _carImageButton.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
-        _cameraBtn.frame = CGRectMake(20+(self.view.frame.size.width-40)/3, _carImageButton.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+        imageView.frame = CGRectMake(10, _carImageButton.frame.origin.y - 64, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+        _cameraBtn.frame = CGRectMake(20+(self.view.frame.size.width-40)/3, _carImageButton.frame.origin.y - 64, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
         [_cameraBtn setImage:[UIImage imageNamed:@"addImage"] forState:UIControlStateNormal];
         _cameraBtn.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
         imageView.userInteractionEnabled = YES;
@@ -316,7 +417,7 @@
         imageView.imageArray = _imageArray;
         
         [_imageArray addObject:imageView];
-        [self.view addSubview:imageView];
+        [_contentView addSubview:imageView];
         
     }else{
 //        NSLog(@"小车不存在---%@--",@(_imageArray.count));
@@ -325,12 +426,12 @@
         
         imageView.clipsToBounds = YES;
         
-        [self.view addSubview:imageView];
+        [_contentView addSubview:imageView];
         
         if (_imageArray.count == 8) {
             _cameraBtn.hidden = YES;
         }else{
-            _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)%3),  _carImageButton.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+            _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)%3),  _carImageButton.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count+1)/3) - 64, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
         }
         
         
@@ -416,7 +517,7 @@
     
     [_imageArray enumerateObjectsUsingBlock:^(UIImageView *obj, NSUInteger idx, BOOL *stop) {
         obj.tag = idx;
-        obj.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*(idx%3),  _carImageButton.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*(idx/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+        obj.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*(idx%3),  _carImageButton.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*(idx/3) - 64, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
     }];
     
     if (_imageArray.count == 8) {
@@ -427,7 +528,7 @@
         [_cameraBtn setImage:[UIImage imageNamed:@"cameraUser"] forState:UIControlStateNormal];
         _cameraBtn.backgroundColor = [UIColor clearColor];
     }else{
-        _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)%3),  _carImageButton.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)/3), (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
+        _cameraBtn.frame = CGRectMake(10+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)%3),  _carImageButton.frame.origin.y+(10+(self.view.frame.size.width-40)/3)*((_imageArray.count)/3) - 64, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3);
     }
     
     

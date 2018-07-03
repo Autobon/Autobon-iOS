@@ -33,7 +33,7 @@
     
     UIWebView *webView = [[UIWebView alloc]init];
     //    webView.scalesPageToFit = YES;
-    NSURL* url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@/api/mobile/admin/study/download?path=%@",BaseHttp,_pathString]];
+    NSURL* url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@",BaseHttp,_pathString]];
     //    NSURL* url = [[NSURL alloc] initWithString:@"https://dev.markd.cn"];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
     
@@ -43,6 +43,7 @@
     //    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
     //    button.frame = CGRectMake(20, 20, 40, 40);
     [self.view addSubview:webView];
+    webView.scalesPageToFit = YES;
     
     
     [webView mas_makeConstraints:^(MASConstraintMaker *make) {

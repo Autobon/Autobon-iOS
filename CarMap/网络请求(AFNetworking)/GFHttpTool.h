@@ -133,7 +133,8 @@
 
 
 
-
+// 添加订单备注
++ (void)postOrderRemarkWithDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
 
 

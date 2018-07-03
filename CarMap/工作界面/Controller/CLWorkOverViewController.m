@@ -27,7 +27,7 @@
 #import "MJRefresh.h"
 #import "GFAddPeoTableViewCell.h"
 #import "CLTouchView.h"
-
+#import "CLTouchScrollView.h"
 
 @interface CLWorkOverViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,GFProjectViewDelegate, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate>
 {
@@ -58,6 +58,8 @@
     
     GFNavigationView *_navView;
     
+    UITextView *_textView;
+    
 }
 
 /**
@@ -85,7 +87,7 @@
 @property (nonatomic, assign) CGPoint conoffSet;
 
 @property (nonatomic, assign) NSInteger page;
-@property (nonatomic, strong) UIScrollView *scView;
+@property (nonatomic, strong) CLTouchScrollView *scView;
 
 @property (nonatomic, strong) UIButton *proButSelect;
 
@@ -1227,7 +1229,7 @@
     _buweiIdArr = [[NSMutableArray alloc] init];
 
     
-    _scView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_titleView.frame), [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 150)];
+    _scView = [[CLTouchScrollView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_titleView.frame), [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 150)];
     _scView.delegate = self;
     [_scrollView addSubview:_scView];
     _scView.directionalLockEnabled = YES;
@@ -1334,9 +1336,56 @@
                 // 添加报废材料页面
                 UIView *baofeiView = [self _setBaofeiView:_buweiArr[m] withMaxY:CGRectGetMaxY(vv.frame) withPage:m];
                 
+                
+                
+                
+                
+                
+                CLTitleView *remarkTitleView = [[CLTitleView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(baofeiView.frame) + 40 , self.view.frame.size.width, 45) Title:@"订单备注"];
+                [_scView addSubview:remarkTitleView];
+                
+//                [remarkTitleView mas_makeConstraints:^(MASConstraintMaker *make) {
+//                    make.left.right.equalTo(self.view);
+//                    make.top.equalTo(_cameraBtn.mas_bottom).offset(36);
+//                    make.height.mas_offset(45);
+//                }];
+                
+                
+                UIButton *submitRemarkButton = [UIButton buttonWithType:UIButtonTypeSystem];
+                [submitRemarkButton setTitle:@"提交" forState:UIControlStateNormal];
+                submitRemarkButton.titleLabel.font = [UIFont systemFontOfSize:15];
+                [submitRemarkButton setTitleColor:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] forState:UIControlStateNormal];
+                [submitRemarkButton addTarget:self action:@selector(submitRemarkBtnClick) forControlEvents:UIControlEventTouchUpInside];
+                submitRemarkButton.layer.cornerRadius = 5;
+                submitRemarkButton.layer.borderWidth = 1;
+                submitRemarkButton.layer.borderColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1].CGColor;
+                [_scView addSubview:submitRemarkButton];
+                [submitRemarkButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.centerY.equalTo(remarkTitleView);
+                    make.right.equalTo(self.view).offset(-20);
+                    make.width.mas_offset(60);
+                    make.height.mas_offset(25);
+                }];
+                
+                _textView = [[UITextView alloc]init];
+                _textView.layer.borderWidth = 1;
+                _textView.layer.borderColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0].CGColor;
+                _textView.layer.cornerRadius = 5;
+                _textView.font = [UIFont systemFontOfSize:14];
+                [_scView addSubview:_textView];
+                [_textView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.equalTo(self.view).offset(20);
+                    make.top.equalTo(remarkTitleView.mas_bottom).offset(20);
+                    make.right.equalTo(self.view).offset(-20);
+                    make.height.mas_offset(100);
+                }];
+                
+                
+                
+                
+                
                 // 提交按钮
                 UIButton *but = [UIButton buttonWithType:UIButtonTypeCustom];
-                but.frame = CGRectMake(50 + [UIScreen mainScreen].bounds.size.width * m, CGRectGetMaxY(baofeiView.frame) + 25, [UIScreen mainScreen].bounds.size.width - 100, 50);
                 [but setTitle:@"完成工作" forState:UIControlStateNormal];
                 [but setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 but.layer.cornerRadius = 7.5;
@@ -1346,17 +1395,55 @@
                 
                 NSString *maxvv = [NSString stringWithFormat:@"%f", CGRectGetMaxY(baofeiView.frame) + 100];
                 [_maxVVArr addObject:maxvv];
+                [but mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.equalTo(self.view).offset(50);
+                    make.top.equalTo(_textView.mas_bottom).offset(50);
+                    make.right.equalTo(self.view).offset(-50);
+                    make.height.mas_offset(50);
+                }];
             }
             
             [_proViewArr addObject:vv];
         }
     }
 
-    _scView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width * _proArr.count, [_maxVVArr[_page - 1] floatValue] - 20);
+    _scView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width * _proArr.count, [_maxVVArr[_page - 1] floatValue] - 20 + 500);
     _scView.frame = CGRectMake(0, CGRectGetMaxY(_titleView.frame), [UIScreen mainScreen].bounds.size.width, [_maxVVArr[_page - 1] floatValue] - 10);
     
 //    NSLog(@"-----%@===%@", _peoIdArr, _peoArr);
 }
+
+
+#pragma mark - 提交备注
+- (void)submitRemarkBtnClick{
+    ICLog(@"---提交备注---");
+    if(_textView.text.length < 1){
+        [self addAlertView:@"请填写订单备注"];
+        return;
+    }
+    NSMutableDictionary *dataDictionary = [[NSMutableDictionary alloc]init];
+    dataDictionary[@"remark"] = _textView.text;
+    dataDictionary[@"orderId"] = @"4769";
+    //    dataDictionary[@"orderId"] = @"qqq";
+    //    NSDictionary *dataDictionary = @{@"orderId":[NSString stringWithFormat:@"%@",_model.orderId],@"remark":_textView.text};
+    [GFHttpTool postOrderRemarkWithDictionary:dataDictionary Success:^(id responseObject) {
+        ICLog(@"responseObject------%@---",responseObject);
+        BOOL status = [responseObject[@"status"] boolValue];
+        if (status == YES) {
+            [self addAlertView:@"操作成功"];
+            _textView.text = nil;
+        }else{
+            [self addAlertView:@"请求失败，请重试"];
+        }
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
+
+
+
 - (void)addButClick {
     
     [self setAddPeoView];
