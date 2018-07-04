@@ -135,6 +135,10 @@
 		B04AF17420D90FE8007EFCB3 /* CLStudyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B04AF17320D90FE8007EFCB3 /* CLStudyTableViewCell.m */; };
 		B052E66620E0E50C00F2B1D8 /* CLStudyDetailWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B052E66520E0E50C00F2B1D8 /* CLStudyDetailWebViewController.m */; };
 		B080C87120EB263700AE7609 /* CLOrderForWaitNewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B080C87020EB263700AE7609 /* CLOrderForWaitNewTableViewCell.m */; };
+		B080C87420EB79D000AE7609 /* CLTeamModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B080C87320EB79D000AE7609 /* CLTeamModel.m */; };
+		B080C87720EB7D4E00AE7609 /* CLTeamTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B080C87620EB7D4E00AE7609 /* CLTeamTableViewCell.m */; };
+		B080C87A20EB812C00AE7609 /* CLTeamPeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B080C87920EB812C00AE7609 /* CLTeamPeopleViewController.m */; };
+		B080C87D20EB833300AE7609 /* CLTeamPeopleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B080C87C20EB833300AE7609 /* CLTeamPeopleModel.m */; };
 		B081E7571ECEA337003558DC /* CLCollectTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B081E7561ECEA337003558DC /* CLCollectTableViewCell.m */; };
 		B088ADF020EA1F3500BCEEC9 /* CLAUTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = B088ADEF20EA1F3500BCEEC9 /* CLAUTouchView.m */; };
 		B09341251F9F411B00DC2A94 /* Commom.m in Sources */ = {isa = PBXBuildFile; fileRef = B09341241F9F411B00DC2A94 /* Commom.m */; };
@@ -428,6 +432,14 @@
 		B052E66520E0E50C00F2B1D8 /* CLStudyDetailWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLStudyDetailWebViewController.m; sourceTree = "<group>"; };
 		B080C86F20EB263700AE7609 /* CLOrderForWaitNewTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLOrderForWaitNewTableViewCell.h; sourceTree = "<group>"; };
 		B080C87020EB263700AE7609 /* CLOrderForWaitNewTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLOrderForWaitNewTableViewCell.m; sourceTree = "<group>"; };
+		B080C87220EB79D000AE7609 /* CLTeamModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLTeamModel.h; sourceTree = "<group>"; };
+		B080C87320EB79D000AE7609 /* CLTeamModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLTeamModel.m; sourceTree = "<group>"; };
+		B080C87520EB7D4E00AE7609 /* CLTeamTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLTeamTableViewCell.h; sourceTree = "<group>"; };
+		B080C87620EB7D4E00AE7609 /* CLTeamTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLTeamTableViewCell.m; sourceTree = "<group>"; };
+		B080C87820EB812C00AE7609 /* CLTeamPeopleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLTeamPeopleViewController.h; sourceTree = "<group>"; };
+		B080C87920EB812C00AE7609 /* CLTeamPeopleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLTeamPeopleViewController.m; sourceTree = "<group>"; };
+		B080C87B20EB833300AE7609 /* CLTeamPeopleModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLTeamPeopleModel.h; sourceTree = "<group>"; };
+		B080C87C20EB833300AE7609 /* CLTeamPeopleModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLTeamPeopleModel.m; sourceTree = "<group>"; };
 		B081E7551ECEA337003558DC /* CLCollectTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCollectTableViewCell.h; sourceTree = "<group>"; };
 		B081E7561ECEA337003558DC /* CLCollectTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLCollectTableViewCell.m; sourceTree = "<group>"; };
 		B088ADEE20EA1F3500BCEEC9 /* CLAUTouchView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLAUTouchView.h; sourceTree = "<group>"; };
@@ -1234,6 +1246,8 @@
 			children = (
 				B04AF16520D8E62E007EFCB3 /* CLTeamManagerViewController.h */,
 				B04AF16620D8E62E007EFCB3 /* CLTeamManagerViewController.m */,
+				B080C87820EB812C00AE7609 /* CLTeamPeopleViewController.h */,
+				B080C87920EB812C00AE7609 /* CLTeamPeopleViewController.m */,
 				B04AF16820D8E63F007EFCB3 /* CLMyTeamViewController.h */,
 				B04AF16920D8E63F007EFCB3 /* CLMyTeamViewController.m */,
 			);
@@ -1243,6 +1257,10 @@
 		B04AF16320D8E614007EFCB3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B080C87220EB79D000AE7609 /* CLTeamModel.h */,
+				B080C87320EB79D000AE7609 /* CLTeamModel.m */,
+				B080C87B20EB833300AE7609 /* CLTeamPeopleModel.h */,
+				B080C87C20EB833300AE7609 /* CLTeamPeopleModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1250,6 +1268,8 @@
 		B04AF16420D8E614007EFCB3 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B080C87520EB7D4E00AE7609 /* CLTeamTableViewCell.h */,
+				B080C87620EB7D4E00AE7609 /* CLTeamTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1524,13 +1544,16 @@
 				B02291C31ECD4DF40022D34F /* CLNewOrderTableViewCell.m in Sources */,
 				B02291581ECD4CFC0022D34F /* GFBillDetailsViewController.m in Sources */,
 				B02290E21ECD4BB40022D34F /* CLTouchView.m in Sources */,
+				B080C87A20EB812C00AE7609 /* CLTeamPeopleViewController.m in Sources */,
 				B02291BE1ECD4DF40022D34F /* CLNewOrderDetailViewController.m in Sources */,
 				B02291A51ECD4DA80022D34F /* GFFangqiViewController.m in Sources */,
+				B080C87420EB79D000AE7609 /* CLTeamModel.m in Sources */,
 				B02290E51ECD4BB40022D34F /* GFTitleView.m in Sources */,
 				B02290E61ECD4BB40022D34F /* GFTouchImageView.m in Sources */,
 				B02291E41ECD4E4F0022D34F /* GFAddpeoModel.m in Sources */,
 				B02291C11ECD4DF40022D34F /* GFOrderForWaitViewController.m in Sources */,
 				B02291491ECD4CFC0022D34F /* GFChangePwdViewController.m in Sources */,
+				B080C87D20EB833300AE7609 /* CLTeamPeopleModel.m in Sources */,
 				B02292241ECD4F310022D34F /* CLCooperateFailViewController.m in Sources */,
 				B02291C21ECD4DF40022D34F /* CLListNewModel.m in Sources */,
 				B02292481ECD50390022D34F /* GFQualifieTableViewCell.m in Sources */,
@@ -1541,6 +1564,7 @@
 				B022914C1ECD4CFC0022D34F /* GFMyMessageViewController.m in Sources */,
 				B02291011ECD4BF70022D34F /* GFSignInViewController.m in Sources */,
 				B02291471ECD4CFC0022D34F /* CLNotificationDetailViewController.m in Sources */,
+				B080C87720EB7D4E00AE7609 /* CLTeamTableViewCell.m in Sources */,
 				B02291551ECD4CFC0022D34F /* GFIndentTableViewCell.m in Sources */,
 				B02291021ECD4BF70022D34F /* GFSignUpViewController.m in Sources */,
 				B022915A1ECD4CFC0022D34F /* CLBillTableViewCellModel.m in Sources */,

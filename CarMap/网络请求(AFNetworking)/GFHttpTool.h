@@ -137,7 +137,17 @@
 + (void)postOrderRemarkWithDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
 
+// 查询团队列表
++ (void)getTechnicianTeamWithDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
+// 查询团队成员
++ (void)getTechnicianTeamPeopleWithDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+
+// 查询团队详情
++ (void)getTechnicianTeamDetailWithDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+
+// 查询团队技师订单列表
++ (void)getTechnicianTeamPeopleOrderWithDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
 
 
