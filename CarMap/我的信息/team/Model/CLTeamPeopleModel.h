@@ -30,6 +30,9 @@
 @property (nonatomic ,strong) NSString *resume;
 @property (nonatomic ,strong) NSString *skill;
 @property (nonatomic ,strong) NSString *teamId;
+@property (nonatomic ,strong) NSString *workStatus;
+@property (nonatomic ,strong) NSString *workStatusString;
+
 
 - (void)setModelDataForDictionary:(NSDictionary *)dictionary;
 

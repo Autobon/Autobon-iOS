@@ -93,8 +93,10 @@
             NSArray *messageArray = responseObject[@"message"];
             [messageArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 CLTeamModel *teamModel = [[CLTeamModel alloc]init];
-                [teamModel setModelDataWithDictionary:obj];
-                [_dataArray addObject:teamModel];
+                if([obj isKindOfClass:[NSDictionary class]]){
+                    [teamModel setModelDataWithDictionary:obj];
+                    [_dataArray addObject:teamModel];
+                }
             }];
             [_tableView reloadData];
         }

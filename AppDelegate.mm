@@ -438,8 +438,8 @@
     if (payload) {
         payloadMsg = [[NSString alloc] initWithBytes:payload.bytes length:payload.length encoding:NSUTF8StringEncoding];
     }
-//    NSString *msg = [NSString stringWithFormat:@" payloadId=%@,taskId=%@,messageId:%@,payloadMsg:%@%@",payloadId,taskId,aMsgId,payloadMsg,offLine ? @"<离线消息>" : @""];
-//    NSLog(@"\n>前台>>[GexinSdk ReceivePayload]:%@\n\n", msg);
+    NSString *msg = [NSString stringWithFormat:@" payloadId=%@,taskId=%@,messageId:%@,payloadMsg:%@%@",payloadId,taskId,aMsgId,payloadMsg,offLine ? @"<离线消息>" : @""];
+    ICLog(@"\n>前台>>[GexinSdk ReceivePayload]:%@\n\n", msg);
     [GeTuiSdk sendFeedbackMessage:90001 taskId:taskId msgId:aMsgId];
     if (!offLine) {
         NSData *JSONData = [payloadMsg dataUsingEncoding:NSUTF8StringEncoding];
