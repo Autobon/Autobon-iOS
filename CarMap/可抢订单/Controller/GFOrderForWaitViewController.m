@@ -360,7 +360,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    return 115;
+    CLHomeOrderCellModel *cellModel = _modelArr[indexPath.row];
+    return cellModel.cellHeight + 10;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

@@ -356,10 +356,10 @@
 
     
     
-    NSArray *imageArray = @[@"order",@"collection",@"information-2",@"editPassword",@"centre",@"centre",@"centre",@"centre"];
-    NSArray *titleArray = @[@"我的订单",@"我的收藏",@"通知列表",@"修改密码",@"服务中心",@"团队管理",@"我的团队",@"学习园地"];
+    NSArray *imageArray = @[@"order",@"my_team",@"collection",@"information-2",@"editPassword",@"centre",@"study_garden"];
+    NSArray *titleArray = @[@"我的订单",@"我的团队",@"我的收藏",@"通知列表",@"修改密码",@"服务中心",@"学习园地"];
     
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < titleArray.count; i++) {
         // baseView
         UIView *baseView = [[UIView alloc] init];
         baseView.backgroundColor = [UIColor whiteColor];
@@ -596,32 +596,32 @@
             [self indentButClick];
             break;
         case 2:
-            ICLog(@"我的收藏");
-            [self collectButClick];
-            break;
-        case 3:
-            ICLog(@"通知列表");
-            [self notificationButClick];
-            break;
-        case 4:
-            ICLog(@"修改密码");
-            [self changePwdButClick];
-            break;
-        case 5:
-            ICLog(@"服务中心");
-            [self serveButClick];
-            break;
-        case 6:
             ICLog(@"团队管理");
             [self teamManagerBtnClick];
             break;
-        case 7:
-            ICLog(@"我的团队");
-            [self myTeamBtnClick];
+        case 3:
+            ICLog(@"我的收藏");
+            [self collectButClick];
             break;
-        case 8:
+        case 4:
+            ICLog(@"通知列表");
+            [self notificationButClick];
+            break;
+        case 5:
+            ICLog(@"修改密码");
+            [self changePwdButClick];
+            break;
+        case 6:
+            ICLog(@"服务中心");
+            [self serveButClick];
+            break;
+        case 7:
             ICLog(@"学习园地");
             [self studyBtnClick];
+            break;
+        case 8:
+            ICLog(@"我的团队");
+            [self myTeamBtnClick];
             break;
         default:
             break;

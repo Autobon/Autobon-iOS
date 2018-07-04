@@ -11,6 +11,7 @@
 #import "GFHttpTool.h"
 #import "CLHomeTableViewCell.h"
 #import "CLHomeOrderCellModel.h"
+#import "MJRefresh.h"
 
 
 @interface CLTeamPeopleOrderListViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -19,6 +20,8 @@
     CGFloat kHeight;
     NSMutableArray *_dataArray;
     UITableView *_tableView;
+    NSInteger _page;
+    NSInteger _pageSize;
 }
 @property (nonatomic, strong) GFNavigationView *navView;
 
@@ -34,15 +37,14 @@
     
     [self setTableView];
     
-    [self getOrderList];
     
 }
 
 
 
 - (void)getOrderList{
-    NSDictionary *dataDictionary = @{@"techId":_teamPeopleModel.idString};
-    _dataArray = [[NSMutableArray alloc]init];
+    NSDictionary *dataDictionary = @{@"techId":_teamPeopleModel.idString,@"page":@(_page),@"pageSize":@(_pageSize)};
+    
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
@@ -63,9 +65,12 @@
             }
         }
         [_tableView reloadData];
+        [_tableView.mj_header endRefreshing];
+        [_tableView.mj_footer endRefreshing];
     } failure:^(NSError *error) {
         ICLog(@"---error----%@--",error);
-        
+        [_tableView.mj_header endRefreshing];
+        [_tableView.mj_footer endRefreshing];
     }];
 }
 
@@ -89,6 +94,31 @@
         make.bottom.equalTo(self.view);
     }];
     
+    
+    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
+    _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+    [_tableView.mj_header beginRefreshing];
+    
+}
+
+- (void)headRefresh {
+    
+    
+    _page = 1;
+    _pageSize = 10;
+    _dataArray = [[NSMutableArray alloc]init];
+    
+    
+    [self getOrderList];
+    
+}
+
+- (void)footRefresh {
+
+    _page = _page + 1;
+    _pageSize = 10;
+    
+    [self getOrderList];
 }
 
 
@@ -190,7 +220,7 @@
     self.view.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:1];
     
     // 导航栏
-    self.navView = [[GFNavigationView alloc] initWithLeftImgName:@"back.png" withLeftImgHightName:@"backClick.png" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"团队技师" withFrame:CGRectMake(0, 0, kWidth, 64)];
+    self.navView = [[GFNavigationView alloc] initWithLeftImgName:@"back.png" withLeftImgHightName:@"backClick.png" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"订单列表" withFrame:CGRectMake(0, 0, kWidth, 64)];
     [self.navView.leftBut addTarget:self action:@selector(leftButClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.navView];
 }

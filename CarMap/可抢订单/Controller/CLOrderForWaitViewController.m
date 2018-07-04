@@ -305,13 +305,13 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    if (indexPath.row == 0) {
-//        return 0;
-//    }else{
-        return 190;
-//    }
-//    
-//    return 0;
+
+    
+    
+    
+    
+    return 190;
+
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

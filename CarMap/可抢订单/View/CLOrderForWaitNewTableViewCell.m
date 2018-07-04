@@ -73,13 +73,33 @@
     
     
     AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    CLLocationCoordinate2D myLocation = CLLocationCoordinate2DMake([appDelegate.locationDictionary[@"lat"] floatValue], [appDelegate.locationDictionary[@"lng"] floatValue]);
     
-    CLLocationCoordinate2D coorLocation = CLLocationCoordinate2DMake([model.customerLat floatValue], [model.customerLon floatValue]);
+    float myLocationLat = [appDelegate.locationDictionary[@"lat"] floatValue];
+    float myLocationLng = [appDelegate.locationDictionary[@"lng"] floatValue];
+    float coorLocationLat = [model.customerLat floatValue];
+    float coorLocationLng = [model.customerLon floatValue];
+    
+    
+    
+    CLLocationCoordinate2D myLocation = CLLocationCoordinate2DMake(myLocationLat, myLocationLng);
+    CLLocationCoordinate2D coorLocation = CLLocationCoordinate2DMake(coorLocationLat, coorLocationLng);
     
     double distance = [GFMapViewController calculatorWithCoordinate1:myLocation withCoordinate2:coorLocation];
     
+    
+    
+    
     _detailLabel.text = [NSString stringWithFormat:@"施工项目：%@，商户名称：%@，地址：%@，距离%0.1f公里，预约施工时间：%@，最迟交车时间：%@。",model.orderType,model.cooperatorFullname,model.address,distance/1000.0,model.orderTime,model.agreedEndTime];
+    
+    if (myLocationLat == 0 || myLocationLng == 0 || coorLocationLat == 0 || coorLocationLng == 0){
+        distance = 0;
+        _detailLabel.text = [NSString stringWithFormat:@"施工项目：%@，商户名称：%@，地址：%@，距离%@，预约施工时间：%@，最迟交车时间：%@。",model.orderType,model.cooperatorFullname,model.address,@"--",model.orderTime,model.agreedEndTime];
+    }
+    
+    CGRect Rect =[_detailLabel.text boundingRectWithSize:CGSizeMake([UIScreen mainScreen].bounds.size.width - 100, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil];
+    model.cellHeight = 20 + Rect.size.height;
+    
+    
 }
 
 

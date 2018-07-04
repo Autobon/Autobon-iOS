@@ -37,7 +37,7 @@
 @property (nonatomic, copy) NSString *creatorName;          // 下单人
 @property (nonatomic, copy) NSString *contactPhone;         //联系方式
 
-@property (nonatomic, copy) NSString *jjjj;
+@property (nonatomic ) CGFloat cellHeight;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dic;
 
