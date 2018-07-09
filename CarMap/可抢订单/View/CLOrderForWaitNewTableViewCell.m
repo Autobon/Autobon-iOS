@@ -89,11 +89,11 @@
     
     
     
-    _detailLabel.text = [NSString stringWithFormat:@"施工项目：%@，商户名称：%@，地址：%@，距离%0.1f公里，预约施工时间：%@，最迟交车时间：%@。",model.orderType,model.cooperatorFullname,model.address,distance/1000.0,model.orderTime,model.agreedEndTime];
+    _detailLabel.text = [NSString stringWithFormat:@"施工项目：%@\n商户名称：%@\n地址：%@\n距离：%0.1f公里\n预约施工时间：%@\n最迟交车时间：%@",model.orderType,model.cooperatorFullname,model.address,distance/1000.0,model.orderTime,model.agreedEndTime];
     
     if (myLocationLat == 0 || myLocationLng == 0 || coorLocationLat == 0 || coorLocationLng == 0){
         distance = 0;
-        _detailLabel.text = [NSString stringWithFormat:@"施工项目：%@，商户名称：%@，地址：%@，距离%@，预约施工时间：%@，最迟交车时间：%@。",model.orderType,model.cooperatorFullname,model.address,@"--",model.orderTime,model.agreedEndTime];
+        _detailLabel.text = [NSString stringWithFormat:@"施工项目：%@\n商户名称：%@\n地址：%@\n距离：%@\n预约施工时间：%@\n最迟交车时间：%@",model.orderType,model.cooperatorFullname,model.address,@"--",model.orderTime,model.agreedEndTime];
     }
     
     CGRect Rect =[_detailLabel.text boundingRectWithSize:CGSizeMake([UIScreen mainScreen].bounds.size.width - 100, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil];

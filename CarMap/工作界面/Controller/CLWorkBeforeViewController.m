@@ -24,6 +24,8 @@
 #import "GFImageView.h"
 #import "CLTouchView.h"
 #import "CLTouchScrollView.h"
+#import "HXPhotoPicker.h"
+
 
 @interface CLWorkBeforeViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
@@ -42,6 +44,8 @@
     UITextView *_textView;
 }
 
+@property (strong, nonatomic) HXPhotoManager *manager;
+@property (strong, nonatomic) UIColor *bottomViewBgColor;
 
 @end
 
@@ -324,7 +328,7 @@
 - (void)userChoosePhoto{
     
     
-    
+    /*
     if (_chooseView == nil) {
         _chooseView = [[CLTouchView alloc]initWithFrame:self.view.bounds];
         _chooseView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.3];
@@ -355,7 +359,120 @@
     _chooseView.hidden = NO;
 //    [_chooseView bringSubviewToFront:self.view];
     [self.view bringSubviewToFront:_chooseView];
+     */
+    
+    [self goAlbumBtnClick];
+    
 }
+
+- (HXPhotoManager *)manager
+{
+    if (!_manager) {
+        _manager = [[HXPhotoManager alloc] initWithType:HXPhotoManagerSelectedTypePhoto];
+        _manager.configuration.videoMaxNum = 5;
+        _manager.configuration.deleteTemporaryPhoto = NO;
+        _manager.configuration.lookLivePhoto = YES;
+        _manager.configuration.saveSystemAblum = YES;
+        _manager.configuration.navigationBar = ^(UINavigationBar *navigationBar) {
+            
+        };
+        _manager.configuration.requestImageAfterFinishingSelection = YES;
+        __weak typeof(self) weakSelf = self;
+        _manager.configuration.photoListBottomView = ^(HXDatePhotoBottomView *bottomView) {
+            bottomView.bgView.barTintColor = weakSelf.bottomViewBgColor;
+        };
+        _manager.configuration.previewBottomView = ^(HXDatePhotoPreviewBottomView *bottomView) {
+            bottomView.bgView.barTintColor = weakSelf.bottomViewBgColor;
+        };
+        _manager.configuration.albumListCollectionView = ^(UICollectionView *collectionView) {
+            //            NSSLog(@"albumList:%@",collectionView);
+        };
+        _manager.configuration.photoListCollectionView = ^(UICollectionView *collectionView) {
+            //            NSSLog(@"photoList:%@",collectionView);
+        };
+        _manager.configuration.previewCollectionView = ^(UICollectionView *collectionView) {
+            //            NSSLog(@"preview:%@",collectionView);
+        };
+        // 使用自动的相机  这里拿系统相机做示例
+        _manager.configuration.shouldUseCamera = ^(UIViewController *viewController, HXPhotoConfigurationCameraType cameraType, HXPhotoManager *manager) {
+            
+            // 这里拿使用系统相机做例子
+            UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+            imagePickerController.delegate = (id)weakSelf;
+            imagePickerController.allowsEditing = NO;
+            NSString *requiredMediaTypeImage = ( NSString *)kUTTypeImage;
+            NSString *requiredMediaTypeMovie = ( NSString *)kUTTypeMovie;
+            NSArray *arrMediaTypes;
+            if (cameraType == HXPhotoConfigurationCameraTypePhoto) {
+                arrMediaTypes=[NSArray arrayWithObjects:requiredMediaTypeImage,nil];
+            }else if (cameraType == HXPhotoConfigurationCameraTypeVideo) {
+                arrMediaTypes=[NSArray arrayWithObjects:requiredMediaTypeMovie,nil];
+            }else {
+                arrMediaTypes=[NSArray arrayWithObjects:requiredMediaTypeImage, requiredMediaTypeMovie,nil];
+            }
+            [imagePickerController setMediaTypes:arrMediaTypes];
+            // 设置录制视频的质量
+            [imagePickerController setVideoQuality:UIImagePickerControllerQualityTypeHigh];
+            //设置最长摄像时间
+            [imagePickerController setVideoMaximumDuration:60.f];
+            imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+            imagePickerController.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+            imagePickerController.modalPresentationStyle=UIModalPresentationOverCurrentContext;
+            [viewController presentViewController:imagePickerController animated:YES completion:nil];
+        };
+        
+        _manager.configuration.videoCanEdit = NO;
+        _manager.configuration.photoCanEdit = NO;
+    }
+    return _manager;
+}
+
+
+- (void)goAlbumBtnClick {
+    self.manager.configuration.clarityScale = 0.8;//小图清晰度
+    self.manager.configuration.themeColor = self.view.tintColor; //主题颜色
+    self.manager.configuration.cellSelectedTitleColor = nil;
+    self.manager.configuration.navBarBackgroudColor = nil; //导航栏背景颜色
+    self.manager.configuration.statusBarStyle = UIStatusBarStyleDefault;
+    self.manager.configuration.sectionHeaderTranslucent = YES;
+    self.bottomViewBgColor = nil;
+    self.manager.configuration.cellSelectedBgColor = nil;
+    self.manager.configuration.selectedTitleColor = nil;
+    self.manager.configuration.sectionHeaderSuspensionBgColor = nil;
+    self.manager.configuration.sectionHeaderSuspensionTitleColor = nil;
+    self.manager.configuration.navigationTitleColor = nil;//导航栏标题颜色
+    self.manager.configuration.hideOriginalBtn = NO;
+    self.manager.configuration.filtrationICloudAsset = NO;
+    self.manager.configuration.photoMaxNum = 9;
+    self.manager.configuration.videoMaxNum = 0;
+    self.manager.configuration.rowCount = 3;
+    self.manager.configuration.downloadICloudAsset = NO;
+    self.manager.configuration.saveSystemAblum = YES;
+    self.manager.configuration.showDateSectionHeader = NO;
+    self.manager.configuration.reverseDate = NO;
+    self.manager.configuration.navigationTitleSynchColor = NO;
+    self.manager.configuration.replaceCameraViewController = NO;
+    self.manager.configuration.openCamera = YES;
+    [self hx_presentAlbumListViewControllerWithManager:self.manager done:^(NSArray<HXPhotoModel *> *allList, NSArray<HXPhotoModel *> *photoList, NSArray<HXPhotoModel *> *videoList, BOOL original, HXAlbumListViewController *viewController) {
+        ICLog(@"all - %@",allList);
+        ICLog(@"photo - %@",photoList);
+        
+        
+        [photoList enumerateObjectsUsingBlock:^(HXPhotoModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [self updataImage:obj.previewPhoto];
+            //            [self updataImage:obj.thumbPhoto];
+        }];
+        
+    } cancel:^(HXAlbumListViewController *viewController) {
+        ICLog(@"取消了");
+    }];
+}
+
+
+
+
+
+
 
 #pragma mark - 选择照片
 - (void)userHeadChoose:(UIButton *)button{
@@ -394,9 +511,15 @@
     
     [self dismissViewControllerAnimated:YES completion:nil];
     
+    [self updataImage:image];
+    
+}
+
+
+- (void)updataImage:(UIImage *)image{
     if (_imageArray.count == 0) {
         _carImageButton.hidden = YES;
-//        MYImageView *imageView = [[MYImageView alloc]init];
+        //        MYImageView *imageView = [[MYImageView alloc]init];
         GFImageView *imageView = [[GFImageView alloc]init];
         imageView.image = image;
         
@@ -420,7 +543,7 @@
         [_contentView addSubview:imageView];
         
     }else{
-//        NSLog(@"小车不存在---%@--",@(_imageArray.count));
+        //        NSLog(@"小车不存在---%@--",@(_imageArray.count));
         GFImageView *imageView = [[GFImageView alloc]initWithFrame:CGRectMake(_cameraBtn.frame.origin.x, _cameraBtn.frame.origin.y, (self.view.frame.size.width-40)/3, (self.view.frame.size.width-40)/3)];
         imageView.image = image;
         
@@ -456,14 +579,14 @@
     }
     UIImage *imageNew = [self imageWithImage:image scaledToSize:imagesize];
     NSData *imageData = UIImageJPEGRepresentation(imageNew, 0.8);
-
+    
     
     GFImageView *imageView = [_imageArray objectAtIndex:_imageArray.count-1];
-
+    
     [GFHttpTool PostImageForWork:imageData success:^(NSDictionary *responseObject) {
-//        NSLog(@"上传成功－%@--－%@",responseObject,responseObject[@"message"]);
+        //        NSLog(@"上传成功－%@--－%@",responseObject,responseObject[@"message"]);
         if ([responseObject[@"status"] integerValue] == 1) {
-//
+            //
             imageView.resultURL = responseObject[@"message"];
         }else{
 #warning --图片上传失败，从数组移走图片
@@ -472,17 +595,18 @@
             [_imageArray removeLastObject];
             [imageView removeFromSuperview];
         }
-//
+        //
     } failure:^(NSError *error) {
-//        NSLog(@"上传失败原因－－%@--",error);
+        //        NSLog(@"上传失败原因－－%@--",error);
         [self addAlertView:@"图片上传失败"];
         _cameraBtn.frame = imageView.frame;
         [imageView removeFromSuperview];
         [_imageArray removeLastObject];
         
     }];
-    
 }
+
+
 
 #pragma mark - 压缩图片尺寸
 -(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
