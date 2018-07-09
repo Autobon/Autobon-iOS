@@ -416,31 +416,48 @@
     phoneButton.frame = CGRectMake(self.view.frame.size.width - baseView1H *2 , phoneLabY , baseView1H *2 , baseView1H);
     
     
+    // 商户位置
+    CGFloat addressLabW = baseView1W;
+    CGFloat addressLabH = baseView1H;
+    CGFloat addressLabX = baseView1X;
+    CGFloat addressLabY = CGRectGetMaxY(lineView5.frame);
+    UILabel *addressLab = [[UILabel alloc] initWithFrame:CGRectMake(addressLabX, addressLabY, addressLabW, addressLabH)];
+    addressLab.text = [NSString stringWithFormat:@"商户位置：%@", _model.address];
+    addressLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
+    [baseView addSubview:addressLab];
+    
+    // 边线
+    UIView *lineView6 = [[UIView alloc] initWithFrame:CGRectMake(jiange1, CGRectGetMaxY(addressLab.frame), numberLabW, 1)];
+    lineView6.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+    [baseView addSubview:lineView6];
+    
+    
+    
     
     // 施工人员
     CGFloat workerLabW = baseView1W;
     CGFloat workerLabH = baseView1H;
     CGFloat workerLabX = baseView1X;
-    CGFloat workerLabY = CGRectGetMaxY(lineView5.frame);
+    CGFloat workerLabY = CGRectGetMaxY(lineView6.frame);
     self.workerLab = [[UILabel alloc] initWithFrame:CGRectMake(workerLabX, workerLabY, workerLabW, workerLabH)];
     self.workerLab.text = [NSString stringWithFormat:@"施工人员：%@", _model.jishiAllName];
     self.workerLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
     [baseView addSubview:self.workerLab];
     
     // 边线
-    UIView *lineView6 = [[UIView alloc] initWithFrame:CGRectMake(jiange1, CGRectGetMaxY(self.workerLab.frame), numberLabW, 1)];
-    lineView6.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
-    [baseView addSubview:lineView6];
+    UIView *lineView9 = [[UIView alloc] initWithFrame:CGRectMake(jiange1, CGRectGetMaxY(self.workerLab.frame), numberLabW, 1)];
+    lineView9.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+    [baseView addSubview:lineView9];
 
     
     
-    // 施工时间
+    // 预约施工时间
     CGFloat workDayLabW = baseView1W;
     CGFloat workDayLabH = baseView1H;
     CGFloat workDayLabX = baseView1X;
     CGFloat workDayLabY = CGRectGetMaxY(self.workerLab.frame);
     self.workDayLab = [[UILabel alloc] initWithFrame:CGRectMake(workDayLabX, workDayLabY, workDayLabW, workDayLabH)];
-    self.workDayLab.text = [NSString stringWithFormat:@"施工时间：%@", _model.startTime];
+    self.workDayLab.text = [NSString stringWithFormat:@"预约施工时间：%@", _model.startTime];
     self.workDayLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
     [baseView addSubview:self.workDayLab];
 //    self.workDayLab.backgroundColor = [UIColor redColor];
@@ -484,6 +501,57 @@
     [baseView addSubview:lineView4];
     
     
+    // 开始施工时间
+    CGFloat workerBeginTimeW = baseView1W;
+    CGFloat workerBeginTimeH = baseView1H;
+    CGFloat workerBeginTimeX = baseView1X;
+    CGFloat workerBeginTimeY = CGRectGetMaxY(lineView4.frame);
+    UILabel *workerBeginTimeLab = [[UILabel alloc] initWithFrame:CGRectMake(workerBeginTimeX, workerBeginTimeY, workerBeginTimeW, workerBeginTimeH)];
+    workerBeginTimeLab.text = [NSString stringWithFormat:@"开始施工时间：%@", _model.signTime];
+    workerBeginTimeLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
+    [baseView addSubview:workerBeginTimeLab];
+    
+    // 边线
+    UIView *lineView10 = [[UIView alloc] initWithFrame:CGRectMake(jiange1, CGRectGetMaxY(workerBeginTimeLab.frame), numberLabW, 1)];
+    lineView10.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+    [baseView addSubview:lineView10];
+    
+    // 预约交车时间
+    CGFloat workerPlanEndTimeW = baseView1W;
+    CGFloat workerPlanEndTimeH = baseView1H;
+    CGFloat workerPlanEndTimeX = baseView1X;
+    CGFloat workerPlanEndTimeY = CGRectGetMaxY(lineView10.frame);
+    UILabel *workerPlanEndTimeLab = [[UILabel alloc] initWithFrame:CGRectMake(workerPlanEndTimeX, workerPlanEndTimeY, workerPlanEndTimeW, workerPlanEndTimeH)];
+    workerPlanEndTimeLab.text = [NSString stringWithFormat:@"预约交车时间：%@", _model.agreedEndTime];
+    workerPlanEndTimeLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
+    [baseView addSubview:workerPlanEndTimeLab];
+    
+    // 边线
+    UIView *lineView11 = [[UIView alloc] initWithFrame:CGRectMake(jiange1, CGRectGetMaxY(workerPlanEndTimeLab.frame), numberLabW, 1)];
+    lineView11.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+    [baseView addSubview:lineView11];
+    
+    // 施工完成时间
+    CGFloat workerOverTimeW = baseView1W;
+    CGFloat workerOverTimeH = baseView1H;
+    CGFloat workerOverTimeX = baseView1X;
+    CGFloat workerOverTimeY = CGRectGetMaxY(lineView11.frame);
+    UILabel *workerOverTimeLab = [[UILabel alloc] initWithFrame:CGRectMake(workerOverTimeX, workerOverTimeY, workerOverTimeW, workerOverTimeH)];
+    workerOverTimeLab.text = [NSString stringWithFormat:@"施工完成时间：%@", _model.endTime];
+    workerOverTimeLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
+    [baseView addSubview:workerOverTimeLab];
+    
+    // 边线
+    UIView *lineView12 = [[UIView alloc] initWithFrame:CGRectMake(jiange1, CGRectGetMaxY(workerOverTimeLab.frame), numberLabW, 1)];
+    lineView12.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+    [baseView addSubview:lineView12];
+    
+    
+    
+    
+    
+    
+    
 //    // 施工耗时
 //    CGFloat workTimeLabW = workDayLabW;
 //    CGFloat workTimeLabH = workDayLabH;
@@ -501,7 +569,7 @@
     
     // 查看施工详情
     UIButton *chakanBut = [UIButton buttonWithType:UIButtonTypeCustom];
-    chakanBut.frame = CGRectMake(0, CGRectGetMaxY(lineView4.frame), [UIScreen mainScreen].bounds.size.width, workDayLabH);
+    chakanBut.frame = CGRectMake(0, CGRectGetMaxY(lineView12.frame), [UIScreen mainScreen].bounds.size.width, workDayLabH);
     chakanBut.titleLabel.font = [UIFont systemFontOfSize:14];
     [chakanBut setTitle:@"查看施工详情" forState:UIControlStateNormal];
     [chakanBut setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];

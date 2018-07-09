@@ -30,6 +30,7 @@
 @property (nonatomic, copy) NSString *remark;           // 订单备注
 @property (nonatomic, copy) NSString *signTime;         // 签到时间
 @property (nonatomic, copy) NSString *startTime;        // 开始施工时间
+@property (nonatomic, copy) NSString *endTime;        // 开始施工时间
 @property (nonatomic, copy) NSString *status;           // 订单状态
 @property (nonatomic, copy) NSString *techAvatar;       // 技师头像地址
 @property (nonatomic, copy) NSString *techId;           // 技师ID

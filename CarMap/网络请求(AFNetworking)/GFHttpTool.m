@@ -14,15 +14,15 @@
 
 
 
-//NSString *const prefixURL = @"http://47.97.25.159:12345/api/mobile";
-//NSString* const HOST = @"http://47.97.25.159:12345/api/mobile";
-//NSString* const PUBHOST = @"http://47.97.25.159:12345/api";
+NSString *const prefixURL = @"http://47.97.25.159:12345/api/mobile";
+NSString* const HOST = @"http://47.97.25.159:12345/api/mobile";
+NSString* const PUBHOST = @"http://47.97.25.159:12345/api";
 
 
 //测试服务器
-NSString *const prefixURL = @"http://10.0.12.248:12345/api/mobile";
-NSString* const HOST = @"http://10.0.12.248:12345/api/mobile";
-NSString* const PUBHOST = @"http://10.0.12.248:12345/api";
+//NSString *const prefixURL = @"http://10.0.12.248:12345/api/mobile";
+//NSString* const HOST = @"http://10.0.12.248:12345/api/mobile";
+//NSString* const PUBHOST = @"http://10.0.12.248:12345/api";
 
 
 //新的正式服务器

@@ -146,6 +146,13 @@
             self.startTime = [formatter stringFromDate:date1];
         }
         
+        if(dic[@"endTime"] == nil) {
+            self.startTime = @"无";
+        }else {
+            NSDate *date1 = [NSDate dateWithTimeIntervalSince1970:[dic[@"endTime"] doubleValue]/1000];
+            self.endTime = [formatter stringFromDate:date1];
+        }
+        
         if(dic[@"status"] == nil) {
             self.status = @"无";
         }else {
