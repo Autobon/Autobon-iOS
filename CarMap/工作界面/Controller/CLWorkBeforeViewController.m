@@ -27,7 +27,7 @@
 #import "HXPhotoPicker.h"
 
 
-@interface CLWorkBeforeViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface CLWorkBeforeViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,HXAlbumListViewControllerDelegate>
 {
     UIView *_chooseView;
     UIButton *_carImageButton;
@@ -361,39 +361,49 @@
     [self.view bringSubviewToFront:_chooseView];
      */
     
-    [self goAlbumBtnClick];
+    _manager = nil;
+    [self directGoPhotoViewController];
     
 }
 
-- (HXPhotoManager *)manager
-{
+- (void)directGoPhotoViewController {
+    HXAlbumListViewController *vc = [[HXAlbumListViewController alloc] init];
+    vc.manager = self.manager;
+    vc.delegate = self;
+    HXCustomNavigationController *nav = [[HXCustomNavigationController alloc] initWithRootViewController:vc];
+    nav.supportRotation = self.manager.configuration.supportRotation;
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+
+
+- (void)albumListViewController:(HXAlbumListViewController *)albumListViewController didDoneAllImage:(NSArray<UIImage *> *)imageList{
+    NSSLog(@"%@",imageList);
+    [imageList enumerateObjectsUsingBlock:^(UIImage* obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self updataImage:obj];
+    }];
+}
+
+- (HXPhotoManager *)manager {
     if (!_manager) {
-        _manager = [[HXPhotoManager alloc] initWithType:HXPhotoManagerSelectedTypePhoto];
-        _manager.configuration.videoMaxNum = 5;
-        _manager.configuration.deleteTemporaryPhoto = NO;
+        _manager = [[HXPhotoManager alloc] initWithType:HXPhotoManagerSelectedTypePhotoAndVideo];
+        _manager.configuration.openCamera = YES;
         _manager.configuration.lookLivePhoto = YES;
-        _manager.configuration.saveSystemAblum = YES;
-        _manager.configuration.navigationBar = ^(UINavigationBar *navigationBar) {
-            
-        };
+        _manager.configuration.photoMaxNum = 9 - _imageArray.count;
+        _manager.configuration.videoMaxNum = 1;
+        _manager.configuration.maxNum = 10;
+        _manager.configuration.videoMaxDuration = 500.f;
+        _manager.configuration.saveSystemAblum = NO;
+        //        _manager.configuration.reverseDate = YES;
+        _manager.configuration.showDateSectionHeader = NO;
+        _manager.configuration.selectTogether = NO;
+        //        _manager.configuration.rowCount = 3;
+        //        _manager.configuration.movableCropBox = YES;
+        //        _manager.configuration.movableCropBoxEditSize = YES;
+        //        _manager.configuration.movableCropBoxCustomRatio = CGPointMake(1, 1);
         _manager.configuration.requestImageAfterFinishingSelection = YES;
         __weak typeof(self) weakSelf = self;
-        _manager.configuration.photoListBottomView = ^(HXDatePhotoBottomView *bottomView) {
-            bottomView.bgView.barTintColor = weakSelf.bottomViewBgColor;
-        };
-        _manager.configuration.previewBottomView = ^(HXDatePhotoPreviewBottomView *bottomView) {
-            bottomView.bgView.barTintColor = weakSelf.bottomViewBgColor;
-        };
-        _manager.configuration.albumListCollectionView = ^(UICollectionView *collectionView) {
-            //            NSSLog(@"albumList:%@",collectionView);
-        };
-        _manager.configuration.photoListCollectionView = ^(UICollectionView *collectionView) {
-            //            NSSLog(@"photoList:%@",collectionView);
-        };
-        _manager.configuration.previewCollectionView = ^(UICollectionView *collectionView) {
-            //            NSSLog(@"preview:%@",collectionView);
-        };
-        // 使用自动的相机  这里拿系统相机做示例
+        //        _manager.configuration.replaceCameraViewController = YES;
         _manager.configuration.shouldUseCamera = ^(UIViewController *viewController, HXPhotoConfigurationCameraType cameraType, HXPhotoManager *manager) {
             
             // 这里拿使用系统相机做例子
@@ -420,52 +430,8 @@
             imagePickerController.modalPresentationStyle=UIModalPresentationOverCurrentContext;
             [viewController presentViewController:imagePickerController animated:YES completion:nil];
         };
-        
-        _manager.configuration.videoCanEdit = NO;
-        _manager.configuration.photoCanEdit = NO;
     }
     return _manager;
-}
-
-
-- (void)goAlbumBtnClick {
-    self.manager.configuration.clarityScale = 0.8;//小图清晰度
-    self.manager.configuration.themeColor = self.view.tintColor; //主题颜色
-    self.manager.configuration.cellSelectedTitleColor = nil;
-    self.manager.configuration.navBarBackgroudColor = nil; //导航栏背景颜色
-    self.manager.configuration.statusBarStyle = UIStatusBarStyleDefault;
-    self.manager.configuration.sectionHeaderTranslucent = YES;
-    self.bottomViewBgColor = nil;
-    self.manager.configuration.cellSelectedBgColor = nil;
-    self.manager.configuration.selectedTitleColor = nil;
-    self.manager.configuration.sectionHeaderSuspensionBgColor = nil;
-    self.manager.configuration.sectionHeaderSuspensionTitleColor = nil;
-    self.manager.configuration.navigationTitleColor = nil;//导航栏标题颜色
-    self.manager.configuration.hideOriginalBtn = NO;
-    self.manager.configuration.filtrationICloudAsset = NO;
-    self.manager.configuration.photoMaxNum = 9;
-    self.manager.configuration.videoMaxNum = 0;
-    self.manager.configuration.rowCount = 3;
-    self.manager.configuration.downloadICloudAsset = NO;
-    self.manager.configuration.saveSystemAblum = YES;
-    self.manager.configuration.showDateSectionHeader = NO;
-    self.manager.configuration.reverseDate = NO;
-    self.manager.configuration.navigationTitleSynchColor = NO;
-    self.manager.configuration.replaceCameraViewController = NO;
-    self.manager.configuration.openCamera = YES;
-    [self hx_presentAlbumListViewControllerWithManager:self.manager done:^(NSArray<HXPhotoModel *> *allList, NSArray<HXPhotoModel *> *photoList, NSArray<HXPhotoModel *> *videoList, BOOL original, HXAlbumListViewController *viewController) {
-        ICLog(@"all - %@",allList);
-        ICLog(@"photo - %@",photoList);
-        
-        
-        [photoList enumerateObjectsUsingBlock:^(HXPhotoModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [self updataImage:obj.previewPhoto];
-            //            [self updataImage:obj.thumbPhoto];
-        }];
-        
-    } cancel:^(HXAlbumListViewController *viewController) {
-        ICLog(@"取消了");
-    }];
 }
 
 

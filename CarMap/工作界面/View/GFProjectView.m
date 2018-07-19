@@ -43,7 +43,14 @@
     [self addSubview:vv];
     _nameLab = vv;
     
-    CGFloat w = ([UIScreen mainScreen].bounds.size.width - 10 * 5) / 4;
+    
+    int rowButtonNumber = 4;
+    if([_proName isEqualToString:@"美容清洁"]){
+        rowButtonNumber = 2;
+    }
+    
+    
+    CGFloat w = ([UIScreen mainScreen].bounds.size.width - 10 * (rowButtonNumber + 1)) / rowButtonNumber;
     CGFloat h = 30;
     CGFloat y = 10;
     
@@ -64,7 +71,7 @@
         [but setBackgroundImage:[UIImage imageNamed:@"but_normal"] forState:UIControlStateNormal];
         [but setBackgroundImage:[UIImage imageNamed:@"but_selected"] forState:UIControlStateSelected];
         [but setBackgroundImage:[UIImage imageNamed:@"but_disable"] forState:UIControlStateDisabled];
-        but.frame = CGRectMake((10 + w) * (i % 4) + 10, y + (i / 4) * (h + y) + vvH, w, h);
+        but.frame = CGRectMake((10 + w) * (i % rowButtonNumber) + 10, y + (i / rowButtonNumber) * (h + y) + vvH, w, h);
         [self addSubview:but];
         [but addTarget:self action:@selector(butClick:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -72,12 +79,12 @@
         [_disableArr addObject:@"YES"];
     }
     
-    if(allNum % 4 == 0) {
+    if(allNum % rowButtonNumber == 0) {
     
-        _vvHeight = y + (prArr.count / 4) * (h + y) + vvH;
+        _vvHeight = y + (prArr.count / rowButtonNumber) * (h + y) + vvH;
     }else {
     
-        _vvHeight = y + (prArr.count / 4 + 1) * (h + y) + vvH;
+        _vvHeight = y + (prArr.count / rowButtonNumber + 1) * (h + y) + vvH;
     }
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, _vvHeight, [UIScreen mainScreen].bounds.size.width, 1)];

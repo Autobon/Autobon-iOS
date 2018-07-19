@@ -55,7 +55,7 @@
 //    NSLog(@"===请求的数据==%@", mDic);
     [GFHttpTool oederDDGetWithParameters:mDic success:^(id responseObject) {
         
-//        NSLog(@"----%@-", responseObject);
+        ICLog(@"----%@-", responseObject);
         if([responseObject[@"status"] integerValue] == 1) {
         
             CLHomeOrderCellModel *model = [[CLHomeOrderCellModel alloc] initWithDictionary:responseObject[@"message"]];
@@ -71,13 +71,13 @@
             [self setViewForAutobon];
         }else {
         
-            
+            [self deleteBtnClick];
         }
         
         
     } failure:^(NSError *error) {
-        
-        
+        ICLog(@"--error--%@-", error);
+        [self deleteBtnClick];
     }];
     
     

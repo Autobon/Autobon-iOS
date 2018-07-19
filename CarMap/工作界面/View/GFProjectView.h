@@ -22,7 +22,7 @@
 @property (nonatomic, strong) NSMutableArray *buweiIdArr;
 @property (nonatomic, strong) NSMutableArray *idArr;
 @property (nonatomic, strong) NSMutableArray *disableArr;
-
+@property (nonatomic, strong) NSString *proName;
 @property (nonatomic, copy) NSString *name;
 
 @property (nonatomic, assign) CGFloat vvHeight;

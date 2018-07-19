@@ -32,7 +32,8 @@
 #import "CLWorkOverViewController.h"
 #import "GFIndentViewController.h"
 #import "GFBalanceViewController.h"
-
+#import "GFIndentDetailsViewController.h"
+#import "GFNewOrderModel.h"
 
 #import <UMSocialCore/UMSocialCore.h>
 #import "CLShareViewController.h"
@@ -253,7 +254,7 @@
                 _locationDictionary[@"district"] = subLocality;
                 _locationDictionary[@"street"] = street;
                 [GFHttpTool PostReportLocation:_locationDictionary success:^(id responseObject) {
-                    
+                    ICLog(@"-----responseObject---%@---",responseObject);
                     
                     if ([responseObject[@"result"] integerValue] == 1) {
                         [_manager stopUpdatingLocation];
@@ -521,7 +522,7 @@
 //                NSLog(@"-----notification---%@---",notification);
                 [[UIApplication sharedApplication]scheduleLocalNotification:notification];
             }
-        }else if ([responseJSON[@"action"]isEqualToString:@"ORDER_CANCELED"]){
+        }else if ([responseJSON[@"action"] isEqualToString:@"ORDER_CANCELED"]){
             
             UILocalNotification*notification = [[UILocalNotification alloc] init];
             if (nil != notification)
@@ -537,6 +538,19 @@
                 [[UIApplication sharedApplication]scheduleLocalNotification:notification];
             }
             
+        }else if ([responseJSON[@"action"] isEqualToString:@"COOPERATION"]){
+            UILocalNotification*notification = [[UILocalNotification alloc] init];
+            if (nil != notification)
+            {
+                notification.fireDate = [NSDate date];
+                _pushDate = [NSDate date];
+                notification.alertTitle = @"车邻邦";
+                notification.alertBody = responseJSON[@"title"];
+                notification.userInfo = @{@"dictionary":payloadMsg};
+                AudioServicesPlaySystemSound(1307);
+                ICLog(@"-----notification---%@---",notification);
+                [[UIApplication sharedApplication]scheduleLocalNotification:notification];
+            }
         }
     }
     
@@ -684,6 +698,8 @@
         }];
         
         */
+    }else if ([responseJSON[@"action"]isEqualToString:@"COOPERATION"]){
+        [self performSelector:@selector(after:) withObject:responseJSON afterDelay:1.0];
     }
     
 
@@ -790,6 +806,41 @@
             }];
             
              */
+            
+        }else if ([responseJSON[@"action"]isEqualToString:@"COOPERATION"]){
+            
+            
+            
+            NSDictionary *dic = responseJSON[@"order"];
+            NSMutableDictionary *mDic= [[NSMutableDictionary alloc] init];
+            mDic[@"orderId"] = dic[@"id"];
+
+            [GFHttpTool oederDDGetWithParameters:mDic success:^(id responseObject) {
+                
+                
+                if([responseObject[@"status"] integerValue] == 1) {
+                    
+                    GFNewOrderModel *model = [[GFNewOrderModel alloc] initWithDictionary:responseObject[@"message"]];
+                    [self performSelector:@selector(after:) withObject:responseJSON afterDelay:1.0];
+                    GFIndentDetailsViewController *indentDetailVC = [[GFIndentDetailsViewController alloc]init];
+                    indentDetailVC.model = model;
+                    UIWindow *window = [UIApplication sharedApplication].delegate.window;
+                    UINavigationController *navigation = (UINavigationController *)window.rootViewController;
+                    [navigation pushViewController:indentDetailVC animated:YES];
+                    
+                }
+                
+                
+                
+                
+                
+                
+                
+            } failure:^(NSError *error) {
+                
+                
+                
+            }];
             
         }
         
