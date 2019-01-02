@@ -15,7 +15,6 @@
 		9B9754471C5765B3004BDC7C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B9754451C5765B3004BDC7C /* Main.storyboard */; };
 		9B9754491C5765B3004BDC7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B9754481C5765B3004BDC7C /* Assets.xcassets */; };
 		9B9754571C5765B3004BDC7C /* CarMapUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9754561C5765B3004BDC7C /* CarMapUITests.m */; };
-		9B9C25A61C75CC05009A69D6 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B02AF661C5A22CB0044FB71 /* StoreKit.framework */; };
 		9B9FCF081C8AA2DB0022F54E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9FCF071C8AA2DB0022F54E /* ViewController.m */; };
 		9BA74D251C75CDF100AF7B26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BA74D241C75CDF100AF7B26 /* LaunchScreen.storyboard */; };
 		9BBA2BD21CBB727E00543004 /* CertifyDelegate.html in Resources */ = {isa = PBXBuildFile; fileRef = 9BBA2BD01CBB727E00543004 /* CertifyDelegate.html */; };
@@ -203,7 +202,6 @@
 		866CCEBB1C755BC800E50C67 /* GFHttpTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFHttpTool.m; sourceTree = "<group>"; };
 		8679EBC91C9A4950001C1D99 /* WorkItemDic.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = WorkItemDic.plist; sourceTree = "<group>"; };
 		8681ADC51E08CE3B00D991D4 /* CarMap.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CarMap.entitlements; sourceTree = "<group>"; };
-		9B02AF661C5A22CB0044FB71 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		9B7F4C6A1C86CE14007CF96C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		9B8C7ED11D1B87B200408942 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		9B93BE9A1C89509A00397078 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "usr/lib/libc++abi.tbd"; sourceTree = SDKROOT; };
@@ -584,7 +582,6 @@
 			files = (
 				9B8C7ED21D1B87B200408942 /* ImageIO.framework in Frameworks */,
 				9B7F4C6B1C86CE14007CF96C /* AudioToolbox.framework in Frameworks */,
-				9B9C25A61C75CC05009A69D6 /* StoreKit.framework in Frameworks */,
 				DBD20F77E81B7DEA58BF000F /* libPods-CarMap.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -635,7 +632,6 @@
 				9BFA805E1C5F4009001651C3 /* BaiduMapAPI_Radar.framework */,
 				9BFA805F1C5F4009001651C3 /* BaiduMapAPI_Search.framework */,
 				9BFA80601C5F4009001651C3 /* BaiduMapAPI_Utils.framework */,
-				9B02AF661C5A22CB0044FB71 /* StoreKit.framework */,
 				A08ADB78524ACF43A63B9DF3 /* libPods-CarMap.a */,
 			);
 			name = Frameworks;
@@ -1552,7 +1548,7 @@
 								enabled = 1;
 							};
 							com.apple.InAppPurchase = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.Push = {
 								enabled = 1;

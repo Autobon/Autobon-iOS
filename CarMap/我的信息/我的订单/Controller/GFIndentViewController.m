@@ -101,7 +101,7 @@
     
     // 负责人横条
     CGFloat baseViewW = kWidth;
-    CGFloat baseViewH = kHeight * 0.0651;
+    CGFloat baseViewH = 50;
     CGFloat baseViewX = 0;
     CGFloat baseViewY = 64;
     UIView *baseView = [[UIView alloc] initWithFrame:CGRectMake(baseViewX, baseViewY, baseViewW, baseViewH)];

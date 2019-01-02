@@ -457,7 +457,7 @@
     CGFloat workDayLabX = baseView1X;
     CGFloat workDayLabY = CGRectGetMaxY(self.workerLab.frame);
     self.workDayLab = [[UILabel alloc] initWithFrame:CGRectMake(workDayLabX, workDayLabY, workDayLabW, workDayLabH)];
-    self.workDayLab.text = [NSString stringWithFormat:@"预约施工时间：%@", _model.startTime];
+    self.workDayLab.text = [NSString stringWithFormat:@"预约施工时间：%@", _model.agreedStartTime];
     self.workDayLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
     [baseView addSubview:self.workDayLab];
 //    self.workDayLab.backgroundColor = [UIColor redColor];
@@ -507,7 +507,7 @@
     CGFloat workerBeginTimeX = baseView1X;
     CGFloat workerBeginTimeY = CGRectGetMaxY(lineView4.frame);
     UILabel *workerBeginTimeLab = [[UILabel alloc] initWithFrame:CGRectMake(workerBeginTimeX, workerBeginTimeY, workerBeginTimeW, workerBeginTimeH)];
-    workerBeginTimeLab.text = [NSString stringWithFormat:@"开始施工时间：%@", _model.signTime];
+    workerBeginTimeLab.text = [NSString stringWithFormat:@"开始施工时间：%@", _model.startTime];
     workerBeginTimeLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
     [baseView addSubview:workerBeginTimeLab];
     

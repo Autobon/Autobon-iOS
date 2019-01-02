@@ -79,7 +79,7 @@
     
     // 负责人横条
     CGFloat baseViewW = kWidth;
-    CGFloat baseViewH = kHeight * 0.0651;
+    CGFloat baseViewH = 50;
     CGFloat baseViewX = 0;
     CGFloat baseViewY = 64;
     UIView *baseView = [[UIView alloc] init];
@@ -90,7 +90,7 @@
         make.left.equalTo(self.view);
         make.top.equalTo(_navView.mas_bottom);
         make.right.equalTo(self.view);
-        make.height.mas_equalTo(64);
+        make.height.mas_equalTo(50);
     }];
     
     // 主负责人
@@ -212,7 +212,7 @@
 //    NSLog(@"=====%@", self.mDic);
     [GFHttpTool orderGetWithParameters:self.mDic success:^(id responseObject) {
         
-//        NSLog(@"====我的订单=====%@", responseObject);
+        ICLog(@"====我的订单=====%@", responseObject);
         
         if([responseObject[@"status"] integerValue] == 1) {
             
@@ -309,7 +309,7 @@
 //    NSLog(@"查询字典===%@", mDic);
     [GFHttpTool oederDDGetWithParameters:mDic success:^(id responseObject) {
         
-//        NSLog(@"订单详情＝＝＝%@", responseObject);
+        ICLog(@"订单详情＝＝＝%@", responseObject);
         
         if([responseObject[@"status"] integerValue]) {
         

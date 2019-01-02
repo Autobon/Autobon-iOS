@@ -14,9 +14,9 @@
 
 
 
-NSString *const prefixURL = @"http://47.97.25.159:12345/api/mobile";
-NSString* const HOST = @"http://47.97.25.159:12345/api/mobile";
-NSString* const PUBHOST = @"http://47.97.25.159:12345/api";
+//NSString *const prefixURL = @"http://47.97.25.159:12345/api/mobile";
+//NSString* const HOST = @"http://47.97.25.159:12345/api/mobile";
+//NSString* const PUBHOST = @"http://47.97.25.159:12345/api";
 
 
 //测试服务器
@@ -26,10 +26,14 @@ NSString* const PUBHOST = @"http://47.97.25.159:12345/api";
 
 
 //新的正式服务器
-//NSString *const prefixURL = @"http://47.93.17.218:12345/api/mobile";
-//NSString* const HOST = @"http://47.93.17.218:12345/api/mobile";
-//NSString* const PUBHOST = @"http://47.93.17.218:12345/api";
+NSString *const prefixURL = @"http://47.93.17.218:12345/api/mobile";
+NSString* const HOST = @"http://47.93.17.218:12345/api/mobile";
+NSString* const PUBHOST = @"http://47.93.17.218:12345/api";
 
+//测试服务器
+//NSString *const prefixURL = @"http://10.0.14.38:12345/api/mobile";
+//NSString* const HOST = @"http://10.0.14.38:12345/api/mobile";
+//NSString* const PUBHOST = @"http://10.0.14.38:12345/api";
 
 
 @implementation GFHttpTool
@@ -1429,7 +1433,7 @@ NSString* const PUBHOST = @"http://47.97.25.159:12345/api";
 //        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         
         
-        [manager PUT:URLString parameters:dictionary success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable responseObject) {
+        [manager POST:URLString parameters:dictionary success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable responseObject) {
             
             NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage]; // 获得响应头
 //            NSLog(@"####################################\n---%@--",[cookieJar cookies]); // 获取响应头的数组
