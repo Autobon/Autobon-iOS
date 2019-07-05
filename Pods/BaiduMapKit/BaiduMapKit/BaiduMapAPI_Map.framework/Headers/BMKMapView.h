@@ -13,6 +13,7 @@
 #import "BMKMapStatus.h"
 #import "BMKLocationViewDisplayParam.h"
 #import "BMKHeatMap.h"
+#import "BMKBaseIndoorMapInfo.h"
 
 @protocol BMKMapViewDelegate;
 
@@ -22,13 +23,41 @@
 @property (nonatomic,strong) NSString* text;
 ///点标注的经纬度坐标
 @property (nonatomic,assign) CLLocationCoordinate2D pt;
+///点标注的uid，可能为空
+@property (nonatomic,strong) NSString* uid;
 @end
 
 typedef enum {
     BMKUserTrackingModeNone = 0,             /// 普通定位模式
+    BMKUserTrackingModeHeading,              /// 定位方向模式
 	BMKUserTrackingModeFollow,               /// 定位跟随模式
 	BMKUserTrackingModeFollowWithHeading,    /// 定位罗盘模式
 } BMKUserTrackingMode;
+
+///枚举：logo位置
+typedef enum {
+    BMKLogoPositionLeftBottom = 0,          /// 地图左下方
+    BMKLogoPositionLeftTop,                 /// 地图左上方
+    BMKLogoPositionCenterBottom,            /// 地图中下方
+    BMKLogoPositionCenterTop,               /// 地图中上方
+    BMKLogoPositionRightBottom,             /// 地图右下方
+    BMKLogoPositionRightTop,                /// 地图右上方
+} BMKLogoPosition;
+
+///枚举：室内图切换楼层结果
+typedef enum {
+    BMKSwitchIndoorFloorSuccess = 0,     /// 切换楼层成功
+    BMKSwitchIndoorFloorFailed,          /// 切换楼层失败
+    BMKSwitchIndoorFloorNotFocused,      /// 地图还未聚焦到传入的室内图
+    BMKSwitchIndoorFloorNotExist,        /// 当前室内图不存在该楼层
+} BMKSwitchIndoorFloorError;
+
+///枚举：地图区域改变原因
+typedef enum {
+    BMKRegionChangeReasonGesture = 0,     /// 手势触发导致地图区域变化，如双击、拖拽、滑动地图
+    BMKRegionChangeReasonEvent,        /// 地图上控件事件，如点击指南针返回2D地图。
+    BMKRegionChangeReasonAPIs,      /// 开发者调用接口、设置地图参数等导致地图区域变化
+} BMKRegionChangeReason;
 
 ///地图View类，使用此View可以显示地图窗口，并且对地图进行相关的操作
 @interface BMKMapView : UIView
@@ -42,13 +71,18 @@ typedef enum {
 /// 当前地图的经纬度范围，设定的该范围可能会被调整为适合地图窗口显示的范围
 @property (nonatomic) BMKCoordinateRegion region;
 
+/// 限制地图的显示范围（地图状态改变时，该范围不会在地图显示范围外。设置成功后，会调整地图显示该范围）
+@property (nonatomic) BMKCoordinateRegion limitMapRegion;
+
 /// 指南针的位置，设定坐标以BMKMapView左上角为原点，向右向下增长
 @property (nonatomic) CGPoint compassPosition;
+/// 指南针的宽高
+@property (nonatomic, readonly) CGSize compassSize;
 
 /// 当前地图的中心点，改变该值时，地图的比例尺级别不会发生变化
 @property (nonatomic) CLLocationCoordinate2D centerCoordinate;
 
-/// 地图比例尺级别，在手机上当前可使用的级别为3-20级
+/// 地图比例尺级别，在手机上当前可使用的级别为4-21级
 @property (nonatomic) float zoomLevel;
 /// 地图的自定义最小比例尺级别
 @property (nonatomic) float minZoomLevel;
@@ -62,13 +96,15 @@ typedef enum {
 @property (nonatomic) int overlooking;
 ///设定地图是否现显示3D楼块效果
 @property(nonatomic, getter=isBuildingsEnabled) BOOL buildingsEnabled;
-///设定地图是否显示底图poi标注，默认YES
+///设定地图是否显示底图poi标注(不包含室内图标注)，默认YES
 @property(nonatomic, assign) BOOL showMapPoi;
 ///设定地图是否打开路况图层
 @property(nonatomic, getter=isTrafficEnabled) BOOL trafficEnabled;
 ///设定地图是否打开百度城市热力图图层（百度自有数据）,注：地图层级大于11时，可显示热力图
 @property(nonatomic, getter=isBaiduHeatMapEnabled) BOOL baiduHeatMapEnabled;
 
+///设定地图View能否支持所有手势操作
+@property(nonatomic) BOOL gesturesEnabled;
 ///设定地图View能否支持用户多点缩放(双指)
 @property(nonatomic, getter=isZoomEnabled) BOOL zoomEnabled;
 ///设定地图View能否支持用户缩放(双击或双指单击)
@@ -80,25 +116,84 @@ typedef enum {
 ///设定地图View能否支持旋转
 @property(nonatomic, getter=isRotateEnabled) BOOL rotateEnabled;
 
+/// 设定地图是否回调force touch事件，默认为NO，仅适用于支持3D Touch的情况，开启后会回调 - mapview:onForceTouch:force:maximumPossibleForce:
+@property(nonatomic) BOOL forceTouchEnabled;
+
 /// 设定是否显式比例尺
 @property (nonatomic) BOOL showMapScaleBar;
 
 /// 比例尺的位置，设定坐标以BMKMapView左上角为原点，向右向下增长
 @property (nonatomic) CGPoint mapScaleBarPosition;
 
+/// 比例尺的宽高
+@property (nonatomic, readonly) CGSize mapScaleBarSize;
+
+/// logo位置，默认BMKLogoPositionLeftBottom
+@property (nonatomic) BMKLogoPosition logoPosition;
+
 ///当前地图范围，采用直角坐标系表示，向右向下增长
 @property (nonatomic) BMKMapRect visibleMapRect;
 
-///设定地图View能否支持以手势中心点为轴进行旋转和缩放
-@property(nonatomic, getter=isChangeWithTouchPointCenterEnabled) BOOL ChangeWithTouchPointCenterEnabled;
 /**
+ *地图预留边界，默认：UIEdgeInsetsZero。
+ *注：设置后，会根据mapPadding调整logo、比例尺、指南针的位置。
+ *   当updateTargetScreenPtWhenMapPaddingChanged==YES时，地图中心(屏幕坐标：BMKMapStatus.targetScreenPt)跟着改变
+ */
+@property (nonatomic) UIEdgeInsets mapPadding;
+///设置mapPadding时，地图中心(屏幕坐标：BMKMapStatus.targetScreenPt)是否跟着改变，默认YES
+@property (nonatomic) BOOL updateTargetScreenPtWhenMapPaddingChanged;
+
+/**
+ 设定双指手势操作时，BMKMapView的旋转和缩放效果的中心点。
+ 设置为YES时，以手势的中心点（二个指头的中心点）为中心进行旋转和缩放，地图中心点会改变；
+ 设置为NO时，以当前地图的中心点为中心进行旋转和缩放，地图中心点不变；
+ 默认值为NO。
+ */
+@property(nonatomic, getter=isChangeWithTouchPointCenterEnabled) BOOL ChangeWithTouchPointCenterEnabled;
+
+/**
+ 设定双击手势放大地图时，BMKMapView的放大效果的中心点。
+ 设置为YES时，以双击的位置为中心点进行放大，地图中心点会改变；
+ 设置为NO时，以当前地图的中心点为中心进行放大，地图中心点不变；
+ 默认值为YES。
+ */
+@property(nonatomic, getter=isChangeCenterWithDoubleTouchPointEnabled) BOOL ChangeCenterWithDoubleTouchPointEnabled;
+
+/**
+ *设置自定义地图样式
+ *注：必须在BMKMapView对象初始化之前调用
+ *@param customMapStyleJsonFilePath 自定义样式文件所在路径，包含文件名
+ */
++ (void)customMapStyle:(NSString*) customMapStyleJsonFilePath;
+/**
+ * 自定义地图样式开关，影响所有BMKMapView对象
+ *@param enable 自定义地图样式是否生效
+ */
++ (void)enableCustomMapStyle:(BOOL) enable;
+
+/**
+ 自定义路况颜色。注意：如果需要自定义路况颜色，必须4种路况全都设置。4个参数全部合法时，自定义颜色才有效；否则全部使用默认的。
+ 
+ @param smooth 路况畅通对应的颜色
+ @param slow 路况缓行对应的颜色
+ @param congestion 路况拥堵对应的颜色
+ @param severeCongestion 路况严重拥堵对应的颜色
+ @return 自定义颜色合法返回true，非法返回false
+ */
+- (BOOL)setCustomTrafficColorForSmooth:(UIColor *)smooth slow:(UIColor *)slow congestion:(UIColor *)congestion severeCongestion:(UIColor *)severeCongestion;
+
+/**
+ * 2.10.0起废弃，空实现，逻辑由地图SDK控制
+ *
  *当应用即将后台时调用，停止一切调用opengl相关的操作。
  */
-+(void)willBackGround;
++(void)willBackGround __deprecated_msg("废弃方法（空实现）,逻辑由地图SDK控制");
 /**
+ * 2.10.0起废弃，空实现，逻辑由地图SDK控制
+ *
  *当应用恢复前台状态时调用。
  */
-+(void)didForeGround;
++(void)didForeGround __deprecated_msg("废弃方法（空实现）,逻辑由地图SDK控制");
 /**
  *当mapview即将被显式的时候调用，恢复之前存储的mapview状态。
  */
@@ -127,11 +222,9 @@ typedef enum {
 - (BOOL)zoomOut;
 
 /**
- *根据当前地图View的窗口大小调整传入的region，返回适合当前地图窗口显示的region，调整过程会保证中心点不改变
- *@param region 待调整的经纬度范围
- *@return 调整后适合当前地图窗口显示的经纬度范围
+ * 此接口什么都没做，已废弃。
  */
-- (BMKCoordinateRegion)regionThatFits:(BMKCoordinateRegion)region;
+- (BMKCoordinateRegion)regionThatFits:(BMKCoordinateRegion)region __deprecated_msg("此方法已废弃");
 
 /**
  *设定当前地图的显示范围
@@ -160,6 +253,12 @@ typedef enum {
 -(UIImage*) takeSnapshot:(CGRect)rect;
 
 /**
+ *设置罗盘的图片
+ *@param image 设置的图片
+*/
+- (void)setCompassImage:(UIImage *)image;
+
+/**
  *设定当前地图的显示范围,采用直角坐标系表示
  *@param mapRect 要设定的地图范围，用直角坐标系表示
  *@param animate 是否采用动画效果
@@ -167,11 +266,9 @@ typedef enum {
 - (void)setVisibleMapRect:(BMKMapRect)mapRect animated:(BOOL)animate;
 
 /**
- *根据当前地图View的窗口大小调整传入的mapRect，返回适合当前地图窗口显示的mapRect，调整过程会保证中心点不改变
- *@param mapRect 待调整的地理范围，采用直角坐标系表示
- *@return 调整后适合当前地图窗口显示的地理范围，采用直角坐标系
+ *此方法什么都没做，已废弃。
  */
-- (BMKMapRect)mapRectThatFits:(BMKMapRect)mapRect;
+- (BMKMapRect)mapRectThatFits:(BMKMapRect)mapRect __deprecated_msg("此方法已废弃");
 
 /**
  *设定地图的显示范围,并使mapRect四周保留insets指定的边界区域
@@ -180,6 +277,14 @@ typedef enum {
  *@param animate 是否采用动画效果
  */
 - (void)setVisibleMapRect:(BMKMapRect)mapRect edgePadding:(UIEdgeInsets)insets animated:(BOOL)animate;
+
+/**
+ *根据当前mapView的窗口大小，预留insets指定的边界区域后，将mapRect指定的地理范围显示在剩余的区域内，并尽量充满
+ *@param mapRect 要显示的地图范围，用直角坐标系表示
+ *@param insets 屏幕四周预留的边界大小（mapRect的内容不会显示在该边界范围内）
+ *@param animate 是否采用动画效果
+ */
+- (void)fitVisibleMapRect:(BMKMapRect)mapRect edgePadding:(UIEdgeInsets)insets withAnimated:(BOOL)animate;
 
 /**
  *根据当前地图View的窗口大小调整传入的mapRect，返回适合当前地图窗口显示的mapRect，并且在该mapRect四周保留insets指定的边界区域
@@ -259,6 +364,15 @@ typedef enum {
 - (void)setMapCenterToScreenPt:(CGPoint)ptInScreen;
 
 /**
+ 根据地理经纬度范围和边距计算BMKMapStatus
+
+ @param region 地理范围
+ @param insets 边距
+ @return BMKMapStatus
+ */
+- (BMKMapStatus *)getMapStatusFromCoordinateRegion:(BMKCoordinateRegion)region edgePadding:(UIEdgeInsets)insets;
+
+/**
  * 获取地图状态
   *@return 返回地图状态信息
  */
@@ -293,6 +407,30 @@ typedef enum {
 
 @end
 
+@interface BMKMapView (IndoorMapAPI)
+
+/// 设定地图是否显示室内图（包含室内图标注），默认不显示
+@property (nonatomic, assign) BOOL baseIndoorMapEnabled;
+
+/// 设定室内图标注是否显示，默认YES，仅当显示室内图（baseIndoorMapEnabled为YES）时生效
+@property (nonatomic, assign) BOOL showIndoorMapPoi;
+
+/**
+ * 设置室内图楼层
+ * @param strFloor      楼层
+ * @param strID         室内图ID
+ * @return 切换结果
+ */
+- (BMKSwitchIndoorFloorError)switchBaseIndoorMapFloor:(NSString*)strFloor withID:(NSString*)strID;
+
+/**
+ * 获取当前聚焦的室内图信息
+ * @return 当前聚焦的室内图信息。没有聚焦的室内图，返回nil
+ */
+- (BMKBaseIndoorMapInfo*)getFocusedBaseIndoorMapInfo;
+
+@end
+
 @interface BMKMapView (LocationViewAPI)
 
 /// 设定是否显示定位图层
@@ -314,7 +452,7 @@ typedef enum {
  *动态更新我的位置数据
  *	@param	[in]	userLocation	定位数据
  */
--(void)updateLocationData:(BMKUserLocation*)userLocation;
+-(void)updateLocationData:(BMKUserLocation *)userLocation;
 @end
 
 @interface BMKMapView (AnnotationAPI)
@@ -345,7 +483,7 @@ typedef enum {
 
 /**
  *移除一组标注
- *@param annotation 要移除的标注数组
+ *@param annotations 要移除的标注数组
  */
 - (void)removeAnnotations:(NSArray *)annotations;
 
@@ -378,11 +516,18 @@ typedef enum {
 - (void)deselectAnnotation:(id <BMKAnnotation>)annotation animated:(BOOL)animated;
 
 /**
- *设置地图使显示区域显示所有annotations
- *@param annotation 指定的标注
+ *设置地图使显示区域显示所有annotations,如果数组中只有一个则直接设置地图中心为annotation的位置
+ *@param annotations 指定的标注
  *@param animated 是否启动动画
  */
 - (void)showAnnotations:(NSArray *)annotations animated:(BOOL)animated;
+
+/**
+ *获取矩形区域内的所有annotations
+ *@param bounds 矩形区域（经纬度）
+ *@return 该矩形区域内的所有annotations
+ */
+- (NSArray *)annotationsInCoordinateBounds:(BMKCoordinateBounds) bounds;
 
 @end
 ///地图View类(和Overlay操作相关的接口)
@@ -455,7 +600,7 @@ typedef enum {
 
 /**
  *添加热力图
- *	@param	[BMKHeatMap*]	heatMap	热力图绘制和显示数据
+ *	@param	heatMap	热力图绘制和显示数据
  */
 - (void)addHeatMap:(BMKHeatMap*)heatMap;
 
@@ -472,30 +617,52 @@ typedef enum {
 
 /**
  *地图初始化完毕时会调用此接口
- *@param mapview 地图View
+ *@param mapView 地图View
  */
 - (void)mapViewDidFinishLoading:(BMKMapView *)mapView;
 
 /**
+ *地图渲染完毕后会调用此接口
+ *@param mapView 地图View
+ */
+- (void)mapViewDidFinishRendering:(BMKMapView *)mapView;
+
+/**
  *地图渲染每一帧画面过程中，以及每次需要重绘地图时（例如添加覆盖物）都会调用此接口
- *@param mapview 地图View
+ *@param mapView 地图View
  *@param status 此时地图的状态
  */
 - (void)mapView:(BMKMapView *)mapView onDrawMapFrame:(BMKMapStatus*)status;
 
 /**
  *地图区域即将改变时会调用此接口
- *@param mapview 地图View
+ *@param mapView 地图View
  *@param animated 是否动画
  */
 - (void)mapView:(BMKMapView *)mapView regionWillChangeAnimated:(BOOL)animated;
 
 /**
+ *地图区域即将改变时会调用此接口
+ *@param mapView 地图View
+ *@param animated 是否动画
+ *@param reason 地区区域改变的原因
+ */
+- (void)mapView:(BMKMapView *)mapView regionWillChangeAnimated:(BOOL)animated reason:(BMKRegionChangeReason)reason;
+
+/**
  *地图区域改变完成后会调用此接口
- *@param mapview 地图View
+ *@param mapView 地图View
  *@param animated 是否动画
  */
 - (void)mapView:(BMKMapView *)mapView regionDidChangeAnimated:(BOOL)animated;
+
+/**
+ *地图区域改变完成后会调用此接口
+ *@param mapView 地图View
+ *@param animated 是否动画
+ *@param reason 地区区域改变的原因
+ */
+- (void)mapView:(BMKMapView *)mapView regionDidChangeAnimated:(BOOL)animated reason:(BMKRegionChangeReason)reason;
 
 /**
  *根据anntation生成对应的View
@@ -515,14 +682,14 @@ typedef enum {
 /**
  *当选中一个annotation views时，调用此接口
  *@param mapView 地图View
- *@param views 选中的annotation views
+ *@param view 选中的annotation views
  */
 - (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view;
 
 /**
  *当取消选中一个annotation views时，调用此接口
  *@param mapView 地图View
- *@param views 取消选中的annotation views
+ *@param view 取消选中的annotation views
  */
 - (void)mapView:(BMKMapView *)mapView didDeselectAnnotationView:(BMKAnnotationView *)view;
 
@@ -560,43 +727,60 @@ typedef enum {
 
 /**
  *点中覆盖物后会回调此接口，目前只支持点中BMKPolylineView时回调
- *@param mapview 地图View
+ *@param mapView 地图View
  *@param overlayView 覆盖物view信息
  */
 - (void)mapView:(BMKMapView *)mapView onClickedBMKOverlayView:(BMKOverlayView *)overlayView;
 
 /**
  *点中底图标注后会回调此接口
- *@param mapview 地图View
+ *@param mapView 地图View
  *@param mapPoi 标注点信息
  */
 - (void)mapView:(BMKMapView *)mapView onClickedMapPoi:(BMKMapPoi*)mapPoi;
 
 /**
  *点中底图空白处会回调此接口
- *@param mapview 地图View
+ *@param mapView 地图View
  *@param coordinate 空白处坐标点的经纬度
  */
 - (void)mapView:(BMKMapView *)mapView onClickedMapBlank:(CLLocationCoordinate2D)coordinate;
 
 /**
  *双击地图时会回调此接口
- *@param mapview 地图View
+ *@param mapView 地图View
  *@param coordinate 返回双击处坐标点的经纬度
  */
 - (void)mapview:(BMKMapView *)mapView onDoubleClick:(CLLocationCoordinate2D)coordinate;
 
 /**
  *长按地图时会回调此接口
- *@param mapview 地图View
+ *@param mapView 地图View
  *@param coordinate 返回长按事件坐标点的经纬度
  */
 - (void)mapview:(BMKMapView *)mapView onLongClick:(CLLocationCoordinate2D)coordinate;
 
 /**
+ *3DTouch 按地图时会回调此接口（仅在支持3D Touch，且fouchTouchEnabled属性为YES时，会回调此接口）
+ *@param mapView 地图View
+ *@param coordinate 触摸点的经纬度
+ *@param force 触摸该点的力度(参考UITouch的force属性)
+ *@param maximumPossibleForce 当前输入机制下的最大可能力度(参考UITouch的maximumPossibleForce属性)
+ */
+- (void)mapview:(BMKMapView *)mapView onForceTouch:(CLLocationCoordinate2D)coordinate force:(CGFloat)force maximumPossibleForce:(CGFloat)maximumPossibleForce;
+
+/**
  *地图状态改变完成后会调用此接口
- *@param mapview 地图View
+ *@param mapView 地图View
  */
 - (void)mapStatusDidChanged:(BMKMapView *)mapView;
+
+/**
+ *地图进入/移出室内图会调用此接口
+ *@param mapView 地图View
+ *@param flag  YES:进入室内图; NO:移出室内图
+ *@param info 室内图信息
+ */
+- (void)mapview:(BMKMapView *)mapView baseIndoorMapWithIn:(BOOL)flag baseIndoorMapInfo:(BMKBaseIndoorMapInfo *)info;
 
 @end

@@ -83,7 +83,7 @@
 }
 
 - (void)btnClick{
-    BMKCitySearchOption *citySearchOption = [[BMKCitySearchOption alloc]init];
+    BMKPOICitySearchOption *citySearchOption = [[BMKPOICitySearchOption alloc]init];
     citySearchOption.city= @"武汉";
     citySearchOption.keyword = @"光谷软件园";
     BOOL flag = [_poisearch poiSearchInCity:citySearchOption];
@@ -113,15 +113,14 @@
 }
 
 #pragma mark implement BMKSearchDelegate
-- (void)onGetPoiResult:(BMKPoiSearch *)searcher result:(BMKPoiResult*)result errorCode:(BMKSearchErrorCode)error
-{
+- (void)onGetPoiResult:(BMKPoiSearch *)searcher result:(BMKPOISearchResult *)poiResult errorCode:(BMKSearchErrorCode)errorCode{
     // 清楚屏幕中所有的annotation
     NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
     [_mapView removeAnnotations:array];
-    if (error == BMK_SEARCH_NO_ERROR) {
+    if (errorCode == BMK_SEARCH_NO_ERROR) {
         NSMutableArray *annotations = [NSMutableArray array];
-        for (int i = 0; i < result.poiInfoList.count; i++) {
-            BMKPoiInfo* poi = [result.poiInfoList objectAtIndex:i];
+        for (int i = 0; i < poiResult.poiInfoList.count; i++) {
+            BMKPoiInfo* poi = [poiResult.poiInfoList objectAtIndex:i];
             BMKPointAnnotation* item = [[BMKPointAnnotation alloc]init];
             item.coordinate = poi.pt;
             item.title = poi.name;
@@ -129,12 +128,13 @@
         }
         [_mapView addAnnotations:annotations];
         [_mapView showAnnotations:annotations animated:YES];
-    } else if (error == BMK_SEARCH_AMBIGUOUS_ROURE_ADDR){
-//        NSLog(@"起始点有歧义");
+    } else if (errorCode == BMK_SEARCH_AMBIGUOUS_ROURE_ADDR){
+        //        NSLog(@"起始点有歧义");
     } else {
         // 各种情况的判断。。。
     }
 }
+
 
 #pragma mark - BMKMapViewDelegate
 

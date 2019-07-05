@@ -184,8 +184,8 @@
     [self.view addSubview:agreeLab];
     agreeLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
     agreeLab.textAlignment = NSTextAlignmentCenter;
-    NSMutableAttributedString *MAStr = [[NSMutableAttributedString alloc] initWithString:@"点击按钮代表本人已阅读并同意《车邻邦技师服务协议》"];
-    [MAStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] range:NSMakeRange(14, 11)];
+    NSMutableAttributedString *MAStr = [[NSMutableAttributedString alloc] initWithString:@"点击按钮代表本人已阅读并同意《共享经济合作伙伴协议》"];
+    [MAStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] range:NSMakeRange(14, 12)];
     agreeLab.attributedText = MAStr;
     agreeLab.font = [UIFont systemFontOfSize:10.5 / 320.0 * kWidth];
     agreeLab.userInteractionEnabled = YES;
@@ -228,7 +228,7 @@
 - (void)agreeButClick {
 
     CLDelegateViewController *delegateView = [[CLDelegateViewController alloc]init];
-    delegateView.delegateTitle = @"servicedelegate";
+    delegateView.delegateTitle = @"SharePartnerProtocol";
     [self.navigationController pushViewController:delegateView animated:YES];
     
 }

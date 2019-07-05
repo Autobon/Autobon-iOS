@@ -14,8 +14,8 @@
 // 百度地图类库
 #import <BaiduMapAPI_Base/BMKMapManager.h>
 //#import "BMKMapManager.h"
-#import <BaiduMapAPI_Location/BMKLocationService.h>
-//#import "BMKLocationService.h"
+#import <BMKLocationKit/BMKLocationManager.h>
+
 #import <BaiduMapAPI_Map/BMKMapView.h>
 //#import "BMKMapView.h"
 #import <BaiduMapAPI_Search/BMKPoiSearch.h>
@@ -45,7 +45,7 @@
 @end
 //#import <BaiduMapAPI_Map/BMKMapComponent.h>
 
-@interface GFMapViewController () <BMKMapViewDelegate, BMKShareURLSearchDelegate,BMKGeoCodeSearchDelegate,BMKPoiSearchDelegate,BMKRouteSearchDelegate,BMKLocationServiceDelegate,UIAlertViewDelegate> {
+@interface GFMapViewController () <BMKMapViewDelegate, BMKShareURLSearchDelegate,BMKGeoCodeSearchDelegate,BMKPoiSearchDelegate,BMKRouteSearchDelegate,BMKLocationManagerDelegate,UIAlertViewDelegate> {
 
     NSInteger num;
     UILabel *_distanceLabel;
@@ -59,7 +59,7 @@
 @property(nonatomic, strong) BMKMapManager *mapManager;
 
 // 定位
-@property(nonatomic, strong) BMKLocationService *locationService;
+@property(nonatomic, strong) BMKLocationManager *locationService;
 
 
 
@@ -150,10 +150,10 @@
 #pragma mark - ***** 定位 *****
 - (void)_setLocationService {
     
-    self.locationService = [[BMKLocationService alloc] init];
+    self.locationService = [[BMKLocationManager alloc] init];
     /* 设定代理 */
     // 开启定位
-    [self.locationService startUserLocationService];
+    [self.locationService startUpdatingLocation];
     self.locationService.allowsBackgroundLocationUpdates = NO;
     self.locationService.pausesLocationUpdatesAutomatically = YES;
     
@@ -245,6 +245,42 @@
  *用户位置更新后，会调用此函数
  *@param userLocation 新的用户位置
  */
+
+- (void)BMKLocationManager:(BMKLocationManager *)manager didUpdateLocation:(BMKLocation *)location orError:(NSError *)error{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"HH:mm"];
+    [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
+    
+    NSString *dateString = [formatter stringFromDate:location.location.timestamp];
+    
+    //    NSLog(@"---%@---定位",userLocation.location);
+    self.workerPointAnno.coordinate = location.location.coordinate;
+//    [self.mapView updateLocationData:userLocation];
+//    [self.mapView updateLocationData:location];
+    
+    
+    double a = [self calculatorWithCoordinate1:self.workerPointAnno.coordinate withCoordinate2:self.bossPointAnno.coordinate];
+    //    NSLog(@"---技师和客户的距离－－%@--",@(a));
+    _distanceLabel.text = [NSString stringWithFormat:@"距离工作地点%0.1fkm",a/1000];
+    if (_distanceBlock) {
+        _distanceBlock(a);
+    }
+    _timeLabel.text = [NSString stringWithFormat:@"时间：%@",dateString];
+    if(num == 0) {
+        self.mapView.centerCoordinate = location.location.coordinate;
+        num = 1;
+        BMKCoordinateRegion region ;//表示范围的结构体
+        region.center = CLLocationCoordinate2DMake((self.workerPointAnno.coordinate.latitude + self.bossPointAnno.coordinate.latitude)/2,(self.workerPointAnno.coordinate.longitude + self.bossPointAnno.coordinate.longitude)/2);//中心点
+        region.span.latitudeDelta = (self.workerPointAnno.coordinate.latitude - self.bossPointAnno.coordinate.latitude)*2;//经度范围（设置为0.1表示显示范围为0.2的纬度范围）
+        region.span.longitudeDelta = (self.workerPointAnno.coordinate.latitude - self.bossPointAnno.coordinate.latitude)*2;//纬度范围
+        [_mapView setRegion:region animated:YES];
+        //         _mapView.zoomLevel = _mapView.zoomLevel - 0.3;
+    }
+    
+    [self.locationService stopUpdatingLocation];
+}
+
+
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation {
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"HH:mm"];
@@ -276,13 +312,13 @@
 //         _mapView.zoomLevel = _mapView.zoomLevel - 0.3;
     }
     
-    [self.locationService stopUserLocationService];
+    [self.locationService stopUpdatingLocation];
     
 }
 
 #pragma mark - 定位方法，发送定位信息
 - (void)startUserLocationService{
-    [self.locationService startUserLocationService];
+    [self.locationService startUpdatingLocation];
     
 //    [GFHttpTool PostReportLocation:@{@"positionLon":@(self.workerPointAnno.coordinate.longitude),@"positionLat":@(self.workerPointAnno.coordinate.latitude)} success:^(NSDictionary *responseObject) {
 //        NSLog(@"------%@-----%@----",responseObject,responseObject[@"message"]);
@@ -297,7 +333,7 @@
     self.bossPointAnno.coordinate = self.workerPointAnno.coordinate;
 //    NSLog(@"--------self.work---%@-",self.workerPointAnno.coordinate);
 //    self.bossPointAnno.coordinate = CLLocationCoordinate2DMake(self.workerPointAnno.coordinate.longitude,self.workerPointAnno.coordinate.latitude);
-    [self.locationService startUserLocationService];
+    [self.locationService startUpdatingLocation];
 }
     
     
