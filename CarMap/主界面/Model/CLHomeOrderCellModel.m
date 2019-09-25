@@ -24,9 +24,16 @@
         _orderId = dic[@"id"];
         _orderNumber = dic[@"orderNum"];
         _orderTime = dic[@"agreedStartTime"];
-        NSDate *date = [NSDate dateWithTimeIntervalSince1970:[dic[@"agreedStartTime"] doubleValue]/1000];
         
-        _orderTime = [formatter stringFromDate:date];
+        if ([dic[@"agreedStartTime"] isKindOfClass:[NSNull class]]){
+            _orderTime = @"";
+        }else{
+            NSDate *date = [NSDate dateWithTimeIntervalSince1970:[dic[@"agreedStartTime"] doubleValue]/1000];
+            
+            _orderTime = [formatter stringFromDate:date];
+        }
+        
+        
         
         if([dic[@"mainTechId"] isKindOfClass:[NSNull class]]) {
             
@@ -37,22 +44,26 @@
         }
 
         
-        
-        NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
-        NSArray *idArr = [dic[@"type"] componentsSeparatedByString:@","];
-        NSString *str = @"";
-        for(int i=0; i<idArr.count; i++) {
-        
-            NSInteger index = [idArr[i] integerValue] - 1;
-            if([str isEqualToString:@""]) {
-            
-                str = array[index];
-            }else {
-            
-                str = [NSString stringWithFormat:@"%@,%@", str, array[index]];
+        if(![dic[@"type"] isKindOfClass:[NSNull class]]){
+            NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
+            NSArray *idArr = [dic[@"type"] componentsSeparatedByString:@","];
+            NSString *str = @"";
+            for(int i=0; i<idArr.count; i++) {
+                
+                NSInteger index = [idArr[i] integerValue] - 1;
+                if([str isEqualToString:@""]) {
+                    
+                    str = array[index];
+                }else {
+                    
+                    str = [NSString stringWithFormat:@"%@,%@", str, array[index]];
+                }
             }
+            _orderType = str;
+        }else{
+            _orderType = @"--";
         }
-        _orderType = str;
+        
         
         _orderPhotoURL = [NSString stringWithFormat:@"%@", dic[@"photo"]];
         if([dic[@"latitude"] isKindOfClass:[NSNull class]]){
@@ -91,10 +102,23 @@
         
         _createTime = [NSString stringWithFormat:@"%@", dic[@"createTime"]];
         _agreedEndTime = [NSString stringWithFormat:@"%@", dic[@"agreedEndTime"]];
-        NSDate *date1 = [NSDate dateWithTimeIntervalSince1970:[dic[@"agreedEndTime"] doubleValue]/1000];
-        NSDate *date11 = [NSDate dateWithTimeIntervalSince1970:[dic[@"createTime"] doubleValue]/1000];
-        _agreedEndTime = [formatter stringFromDate:date1];
-        _createTime = [formatter stringFromDate:date11];
+        
+        if ([dic[@"agreedEndTime"] isKindOfClass:[NSNull class]]){
+            _agreedEndTime = @"";
+        }else{
+            NSDate *date = [NSDate dateWithTimeIntervalSince1970:[dic[@"agreedEndTime"] doubleValue]/1000];
+            
+            _agreedEndTime = [formatter stringFromDate:date];
+        }
+        
+        if ([dic[@"createTime"] isKindOfClass:[NSNull class]]){
+            _createTime = @"";
+        }else{
+            NSDate *date = [NSDate dateWithTimeIntervalSince1970:[dic[@"createTime"] doubleValue]/1000];
+            
+            _createTime = [formatter stringFromDate:date];
+        }
+        
         _creatorName = [NSString stringWithFormat:@"%@", dic[@"creatorName"]];
         
         // 开始时间
@@ -113,6 +137,24 @@
         }else {
             
             _address = dic[@"address"];
+        }
+        
+        // 车牌号
+        if([dic[@"license"] isKindOfClass:[NSNull class]]) {
+            
+            _license = @"";
+        }else {
+            
+            _license = dic[@"license"];
+        }
+        
+        // 车架号
+        if([dic[@"vin"] isKindOfClass:[NSNull class]]) {
+            
+            _vin = @"";
+        }else {
+            
+            _vin = dic[@"vin"];
         }
     }
     

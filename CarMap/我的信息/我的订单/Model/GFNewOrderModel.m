@@ -249,6 +249,19 @@
             self.constructionWasteShows = dic[@"constructionWasteShows"];
         }
         
+        
+        if(dic[@"license"] == nil) {
+            self.license = @"无";
+        }else {
+            self.license = dic[@"license"];
+        }
+        
+        if(dic[@"vin"] == nil) {
+            self.vin = @"无";
+        }else {
+            self.vin = dic[@"vin"];
+        }
+        
     }
     
     return self;

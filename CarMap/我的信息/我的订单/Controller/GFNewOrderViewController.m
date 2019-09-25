@@ -15,9 +15,9 @@
 #import "GFIndentTableViewCell.h"
 #import "GFHttpTool.h"
 #import "GFNewOrderModel.h"
+#import "CLSearchOrderViewController.h"
 
-
-@interface GFNewOrderViewController () {
+@interface GFNewOrderViewController ()<CLSearchOrderDelegate> {
     
     CGFloat kWidth;
     CGFloat kHeight;
@@ -25,7 +25,6 @@
     NSInteger page;
     NSInteger pageSize;
     NSString *status;
-    
 }
 
 
@@ -62,10 +61,38 @@
     self.view.backgroundColor = [UIColor colorWithRed:252 / 255.0 green:252 / 255.0 blue:252 / 255.0 alpha:1];
     
     // 导航栏
-    self.navView = [[GFNavigationView alloc] initWithLeftImgName:@"back.png" withLeftImgHightName:@"backClick.png" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"我的订单" withFrame:CGRectMake(0, 0, kWidth, 64)];
+    self.navView = [[GFNavigationView alloc] initWithLeftImgName:@"back.png" withLeftImgHightName:@"backClick.png" withRightImgName:@"" withRightImgHightName:nil withCenterTitle:@"我的订单" withFrame:CGRectMake(0, 0, kWidth, 64)];
     [self.navView.leftBut addTarget:self action:@selector(leftButClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.navView.rightBut setTitle:@"搜索  " forState:UIControlStateNormal];
+    self.navView.rightBut.titleLabel.font = [UIFont systemFontOfSize:15];
+    [self.navView.rightBut addTarget:self action:@selector(rightSearchBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.navView];
 }
+
+- (void)rightSearchBtnClick{
+    ICLog(@"--right search button click---");
+    
+    CLSearchOrderViewController *searchOrderVC = [[CLSearchOrderViewController alloc]init];
+    searchOrderVC.delegate = self;
+    [self.navigationController pushViewController:searchOrderVC animated:YES];
+    
+}
+
+- (void)searchOrderForDictionary:(NSDictionary *)dataDictionary{
+    
+    [self.mDic removeObjectForKey:@"license"];
+    [self.mDic removeObjectForKey:@"vin"];
+    
+    [dataDictionary enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *obj, BOOL * _Nonnull stop) {
+        self.mDic[key] = obj;
+    }];
+    
+    
+    
+    [_tableview.mj_header beginRefreshing];
+    
+}
+
 
 - (void)_setView {
     page = 1;
@@ -298,7 +325,7 @@
     
     
     //    return kHeight * 0.464  - kHeight * 0.2344 + kHeight * 0.0183;
-    return 140;
+    return 170;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

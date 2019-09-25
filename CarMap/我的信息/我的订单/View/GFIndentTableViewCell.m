@@ -15,6 +15,7 @@
 
 
 @property (nonatomic, strong) UILabel *orderLab;
+@property (nonatomic, strong) UILabel *vinLab;
 @property (nonatomic, strong) UILabel *proLab;
 @property (nonatomic, strong) UILabel *workTimeLab;
 
@@ -57,7 +58,9 @@
         self.mLab.text = [NSString stringWithFormat:@"合计：%@", model.payment];
     }
     
-    self.orderLab.text = [NSString stringWithFormat:@"订单编号：%@", model.orderNum];
+    self.orderLab.text = [NSString stringWithFormat:@"车牌号：%@", model.license];
+    self.vinLab.text = [NSString stringWithFormat:@"车架号：%@", model.vin];
+    
     self.workTimeLab.text = [NSString stringWithFormat:@"施工时间：%@", model.startTime];
     
     
@@ -123,7 +126,7 @@
         
         UIView *vv = [[UIView alloc] init];
         vv.backgroundColor = [UIColor whiteColor];
-        vv.frame = CGRectMake(-1, 10, [UIScreen mainScreen].bounds.size.width + 2, 130);
+        vv.frame = CGRectMake(-1, 10, [UIScreen mainScreen].bounds.size.width + 2, 160);
         vv.layer.borderColor = [[UIColor colorWithRed:217 / 255.0 green:217 / 255.0 blue:217 / 255.0 alpha:1] CGColor];
         vv.layer.borderWidth = 1;
         [self.contentView addSubview:vv];
@@ -133,12 +136,23 @@
         self.orderLab.textColor = [UIColor darkGrayColor];
         self.orderLab.font = [UIFont systemFontOfSize:14];
         [vv addSubview:self.orderLab];
+        
+        
+        self.vinLab = [[UILabel alloc] initWithFrame:CGRectMake(11, 37, 250, 25)];
+        self.vinLab.text = @"车架号：999999999999999";
+        self.vinLab.textColor = [UIColor darkGrayColor];
+        self.vinLab.font = [UIFont systemFontOfSize:14];
+        [vv addSubview:self.vinLab];
+        
+        
+        
+        
 //        self.orderLab.backgroundColor = [UIColor redColor];
         
         for(int i=0; i<4; i++) {
         
             UILabel *lab = [[UILabel alloc] init];
-            lab.frame = CGRectMake(11 + 72 * i, 40, 65, 30);
+            lab.frame = CGRectMake(11 + 72 * i, 70, 65, 30);
 //            lab.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:0.9];
             lab.backgroundColor = [UIColor colorWithRed:230 / 255.0 green:230 / 255.0 blue:230 / 255.0 alpha:1];
             lab.font = [UIFont systemFontOfSize:13];
@@ -165,7 +179,7 @@
             }
         }
         
-        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(11, 85, [UIScreen mainScreen].bounds.size.width - 22, 1)];
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(11, 115, [UIScreen mainScreen].bounds.size.width - 22, 1)];
         lineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
         [vv addSubview:lineView];
         

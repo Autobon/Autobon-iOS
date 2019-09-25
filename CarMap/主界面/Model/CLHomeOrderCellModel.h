@@ -37,6 +37,9 @@
 @property (nonatomic, copy) NSString *creatorName;          // 下单人
 @property (nonatomic, copy) NSString *contactPhone;         //联系方式
 
+@property (nonatomic, copy) NSString *vin;         //车架号
+@property (nonatomic, copy) NSString *license;         //车牌号
+
 @property (nonatomic ) CGFloat cellHeight;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dic;

@@ -48,7 +48,8 @@
 @property (nonatomic, copy) NSString *commentStr;
 
 @property (nonatomic, strong) NSArray *constructionWasteShows;
-
+@property (nonatomic, strong) NSString *license;
+@property (nonatomic, strong) NSString *vin;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dic;
 

@@ -21,6 +21,10 @@
 		9BBA2BD61CBB72E500543004 /* servicedelegate.html in Resources */ = {isa = PBXBuildFile; fileRef = 9BBA2BD51CBB72E500543004 /* servicedelegate.html */; };
 		9BCFDCA51C85B6CF003A35A8 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9BCFDCA21C85B6CF003A35A8 /* AppDelegate.mm */; };
 		9BD52BE71CC46C6E009FE948 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BD52BE61CC46C6E009FE948 /* GoogleService-Info.plist */; };
+		A6BDB8B32339C31800FB0355 /* CLSearchOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BDB8B12339C31800FB0355 /* CLSearchOrderViewController.m */; };
+		A6BDB8B82339C3C400FB0355 /* CLLineTextFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BDB8B52339C3C400FB0355 /* CLLineTextFieldView.m */; };
+		A6BDB8B92339C3C400FB0355 /* CLZYSupperSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BDB8B72339C3C400FB0355 /* CLZYSupperSelectView.m */; };
+		A6BDB8BC2339C3FA00FB0355 /* CLChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BDB8BA2339C3F900FB0355 /* CLChooseView.m */; };
 		A6FCB87E22CEDC6400D74B8B /* SharePartnerProtocol.html in Resources */ = {isa = PBXBuildFile; fileRef = A6FCB87D22CEDC6400D74B8B /* SharePartnerProtocol.html */; };
 		B00FA48220EC9A7B00B31DC9 /* CLTeamPeopleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B00FA48120EC9A7B00B31DC9 /* CLTeamPeopleTableViewCell.m */; };
 		B02290DB1ECD4BB40022D34F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B02290A61ECD4BB40022D34F /* Reachability.m */; };
@@ -238,6 +242,14 @@
 		9BFA80811C5F4744001651C3 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		9BFA80841C5F475B001651C3 /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
 		A08ADB78524ACF43A63B9DF3 /* libPods-CarMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CarMap.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6BDB8B12339C31800FB0355 /* CLSearchOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLSearchOrderViewController.m; sourceTree = "<group>"; };
+		A6BDB8B22339C31800FB0355 /* CLSearchOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLSearchOrderViewController.h; sourceTree = "<group>"; };
+		A6BDB8B42339C3C400FB0355 /* CLZYSupperSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLZYSupperSelectView.h; sourceTree = "<group>"; };
+		A6BDB8B52339C3C400FB0355 /* CLLineTextFieldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLLineTextFieldView.m; sourceTree = "<group>"; };
+		A6BDB8B62339C3C400FB0355 /* CLLineTextFieldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLLineTextFieldView.h; sourceTree = "<group>"; };
+		A6BDB8B72339C3C400FB0355 /* CLZYSupperSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLZYSupperSelectView.m; sourceTree = "<group>"; };
+		A6BDB8BA2339C3F900FB0355 /* CLChooseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLChooseView.m; sourceTree = "<group>"; };
+		A6BDB8BB2339C3F900FB0355 /* CLChooseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLChooseView.h; sourceTree = "<group>"; };
 		A6FCB87D22CEDC6400D74B8B /* SharePartnerProtocol.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SharePartnerProtocol.html; sourceTree = "<group>"; };
 		B00FA48020EC9A7A00B31DC9 /* CLTeamPeopleTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLTeamPeopleTableViewCell.h; sourceTree = "<group>"; };
 		B00FA48120EC9A7B00B31DC9 /* CLTeamPeopleTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLTeamPeopleTableViewCell.m; sourceTree = "<group>"; };
@@ -895,6 +907,8 @@
 				B02291221ECD4CFC0022D34F /* GFNewOrderViewController.m */,
 				B02291231ECD4CFC0022D34F /* GFShigongDDViewController.h */,
 				B02291241ECD4CFC0022D34F /* GFShigongDDViewController.m */,
+				A6BDB8B22339C31800FB0355 /* CLSearchOrderViewController.h */,
+				A6BDB8B12339C31800FB0355 /* CLSearchOrderViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -915,6 +929,12 @@
 			children = (
 				B022912B1ECD4CFC0022D34F /* GFIndentTableViewCell.h */,
 				B022912C1ECD4CFC0022D34F /* GFIndentTableViewCell.m */,
+				A6BDB8B62339C3C400FB0355 /* CLLineTextFieldView.h */,
+				A6BDB8B52339C3C400FB0355 /* CLLineTextFieldView.m */,
+				A6BDB8B42339C3C400FB0355 /* CLZYSupperSelectView.h */,
+				A6BDB8B72339C3C400FB0355 /* CLZYSupperSelectView.m */,
+				A6BDB8BB2339C3F900FB0355 /* CLChooseView.h */,
+				A6BDB8BA2339C3F900FB0355 /* CLChooseView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1669,6 +1689,7 @@
 				B02291E51ECD4E4F0022D34F /* GFBuweiModel.m in Sources */,
 				B02290DB1ECD4BB40022D34F /* Reachability.m in Sources */,
 				B02292461ECD50390022D34F /* GFTrainViewController.m in Sources */,
+				A6BDB8B32339C31800FB0355 /* CLSearchOrderViewController.m in Sources */,
 				B05EC0D620F3383900EFB588 /* UIImageView+HXExtension.m in Sources */,
 				B04AF16A20D8E63F007EFCB3 /* CLMyTeamViewController.m in Sources */,
 				B05EC0E220F3383900EFB588 /* HXDatePhotoViewPresentTransition.m in Sources */,
@@ -1711,6 +1732,7 @@
 				B05EC0D720F3383900EFB588 /* UIFont+HXExtension.m in Sources */,
 				B02291E01ECD4E4F0022D34F /* CLShareViewController.m in Sources */,
 				B022917E1ECD4D570022D34F /* CLCertifyViewController.m in Sources */,
+				A6BDB8B92339C3C400FB0355 /* CLZYSupperSelectView.m in Sources */,
 				B022914B1ECD4CFC0022D34F /* GFMoreViewController.m in Sources */,
 				B081E7571ECEA337003558DC /* CLCollectTableViewCell.m in Sources */,
 				B02292471ECD50390022D34F /* GFTransformViewController.m in Sources */,
@@ -1734,6 +1756,7 @@
 				9B9FCF081C8AA2DB0022F54E /* ViewController.m in Sources */,
 				B05EC0EA20F3383900EFB588 /* HXDatePhotoViewTransition.m in Sources */,
 				B02290DF1ECD4BB40022D34F /* GFMapViewController.mm in Sources */,
+				A6BDB8BC2339C3FA00FB0355 /* CLChooseView.m in Sources */,
 				B02291501ECD4CFC0022D34F /* GFIndentViewController.m in Sources */,
 				B02291AB1ECD4DA80022D34F /* GFHomeTableViewCell.m in Sources */,
 				B02291821ECD4D570022D34F /* GFCertifyModel.m in Sources */,
@@ -1756,6 +1779,7 @@
 				B022914D1ECD4CFC0022D34F /* CLNotificationModel.m in Sources */,
 				B02290DE1ECD4BB40022D34F /* GFAnnotationView.m in Sources */,
 				B02291031ECD4BF70022D34F /* GFAlertView.m in Sources */,
+				A6BDB8B82339C3C400FB0355 /* CLLineTextFieldView.m in Sources */,
 				B0E0EBF020ECA89F0046F650 /* CLTeamPeopleOrderListViewController.m in Sources */,
 				B022922B1ECD4F310022D34F /* GFNoIndentTableViewCell.m in Sources */,
 				B02290FF1ECD4BF70022D34F /* GFForgetPwdViewController_1.m in Sources */,

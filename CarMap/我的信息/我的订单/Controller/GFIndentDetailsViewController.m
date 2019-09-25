@@ -285,11 +285,39 @@
     lineView2.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
     [baseView addSubview:lineView2];
     
+    
+    
+    // 车牌号
+
+    UILabel *licenseLabel = [[UILabel alloc] initWithFrame:CGRectMake(jiange1, CGRectGetMaxY(lineView2.frame), kWidth - jiange1 * 2, kHeight * 0.068)];
+    licenseLabel.text = [NSString stringWithFormat:@"订单类型：%@", _model.license];
+    licenseLabel.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
+    [baseView addSubview:licenseLabel];
+    
+    // 边线
+    UIView *lineViewLicense = [[UIView alloc] initWithFrame:CGRectMake(jiange1, CGRectGetMaxY(licenseLabel.frame), numberLabW, 1)];
+    lineViewLicense.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+    [baseView addSubview:lineViewLicense];
+    
+    
+    // 车架号
+    UILabel *vinLabel = [[UILabel alloc] initWithFrame:CGRectMake(jiange1, CGRectGetMaxY(lineViewLicense.frame), kWidth - jiange1 * 2, kHeight * 0.068)];
+    vinLabel.text = [NSString stringWithFormat:@"订单类型：%@", _model.vin];
+    vinLabel.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
+    [baseView addSubview:vinLabel];
+    
+    // 边线
+    UIView *lineViewVin = [[UIView alloc] initWithFrame:CGRectMake(jiange1, CGRectGetMaxY(vinLabel.frame), numberLabW, 1)];
+    lineViewVin.backgroundColor = [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1];
+    [baseView addSubview:lineViewVin];
+    
+    
+    
     // 下单备注
     CGFloat baseView1W = kWidth - jiange1 * 2;
     CGFloat baseView1H = kHeight * 0.068;
     CGFloat baseView1X = jiange1;
-    CGFloat baseView1Y = maxY + jianjv2;
+    CGFloat baseView1Y = CGRectGetMaxY(vinLabel.frame) + jianjv2;
     UIView *baseView1 = [[UIView alloc] initWithFrame:CGRectMake(baseView1X, baseView1Y, baseView1W, baseView1H)];
     [baseView addSubview:baseView1];
     CGFloat xiadanLabW = kWidth * 0.21;

@@ -33,6 +33,7 @@
     
     CGFloat verifyButOriW;
     CGFloat verifyButNewW;
+    UIButton *_submitBut;
 }
 @property (nonatomic, strong) GFNavigationView *navView;
 @property (nonatomic, strong) GFTextField *userNameTxt;
@@ -163,29 +164,33 @@
     CGFloat submitButH = kHeight * 0.073;
     CGFloat submitButX = jianjv1 - 4;
     CGFloat submitButY = CGRectGetMaxY(self.passWordTxt.frame) + jiange3;
-    UIButton *submitBut = [UIButton buttonWithType:UIButtonTypeCustom];
-    submitBut.frame = CGRectMake(submitButX, submitButY, submitButW, submitButH);
-    [submitBut setBackgroundImage:[UIImage imageNamed:@"button.png"] forState:UIControlStateNormal];
-    [submitBut setBackgroundImage:[UIImage imageNamed:@"buttonClick.png"] forState:UIControlStateHighlighted];
-    [submitBut setTitle:@"提交" forState:UIControlStateNormal];
-    [submitBut setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    submitBut.titleLabel.font = [UIFont systemFontOfSize:19 / 320.0 * kWidth];
-    [self.view addSubview:submitBut];
-    [submitBut addTarget:self action:@selector(submitBut) forControlEvents:UIControlEventTouchUpInside];
+    _submitBut = [UIButton buttonWithType:UIButtonTypeCustom];
+    _submitBut.frame = CGRectMake(submitButX, submitButY, submitButW, submitButH);
+    [_submitBut setBackgroundImage:[UIImage imageNamed:@"button.png"] forState:UIControlStateNormal];
+    [_submitBut setBackgroundImage:[UIImage imageNamed:@"buttonClick.png"] forState:UIControlStateHighlighted];
+    [_submitBut setTitle:@"提交" forState:UIControlStateNormal];
+    [_submitBut setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _submitBut.titleLabel.font = [UIFont systemFontOfSize:19 / 320.0 * kWidth];
+    [self.view addSubview:_submitBut];
+    [_submitBut addTarget:self action:@selector(submitBut) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    
+    
     
     
     // 车邻邦服务协议
     
     CGFloat agreeLabW = kWidth;
     CGFloat agreeLabH = kHeight * 0.024;
-    CGFloat agreeLabX = 0;
-    CGFloat agreeLabY = CGRectGetMaxY(submitBut.frame) + jiange2;
+    CGFloat agreeLabX = 0 + 18;
+    CGFloat agreeLabY = CGRectGetMaxY(_submitBut.frame) + jiange2 + 19;
     UILabel *agreeLab = [[UILabel alloc] initWithFrame:CGRectMake(agreeLabX, agreeLabY, agreeLabW, agreeLabH)];
     [self.view addSubview:agreeLab];
     agreeLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
     agreeLab.textAlignment = NSTextAlignmentCenter;
-    NSMutableAttributedString *MAStr = [[NSMutableAttributedString alloc] initWithString:@"点击按钮代表本人已阅读并同意《共享经济合作伙伴协议》"];
-    [MAStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] range:NSMakeRange(14, 12)];
+    NSMutableAttributedString *MAStr = [[NSMutableAttributedString alloc] initWithString:@"我已详细阅读并同意《共享经济合作伙伴协议》"];
+    [MAStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] range:NSMakeRange(9, 12)];
     agreeLab.attributedText = MAStr;
     agreeLab.font = [UIFont systemFontOfSize:10.5 / 320.0 * kWidth];
     agreeLab.userInteractionEnabled = YES;
@@ -221,6 +226,16 @@
 //    rightBut.titleLabel.font = [UIFont systemFontOfSize:11 / 320.0 * kWidth];
 //    rightBut.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
 //    [self.view addSubview:rightBut];
+    
+    
+    UIButton *agreeButton = [[UIButton alloc]init];
+    [agreeButton setImage:[UIImage imageNamed:@"over"] forState:UIControlStateNormal];
+    [agreeButton setImage:[UIImage imageNamed:@"overClick"] forState:UIControlStateSelected];
+    agreeButton.frame = CGRectMake(jianjv1 - 4 - 15, CGRectGetMidY(agreeLab.frame) - 30, 60, 60);
+    [self.view addSubview:agreeButton];
+    [agreeButton addTarget:self action:@selector(agreeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    agreeButton.selected = YES;
+    
 }
 
 
@@ -230,6 +245,18 @@
     CLDelegateViewController *delegateView = [[CLDelegateViewController alloc]init];
     delegateView.delegateTitle = @"SharePartnerProtocol";
     [self.navigationController pushViewController:delegateView animated:YES];
+    
+}
+
+- (void)agreeButtonClick:(UIButton *)button{
+    button.selected = !button.selected;
+    if (button.selected == false){
+        _submitBut.alpha = 0.5;
+        _submitBut.userInteractionEnabled = NO;
+    }else{
+        _submitBut.alpha = 1.0;
+        _submitBut.userInteractionEnabled = YES;
+    }
     
 }
 
