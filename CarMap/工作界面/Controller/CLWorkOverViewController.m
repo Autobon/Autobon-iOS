@@ -42,7 +42,7 @@
     NSArray *_workItemarray;
 //    NSMutableArray *_workItemBtnArray;
     NSMutableArray *_workItemIdArray;
-    UIScrollView *_scrollView;
+    CLTouchScrollView *_scrollView;
     NSMutableArray *_fiveItemArray;
     NSMutableArray *_fiveItemIdArray;
     NSMutableArray *_sevenItemArray;
@@ -129,7 +129,7 @@
     _imageArray = [[NSMutableArray alloc]init];
     _buttonArray = [[NSMutableArray alloc]init];
     _buweiOOArr = [[NSMutableArray alloc] init];
-    _scrollView = [[UIScrollView alloc]init];
+    _scrollView = [[CLTouchScrollView alloc]init];
 //    _scrollView.frame = CGRectMake(0, 64+36, self.view.frame.size.width, self.view.frame.size.height-64-38);
 
     [self.view addSubview:_scrollView];
@@ -151,7 +151,20 @@
     
     [self startTimeForNows];
     
+//    [self getProductOfferWithOrderId];
+    
 }
+
+
+- (void)getProductOfferWithOrderId{
+    [GFHttpTool getProductOfferWithOrderId:self.model.orderId success:^(id responseObject) {
+        ICLog(@"responseObject------%@----",responseObject);
+    } failure:^(NSError *error) {
+         ICLog(@"error------%@----",error);
+    }];
+}
+
+
 
 #pragma mark - 设置日期和状态
 - (void)setDate{
@@ -332,12 +345,13 @@
     self.baseView = vv;
 //    vv.layer.cornerRadius = 7;
     
-    UIView *baseView = [[UIView alloc] initWithFrame:CGRectMake(20, 50, vv.frame.size.width - 40, vv.frame.size.height - 60)];
+    UIView *baseView = [[UIView alloc] initWithFrame:CGRectMake(20, 70, vv.frame.size.width - 40, vv.frame.size.height - 80)];
     baseView.backgroundColor = [UIColor whiteColor];
+//    baseView.backgroundColor = [UIColor redColor];
     baseView.layer.cornerRadius = 7;
     [vv addSubview:baseView];
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, baseView.frame.size.width, baseView.frame.size.height - 20) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 84, baseView.frame.size.width, baseView.frame.size.height - 40) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -347,7 +361,7 @@
     [baseView addSubview:_tableView];
     
     
-    self.seatchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(10, 10, baseView.frame.size.width - 70, 40)];
+    self.seatchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(10, 30, baseView.frame.size.width - 70, 40)];
     self.seatchBar.barTintColor = [UIColor whiteColor];
     self.seatchBar.layer.cornerRadius = 20;
     self.seatchBar.layer.borderWidth = 1.0;
@@ -357,7 +371,7 @@
     self.seatchBar.placeholder = @"请输入";
     
     UIButton *searchBut = [UIButton buttonWithType:UIButtonTypeCustom];
-    searchBut.frame = CGRectMake(baseView.frame.size.width - 60, 10, 50, 40);
+    searchBut.frame = CGRectMake(baseView.frame.size.width - 60, 30, 50, 40);
     [searchBut setTitle:@"搜索" forState:UIControlStateNormal];
     [searchBut setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
     [baseView addSubview:searchBut];
@@ -367,7 +381,8 @@
     
     
     UIButton *but = [UIButton buttonWithType:UIButtonTypeCustom];
-    but.frame = CGRectMake([UIScreen mainScreen].bounds.size.width - 70, 0, 70, 50);
+    but.frame = CGRectMake([UIScreen mainScreen].bounds.size.width - 70, 30, 70, 50);
+//    but.backgroundColor = [UIColor cyanColor];
     [but setTitle:@"关闭" forState:UIControlStateNormal];
     [vv addSubview:but];
     [but addTarget:self action:@selector(butClick) forControlEvents:UIControlEventTouchUpInside];
@@ -497,9 +512,9 @@
     
     
     
-    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, titleView.frame.origin.y+95, self.view.frame.size.width, 1)];
-    lineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
-    [_scrollView addSubview:lineView];
+//    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, titleView.frame.origin.y+95, self.view.frame.size.width, 1)];
+//    lineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
+//    [_scrollView addSubview:lineView];
 
     
 //    _fiveItemArray = [[NSMutableArray alloc]init];
@@ -510,6 +525,27 @@
     _buweiModelArr = [[NSMutableArray alloc] init];
     
 //    NSLog(@"--订单ID－－-%@", _orderId);
+    
+    
+    
+    
+    [GFHttpTool getProductOfferWithOrderId:self.model.orderId success:^(id responseObject) {
+        ICLog(@"responseObject------%@----",responseObject);
+        if(![responseObject[@"message"] isKindOfClass:[NSNull class]]) {
+            self.messageArr = responseObject[@"message"];
+        }
+        _peoArr = [[NSMutableArray alloc] init];
+        [_peoArr addObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"name"]];
+        _peoIdArr = [[NSMutableArray alloc] init];
+        [_peoIdArr addObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"mainTechId"]];
+        [self _setSC];
+        _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(_scView.frame)+20);
+    } failure:^(NSError *error) {
+        ICLog(@"error------%@----",error);
+    }];
+    
+    
+    /*
     
     [GFHttpTool GetWorkItemsOrderTypeId:[_orderId integerValue] success:^(NSDictionary *responseObject) {
         
@@ -599,54 +635,54 @@
         [self _setSC];
         
         _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(_scView.frame)+20);
-        /*
-        [messageArr enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
-            if ([obj[@"seat"]integerValue] == 5) {
-                [_fiveItemArray addObject:obj[@"name"]];
-                [_fiveItemIdArray addObject:obj[@"id"]];
-            }else{
-                [_sevenItemArray addObject:obj[@"name"]];
-                [_sevenItemIdArray addObject:obj[@"id"]];
-            }
-        }];
         
-        _workItemarray = _fiveItemArray;
-        _workItemIdArray = _fiveItemIdArray;
+//        [messageArr enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
+//            if ([obj[@"seat"]integerValue] == 5) {
+//                [_fiveItemArray addObject:obj[@"name"]];
+//                [_fiveItemIdArray addObject:obj[@"id"]];
+//            }else{
+//                [_sevenItemArray addObject:obj[@"name"]];
+//                [_sevenItemIdArray addObject:obj[@"id"]];
+//            }
+//        }];
+//
+//        _workItemarray = _fiveItemArray;
+//        _workItemIdArray = _fiveItemIdArray;
+//
+//        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+//        layout.itemSize = CGSizeMake((self.view.frame.size.width-50)/4, 30);
+//        layout.minimumInteritemSpacing = 5.0f;
+//        layout.minimumLineSpacing = 5.0f;
+//        layout.sectionInset = UIEdgeInsetsMake(10, 10, 0, 10);
+//
+//        _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, lineView.frame.origin.y + 5, self.view.frame.size.width , ((_workItemarray.count+1)/4 + 1)*35+10) collectionViewLayout:layout];
+//        [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+//        _collectionView.backgroundColor = [UIColor whiteColor];
+//        _collectionView.delegate = self;
+//        _collectionView.dataSource = self;
+//        [_scrollView addSubview:_collectionView];
+//
+//        UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(10, _collectionView.frame.origin.y+_collectionView.frame.size.height+10, self.view.frame.size.width-20, 1)];
+//        lineView2.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
+//        [_scrollView addSubview:lineView2];
+//
+//        UIButton *workOverButton = [[UIButton alloc]initWithFrame:CGRectMake(30, lineView2.frame.origin.y+30, self.view.frame.size.width-60, 50)];
+//        //    workOverButton.center = CGPointMake(self.view.center.x, self.view.center.y+50+36+50);
+//        [workOverButton setTitle:@"完成工作" forState:UIControlStateNormal];
+//        workOverButton.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+//        workOverButton.layer.cornerRadius = 10;
+//
+//        [workOverButton addTarget:self action:@selector(workOverBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//
+//        [_scrollView addSubview:workOverButton];
+//        _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(workOverButton.frame)+20);
         
-        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-        layout.itemSize = CGSizeMake((self.view.frame.size.width-50)/4, 30);
-        layout.minimumInteritemSpacing = 5.0f;
-        layout.minimumLineSpacing = 5.0f;
-        layout.sectionInset = UIEdgeInsetsMake(10, 10, 0, 10);
-        
-        _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, lineView.frame.origin.y + 5, self.view.frame.size.width , ((_workItemarray.count+1)/4 + 1)*35+10) collectionViewLayout:layout];
-        [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
-        _collectionView.backgroundColor = [UIColor whiteColor];
-        _collectionView.delegate = self;
-        _collectionView.dataSource = self;
-        [_scrollView addSubview:_collectionView];
-        
-        UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(10, _collectionView.frame.origin.y+_collectionView.frame.size.height+10, self.view.frame.size.width-20, 1)];
-        lineView2.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
-        [_scrollView addSubview:lineView2];
-        
-        UIButton *workOverButton = [[UIButton alloc]initWithFrame:CGRectMake(30, lineView2.frame.origin.y+30, self.view.frame.size.width-60, 50)];
-        //    workOverButton.center = CGPointMake(self.view.center.x, self.view.center.y+50+36+50);
-        [workOverButton setTitle:@"完成工作" forState:UIControlStateNormal];
-        workOverButton.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-        workOverButton.layer.cornerRadius = 10;
-        
-        [workOverButton addTarget:self action:@selector(workOverBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        
-        [_scrollView addSubview:workOverButton];
-        _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(workOverButton.frame)+20);
-         */
         
     } failure:^(NSError *error) {
 //        NSLog(@"失败了－－－%@---",error);
 //        [self addAlertView:@"请求失败"];
     }];
-    
+    */
 //
 
     
@@ -1385,30 +1421,28 @@
     self.proButView.backgroundColor = [UIColor whiteColor];
     [_scView addSubview:self.proButView];
     
+    
+    
+    NSDictionary *modelDic = self.messageArr[0];
+    GFBuweiModel *model = [[GFBuweiModel alloc] initWithDictionary:modelDic];
+    [_buweiModelArr addObject:model];
+    [_proArr addObject:model.typeName];
+    [_proIdArr addObject:model.typeId];
+    
+    NSMutableArray *bbArr = [[NSMutableArray alloc] init];
+    NSMutableArray *bbIdArr = [[NSMutableArray alloc] init];
+    NSMutableArray *bbOOArr = [[NSMutableArray alloc] init];
+    
+    
     for(int i=0; i<self.messageArr.count; i++) {
         
         NSDictionary *dic = self.messageArr[i];
-        GFBuweiModel *model = [[GFBuweiModel alloc] initWithDictionary:dic];
-        [_buweiModelArr addObject:model];
-        [_proArr addObject:model.proName];
-        [_proIdArr addObject:model.proId];
-        
-        NSArray *buweiAA = model.buweiDicArr;
-        NSMutableArray *bbArr = [[NSMutableArray alloc] init];
-        NSMutableArray *bbIdArr = [[NSMutableArray alloc] init];
-        NSMutableArray *bbOOArr = [[NSMutableArray alloc] init];
-        for(NSDictionary *dic in buweiAA) {
-            
-            NSString *buwei = dic[@"name"];
-            NSString *buweiID = dic[@"id"];
-            [bbArr addObject:buwei];
-            [bbIdArr addObject:buweiID];
-            [bbOOArr addObject:@"0"];
-        }
-        [_buweiArr addObject:bbArr];
-        [_buweiIdArr addObject:bbIdArr];
-        [_buweiOOArr addObject:bbOOArr];
-        
+        NSString *buwei = dic[@"constructionPositionName"];
+        NSString *buweiID = dic[@"constructionPosition"];
+        [bbArr addObject:buwei];
+        [bbIdArr addObject:buweiID];
+        [bbOOArr addObject:@"0"];
+        if(i == 0) {
         // 施工项目按钮
         CGFloat butW = ([UIScreen mainScreen].bounds.size.width - 60) / 4.0;
         UIButton *but = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -1424,8 +1458,6 @@
         [but setTitle:_proArr[i] forState:UIControlStateNormal];
         [but addTarget:self action:@selector(proButClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.proButView addSubview:but];
-        if(i == 0) {
-            
             _proButSelect = but;
             _proButSelect.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
             _proButSelect.layer.borderColor = [[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] CGColor];
@@ -1433,6 +1465,10 @@
             //                but.selected = YES;
         }
     }
+    
+    [_buweiArr addObject:bbArr];
+    [_buweiIdArr addObject:bbIdArr];
+    [_buweiOOArr addObject:bbOOArr];
     
     _page = 1;
     _proViewArr = [[NSMutableArray alloc] init];
@@ -1794,17 +1830,16 @@
         mDic[@"afterPhotos"] = urlStr;
         mDic[@"constructionDetails"] = allArr;
         mDic[@"constructionWastes"] = constructionWastesArr;
-//        NSLog(@"提交的数据%@", mDic);
-        
+        NSLog(@"提交的数据%@", mDic);
+
         NSDictionary *dicccc = allArr[0];
         NSArray *projectPositionsArrrr  = dicccc[@"projectPositions"];
         if(projectPositionsArrrr.count > 0) {
         
             NSArray *aa = [urlStr componentsSeparatedByString:@","];
             if(aa.count >= 3) {
-                
-//                NSLog(@"提交的数据%@", mDic);
-                [GFHttpTool PostOverDictionary:mDic success:^(id responseObject) {
+            
+                [GFHttpTool PostOverProductDictionary:mDic success:^(id responseObject) {
                     
 //                    NSLog(@"$$$$$提交成功$$$%@", responseObject);
                     if([responseObject[@"status"] integerValue] == 1) {
@@ -1829,7 +1864,7 @@
                     ICLog(@"+++++%@", error);
                 }];
             }else {
-                
+
                 [self addAlertView:@"请上传不少于3张工作后的照片"];
             }
         }else {

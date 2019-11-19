@@ -37,6 +37,9 @@
 
 #import <UMSocialCore/UMSocialCore.h>
 #import "CLShareViewController.h"
+
+#import <IQKeyboardManager/IQKeyboardManager.h>
+
 // 个推开发者网站中申请App时，注册的AppId、AppKey、AppSecret
 #define kGtAppId      @"zoCAUGD4Hi55CS6iW1OI77"
 #define kGtAppKey     @"ESlofHVour7DmT7xy7cnJ9"
@@ -71,6 +74,9 @@
 //    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
 //    NSLog(@"佛祖保佑，没有BUG");
+    
+    [IQKeyboardManager sharedManager].enable = YES;
+    [IQKeyboardManager sharedManager].shouldShowToolbarPlaceholder = false;
     
     _launchDict = [[NSDictionary alloc]initWithDictionary:launchOptions];
     // 通过个推平台分配的appId、 appKey 、appSecret 启动SDK，注：该方法需要在主线程中调用
@@ -587,16 +593,6 @@
 // 收到的推送消息还是要存储起来的，用来查看历史订单不用存储到数据库中吧
     
 }
-
-
-
-
-
-
-
-
-
-
 
 
 /** APP已经接收到“远程”通知(推送) - 透传推送消息  */

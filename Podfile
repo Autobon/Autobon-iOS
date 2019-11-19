@@ -20,6 +20,7 @@ pod 'UMengUShare/Social/WeChat'
 # 集成QQ/QZone/TIM
 pod 'UMengUShare/Social/QQ'
 
+pod 'IQKeyboardManager', '~> 6.4.0'
 
 end
 

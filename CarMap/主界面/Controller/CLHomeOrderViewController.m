@@ -313,7 +313,7 @@
 }
 #pragma mark - 接受通知消息
 -(void)receiveNotification:(NSNotification *)Notification {
-    
+    ICLog(@"接收通知消息----%@---", Notification.userInfo);
     _inviteDictionary = [[NSDictionary alloc]initWithDictionary:Notification.userInfo];
     if ([Notification.userInfo[@"action"] isEqualToString:@"NEW_ORDER"]) {
         
@@ -336,7 +336,7 @@
             [self.knockOrder.certifyButton addTarget:self action:@selector(knockBtnClick:) forControlEvents:UIControlEventTouchUpInside];
             [self.knockOrder.cancelButton addTarget:self action:@selector(knockCancelClick) forControlEvents:UIControlEventTouchUpInside];
         }else{
-//            NSLog(@"没有显示订单");
+            NSLog(@"没有显示订单");
         }
         
     }

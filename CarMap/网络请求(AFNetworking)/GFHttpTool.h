@@ -149,8 +149,12 @@
 // 查询团队技师订单列表
 + (void)getTechnicianTeamPeopleOrderWithDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
+#pragma mark - 获取订单可用报价产品
++ (void)getProductOfferWithOrderId:(NSString *)orderId success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
-
+#pragma mark - 施工完成的请求接口
+// 三期
++ (void)PostOverProductDictionary:(NSDictionary *)dictionary success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
 
 

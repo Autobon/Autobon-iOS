@@ -305,10 +305,6 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-
-    
-    
-    
     
     return 190;
 
@@ -316,32 +312,33 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    CLHomeOrderCellModel *cellModel = (CLHomeOrderCellModel *)self.newsModelArr[indexPath.row];
-    
-//    NSLog(@"第几个数据模型；；；；%ld", indexPath.row);
-    
-    GFKeqiangDDViewController *orderDetail = [[GFKeqiangDDViewController alloc]init];
-    orderDetail.model = cellModel;
-    orderDetail.startTime = cellModel.startTime;
-    orderDetail.orderId = cellModel.orderId;
-    orderDetail.customerLat = cellModel.customerLat;
-    orderDetail.customerLon = cellModel.customerLon;
-    orderDetail.orderPhotoURL = cellModel.orderPhotoURL;
-    orderDetail.orderTime = cellModel.orderTime;
-    orderDetail.remark = cellModel.remark;
-    orderDetail.action = cellModel.status;
-    orderDetail.orderType = cellModel.orderType;
-    orderDetail.orderNumber = cellModel.orderNumber;
-    orderDetail.cooperatorName = cellModel.cooperatorFullname;
-    orderDetail.cooperatorAddress = cellModel.address;
-    orderDetail.cooperatorFullname = cellModel.cooperatorFullname;
-    
-//    CLNewOrderDetailViewController *newOrderDetail = [[CLNewOrderDetailViewController alloc]init];
-//    newOrderDetail.model = _cellModelArray[indexPath.row - 1];
-//    NSLog(@"-----model -%@---cell--%@-",newOrderDetail.model,_cellModelArray[indexPath.row-1]);
-    [self.navigationController pushViewController:orderDetail animated:YES];
-//    NSLog(@"--------model.dictionary-----%@---",newOrderDetail.model.dataDictionary);
+    if (self.newsModelArr.count > indexPath.row){
+        CLHomeOrderCellModel *cellModel = (CLHomeOrderCellModel *)self.newsModelArr[indexPath.row];
+        
+        //    NSLog(@"第几个数据模型；；；；%ld", indexPath.row);
+        
+        GFKeqiangDDViewController *orderDetail = [[GFKeqiangDDViewController alloc]init];
+        orderDetail.model = cellModel;
+        orderDetail.startTime = cellModel.startTime;
+        orderDetail.orderId = cellModel.orderId;
+        orderDetail.customerLat = cellModel.customerLat;
+        orderDetail.customerLon = cellModel.customerLon;
+        orderDetail.orderPhotoURL = cellModel.orderPhotoURL;
+        orderDetail.orderTime = cellModel.orderTime;
+        orderDetail.remark = cellModel.remark;
+        orderDetail.action = cellModel.status;
+        orderDetail.orderType = cellModel.orderType;
+        orderDetail.orderNumber = cellModel.orderNumber;
+        orderDetail.cooperatorName = cellModel.cooperatorFullname;
+        orderDetail.cooperatorAddress = cellModel.address;
+        orderDetail.cooperatorFullname = cellModel.cooperatorFullname;
+        
+        //    CLNewOrderDetailViewController *newOrderDetail = [[CLNewOrderDetailViewController alloc]init];
+        //    newOrderDetail.model = _cellModelArray[indexPath.row - 1];
+        //    NSLog(@"-----model -%@---cell--%@-",newOrderDetail.model,_cellModelArray[indexPath.row-1]);
+        [self.navigationController pushViewController:orderDetail animated:YES];
+        //    NSLog(@"--------model.dictionary-----%@---",newOrderDetail.model.dataDictionary);
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -373,8 +370,6 @@
             [cell.orderButton setTitle:@"抢单" forState:UIControlStateNormal];
             cell.orderButton.tag = indexPath.row;
             [cell.orderButton addTarget:self action:@selector(knockBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-            
-            
             
         }
     

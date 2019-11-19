@@ -14,6 +14,11 @@
 @property (nonatomic, copy) NSString *proId;
 @property (nonatomic, copy) NSString *proName;
 
+@property (nonatomic, copy) NSString *typeId;
+@property (nonatomic, copy) NSString *typeName;
+@property (nonatomic, copy) NSString *constructionPositionName;
+@property (nonatomic, copy) NSString *constructionPosition;
+
 - (instancetype)initWithDictionary:(NSDictionary *)dic;
 
 @end

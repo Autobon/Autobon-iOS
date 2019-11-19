@@ -368,27 +368,28 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     CLHomeOrderCellModel *model = (CLHomeOrderCellModel *)self.modelArr[indexPath.row];
-    
+    if (self.modelArr.count > indexPath.row){
+        GFKeqiangDDViewController *orderDetail = [[GFKeqiangDDViewController alloc]init];
+        orderDetail.model = model;
+        orderDetail.startTime = model.startTime;
+        orderDetail.orderId = model.orderId;
+        orderDetail.customerLat = model.customerLat;
+        orderDetail.customerLon = model.customerLon;
+        orderDetail.orderPhotoURL = model.orderPhotoURL;
+        orderDetail.orderTime = model.orderTime;
+        orderDetail.remark = model.remark;
+        orderDetail.action = model.status;
+        orderDetail.orderType = model.orderType;
+        orderDetail.orderNumber = model.orderNumber;
+        orderDetail.cooperatorName = model.cooperatorFullname;
+        orderDetail.cooperatorAddress = model.address;
+        orderDetail.cooperatorFullname = model.cooperatorFullname;
+        
+        [self.navigationController pushViewController:orderDetail animated:YES];
+    }
 //
 //    NSLog(@"第几个数据模型；；；；%ld", indexPath.row);
-//    
-    GFKeqiangDDViewController *orderDetail = [[GFKeqiangDDViewController alloc]init];
-    orderDetail.model = model;
-    orderDetail.startTime = model.startTime;
-    orderDetail.orderId = model.orderId;
-    orderDetail.customerLat = model.customerLat;
-    orderDetail.customerLon = model.customerLon;
-    orderDetail.orderPhotoURL = model.orderPhotoURL;
-    orderDetail.orderTime = model.orderTime;
-    orderDetail.remark = model.remark;
-    orderDetail.action = model.status;
-    orderDetail.orderType = model.orderType;
-    orderDetail.orderNumber = model.orderNumber;
-    orderDetail.cooperatorName = model.cooperatorFullname;
-    orderDetail.cooperatorAddress = model.address;
-    orderDetail.cooperatorFullname = model.cooperatorFullname;
-    
-    [self.navigationController pushViewController:orderDetail animated:YES];
+//
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{

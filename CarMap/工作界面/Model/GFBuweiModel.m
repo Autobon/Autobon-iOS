@@ -21,6 +21,10 @@
         _buweiDicArr = dic[@"constructionPositions"];
         _proId = [NSString stringWithFormat:@"%@", dic[@"id"]];
         _proName = dic[@"name"];
+        _typeId = [NSString stringWithFormat:@"%@", dic[@"type"]];
+        _typeName = dic[@"typeName"];
+        _constructionPositionName = dic[@"constructionPositionName"];
+        _constructionPosition = [NSString stringWithFormat:@"%@", dic[@"constructionPosition"]];
     }
     
     return self;
