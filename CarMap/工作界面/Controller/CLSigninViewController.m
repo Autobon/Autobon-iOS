@@ -20,7 +20,7 @@
 #import "GFFangqiViewController.h"
 
 
-@interface CLSigninViewController ()
+@interface CLSigninViewController ()<CLMapForViewDelegate>
 {
     
     GFMapViewController *_mapVC;
@@ -34,7 +34,8 @@
 
 @property (nonatomic ,strong) UILabel *distanceLabel;
 @property (nonatomic ,strong) UIButton *signinButton;
-
+@property (nonatomic ,strong) NSString *startLatitude;
+@property (nonatomic ,strong) NSString *startLongitude;
 
 
 @end
@@ -56,6 +57,24 @@
     [self addMap];
     _signinButton.userInteractionEnabled = NO;
     
+    [self getTechOrderStart];
+    
+}
+
+- (void)getTechOrderStart{
+    [GFHttpTool getTechOrderStartPlaceWithDictionary:@{@"id": self.model.orderId} Success:^(id responseObject) {
+        ICLog(@"获取订单开始位置成功----%@---", responseObject);
+        NSInteger flage = [responseObject[@"status"] integerValue];
+        if (flage == 1){
+            NSDictionary *messageDictionary = responseObject[@"message"];
+            self.startLatitude = [NSString stringWithFormat:@"%@", messageDictionary[@"startLatitude"]];
+            self.startLongitude = [NSString stringWithFormat:@"%@", messageDictionary[@"startLongitude"]];
+        }else{
+            [self addAlertView:responseObject[@"message"]];
+        }
+    } failure:^(NSError *error) {
+        ICLog(@"获取订单开始位置失败----%@---", error);
+    }];
 }
 
 // 设置日期和状态
@@ -139,7 +158,7 @@
     [_mapVC didMoveToParentViewController:self];
 //    _mapVC.view.frame = CGRectMake(0, 64+36, self.view.frame.size.width, self.view.frame.size.height/3);
     _mapVC.mapView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height/3);
-    
+    _mapVC.mapView.clipsToBounds = YES;
     [_mapVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
         make.top.equalTo(_headerView.mas_bottom);
@@ -192,14 +211,12 @@
 }
 
 
-
-// 签到按钮的响应方法
-- (void)signinBtnClick{
-    
-    
-    NSDictionary *dic = @{@"positionLon":_customerLon,@"positionLat":_customerLat,@"orderId":_orderId};
-    [GFHttpTool signinParameters:dic Success:^(NSDictionary *responseObject) {
-//        NSLog(@"－－－－－%@---",responseObject);
+- (void)getCarDistanceForSign:(NSInteger)distance{
+    ICLog(@"---distance---%ld--", distance);
+    NSDictionary *dic = @{@"positionLon":_customerLon,@"positionLat":_customerLat,@"orderId":_orderId, @"distance": @(distance)};
+    ICLog(@"---signinDic---%@--", dic);
+    [GFHttpTool postTechOrderSigninWithDictionary:dic Success:^(NSDictionary *responseObject) {
+        //        NSLog(@"－－－－－%@---",responseObject);
         if ([responseObject[@"status"]integerValue] == 1) {
             CLWorkBeforeViewController *workBefore = [[CLWorkBeforeViewController alloc]init];
             workBefore.orderId = _orderId;
@@ -208,16 +225,29 @@
             workBefore.orderNumber = self.orderNumber;
             workBefore.model = _model;
             [self.navigationController pushViewController:workBefore animated:YES];
-//            [_timer invalidate];
-//            _timer = nil;
+            //            [_timer invalidate];
+            //            _timer = nil;
         }else{
             [self addAlertView:responseObject[@"message"]];
         }
     } failure:^(NSError *error) {
-//        NSLog(@"--qiandao---%@--",error);
-//        [self addAlertView:@"请求失败"];
+        //        NSLog(@"--qiandao---%@--",error);
+        //        [self addAlertView:@"请求失败"];
     }];
+}
+
+// 签到按钮的响应方法
+- (void)signinBtnClick{
+    if (self.startLatitude == nil || self.startLongitude == nil){
+        [self getCarDistanceForSign:0];
+        return;
+    }
     
+//    _mapVC.workerPointAnno.coordinate
+    CLLocationCoordinate2D Coordinate1 = CLLocationCoordinate2DMake([self.startLatitude floatValue], [self.startLongitude floatValue]);
+//    CLLocationCoordinate2D Coordinate2 = CLLocationCoordinate2DMake(coorLocationLat, coorLocationLng);
+    [_mapVC getCarDistanceWithCoordinate1:Coordinate1 withCoordinate2:_mapVC.workerPointAnno.coordinate];
+    _mapVC.delegate = self;
 }
 
 

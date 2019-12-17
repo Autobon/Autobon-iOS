@@ -133,6 +133,19 @@
         }else {
             self.verifyMsg = @"无";
         }
+        
+        if(dic[@"signStatus"] != nil) {
+            self.signStatus = [NSString stringWithFormat:@"%@", dic[@"signStatus"]];
+        }else {
+            self.signStatus = @"0";
+        }
+        
+        if(dic[@"stationCoopId"] != nil) {
+            self.stationCoopId = [NSString stringWithFormat:@"%@", dic[@"stationCoopId"]];
+        }else {
+            self.stationCoopId = @"";
+        }
+        
     }
     
     return self;

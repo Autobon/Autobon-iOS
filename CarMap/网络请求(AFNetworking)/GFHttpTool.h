@@ -156,7 +156,26 @@
 // 三期
 + (void)PostOverProductDictionary:(NSDictionary *)dictionary success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
+// 修改技师常驻地商户
++ (void)postStationCoopWithDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
+// 技师常驻地签到
++ (void)postStationSignWithDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+
+// 查询商户列表
++ (void)getCoopListWithDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+
+// 查询技师常驻地信息
++ (void)getTechStationWithDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+
+// 订单进入施工环节中
++ (void)postTechOrderStartWithDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+
+// 查询订单开始位置
++ (void)getTechOrderStartPlaceWithDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+
+// 订单签到
++ (void)postTechOrderSigninWithDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
 
 @end

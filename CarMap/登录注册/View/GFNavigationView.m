@@ -57,7 +57,7 @@
             
             CGFloat rightButW = leftButW;
             CGFloat rightButH = leftButH;
-            CGFloat rightButX = kWidth - rightButW;
+            CGFloat rightButX = kWidth - rightButW - 10;
             CGFloat rightButY = leftButY;
             self.rightBut = [UIButton buttonWithType:UIButtonTypeCustom];
             self.rightBut.frame = CGRectMake(rightButX, rightButY, rightButW, rightButH);

@@ -260,7 +260,7 @@
                 _locationDictionary[@"district"] = subLocality;
                 _locationDictionary[@"street"] = street;
                 [GFHttpTool PostReportLocation:_locationDictionary success:^(id responseObject) {
-                    ICLog(@"-----responseObject---%@---",responseObject);
+                    ICLog(@"---Location--responseObject---%@---",responseObject);
                     
                     if ([responseObject[@"result"] integerValue] == 1) {
                         [_manager stopUpdatingLocation];

@@ -35,6 +35,8 @@
 
 @property (nonatomic, copy) NSString *verifyMsg;
 
+@property (nonatomic, copy) NSString *signStatus;
+@property (nonatomic, copy) NSString *stationCoopId;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dic;
 

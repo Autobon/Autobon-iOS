@@ -28,7 +28,7 @@
 
 #import "GFFangqiViewController.h"
 #import "ACETelPrompt.h"
-
+#import "AppDelegate.h"
 
 @interface CLOrderDetailViewController () <HZPhotoBrowserDelegate>
 {
@@ -316,9 +316,13 @@
 #pragma mark - 开始工作按钮的响应方法
 - (void)workBtnClick{
    
-    
-    [GFHttpTool postOrderStart:@{@"orderId":_orderId} Success:^(NSDictionary *responseObject) {
-        
+    NSMutableDictionary *dataDictionary = [[NSMutableDictionary alloc]init];
+    dataDictionary[@"orderId"] = _orderId;
+    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    dataDictionary[@"longitude"] = app.locationDictionary[@"lng"];
+    dataDictionary[@"latitude"] = app.locationDictionary[@"lat"];
+    ICLog(@"dataDictionary----%@---", dataDictionary);
+    [GFHttpTool postTechOrderStartWithDictionary:dataDictionary Success:^(NSDictionary *responseObject) {
 //        NSLog(@"----responseObject--%@",responseObject);
         if ([responseObject[@"status"]integerValue] == 1) {
             CLSigninViewController *signinView = [[CLSigninViewController alloc]init];

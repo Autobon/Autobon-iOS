@@ -51,7 +51,7 @@
     UILabel *_distanceLabel;
     UILabel *_timeLabel;
     UIView *_baseView;
-    
+    BMKRouteSearch *_routesearch;
 }
 
 
@@ -63,8 +63,7 @@
 
 
 
-// 大头针
-@property(nonatomic, strong) GFAnnotation *workerPointAnno;
+
 
 
 
@@ -107,6 +106,9 @@
     
     // 添加大头针
     [self _setAnnonation];
+    
+    _routesearch = [[BMKRouteSearch alloc] init];
+    _routesearch.delegate = self;
 }
 
 #pragma mark - ***** 基础设置 *****
@@ -557,6 +559,33 @@
 //    
 //    return view;
 //}
+
+- (void)getCarDistanceWithCoordinate1:(CLLocationCoordinate2D)coordinate1 withCoordinate2:(CLLocationCoordinate2D)coordinate2{
+    //线路检索节点信息
+    BMKPlanNode *start = [[BMKPlanNode alloc] init];
+    start.pt = coordinate1;
+    BMKPlanNode *end = [[BMKPlanNode alloc] init];
+    end.pt = coordinate2;
+    BMKDrivingRoutePlanOption *drivingRouteSearchOption = [[BMKDrivingRoutePlanOption alloc] init];
+    drivingRouteSearchOption.from = start;
+    drivingRouteSearchOption.to = end;
+    BOOL flag = [_routesearch drivingSearch:drivingRouteSearchOption];
+    if (flag) {
+    }
+}
+
+#pragma mark 返回驾乘搜索结果
+- (void)onGetDrivingRouteResult:(BMKRouteSearch*)searcher result:(BMKDrivingRouteResult*)result errorCode:(BMKSearchErrorCode)error
+{
+    
+    if (error == BMK_SEARCH_NO_ERROR) {
+        //表示一条驾车路线
+        BMKDrivingRouteLine* plan = (BMKDrivingRouteLine*)[result.routes objectAtIndex:0];
+        ICLog(@"distance---%d--", plan.distance);
+        [_delegate getCarDistanceForSign:plan.distance];
+    }
+}
+
 
 
 #pragma mark - 设置地图范围

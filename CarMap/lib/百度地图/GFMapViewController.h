@@ -15,9 +15,16 @@
 // 距离店铺Block
 typedef void (^DistanceBlock)(double distance);
 
+
+@protocol CLMapForViewDelegate <NSObject>
+
+- (void)getCarDistanceForSign:(NSInteger )distance;
+
+@end
+
 @interface GFMapViewController : UIViewController
 
-
+@property (nonatomic) id<CLMapForViewDelegate>delegate;
 
 @property (nonatomic ,copy) DistanceBlock distanceBlock;
 
@@ -26,7 +33,8 @@ typedef void (^DistanceBlock)(double distance);
 @property(nonatomic, strong) BMKMapView *mapView;
 
 @property(nonatomic, strong) GFAnnotation *bossPointAnno;
-
+// 大头针
+@property(nonatomic, strong) GFAnnotation *workerPointAnno;
 
 
 
@@ -38,5 +46,12 @@ typedef void (^DistanceBlock)(double distance);
 
 + (double)calculatorWithCoordinate1:(CLLocationCoordinate2D)coordinate1 withCoordinate2:(CLLocationCoordinate2D)coordinate2;
 
+- (void)getCarDistanceWithCoordinate1:(CLLocationCoordinate2D)coordinate1 withCoordinate2:(CLLocationCoordinate2D)coordinate2;
+
+
 
 @end
+
+
+
+

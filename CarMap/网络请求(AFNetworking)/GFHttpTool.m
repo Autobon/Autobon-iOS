@@ -2792,8 +2792,316 @@ NSString* const PUBHOST = @"http://118.31.41.230:7123/api";
     }
 }
 
+// 修改技师常驻地商户
++ (void)postStationCoopWithDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    if ([GFHttpTool isConnectionAvailable]) {
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
+        
+        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 
+        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+        manager.requestSerializer.timeoutInterval = 30.0;
+        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+        NSString *token = [userDefaultes objectForKey:@"autoken"];
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        ICLog(@"-token--%@---",token);
+        
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/v2/station/%@/coop",HOST,dictionary[@"id"]];
+        ICLog(@"token-可能是这里错了-%@-－－URLString--%@-",token,URLString);
+        [manager POST:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            ICLog(@"走出来了");
+            [aView removeFromSuperview];
+            if(success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
 
+            NSData *data = error.userInfo[@"com.alamofire.serialization.response.error.data"];
+            NSString *dataString = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+            ICLog(@"dataString---%@",dataString);
+            [aView removeFromSuperview];
+            // 判断请求超时
+            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+            if([errorStr isEqualToString:@"The request timed out."]) {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+            }else {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+            }
+            if(failure) {
+                failure(error);
+            }
+        }];
+        
+    }else{
+        
+        [GFHttpTool addAlertView:@"无网络连接"];
+    }
+}
+
+// 技师常驻地签到
++ (void)postStationSignWithDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    if ([GFHttpTool isConnectionAvailable]) {
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
+        
+        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        
+        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+        manager.requestSerializer.timeoutInterval = 30.0;
+        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+        NSString *token = [userDefaultes objectForKey:@"autoken"];
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        ICLog(@"-token--%@---",token);
+        
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/v2/station/sign",HOST];
+        ICLog(@"token-可能是这里错了-%@-－－URLString--%@-",token,URLString);
+        [manager POST:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            ICLog(@"走出来了");
+            [aView removeFromSuperview];
+            if(success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+            NSData *data = error.userInfo[@"com.alamofire.serialization.response.error.data"];
+            NSString *dataString = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+            ICLog(@"dataString---%@",dataString);
+            [aView removeFromSuperview];
+            // 判断请求超时
+            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+            if([errorStr isEqualToString:@"The request timed out."]) {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+            }else {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+            }
+            if(failure) {
+                failure(error);
+            }
+        }];
+        
+    }else{
+        
+        [GFHttpTool addAlertView:@"无网络连接"];
+    }
+}
+
+// 查询商户列表
++ (void)getCoopListWithDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    if ([GFHttpTool isConnectionAvailable]) {
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
+        
+        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+        manager.requestSerializer.timeoutInterval = 30.0;
+        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+        NSString *token = [userDefaultes objectForKey:@"autoken"];
+        
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/v2/coop",HOST];
+        //        NSLog(@"token-可能是这里错了-%@-－－URLString--%@-",token,URLString);
+        [manager GET:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            //            NSLog(@"走出来了");
+            [aView removeFromSuperview];
+            if(success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+            [aView removeFromSuperview];
+            // 判断请求超时
+            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+            if([errorStr isEqualToString:@"The request timed out."]) {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+            }else {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+            }
+            if(failure) {
+                failure(error);
+            }
+        }];
+    }else{
+        
+        [GFHttpTool addAlertView:@"无网络连接"];
+    }
+}
+
+// 查询技师常驻地信息
++ (void)getTechStationWithDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    if ([GFHttpTool isConnectionAvailable]) {
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
+        
+        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+        manager.requestSerializer.timeoutInterval = 30.0;
+        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+        NSString *token = [userDefaultes objectForKey:@"autoken"];
+        
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/v2/station",HOST];
+        //        NSLog(@"token-可能是这里错了-%@-－－URLString--%@-",token,URLString);
+        [manager GET:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            //            NSLog(@"走出来了");
+            [aView removeFromSuperview];
+            if(success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+            [aView removeFromSuperview];
+            // 判断请求超时
+            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+            if([errorStr isEqualToString:@"The request timed out."]) {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+            }else {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+            }
+            if(failure) {
+                failure(error);
+            }
+        }];
+    }else{
+        
+        [GFHttpTool addAlertView:@"无网络连接"];
+    }
+}
+
+// 订单进入施工环节中
++ (void)postTechOrderStartWithDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    if ([GFHttpTool isConnectionAvailable]) {
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
+        
+        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        
+        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+        manager.requestSerializer.timeoutInterval = 30.0;
+        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+        NSString *token = [userDefaultes objectForKey:@"autoken"];
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        ICLog(@"-token--%@---",token);
+        
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/v2/order/start",HOST];
+        ICLog(@"token-可能是这里错了-%@-－－URLString--%@-",token,URLString);
+        [manager POST:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            ICLog(@"走出来了");
+            [aView removeFromSuperview];
+            if(success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+            NSData *data = error.userInfo[@"com.alamofire.serialization.response.error.data"];
+            NSString *dataString = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+            ICLog(@"dataString---%@",dataString);
+            [aView removeFromSuperview];
+            // 判断请求超时
+            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+            if([errorStr isEqualToString:@"The request timed out."]) {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+            }else {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+            }
+            if(failure) {
+                failure(error);
+            }
+        }];
+        
+    }else{
+        
+        [GFHttpTool addAlertView:@"无网络连接"];
+    }
+}
+
+// 订单签到
++ (void)postTechOrderSigninWithDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    if ([GFHttpTool isConnectionAvailable]) {
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
+        
+        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        
+        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+        manager.requestSerializer.timeoutInterval = 30.0;
+        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+        NSString *token = [userDefaultes objectForKey:@"autoken"];
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        ICLog(@"-token--%@---",token);
+        
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/v2/order/signIn",HOST];
+        ICLog(@"token-可能是这里错了-%@-－－URLString--%@-",token,URLString);
+        [manager POST:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            ICLog(@"走出来了");
+            [aView removeFromSuperview];
+            if(success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+            NSData *data = error.userInfo[@"com.alamofire.serialization.response.error.data"];
+            NSString *dataString = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+            ICLog(@"dataString---%@",dataString);
+            [aView removeFromSuperview];
+            // 判断请求超时
+            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+            if([errorStr isEqualToString:@"The request timed out."]) {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+            }else {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+            }
+            if(failure) {
+                failure(error);
+            }
+        }];
+        
+    }else{
+        
+        [GFHttpTool addAlertView:@"无网络连接"];
+    }
+}
+
+// 查询订单开始位置
++ (void)getTechOrderStartPlaceWithDictionary:(NSDictionary *)dictionary Success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
+    if ([GFHttpTool isConnectionAvailable]) {
+        GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
+        
+        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+        manager.requestSerializer.timeoutInterval = 30.0;
+        [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+        NSString *token = [userDefaultes objectForKey:@"autoken"];
+        
+        [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/v2/order/start/place/%@",HOST,dictionary[@"id"]];
+        //        NSLog(@"token-可能是这里错了-%@-－－URLString--%@-",token,URLString);
+        [manager GET:URLString parameters:dictionary progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            //            NSLog(@"走出来了");
+            [aView removeFromSuperview];
+            if(success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+            [aView removeFromSuperview];
+            // 判断请求超时
+            NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
+            if([errorStr isEqualToString:@"The request timed out."]) {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求超时，请重试" withShowTimw:1.5];
+            }else {
+                [GFTipView tipViewWithNormalHeightWithMessage:@"请求失败，请重试" withShowTimw:1.5];
+            }
+            if(failure) {
+                failure(error);
+            }
+        }];
+    }else{
+        
+        [GFHttpTool addAlertView:@"无网络连接"];
+    }
+}
 
 #pragma mark - 判断网络连接情况
 // 加号方法里只能够调用加号方法

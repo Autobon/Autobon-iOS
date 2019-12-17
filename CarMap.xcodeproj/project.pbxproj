@@ -21,6 +21,10 @@
 		9BBA2BD61CBB72E500543004 /* servicedelegate.html in Resources */ = {isa = PBXBuildFile; fileRef = 9BBA2BD51CBB72E500543004 /* servicedelegate.html */; };
 		9BCFDCA51C85B6CF003A35A8 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9BCFDCA21C85B6CF003A35A8 /* AppDelegate.mm */; };
 		9BD52BE71CC46C6E009FE948 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BD52BE61CC46C6E009FE948 /* GoogleService-Info.plist */; };
+		A670347223A759930017D10D /* CLStationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A670347123A759930017D10D /* CLStationTableViewCell.m */; };
+		A6A68BBC23A723C000D58D5A /* CLTechStationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A68BBB23A723C000D58D5A /* CLTechStationViewController.m */; };
+		A6A68BBF23A723EC00D58D5A /* CLStationListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A68BBE23A723EC00D58D5A /* CLStationListViewController.m */; };
+		A6A68BC223A7299C00D58D5A /* CLStationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A68BC123A7299C00D58D5A /* CLStationModel.m */; };
 		A6BDB8B32339C31800FB0355 /* CLSearchOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BDB8B12339C31800FB0355 /* CLSearchOrderViewController.m */; };
 		A6BDB8B82339C3C400FB0355 /* CLLineTextFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BDB8B52339C3C400FB0355 /* CLLineTextFieldView.m */; };
 		A6BDB8B92339C3C400FB0355 /* CLZYSupperSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BDB8B72339C3C400FB0355 /* CLZYSupperSelectView.m */; };
@@ -242,6 +246,14 @@
 		9BFA80811C5F4744001651C3 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		9BFA80841C5F475B001651C3 /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
 		A08ADB78524ACF43A63B9DF3 /* libPods-CarMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CarMap.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A670347023A759930017D10D /* CLStationTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLStationTableViewCell.h; sourceTree = "<group>"; };
+		A670347123A759930017D10D /* CLStationTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLStationTableViewCell.m; sourceTree = "<group>"; };
+		A6A68BBA23A723C000D58D5A /* CLTechStationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLTechStationViewController.h; sourceTree = "<group>"; };
+		A6A68BBB23A723C000D58D5A /* CLTechStationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLTechStationViewController.m; sourceTree = "<group>"; };
+		A6A68BBD23A723EC00D58D5A /* CLStationListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLStationListViewController.h; sourceTree = "<group>"; };
+		A6A68BBE23A723EC00D58D5A /* CLStationListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLStationListViewController.m; sourceTree = "<group>"; };
+		A6A68BC023A7299C00D58D5A /* CLStationModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLStationModel.h; sourceTree = "<group>"; };
+		A6A68BC123A7299C00D58D5A /* CLStationModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLStationModel.m; sourceTree = "<group>"; };
 		A6BDB8B12339C31800FB0355 /* CLSearchOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLSearchOrderViewController.m; sourceTree = "<group>"; };
 		A6BDB8B22339C31800FB0355 /* CLSearchOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLSearchOrderViewController.h; sourceTree = "<group>"; };
 		A6BDB8B42339C3C400FB0355 /* CLZYSupperSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLZYSupperSelectView.h; sourceTree = "<group>"; };
@@ -856,6 +868,10 @@
 				B04AF15F20D8E5D1007EFCB3 /* CLStudyViewController.m */,
 				B052E66420E0E50C00F2B1D8 /* CLStudyDetailWebViewController.h */,
 				B052E66520E0E50C00F2B1D8 /* CLStudyDetailWebViewController.m */,
+				A6A68BBA23A723C000D58D5A /* CLTechStationViewController.h */,
+				A6A68BBB23A723C000D58D5A /* CLTechStationViewController.m */,
+				A6A68BBD23A723EC00D58D5A /* CLStationListViewController.h */,
+				A6A68BBE23A723EC00D58D5A /* CLStationListViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -871,6 +887,8 @@
 				B081E7561ECEA337003558DC /* CLCollectTableViewCell.m */,
 				B04AF16B20D8F95F007EFCB3 /* CLStudyModel.h */,
 				B04AF16C20D8F95F007EFCB3 /* CLStudyModel.m */,
+				A6A68BC023A7299C00D58D5A /* CLStationModel.h */,
+				A6A68BC123A7299C00D58D5A /* CLStationModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -882,6 +900,8 @@
 				B022911A1ECD4CFC0022D34F /* CLNotificationTableViewCell.m */,
 				B04AF17220D90FE8007EFCB3 /* CLStudyTableViewCell.h */,
 				B04AF17320D90FE8007EFCB3 /* CLStudyTableViewCell.m */,
+				A670347023A759930017D10D /* CLStationTableViewCell.h */,
+				A670347123A759930017D10D /* CLStationTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1681,6 +1701,7 @@
 				B02291E61ECD4E4F0022D34F /* GFAddPeoTableViewCell.m in Sources */,
 				B05EC0F320F3383900EFB588 /* HXDatePhotoEditViewController.m in Sources */,
 				B02292441ECD50390022D34F /* GFQualifieViewController.m in Sources */,
+				A6A68BBF23A723EC00D58D5A /* CLStationListViewController.m in Sources */,
 				B052E66620E0E50C00F2B1D8 /* CLStudyDetailWebViewController.m in Sources */,
 				B02290E81ECD4BB40022D34F /* HZPhotoBrowser.m in Sources */,
 				B00FA48220EC9A7B00B31DC9 /* CLTeamPeopleTableViewCell.m in Sources */,
@@ -1729,6 +1750,7 @@
 				B02291571ECD4CFC0022D34F /* GFBankCardViewController.m in Sources */,
 				B05EC0EC20F3383900EFB588 /* HXAlbumModel.m in Sources */,
 				B04AF16020D8E5D1007EFCB3 /* CLStudyViewController.m in Sources */,
+				A6A68BC223A7299C00D58D5A /* CLStationModel.m in Sources */,
 				B022915E1ECD4CFC0022D34F /* GFNothingView.m in Sources */,
 				B02291591ECD4CFC0022D34F /* GFBillViewController.m in Sources */,
 				B05EC0D720F3383900EFB588 /* UIFont+HXExtension.m in Sources */,
@@ -1755,6 +1777,7 @@
 				B02291841ECD4D570022D34F /* CLTouchScrollView.m in Sources */,
 				B02291E11ECD4E4F0022D34F /* CLSigninViewController.m in Sources */,
 				B02291001ECD4BF70022D34F /* GFForgetPwdViewController_2.m in Sources */,
+				A670347223A759930017D10D /* CLStationTableViewCell.m in Sources */,
 				9B9FCF081C8AA2DB0022F54E /* ViewController.m in Sources */,
 				B05EC0EA20F3383900EFB588 /* HXDatePhotoViewTransition.m in Sources */,
 				B02290DF1ECD4BB40022D34F /* GFMapViewController.mm in Sources */,
@@ -1841,6 +1864,7 @@
 				B02291E21ECD4E4F0022D34F /* CLWorkBeforeViewController.m in Sources */,
 				B02291541ECD4CFC0022D34F /* GFNewOrderModel.m in Sources */,
 				B02290E71ECD4BB40022D34F /* HZIndicatorView.m in Sources */,
+				A6A68BBC23A723C000D58D5A /* CLTechStationViewController.m in Sources */,
 				B05EC0CE20F3383900EFB588 /* HXCustomCameraViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

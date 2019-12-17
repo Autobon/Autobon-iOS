@@ -32,6 +32,10 @@
 #import "CLStudyViewController.h"
 #import "CLTeamManagerViewController.h"
 #import "CLMyTeamViewController.h"
+#import "CLStationModel.h"
+#import "AppDelegate.h"
+#import <CoreLocation/CoreLocation.h>
+#import "CLTechStationViewController.h"
 
 
 
@@ -52,10 +56,15 @@
 
 @property (nonatomic, strong) GFCertifyModel *model;
 
+@property (nonatomic, strong) CLStationModel *stationModel;
 
 @end
 
 @implementation GFMyMessageViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    [self getUserInformation];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -67,7 +76,6 @@
     
     // 界面搭建
     [self _setView];
-    
     
     
 }
@@ -86,7 +94,10 @@
     self.view.backgroundColor = [UIColor colorWithRed:252 / 255.0 green:252 / 255.0 blue:252 / 255.0 alpha:1];
     
     // 导航栏
-    self.navView = [[GFNavigationView alloc] initWithLeftImgName:@"back.png" withLeftImgHightName:@"backClick.png" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"我的信息" withFrame:CGRectMake(0, 0, kWidth, 64)];
+    self.navView = [[GFNavigationView alloc] initWithLeftImgName:@"back.png" withLeftImgHightName:@"backClick.png" withRightImgName:@"" withRightImgHightName:nil withCenterTitle:@"我的信息" withFrame:CGRectMake(0, 0, kWidth, 64)];
+    [self.navView.rightBut setTitle:@"签到  " forState:UIControlStateNormal];
+    self.navView.rightBut.titleLabel.font = [UIFont systemFontOfSize:14];
+    [self.navView.rightBut addTarget:self action:@selector(rightBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.navView.leftBut addTarget:self action:@selector(leftButClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.navView];
 }
@@ -356,8 +367,8 @@
 
     
     
-    NSArray *imageArray = @[@"order",@"my_team",@"collection",@"information-2",@"editPassword",@"centre",@"study_garden"];
-    NSArray *titleArray = @[@"我的订单",@"我的团队",@"我的收藏",@"通知列表",@"修改密码",@"服务中心",@"学习园地"];
+    NSArray *imageArray = @[@"order",@"my_team",@"collection",@"information-2",@"editPassword",@"centre",@"study_garden",@"study_garden"];
+    NSArray *titleArray = @[@"我的订单",@"我的团队",@"我的收藏",@"通知列表",@"修改密码",@"服务中心",@"学习园地", @"常驻地设置"];
     
     for (int i = 0; i < titleArray.count; i++) {
         // baseView
@@ -424,7 +435,7 @@
     [_contentView addSubview:exitBut];
     [exitBut addTarget:self action:@selector(exitButClick) forControlEvents:UIControlEventTouchUpInside];
     [exitBut mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(moneyView.mas_bottom).offset(60 + 45*9);
+        make.top.equalTo(moneyView.mas_bottom).offset(60 + 45*10);
         make.left.equalTo(self.view).offset(0);
         make.right.equalTo(self.view).offset(0);
         make.height.mas_offset(45);
@@ -488,7 +499,9 @@
                 self.model.reference = [NSString stringWithFormat:@"%@", dataDic[@"reference"]];
             }
             
-            
+            if ([self.model.signStatus isEqualToString:@"1"]){
+                [self.navView.rightBut setTitle:@"已签到" forState:UIControlStateNormal];
+            }
 
             
             
@@ -574,6 +587,9 @@
                 self.model.resume = [NSString stringWithFormat:@"%@", dataDic[@"resume"]];
             }
             
+            //获取技师常驻地信息
+            [self getTechStationInformation];
+            
         }else {
         
 //            NSLog(@"请求失败+++++++++++++%@", responseObject);
@@ -587,6 +603,73 @@
     
     
 }
+
+// 获取技师信息
+- (void)getUserInformation{
+    [GFHttpTool messageGetWithParameters:nil success:^(id responseObject) {
+        
+        
+        ICLog(@"个人信息数据＝＝＝＝＝＝＝＝＝%@", responseObject);
+        
+        NSInteger flage = [responseObject[@"status"] integerValue];
+        if(flage == 1) {
+            
+            //            NSLog(@"请求成功++++++个人信息+++++++%@", responseObject);
+            NSDictionary *dic = responseObject[@"message"];
+            
+            NSDictionary *dataDic = dic[@"technician"];
+            
+            self.model = [[GFCertifyModel alloc] initWithDictionary:dataDic];
+            
+            if([dataDic[@"reference"] isKindOfClass:[NSNull class]]) {
+                
+                self.model.reference = @"无";
+            }else {
+                
+                self.model.reference = [NSString stringWithFormat:@"%@", dataDic[@"reference"]];
+            }
+            
+            if ([self.model.signStatus isEqualToString:@"1"]){
+                [self.navView.rightBut setTitle:@"已签到" forState:UIControlStateNormal];
+            }
+            
+            NSString *name = dataDic[@"name"];
+            if([name isKindOfClass:[NSNull class]]) {
+                name = [NSString stringWithFormat:@""];
+            }
+            
+            NSString *balance = dic[@"balance"];
+            if([balance isKindOfClass:[NSNull class]]) {
+                balance = [NSString stringWithFormat:@"0"];
+            }
+            
+            self.bank = dataDic[@"bank"];
+            self.bankCardNo = dataDic[@"bankCardNo"];
+            self.balance = balance;
+            self.name = name;
+            self.idString = dataDic[@"id"];
+            
+            if([dataDic[@"resume"] isKindOfClass:[NSNull class]]) {
+                
+                self.model.resume = @"无";
+            }else {
+                
+                self.model.resume = [NSString stringWithFormat:@"%@", dataDic[@"resume"]];
+            }
+            
+            //获取技师常驻地信息
+            [self getTechStationInformation];
+            
+        }else {
+            
+        }
+        
+    } failure:^(NSError *error) {
+        //         NSLog(@"请求失败+++++++++++++%@", error);
+        [self addAlertView:@"信息请求失败"];
+    }];
+}
+
 
 
 - (void)btnClick:(UIButton *)button{
@@ -619,9 +702,13 @@
             ICLog(@"学习园地");
             [self studyBtnClick];
             break;
-        case 8:
+        case -8:
             ICLog(@"我的团队");
             [self myTeamBtnClick];
+            break;
+        case 8:
+            ICLog(@"常驻地设置");
+            [self myTechStationClick];
             break;
         default:
             break;
@@ -691,6 +778,13 @@
     
 }
 
+#pragma mark - 获取技师常驻地信息
+- (void)myTechStationClick{
+    ICLog(@"获取技师常驻地信息");
+    CLTechStationViewController *techStationVC = [[CLTechStationViewController alloc]init];
+    techStationVC.stationModel = self.stationModel;
+    [self.navigationController pushViewController:techStationVC animated:YES];
+}
 
 // 信息界面按钮跳转
 - (void)msgButClick {
@@ -747,10 +841,25 @@
     GFChangePwdViewController *chagePwdVC = [[GFChangePwdViewController alloc] init];
     [self.navigationController pushViewController:chagePwdVC animated:YES];
     
-
-    
-    
 }
+
+#pragma mark - 获取技师常驻地信息
+- (void)getTechStationInformation{
+    if (self.model.stationCoopId == nil || [self.model.stationCoopId isEqualToString:@""]){
+        return;
+    }
+    NSDictionary *dataDictionary = @{@"coopId": self.model.stationCoopId};
+    ICLog(@"dataDictionary-----%@---", dataDictionary);
+    [GFHttpTool getTechStationWithDictionary:dataDictionary Success:^(id responseObject) {
+        ICLog(@"获取技师常驻地信息成功-----%@---", responseObject);
+        NSDictionary *messageDict = responseObject[@"message"];
+        self.stationModel = [[CLStationModel alloc]init];
+        [self.stationModel setModelForDataDictionary:messageDict];
+    } failure:^(NSError *error) {
+        ICLog(@"获取技师常驻地信息失败----%@---", error);
+    }];
+}
+
 
 - (void)exitButClick {
     
@@ -776,6 +885,40 @@
 - (void)leftButClick {
     
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)rightBtnClick{
+    if ([self.model.signStatus isEqualToString:@"1"]){
+        return;
+    }
+    ICLog(@"个人中心常驻地签到，需要在常驻地五百米之内");
+    if (self.stationModel == nil){
+        [self addAlertView:@"请先设置常驻地"];
+        return;
+    }
+    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    ICLog(@"----app.locationDictionary---%@--", app.locationDictionary);
+    CLLocation *location1 = [[CLLocation alloc] initWithLatitude:[app.locationDictionary[@"lat"] floatValue] longitude:[app.locationDictionary[@"lng"] floatValue]];
+    CLLocation *location2 = [[CLLocation alloc] initWithLatitude:[self.stationModel.latitude floatValue] longitude:[self.stationModel.longitude floatValue]];
+    double distance = [location1 distanceFromLocation:location2];
+    ICLog(@"distance---%f---", distance);
+    if (distance > 500){
+        [self addAlertView:@"请在常驻地五百米范围之内签到"];
+        return;
+    }
+    
+    [GFHttpTool postStationSignWithDictionary:@{} Success:^(id responseObject) {
+        ICLog(@"--常驻地签到成功--%@---", responseObject);
+        NSInteger flage = [responseObject[@"status"] integerValue];
+        if (flage == 1){
+            [self.navView.rightBut setTitle:@"已签到" forState:UIControlStateNormal];
+        }else{
+            [self addAlertView:responseObject[@"message"]];
+        }
+    } failure:^(NSError *error) {
+        ICLog(@"--常驻地签到失败---%@---", error);
+    }];
+    
 }
 
 
