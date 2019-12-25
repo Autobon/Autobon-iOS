@@ -143,14 +143,12 @@
     
     _mapVC.distanceBlock = ^(double distance) {
 //        NSLog(@"距离－－%f--",distance);
-        
         signinView.distanceLabel.text = [NSString stringWithFormat:@"距离：%0.2fkm",distance/1000.0];
         if (distance < 5000) {
             signinView.signinButton.userInteractionEnabled = YES;
             signinView.signinButton.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
 //            [signinView.signinButton setTitle:@"可以签到了" forState:UIControlStateNormal];
         }
-        
     };
     
     [self.view addSubview:_mapVC.view];
@@ -177,7 +175,6 @@
     _signinButton.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
     _signinButton.layer.cornerRadius = 10;
     [_signinButton addTarget:self action:@selector(signinBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    
     [self.view addSubview:_signinButton];
     
     

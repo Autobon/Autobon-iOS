@@ -181,8 +181,13 @@
                 CLHomeOrderCellModel *cellModel = [[CLHomeOrderCellModel alloc] initWithDictionary:dic];
 //                GFNewOrderModel *cellModel = [[GFNewOrderModel alloc] initWithDictionary:dic];
                 [_cellModelArray addObject:cellModel];
-                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[dic[@"agreedStartTime"] doubleValue]/1000];
-                cellModel.orderTime = [formatter stringFromDate:date];
+                if ([dic[@"agreedStartTime"] isKindOfClass:[NSNull class]]){
+                    cellModel.orderTime = @"";
+                }else{
+                    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[dic[@"agreedStartTime"] doubleValue]/1000];
+                    cellModel.orderTime = [formatter stringFromDate:date];
+                }
+                
             }
             
             

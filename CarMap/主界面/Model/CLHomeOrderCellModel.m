@@ -85,6 +85,10 @@
             
             _remark = @" ";
         }
+        if ([[NSString stringWithFormat:@"%@",_remark] isEqualToString:@"(null)"] || [[NSString stringWithFormat:@"%@",_remark] isEqualToString:@"<null>"]){
+            _remark = @" ";
+        }
+        
         
         _status = dic[@"status"];
         // 商户名字
@@ -147,6 +151,22 @@
             
             _license = dic[@"license"];
         }
+        if ([[NSString stringWithFormat:@"%@",_license] isEqualToString:@"(null)"] || [[NSString stringWithFormat:@"%@",_license] isEqualToString:@"<null>"]){
+            _license = @" ";
+        }
+        
+        // 车型
+        if([dic[@"vehicleModel"] isKindOfClass:[NSNull class]]) {
+            
+            _vehicleModel = @"";
+        }else {
+            
+            _vehicleModel = dic[@"vehicleModel"];
+        }
+        if ([[NSString stringWithFormat:@"%@",_vehicleModel] isEqualToString:@"(null)"] || [[NSString stringWithFormat:@"%@",_vehicleModel] isEqualToString:@"<null>"]){
+            _vehicleModel = @" ";
+        }
+        
         
         // 车架号
         if([dic[@"vin"] isKindOfClass:[NSNull class]]) {

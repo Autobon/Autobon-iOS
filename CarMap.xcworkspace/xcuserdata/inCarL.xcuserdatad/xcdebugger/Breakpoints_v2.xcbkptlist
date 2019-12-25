@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CarMap/&#x53ef;&#x62a2;&#x8ba2;&#x5355;/Controller/GFOrderForWaitViewController.m"
-            timestampString = "593344162.150978"
+            filePath = "CarMap/&#x4e3b;&#x754c;&#x9762;/Controller/CLHomeOrderViewController.m"
+            timestampString = "598874616.27668"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "372"
-            endingLineNumber = "372"
-            landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            startingLineNumber = "407"
+            endingLineNumber = "407"
+            landmarkName = "-OrderDetailBtnClick"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

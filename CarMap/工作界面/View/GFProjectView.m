@@ -48,7 +48,7 @@
     if([_proName isEqualToString:@"美容清洁"]){
         rowButtonNumber = 2;
     }
-    
+    rowButtonNumber = 1;
     
     CGFloat w = ([UIScreen mainScreen].bounds.size.width - 10 * (rowButtonNumber + 1)) / rowButtonNumber;
     CGFloat h = 30;

@@ -527,7 +527,8 @@
 //    NSLog(@"--订单ID－－-%@", _orderId);
     
     
-    
+//    [self _setSC];
+//    _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(_scView.frame)+20);
     
     [GFHttpTool getProductOfferWithOrderId:self.model.orderId success:^(id responseObject) {
         ICLog(@"responseObject------%@----",responseObject);
@@ -1377,7 +1378,7 @@
         UIButton *but = [UIButton buttonWithType:UIButtonTypeCustom];
         but.tag = i + 1;
         but.titleLabel.font = [UIFont systemFontOfSize:10];
-        [but setTitle:buweiArr[i] forState:UIControlStateNormal];
+        [but setTitle:[buweiArr[i] componentsSeparatedByString:@"-"][0] forState:UIControlStateNormal];
         [but setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
         [but setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
         [but setBackgroundImage:[UIImage imageNamed:@"but_normal"] forState:UIControlStateNormal];
@@ -1422,7 +1423,9 @@
     [_scView addSubview:self.proButView];
     
     
-    
+    if (self.messageArr.count == 0){
+        return;
+    }
     NSDictionary *modelDic = self.messageArr[0];
     GFBuweiModel *model = [[GFBuweiModel alloc] initWithDictionary:modelDic];
     [_buweiModelArr addObject:model];
@@ -1437,7 +1440,7 @@
     for(int i=0; i<self.messageArr.count; i++) {
         
         NSDictionary *dic = self.messageArr[i];
-        NSString *buwei = dic[@"constructionPositionName"];
+        NSString *buwei = [NSString stringWithFormat:@"%@-%@", dic[@"constructionPositionName"], dic[@"model"]];
         NSString *buweiID = dic[@"constructionPosition"];
         [bbArr addObject:buwei];
         [bbIdArr addObject:buweiID];
@@ -1482,7 +1485,7 @@
 //    _scView.bounces = NO;
 //    _scrollView.bounces = NO;
 
-    
+#pragma mark - 施工部位
     _maxVVArr = [[NSMutableArray alloc] init];
     for(int m=0; m<_proArr.count; m++) {
         
@@ -1531,21 +1534,21 @@
 //                }];
                 
                 
-                UIButton *submitRemarkButton = [UIButton buttonWithType:UIButtonTypeSystem];
-                [submitRemarkButton setTitle:@"提交" forState:UIControlStateNormal];
-                submitRemarkButton.titleLabel.font = [UIFont systemFontOfSize:15];
-                [submitRemarkButton setTitleColor:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] forState:UIControlStateNormal];
-                [submitRemarkButton addTarget:self action:@selector(submitRemarkBtnClick) forControlEvents:UIControlEventTouchUpInside];
-                submitRemarkButton.layer.cornerRadius = 5;
-                submitRemarkButton.layer.borderWidth = 1;
-                submitRemarkButton.layer.borderColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1].CGColor;
-                [_scView addSubview:submitRemarkButton];
-                [submitRemarkButton mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.centerY.equalTo(remarkTitleView);
-                    make.right.equalTo(self.view).offset(-20);
-                    make.width.mas_offset(60);
-                    make.height.mas_offset(25);
-                }];
+//                UIButton *submitRemarkButton = [UIButton buttonWithType:UIButtonTypeSystem];
+//                [submitRemarkButton setTitle:@"提交" forState:UIControlStateNormal];
+//                submitRemarkButton.titleLabel.font = [UIFont systemFontOfSize:15];
+//                [submitRemarkButton setTitleColor:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] forState:UIControlStateNormal];
+//                [submitRemarkButton addTarget:self action:@selector(submitRemarkBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//                submitRemarkButton.layer.cornerRadius = 5;
+//                submitRemarkButton.layer.borderWidth = 1;
+//                submitRemarkButton.layer.borderColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1].CGColor;
+//                [_scView addSubview:submitRemarkButton];
+//                [submitRemarkButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//                    make.centerY.equalTo(remarkTitleView);
+//                    make.right.equalTo(self.view).offset(-20);
+//                    make.width.mas_offset(60);
+//                    make.height.mas_offset(25);
+//                }];
                 
                 _textView = [[UITextView alloc]init];
                 _textView.layer.borderWidth = 1;
@@ -1603,7 +1606,7 @@
     }
     NSMutableDictionary *dataDictionary = [[NSMutableDictionary alloc]init];
     dataDictionary[@"remark"] = _textView.text;
-    dataDictionary[@"orderId"] = @"4769";
+//    dataDictionary[@"orderId"] = @"4769";
     //    dataDictionary[@"orderId"] = @"qqq";
     //    NSDictionary *dataDictionary = @{@"orderId":[NSString stringWithFormat:@"%@",_model.orderId],@"remark":_textView.text};
     [GFHttpTool postOrderRemarkWithDictionary:dataDictionary Success:^(id responseObject) {
@@ -1830,7 +1833,8 @@
         mDic[@"afterPhotos"] = urlStr;
         mDic[@"constructionDetails"] = allArr;
         mDic[@"constructionWastes"] = constructionWastesArr;
-        NSLog(@"提交的数据%@", mDic);
+        mDic[@"remark"] = _textView.text;
+        ICLog(@"提交的数据%@", mDic);
 
         NSDictionary *dicccc = allArr[0];
         NSArray *projectPositionsArrrr  = dicccc[@"projectPositions"];
@@ -1941,11 +1945,11 @@
     self.baifeiSelArr[self.selBaofeiBut.tag - 1] = @(row);
     if(row == 0) {
         
-        [self.selBaofeiBut setTitle:[NSString stringWithFormat:@"%@", self.baofeiNorArr[self.selBaofeiBut.tag - 1]] forState:UIControlStateNormal];
+        [self.selBaofeiBut setTitle:[NSString stringWithFormat:@"%@", [self.baofeiNorArr[self.selBaofeiBut.tag - 1] componentsSeparatedByString:@"-"][0]] forState:UIControlStateNormal];
         self.selBaofeiBut.selected = NO;
     }else {
         
-        [self.selBaofeiBut setTitle:[NSString stringWithFormat:@"%@ x %ld", self.baofeiNorArr[self.selBaofeiBut.tag - 1], row] forState:UIControlStateNormal];
+        [self.selBaofeiBut setTitle:[NSString stringWithFormat:@"%@ x %ld", [self.baofeiNorArr[self.selBaofeiBut.tag - 1] componentsSeparatedByString:@"-"][0], row] forState:UIControlStateNormal];
         self.selBaofeiBut.selected = YES;
     }
     

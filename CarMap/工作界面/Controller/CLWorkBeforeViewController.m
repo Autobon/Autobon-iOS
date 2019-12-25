@@ -667,7 +667,6 @@
 //                    cleanWork.startTime = _startTime;
 //                    cleanWork.orderNumber = self.orderNumber;
 //                    [self.navigationController pushViewController:cleanWork animated:YES];
-                
 //                }else{
                 CLWorkOverViewController *workOver = [[CLWorkOverViewController alloc]init];
                 workOver.orderId = _orderId;
