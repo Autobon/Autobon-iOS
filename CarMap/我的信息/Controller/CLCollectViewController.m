@@ -161,7 +161,17 @@
 
 - (CGFloat )tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return 90;
+    CLCooperatorModel *model = _dataArray[indexPath.row];
+    
+    CGSize maxSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width- 10 - 75 - 65, MAXFLOAT);
+    CGRect rect =
+    [model.fullname boundingRectWithSize:maxSize
+                            options:NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin
+                         attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:14]}
+                            context:nil];
+    
+    
+    return 90 + rect.size.height;
 }
 
 - (void)_setBase {

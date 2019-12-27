@@ -1281,7 +1281,7 @@ NSString* const PUBHOST = @"http://118.31.41.230:7123/api";
 }
 #pragma mark - 提交工作前照片
 // 二期
-+ (void)PostPhotoForBeforeOrderId:(NSInteger )orderId URLs:(NSString *)URLs success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
++ (void)PostPhotoForBeforeParameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure{
     
     
     
@@ -1298,17 +1298,18 @@ NSString* const PUBHOST = @"http://118.31.41.230:7123/api";
         [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
         NSString *token = [userDefaultes objectForKey:@"autoken"];
         [manager.requestSerializer setValue:token forHTTPHeaderField:@"Cookie"];
-//        NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/beforePhoto",HOST];
-        NSString *URLString = [NSString stringWithFormat:@"%@/technician/construct/v2/beforePhoto",HOST];
-        [manager POST:URLString parameters:@{@"orderId":@(orderId),@"urls":URLs} progress:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
-            //            NSLog(@"-----%@－－－－",responseObject[@"message"]);
+        NSString *URLString = [NSString stringWithFormat:@"%@/technician/v2/order/beforePhoto?orderId=%@&urls=%@&remark=%@",HOST, parameters[@"orderId"], parameters[@"urls"], parameters[@"remark"]];
+        ICLog(@"----URLString---%@---", URLString);
+        [manager PUT:URLString parameters:nil success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+            ICLog(@"--parameters--%@---%@－－－－",parameters ,responseObject[@"message"]);
+            
             if(success) {
                 
                 [aView removeFromSuperview];
                 success(responseObject);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            //            NSLog(@"－－－－%@----",error);
+            ICLog(@"－－－－%@----",error);
             // 判断请求超时
             NSString *errorStr = error.userInfo[@"NSLocalizedDescription"];
             if([errorStr isEqualToString:@"The request timed out."]) {

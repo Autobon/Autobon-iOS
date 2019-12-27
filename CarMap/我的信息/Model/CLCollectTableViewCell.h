@@ -12,6 +12,7 @@
 @interface CLCollectTableViewCell : UITableViewCell
 {
     UILabel *_nameLab;
+    UILabel *_nameValueLab;
     UILabel *_peopleLab;
     UILabel *_phoneLab;
 }

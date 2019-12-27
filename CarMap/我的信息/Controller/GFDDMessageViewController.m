@@ -217,6 +217,7 @@
 - (void)butClick {
     
     GFFCertifyViewController *vvc = [[GFFCertifyViewController alloc] init];
+    vvc.isChange = YES;
     [self.navigationController pushViewController:vvc animated:YES];
 }
 

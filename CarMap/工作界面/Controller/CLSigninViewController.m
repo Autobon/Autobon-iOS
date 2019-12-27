@@ -180,7 +180,7 @@
     
     // 距离提示框
     UILabel *tipLab = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_signinButton.frame), [UIScreen mainScreen].bounds.size.width, 35)];
-    tipLab.text = @"请在距离目标5000米范围内进行提示";
+    tipLab.text = @"请距离目标位置5000米内签到！";
     tipLab.font = [UIFont systemFontOfSize:12];
     tipLab.textAlignment = NSTextAlignmentCenter;
     tipLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];

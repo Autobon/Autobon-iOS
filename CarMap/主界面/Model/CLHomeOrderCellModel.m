@@ -89,6 +89,15 @@
             _remark = @" ";
         }
         
+        // 备注
+        _technicianRemark = dic[@"technicianRemark"];
+        if ([_technicianRemark isKindOfClass:[NSNull class]]) {
+            
+            _technicianRemark = @"";
+        }
+        if ([[NSString stringWithFormat:@"%@",_technicianRemark] isEqualToString:@"(null)"] || [[NSString stringWithFormat:@"%@",_technicianRemark] isEqualToString:@"<null>"]){
+            _technicianRemark = @"";
+        }
         
         _status = dic[@"status"];
         // 商户名字

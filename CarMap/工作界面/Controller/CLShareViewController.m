@@ -47,14 +47,20 @@
     
     
     
-    UIButton *shareButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width-80, 20, 44, 44)];
+//    UIButton *shareButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width-80, 20, 44, 44)];
+    UIButton *shareButton = [[UIButton alloc]init];
     [shareButton setImage:[UIImage imageNamed:@"share"] forState:UIControlStateNormal];
     
     [shareButton setImage:[UIImage imageNamed:@"shareClick"] forState:UIControlStateHighlighted];
     [shareButton addTarget:self action:@selector(shareBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [navView addSubview:shareButton];
     
-    
+    [shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(navView).offset(-44);
+        make.bottom.equalTo(navView);
+        make.height.mas_offset(44);
+        make.width.mas_offset(44);
+    }];
     
 }
 

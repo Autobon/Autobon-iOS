@@ -27,46 +27,63 @@
         self.backgroundColor = [UIColor colorWithRed:252 / 255.0 green:252 / 255.0 blue:252 / 255.0 alpha:1];
         
         // 基础视图
-        CGFloat baseViewW = kWidth;
-        CGFloat baseViewH = 85;
-        CGFloat baseViewX = 0;
-        CGFloat baseViewY = 5;
-        UIView *baseView = [[UIView alloc] initWithFrame:CGRectMake(baseViewX, baseViewY, baseViewW, baseViewH)];
+        UIView *baseView = [[UIView alloc] init];
         baseView.backgroundColor = [UIColor whiteColor];
         [self.contentView addSubview:baseView];
-        
+        [baseView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.equalTo(self);
+            make.top.equalTo(self).offset(5);
+            make.bottom.equalTo(self).offset(-5);
+        }];
 // 商户名称
-        CGFloat nameLabW = kWidth - jiange * 2;
-        CGFloat nameLabH = 25;
-        CGFloat nameLabX = jiange;
-        CGFloat nameLabY = 10;
-        _nameLab = [[UILabel alloc] initWithFrame:CGRectMake(nameLabX, nameLabY-5, nameLabW, nameLabH)];
-        _nameLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
-//        _nameLab.text = @"商户名称：测试商户";
+        _nameLab = [[UILabel alloc] init];
+        _nameLab.font = [UIFont systemFontOfSize:14];
+        _nameLab.text = @"商户名称：";
         [baseView addSubview:_nameLab];
+        [_nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(baseView).offset(10);
+            make.width.mas_offset(75);
+            make.top.equalTo(baseView).offset(15);
+        }];
+        
+        _nameValueLab = [[UILabel alloc]init];
+        _nameValueLab.font = [UIFont systemFontOfSize:14];
+        _nameValueLab.numberOfLines = 0;
+        _nameValueLab.text = @" ";
+        [baseView addSubview:_nameValueLab];
+        [_nameValueLab mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_nameLab.mas_right).offset(-5);
+            make.right.equalTo(baseView).offset(-70);
+            make.top.equalTo(_nameLab).offset(0);
+        }];
+        
+        
+        
         
 // 商户法人
-        CGFloat peopleLabW = 240 / 375.0 * kWidth;
-        CGFloat peopleLabH = 25;
-        CGFloat peopleLabX = jiange;
-        CGFloat peopleLabY = CGRectGetMaxY(_nameLab.frame);
-        _peopleLab = [[UILabel alloc] initWithFrame:CGRectMake(peopleLabX, peopleLabY, peopleLabW, peopleLabH)];
+        _peopleLab = [[UILabel alloc] init];
         _peopleLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
-        _peopleLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
+        _peopleLab.font = [UIFont systemFontOfSize:14];
 //        _peopleLab.text = @"商户法人：王老板";
         [baseView addSubview:_peopleLab];
-        
+        [_peopleLab mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(baseView).offset(10);
+            make.right.equalTo(baseView).offset(-60);
+            make.top.equalTo(_nameValueLab.mas_bottom).offset(10);
+            make.height.mas_offset(20);
+        }];
 // 联系方式
-        CGFloat phoneLabW = nameLabW;
-        CGFloat phoneLabH = 25;
-        CGFloat phoneLabX = nameLabX;
-        CGFloat phoneLabY = CGRectGetMaxY(_peopleLab.frame);
-        _phoneLab = [[UILabel alloc] initWithFrame:CGRectMake(phoneLabX, phoneLabY, phoneLabW, phoneLabH)];
-        _phoneLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
+        _phoneLab = [[UILabel alloc] init];
+        _phoneLab.font = [UIFont systemFontOfSize:14];
         _phoneLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
 //        _phoneLab.text = @"联系方式：18672944895";
         [baseView addSubview:_phoneLab];
-        
+        [_phoneLab mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(baseView).offset(10);
+            make.right.equalTo(baseView).offset(-60);
+            make.top.equalTo(_peopleLab.mas_bottom).offset(10);
+            make.height.mas_offset(20);
+        }];
         
         // 移除
         _removeButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -96,7 +113,7 @@
 
 
 - (void)setModel:(CLCooperatorModel *)model{
-    _nameLab.text = [NSString stringWithFormat:@"商户名称：%@",model.fullname];
+    _nameValueLab.text = [NSString stringWithFormat:@"%@",model.fullname];
     _peopleLab.text = [NSString stringWithFormat:@"商户法人：%@",model.corporationName];
     _phoneLab.text = [NSString stringWithFormat:@"联系方式：%@",model.contactPhone];
 }

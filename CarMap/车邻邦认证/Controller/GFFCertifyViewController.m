@@ -260,7 +260,7 @@
     
     // 个人简介
     _txtView = [[UITextView alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(skillView.frame) + 15 + 35 + 35 + 35 + 35 + 10, [UIScreen mainScreen].bounds.size.width - 40, 80)];
-    _txtView.text = @"请介绍一下自己吧！";
+    _txtView.text = @"请介绍一下自己吧！（200字以内）";
     _txtView.textColor = [UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0];
     _txtView.delegate = self;
     [_scView addSubview:_txtView];
@@ -288,7 +288,7 @@
     self.yinhangMingTxt = [self setYinhangWith:0 withY:CGRectGetMaxY(yinhangView.frame) withTitle:@"银行名称"];
     self.yinhangMingTxt.tag = 99;
     self.yinhangMingTxt.delegate = self;
-    
+    self.yinhangMingTxt.text = @"农业银行";
     // 横线
     UIView *lineView2 = [[UIView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(yinhangView.frame) + 40, [UIScreen mainScreen].bounds.size.width - 20, 1)];
     lineView2.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
@@ -311,16 +311,20 @@
     [_scView addSubview:lineView4];
     
     // 提交按钮
-    UIButton *subBut = [UIButton buttonWithType:UIButtonTypeCustom];
-    subBut.frame = CGRectMake(40, CGRectGetMaxY(lineView4.frame) + 35, [UIScreen mainScreen].bounds.size.width - 80, 45);
-    subBut.backgroundColor = [UIColor colorWithRed:233 / 255.0 green:96 / 255.0 blue:30 / 255.0 alpha:1];
-    subBut.layer.cornerRadius = 5;
-    [subBut setTitle:@"提交" forState:UIControlStateNormal];
-    [_scView addSubview:subBut];
-    [subBut addTarget:self action:@selector(subButClick) forControlEvents:UIControlEventTouchUpInside];
+    _submitBut = [UIButton buttonWithType:UIButtonTypeCustom];
+    _submitBut.frame = CGRectMake(40, CGRectGetMaxY(lineView4.frame) + 35, [UIScreen mainScreen].bounds.size.width - 80, 45);
+    _submitBut.backgroundColor = [UIColor colorWithRed:233 / 255.0 green:96 / 255.0 blue:30 / 255.0 alpha:1];
+    _submitBut.layer.cornerRadius = 5;
+    if (self.isChange){
+        [_submitBut setTitle:@"再次认证" forState:UIControlStateNormal];
+    }else{
+        [_submitBut setTitle:@"提交" forState:UIControlStateNormal];
+    }
+    [_scView addSubview:_submitBut];
+    [_submitBut addTarget:self action:@selector(subButClick) forControlEvents:UIControlEventTouchUpInside];
     
     // 技师认证协议
-    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(subBut.frame) + 5, [UIScreen mainScreen].bounds.size.width * 0.6 - 6 / 320.0 * [UIScreen mainScreen].bounds.size.width, 20)];
+    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_submitBut.frame) + 5, [UIScreen mainScreen].bounds.size.width * 0.6 - 6 / 320.0 * [UIScreen mainScreen].bounds.size.width, 20)];
     lab.textColor = [UIColor lightGrayColor];
     [_scView addSubview:lab];
     lab.font = [UIFont systemFontOfSize:11];
@@ -337,7 +341,7 @@
     [bb addTarget:self action:@selector(xieyiBut) forControlEvents:UIControlEventTouchUpInside];
     
     
-    _scView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, CGRectGetMaxY(subBut.frame) + 60);
+    _scView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, CGRectGetMaxY(_submitBut.frame) + 60);
     
     // 时间选择器
     _bbView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
@@ -377,7 +381,7 @@
     if(self.tuijianrenTxt.text.length > 0) {
         _dataDictionary[@"reference"] = self.tuijianrenTxt.text;
     }
-    if(![self.txtView.text isEqualToString:@"请介绍一下自己吧！"]) {
+    if(![self.txtView.text isEqualToString:@"请介绍一下自己吧！（200字以内）"]) {
         _dataDictionary[@"resume"] = self.txtView.text;
     }
     
@@ -848,7 +852,7 @@
 #pragma mark - textView的协议方法
 - (void)textViewDidBeginEditing:(UITextView *)textView {
     
-    if ([textView.text isEqualToString:@"请介绍一下自己吧！"]) {
+    if ([textView.text isEqualToString:@"请介绍一下自己吧！（200字以内）"]) {
         textView.text = nil;
         textView.textColor = [UIColor blackColor];
     }
@@ -858,7 +862,7 @@
 }
 - (void)textViewDidEndEditing:(UITextView *)textView{
     if (textView.text.length == 0) {
-        textView.text = @"请介绍一下自己吧！";
+        textView.text = @"请介绍一下自己吧！（200字以内）";
         textView.textColor = [UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0];
     }
     

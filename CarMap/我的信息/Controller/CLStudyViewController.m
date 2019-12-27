@@ -106,7 +106,15 @@
 }
 
 - (CGFloat )tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 90;
+//    return 90;
+    CLStudyModel *model = _dataArray[indexPath.row];
+    CGSize maxSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width- 58 - 15 - 10, MAXFLOAT);
+    CGRect rect =
+    [model.remark boundingRectWithSize:maxSize
+                                 options:NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin
+                              attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:14]}
+                                 context:nil];
+    return 80 + rect.size.height;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

@@ -16,6 +16,7 @@
     UILabel *_titleLabel;
     UILabel *_typeLabel;
     UILabel *_remarkLabel;
+    UILabel *_remarkDetailLabel;
 }
 
 - (void)setDataForStudyModel:(CLStudyModel *)studyModel;

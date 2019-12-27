@@ -897,10 +897,9 @@
 #pragma mark - 设置导航条
 - (void)setNavigation{
     
-    
-    _navView = [[GFNavigationView alloc] initWithLeftImgName:@"waitOrder" withLeftImgHightName:@"waitOrder" withRightImgName:@"person" withRightImgHightName:@"personClick" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
-    [_navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [_navView.rightBut addTarget:_navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    _navView = [[GFNavigationView alloc] initWithLeftImgName:@"person" withLeftImgHightName:@"personClick" withRightImgName:@"waitOrder" withRightImgHightName:@"waitOrder" withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+    [_navView.rightBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [_navView.leftBut addTarget:_navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_navView];
     
  

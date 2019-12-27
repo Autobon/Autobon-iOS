@@ -32,7 +32,7 @@
 
 
 
-@interface CLWorkOverViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,GFProjectViewDelegate, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate,HXAlbumListViewControllerDelegate>
+@interface CLWorkOverViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,GFProjectViewDelegate, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate,HXAlbumListViewControllerDelegate,UITextViewDelegate>
 {
     UIView *_chooseView;
     UIButton *_carImageButton;
@@ -62,7 +62,7 @@
     GFNavigationView *_navView;
     
     UITextView *_textView;
-    
+    NSInteger _timeA;
 }
 
 /**
@@ -229,38 +229,42 @@
     [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
 //    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[_startTime floatValue]/1000];
     NSInteger time = (NSInteger)[[NSDate date] timeIntervalSince1970] - [_startTime floatValue]/1000;
-    
-//    NSLog(@"--时间戳-%ld", time);
+    if (time < 0){
+        time = 0;
+    }
+    ICLog(@"--时间戳-%ld", time);
         NSInteger minute = time/60;
+        NSInteger second = time%60;
         if (minute > 60) {
-            _distanceLabel.text = [NSString stringWithFormat:@"已用时：%ld时 %ld分",minute/60,minute%60];
+            _distanceLabel.text = [NSString stringWithFormat:@"已用时：%ld时 %ld分 %ld秒",minute/60,minute%60, second];
         }else{
 //            NSLog(@"----shezhi时间");
-            _distanceLabel.text = [NSString stringWithFormat:@"已用时： %ld分钟",(long)minute];
+            _distanceLabel.text = [NSString stringWithFormat:@"已用时： %ld分钟 %ld秒",(long)minute, second];
             
         }
     
     if (_timer == nil) {
-        _timer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(timeForWork:) userInfo:@{@"time":@(time)} repeats:YES];
+        _timeA = 0;
+        _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timeForWork:) userInfo:@{@"time":@(time)} repeats:YES];
     }
     
 }
 
 - (void)timeForWork:(NSTimer *)timer{
     
-//    NSLog(@"----%@----",timer.userInfo[@"time"]);
-    static NSInteger a = 0;
-    if (a == 0) {
-        a = [timer.userInfo[@"time"] integerValue];
+    ICLog(@"----%@----",timer.userInfo[@"time"]);
+    if (_timeA == 0) {
+        _timeA = [timer.userInfo[@"time"] integerValue];
         
     }
-    a = a + 60;
-    NSInteger minute = a/60;
+    _timeA = _timeA + 1;
+    NSInteger minute = _timeA/60;
+    NSInteger second = _timeA%60;
     if (minute > 60) {
-        _distanceLabel.text = [NSString stringWithFormat:@"已用时：%ld时 %ld分",minute/60,minute%60];
+        _distanceLabel.text = [NSString stringWithFormat:@"已用时：%ld时 %ld分 %ld秒",minute/60,minute%60, second];
     }else{
 //        NSLog(@"----shezhi时间");
-        _distanceLabel.text = [NSString stringWithFormat:@"已用时： %ld分钟",minute];
+        _distanceLabel.text = [NSString stringWithFormat:@"已用时： %ld分钟 %ld秒",(long)minute, second];
         
     }
 }
@@ -1555,6 +1559,12 @@
                 _textView.layer.borderColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0].CGColor;
                 _textView.layer.cornerRadius = 5;
                 _textView.font = [UIFont systemFontOfSize:14];
+                _textView.text = _model.technicianRemark;
+                if ([_model.technicianRemark isEqualToString:@" "] || [_model.technicianRemark isEqualToString:@""]){
+                    _textView.text = @"请填写备注（最多300字）";
+                    _textView.textColor = [UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0];
+                }
+                _textView.delegate = self;
                 [_scView addSubview:_textView];
                 [_textView mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.left.equalTo(self.view).offset(20);
@@ -1833,6 +1843,10 @@
         mDic[@"afterPhotos"] = urlStr;
         mDic[@"constructionDetails"] = allArr;
         mDic[@"constructionWastes"] = constructionWastesArr;
+        NSString *remarkString = _textView.text;
+        if ([remarkString isEqualToString:@"请填写备注（最多300字）"]){
+            remarkString = @"";
+        }
         mDic[@"remark"] = _textView.text;
         ICLog(@"提交的数据%@", mDic);
 
@@ -1852,6 +1866,10 @@
 //                        CLHomeOrderViewController *homeOrder = self.navigationController.viewControllers[0];
 //                        [homeOrder headRefresh];
 //                        [self.navigationController popToRootViewControllerAnimated:YES];
+                        
+                        [_timer invalidate];
+                        _timer = nil;
+                        
                         CLShareViewController *homeOrder1 = [[CLShareViewController alloc]init];
                         homeOrder1.orderNumber = self.orderNumber;
                         //                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
@@ -1971,7 +1989,31 @@
     self.curNum = @"0";
 }
 
-
+#pragma mark - textView的协议方法
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    
+    if ([textView.text isEqualToString:@"请填写备注（最多300字）"]) {
+        textView.text = nil;
+        textView.textColor = [UIColor blackColor];
+    }
+    
+    
+}
+- (void)textViewDidEndEditing:(UITextView *)textView{
+    if (textView.text.length == 0) {
+        textView.text = @"请填写备注（最多300字）";
+        textView.textColor = [UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0];
+    }
+    
+    
+}
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    if (textView.text.length > 300 && range.length==0) {
+        return NO;
+    }else{
+        return YES;
+    }
+}
 
 #pragma mark - 弃单提示和请求
 - (void)removeOrderBtnClick1{

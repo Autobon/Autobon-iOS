@@ -27,7 +27,7 @@
 #import "HXPhotoPicker.h"
 
 
-@interface CLWorkBeforeViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,HXAlbumListViewControllerDelegate>
+@interface CLWorkBeforeViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,HXAlbumListViewControllerDelegate,UITextViewDelegate>
 {
     UIView *_chooseView;
     UIButton *_carImageButton;
@@ -242,27 +242,30 @@
     }];
     
     
-    UIButton *submitRemarkButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [submitRemarkButton setTitle:@"提交" forState:UIControlStateNormal];
-    submitRemarkButton.titleLabel.font = [UIFont systemFontOfSize:15];
-    [submitRemarkButton setTitleColor:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] forState:UIControlStateNormal];
-    [submitRemarkButton addTarget:self action:@selector(submitRemarkBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    submitRemarkButton.layer.cornerRadius = 5;
-    submitRemarkButton.layer.borderWidth = 1;
-    submitRemarkButton.layer.borderColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1].CGColor;
-    [_contentView addSubview:submitRemarkButton];
-    [submitRemarkButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(remarkTitleView);
-        make.right.equalTo(_contentView).offset(-20);
-        make.width.mas_offset(60);
-        make.height.mas_offset(25);
-    }];
+//    UIButton *submitRemarkButton = [UIButton buttonWithType:UIButtonTypeSystem];
+//    [submitRemarkButton setTitle:@"提交" forState:UIControlStateNormal];
+//    submitRemarkButton.titleLabel.font = [UIFont systemFontOfSize:15];
+//    [submitRemarkButton setTitleColor:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] forState:UIControlStateNormal];
+//    [submitRemarkButton addTarget:self action:@selector(submitRemarkBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//    submitRemarkButton.layer.cornerRadius = 5;
+//    submitRemarkButton.layer.borderWidth = 1;
+//    submitRemarkButton.layer.borderColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1].CGColor;
+//    [_contentView addSubview:submitRemarkButton];
+//    [submitRemarkButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(remarkTitleView);
+//        make.right.equalTo(_contentView).offset(-20);
+//        make.width.mas_offset(60);
+//        make.height.mas_offset(25);
+//    }];
     
     _textView = [[UITextView alloc]init];
     _textView.layer.borderWidth = 1;
     _textView.layer.borderColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0].CGColor;
     _textView.layer.cornerRadius = 5;
     _textView.font = [UIFont systemFontOfSize:14];
+    _textView.text = @"请填写备注（最多300字）";
+    _textView.textColor = [UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0];
+    _textView.delegate = self;
     [_contentView addSubview:_textView];
     [_textView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_contentView).offset(20);
@@ -304,7 +307,7 @@
     }
     NSMutableDictionary *dataDictionary = [[NSMutableDictionary alloc]init];
     dataDictionary[@"remark"] = _textView.text;
-    dataDictionary[@"orderId"] = @"4769";
+    dataDictionary[@"orderId"] = _model.orderId;
 //    dataDictionary[@"orderId"] = @"qqq";
 //    NSDictionary *dataDictionary = @{@"orderId":[NSString stringWithFormat:@"%@",_model.orderId],@"remark":_textView.text};
     [GFHttpTool postOrderRemarkWithDictionary:dataDictionary Success:^(id responseObject) {
@@ -644,9 +647,15 @@
                 URLString = [NSString stringWithFormat:@"%@,%@",URLString,obj.resultURL];
             }
         }];
-        
-        
-        [GFHttpTool PostPhotoForBeforeOrderId:[_orderId integerValue] URLs:URLString success:^(NSDictionary *responseObject) {
+        NSString *remarkString = _textView.text;
+        if ([remarkString isEqualToString:@"请填写备注（最多300字）"]){
+            remarkString = @"";
+        }
+//        URLString = [NSString stringWithFormat:@"%@&remark=%@", URLString, remarkString];
+//        ICLog(@"URLString----%@---", URLString);
+        NSDictionary *dataDict = @{@"orderId":@([_orderId integerValue]),@"urls":URLString,@"remark":remarkString};
+        ICLog(@"dataDict----%@---", dataDict);
+        [GFHttpTool PostPhotoForBeforeParameters: dataDict success:^(NSDictionary *responseObject) {
             
 //            NSLog(@"---继续---%@", responseObject);
             
@@ -673,6 +682,7 @@
                 workOver.orderType = _orderType;
                 workOver.startTime = _startTime;
                 workOver.orderNumber = self.orderNumber;
+                _model.technicianRemark = remarkString;
                 workOver.model = _model;
                 [self.navigationController pushViewController:workOver animated:YES];
 //                }
@@ -727,7 +737,31 @@
     [self.view addSubview:_navView];
 }
 
-
+#pragma mark - textView的协议方法
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    
+    if ([textView.text isEqualToString:@"请填写备注（最多300字）"]) {
+        textView.text = nil;
+        textView.textColor = [UIColor blackColor];
+    }
+    
+    
+}
+- (void)textViewDidEndEditing:(UITextView *)textView{
+    if (textView.text.length == 0) {
+        textView.text = @"请填写备注（最多300字）";
+        textView.textColor = [UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0];
+    }
+    
+    
+}
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    if (textView.text.length > 300 && range.length==0) {
+        return NO;
+    }else{
+        return YES;
+    }
+}
 #pragma mark - 弃单提示和请求
 - (void)removeOrderBtnClick{
     GFAlertView *alertView = [[GFAlertView alloc]initWithTitle:@"确认要放弃此单吗？" leftBtn:@"取消" rightBtn:@"确定"];

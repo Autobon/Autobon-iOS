@@ -45,7 +45,7 @@
         
         self.statusLab.text = @"未结算";
         self.statusLab.textColor = [UIColor lightGrayColor];
-        self.mLab.text = [NSString stringWithFormat:@"合计：%@", model.payment];
+        self.mLab.text = [NSString stringWithFormat:@"合计：¥%0.1f", [model.payment floatValue]];
     }else if(([model.payment integerValue] == 0)){
     
         self.statusLab.text = @"待计算";

@@ -58,13 +58,24 @@
         }];
         
         _remarkLabel = [[UILabel alloc]init];
-        _remarkLabel.text = @"测试--车邻邦";
-        _remarkLabel.font = [UIFont systemFontOfSize:12];
+        _remarkLabel.text = @"备注：";
+        _remarkLabel.font = [UIFont systemFontOfSize:14];
         [baseView addSubview:_remarkLabel];
         [_remarkLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(_typeLabel.mas_bottom).offset(5);
+            make.top.equalTo(_typeLabel.mas_bottom).offset(8);
             make.left.equalTo(baseView).offset(15);
-            make.height.mas_equalTo(20);
+            make.width.mas_offset(50);
+            
+        }];
+        
+        _remarkDetailLabel = [[UILabel alloc]init];
+        _remarkDetailLabel.text = @" ";
+        _remarkDetailLabel.font = [UIFont systemFontOfSize:14];
+        _remarkDetailLabel.numberOfLines = 0;
+        [baseView addSubview:_remarkDetailLabel];
+        [_remarkDetailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_typeLabel.mas_bottom).offset(8);
+            make.left.equalTo(baseView).offset(58);
             make.right.equalTo(baseView).offset(-15);
         }];
         
@@ -76,10 +87,9 @@
 
 
 - (void)setDataForStudyModel:(CLStudyModel *)studyModel{
-    _titleLabel.text = studyModel.fileName;
-    _typeLabel.text = studyModel.typeString;
-    _remarkLabel.text = studyModel.remark;
-    
+    _titleLabel.text = [NSString stringWithFormat:@"名称：%@", studyModel.fileName];
+    _typeLabel.text = [NSString stringWithFormat:@"类型：%@", studyModel.typeString];
+    _remarkDetailLabel.text = studyModel.remark;
 }
 
 

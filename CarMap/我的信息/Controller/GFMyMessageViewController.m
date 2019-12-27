@@ -296,15 +296,7 @@
     moneyLab.text = @"钱包";
     [moneyView addSubview:moneyLab];
     
-#pragma mark - 佣金标准
-    UIButton *commissionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [commissionButton setTitle:@"佣金标准" forState:UIControlStateNormal];
-    [commissionButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    commissionButton.frame = CGRectMake(_contentView.frame.size.width - 110, moneyImgViewY, 100, moneyImgViewH);
-//    commissionButton.backgroundColor = [UIColor cyanColor];
-    [commissionButton addTarget:self action:@selector(commissionBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [moneyView addSubview:commissionButton];
-    
+
     
     // 余额栏界面
     CGFloat balanceLabUpW = (kWidth - 1) / 2.0;
@@ -365,6 +357,22 @@
     [moneyView addSubview:billBut];
     [billBut addTarget:self action:@selector(billBut) forControlEvents:UIControlEventTouchUpInside];
 
+    
+#pragma mark - 佣金标准
+    UIButton *commissionButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [commissionButton setTitle:@"佣金标准" forState:UIControlStateNormal];
+    [commissionButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    commissionButton.titleLabel.font = [UIFont systemFontOfSize:15];
+    commissionButton.frame = CGRectMake(_contentView.frame.size.width - 110, moneyImgViewY, 100, moneyImgViewH);
+    //    commissionButton.backgroundColor = [UIColor cyanColor];
+    [commissionButton addTarget:self action:@selector(commissionBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [moneyView addSubview:commissionButton];
+    [commissionButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(moneyLab);
+        make.right.equalTo(_contentView).offset(-10);
+        make.width.mas_offset(100);
+        make.height.mas_offset(30);
+    }];
     
     
     NSArray *imageArray = @[@"order",@"my_team",@"collection",@"information-2",@"editPassword",@"centre",@"study_garden",@"study_garden"];
@@ -486,6 +494,7 @@
             if([balance isKindOfClass:[NSNull class]]) {
                 balance = [NSString stringWithFormat:@"0"];
             }
+            balance = [NSString stringWithFormat:@"%0.1f", [balance floatValue]];
             NSString *unpaidOrders = dic[@"unpaidOrders"];
             if([unpaidOrders isKindOfClass:[NSNull class]]) {
                 unpaidOrders = [NSString stringWithFormat:@"0"];
@@ -642,7 +651,7 @@
             if([balance isKindOfClass:[NSNull class]]) {
                 balance = [NSString stringWithFormat:@"0"];
             }
-            
+            balance = [NSString stringWithFormat:@"%0.1f", [balance floatValue]];
             self.bank = dataDic[@"bank"];
             self.bankCardNo = dataDic[@"bankCardNo"];
             self.balance = balance;

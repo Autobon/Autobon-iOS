@@ -10,4 +10,6 @@
 
 @interface GFFCertifyViewController : UIViewController
 
+@property (nonatomic, strong) UIButton *submitBut;
+@property (nonatomic ) BOOL isChange;
 @end

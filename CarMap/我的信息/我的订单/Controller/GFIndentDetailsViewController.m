@@ -197,7 +197,7 @@
     CGFloat moneyLabX = kWidth - jiange1 - moneyLabW;
     CGFloat moneyLabY = numberLabY + 3 / 568.0 * kHeight;
     self.moneyLab = [[UILabel alloc] initWithFrame:CGRectMake(moneyLabX, moneyLabY, moneyLabW, moneyLabH)];
-    self.moneyLab.text = [NSString stringWithFormat:@"￥%@", self.model.payment];
+    self.moneyLab.text = [NSString stringWithFormat:@"￥%0.1f", [self.model.payment floatValue]];
     self.moneyLab.textAlignment = NSTextAlignmentRight;
     self.moneyLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
     self.moneyLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
@@ -249,9 +249,15 @@
     for(int i=0; i<_photoArr.count; i++) {
         
         UIButton *but = [UIButton buttonWithType:UIButtonTypeCustom];
-        but.backgroundColor = [UIColor redColor];
+        but.backgroundColor = [UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1.0];
         but.frame = CGRectMake(10 + (butW + 10) * (i % 3), lineView1.frame.origin.y + 7 + (butH + 10) * (i / 3), butW, butH);
-        [but sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BaseHttp,_photoArr[i]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"orderImage"]];
+        [but sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",BaseHttp, _photoArr[i]]] forState:UIControlStateNormal completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            ICLog(@"error---%@--", error);
+            if(error){
+                ICLog(@"图片加载失败");
+                [but setImage:[UIImage imageNamed:@"load_image_failed"] forState:UIControlStateNormal];
+            }
+        }];
         but.clipsToBounds = YES;
         but.tag = i + 1;
         [but setTitle:@"订单" forState:UIControlStateNormal];

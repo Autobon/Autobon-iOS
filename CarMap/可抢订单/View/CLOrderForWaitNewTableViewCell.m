@@ -107,7 +107,7 @@
     
     [GFHttpTool postOrderId:[_model.orderId integerValue] Success:^(NSDictionary *responseObject) {
         
-        //        NSLog(@"----抢单结果--%@--",responseObject);
+        ICLog(@"----抢单结果--%@--",responseObject);
         if ([responseObject[@"status"]integerValue] == 1) {
             
             CLAddOrderSuccessViewController *addSuccess = [[CLAddOrderSuccessViewController alloc]init];
@@ -118,7 +118,7 @@
             [self addAlertView:responseObject[@"message"]];
         }
     } failure:^(NSError *error) {
-        //        NSLog(@"----抢单结果-222-%@--",error);
+        ICLog(@"----抢单结果-222-%@--",error);
         //        [self addAlertView:@"请求失败"];
     }];
 }
@@ -136,8 +136,7 @@
 
 #pragma mark - AlertView
 - (void)addAlertView:(NSString *)title{
-    
-    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withViewController:self withShowTimw:1.0];
+    GFTipView *tipView = [[GFTipView alloc]initWithNormalHeightWithMessage:title withShowTimw:1.0];
     [tipView tipViewShow];
 }
 

@@ -39,6 +39,7 @@
 @property (nonatomic, copy) NSString *vehicleModel;         //车型
 @property (nonatomic, copy) NSString *vin;         //车架号
 @property (nonatomic, copy) NSString *license;         //车牌号
+@property (nonatomic, copy) NSString *technicianRemark;         //车牌号
 
 @property (nonatomic ) CGFloat cellHeight;
 
