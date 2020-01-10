@@ -152,9 +152,12 @@
     // 施工时间
     [self setLineView:[NSString stringWithFormat:@"施工时间：%@",_model.orderTime] maxY:lineView2.frame.origin.y];
     
-    NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
-    
-    [self setLineView:[NSString stringWithFormat:@"订单类型：%@",array[[_model.orderType integerValue]-1]] maxY:lineView2.frame.origin.y+self.view.frame.size.height/18+1];
+    NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁",@"安全膜",@"其他"];
+    NSInteger typeIndex = [_model.orderType integerValue]-1;
+    if (typeIndex > array.count - 1){
+        typeIndex = array.count - 1;
+    }
+    [self setLineView:[NSString stringWithFormat:@"订单类型：%@",array[typeIndex]] maxY:lineView2.frame.origin.y+self.view.frame.size.height/18+1];
     
     [self setLineView:[NSString stringWithFormat:@"下单人员：%@",_model.cooperatorName] maxY:lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*2];
     

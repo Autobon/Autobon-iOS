@@ -174,7 +174,7 @@
 
                 }else {
                 
-                    NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
+                    NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁",@"安全膜",@"其他"];
                     NSString *str = [NSString stringWithFormat:@"%@", ss];
                     NSArray *arr = [str componentsSeparatedByString:@","];
                     
@@ -183,6 +183,9 @@
                         
                         for(int i=0; i<arr.count; i++) {
                             NSInteger index = [arr[i] integerValue] - 1;
+                            if (index > array.count - 1){
+                                index = array.count - 1;
+                            }
                             if([sss isEqualToString:@""]) {
 //                                NSLog(@"----%ld", index);
                                 sss = array[index];

@@ -48,7 +48,7 @@
     
     _detailLabel = [[UILabel alloc]init];
     
-    NSArray *skillArray = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
+    NSArray *skillArray = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁",@"安全膜",@"其他"];
     
     [GFHttpTool getCertificateSuccess:^(NSDictionary *responseObject) {
 //        NSLog(@"%@",responseObject);

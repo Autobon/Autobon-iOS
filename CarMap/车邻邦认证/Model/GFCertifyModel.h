@@ -28,6 +28,11 @@
 @property (nonatomic, copy) NSString *colorModifyWorkingSeniority;
 @property (nonatomic, copy) NSString *beautyLevel;
 @property (nonatomic, copy) NSString *beautyWorkingSeniority;
+@property (nonatomic, copy) NSString *safeLevel;
+@property (nonatomic, copy) NSString *safeWorkingSeniority;
+@property (nonatomic, copy) NSString *otherLevel;
+@property (nonatomic, copy) NSString *otherWorkingSeniority;
+
 
 @property (nonatomic, copy) NSString *idPhoto;
 

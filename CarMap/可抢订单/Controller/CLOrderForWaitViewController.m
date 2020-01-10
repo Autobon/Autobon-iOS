@@ -116,13 +116,16 @@
                 model.orderId = obj[@"id"];
                 model.orderNumber = obj[@"orderNum"];
                 
-                NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
+                NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁",@"安全膜",@"其他"];
                 NSString *str = obj[@"type"];
                 NSArray *arr = [str componentsSeparatedByString:@","];
                 NSString *ss = @"";
                 for(int i=0; i<arr.count; i++) {
                     
                     NSInteger index = [arr[i] integerValue] - 1;
+                    if (index > array.count - 1){
+                        index = array.count - 1;
+                    }
                     if([ss isEqualToString:@""]) {
                         
                         ss = array[index];

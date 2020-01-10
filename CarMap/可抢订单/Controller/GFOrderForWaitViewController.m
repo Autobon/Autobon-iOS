@@ -123,7 +123,7 @@
         case 2:     //项目
         {
             ICLog(@"项目项目");
-            NSArray *titleArray = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
+            NSArray *titleArray = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁",@"安全膜",@"其他"];
             [self setSearchViewWithTitleArray:titleArray chooseTouchViewTag:2];
         }
             break;

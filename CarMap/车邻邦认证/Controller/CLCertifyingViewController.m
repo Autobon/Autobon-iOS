@@ -216,14 +216,18 @@
     
     [self _setjishiWithX:0 withY:CGRectGetMaxY(idImageLabel.frame) + 10 withXingji:[_model.filmLevel integerValue] withNianxian:_model.filmWorkingSeniority withTitle:@"隔热膜"];
     
-    [self _setjishiWithX:0 withY:CGRectGetMaxY(idImageLabel.frame) + 10 + 30 withXingji:[_model.carCoverLevel integerValue] withNianxian:_model.carCoverWorkingSeniority withTitle:@"隐形车衣"];
+    [self _setjishiWithX:0 withY:CGRectGetMaxY(idImageLabel.frame) + 10 + 30 * 1 withXingji:[_model.carCoverLevel integerValue] withNianxian:_model.carCoverWorkingSeniority withTitle:@"隐形车衣"];
     
-    [self _setjishiWithX:0 withY:CGRectGetMaxY(idImageLabel.frame) + 10 + 30 + 30 withXingji:[_model.colorModifyLevel integerValue] withNianxian:_model.colorModifyWorkingSeniority withTitle:@"车身改色"];
+    [self _setjishiWithX:0 withY:CGRectGetMaxY(idImageLabel.frame) + 10 + 30 * 2 withXingji:[_model.colorModifyLevel integerValue] withNianxian:_model.colorModifyWorkingSeniority withTitle:@"车身改色"];
     
-    [self _setjishiWithX:0 withY:CGRectGetMaxY(idImageLabel.frame) + 10 + 30 + 30 + 30 withXingji:[_model.beautyLevel integerValue] withNianxian:_model.beautyWorkingSeniority withTitle:@"美容清洁"];
+    [self _setjishiWithX:0 withY:CGRectGetMaxY(idImageLabel.frame) + 10 + 30 * 3 withXingji:[_model.beautyLevel integerValue] withNianxian:_model.beautyWorkingSeniority withTitle:@"美容清洁"];
+    
+    [self _setjishiWithX:0 withY:CGRectGetMaxY(idImageLabel.frame) + 10 + 30 * 4 withXingji:[_model.safeLevel integerValue] withNianxian:_model.safeWorkingSeniority withTitle:@"安全膜"];
+    
+    [self _setjishiWithX:0 withY:CGRectGetMaxY(idImageLabel.frame) + 10 + 30 * 5 withXingji:[_model.otherLevel integerValue] withNianxian:_model.otherWorkingSeniority withTitle:@"其他"];
     
     
-    UIView *lineView4 = [[UIView alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(idImageLabel.frame) + 23 + 30 + 30 + 30 + 30 + 15, self.view.frame.size.width-20, 1)];
+    UIView *lineView4 = [[UIView alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(idImageLabel.frame) + 23 + 30 * 6 + 15, self.view.frame.size.width-20, 1)];
     lineView4.backgroundColor = [UIColor colorWithRed:160/255.0 green:160/255.0 blue:160/255.0 alpha:1.0];
     [_scView addSubview:lineView4];
     UILabel *idImageLabel22 = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 160, 20)];

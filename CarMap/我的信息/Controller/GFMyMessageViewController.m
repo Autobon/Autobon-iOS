@@ -862,8 +862,12 @@
     [GFHttpTool getTechStationWithDictionary:dataDictionary Success:^(id responseObject) {
         ICLog(@"获取技师常驻地信息成功-----%@---", responseObject);
         NSDictionary *messageDict = responseObject[@"message"];
-        self.stationModel = [[CLStationModel alloc]init];
-        [self.stationModel setModelForDataDictionary:messageDict];
+        if ([messageDict isKindOfClass:[NSNull class]]){
+            ICLog(@"暂未设置常驻地");
+        }else{
+            self.stationModel = [[CLStationModel alloc]init];
+            [self.stationModel setModelForDataDictionary:messageDict];
+        }
     } failure:^(NSError *error) {
         ICLog(@"获取技师常驻地信息失败----%@---", error);
     }];

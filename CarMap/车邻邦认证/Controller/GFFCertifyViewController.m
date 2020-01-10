@@ -48,6 +48,11 @@
 @property (nonatomic, strong) GFButtonRight *gaiseBut;
 @property (nonatomic, strong) GFPingfenView *meirongView;
 @property (nonatomic, strong) GFButtonRight *meirongBut;
+@property (nonatomic, strong) GFPingfenView *anQuanView;
+@property (nonatomic, strong) GFButtonRight *anQuanBut;
+@property (nonatomic, strong) GFPingfenView *qiTaView;
+@property (nonatomic, strong) GFButtonRight *qiTaBut;
+
 
 @property (nonatomic, strong) UITextView *txtView;
 
@@ -245,21 +250,34 @@
     // 车身改色
     self.gaiseBut = [GFButtonRight buttonWithType:UIButtonTypeCustom];
     self.gaiseBut.frame = CGRectMake([UIScreen mainScreen].bounds.size.width - 10 - 65, 0, 65, 25);
-    _gaiseView = [self setJinengpingdingWithX:0 withY:CGRectGetMaxY(skillView.frame) + 15 + 35 + 35 withBut:self.gaiseBut withTitle:@"车身改色"];
+    _gaiseView = [self setJinengpingdingWithX:0 withY:CGRectGetMaxY(skillView.frame) + 15 + 35 * 2 withBut:self.gaiseBut withTitle:@"车身改色"];
     self.gaiseBut.tag = 3;
     // 美容清洁
     self.meirongBut = [GFButtonRight buttonWithType:UIButtonTypeCustom];
     self.meirongBut.frame = CGRectMake([UIScreen mainScreen].bounds.size.width - 10 - 65, 0, 65, 25);
-    _meirongView = [self setJinengpingdingWithX:0 withY:CGRectGetMaxY(skillView.frame) + 15 + 35 + 35 + 35 withBut:self.meirongBut withTitle:@"美容清洁"];
+    _meirongView = [self setJinengpingdingWithX:0 withY:CGRectGetMaxY(skillView.frame) + 15 + 35 * 3 withBut:self.meirongBut withTitle:@"美容清洁"];
     self.meirongBut.tag = 4;
     
+    // 安全膜
+    self.anQuanBut = [GFButtonRight buttonWithType:UIButtonTypeCustom];
+    self.anQuanBut.frame = CGRectMake([UIScreen mainScreen].bounds.size.width - 10 - 65, 0, 65, 25);
+    _anQuanView = [self setJinengpingdingWithX:0 withY:CGRectGetMaxY(skillView.frame) + 15 + 35 * 4 withBut:self.anQuanBut withTitle:@"安全膜"];
+    self.anQuanBut.tag = 5;
+    // 其他
+    self.qiTaBut = [GFButtonRight buttonWithType:UIButtonTypeCustom];
+    self.qiTaBut.frame = CGRectMake([UIScreen mainScreen].bounds.size.width - 10 - 65, 0, 65, 25);
+    _qiTaView = [self setJinengpingdingWithX:0 withY:CGRectGetMaxY(skillView.frame) + 15 + 35 * 5 withBut:self.qiTaBut withTitle:@"其他"];
+    self.qiTaBut.tag = 6;
+    
+    
+    
     // 横线
-    UIView *lineView1 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(skillView.frame) + 15 + 35 + 35 + 35 + 35, [UIScreen mainScreen].bounds.size.width, 1)];
+    UIView *lineView1 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(skillView.frame) + 15 + 35 * 6, [UIScreen mainScreen].bounds.size.width, 1)];
     lineView1.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
     [_scView addSubview:lineView1];
     
     // 个人简介
-    _txtView = [[UITextView alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(skillView.frame) + 15 + 35 + 35 + 35 + 35 + 10, [UIScreen mainScreen].bounds.size.width - 40, 80)];
+    _txtView = [[UITextView alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(skillView.frame) + 15 + 35 * 6 + 10, [UIScreen mainScreen].bounds.size.width - 40, 80)];
     _txtView.text = @"请介绍一下自己吧！（200字以内）";
     _txtView.textColor = [UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0];
     _txtView.delegate = self;
@@ -406,7 +424,7 @@
         _dataDictionary[@"filmWorkingSeniority"] = @(0);
     }
     // 隐形车衣 2
-    if((![self.gerebut.titleLabel.text isEqualToString:@"工作年限"]) && (![self.gerebut.titleLabel.text isEqualToString:@"0 年"]) && (![self.yinxingView.xingjiStr isEqualToString:@"0"])) {
+    if((![self.yinxingBut.titleLabel.text isEqualToString:@"工作年限"]) && (![self.yinxingBut.titleLabel.text isEqualToString:@"0 年"]) && (![self.yinxingView.xingjiStr isEqualToString:@"0"])) {
         _dataDictionary[@"carCoverLevel"] = self.yinxingView.xingjiStr;
         NSRange rang = NSMakeRange(0, 1);
         _dataDictionary[@"carCoverWorkingSeniority"] = [self.yinxingBut.titleLabel.text substringWithRange:rang];
@@ -423,7 +441,7 @@
         _dataDictionary[@"carCoverWorkingSeniority"] = @(0);
     }
     // 车身改色 3
-    if((![self.gerebut.titleLabel.text isEqualToString:@"工作年限"]) && (![self.gerebut.titleLabel.text isEqualToString:@"0 年"]) && (![self.gaiseView.xingjiStr isEqualToString:@"0"])) {
+    if((![self.gaiseBut.titleLabel.text isEqualToString:@"工作年限"]) && (![self.gaiseBut.titleLabel.text isEqualToString:@"0 年"]) && (![self.gaiseView.xingjiStr isEqualToString:@"0"])) {
         _dataDictionary[@"colorModifyLevel"] = self.gaiseView.xingjiStr;
         NSRange rang = NSMakeRange(0, 1);
         _dataDictionary[@"colorModifyWorkingSeniority"] = [self.gaiseBut.titleLabel.text substringWithRange:rang];
@@ -440,7 +458,7 @@
         _dataDictionary[@"colorModifyWorkingSeniority"] = @(0);
     }
     // 美容清洁 4
-    if((![self.gerebut.titleLabel.text isEqualToString:@"工作年限"]) && (![self.gerebut.titleLabel.text isEqualToString:@"0 年"]) && (![self.meirongView.xingjiStr isEqualToString:@"0"])) {
+    if((![self.meirongBut.titleLabel.text isEqualToString:@"工作年限"]) && (![self.meirongBut.titleLabel.text isEqualToString:@"0 年"]) && (![self.meirongView.xingjiStr isEqualToString:@"0"])) {
         _dataDictionary[@"beautyLevel"] = self.meirongView.xingjiStr;
         NSRange rang = NSMakeRange(0, 1);
         if([self.meirongBut.titleLabel.text isEqualToString:@"10 年"]) {
@@ -460,9 +478,53 @@
         _dataDictionary[@"beautyWorkingSeniority"] = @(0);
     }
     
+    // 安全膜 5
+    if((![self.anQuanBut.titleLabel.text isEqualToString:@"工作年限"]) && (![self.anQuanBut.titleLabel.text isEqualToString:@"0 年"]) && (![self.anQuanView.xingjiStr isEqualToString:@"0"])) {
+        _dataDictionary[@"safeLevel"] = self.anQuanView.xingjiStr;
+        NSRange rang = NSMakeRange(0, 1);
+        if([self.anQuanBut.titleLabel.text isEqualToString:@"10 年"]) {
+            rang = NSMakeRange(0, 2);
+        }
+        _dataDictionary[@"safeWorkingSeniority"] = [self.anQuanBut.titleLabel.text substringWithRange:rang];
+        //        NSLog(@"\\\\\\\\\%@=====%@", _dataDictionary[@"beautyWorkingSeniority"], self.meirongBut);
+        if([skillStr isEqualToString:@""]) {
+            
+            skillStr = @"5";
+        }else {
+            
+            skillStr = [NSString stringWithFormat:@"%@,5", skillStr];
+        }
+    }else {
+        _dataDictionary[@"safeLevel"] = @(0);
+        _dataDictionary[@"safeWorkingSeniority"] = @(0);
+    }
+    
+    // 其他 99
+    if((![self.qiTaBut.titleLabel.text isEqualToString:@"工作年限"]) && (![self.qiTaBut.titleLabel.text isEqualToString:@"0 年"]) && (![self.qiTaView.xingjiStr isEqualToString:@"0"])) {
+        _dataDictionary[@"otherLevel"] = self.qiTaView.xingjiStr;
+        NSRange rang = NSMakeRange(0, 1);
+        if([self.qiTaBut.titleLabel.text isEqualToString:@"10 年"]) {
+            rang = NSMakeRange(0, 2);
+        }
+        _dataDictionary[@"otherWorkingSeniority"] = [self.qiTaBut.titleLabel.text substringWithRange:rang];
+        //        NSLog(@"\\\\\\\\\%@=====%@", _dataDictionary[@"beautyWorkingSeniority"], self.meirongBut);
+        if([skillStr isEqualToString:@""]) {
+            
+            skillStr = @"99";
+        }else {
+            
+            skillStr = [NSString stringWithFormat:@"%@,99", skillStr];
+        }
+    }else {
+        _dataDictionary[@"otherLevel"] = @(0);
+        _dataDictionary[@"otherWorkingSeniority"] = @(0);
+    }
+    
+    
+    
     _dataDictionary[@"skill"] = skillStr;
     
-//    NSLog(@"==认证信息==%@", _dataDictionary);
+    ICLog(@"==认证信息==%@", _dataDictionary);
     
     if([_dataDictionary[@"name"] isEqualToString:@""]) {
     

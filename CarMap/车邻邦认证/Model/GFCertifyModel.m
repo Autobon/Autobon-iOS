@@ -116,6 +116,30 @@
             self.beautyWorkingSeniority = @"无";
         }
         
+        if(dic[@"safeLevel"] != nil) {
+            self.safeLevel = [NSString stringWithFormat:@"%@", dic[@"safeLevel"]];
+        }else {
+            self.safeLevel = @"无";
+        }
+        
+        if(dic[@"safeWorkingSeniority"] != nil) {
+            self.safeWorkingSeniority = [NSString stringWithFormat:@"%@", dic[@"safeWorkingSeniority"]];
+        }else {
+            self.safeWorkingSeniority = @"无";
+        }
+        
+        if(dic[@"otherLevel"] != nil) {
+            self.otherLevel = [NSString stringWithFormat:@"%@", dic[@"otherLevel"]];
+        }else {
+            self.otherLevel = @"无";
+        }
+        
+        if(dic[@"otherWorkingSeniority"] != nil) {
+            self.otherWorkingSeniority = [NSString stringWithFormat:@"%@", dic[@"otherWorkingSeniority"]];
+        }else {
+            self.otherWorkingSeniority = @"无";
+        }
+        
         if(dic[@"idPhoto"] != nil) {
             self.idPhoto = [NSString stringWithFormat:@"%@", dic[@"idPhoto"]];
         }else {

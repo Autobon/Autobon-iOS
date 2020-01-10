@@ -201,10 +201,13 @@
             self.type = dic[@"type"];
         }
         NSString *ss = @"";
-        NSArray *typeNameArr = @[@"隔热膜", @"隐形车衣", @"车身改色", @"美容清洁"];
+        NSArray *typeNameArr = @[@"隔热膜", @"隐形车衣", @"车身改色", @"美容清洁",@"安全膜",@"其他"];
         NSArray *arr = [self.type componentsSeparatedByString:@","];
         for(int i=0; i<arr.count; i++) {
             NSInteger index = [arr[i] integerValue] - 1;
+            if (index > typeNameArr.count - 1){
+                index = typeNameArr.count - 1;
+            }
             if([ss isEqualToString:@""]) {
                 ss = typeNameArr[index];
             }else {

@@ -45,12 +45,15 @@
 
         
         if(![dic[@"type"] isKindOfClass:[NSNull class]]){
-            NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
+            NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁",@"安全膜",@"其他"];
             NSArray *idArr = [dic[@"type"] componentsSeparatedByString:@","];
             NSString *str = @"";
             for(int i=0; i<idArr.count; i++) {
                 
                 NSInteger index = [idArr[i] integerValue] - 1;
+                if (index > array.count - 1){
+                    index = array.count - 1;
+                }
                 if([str isEqualToString:@""]) {
                     
                     str = array[index];
