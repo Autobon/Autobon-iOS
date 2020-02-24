@@ -70,6 +70,10 @@
     self.noOrderlabel.hidden = YES;
     self.noOrderImageView.hidden = YES;
     
+//    _dataDictionary[@"longitude"] = @"114.414640";
+//    _dataDictionary[@"latitude"] = @"30.480380";
+//    [1]    (null)    @"longitude" : @"114.414640"
+//    [2]    (null)    @"latitude" : @"30.480380"
     [_tableView.mj_header beginRefreshing];
 }
 
@@ -118,6 +122,7 @@
         case 1:     //全部
             ICLog(@"全部");
             [_dataDictionary removeAllObjects];
+            _dataDictionary[@"order"] = @"1";
             [_tableView.mj_header beginRefreshing];
             break;
         case 2:     //项目
@@ -219,6 +224,9 @@
     [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"zh_CN"]];
     
 //    NSDictionary *dictionary = @{@"page":@(_page),@"pageSize":@(5)};
+    AppDelegate * appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    _dataDictionary[@"longitude"] = appDelegate.locationDictionary[@"lng"];
+    _dataDictionary[@"latitude"] = appDelegate.locationDictionary[@"lat"];
     _dataDictionary[@"page"] = @(_page);
     _dataDictionary[@"pageSize"] = @(5);
     [GFHttpTool getOrderListNewDictionary:_dataDictionary Success:^(NSDictionary *responseObject) {
@@ -259,7 +267,7 @@
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
     } failure:^(NSError *error) {
-        //        NSLog(@"-不知道为什么请求失败了－－error--%@---",error);
+        ICLog(@"-请求失败了－－error--%@---",error);
         //        [self addAlertView:@"请求失败"];
         
         [self.tableView.mj_header endRefreshing];
@@ -302,7 +310,7 @@
     
 
     _noOrderImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 57, 57)];
-    _noOrderImageView.center = _tableView.center;
+    _noOrderImageView.center = self.view.center;
     _noOrderImageView.image = [UIImage imageNamed:@"NoOrder"];
     [self.view addSubview:_noOrderImageView];
     [self.view bringSubviewToFront:_noOrderImageView];

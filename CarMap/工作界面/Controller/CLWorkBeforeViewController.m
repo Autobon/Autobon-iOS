@@ -306,7 +306,11 @@
         return;
     }
     NSMutableDictionary *dataDictionary = [[NSMutableDictionary alloc]init];
-    dataDictionary[@"remark"] = _textView.text;
+    NSString *remarkString = _textView.text;
+    if ([remarkString isEqualToString:@"请填写备注（最多300字）"]){
+        remarkString = @"";
+    }
+    dataDictionary[@"remark"] = remarkString;
     dataDictionary[@"orderId"] = _model.orderId;
 //    dataDictionary[@"orderId"] = @"qqq";
 //    NSDictionary *dataDictionary = @{@"orderId":[NSString stringWithFormat:@"%@",_model.orderId],@"remark":_textView.text};

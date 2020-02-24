@@ -2,4 +2,118 @@
 <Bucket
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CarMap/lib/&#x767e;&#x5ea6;&#x5730;&#x56fe;/GFMapViewController.mm"
+            timestampString = "600657562.524488"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "304"
+            endingLineNumber = "304"
+            landmarkName = "-didUpdateBMKUserLocation:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CarMap/&#x5de5;&#x4f5c;&#x754c;&#x9762;/Controller/CLWorkBeforeViewController.m"
+            timestampString = "600750155.383377"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "662"
+            endingLineNumber = "662"
+            landmarkName = "-nextBtnClick"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[CLWorkBeforeViewController nextBtnClick]"
+                  moduleName = "CarMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/inCar/Desktop/%E8%BD%A6%E9%82%BB%E9%82%A6/%E8%BD%A6%E9%82%BB%E9%82%A6%20%E5%8F%B8%E6%9C%BA/CarMap/%E5%B7%A5%E4%BD%9C%E7%95%8C%E9%9D%A2/Controller/CLWorkBeforeViewController.m"
+                  timestampString = "600761140.896655"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "662"
+                  endingLineNumber = "662"
+                  offsetFromSymbolStart = "1209">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__42-[CLWorkBeforeViewController nextBtnClick]_block_invoke.386"
+                  moduleName = "CarMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/inCar/Desktop/%E8%BD%A6%E9%82%BB%E9%82%A6/%E8%BD%A6%E9%82%BB%E9%82%A6%20%E5%8F%B8%E6%9C%BA/CarMap/%E5%B7%A5%E4%BD%9C%E7%95%8C%E9%9D%A2/Controller/CLWorkBeforeViewController.m"
+                  timestampString = "600761140.898887"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "666"
+                  endingLineNumber = "666"
+                  offsetFromSymbolStart = "54">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CarMap/&#x5de5;&#x4f5c;&#x754c;&#x9762;/Controller/CLWorkBeforeViewController.m"
+            timestampString = "600750155.383442"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "661"
+            endingLineNumber = "661"
+            landmarkName = "-nextBtnClick"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CarMap/&#x5de5;&#x4f5c;&#x754c;&#x9762;/Controller/CLWorkOverViewController.m"
+            timestampString = "600761140.697283"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1622"
+            endingLineNumber = "1622"
+            landmarkName = "-submitRemarkBtnClick"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CarMap/&#x5de5;&#x4f5c;&#x754c;&#x9762;/Controller/CLWorkBeforeViewController.m"
+            timestampString = "600750155.383853"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "654"
+            endingLineNumber = "654"
+            landmarkName = "-nextBtnClick"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

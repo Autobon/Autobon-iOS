@@ -1614,8 +1614,12 @@
         [self addAlertView:@"请填写订单备注"];
         return;
     }
+    NSString *remarkString = _textView.text;
+    if ([remarkString isEqualToString:@"请填写备注（最多300字）"]){
+        remarkString = @"";
+    }
     NSMutableDictionary *dataDictionary = [[NSMutableDictionary alloc]init];
-    dataDictionary[@"remark"] = _textView.text;
+    dataDictionary[@"remark"] = remarkString;
 //    dataDictionary[@"orderId"] = @"4769";
     //    dataDictionary[@"orderId"] = @"qqq";
     //    NSDictionary *dataDictionary = @{@"orderId":[NSString stringWithFormat:@"%@",_model.orderId],@"remark":_textView.text};
@@ -1847,7 +1851,7 @@
         if ([remarkString isEqualToString:@"请填写备注（最多300字）"]){
             remarkString = @"";
         }
-        mDic[@"remark"] = _textView.text;
+        mDic[@"remark"] = remarkString;
         ICLog(@"提交的数据%@", mDic);
 
         NSDictionary *dicccc = allArr[0];

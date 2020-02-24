@@ -22,6 +22,7 @@
 //#import "BMKPoiSearch.h"
 #import "GFAnnotationView.h"
 #import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
+#import "AppDelegate.h"
 
 #define MYBUNDLE_NAME @ "mapapi.bundle"
 #define MYBUNDLE_PATH [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent: MYBUNDLE_NAME]
@@ -259,6 +260,13 @@
     self.workerPointAnno.coordinate = location.location.coordinate;
 //    [self.mapView updateLocationData:userLocation];
 //    [self.mapView updateLocationData:location];
+    
+    
+    AppDelegate * appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    float myLocationLat = [appDelegate.locationDictionary[@"lat"] floatValue];
+    float myLocationLng = [appDelegate.locationDictionary[@"lng"] floatValue];
+    self.workerPointAnno.coordinate = CLLocationCoordinate2DMake(myLocationLat, myLocationLng);
+    
     
     
     double a = [self calculatorWithCoordinate1:self.workerPointAnno.coordinate withCoordinate2:self.bossPointAnno.coordinate];
@@ -784,8 +792,8 @@
 
 #pragma mark - ***** 计算两点间的距离 *****
 - (double)calculatorWithCoordinate1:(CLLocationCoordinate2D)coordinate1 withCoordinate2:(CLLocationCoordinate2D)coordinate2 {
-//    NSLog(@"----dian-%f----diandian--%f--",coordinate1.latitude,coordinate2.longitude);
-
+    ICLog(@"----dian-%f----diandian--%f--",coordinate1.latitude,coordinate1.longitude);
+    ICLog(@"----dian-%f----diandian--%f--",coordinate2.latitude,coordinate2.longitude);
     CLLocation *location1 = [[CLLocation alloc] initWithLatitude:coordinate1.latitude longitude:coordinate1.longitude];
     CLLocation *location2 = [[CLLocation alloc] initWithLatitude:coordinate2.latitude longitude:coordinate2.longitude];
     
@@ -795,7 +803,8 @@
 }
 
 + (double)calculatorWithCoordinate1:(CLLocationCoordinate2D)coordinate1 withCoordinate2:(CLLocationCoordinate2D)coordinate2 {
-    //    NSLog(@"----dian-%f----diandian--%f--",coordinate1.latitude,coordinate2.longitude);
+    ICLog(@"----dian-%f----diandian--%f--",coordinate1.latitude,coordinate1.longitude);
+    ICLog(@"----dian-%f----diandian--%f--",coordinate2.latitude,coordinate2.longitude);
     
     CLLocation *location1 = [[CLLocation alloc] initWithLatitude:coordinate1.latitude longitude:coordinate1.longitude];
     CLLocation *location2 = [[CLLocation alloc] initWithLatitude:coordinate2.latitude longitude:coordinate2.longitude];

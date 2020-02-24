@@ -56,6 +56,11 @@
     
     [self setNavigation];
     
+    [self getOrderDetail];
+}
+
+- (void)setViewForDetail{
+    
     [self addMap];
     
     _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height/3+64, self.view.frame.size.width, self.view.frame.size.height*2/3-64-40)];
@@ -68,9 +73,10 @@
         make.bottom.equalTo(self.view).offset(-40);
     }];
     
+    [self setViewForAutobon];
     
-    [self getOrderDetail];
 }
+
 
 - (void)getOrderDetail{
     [GFHttpTool orderDDGetWithParameters:@{@"id": self.model.orderId} success:^(id responseObject) {
@@ -80,7 +86,7 @@
             _productOfferArray = messageDictionary[@"productOfferShows"];
             self.model.vehicleModel = [NSString stringWithFormat:@"%@", messageDictionary[@"vehicleModel"]];
         }
-        [self setViewForAutobon];
+        [self setViewForDetail];
     } failure:^(NSError *error) {
         ICLog(@"----error---%@----", error);
     }];
@@ -98,12 +104,12 @@
     _mapVC.bossPointAnno.iconImgName = @"location";
 //    _mapVC.bossPointAnno.title = @"发单商户";
     _mapVC.bossPointAnno.title = _cooperatorName;
-    __weak CLOrderDetailViewController *weakOrder = self;
-    _mapVC.distanceBlock = ^(double distance) {
-//        NSLog(@"距离－－%f--",distance);
-#pragma mark - 返回距离
-        weakOrder.distanceLabel.text = [NSString stringWithFormat:@"距离：%0.2fkm",distance/1000.0];
-    };
+//    __weak CLOrderDetailViewController *weakOrder = self;
+//    _mapVC.distanceBlock = ^(double distance) {
+////        ICLog(@"距离－－%lf--",distance);
+//#pragma mark - 返回距离
+//        weakOrder.distanceLabel.text = [NSString stringWithFormat:@"距离：%0.2fkm",distance/1000.0];
+//    };
     
     [self.view addSubview:_mapVC.view];
     [self addChildViewController:_mapVC];
@@ -116,6 +122,7 @@
         make.top.equalTo(_navView.mas_bottom);
         make.height.mas_offset(self.view.frame.size.height/3);
     }];
+    _mapVC.mapView.clipsToBounds = YES;
 
 }
 
@@ -135,9 +142,22 @@
     
     // 距离label
     _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(orderNumberLineView.frame) + 7, self.view.frame.size.width, 40)];
-    _distanceLabel.text = @"距离：  1.3km";
+    _distanceLabel.text = @"距离：  ";
     _distanceLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [_scrollView addSubview:_distanceLabel];
+    
+    AppDelegate * appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    float myLocationLat = [appDelegate.locationDictionary[@"lat"] floatValue];
+    float myLocationLng = [appDelegate.locationDictionary[@"lng"] floatValue];
+    float coorLocationLat = [self.customerLat floatValue];
+    float coorLocationLng = [self.customerLon floatValue];
+    
+    CLLocationCoordinate2D myLocation = CLLocationCoordinate2DMake(myLocationLat, myLocationLng);
+    CLLocationCoordinate2D coorLocation = CLLocationCoordinate2DMake(coorLocationLat, coorLocationLng);
+    
+    double distance = [GFMapViewController calculatorWithCoordinate1:myLocation withCoordinate2:coorLocation];
+    self.distanceLabel.text = [NSString stringWithFormat:@"距离：%0.2fkm",distance/1000.0];
+    
     
     UIView *distanceLineView = [[UIView alloc]initWithFrame:CGRectMake(0, _distanceLabel.frame.origin.y+40, self.view.frame.size.width, 1)];
     distanceLineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];

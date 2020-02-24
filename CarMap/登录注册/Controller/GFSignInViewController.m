@@ -271,8 +271,7 @@
         
         [self tipShow:@"手机号不能为空"];
         
-    }else if([phonegextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == NO)
-              {
+    }else if([phonegextestct evaluateWithObject:self.userNameTxt.centerTxt.text] == NO){
         
         [self tipShow:@"请输入正确的手机号"];
         

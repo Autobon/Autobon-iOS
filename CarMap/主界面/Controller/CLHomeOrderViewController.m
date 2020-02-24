@@ -104,7 +104,7 @@
     [self setTableView];
     
     _noOrderImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 57, 57)];
-    _noOrderImageView.center = _tableView.center;
+    _noOrderImageView.center = self.view.center;
     _noOrderImageView.image = [UIImage imageNamed:@"NoOrder"];
     [self.view addSubview:_noOrderImageView];
     [self.view bringSubviewToFront:_noOrderImageView];

@@ -22,6 +22,9 @@
 @property (nonatomic, strong) UITextView *txtview;
 
 @property (nonatomic, copy) NSString *reasonStr;
+
+@property (nonatomic, strong) GFNavigationView *navView;
+
 @end
 
 @implementation GFFangqiViewController
@@ -35,12 +38,16 @@
     _liyouStr = @"";
     
     UIButton *but1 = [UIButton buttonWithType:UIButtonTypeCustom];
-    but1.frame = CGRectMake(0, 70, [UIScreen mainScreen].bounds.size.width, 45);
     [but1 setTitle:@"抢错单了。" forState:UIControlStateNormal];
     [but1 setImage:[UIImage imageNamed:@"over"] forState:UIControlStateNormal];
     [but1 setImage:[UIImage imageNamed:@"overClick"] forState:UIControlStateSelected];
     [but1 addTarget:self action:@selector(liyouButClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:but1];
+    [but1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(self.navView.mas_bottom).offset(10);
+        make.height.mas_offset(45);
+    }];
     but1.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [but1 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     but1.layer.borderWidth = 1;
@@ -50,12 +57,16 @@
     but1.tag = 1;
     
     UIButton *but2 = [UIButton buttonWithType:UIButtonTypeCustom];
-    but2.frame = CGRectMake(0, CGRectGetMaxY(but1.frame) + 10, [UIScreen mainScreen].bounds.size.width, 45);
     [but2 setTitle:@"临时有事。" forState:UIControlStateNormal];
     [but2 setImage:[UIImage imageNamed:@"over"] forState:UIControlStateNormal];
     [but2 setImage:[UIImage imageNamed:@"overClick"] forState:UIControlStateSelected];
     [but2 addTarget:self action:@selector(liyouButClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:but2];
+    [but2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(but1.mas_bottom).offset(10);
+        make.height.mas_offset(45);
+    }];
     but2.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [but2 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     but2.layer.borderWidth = 1;
@@ -65,12 +76,16 @@
     but2.tag = 2;
     
     UIButton *but3 = [UIButton buttonWithType:UIButtonTypeCustom];
-    but3.frame = CGRectMake(0, CGRectGetMaxY(but2.frame) + 10, [UIScreen mainScreen].bounds.size.width, 45);
     [but3 setTitle:@"其他" forState:UIControlStateNormal];
     [but3 setImage:[UIImage imageNamed:@"over"] forState:UIControlStateNormal];
     [but3 setImage:[UIImage imageNamed:@"overClick"] forState:UIControlStateSelected];
     [but3 addTarget:self action:@selector(liyouButClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:but3];
+    [but3 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(but2.mas_bottom).offset(10);
+        make.height.mas_offset(45);
+    }];
     but3.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [but3 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     but3.layer.borderWidth = 1;
@@ -79,7 +94,7 @@
     but3.titleEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0);
     but3.tag = 3;
     
-    self.txtview = [[UITextView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(but3.frame) + 10, [UIScreen mainScreen].bounds.size.width - 20, 60)];
+    self.txtview = [[UITextView alloc] init];
     self.txtview.font = [UIFont systemFontOfSize:15];
     self.txtview.textColor = [UIColor darkGrayColor];
     self.txtview.layer.borderWidth = 1;
@@ -88,15 +103,27 @@
     self.txtview.text = @"请输入其他理由";
     self.txtview.delegate = self;
     [self.view addSubview:self.txtview];
+    [self.txtview mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).offset(10);
+        make.right.equalTo(self.view).offset(-10);
+        make.top.equalTo(but3.mas_bottom).offset(10);
+        make.height.mas_offset(60);
+    }];
     
     
-    UIButton *workButton = [[UIButton alloc]initWithFrame:CGRectMake(25, CGRectGetMaxY(but3.frame) + 100, self.view.frame.size.width - 80, 40)];
+    UIButton *workButton = [[UIButton alloc]init];
     [workButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     workButton.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
     [self.view addSubview:workButton];
     [workButton addTarget:self action:@selector(butClick) forControlEvents:UIControlEventTouchUpInside];
     [workButton setTitle:@"提交" forState:UIControlStateNormal];
     workButton.layer.cornerRadius = 7.5;
+    [workButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).offset(10);
+        make.right.equalTo(self.view).offset(-10);
+        make.top.equalTo(but3.mas_bottom).offset(100);
+        make.height.mas_offset(60);
+    }];
 }
 - (void)textViewDidBeginEditing:(UITextView *)textView {
 
@@ -212,10 +239,10 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    GFNavigationView *navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
-    [navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    _navView = [[GFNavigationView alloc] initWithLeftImgName:@"back" withLeftImgHightName:@"backClick" withRightImgName:nil withRightImgHightName:nil withCenterTitle:@"车邻邦" withFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+    [_navView.leftBut addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
     //    [navView.rightBut addTarget:navView action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:navView];
+    [self.view addSubview:_navView];
 }
 
 
