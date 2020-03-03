@@ -120,13 +120,13 @@
             self.payment = dic[@"payment"];
         }
         
-        if(dic[@"photo"] == nil) {
+        if(dic[@"photo"] == nil || [dic[@"photo"] isKindOfClass:[NSNull class]]) {
             self.photo = @"无";
         }else {
             self.photo = dic[@"photo"];
         }
         
-        if(dic[@"remark"] == nil) {
+        if(dic[@"remark"] == nil || [dic[@"remark"] isKindOfClass:[NSNull class]]) {
             self.remark = @"无";
         }else {
             self.remark = dic[@"remark"];
@@ -263,6 +263,14 @@
             self.vin = @"无";
         }else {
             self.vin = dic[@"vin"];
+        }
+        self.productOfferArray = dic[@"productOfferShows"];
+        if ([self.productOfferArray isKindOfClass:[NSNull class]]){
+            self.productOfferArray = [[NSArray  alloc]init];
+        }
+        self.setMenusArray = dic[@"setMenus"];
+        if ([self.setMenusArray isKindOfClass:[NSNull class]]){
+            self.setMenusArray = [[NSArray  alloc]init];
         }
         
     }

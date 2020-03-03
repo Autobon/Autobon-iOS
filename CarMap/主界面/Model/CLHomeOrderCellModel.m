@@ -188,6 +188,24 @@
             
             _vin = dic[@"vin"];
         }
+        
+        // 商户名称
+        if([dic[@"coopName"] isKindOfClass:[NSNull class]]) {
+            
+            _cooperatorName = @"";
+        }else {
+            
+            _cooperatorName = dic[@"coopName"];
+        }
+        
+        // 商户位置
+        if([dic[@"address"] isKindOfClass:[NSNull class]]) {
+            
+            _cooperatorAddress = @"";
+        }else {
+            
+            _cooperatorAddress = dic[@"address"];
+        }
     }
     
     return self;

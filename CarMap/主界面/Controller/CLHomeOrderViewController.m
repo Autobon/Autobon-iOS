@@ -142,6 +142,9 @@
     
     [self NSNotificationCenter];
     
+    
+    //模拟推送消息 测试专用
+//    [self performSelector:@selector(receiveNotification:) withObject:nil afterDelay:5];
 }
 
 
@@ -345,6 +348,24 @@
         }
         
     }
+    
+    /*
+//     测试专用
+    if (Notification == nil){
+        self.knockOrder = [[CLKnockOrderViewController alloc]init];
+        self.knockOrder.orderDictionary = @{@"order": @{@"id": @"82606"}};
+        [self.view addSubview:self.knockOrder.view];
+        self.knockOrder.view.tag = 10;
+        [self.view bringSubviewToFront:self.knockOrder.view];
+        
+        [self addChildViewController:self.knockOrder];
+        [self.knockOrder didMoveToParentViewController:self];
+        
+        self.knockOrder.certifyButton.tag = [@"82606" integerValue];
+        [self.knockOrder.certifyButton addTarget:self action:@selector(knockBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self.knockOrder.cancelButton addTarget:self action:@selector(knockCancelClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+    */
 //    else if ([Notification.userInfo[@"action"] isEqualToString:@"INVITE_PARTNER"]){
 ////        NSLog(@"有人邀请");
 //        [GFHttpTool getOrderDetailOrderId:[Notification.userInfo[@"order"] integerValue] success:^(id responseObject) {

@@ -227,6 +227,8 @@
     AppDelegate * appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
     _dataDictionary[@"longitude"] = appDelegate.locationDictionary[@"lng"];
     _dataDictionary[@"latitude"] = appDelegate.locationDictionary[@"lat"];
+    _dataDictionary[@"longitude"] = @"115.147885";
+    _dataDictionary[@"latitude"] = @"30.489376";
     _dataDictionary[@"page"] = @(_page);
     _dataDictionary[@"pageSize"] = @(5);
     [GFHttpTool getOrderListNewDictionary:_dataDictionary Success:^(NSDictionary *responseObject) {

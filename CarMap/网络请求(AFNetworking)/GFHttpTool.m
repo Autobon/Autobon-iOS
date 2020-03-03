@@ -1140,7 +1140,7 @@ NSString* const PUBHOST = @"http://118.31.41.230:7123/api";
         GFAlertView *aView = [GFAlertView initWithJinduTiaoTipName:@"加载中..."];
         
         NSString *suffixURL = @"/technician/v2/order/";
-        NSString *url = [NSString stringWithFormat:@"%@%@%@", prefixURL, suffixURL,parameters[@"orderId"]];
+        NSString *url = [NSString stringWithFormat:@"%@%@%@", prefixURL, suffixURL,parameters[@"id"]];
         ICLog(@"--请求的地址---%@", url);
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];

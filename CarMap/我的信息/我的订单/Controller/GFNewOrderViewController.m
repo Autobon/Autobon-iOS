@@ -332,9 +332,9 @@
 
     GFNewOrderModel *model = self.modelArr[indexPath.row];
     NSMutableDictionary *mDic = [[NSMutableDictionary alloc] init];
-    mDic[@"orderId"] = model.orderID;
+    mDic[@"id"] = model.orderID;
 //    NSLog(@"查询字典===%@", mDic);
-    [GFHttpTool oederDDGetWithParameters:mDic success:^(id responseObject) {
+    [GFHttpTool orderDDGetWithParameters:mDic success:^(id responseObject) {
         
         ICLog(@"订单详情＝＝＝%@", responseObject);
         

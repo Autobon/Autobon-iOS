@@ -51,6 +51,9 @@
 @property (nonatomic, strong) NSString *license;
 @property (nonatomic, strong) NSString *vin;
 
+@property (nonatomic, strong) NSArray *productOfferArray;
+@property (nonatomic, strong) NSArray *setMenusArray;
+
 - (instancetype)initWithDictionary:(NSDictionary *)dic;
 
 @end

@@ -1675,6 +1675,7 @@
         _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(_scView.frame)+20);
     }];
 }
+#pragma mark - 选择施工部位协议方法
 - (void)GFProjectView:(GFProjectView *)projectView {
     
     NSInteger a = 0;
@@ -1695,7 +1696,6 @@
     }
 }
 - (void)proButClick:(UIButton *)sender {
-    
     
     sender.enabled = !sender.enabled;
     sender.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
@@ -1902,6 +1902,24 @@
     }
 }
 - (void)submitClick {
+    
+    
+    ICLog(@"选择项目");
+    NSInteger i = 0;
+    for(int j=0; j<_proViewArr.count; j++) {
+        GFProjectView *proView = _proViewArr[j];
+        NSArray *buweiIdArr = proView.idArr;
+        i = i + buweiIdArr.count;
+    }
+    GFProjectView *proView = _proViewArr[0];
+    if (i < proView.prArr.count){
+        ICLog(@"请选择所有的施工项目");
+        return;
+    }
+    
+    
+    
+    return;
     
     UIAlertView *aa = [[UIAlertView alloc] initWithTitle:@"注意" message:@"确定要提交施工单！！" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     [aa show];
