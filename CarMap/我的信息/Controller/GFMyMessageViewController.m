@@ -187,7 +187,8 @@
     CGFloat nameLabH = iconImgViewH / 2.0;
     CGFloat nameLabX = CGRectGetMaxX(iconImgView.frame) + jianjv2;
     CGFloat nameLabY = iconImgViewY + 2;
-    UILabel *nameLab = [[UILabel alloc] initWithFrame:CGRectMake(nameLabX, nameLabY, nameLabW, nameLabH)];
+    UILabel *nameLab = [[UILabel alloc] init];
+    nameLab.frame = CGRectMake(nameLabX, nameLabY, nameLabW, nameLabH);
     nameLab.font = [UIFont systemFontOfSize:16.5 / 320.0 * kWidth];
     nameLab.text = nameStr;
     [msgView addSubview:nameLab];
@@ -199,7 +200,8 @@
     CGFloat indentLabH = nameLabH;
     CGFloat indentLabX = nameLabX;
     CGFloat indentLabY = CGRectGetMaxY(nameLab.frame);
-    UILabel *indentLab = [[UILabel alloc] initWithFrame:CGRectMake(indentLabX, indentLabY, indentLabW, indentLabH)];
+    UILabel *indentLab = [[UILabel alloc] init];
+    indentLab.frame = CGRectMake(indentLabX, indentLabY, indentLabW, indentLabH);
     indentLab.text = @"订单数";
     indentLab.font = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
     [msgView addSubview:indentLab];
@@ -212,7 +214,8 @@
     CGFloat numLabH = indentLabH;
     CGFloat numLabX = CGRectGetMaxX(indentLab.frame) - 3;
     CGFloat numLabY = indentLabY;
-    UILabel *numLab = [[UILabel alloc] initWithFrame:CGRectMake(numLabX, numLabY, numLabW, numLabH)];
+    UILabel *numLab = [[UILabel alloc] init];
+    numLab.frame = CGRectMake(numLabX, numLabY, numLabW, numLabH);
     numLab.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
     numLab.font = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
     numLab.text = numStr;
@@ -227,7 +230,8 @@
     CGFloat fenLabH = strRect.size.height;
     CGFloat fenLabX = CGRectGetMaxX(nameLab.frame) + strRect.size.height * 5 + jianjv1;
     CGFloat fenLabY = numLabY + 3.5 / 568 * kHeight + 1;
-    UILabel *fenLab = [[UILabel alloc] initWithFrame:CGRectMake(fenLabX, fenLabY, fenLabW, fenLabH)];
+    UILabel *fenLab = [[UILabel alloc] init];
+    fenLab.frame = CGRectMake(fenLabX, fenLabY, fenLabW, fenLabH);
     fenLab.textColor = [UIColor whiteColor];
     fenLab.textAlignment = NSTextAlignmentCenter;
     fenLab.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
@@ -292,7 +296,8 @@
     CGFloat moneyLabH = moneyImgViewH;
     CGFloat moneyLabX = CGRectGetMaxX(moneyImgView.frame) + jianjv1;
     CGFloat moneyLabY = moneyImgViewY;
-    UILabel *moneyLab = [[UILabel alloc] initWithFrame:CGRectMake(moneyLabX, moneyLabY, moneyLabW, moneyLabH)];
+    UILabel *moneyLab = [[UILabel alloc] init];
+    moneyLab.frame = CGRectMake(moneyLabX, moneyLabY, moneyLabW, moneyLabH);
     moneyLab.text = @"钱包";
     [moneyView addSubview:moneyLab];
     
@@ -303,7 +308,8 @@
     CGFloat balanceLabUpH = moneyLineShu.frame.size.height / 2.0;
     CGFloat balanceLabUpX = 0;
     CGFloat balanceLabUpY = moneyLineShu.frame.origin.y - 2;
-    UILabel *balanceLabUp = [[UILabel alloc] initWithFrame:CGRectMake(balanceLabUpX, balanceLabUpY, balanceLabUpW, balanceLabUpH)];
+    UILabel *balanceLabUp = [[UILabel alloc] init];
+    balanceLabUp.frame = CGRectMake(balanceLabUpX, balanceLabUpY, balanceLabUpW, balanceLabUpH);
     balanceLabUp.textAlignment = NSTextAlignmentCenter;
     balanceLabUp.text = @"0";
     balanceLabUp.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
@@ -312,7 +318,8 @@
     CGFloat balanceLabDownH = balanceLabUpH;
     CGFloat balanceLabDownX = balanceLabUpX;
     CGFloat balanceLabDownY = CGRectGetMaxY(balanceLabUp.frame) + 3;
-    UILabel *balanceLabDown = [[UILabel alloc] initWithFrame:CGRectMake(balanceLabDownX, balanceLabDownY, balanceLabDownW, balanceLabDownH)];
+    UILabel *balanceLabDown = [[UILabel alloc] init];
+    balanceLabDown.frame = CGRectMake(balanceLabDownX, balanceLabDownY, balanceLabDownW, balanceLabDownH);
     balanceLabDown.textAlignment = NSTextAlignmentCenter;
     balanceLabDown.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
     balanceLabDown.font = [UIFont systemFontOfSize:10 / 320.0 * kWidth];
@@ -332,7 +339,8 @@
     CGFloat billLabUpH = moneyLineShu.frame.size.height / 2.0;
     CGFloat billLabUpX = kWidth / 2.0 + 0.5;
     CGFloat billLabUpY = moneyLineShu.frame.origin.y - 2;
-    UILabel *billLabUp = [[UILabel alloc] initWithFrame:CGRectMake(billLabUpX, billLabUpY, billLabUpW, billLabUpH)];
+    UILabel *billLabUp = [[UILabel alloc] init];
+    billLabUp.frame = CGRectMake(billLabUpX, billLabUpY, billLabUpW, billLabUpH);
     billLabUp.textAlignment = NSTextAlignmentCenter;
     billLabUp.text = @"6";
     billLabUp.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
@@ -341,7 +349,8 @@
     CGFloat billLabDownH = billLabUpH;
     CGFloat billLabDownX = billLabUpX;
     CGFloat billLabDownY = CGRectGetMaxY(billLabUp.frame) + 3;
-    UILabel *billLabDown = [[UILabel alloc] initWithFrame:CGRectMake(billLabDownX, billLabDownY, billLabDownW, billLabDownH)];
+    UILabel *billLabDown = [[UILabel alloc] init];
+    billLabDown.frame = CGRectMake(billLabDownX, billLabDownY, billLabDownW, billLabDownH);
     billLabDown.textAlignment = NSTextAlignmentCenter;
     billLabDown.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
     billLabDown.font = [UIFont systemFontOfSize:10 / 320.0 * kWidth];
@@ -408,7 +417,8 @@
         CGFloat collectLabH = imgViewH;
         CGFloat collectLabX = CGRectGetMaxX(collectImgView.frame) + jianjv1;
         CGFloat collectLabY = imgViewY;
-        UILabel *collectLab = [[UILabel alloc] initWithFrame:CGRectMake(collectLabX, collectLabY, labW, collectLabH)];
+        UILabel *collectLab = [[UILabel alloc] init];
+        collectLab.frame = CGRectMake(collectLabX, collectLabY, labW, collectLabH);
         collectLab.text = titleArray[i];
         //    notificationLab.backgroundColor = [UIColor redColor];
         [baseView addSubview:collectLab];

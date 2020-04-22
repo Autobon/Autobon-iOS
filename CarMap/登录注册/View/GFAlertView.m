@@ -63,7 +63,8 @@
     CGFloat labH = 35 / 320.0 * kWidth;
     CGFloat labX = 0;
     CGFloat labY = CGRectGetMaxY(imgView.frame);
-    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(labX, labY, labW, labH)];
+    UILabel *lab = [[UILabel alloc] init];
+    lab.frame = CGRectMake(labX, labY, labW, labH);
     lab.textAlignment = NSTextAlignmentCenter;
     lab.textColor = [UIColor blackColor];
     lab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
@@ -109,7 +110,8 @@
         CGFloat tipLabH = 40 / 568.0 * kHeight;
         CGFloat tipLabX = 0;
         CGFloat tipLabY = 0;
-        UILabel *tipLab = [[UILabel alloc] initWithFrame:CGRectMake(tipLabX, tipLabY, tipLabW, tipLabH)];
+        UILabel *tipLab = [[UILabel alloc] init];
+        tipLab.frame = CGRectMake(tipLabX, tipLabY, tipLabW, tipLabH);
         tipLab.backgroundColor = [UIColor whiteColor];
         tipLab.text = tipName;
         tipLab.textAlignment = NSTextAlignmentCenter;
@@ -139,7 +141,8 @@
         CGFloat msgLabH = fenRect.size.height + 6;
         CGFloat msgLabX = 20;
         CGFloat msgLabY = CGRectGetMaxY(tipLab.frame) + 20;
-        UILabel *msgLab = [[UILabel alloc] initWithFrame:CGRectMake(msgLabX, msgLabY, msgLabW, msgLabH)];
+        UILabel *msgLab = [[UILabel alloc] init];
+        msgLab.frame = CGRectMake(msgLabX, msgLabY, msgLabW, msgLabH);
         msgLab.numberOfLines = 0;
         msgLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
         msgLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
@@ -165,7 +168,8 @@
         CGFloat okLabH = 30;
         CGFloat okLabX = (baseViewW - okLabW) / 2.0;
         CGFloat okLabY = (okButH - okLabH) / 2.0;
-        UILabel *okLab = [[UILabel alloc] initWithFrame:CGRectMake(okLabX, okLabY, okLabW, okLabH)];
+        UILabel *okLab = [[UILabel alloc] init];
+        okLab.frame = CGRectMake(okLabX, okLabY, okLabW, okLabH);
         okLab.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
         okLab.textColor = [UIColor whiteColor];
         okLab.text = buttonArray[0];
@@ -229,7 +233,8 @@
         CGFloat tipLabH = 40 / 568.0 * kHeight;
         CGFloat tipLabX = 10;
         CGFloat tipLabY = 15 / 568.0 * kHeight;
-        UILabel *tipLab = [[UILabel alloc] initWithFrame:CGRectMake(tipLabX, tipLabY, tipLabW, tipLabH)];
+        UILabel *tipLab = [[UILabel alloc] init];
+        tipLab.frame = CGRectMake(tipLabX, tipLabY, tipLabW, tipLabH);
         tipLab.backgroundColor = [UIColor whiteColor];
         tipLab.text = tipName;
         tipLab.textAlignment = NSTextAlignmentLeft;
@@ -272,7 +277,8 @@
         CGFloat msgLabH = fenRect.size.height + 6;
         CGFloat msgLabX = 20;
         CGFloat msgLabY = CGRectGetMaxY(tipLab.frame) + 20;
-        UILabel *msgLab = [[UILabel alloc] initWithFrame:CGRectMake(msgLabX, msgLabY, msgLabW, msgLabH)];
+        UILabel *msgLab = [[UILabel alloc] init];
+        msgLab.frame = CGRectMake(msgLabX, msgLabY, msgLabW, msgLabH);
         msgLab.numberOfLines = 0;
         msgLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
         msgLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
@@ -303,7 +309,8 @@
         CGFloat okLabH = 30;
         CGFloat okLabX = (baseViewW - okLabW) / 2.0;
         CGFloat okLabY = (okButH - okLabH) / 2.0;
-        UILabel *okLab = [[UILabel alloc] initWithFrame:CGRectMake(okLabX, okLabY, okLabW, okLabH)];
+        UILabel *okLab = [[UILabel alloc] init];
+        okLab.frame = CGRectMake(okLabX, okLabY, okLabW, okLabH);
         okLab.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
         okLab.textColor = [UIColor whiteColor];
         okLab.text = nameStr;
@@ -375,7 +382,8 @@
         CGFloat nameLabH = iconImgViewH / 2.0;
         CGFloat nameLabX = CGRectGetMaxX(iconImgView.frame) + jianjv2;
         CGFloat nameLabY = iconImgViewY + 2;
-        UILabel *nameLab = [[UILabel alloc] initWithFrame:CGRectMake(nameLabX, nameLabY, nameLabW, nameLabH)];
+        UILabel *nameLab = [[UILabel alloc] init];
+        nameLab.frame = CGRectMake(nameLabX, nameLabY, nameLabW, nameLabH);
         nameLab.font = [UIFont systemFontOfSize:16.5 / 320.0 * kWidth];
         nameLab.text = nameStr;
         [baseView addSubview:nameLab];
@@ -385,7 +393,8 @@
         CGFloat indentLabH = nameLabH;
         CGFloat indentLabX = nameLabX;
         CGFloat indentLabY = CGRectGetMaxY(nameLab.frame);
-        UILabel *indentLab = [[UILabel alloc] initWithFrame:CGRectMake(indentLabX, indentLabY, indentLabW, indentLabH)];
+        UILabel *indentLab = [[UILabel alloc] init];
+        indentLab.frame = CGRectMake(indentLabX, indentLabY, indentLabW, indentLabH);
         indentLab.text = @"订单数";
         indentLab.font = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
         [baseView addSubview:indentLab];
@@ -398,7 +407,8 @@
         CGFloat numLabH = indentLabH;
         CGFloat numLabX = CGRectGetMaxX(indentLab.frame) - 3;
         CGFloat numLabY = indentLabY;
-        UILabel *numLab = [[UILabel alloc] initWithFrame:CGRectMake(numLabX, numLabY, numLabW, numLabH)];
+        UILabel *numLab = [[UILabel alloc] init];
+        numLab.frame = CGRectMake(numLabX, numLabY, numLabW, numLabH);
         numLab.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
         numLab.font = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
         numLab.text = numStr;
@@ -440,7 +450,8 @@
         CGFloat fenLabH = strRect.size.height;
         CGFloat fenLabX = CGRectGetMaxX(numLab.frame) + 20 + strRect.size.height * 5 + jianjv1;
         CGFloat fenLabY = numLabY + 3.5 / 568 * kHeight;
-        UILabel *fenLab = [[UILabel alloc] initWithFrame:CGRectMake(fenLabX, fenLabY, fenLabW, fenLabH)];
+        UILabel *fenLab = [[UILabel alloc] init];
+        fenLab.frame = CGRectMake(fenLabX, fenLabY, fenLabW, fenLabH);
         fenLab.textColor = [UIColor whiteColor];
         fenLab.textAlignment = NSTextAlignmentCenter;
         fenLab.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
@@ -455,7 +466,8 @@
 //        CGFloat goodLabH = indentLabH;
 //        CGFloat goodLabX = CGRectGetMaxX(numLab.frame) + jianjv1;
 //        CGFloat goodLabY = indentLabY;
-//        UILabel *goodLab = [[UILabel alloc] initWithFrame:CGRectMake(goodLabX, goodLabY, goodLabW, goodLabH)];
+//        UILabel *goodLab = [[UILabel alloc] init];
+//        goodLab.frame = CGRectMake(goodLabX, goodLabY, goodLabW, goodLabH);
 //        goodLab.text = @"好评率";
 //        goodLab.font = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
 //        [baseView addSubview:goodLab];
@@ -468,7 +480,8 @@
 //        CGFloat proLabH = goodLabH;
 //        CGFloat proLabX = CGRectGetMaxX(goodLab.frame) - 3;
 //        CGFloat proLabY = goodLabY;
-//        UILabel *proLab = [[UILabel alloc] initWithFrame:CGRectMake(proLabX, proLabY, proLabW, proLabH)];
+//        UILabel *proLab = [[UILabel alloc] init];
+//        proLab.frame = CGRectMake(proLabX, proLabY, proLabW, proLabH);
 //        proLab.text = proStr;
 //        proLab.font = [UIFont systemFontOfSize:14.5 / 320.0 * kWidth];
 //        proLab.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
@@ -512,7 +525,8 @@
         CGFloat msgLabH = fenRect2.size.height + 6;
         CGFloat msgLabX = 20;
         CGFloat msgLabY = CGRectGetMaxY(lineView.frame) + 10;
-        UILabel *msgLab = [[UILabel alloc] initWithFrame:CGRectMake(msgLabX, msgLabY, msgLabW, msgLabH)];
+        UILabel *msgLab = [[UILabel alloc] init];
+        msgLab.frame = CGRectMake(msgLabX, msgLabY, msgLabW, msgLabH);
         msgLab.numberOfLines = 0;
         msgLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
         msgLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
@@ -543,7 +557,8 @@
         CGFloat okLabH = 30;
         CGFloat okLabX = (baseViewW - okLabW) / 2.0;
         CGFloat okLabY = (okButH - okLabH) / 2.0;
-        UILabel *okLab = [[UILabel alloc] initWithFrame:CGRectMake(okLabX, okLabY, okLabW, okLabH)];
+        UILabel *okLab = [[UILabel alloc] init];
+        okLab.frame = CGRectMake(okLabX, okLabY, okLabW, okLabH);
         okLab.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
         okLab.textColor = [UIColor whiteColor];
         okLab.text = nameStr2;
@@ -585,7 +600,8 @@
         [self addSubview:bgView];
         
 // 合作人暂无回应
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(50, 20, bgView.frame.size.width-100, 30)];
+        UILabel *label = [[UILabel alloc] init];
+        label.frame = CGRectMake(50, 20, bgView.frame.size.width-100, 30);
         label.text = title;
         label.textAlignment = NSTextAlignmentCenter;
         [bgView addSubview:label];
@@ -650,7 +666,8 @@
         CGFloat tipLabY = 10;
         CGRect tipRect = [title boundingRectWithSize:CGSizeMake(baseViewW-50, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15 / 320.0 * kWidth]} context:nil];
         
-        UILabel *tipLab = [[UILabel alloc] initWithFrame:CGRectMake(tipLabX+25, tipLabY, tipLabW-50, tipRect.size.height)];
+        UILabel *tipLab = [[UILabel alloc] init];
+        tipLab.frame = CGRectMake(tipLabX+25, tipLabY, tipLabW-50, tipRect.size.height);
         tipLab.backgroundColor = [UIColor whiteColor];
         tipLab.numberOfLines = 0;
         tipLab.text = title;
@@ -683,7 +700,8 @@
         CGFloat msgLabH = fenRect.size.height + 6;
         CGFloat msgLabX = 20;
         CGFloat msgLabY = CGRectGetMaxY(tipLab.frame) + 20;
-        UILabel *msgLab = [[UILabel alloc] initWithFrame:CGRectMake(msgLabX, msgLabY, msgLabW, msgLabH)];
+        UILabel *msgLab = [[UILabel alloc] init];
+        msgLab.frame = CGRectMake(msgLabX, msgLabY, msgLabW, msgLabH);
         msgLab.numberOfLines = 0;
         msgLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
         msgLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
@@ -710,7 +728,8 @@
         CGFloat okLabH = 30;
         CGFloat okLabX = (baseViewW - okLabW) / 2.0;
         CGFloat okLabY = (okButH - okLabH) / 2.0;
-        UILabel *okLab = [[UILabel alloc] initWithFrame:CGRectMake(okLabX, okLabY, okLabW, okLabH)];
+        UILabel *okLab = [[UILabel alloc] init];
+        okLab.frame = CGRectMake(okLabX, okLabY, okLabW, okLabH);
         okLab.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
         okLab.textColor = [UIColor whiteColor];
         okLab.text = buttonArray[0];

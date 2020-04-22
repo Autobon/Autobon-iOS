@@ -31,7 +31,8 @@
         [self addSubview:orangeView];
         
 // title
-        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 10, 300, 30)];
+        UILabel *titleLabel = [[UILabel alloc] init];
+        titleLabel.frame = CGRectMake(20, 10, 300, 30);
         titleLabel.text = titleString;
         titleLabel.textColor = [UIColor darkGrayColor];
         [self addSubview:titleLabel];

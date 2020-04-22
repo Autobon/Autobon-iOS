@@ -87,6 +87,7 @@
     
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height-44) style:UITableViewStylePlain];
+    _tableView.backgroundColor = [UIColor clearColor];
     _tableView.delegate = self;
     _tableView.dataSource = self;
 //    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -106,7 +107,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
-        UILabel *label = [[UILabel alloc]init];
+        UILabel *label = [[UILabel alloc] init];
         label.numberOfLines = 0;
         label.tag = 5;
         [cell addSubview:label];

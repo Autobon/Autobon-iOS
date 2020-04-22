@@ -103,7 +103,8 @@
         NSString *str = @"一星代表“初学”， 二星代表“生疏”， 三星代表“熟练”， 四星代表“优秀”， 五星代表“大神”。";
         CGRect strRect = [str boundingRectWithSize:CGSizeMake([UIScreen mainScreen].bounds.size.width - 50, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]} context:nil];
         
-        UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(20, 220, [UIScreen mainScreen].bounds.size.width - 40 , strRect.size.height + 10 + 30)];
+        UILabel *lab = [[UILabel alloc] init];
+        lab.frame = CGRectMake(20, 220, [UIScreen mainScreen].bounds.size.width - 40 , strRect.size.height + 10 + 30);
         lab.backgroundColor = [UIColor whiteColor];
         lab.textAlignment = NSTextAlignmentCenter;
         lab.text = str;
@@ -278,6 +279,7 @@
     
     // 个人简介
     _txtView = [[UITextView alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(skillView.frame) + 15 + 35 * 6 + 10, [UIScreen mainScreen].bounds.size.width - 40, 80)];
+    _txtView.backgroundColor = [UIColor clearColor];
     _txtView.text = @"请介绍一下自己吧！（200字以内）";
     _txtView.textColor = [UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0];
     _txtView.delegate = self;
@@ -342,7 +344,8 @@
     [_submitBut addTarget:self action:@selector(subButClick) forControlEvents:UIControlEventTouchUpInside];
     
     // 技师认证协议
-    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_submitBut.frame) + 5, [UIScreen mainScreen].bounds.size.width * 0.6 - 6 / 320.0 * [UIScreen mainScreen].bounds.size.width, 20)];
+    UILabel *lab = [[UILabel alloc] init];
+    lab.frame = CGRectMake(0, CGRectGetMaxY(_submitBut.frame) + 5, [UIScreen mainScreen].bounds.size.width * 0.6 - 6 / 320.0 * [UIScreen mainScreen].bounds.size.width, 20);
     lab.textColor = [UIColor lightGrayColor];
     [_scView addSubview:lab];
     lab.font = [UIFont systemFontOfSize:11];
@@ -666,14 +669,15 @@
     vv.frame = CGRectMake(x, y, [UIScreen mainScreen].bounds.size.width, 40);
     [_scView addSubview:vv];
     
-    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, 40)];
+    UILabel *lab = [[UILabel alloc] init];
+    lab.frame = CGRectMake(10, 0, 100, 40);
     lab.textColor = [UIColor lightGrayColor];
     lab.text = tittle;
     lab.font = [UIFont systemFontOfSize:14];
     [vv addSubview:lab];
     
     UITextField *txt = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(lab.frame), 0, [UIScreen mainScreen].bounds.size.width - 20 - 100, 40)];
-    txt.placeholder = @"请输入";
+    [txt setTextFieldPlaceholderString:@"请输入"];
     txt.font = [UIFont systemFontOfSize:14];
     txt.textColor = [UIColor darkGrayColor];
     [vv addSubview:txt];
@@ -687,7 +691,8 @@
     UIView *vv = [[UIView alloc] initWithFrame:CGRectMake(x, y, [UIScreen mainScreen].bounds.size.width, 45)];
     [_scView addSubview:vv];
     
-    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 80, 25)];
+    UILabel *lab = [[UILabel alloc] init];
+    lab.frame = CGRectMake(10, 0, 80, 25);
     lab.textColor = [UIColor darkGrayColor];
     lab.font = [UIFont systemFontOfSize:14];
     lab.text = title;
@@ -714,7 +719,8 @@
     UIView *vv = [[UIView alloc] initWithFrame:CGRectMake(x, y, [UIScreen mainScreen].bounds.size.width - 120, 30)];
     [_scView addSubview:vv];
     
-    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
+    UILabel *lab = [[UILabel alloc] init];
+    lab.frame = CGRectMake(0, 0, 80, 30);
     lab.text = title;
     lab.textColor = [UIColor grayColor];
     lab.font = [UIFont systemFontOfSize:14];
@@ -723,7 +729,7 @@
     UITextField *txt = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, vv.frame.size.width - 80, 30)];
     txt.font = [UIFont systemFontOfSize:14];
     txt.textColor = [UIColor darkGrayColor];
-    txt.placeholder = @"请输入";
+    [txt setTextFieldPlaceholderString:@"请输入"];
     [vv addSubview:txt];
     
     UIView *lineView= [[UIView alloc] initWithFrame:CGRectMake(75, 29, vv.frame.size.width - 75, 1)];

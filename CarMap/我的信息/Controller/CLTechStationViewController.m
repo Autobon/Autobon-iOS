@@ -38,7 +38,7 @@
 
 - (void)setViewForDetail{
     
-    UILabel *nameLabel = [[UILabel alloc]init];
+    UILabel *nameLabel = [[UILabel alloc] init];
     if (self.stationModel.coopName == nil){
         nameLabel.text = [NSString stringWithFormat:@"商户名称：%@", @" "];
     }else{
@@ -51,7 +51,7 @@
         make.top.equalTo(self.navView.mas_bottom).offset(5);
         make.height.mas_offset(40);
     }];
-    UILabel *nameLineLabel = [[UILabel alloc]init];
+    UILabel *nameLineLabel = [[UILabel alloc] init];
     nameLineLabel.backgroundColor = [UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1.0];
     [self.view addSubview:nameLineLabel];
     [nameLineLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -60,7 +60,7 @@
         make.height.mas_offset(0.5);
     }];
     
-    UILabel *addressLabel = [[UILabel alloc]init];
+    UILabel *addressLabel = [[UILabel alloc] init];
     if (self.stationModel.address == nil){
         addressLabel.text = [NSString stringWithFormat:@"商户位置：%@", @""];
     }else{
@@ -74,7 +74,7 @@
         make.height.mas_offset(40);
     }];
     
-    UILabel *addressLineLabel = [[UILabel alloc]init];
+    UILabel *addressLineLabel = [[UILabel alloc] init];
     addressLineLabel.backgroundColor = [UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1.0];
     [self.view addSubview:addressLineLabel];
     [addressLineLabel mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -26,7 +26,7 @@
 - (instancetype)initWithTitle:(NSString *)titleString width:(int )width{
     self = [super init];
     if (self){
-        _titleLabel = [[UILabel alloc]init];
+        _titleLabel = [[UILabel alloc] init];
         _titleLabel.text = titleString;
         _titleLabel.font = [UIFont systemFontOfSize:15];
         [self addSubview:_titleLabel];

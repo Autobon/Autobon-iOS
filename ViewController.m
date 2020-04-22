@@ -50,6 +50,7 @@
 //    window.rootViewController = nav;
 //    [self.navigationController pushViewController:homeView animated:YES];
     UITableView *tableView = [[UITableView alloc]initWithFrame:self.view.bounds];
+    tableView.backgroundColor = [UIColor clearColor];
     tableView.delegate = self;
     tableView.dataSource = self;
     [self.view addSubview:tableView];

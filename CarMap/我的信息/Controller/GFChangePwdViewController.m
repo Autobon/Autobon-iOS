@@ -315,7 +315,8 @@
     CGFloat msgLabH = tipViewH;
     CGFloat msgLabX = 0;
     CGFloat msgLabY = 0;
-    UILabel *msgLab = [[UILabel alloc] initWithFrame:CGRectMake(msgLabX, msgLabY, msgLabW, msgLabH)];
+    UILabel *msgLab = [[UILabel alloc] init];
+    msgLab.frame = CGRectMake(msgLabX, msgLabY, msgLabW, msgLabH);
     msgLab.text = messageStr;
     [self.tipView addSubview:msgLab];
     msgLab.textAlignment = NSTextAlignmentCenter;

@@ -188,7 +188,8 @@
     CGFloat agreeLabH = kHeight * 0.024;
     CGFloat agreeLabX = 0 + 18;
     CGFloat agreeLabY = CGRectGetMaxY(_submitBut.frame) + jiange2 + 19;
-    UILabel *agreeLab = [[UILabel alloc] initWithFrame:CGRectMake(agreeLabX, agreeLabY, agreeLabW, agreeLabH)];
+    UILabel *agreeLab = [[UILabel alloc] init];
+    agreeLab.frame = CGRectMake(agreeLabX, agreeLabY, agreeLabW, agreeLabH);
     [self.view addSubview:agreeLab];
     agreeLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
     agreeLab.textAlignment = NSTextAlignmentCenter;
@@ -211,7 +212,8 @@
 //    CGFloat leftLabH = kHeight * 0.024;
 //    CGFloat leftLabX = 0;
 //    CGFloat leftLabY = CGRectGetMaxY(submitBut.frame) + jiange2;
-//    UILabel *leftLab = [[UILabel alloc] initWithFrame:CGRectMake(leftLabX, leftLabY, leftLabW, leftLabH)];
+//    UILabel *leftLab = [[UILabel alloc] init];
+//    leftLab.frame = CGRectMake(leftLabX, leftLabY, leftLabW, leftLabH);
 //    leftLab.text = @"点击“提交”代表本人同意";
 //    leftLab.textAlignment = NSTextAlignmentRight;
 //    leftLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
@@ -640,7 +642,8 @@
     CGFloat msgLabH = tipViewH;
     CGFloat msgLabX = 0;
     CGFloat msgLabY = 0;
-    UILabel *msgLab = [[UILabel alloc] initWithFrame:CGRectMake(msgLabX, msgLabY, msgLabW, msgLabH)];
+    UILabel *msgLab = [[UILabel alloc] init];
+    msgLab.frame = CGRectMake(msgLabX, msgLabY, msgLabW, msgLabH);
     msgLab.text = messageStr;
     [self.tipView addSubview:msgLab];
     msgLab.textAlignment = NSTextAlignmentCenter;

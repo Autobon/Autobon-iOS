@@ -9,6 +9,7 @@
 #import "Commom.h"
 #import "Masonry.h"
 #import "UITextField+PlaceholderColor.h"
+#import "UILabel+TextColor.h"
 
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch

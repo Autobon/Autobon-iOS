@@ -53,14 +53,16 @@
         self.contentView.contentMode = UIViewContentModeScaleAspectFit;
         [vv addSubview:self.iconView];
         
-        self.nameLab = [[UILabel alloc] initWithFrame:CGRectMake(80, 10, 200, 30)];
+        self.nameLab = [[UILabel alloc] init];
+        self.nameLab.frame = CGRectMake(80, 10, 200, 30);
 //        self.nameLab.backgroundColor = [UIColor greenColor];
         self.nameLab.font = [UIFont systemFontOfSize:15];
         self.nameLab.text = @"王尼玛 ";
         self.nameLab.textColor = [UIColor darkGrayColor];
         [vv addSubview:self.nameLab];
         
-        self.phoneLab = [[UILabel alloc] initWithFrame:CGRectMake(80, 40, 200, 30)];
+        self.phoneLab = [[UILabel alloc] init];
+        self.phoneLab.frame = CGRectMake(80, 40, 200, 30);
 //        self.phoneLab.backgroundColor = [UIColor greenColor];
         self.phoneLab.font = [UIFont systemFontOfSize:15];
         self.phoneLab.text = @"999999999";

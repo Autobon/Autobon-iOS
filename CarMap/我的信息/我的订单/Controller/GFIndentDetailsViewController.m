@@ -185,7 +185,7 @@
 //    }];
     
     // 结算按钮
-    self.tipLabel = [[UILabel alloc]init];
+    self.tipLabel = [[UILabel alloc] init];
 //    [self.tipBut setTitle:@"未结算" forState:UIControlStateNormal];
 //    [self.tipBut setTitle:@"已结算" forState:UIControlStateSelected];
 //    [self.tipBut setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -443,7 +443,7 @@
         [titleImageBaseView addSubview:titleImageView];
         titleImageView.frame = CGRectMake(20, 12, 15, 15);
         
-        UILabel *titleImageLabel = [[UILabel alloc]init];
+        UILabel *titleImageLabel = [[UILabel alloc] init];
         titleImageLabel.text = @"型号+部位";
         titleImageLabel.font = [UIFont boldSystemFontOfSize:14];
         [titleImageBaseView addSubview:titleImageLabel];
@@ -469,7 +469,8 @@
             
             
             NSDictionary *productDict = self.model.productOfferArray[i];
-            UILabel *menusNameLab = [[UILabel alloc] initWithFrame:CGRectMake(40, 5, [UIScreen mainScreen].bounds.size.width - 60, 30)];
+            UILabel *menusNameLab = [[UILabel alloc] init];
+            menusNameLab.frame = CGRectMake(40, 5, [UIScreen mainScreen].bounds.size.width - 60, 30);
             menusNameLab.textColor = [UIColor darkGrayColor];
             menusNameLab.font = [UIFont systemFontOfSize:14];
             menusNameLab.text = [NSString stringWithFormat:@"%@--%@", productDict[@"model"], productDict[@"constructionPositionName"]];
@@ -533,7 +534,7 @@
         [titleImageBaseView addSubview:titleImageView];
         titleImageView.frame = CGRectMake(20, 12, 15, 15);
         
-        UILabel *titleImageLabel = [[UILabel alloc]init];
+        UILabel *titleImageLabel = [[UILabel alloc] init];
         titleImageLabel.text = @"套餐名称";
         titleImageLabel.font = [UIFont boldSystemFontOfSize:14];
         [titleImageBaseView addSubview:titleImageLabel];
@@ -560,7 +561,8 @@
             
             
             NSDictionary *menusDict = self.model.setMenusArray[i];
-            UILabel *menusNameLab = [[UILabel alloc] initWithFrame:CGRectMake(40, 5, [UIScreen mainScreen].bounds.size.width - 60, 30)];
+            UILabel *menusNameLab = [[UILabel alloc] init];
+            menusNameLab.frame = CGRectMake(40, 5, [UIScreen mainScreen].bounds.size.width - 60, 30);
             menusNameLab.textColor = [UIColor darkGrayColor];
             menusNameLab.font = [UIFont systemFontOfSize:14];
             menusNameLab.text = [NSString stringWithFormat:@"%@", menusDict[@"name"]];
@@ -857,7 +859,8 @@
     
     
     
-    UILabel *mLab = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 10 - 120, self.workTimeLab.frame.origin.y, 120, 25)];
+    UILabel *mLab = [[UILabel alloc] init];
+    mLab.frame = CGRectMake([UIScreen mainScreen].bounds.size.width - 10 - 120, self.workTimeLab.frame.origin.y, 120, 25);
     mLab.text = [NSString stringWithFormat:@"合计：¥%0.1f", [self.model.payment floatValue]];
     mLab.textAlignment = NSTextAlignmentRight;
     //        self.mLab.textColor = [UIColor lightGrayColor];
@@ -927,7 +930,8 @@
 //    CGFloat workTimeLabH = workDayLabH;
 //    CGFloat workTimeLabX = workDayLabX;
 //    CGFloat workTimeLabY = CGRectGetMaxY(self.workDayLab.frame);
-//    self.workTimeLab = [[UILabel alloc] initWithFrame:CGRectMake(workTimeLabX, workTimeLabY, workTimeLabW, workTimeLabH)];
+//    self.workTimeLab = [[UILabel alloc] init];
+//    self.workTimeLab.frame = CGRectMake(workTimeLabX, workTimeLabY, workTimeLabW, workTimeLabH);
 //    self.workTimeLab.text = [NSString stringWithFormat:@"施工耗时："];
 //    self.workTimeLab.font = [UIFont systemFontOfSize:14];
 //    [baseView addSubview:self.workTimeLab];
@@ -1201,7 +1205,7 @@
     if ([_model.commentStr isEqualToString:@"无"]) {
         // 其他意见和建议
         
-        UILabel *otherLabel = [[UILabel alloc]init];
+        UILabel *otherLabel = [[UILabel alloc] init];
         otherLabel.text = @"暂无评价";
         otherLabel.frame = CGRectMake(0, lineView.frame.origin.y + 5, self.view.frame.size.width, 40);
         otherLabel.textAlignment = NSTextAlignmentCenter;

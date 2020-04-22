@@ -78,6 +78,7 @@
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     [self.view addSubview:self.tableview];
+    self.tableview.backgroundColor = [UIColor clearColor];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableview mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.equalTo(self.view);

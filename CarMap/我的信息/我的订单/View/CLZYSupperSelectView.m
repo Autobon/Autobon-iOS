@@ -64,7 +64,7 @@
             
             
             if(i == itemArray.count - 1){
-                UILabel *label = [[UILabel alloc]init];
+                UILabel *label = [[UILabel alloc] init];
                 label.text = titleString;
                 label.textAlignment = NSTextAlignmentCenter;
                 label.backgroundColor = [UIColor whiteColor];

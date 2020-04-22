@@ -38,7 +38,8 @@
         
         
         // 标题
-        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWidth * 0.065, 0, kWidth * 0.9, baseViewH)];
+        UILabel *titleLabel = [[UILabel alloc] init];
+        titleLabel.frame = CGRectMake(kWidth * 0.065, 0, kWidth * 0.9, baseViewH);
         titleLabel.text = titleString;
         [self addSubview:titleLabel];
         
@@ -77,7 +78,8 @@
         
         
         // 标题
-        self.titleLab = [[UILabel alloc]initWithFrame:CGRectMake(kWidth * 0.065, 0, kWidth * 0.9, baseViewH)];
+        self.titleLab = [[UILabel alloc] init];
+        self.titleLab.frame = CGRectMake(kWidth * 0.065, 0, kWidth * 0.9, baseViewH);
         self.titleLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
         [self addSubview:self.titleLab];
         
@@ -89,7 +91,8 @@
         
         
         // 右边lab
-        self.rightLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kWidth - kWidth * 0.065, baseViewH)];
+        self.rightLab = [[UILabel alloc] init];
+        self.rightLab.frame = CGRectMake(0, 0, kWidth - kWidth * 0.065, baseViewH);
         self.rightLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
         self.rightLab.textAlignment = NSTextAlignmentRight;
         

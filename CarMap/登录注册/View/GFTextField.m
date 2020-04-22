@@ -150,7 +150,7 @@
         CGFloat centerTxtY = 0;
         self.centerTxt = [[UITextField alloc] initWithFrame:CGRectMake(centerTxtX, centerTxtY, centerTxtW, centerTxtH)];
         self.centerTxt.textColor = [UIColor colorWithRed:40 / 255.0 green:40 / 255.0 blue:40 / 255.0 alpha:1];
-        self.centerTxt.placeholder = placeholder;
+        [self.centerTxt setTextFieldPlaceholderString:placeholder];
 //        [self.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * ([UIScreen mainScreen].bounds.size.width))] forKeyPath:@"_placeholderLabel.font"];
         self.centerTxt.font = [UIFont systemFontOfSize:(15 / 320.0 * [UIScreen mainScreen].bounds.size.width)];
         [baseView addSubview:self.centerTxt];

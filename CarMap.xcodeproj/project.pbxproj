@@ -21,6 +21,7 @@
 		9BBA2BD61CBB72E500543004 /* servicedelegate.html in Resources */ = {isa = PBXBuildFile; fileRef = 9BBA2BD51CBB72E500543004 /* servicedelegate.html */; };
 		9BCFDCA51C85B6CF003A35A8 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9BCFDCA21C85B6CF003A35A8 /* AppDelegate.mm */; };
 		9BD52BE71CC46C6E009FE948 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BD52BE61CC46C6E009FE948 /* GoogleService-Info.plist */; };
+		A608AF50244FE19E000694C6 /* UILabel+TextColor.m in Sources */ = {isa = PBXBuildFile; fileRef = A608AF4F244FE19E000694C6 /* UILabel+TextColor.m */; };
 		A6341042244F18C600005CFF /* UITextField+PlaceholderColor.m in Sources */ = {isa = PBXBuildFile; fileRef = A6341041244F18C600005CFF /* UITextField+PlaceholderColor.m */; };
 		A670347223A759930017D10D /* CLStationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A670347123A759930017D10D /* CLStationTableViewCell.m */; };
 		A6A68BBC23A723C000D58D5A /* CLTechStationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A68BBB23A723C000D58D5A /* CLTechStationViewController.m */; };
@@ -247,6 +248,8 @@
 		9BFA80811C5F4744001651C3 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		9BFA80841C5F475B001651C3 /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
 		A08ADB78524ACF43A63B9DF3 /* libPods-CarMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CarMap.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A608AF4E244FE19E000694C6 /* UILabel+TextColor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UILabel+TextColor.h"; sourceTree = "<group>"; };
+		A608AF4F244FE19E000694C6 /* UILabel+TextColor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UILabel+TextColor.m"; sourceTree = "<group>"; };
 		A6341040244F18C600005CFF /* UITextField+PlaceholderColor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextField+PlaceholderColor.h"; sourceTree = "<group>"; };
 		A6341041244F18C600005CFF /* UITextField+PlaceholderColor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextField+PlaceholderColor.m"; sourceTree = "<group>"; };
 		A670347023A759930017D10D /* CLStationTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLStationTableViewCell.h; sourceTree = "<group>"; };
@@ -735,6 +738,8 @@
 				B02290A61ECD4BB40022D34F /* Reachability.m */,
 				A6341040244F18C600005CFF /* UITextField+PlaceholderColor.h */,
 				A6341041244F18C600005CFF /* UITextField+PlaceholderColor.m */,
+				A608AF4E244FE19E000694C6 /* UILabel+TextColor.h */,
+				A608AF4F244FE19E000694C6 /* UILabel+TextColor.m */,
 				B02290A71ECD4BB40022D34F /* 百度地图 */,
 				B02290B01ECD4BB40022D34F /* 自定义控件 */,
 			);
@@ -1818,6 +1823,7 @@
 				B04AF16D20D8F95F007EFCB3 /* CLStudyModel.m in Sources */,
 				866CCEC21C755BC800E50C67 /* GFHttpTool.m in Sources */,
 				B05EC0D320F3383900EFB588 /* HXDatePhotoPreviewBottomView.m in Sources */,
+				A608AF50244FE19E000694C6 /* UILabel+TextColor.m in Sources */,
 				B02290E41ECD4BB40022D34F /* GFImageView.m in Sources */,
 				B022914E1ECD4CFC0022D34F /* CLNotificationTableViewCell.m in Sources */,
 				B05EC0D120F3383900EFB588 /* HXDownloadProgressView.m in Sources */,

@@ -25,7 +25,7 @@
     
     
     
-    UILabel *label = [[UILabel alloc]init];
+    UILabel *label = [[UILabel alloc] init];
     label.numberOfLines = 0;
     label.text = _detailModel.titleString;
     label.textAlignment = NSTextAlignmentCenter;
@@ -36,13 +36,14 @@
     
     [self.view addSubview:label];
     
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(label.frame)+10, self.view.frame.size.width-20, 20)];
+    UILabel *timeLabel = [[UILabel alloc] init];
+    timeLabel.frame = CGRectMake(10, CGRectGetMaxY(label.frame)+10, self.view.frame.size.width-20, 20);
     timeLabel.text = _detailModel.timeString;
     timeLabel.textAlignment = NSTextAlignmentCenter;
     timeLabel.alpha = 0.6;
     [self.view addSubview:timeLabel];
     
-    UILabel *contentLabel = [[UILabel alloc]init];
+    UILabel *contentLabel = [[UILabel alloc] init];
     contentLabel.numberOfLines = 0;
     contentLabel.alpha = 0.8;
     contentLabel.text = [NSString stringWithFormat:@"      %@",_detailModel.contentString];

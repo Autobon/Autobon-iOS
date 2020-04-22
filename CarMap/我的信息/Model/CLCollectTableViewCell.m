@@ -46,7 +46,7 @@
             make.top.equalTo(baseView).offset(15);
         }];
         
-        _nameValueLab = [[UILabel alloc]init];
+        _nameValueLab = [[UILabel alloc] init];
         _nameValueLab.font = [UIFont systemFontOfSize:14];
         _nameValueLab.numberOfLines = 0;
         _nameValueLab.text = @" ";

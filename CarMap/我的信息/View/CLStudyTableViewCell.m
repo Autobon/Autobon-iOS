@@ -35,7 +35,7 @@
         }];
         
         
-        _titleLabel = [[UILabel alloc]init];
+        _titleLabel = [[UILabel alloc] init];
         _titleLabel.text = @"贴膜前检查事项";
         _titleLabel.font = [UIFont systemFontOfSize:14];
         [baseView addSubview:_titleLabel];
@@ -46,7 +46,7 @@
             make.right.equalTo(baseView).offset(-15);
         }];
         
-        _typeLabel = [[UILabel alloc]init];
+        _typeLabel = [[UILabel alloc] init];
         _typeLabel.text = @"培训资料";
         _typeLabel.font = [UIFont systemFontOfSize:14];
         [baseView addSubview:_typeLabel];
@@ -57,7 +57,7 @@
             make.right.equalTo(baseView).offset(-15);
         }];
         
-        _remarkLabel = [[UILabel alloc]init];
+        _remarkLabel = [[UILabel alloc] init];
         _remarkLabel.text = @"备注：";
         _remarkLabel.font = [UIFont systemFontOfSize:14];
         [baseView addSubview:_remarkLabel];
@@ -68,7 +68,7 @@
             
         }];
         
-        _remarkDetailLabel = [[UILabel alloc]init];
+        _remarkDetailLabel = [[UILabel alloc] init];
         _remarkDetailLabel.text = @" ";
         _remarkDetailLabel.font = [UIFont systemFontOfSize:14];
         _remarkDetailLabel.numberOfLines = 0;

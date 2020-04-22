@@ -28,7 +28,7 @@
         [self addSubview:baseView];
         
         
-        _detailLabel = [[UILabel alloc]init];
+        _detailLabel = [[UILabel alloc] init];
 //        _detailLabel.text = @"施工项目：隐形车衣 施工项目：隐形车衣 施工项目：隐形车衣 施工项目：隐形车衣 施工项目：隐形车衣 施工项目：隐形车衣 施工项目：隐形车衣 施工项目：隐形车衣 施工项目：隐形车衣 施工项目：隐形车衣 施工项目：隐形车衣 施工项目：隐形车衣 ";
         _detailLabel.numberOfLines = 0;
         _detailLabel.font = [UIFont systemFontOfSize:14];

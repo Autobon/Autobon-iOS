@@ -75,7 +75,8 @@
     CGFloat upMoneyLabH = kHeight * 0.162;
     CGFloat upMoneyLabX = 0;
     CGFloat upMoneyLabY = 94;
-    self.upMoneyLab = [[UILabel alloc] initWithFrame:CGRectMake(upMoneyLabX, upMoneyLabY, upMoneyLabW, upMoneyLabH)];
+    self.upMoneyLab = [[UILabel alloc] init];
+    self.upMoneyLab.frame = CGRectMake(upMoneyLabX, upMoneyLabY, upMoneyLabW, upMoneyLabH);
     self.upMoneyLab.backgroundColor = [UIColor whiteColor];
     self.upMoneyLab.textAlignment = NSTextAlignmentCenter;
     if (self.balance == NULL) {
@@ -105,7 +106,8 @@
     CGFloat bankLabH = (bankViewH - 6) / 2.0;
     CGFloat bankLabX = jianjv1;
     CGFloat bankLabY = 3;
-    self.bankLab = [[UILabel alloc] initWithFrame:CGRectMake(bankLabX, bankLabY, bankLabW, bankLabH)];
+    self.bankLab = [[UILabel alloc] init];
+    self.bankLab.frame = CGRectMake(bankLabX, bankLabY, bankLabW, bankLabH);
     self.bankLab.text = self.bank;
     self.bankLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
     [bankView addSubview:self.bankLab];
@@ -114,7 +116,8 @@
     CGFloat cardLabH = bankLabH;
     CGFloat cardLabX = bankLabX;
     CGFloat cardLabY = CGRectGetMaxY(self.bankLab.frame);
-    self.cardLab = [[UILabel alloc] initWithFrame:CGRectMake(cardLabX, cardLabY, cardLabW, cardLabH)];
+    self.cardLab = [[UILabel alloc] init];
+    self.cardLab.frame = CGRectMake(cardLabX, cardLabY, cardLabW, cardLabH);
     self.cardLab.text = self.bankCardNo;
     self.cardLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
     [bankView addSubview:self.cardLab];
@@ -141,7 +144,8 @@
     CGFloat timeLabH = bankViewH;
     CGFloat timeLabX = jianjv1;
     CGFloat timeLabY = CGRectGetMaxY(bankView.frame);
-    UILabel *timeLab = [[UILabel alloc] initWithFrame:CGRectMake(timeLabX, timeLabY, timeLabW, timeLabH)];
+    UILabel *timeLab = [[UILabel alloc] init];
+    timeLab.frame = CGRectMake(timeLabX, timeLabY, timeLabW, timeLabH);
     timeLab.text = @"每月底为车邻邦平台结算时间";
     timeLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
     timeLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
@@ -159,7 +163,7 @@
     [self.view addSubview:_cashTextField];
     
     
-    UILabel *cashLabel = [[UILabel alloc]init];
+    UILabel *cashLabel = [[UILabel alloc] init];
     cashLabel.text = @"提现金额:";
     cashLabel.font = [UIFont systemFontOfSize:15];
     [self.view addSubview:cashLabel];

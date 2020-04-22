@@ -837,7 +837,8 @@ HXDateVideoEditViewControllerDelegate
 }
 - (UILabel *)subTitleLb {
     if (!_subTitleLb) {
-        _subTitleLb = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.titleLb.frame) + 4, 150, 12)];
+        _subTitleLb = [[UILabel alloc] init];
+        _subTitleLb.frame = CGRectMake(0, CGRectGetMaxY(self.titleLb.frame) + 4, 150, 12);
         _subTitleLb.textAlignment = NSTextAlignmentCenter;
         if (iOS8_2Later) {
             _subTitleLb.font = [UIFont systemFontOfSize:11 weight:UIFontWeightRegular];

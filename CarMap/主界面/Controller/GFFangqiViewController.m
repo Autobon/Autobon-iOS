@@ -95,6 +95,7 @@
     but3.tag = 3;
     
     self.txtview = [[UITextView alloc] init];
+    self.txtview.backgroundColor = [UIColor clearColor];
     self.txtview.font = [UIFont systemFontOfSize:15];
     self.txtview.textColor = [UIColor darkGrayColor];
     self.txtview.layer.borderWidth = 1;

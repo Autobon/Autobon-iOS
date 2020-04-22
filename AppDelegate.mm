@@ -103,7 +103,7 @@
 //    [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
 //
     
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@"3285914881" appSecret:@"25a0f37f0b56dbc93cae8271d65e895d" redirectURL:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];
+//    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@"3285914881" appSecret:@"25a0f37f0b56dbc93cae8271d65e895d" redirectURL:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];
     
     
 //    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:@"3285914881" RedirectURL:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];

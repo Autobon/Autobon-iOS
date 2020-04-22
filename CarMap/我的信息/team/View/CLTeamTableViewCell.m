@@ -28,7 +28,7 @@
             make.right.equalTo(self).offset(2);
         }];
         
-        _teamNameLabel = [[UILabel alloc]init];
+        _teamNameLabel = [[UILabel alloc] init];
         _teamNameLabel.font = [UIFont systemFontOfSize:14];
         [baseView addSubview:_teamNameLabel];
         [_teamNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -39,7 +39,7 @@
         }];
         
         
-        _managerNameLabel = [[UILabel alloc]init];
+        _managerNameLabel = [[UILabel alloc] init];
         _managerNameLabel.font = [UIFont systemFontOfSize:14];
         [baseView addSubview:_managerNameLabel];
         [_managerNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -49,7 +49,7 @@
             make.right.equalTo(baseView).offset(-20);
         }];
         
-        _managerPhoneLabel = [[UILabel alloc]init];
+        _managerPhoneLabel = [[UILabel alloc] init];
         _managerPhoneLabel.font = [UIFont systemFontOfSize:14];
         [baseView addSubview:_managerPhoneLabel];
         [_managerPhoneLabel mas_makeConstraints:^(MASConstraintMaker *make) {

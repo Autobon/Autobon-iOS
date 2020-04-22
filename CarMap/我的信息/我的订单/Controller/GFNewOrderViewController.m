@@ -169,7 +169,7 @@
     self.tableview.dataSource = self;
     [self.view addSubview:self.tableview];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
+    self.tableview.backgroundColor = [UIColor clearColor];
     [self.tableview mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view);
         make.top.equalTo(baseView.mas_bottom);

@@ -31,7 +31,8 @@
 //    view.backgroundColor = [UIColor whiteColor];
 //    [self.view addSubview:view];
 //    
-//    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 20, self.view.frame.size.width-200, 40)];
+//    UILabel *titleLabel = [[UILabel alloc] init];
+//    titleLabel.frame = CGRectMake(50, 20, self.view.frame.size.width-200, 40);
 //    titleLabel.text = _labelTitle;
 //    [view addSubview:titleLabel];
     

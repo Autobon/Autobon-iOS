@@ -104,7 +104,8 @@
         vv.layer.borderWidth = 1;
         [self.contentView addSubview:vv];
         
-        self.orderLab = [[UILabel alloc] initWithFrame:CGRectMake(11, 7, 300, 25)];
+        self.orderLab = [[UILabel alloc] init];
+        self.orderLab.frame = CGRectMake(11, 7, 300, 25);
         self.orderLab.text = @"订单编号：999999999999999";
         self.orderLab.textColor = [UIColor darkGrayColor];
         self.orderLab.font = [UIFont systemFontOfSize:14];
@@ -144,27 +145,31 @@
         lineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
         [vv addSubview:lineView];
         
-        self.workTimeLab = [[UILabel alloc] initWithFrame:CGRectMake(11, CGRectGetMaxY(lineView.frame) + 10, 300, 25)];
+        self.workTimeLab = [[UILabel alloc] init];
+        self.workTimeLab.frame = CGRectMake(11, CGRectGetMaxY(lineView.frame) + 10, 300, 25);
         self.workTimeLab.text = @"施工时间：2016-12-02 17:31";
         self.workTimeLab.textColor = [UIColor lightGrayColor];
         self.workTimeLab.font = [UIFont systemFontOfSize:13.5];
         [vv addSubview:self.workTimeLab];
         
         
-        //        self.proLab = [[UILabel alloc] initWithFrame:CGRectMake(11, CGRectGetMaxY(self.workTimeLab.frame), 300, 25)];
+        //        self.proLab = [[UILabel alloc] init];
+//                self.proLab = CGRectMake(11, CGRectGetMaxY(self.workTimeLab.frame), 300, 25);
         //        self.proLab.text = @"隔热膜，隐形车衣，车身改色，美容清洁";
         //        self.proLab.textColor = [UIColor orangeColor];
         //        self.proLab.font = [UIFont systemFontOfSize:15];
         //        [vv addSubview:self.proLab];
         
-        self.statusLab = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 10 - 120, self.orderLab.frame.origin.y, 120, 25)];
+        self.statusLab = [[UILabel alloc] init];
+        self.statusLab.frame = CGRectMake([UIScreen mainScreen].bounds.size.width - 10 - 120, self.orderLab.frame.origin.y, 120, 25);
         self.statusLab.text = @"已结算";
         self.statusLab.textAlignment = NSTextAlignmentRight;
         self.statusLab.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
         self.statusLab.font = [UIFont systemFontOfSize:14];
         [vv addSubview:self.statusLab];
         
-        self.mLab = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 10 - 120, self.workTimeLab.frame.origin.y, 120, 25)];
+        self.mLab = [[UILabel alloc] init];
+        self.mLab.frame = CGRectMake([UIScreen mainScreen].bounds.size.width - 10 - 120, self.workTimeLab.frame.origin.y, 120, 25);
         self.mLab.text = @"合计:¥ 2000";
         self.mLab.textAlignment = NSTextAlignmentRight;
         self.mLab.textColor = [UIColor lightGrayColor];

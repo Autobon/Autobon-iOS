@@ -45,7 +45,8 @@
         CGFloat titleLabH = leftButH;
         CGFloat titleLabX = kWidth * 1.5 / 5;
         CGFloat titleLabY = leftButY;
-        self.titleLab = [[UILabel alloc] initWithFrame:CGRectMake(titleLabX, titleLabY, titleLabW, titleLabH)];
+        self.titleLab = [[UILabel alloc] init];
+        self.titleLab.frame = CGRectMake(titleLabX, titleLabY, titleLabW, titleLabH);
         self.titleLab.text = titleName;
         self.titleLab.textAlignment = NSTextAlignmentCenter;
         self.titleLab.textColor = [UIColor whiteColor];

@@ -35,7 +35,7 @@
             make.bottom.equalTo(self).offset(-5);
         }];
         
-        _nameLabel = [[UILabel alloc]init];
+        _nameLabel = [[UILabel alloc] init];
         _nameLabel.text = @"商户名称：";
         [baseView addSubview:_nameLabel];
         [_nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -45,7 +45,7 @@
             make.height.mas_offset(40);
         }];
         
-        _addressLabel = [[UILabel alloc]init];
+        _addressLabel = [[UILabel alloc] init];
         _addressLabel.text = @"商户位置：";
         [baseView addSubview:_addressLabel];
         [_addressLabel mas_makeConstraints:^(MASConstraintMaker *make) {

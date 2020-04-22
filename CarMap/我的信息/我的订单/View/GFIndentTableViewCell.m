@@ -249,7 +249,8 @@
         
         
         
-//        self.proLab = [[UILabel alloc] initWithFrame:CGRectMake(11, CGRectGetMaxY(self.workTimeLab.frame), 300, 25)];
+//        self.proLab = [[UILabel alloc] init];
+        self.proLab.frame = CGRectMake(11, CGRectGetMaxY(self.workTimeLab.frame), 300, 25);
 //        self.proLab.text = @"隔热膜，隐形车衣，车身改色，美容清洁";
 //        self.proLab.textColor = [UIColor orangeColor];
 //        self.proLab.font = [UIFont systemFontOfSize:15];
@@ -268,7 +269,8 @@
         
         
         
-        self.mLab = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 10 - 120, self.workTimeLab.frame.origin.y, 120, 25)];
+        self.mLab = [[UILabel alloc] init];
+        self.mLab.frame = CGRectMake([UIScreen mainScreen].bounds.size.width - 10 - 120, self.workTimeLab.frame.origin.y, 120, 25);
         self.mLab.text = @"合计:¥2000";
         self.mLab.textAlignment = NSTextAlignmentRight;
 //        self.mLab.textColor = [UIColor lightGrayColor];
@@ -326,7 +328,8 @@
         CGFloat numberLabH = kHeight * 0.078125;
         CGFloat numberLabX = jiange;
         CGFloat numberLabY = 0;
-        self.numberLab = [[UILabel alloc] initWithFrame:CGRectMake(numberLabX, numberLabY, numberLabW, numberLabH)];
+        self.numberLab = [[UILabel alloc] init];
+        self.numberLab.frame = CGRectMake(numberLabX, numberLabY, numberLabW, numberLabH);
         self.numberLab.text = @"订单编号sdjfhashdfgs";
         self.numberLab.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
         [baseView addSubview:self.numberLab];
@@ -341,7 +344,8 @@
         CGFloat moneyLabH = numberLabH / 2.0;
         CGFloat moneyLabX = kWidth - jiange - moneyLabW;
         CGFloat moneyLabY = numberLabY + 3   / 568.0 * kHeight;
-        self.moneyLab = [[UILabel alloc] initWithFrame:CGRectMake(moneyLabX, moneyLabY, moneyLabW, moneyLabH)];
+        self.moneyLab = [[UILabel alloc] init];
+        self.moneyLab.frame = CGRectMake(moneyLabX, moneyLabY, moneyLabW, moneyLabH);
         self.moneyLab.text = @"￥200";
         self.moneyLab.textAlignment = NSTextAlignmentRight;
         self.moneyLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
@@ -353,7 +357,7 @@
         CGFloat tipButH = moneyLabH;
         CGFloat tipButX = moneyLabX;
         CGFloat tipButY = CGRectGetMaxY(self.moneyLab.frame) - 6 / 568.0 * kHeight;
-        self.tipLabel = [[UILabel alloc]init];
+        self.tipLabel = [[UILabel alloc] init];
         self.tipLabel.frame = CGRectMake(tipButX, tipButY, tipButW, tipButH);
 //        [self.tipBut setTitle:@"未结算" forState:UIControlStateNormal];
 //        [self.tipBut setTitle:@"已结算" forState:UIControlStateSelected];
@@ -379,7 +383,8 @@
         CGFloat timeLabH = (baseViewH - numberLabH - kHeight * 0.013 * 2) /2.0;
         CGFloat timeLabX = jiange1;
         CGFloat timeLabY = CGRectGetMaxY(self.numberLab.frame) + kHeight * 0.013;
-        self.timeLab = [[UILabel alloc] initWithFrame:CGRectMake(timeLabX, timeLabY, timeLabW, timeLabH)];
+        self.timeLab = [[UILabel alloc] init];
+        self.timeLab.frame = CGRectMake(timeLabX, timeLabY, timeLabW, timeLabH);
         self.timeLab.text = @"施工时间：公元前1993年";
         self.timeLab.font = [UIFont systemFontOfSize:13 /320.0 * kWidth];
         [baseView addSubview:self.timeLab];
@@ -389,7 +394,8 @@
         CGFloat placeLabH = timeLabH;
         CGFloat placeLabX = timeLabX;
         CGFloat placeLabY = CGRectGetMaxY(self.timeLab.frame);
-        self.placeLab = [[UILabel alloc] initWithFrame:CGRectMake(placeLabX, placeLabY, placeLabW, placeLabH)];
+        self.placeLab = [[UILabel alloc] init];
+        self.placeLab.frame = CGRectMake(placeLabX, placeLabY, placeLabW, placeLabH);
         self.placeLab.text = @"施工部位：脑袋";
         self.placeLab.font = [UIFont systemFontOfSize:13 /320.0 * kWidth];
         [baseView addSubview:self.placeLab];

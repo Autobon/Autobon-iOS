@@ -159,7 +159,7 @@
     self.tableview.dataSource = self;
     [self.view addSubview:self.tableview];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
+    self.tableview.backgroundColor = [UIColor clearColor];
     self.nothingView = [[GFNothingView alloc] initWithImageName:@"NoOrder" withTipString:@"暂无订单" withSubtipString:nil];
     UIWindow *window = [UIApplication sharedApplication].delegate.window;
     [self.view addSubview:self.nothingView];

@@ -445,7 +445,8 @@ UITableViewDelegate
 }
 - (UILabel *)authorizationLb {
     if (!_authorizationLb) {
-        _authorizationLb = [[UILabel alloc] initWithFrame:CGRectMake(0, 200, self.view.frame.size.width, 100)];
+        _authorizationLb = [[UILabel alloc] init];
+        _authorizationLb.frame = CGRectMake(0, 200, self.view.frame.size.width, 100);
         _authorizationLb.text = [NSBundle hx_localizedStringForKey:@"无法访问照片\n请点击这里前往设置中允许访问照片"];
         _authorizationLb.textAlignment = NSTextAlignmentCenter;
         _authorizationLb.numberOfLines = 0;

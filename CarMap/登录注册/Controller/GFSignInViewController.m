@@ -105,7 +105,8 @@
 //    CGFloat centerLabH = kHeight * 0.042;
 //    CGFloat centerLabX = 0;
 //    CGFloat centerLabY = kHeight * 0.172;
-//    self.centerLab = [[UILabel alloc] initWithFrame:CGRectMake(centerLabX, centerLabY, centerLabW, centerLabH)];
+//    self.centerLab = [[UILabel alloc] init];
+//    self.centerLab.frame = CGRectMake(centerLabX, centerLabY, centerLabW, centerLabH);
 //    self.centerLab.font = [UIFont boldSystemFontOfSize:(25 / 320.0 * kWidth)];
 //    self.centerLab.textAlignment = NSTextAlignmentCenter;
 //    self.centerLab.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
@@ -118,7 +119,8 @@
 //    CGFloat enLabH = kHeight * 0.022;
 //    CGFloat enLabX = centerLabX;
 //    CGFloat enLabY = CGRectGetMaxY(self.centerLab.frame) + 3;
-//    UILabel *enLab = [[UILabel alloc] initWithFrame:CGRectMake(enLabX, enLabY, enLabW, enLabH)];
+//    UILabel *enLab = [[UILabel alloc] init];
+//    enLab.frame = CGRectMake(enLabX, enLabY, enLabW, enLabH);
 //    enLab.text = @"AUTOBON";
 //    enLab.textAlignment = NSTextAlignmentCenter;
 //    enLab.textColor = [UIColor blackColor];
@@ -227,11 +229,15 @@
     CGFloat leftLabH = backViewH;
     CGFloat leftLabX = 0;
     CGFloat leftLabY = 0;
-    UILabel *leftLab = [[UILabel alloc] initWithFrame:CGRectMake(leftLabX, leftLabY, leftLabW, leftLabH)];
+    UILabel *leftLab = [[UILabel alloc] init];
+    leftLab.frame = CGRectMake(leftLabX, leftLabY, leftLabW, leftLabH);
+    leftLab = [[UILabel alloc] init];
+    leftLab.frame = CGRectMake(leftLabX, leftLabY, leftLabW, leftLabH);
     leftLab.text = @"还没账号？";
     leftLab.font = [UIFont systemFontOfSize:(13 / 320.0 * kWidth)];
     leftLab.textAlignment = NSTextAlignmentRight;
-    leftLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
+//    leftLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
+    
     [backView addSubview:leftLab];
     // 右边按钮
     CGFloat signUpButW = backViewW - leftLabW;
@@ -404,7 +410,8 @@
     CGFloat strLabH = 40 / 320.0 * kWidth;
     CGFloat strLabX = 45;
     CGFloat strLabY = 5;
-    UILabel *strLab = [[UILabel alloc] initWithFrame:CGRectMake(strLabX, strLabY, strLabW, strLabH)];
+    UILabel *strLab = [[UILabel alloc] init];
+    strLab.frame = CGRectMake(strLabX, strLabY, strLabW, strLabH);
     strLab.text = strText;
     strLab.textAlignment = NSTextAlignmentCenter;
     
@@ -552,7 +559,8 @@
     CGFloat msgLabH = tipViewH;
     CGFloat msgLabX = 0;
     CGFloat msgLabY = 0;
-    UILabel *msgLab = [[UILabel alloc] initWithFrame:CGRectMake(msgLabX, msgLabY, msgLabW, msgLabH)];
+    UILabel *msgLab = [[UILabel alloc] init];
+    msgLab.frame = CGRectMake(msgLabX, msgLabY, msgLabW, msgLabH);
     msgLab.text = messageStr;
     [self.tipView addSubview:msgLab];
     msgLab.textAlignment = NSTextAlignmentCenter;

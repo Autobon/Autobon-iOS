@@ -67,7 +67,8 @@
     CGFloat photoLabH = baseViewH / 3.0;
     CGFloat photoLabX = kWidth * 0.06;
     CGFloat photoLabY = 0;
-    UILabel *photoLab = [[UILabel alloc] initWithFrame:CGRectMake(photoLabX, photoLabY, photoLabW, photoLabH)];
+    UILabel *photoLab = [[UILabel alloc] init];
+    photoLab.frame = CGRectMake(photoLabX, photoLabY, photoLabW, photoLabH);
     photoLab.text = @"电话：18201306715";
     photoLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
     [baseView addSubview:photoLab];
@@ -76,7 +77,8 @@
     CGFloat emailLabH = photoLabH;
     CGFloat emailLabX = photoLabX;
     CGFloat emailLabY = CGRectGetMaxY(photoLab.frame);
-    UILabel *emailLab = [[UILabel alloc] initWithFrame:CGRectMake(emailLabX, emailLabY, emailLabW, emailLabH)];
+    UILabel *emailLab = [[UILabel alloc] init];
+    emailLab.frame = CGRectMake(emailLabX, emailLabY, emailLabW, emailLabH);
     emailLab.text = @"邮箱：contact@incardata.com.cn";
     emailLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
     [baseView addSubview:emailLab];
@@ -86,7 +88,8 @@
     CGFloat addressLabH = photoLabH;
     CGFloat addressLabX = photoLabX;
     CGFloat addressLabY = CGRectGetMaxY(emailLab.frame);
-    UILabel *addressLab = [[UILabel alloc] initWithFrame:CGRectMake(addressLabX, addressLabY, addressLabW, addressLabH)];
+    UILabel *addressLab = [[UILabel alloc] init];
+    addressLab.frame = CGRectMake(addressLabX, addressLabY, addressLabW, addressLabH);
     addressLab.text = @"地址：湖北省武汉市洪山区光谷软件园";
     addressLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
     [baseView addSubview:addressLab];

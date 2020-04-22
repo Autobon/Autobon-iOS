@@ -89,9 +89,11 @@
     
 //    self.view.backgroundColor = [UIColor redColor];
     
-//    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 410, self.view.frame.size.width-40, 40)];
+//    _distanceLabel = [[UILabel alloc] init];
+    _distanceLabel.frame = CGRectMake(20, 410, self.view.frame.size.width-40, 40);
     [self.view addSubview:_distanceLabel];
-//    _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 450, self.view.frame.size.width-40, 40)];
+//    _timeLabel = [[UILabel alloc] init];
+    _timeLabel.frame = CGRectMake(20, 450, self.view.frame.size.width-40, 40);
     [self.view addSubview:_timeLabel];
     // 基础设置
     [self _setBase];

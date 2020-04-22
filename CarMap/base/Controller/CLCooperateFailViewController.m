@@ -47,18 +47,20 @@
     }];
     
 //加盟状态
-    UILabel *settingLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 20, 100, 30)];
+    UILabel *settingLabel = [[UILabel alloc] init];
+    settingLabel.frame = CGRectMake(15, 20, 100, 30);
     settingLabel.text = @"加盟状态：";
     [scrollView addSubview:settingLabel];
     
-    UILabel *setLabel = [[UILabel alloc]initWithFrame:CGRectMake(100, 20, 100, 30)];
+    UILabel *setLabel = [[UILabel alloc] init];
+    settingLabel.frame = CGRectMake(100, 20, 100, 30);
     setLabel.text = @"失败";
     setLabel.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
     setLabel.textAlignment = NSTextAlignmentLeft;
     [scrollView addSubview:setLabel];
     
 //失败原因
-    UILabel *failLabel = [[UILabel alloc]init];
+    UILabel *failLabel = [[UILabel alloc] init];
     failLabel.text = @"失败原因：失败原因失败原因失败原因失败原因失败原因失败原因";
     failLabel.numberOfLines = 0;
     failLabel.frame = CGRectMake(15, 50, self.view.frame.size.width-30, 60);
@@ -71,7 +73,8 @@
     [scrollView addSubview:lineView];
     
     
-    UILabel *idImageLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 160, 20)];
+    UILabel *idImageLabel = [[UILabel alloc] init];
+    idImageLabel.frame = CGRectMake(0, 0, 160, 20);
     idImageLabel.center = lineView.center;
     idImageLabel.text = @"加盟信息";
     idImageLabel.textAlignment = NSTextAlignmentCenter;
@@ -83,24 +86,24 @@
     
 // 营业执照名，号；法人姓名，身份证号
     
-    UILabel *licenceName = [[UILabel alloc]init];
+    UILabel *licenceName = [[UILabel alloc] init];
     licenceName.text = @"营业执照名：北京卡曼车饰有限公司";
     licenceName.frame = CGRectMake(15, lineView.frame.origin.y + 31 , self.view.frame.size.width-30, 30);
     [scrollView addSubview:licenceName];
     
-    UILabel *licenceNumber = [[UILabel alloc]init];
+    UILabel *licenceNumber = [[UILabel alloc] init];
     licenceNumber.text = @"营业执照号：420023123515";
     licenceNumber.frame = CGRectMake(15, licenceName.frame.origin.y + 35, self.view.frame.size.width-30, 30);
     [scrollView addSubview:licenceNumber];
     
     
-    UILabel *legalEntity = [[UILabel alloc]init];
+    UILabel *legalEntity = [[UILabel alloc] init];
     legalEntity.text = @"法人的姓名：北京卡曼车饰有限公司";
     legalEntity.frame = CGRectMake(15, licenceNumber.frame.origin.y + 35, self.view.frame.size.width-30, 30);
     [scrollView addSubview:legalEntity];
 
     
-    UILabel *legalEntityId = [[UILabel alloc]init];
+    UILabel *legalEntityId = [[UILabel alloc] init];
     legalEntityId.text = @"法人身份证：42100000000000000001236";
     legalEntityId.frame = CGRectMake(15, legalEntity.frame.origin.y + 35, self.view.frame.size.width-30, 30);
     [scrollView addSubview:legalEntityId];
@@ -112,7 +115,8 @@
     [scrollView addSubview:lineView2];
     
     
-    UILabel *licenceDuplicate = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 160, 20)];
+    UILabel *licenceDuplicate = [[UILabel alloc] init];
+    licenceDuplicate.frame = CGRectMake(0, 0, 160, 20);
     licenceDuplicate.center = lineView2.center;
     licenceDuplicate.text = @"营业执照副本";
     licenceDuplicate.textAlignment = NSTextAlignmentCenter;
@@ -134,7 +138,8 @@
     [scrollView addSubview:lineView3];
     
     
-    UILabel *legalEntityIdLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 160, 20)];
+    UILabel *legalEntityIdLabel = [[UILabel alloc] init];
+    legalEntityIdLabel.frame = CGRectMake(0, 0, 160, 20);
     legalEntityIdLabel.center = lineView3.center;
     legalEntityIdLabel.text = @"法人身份证正面照";
     legalEntityIdLabel.textAlignment = NSTextAlignmentCenter;
@@ -156,7 +161,8 @@
     [scrollView addSubview:lineView4];
     
     
-    UILabel *invoiceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 160, 20)];
+    UILabel *invoiceLabel = [[UILabel alloc] init];
+    invoiceLabel.frame = CGRectMake(0, 0, 160, 20);
     invoiceLabel.center = lineView4.center;
     invoiceLabel.text = @"发票信息";
     invoiceLabel.textAlignment = NSTextAlignmentCenter;
@@ -167,18 +173,18 @@
     
     
 // 发票抬头，纳税识别号，邮政编号
-    UILabel *invoiceName = [[UILabel alloc]init];
+    UILabel *invoiceName = [[UILabel alloc] init];
     invoiceName.text = @"发票抬头名：北京卡曼车饰有限公司";
     invoiceName.frame = CGRectMake(15, lineView4.frame.origin.y + 31 , self.view.frame.size.width-30, 30);
     [scrollView addSubview:invoiceName];
     
     
-    UILabel *payNumber = [[UILabel alloc]init];
+    UILabel *payNumber = [[UILabel alloc] init];
     payNumber.text = @"纳税识别号：4200231213544";
     payNumber.frame = CGRectMake(15, invoiceName.frame.origin.y + 35 , self.view.frame.size.width-30, 30);
     [scrollView addSubview:payNumber];
     
-    UILabel *postcode = [[UILabel alloc]init];
+    UILabel *postcode = [[UILabel alloc] init];
     postcode.text = @"邮政编码号：400101";
     postcode.frame = CGRectMake(15, payNumber.frame.origin.y + 31 , self.view.frame.size.width-30, 30);
     [scrollView addSubview:postcode];
@@ -192,13 +198,13 @@
 // 邮寄地址，商户位置
     
     
-    UILabel *addressLabel = [[UILabel alloc]init];
+    UILabel *addressLabel = [[UILabel alloc] init];
     addressLabel.text = @"邮寄地址：北京市朝阳区某某某位置";
     addressLabel.frame = CGRectMake(15, lineView5.frame.origin.y + 11 , self.view.frame.size.width-30, 30);
     [scrollView addSubview:addressLabel];
     
     
-    UILabel *placeLabel = [[UILabel alloc]init];
+    UILabel *placeLabel = [[UILabel alloc] init];
     placeLabel.text = @"商户位置：北京市朝阳区某某某位置";
     placeLabel.frame = CGRectMake(15, addressLabel.frame.origin.y + 35 , self.view.frame.size.width-30, 30);
     [scrollView addSubview:placeLabel];

@@ -41,7 +41,8 @@
         CGFloat lab1H = kHeight * 0.0287;
         CGFloat lab1X = kWidth * 0.032;
         CGFloat lab1Y = kHeight * 0.02864;
-        UILabel *lab1 = [[UILabel alloc] initWithFrame:CGRectMake(lab1X, lab1Y, lab1W, lab1H)];
+        UILabel *lab1 = [[UILabel alloc] init];
+        lab1.frame = CGRectMake(lab1X, lab1Y, lab1W, lab1H);
         [baseView addSubview:lab1];
         lab1.font = [UIFont systemFontOfSize:14 / 320.0 * kWidth];
         lab1.text = @"能力项目: ";
@@ -54,7 +55,8 @@
         CGFloat contLab1H = fenRect1.size.height;
         CGFloat contLab1X = CGRectGetMaxX(lab1.frame);
         CGFloat contLab1Y = lab1Y;
-        UILabel *contLab1 = [[UILabel alloc] initWithFrame:CGRectMake(contLab1X, contLab1Y, contLab1W, contLab1H)];
+        UILabel *contLab1 = [[UILabel alloc] init];
+        contLab1.frame = CGRectMake(contLab1X, contLab1Y, contLab1W, contLab1H);
         contLab1.numberOfLines = 0;
         contLab1.text = lab1Str;
         contLab1.font = [UIFont systemFontOfSize:14 / 320.0 * kWidth];
@@ -67,7 +69,8 @@
         CGFloat lab2H = kHeight * 0.0287;
         CGFloat lab2X = kWidth * 0.032;
         CGFloat lab2Y = CGRectGetMaxY(contLab1.frame) + kHeight * 0.02;
-        UILabel *lab2 = [[UILabel alloc] initWithFrame:CGRectMake(lab2X, lab2Y, lab2W, lab2H)];
+        UILabel *lab2 = [[UILabel alloc] init];
+        lab2.frame = CGRectMake(lab2X, lab2Y, lab2W, lab2H);
         [baseView addSubview:lab2];
         lab2.font = [UIFont systemFontOfSize:14 / 320.0 * kWidth];
         lab2.text = @"认证等级: ";
@@ -80,7 +83,8 @@
         CGFloat contLab2H = fenRect2.size.height;
         CGFloat contLab2X = CGRectGetMaxX(lab1.frame);
         CGFloat contLab2Y = lab2Y;
-        UILabel *contLab2 = [[UILabel alloc] initWithFrame:CGRectMake(contLab2X, contLab2Y, contLab2W, contLab2H)];
+        UILabel *contLab2 = [[UILabel alloc] init];
+        contLab2.frame = CGRectMake(contLab2X, contLab2Y, contLab2W, contLab2H);
         contLab2.numberOfLines = 0;
         contLab2.text = lab2Str;
         contLab2.font = [UIFont systemFontOfSize:14 / 320.0 * kWidth];
@@ -91,7 +95,8 @@
         CGFloat lab3H = kHeight * 0.0287;
         CGFloat lab3X = kWidth * 0.032;
         CGFloat lab3Y = CGRectGetMaxY(lab2.frame) + kHeight * 0.02;
-        UILabel *lab3 = [[UILabel alloc] initWithFrame:CGRectMake(lab3X, lab3Y, lab3W, lab3H)];
+        UILabel *lab3 = [[UILabel alloc] init];
+        lab3.frame = CGRectMake(lab3X, lab3Y, lab3W, lab3H);
         [baseView addSubview:lab3];
         lab3.font = [UIFont systemFontOfSize:14 / 320.0 * kWidth];
         lab3.text = @"认证日期: ";
@@ -104,7 +109,8 @@
         CGFloat contLab3H = fenRect3.size.height;
         CGFloat contLab3X = CGRectGetMaxX(lab2.frame);
         CGFloat contLab3Y = lab3Y;
-        UILabel *contLab3 = [[UILabel alloc] initWithFrame:CGRectMake(contLab3X, contLab3Y, contLab3W, contLab3H)];
+        UILabel *contLab3 = [[UILabel alloc] init];
+        contLab3.frame = CGRectMake(contLab3X, contLab3Y, contLab3W, contLab3H);
         contLab3.numberOfLines = 0;
         contLab3.text = lab3Str;
         contLab3.font = [UIFont systemFontOfSize:14 / 320.0 * kWidth];
@@ -116,7 +122,8 @@
         CGFloat lab4H = kHeight * 0.0287;
         CGFloat lab4X = kWidth * 0.032;
         CGFloat lab4Y = CGRectGetMaxY(lab3.frame) + kHeight * 0.02;
-        UILabel *lab4 = [[UILabel alloc] initWithFrame:CGRectMake(lab4X, lab4Y, lab4W, lab4H)];
+        UILabel *lab4 = [[UILabel alloc] init];
+        lab4.frame = CGRectMake(lab4X, lab4Y, lab4W, lab4H);
         [baseView addSubview:lab4];
         lab4.font = [UIFont systemFontOfSize:14 / 320.0 * kWidth];
         lab4.text = @"其他: ";
@@ -129,7 +136,8 @@
         CGFloat contLab4H = fenRect4.size.height;
         CGFloat contLab4X = CGRectGetMaxX(lab3.frame);
         CGFloat contLab4Y = lab4Y;
-        UILabel *contLab4 = [[UILabel alloc] initWithFrame:CGRectMake(contLab4X, contLab4Y, contLab4W, contLab4H)];
+        UILabel *contLab4 = [[UILabel alloc] init];
+        contLab4.frame = CGRectMake(contLab4X, contLab4Y, contLab4W, contLab4H);
         contLab4.numberOfLines = 0;
         contLab4.text = lab4Str;
         contLab4.font = [UIFont systemFontOfSize:14 / 320.0 * kWidth];

@@ -46,7 +46,7 @@
     
     
     
-    _detailLabel = [[UILabel alloc]init];
+    _detailLabel = [[UILabel alloc] init];
     
     NSArray *skillArray = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁",@"安全膜",@"其他"];
     
@@ -120,13 +120,15 @@
     
     
     
-    UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 75, 100, 25)];
+    UILabel *stateLabel = [[UILabel alloc] init];
+    stateLabel.frame = CGRectMake(15, 75, 100, 25);
     stateLabel.text = @"审核状态：";
     stateLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
     stateLabel.font = [UIFont systemFontOfSize:16];
     [scrollView addSubview:stateLabel];
     
-    UILabel *failLabel = [[UILabel alloc]initWithFrame:CGRectMake(95, 75, 100, 25)];
+    UILabel *failLabel = [[UILabel alloc] init];
+    failLabel.frame = CGRectMake(95, 75, 100, 25);
     failLabel.text = @"失败";
     failLabel.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
     failLabel.font = [UIFont systemFontOfSize:16];
@@ -145,7 +147,8 @@
     
     
     
-    UILabel *certifyLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 20)];
+    UILabel *certifyLabel = [[UILabel alloc] init];
+    certifyLabel.frame = CGRectMake(0, 0, 100, 20);
     certifyLabel.center = view.center;
     certifyLabel.text = @"认证信息";
     certifyLabel.textAlignment = NSTextAlignmentCenter;
@@ -162,12 +165,14 @@
     [scrollView addSubview:_headImage];
     
     
-    _userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(120, view.frame.origin.y + 30, 100, 40)];
+    _userNameLabel = [[UILabel alloc] init];
+    _userNameLabel.frame = CGRectMake(120, view.frame.origin.y + 30, 100, 40);
 //    _userNameLabel.text = @"林峰";
     _userNameLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
     [scrollView addSubview:_userNameLabel];
     
-    _identityLabel = [[UILabel alloc]initWithFrame:CGRectMake(120, view.frame.origin.y + 55, self.view.frame.size.width - 140, 40)];
+    _identityLabel = [[UILabel alloc] init];
+    _identityLabel.frame = CGRectMake(120, view.frame.origin.y + 55, self.view.frame.size.width - 140, 40);
     _identityLabel.font = [UIFont systemFontOfSize:16];
     _identityLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
     [scrollView addSubview:_identityLabel];
@@ -177,18 +182,21 @@
     [scrollView addSubview:lineView2];
     
 // 技能项目
-    _skillLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, lineView2.frame.origin.y + 5, self.view.frame.size.width-30, 40)];
+    _skillLabel = [[UILabel alloc] init];
+    _skillLabel.frame = CGRectMake(15, lineView2.frame.origin.y + 5, self.view.frame.size.width-30, 40);
     _skillLabel.text = @"技能项目：";
     _skillLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
     _skillLabel.font = [UIFont systemFontOfSize:14];
     [scrollView addSubview:_skillLabel];
     
-    _bankNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, lineView2.frame.origin.y + 50, self.view.frame.size.width-115, 20)];
+    _bankNumberLabel = [[UILabel alloc] init];
+    _bankNumberLabel.frame = CGRectMake(15, lineView2.frame.origin.y + 50, self.view.frame.size.width-115, 20);
     _bankNumberLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
     _bankNumberLabel.font = [UIFont systemFontOfSize:14];
     [scrollView addSubview:_bankNumberLabel];
     
-    _bankLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width-100, lineView2.frame.origin.y + 50, 100, 20)];
+    _bankLabel = [[UILabel alloc] init];
+    _bankLabel.frame = CGRectMake(self.view.frame.size.width-100, lineView2.frame.origin.y + 50, 100, 20);
     _bankLabel.text = @"农业银行";
     _bankLabel.font = [UIFont systemFontOfSize:14];
     _bankLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
@@ -204,7 +212,8 @@
     [scrollView addSubview:lineView3];
     
     
-    UILabel *idImageLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 160, 20)];
+    UILabel *idImageLabel = [[UILabel alloc] init];
+    idImageLabel.frame = CGRectMake(0, 0, 160, 20);
     idImageLabel.center = lineView3.center;
     idImageLabel.text = @"手持身份证正面照";
     idImageLabel.textAlignment = NSTextAlignmentCenter;

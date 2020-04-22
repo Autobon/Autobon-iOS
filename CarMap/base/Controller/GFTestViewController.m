@@ -19,6 +19,7 @@
     
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:UITableViewStylePlain];
+    tableView.backgroundColor = [UIColor clearColor];
     tableView.dataSource = self;
     tableView.delegate = self;
     [self.view addSubview:tableView];

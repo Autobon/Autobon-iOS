@@ -125,7 +125,8 @@
     headerView.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     
     
-    UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width-120, 8, 100, 20)];
+    UILabel *stateLabel = [[UILabel alloc] init];
+    stateLabel.frame = CGRectMake(self.view.frame.size.width-120, 8, 100, 20);
     stateLabel.text = @"工作完成模式";
     stateLabel.textAlignment = NSTextAlignmentRight;
     stateLabel.font = [UIFont systemFontOfSize:14];
@@ -148,7 +149,8 @@
 #pragma mark - 设置界面
 
 - (void)setViewForShare{
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(30, 170, self.view.frame.size.width-60, 80)];
+    UILabel *label = [[UILabel alloc] init];
+    label.frame = CGRectMake(30, 170, self.view.frame.size.width-60, 80);
     label.text = [NSString stringWithFormat:@"恭喜，您已经顺利完成本次编号为%@的订单，分享可获得奖励啊！",_orderNumber];
 //    label.textAlignment = NSTextAlignmentCenter;
     label.font = [UIFont systemFontOfSize:20];

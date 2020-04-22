@@ -40,6 +40,7 @@
 - (void)setTableView{
     
     UITableView *tableView = [[UITableView alloc]init];
+    tableView.backgroundColor = [UIColor clearColor];
     tableView.delegate = self;
     tableView.dataSource = self;
 //    tableView.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64);

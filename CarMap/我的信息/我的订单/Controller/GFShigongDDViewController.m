@@ -112,7 +112,8 @@
         NSString *proSS = dic[@"projectName"];
         NSString *posSS = dic[@"postitionName"];
         NSString *tatalSS = dic[@"total"];
-        UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(baofeiView.frame) + 30 * i, vvWidth - 30, 30)];
+        UILabel *lab = [[UILabel alloc] init];
+        lab.frame = CGRectMake(15, CGRectGetMaxY(baofeiView.frame) + 30 * i, vvWidth - 30, 30);
         lab.font = [UIFont systemFontOfSize:13];
         lab.textColor = [UIColor darkGrayColor];
         lab.text = [NSString stringWithFormat:@"%@     %@      %@ x %@", nameSS, proSS, posSS, tatalSS];
@@ -130,7 +131,8 @@
 //    vv.backgroundColor = [UIColor greenColor];
     [self.scView addSubview:vv];
     
-    UILabel *nameLab = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, vvWidth - 20, 30)];
+    UILabel *nameLab = [[UILabel alloc] init];
+    nameLab.frame = CGRectMake(10, 0, vvWidth - 20, 30);
     nameLab.font = [UIFont systemFontOfSize:16];
     nameLab.textColor = [UIColor darkGrayColor];
     nameLab.text = name;
@@ -154,7 +156,8 @@
 //            }
         }
         
-        UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(20, hh + 30 - strRect.size.height, vvWidth - 40, strRect.size.height)];
+        UILabel *lab = [[UILabel alloc] init];
+        lab.frame = CGRectMake(20, hh + 30 - strRect.size.height, vvWidth - 40, strRect.size.height);
         lab.font = [UIFont systemFontOfSize:14];
         lab.textColor = [UIColor darkGrayColor];
         lab.text = [NSString stringWithFormat:@"%@：%@", dic[@"project"], dic[@"position"]];

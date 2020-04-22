@@ -82,12 +82,14 @@
     _headerView = [[UIView alloc]init];
     _headerView.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 8, 200, 20)];
+    UILabel *timeLabel = [[UILabel alloc] init];
+    timeLabel.frame = CGRectMake(10, 8, 200, 20);
     timeLabel.text = [self weekdayString];
     timeLabel.font = [UIFont systemFontOfSize:14];
     [_headerView addSubview:timeLabel];
     
-    UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width-100, 8, 80, 20)];
+    UILabel *stateLabel = [[UILabel alloc] init];
+    stateLabel.frame = CGRectMake(self.view.frame.size.width-100, 8, 80, 20);
     stateLabel.text = @"工作模式";
     stateLabel.textAlignment = NSTextAlignmentRight;
     stateLabel.font = [UIFont systemFontOfSize:14];
@@ -164,7 +166,8 @@
     }];
     
     
-    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height/3+64+36+24, self.view.frame.size.width, 60)];
+    _distanceLabel = [[UILabel alloc] init];
+    _distanceLabel.frame = CGRectMake(0, self.view.frame.size.height/3+64+36+24, self.view.frame.size.width, 60);
     _distanceLabel.text = @"距离门店   m";
     _distanceLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_distanceLabel];
@@ -179,7 +182,8 @@
     
     
     // 距离提示框
-    UILabel *tipLab = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_signinButton.frame), [UIScreen mainScreen].bounds.size.width, 35)];
+    UILabel *tipLab = [[UILabel alloc] init];
+    tipLab.frame = CGRectMake(0, CGRectGetMaxY(_signinButton.frame), [UIScreen mainScreen].bounds.size.width, 35);
     tipLab.text = @"请距离目标位置5000米内签到！";
     tipLab.font = [UIFont systemFontOfSize:12];
     tipLab.textAlignment = NSTextAlignmentCenter;
@@ -187,7 +191,8 @@
     [self.view addSubview:tipLab];
     
     // 室外提示框
-    UILabel *nothingLab = [[UILabel alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height - 35, [UIScreen mainScreen].bounds.size.width, 35)];
+    UILabel *nothingLab = [[UILabel alloc] init];
+    nothingLab.frame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height - 35, [UIScreen mainScreen].bounds.size.width, 35);
     nothingLab.text = @"为了准确定位你的位置，请在室外无遮挡处定位";
     nothingLab.font = [UIFont systemFontOfSize:10];
     nothingLab.textAlignment = NSTextAlignmentCenter;

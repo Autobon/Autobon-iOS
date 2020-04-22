@@ -70,7 +70,8 @@
 
 // 添加地图
 - (void)addMap{
-//    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 5+64, 150, 30)];
+//    UILabel *titleLabel = [[UILabel alloc] init];
+//    titleLabel.frame = CGRectMake(20, 5+64, 150, 30);
 //    NSArray *array = @[@"隔热膜",@"隐形车衣",@"车身改色",@"美容清洁"];
 //    titleLabel.text = array[[_model.orderType integerValue]-1];
 //    [self.view addSubview:titleLabel];
@@ -100,7 +101,8 @@
 - (void)setLineView:(NSString *)title maxY:(float)maxY{
     
     // 施工时间
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, maxY +4, self.view.frame.size.width, self.view.frame.size.height/18)];
+    UILabel *timeLabel = [[UILabel alloc] init];
+    timeLabel.frame = CGRectMake(10, maxY +4, self.view.frame.size.width, self.view.frame.size.height/18);
     //    timeLabel.backgroundColor = [UIColor cyanColor];
     timeLabel.text = title;
     timeLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
@@ -118,7 +120,8 @@
     
     
     // 距离label
-    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, -10, self.view.frame.size.width, self.view.frame.size.height/18)];
+    _distanceLabel = [[UILabel alloc] init];
+    _distanceLabel.frame = CGRectMake(10, -10, self.view.frame.size.width, self.view.frame.size.height/18);
     //    distanceLabel.backgroundColor = [UIColor cyanColor];
     _distanceLabel.text = @"距离：  0km";
     _distanceLabel.font = [UIFont systemFontOfSize:14];
@@ -166,7 +169,8 @@
     
     
     
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView2.frame.origin.y+4+(self.view.frame.size.height/18+1)*4, self.view.frame.size.width-20 ,self.view.frame.size.height/18)];
+    UILabel *timeLabel = [[UILabel alloc] init];
+    timeLabel.frame = CGRectMake(10, lineView2.frame.origin.y+4+(self.view.frame.size.height/18+1)*4, self.view.frame.size.width-20 ,self.view.frame.size.height/18);
     //    timeLabel.backgroundColor = [UIColor cyanColor];
     //    timeLabel.text = @"工作时间： 今天14:30";
     timeLabel.text = [NSString stringWithFormat:@"商户名称：%@",_model.cooperatorFullname];
@@ -180,7 +184,7 @@
     
     
     // 备注
-    UILabel *otherLabel = [[UILabel alloc]init];
+    UILabel *otherLabel = [[UILabel alloc] init];
     
     NSString *remarkString = _model.orderRemark;
     //    NSLog(@"---_orderDictionary--%@--",_orderDictionary);

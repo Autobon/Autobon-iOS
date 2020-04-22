@@ -94,7 +94,8 @@
         
         
         // 订单编号
-        _orderNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 250, 25)];
+        _orderNumberLabel = [[UILabel alloc] init];
+        _orderNumberLabel.frame = CGRectMake(10, 10, 250, 25);
         _orderNumberLabel.font = [UIFont systemFontOfSize:14.0];
         _orderNumberLabel.textColor = [UIColor darkGrayColor];
         [self.contentView addSubview:_orderNumberLabel];
@@ -135,7 +136,8 @@
         [self.contentView addSubview:lineView];
         
         // 预约时间
-        _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(lineView.frame) + 10, 250, 25)];
+        _timeLabel = [[UILabel alloc] init];
+        _timeLabel.frame = CGRectMake(10, CGRectGetMaxY(lineView.frame) + 10, 250, 25);
         //    _timeLabel.text = @"预约时间 今天 12:00";
         _timeLabel.textColor = [UIColor colorWithRed:157/255.0 green:157/255.0 blue:157/255.0 alpha:1.0];
         _timeLabel.font = [UIFont systemFontOfSize:12.0];

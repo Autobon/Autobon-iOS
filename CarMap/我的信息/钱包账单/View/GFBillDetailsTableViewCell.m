@@ -102,7 +102,8 @@
         CGFloat numberLabH = 25;
         CGFloat numberLabX = 10;
         CGFloat numberLabY = 0;
-        self.numberLab = [[UILabel alloc] initWithFrame:CGRectMake(numberLabX, numberLabY, numberLabW, numberLabH)];
+        self.numberLab = [[UILabel alloc] init];
+        self.numberLab.frame = CGRectMake(numberLabX, numberLabY, numberLabW, numberLabH);
         self.numberLab.text = @"订单编号：sdjfhashdfgs";
         self.numberLab.font = [UIFont systemFontOfSize:14];
         [self.baseView addSubview:self.numberLab];
@@ -158,7 +159,8 @@
         CGFloat timeLabH = 25;
         CGFloat timeLabX = 10;
         CGFloat timeLabY = CGRectGetMaxY(lineView.frame) + 10;
-        self.timeLab = [[UILabel alloc] initWithFrame:CGRectMake(timeLabX, timeLabY, timeLabW, timeLabH)];
+        self.timeLab = [[UILabel alloc] init];
+        self.timeLab.frame = CGRectMake(timeLabX, timeLabY, timeLabW, timeLabH);
         self.timeLab.text = @"完成时间：公元前1993年";
         self.timeLab.font = [UIFont systemFontOfSize:13 /320.0 * kWidth];
         [self.baseView addSubview:self.timeLab];
@@ -167,7 +169,8 @@
         CGFloat moneyLabH = 25;
         CGFloat moneyLabX = [UIScreen mainScreen].bounds.size.width - 10 - 120;
         CGFloat moneyLabY = self.timeLab.frame.origin.y;
-        self.moneyLab = [[UILabel alloc] initWithFrame:CGRectMake(moneyLabX, moneyLabY, moneyLabW, moneyLabH)];
+        self.moneyLab = [[UILabel alloc] init];
+        self.moneyLab.frame = CGRectMake(moneyLabX, moneyLabY, moneyLabW, moneyLabH);
         self.moneyLab.text = @"￥200";
         self.moneyLab.textAlignment = NSTextAlignmentRight;
         self.moneyLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
@@ -180,7 +183,8 @@
 //        CGFloat labppH = timeLabH;
 //        CGFloat labppX = timeLabX;
 //        CGFloat labppY = CGRectGetMaxY(self.timeLab.frame);
-//        UILabel *labpp = [[UILabel alloc] initWithFrame:CGRectMake(labppX, labppY, labppW, labppH)];
+//        UILabel *labpp = [[UILabel alloc] init];
+//        labpp.frame = CGRectMake(labppX, labppY, labppW, labppH);
 //        labpp.text = @"施工部位：";
 //        labpp.font = [UIFont systemFontOfSize:13 / 320.0 * kWidth];
 //        [self.baseView addSubview:labpp];
@@ -189,7 +193,8 @@
 //        CGFloat placeLabH = timeLabH;
 //        CGFloat placeLabX = CGRectGetMaxX(labpp.frame);
 //        CGFloat placeLabY = CGRectGetMaxY(self.timeLab.frame) + 10.5 / 568.0 * kHeight;
-//        self.placeLab = [[UILabel alloc] initWithFrame:CGRectMake(placeLabX, placeLabY, placeLabW, placeLabH)];
+//        self.placeLab = [[UILabel alloc] init];
+//        self.placeLab.frame = CGRectMake(placeLabX, placeLabY, placeLabW, placeLabH);
 //        self.placeLab.text = @"脑袋";
 //        self.placeLab.font = [UIFont systemFontOfSize:13 /320.0 * kWidth];
 //        self.placeLab.numberOfLines = 0;

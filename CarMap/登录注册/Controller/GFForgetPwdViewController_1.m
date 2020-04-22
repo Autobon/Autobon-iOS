@@ -125,7 +125,8 @@
     
     
     // 时间lab
-    self.timeLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kWidth * 0.2, kHeight * 0.037)];
+    self.timeLab = [[UILabel alloc] init];
+    self.timeLab.frame = CGRectMake(0, 0, kWidth * 0.2, kHeight * 0.037);
     self.timeLab.layer.borderColor = [[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] CGColor];
     self.timeLab.textAlignment = NSTextAlignmentCenter;
     self.timeLab.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
@@ -145,7 +146,8 @@
 //    CGFloat showLabH = kHeight * 0.024;
 //    CGFloat showLabX = 0;
 //    CGFloat showLabY = CGRectGetMaxY(self.verifyTxt.frame) + jiange2 + 10;
-//    UILabel *showLab = [[UILabel alloc] initWithFrame:CGRectMake(showLabX, showLabY, showLabW, showLabH)];
+//    UILabel *showLab = [[UILabel alloc] init];
+//    showLab.frame = CGRectMake(showLabX, showLabY, showLabW, showLabH);
 //    showLab.text = @"验证码已以短信的形式发送到您的手机中，请注意查收";
 //    showLab.textAlignment = NSTextAlignmentCenter;
 //    showLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
@@ -536,7 +538,8 @@
     CGFloat msgLabH = tipViewH;
     CGFloat msgLabX = 0;
     CGFloat msgLabY = 0;
-    UILabel *msgLab = [[UILabel alloc] initWithFrame:CGRectMake(msgLabX, msgLabY, msgLabW, msgLabH)];
+    UILabel *msgLab = [[UILabel alloc] init];
+    msgLab.frame = CGRectMake(msgLabX, msgLabY, msgLabW, msgLabH);
     msgLab.text = messageStr;
     [self.tipView addSubview:msgLab];
     msgLab.textAlignment = NSTextAlignmentCenter;

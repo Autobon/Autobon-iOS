@@ -155,8 +155,8 @@
     
     
     // 订单编号
-    UILabel *orderNumberLabel = [[UILabel alloc]init];
-    orderNumberLabel = [[UILabel alloc]init];
+    UILabel *orderNumberLabel = [[UILabel alloc] init];
+    orderNumberLabel = [[UILabel alloc] init];
     orderNumberLabel.text = [NSString stringWithFormat:@"订单编号：%@",_model.orderNumber];
     orderNumberLabel.font = [UIFont systemFontOfSize:15];
     orderNumberLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
@@ -179,7 +179,7 @@
 
     
     // 距离label
-    _distanceLabel = [[UILabel alloc]init];
+    _distanceLabel = [[UILabel alloc] init];
     _distanceLabel.text = @"距离：  ";
     _distanceLabel.font = [UIFont systemFontOfSize:15];
     _distanceLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
@@ -268,7 +268,7 @@
             offerString = [NSString stringWithFormat:@"%@\r%@/%@", offerString, productOfferDictionary[@"constructionPositionName"], productOfferDictionary[@"model"]];
         }
     }
-    UILabel *productDetailTitleLabel = [[UILabel alloc]init];
+    UILabel *productDetailTitleLabel = [[UILabel alloc] init];
     productDetailTitleLabel.text = @"施工详情：";
     productDetailTitleLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
 //    productDetailTitleLabel.frame = CGRectMake(10, lineView2.frame.origin.y+ 40*4, 90, 40);
@@ -280,7 +280,7 @@
         make.height.mas_offset(45);
     }];
     
-    UILabel *productDetailValueLabel = [[UILabel alloc]init];
+    UILabel *productDetailValueLabel = [[UILabel alloc] init];
     productDetailValueLabel.text = offerString;
     productDetailValueLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     productDetailValueLabel.numberOfLines = 0;
@@ -362,7 +362,7 @@
         [titleImageBaseView addSubview:titleImageView];
         titleImageView.frame = CGRectMake(20, 12, 15, 15);
         
-        UILabel *titleImageLabel = [[UILabel alloc]init];
+        UILabel *titleImageLabel = [[UILabel alloc] init];
         titleImageLabel.text = @"型号+部位";
         titleImageLabel.font = [UIFont boldSystemFontOfSize:14];
         [titleImageBaseView addSubview:titleImageLabel];
@@ -388,7 +388,8 @@
             
             
             NSDictionary *productDict = _productOfferArray[i];
-            UILabel *menusNameLab = [[UILabel alloc] initWithFrame:CGRectMake(40, 5, [UIScreen mainScreen].bounds.size.width - 60, 30)];
+            UILabel *menusNameLab = [[UILabel alloc] init];
+            menusNameLab.frame = CGRectMake(40, 5, [UIScreen mainScreen].bounds.size.width - 60, 30);
             menusNameLab.textColor = [UIColor darkGrayColor];
             menusNameLab.font = [UIFont systemFontOfSize:14];
             menusNameLab.text = [NSString stringWithFormat:@"%@--%@", productDict[@"model"], productDict[@"constructionPositionName"]];
@@ -452,7 +453,7 @@
         [titleImageBaseView addSubview:titleImageView];
         titleImageView.frame = CGRectMake(20, 12, 15, 15);
         
-        UILabel *titleImageLabel = [[UILabel alloc]init];
+        UILabel *titleImageLabel = [[UILabel alloc] init];
         titleImageLabel.text = @"套餐名称";
         titleImageLabel.font = [UIFont boldSystemFontOfSize:14];
         [titleImageBaseView addSubview:titleImageLabel];
@@ -479,7 +480,8 @@
             
             
             NSDictionary *menusDict = _setMenusArray[i];
-            UILabel *menusNameLab = [[UILabel alloc] initWithFrame:CGRectMake(40, 5, [UIScreen mainScreen].bounds.size.width - 60, 30)];
+            UILabel *menusNameLab = [[UILabel alloc] init];
+            menusNameLab.frame = CGRectMake(40, 5, [UIScreen mainScreen].bounds.size.width - 60, 30);
             menusNameLab.textColor = [UIColor darkGrayColor];
             menusNameLab.font = [UIFont systemFontOfSize:14];
             menusNameLab.text = [NSString stringWithFormat:@"%@", menusDict[@"name"]];
@@ -521,7 +523,7 @@
     lastLineView = [self setLineView:[NSString stringWithFormat:@"商户位置：%@",self.cooperatorAddress] lastView:lastLineView];
     
     // 备注
-    UILabel *otherLabel = [[UILabel alloc]init];
+    UILabel *otherLabel = [[UILabel alloc] init];
     otherLabel.text = [NSString stringWithFormat:@"下单备注：%@",self.remark];
     otherLabel.font = [UIFont systemFontOfSize:15];
     otherLabel.numberOfLines = 0;
@@ -590,7 +592,7 @@
 - (UIView *)setLineView:(NSString *)title lastView:(UIView *)lastView{
     
     // label
-    UILabel *label = [[UILabel alloc]init];
+    UILabel *label = [[UILabel alloc] init];
     label.text = title;
     label.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     label.font = [UIFont systemFontOfSize:15];

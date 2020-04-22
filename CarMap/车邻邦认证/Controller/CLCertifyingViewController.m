@@ -120,13 +120,15 @@
     
     [[SDImageCache sharedImageCache] clearDisk];
 
-    UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 75, 100, 30)];
+    UILabel *stateLabel = [[UILabel alloc] init];
+    stateLabel.frame = CGRectMake(15, 75, 100, 30);
     stateLabel.text = @"审核状态：";
     stateLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
     stateLabel.font = [UIFont systemFontOfSize:16];
     [_scView addSubview:stateLabel];
     
-    UILabel *failLabel = [[UILabel alloc]initWithFrame:CGRectMake(95, 75, 100, 30)];
+    UILabel *failLabel = [[UILabel alloc] init];
+    failLabel.frame = CGRectMake(95, 75, 100, 30);
     failLabel.text = @"正在审核";
     failLabel.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
     failLabel.font = [UIFont systemFontOfSize:16];
@@ -137,7 +139,8 @@
     view.backgroundColor = [UIColor colorWithRed:160/255.0 green:160/255.0 blue:160/255.0 alpha:1.0];
     [_scView addSubview:view];
     
-    UILabel *certifyLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 30)];
+    UILabel *certifyLabel = [[UILabel alloc] init];
+    certifyLabel.frame = CGRectMake(0, 0, 100, 30);
     certifyLabel.center = view.center;
     certifyLabel.text = @"认证信息";
     certifyLabel.textAlignment = NSTextAlignmentCenter;
@@ -156,19 +159,22 @@
     [_scView addSubview:_headImage];
     
     
-    _userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(120, 130, 100, 30)];
+    _userNameLabel = [[UILabel alloc] init];
+    _userNameLabel.frame = CGRectMake(120, 130, 100, 30);
     _userNameLabel.font = [UIFont systemFontOfSize:15];
     _userNameLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
     _userNameLabel.text = _model.name;
     [_scView addSubview:_userNameLabel];
     
-    _identityLabel = [[UILabel alloc]initWithFrame:CGRectMake(120, 160, self.view.frame.size.width - 140, 30)];
+    _identityLabel = [[UILabel alloc] init];
+    _identityLabel.frame = CGRectMake(120, 160, self.view.frame.size.width - 140, 30);
     _identityLabel.text = _model.idNo;
     _identityLabel.font = [UIFont systemFontOfSize:14];
     _identityLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
     [_scView addSubview:_identityLabel];
     
-    _tuijianrenLab = [[UILabel alloc] initWithFrame:CGRectMake(120, 190, self.view.frame.size.width - 140, 30)];
+    _tuijianrenLab = [[UILabel alloc] init];
+    _tuijianrenLab.frame = CGRectMake(120, 190, self.view.frame.size.width - 140, 30);
     _tuijianrenLab.font = [UIFont systemFontOfSize:14];
     _tuijianrenLab.text = [NSString stringWithFormat:@"推荐人：%@", _model.reference];
     _tuijianrenLab.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
@@ -204,7 +210,8 @@
     UIView *lineView3 = [[UIView alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(self.jianjieLab.frame) + 23, self.view.frame.size.width-20, 1)];
     lineView3.backgroundColor = [UIColor colorWithRed:160/255.0 green:160/255.0 blue:160/255.0 alpha:1.0];
     [_scView addSubview:lineView3];
-    UILabel *idImageLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 20)];
+    UILabel *idImageLabel = [[UILabel alloc] init];
+    idImageLabel.frame = CGRectMake(0, 0, 100, 20);
     idImageLabel.center = lineView3.center;
     idImageLabel.text = @"技能项目";
     idImageLabel.textAlignment = NSTextAlignmentCenter;
@@ -230,7 +237,8 @@
     UIView *lineView4 = [[UIView alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(idImageLabel.frame) + 23 + 30 * 6 + 15, self.view.frame.size.width-20, 1)];
     lineView4.backgroundColor = [UIColor colorWithRed:160/255.0 green:160/255.0 blue:160/255.0 alpha:1.0];
     [_scView addSubview:lineView4];
-    UILabel *idImageLabel22 = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 160, 20)];
+    UILabel *idImageLabel22 = [[UILabel alloc] init];
+    idImageLabel22.frame = CGRectMake(0, 0, 160, 20);
     idImageLabel22.center = lineView4.center;
     idImageLabel22.text = @"手持身份证正面照";
     idImageLabel22.textAlignment = NSTextAlignmentCenter;
@@ -257,7 +265,8 @@
     UIView *vv = [[UIView alloc] initWithFrame:CGRectMake(x, y, [UIScreen mainScreen].bounds.size.width, 30)];
     [_scView addSubview:vv];
     
-    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 85, 30)];
+    UILabel *lab = [[UILabel alloc] init];
+    lab.frame = CGRectMake(10, 0, 85, 30);
     lab.text = title;
     lab.textColor = [UIColor darkGrayColor];
     lab.font = [UIFont systemFontOfSize:14];
@@ -277,7 +286,8 @@
         [vv addSubview:img];
     }
     
-    UILabel *rightLab = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 75, 0, 60, 30)];
+    UILabel *rightLab = [[UILabel alloc] init];
+    rightLab.frame = CGRectMake([UIScreen mainScreen].bounds.size.width - 75, 0, 60, 30);
     rightLab.textColor = [UIColor colorWithRed:231 / 255.0 green:97 / 255.0 blue:30 / 255.0 alpha:1];
     rightLab.text = [NSString stringWithFormat:@"%@年", nianxian];
     rightLab.font =[UIFont systemFontOfSize:14];

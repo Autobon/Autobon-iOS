@@ -91,12 +91,14 @@
     UIView *headerView = [[UIView alloc]init];
     headerView.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 8, 200, 20)];
+    UILabel *timeLabel = [[UILabel alloc] init];
+    timeLabel.frame = CGRectMake(10, 8, 200, 20);
     timeLabel.text = [self weekdayString];
     timeLabel.font = [UIFont systemFontOfSize:14];
     [headerView addSubview:timeLabel];
     
-    UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width-100, 8, 80, 20)];
+    UILabel *stateLabel = [[UILabel alloc] init];
+    stateLabel.frame = CGRectMake(self.view.frame.size.width-100, 8, 80, 20);
     stateLabel.text = @"工作模式";
     stateLabel.textAlignment = NSTextAlignmentRight;
     stateLabel.font = [UIFont systemFontOfSize:14];
@@ -208,7 +210,7 @@
     }];
     
     
-    UILabel *photoLabel = [[UILabel alloc]init];
+    UILabel *photoLabel = [[UILabel alloc] init];
     photoLabel.text = @"不少于3张";
     photoLabel.font = [UIFont systemFontOfSize:16];
     photoLabel.textColor = [UIColor colorWithRed:196/255.0 green:196/255.0 blue:196/255.0 alpha:1.0];
@@ -216,7 +218,8 @@
     [titleView addSubview:photoLabel];
     
     
-//    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 101, self.view.frame.size.width, 40)];
+//    _distanceLabel = [[UILabel alloc] init];
+//    _distanceLabel.frame = CGRectMake(0, 101, self.view.frame.size.width, 40);
 //    _distanceLabel.text = @"已用时：15分28秒";
 //    _distanceLabel.backgroundColor = [UIColor whiteColor];
 //    _distanceLabel.font = [UIFont systemFontOfSize:15];
@@ -267,6 +270,7 @@
 //    }];
     
     _textView = [[UITextView alloc]init];
+    _textView.backgroundColor = [UIColor clearColor];
     _textView.layer.borderWidth = 1;
     _textView.layer.borderColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0].CGColor;
     _textView.layer.cornerRadius = 5;

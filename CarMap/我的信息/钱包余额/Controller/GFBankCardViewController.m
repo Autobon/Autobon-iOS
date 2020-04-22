@@ -93,7 +93,8 @@
     lineView.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
     [baseView addSubview:lineView];
     // 银行卡信息Lab
-    UILabel *msgLab = [[UILabel alloc] initWithFrame:CGRectMake(jiange1, 0, 200, baseViewH)];
+    UILabel *msgLab = [[UILabel alloc] init];
+    msgLab.frame = CGRectMake(jiange1, 0, 200, baseViewH);
     msgLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
     msgLab.text = @"银行卡信息";
     [baseView addSubview:msgLab];
@@ -112,7 +113,8 @@
     nameView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:nameView];
     // 姓名Lab
-    self.nameLab = [[UILabel alloc] initWithFrame:CGRectMake(jiange1, 0, 200, nameViewH)];
+    self.nameLab = [[UILabel alloc] init];
+    self.nameLab.frame = CGRectMake(jiange1, 0, 200, nameViewH);
     self.nameLab.text = self.name;
     self.nameLab.font = [UIFont systemFontOfSize:15 / 320.0 * kWidth];
     self.nameLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];

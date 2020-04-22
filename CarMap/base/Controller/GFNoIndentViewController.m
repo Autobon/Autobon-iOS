@@ -53,6 +53,7 @@
     
     
     self.tableView = [[UITableView alloc] init];
+    self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];

@@ -90,7 +90,8 @@
         NSString *str = @"认证通过后才能接单赚钱，快去认证吧！";
         CGRect strRect = [str boundingRectWithSize:CGSizeMake([UIScreen mainScreen].bounds.size.width - 40, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]} context:nil];
         
-        UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(20, 200, [UIScreen mainScreen].bounds.size.width - 40 , strRect.size.height + 100)];
+        UILabel *lab = [[UILabel alloc] init];
+        lab.frame = CGRectMake(20, 200, [UIScreen mainScreen].bounds.size.width - 40 , strRect.size.height + 100);
         lab.backgroundColor = [UIColor whiteColor];
         lab.textAlignment = NSTextAlignmentCenter;
         lab.text = str;
@@ -114,7 +115,8 @@
 - (void)setViewForAutobon{
     
 // 距离label
-    UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, -5, self.view.frame.size.width, self.view.frame.size.height/18)];
+    UILabel *distanceLabel = [[UILabel alloc] init];
+    distanceLabel.frame = CGRectMake(10, -5, self.view.frame.size.width, self.view.frame.size.height/18);
 //    distanceLabel.backgroundColor = [UIColor cyanColor];
     distanceLabel.text = @"距离：  ";
     distanceLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
@@ -137,7 +139,8 @@
     
     
 // 施工时间
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView2.frame.origin.y+4, self.view.frame.size.width, self.view.frame.size.height/18)];
+    UILabel *timeLabel = [[UILabel alloc] init];
+    timeLabel.frame = CGRectMake(10, lineView2.frame.origin.y+4, self.view.frame.size.width, self.view.frame.size.height/18);
 //    timeLabel.backgroundColor = [UIColor cyanColor];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
@@ -163,7 +166,8 @@
     
     
 // 备注
-    UILabel *otherLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*4, self.view.frame.size.width, self.view.frame.size.height/18)];
+    UILabel *otherLabel = [[UILabel alloc] init];
+    otherLabel.frame = CGRectMake(10, lineView2.frame.origin.y+(self.view.frame.size.height/18+1)*4, self.view.frame.size.width, self.view.frame.size.height/18);
 //    otherLabel.backgroundColor = [UIColor cyanColor];
     otherLabel.text = @"工作备注：";
     otherLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
@@ -203,7 +207,8 @@
 - (void)setLineView:(NSString *)title maxY:(float)maxY{
     
     // 施工时间
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, maxY +4, self.view.frame.size.width, self.view.frame.size.height/18)];
+    UILabel *timeLabel = [[UILabel alloc] init];
+    timeLabel.frame = CGRectMake(10, maxY +4, self.view.frame.size.width, self.view.frame.size.height/18);
     //    timeLabel.backgroundColor = [UIColor cyanColor];
     timeLabel.text = title;
     timeLabel.textColor = [[UIColor alloc]initWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];

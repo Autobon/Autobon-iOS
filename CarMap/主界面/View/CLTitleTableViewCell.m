@@ -15,7 +15,8 @@
 //    if (self = [super init]) {
 //        self.backgroundColor = [UIColor redColor];
 //标题label
-    _titleLable = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, [UIScreen mainScreen].bounds.size.width-20, 40)];
+    _titleLable = [[UILabel alloc] init];
+    _titleLable.frame = CGRectMake(15, 5, [UIScreen mainScreen].bounds.size.width-20, 40);
     _titleLable.text = @"未完成的订单数：0";
 //    _titleLable.textColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:20/255.0 alpha:1.0];
 //    _titleLable.font = [UIFont systemFontOfSize:19];
@@ -23,7 +24,8 @@
     [self addSubview:_titleLable];
         
 //详情标题
-    _detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 45, [UIScreen mainScreen].bounds.size.width, 30)];
+    _detailLabel = [[UILabel alloc] init];
+    _detailLabel.frame = CGRectMake(15, 45, [UIScreen mainScreen].bounds.size.width, 30);
     _detailLabel.text = @"今日完成订单数：0    共计金额：0";
 //    _detailLabel.textColor = [UIColor colorWithRed:157/255.0 green:157/255.0 blue:157/255.0 alpha:1.0];
 //    _detailLabel.textAlignment = NSTextAlignmentCenter;

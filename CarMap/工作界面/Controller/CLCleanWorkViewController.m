@@ -78,12 +78,14 @@
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 36)];
     headerView.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 8, 200, 20)];
+    UILabel *timeLabel = [[UILabel alloc] init];
+    timeLabel.frame = CGRectMake(10, 8, 200, 20);
     timeLabel.text = [self weekdayString];
     timeLabel.font = [UIFont systemFontOfSize:14];
     [headerView addSubview:timeLabel];
     
-    UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width-120, 8, 100, 20)];
+    UILabel *stateLabel = [[UILabel alloc] init];
+    stateLabel.frame = CGRectMake(self.view.frame.size.width-120, 8, 100, 20);
     stateLabel.text = @"即将完成模式";
     stateLabel.textAlignment = NSTextAlignmentRight;
     stateLabel.font = [UIFont systemFontOfSize:14];
@@ -125,7 +127,8 @@
 
 - (void)titleView{
     
-    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, self.view.frame.size.width, 20)];
+    _distanceLabel = [[UILabel alloc] init];
+    _distanceLabel.frame = CGRectMake(0, 10, self.view.frame.size.width, 20);
     _distanceLabel.text = @"已用时：";
     _distanceLabel.backgroundColor = [UIColor whiteColor];
     _distanceLabel.font = [UIFont systemFontOfSize:15];
@@ -133,7 +136,7 @@
     [_scrollView addSubview:_distanceLabel];
     
     CLTitleView *photoTitle = [[CLTitleView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_distanceLabel.frame)+10, self.view.frame.size.width, 45) Title:@"上传工作完成车辆照片"];
-    UILabel *photoLabel = [[UILabel alloc]init];
+    UILabel *photoLabel = [[UILabel alloc] init];
     photoLabel.text = @"不少于3张";
     photoLabel.font = [UIFont systemFontOfSize:16];
     photoLabel.textColor = [UIColor colorWithRed:196/255.0 green:196/255.0 blue:196/255.0 alpha:1.0];
@@ -181,7 +184,8 @@
     [addButton setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
     [_scrollView addSubview:addButton];
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(80, addButton.frame.origin.y + 40, self.view.frame.size.width-160, 30)];
+    UILabel *label = [[UILabel alloc] init];
+    label.frame = CGRectMake(80, addButton.frame.origin.y + 40, self.view.frame.size.width-160, 30);
     label.text = @"按百分比计算(%)";
     label.textAlignment = NSTextAlignmentCenter;
     label.font = [UIFont systemFontOfSize:14.0];

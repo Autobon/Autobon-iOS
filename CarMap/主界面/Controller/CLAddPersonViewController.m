@@ -83,7 +83,7 @@
     _tableView.frame = CGRectMake(0, 124, self.view.frame.size.width, self.view.frame.size.height-124);
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
-//    tableView.backgroundColor = [UIColor cyanColor];
+    _tableView.backgroundColor = [UIColor clearColor];
 }
 
 

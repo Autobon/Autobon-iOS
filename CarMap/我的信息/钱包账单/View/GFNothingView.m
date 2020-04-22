@@ -40,7 +40,8 @@
         CGFloat lab1H = 40;
         CGFloat lab1X = 0;
         CGFloat lab1Y = CGRectGetMaxY(imgView.frame);
-        UILabel *lab1 = [[UILabel alloc] initWithFrame:CGRectMake(lab1X, lab1Y, lab1W, lab1H)];
+        UILabel *lab1 = [[UILabel alloc] init];
+        lab1.frame = CGRectMake(lab1X, lab1Y, lab1W, lab1H);
         lab1.text = tipStr;
         lab1.textAlignment = NSTextAlignmentCenter;
         lab1.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
@@ -51,7 +52,8 @@
         CGFloat lab2H = 40;
         CGFloat lab2X = 0;
         CGFloat lab2Y = CGRectGetMaxY(lab1.frame) - 15;
-        UILabel *lab2 = [[UILabel alloc] initWithFrame:CGRectMake(lab2X, lab2Y, lab2W, lab2H)];
+        UILabel *lab2 = [[UILabel alloc] init];
+        lab2.frame = CGRectMake(lab2X, lab2Y, lab2W, lab2H);
         lab2.text = subTipStr;
         lab2.textAlignment = NSTextAlignmentCenter;
         lab2.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
@@ -93,7 +95,8 @@
 //        CGFloat lab1H = 40;
 //        CGFloat lab1X = 0;
 //        CGFloat lab1Y = CGRectGetMaxY(imgView.frame);
-//        UILabel *lab1 = [[UILabel alloc] initWithFrame:CGRectMake(lab1X, lab1Y, lab1W, lab1H)];
+//        UILabel *lab1 = [[UILabel alloc] init];
+//        lab1.frame = CGRectMake(lab1X, lab1Y, lab1W, lab1H);
 //        lab1.text = tipStr;
 //        lab1.textAlignment = NSTextAlignmentCenter;
 //        lab1.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
@@ -104,7 +107,8 @@
 //        CGFloat lab2H = 40;
 //        CGFloat lab2X = 0;
 //        CGFloat lab2Y = CGRectGetMaxY(lab1.frame) - 15;
-//        UILabel *lab2 = [[UILabel alloc] initWithFrame:CGRectMake(lab2X, lab2Y, lab2W, lab2H)];
+//        UILabel *lab2 = [[UILabel alloc] init];
+//        lab2.frame = CGRectMake(lab2X, lab2Y, lab2W, lab2H);
 //        lab2.text = subTipStr;
 //        lab2.textAlignment = NSTextAlignmentCenter;
 //        lab2.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];

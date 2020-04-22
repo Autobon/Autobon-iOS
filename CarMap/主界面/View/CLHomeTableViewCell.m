@@ -70,11 +70,12 @@
 
 - (void)initWithOrder{
     
+    self.backgroundColor = [UIColor whiteColor];
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 10)];
     view.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0];
     [self addSubview:view];
     
-//    _orderTypeLabel = [[UILabel alloc]init];
+//    _orderTypeLabel = [[UILabel alloc] init];
 //    _orderTypeLabel.frame = CGRectMake(10, 10, 250, 25);
 //    _orderTypeLabel.font = [UIFont systemFontOfSize:14.0];
 //    _orderTypeLabel.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
@@ -126,7 +127,8 @@
     [view addSubview:lineView];
     
 // 预约时间
-    _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(lineView.frame) + 10, 250, 25)];
+    _timeLabel = [[UILabel alloc] init];
+    _timeLabel.frame = CGRectMake(10, CGRectGetMaxY(lineView.frame) + 10, 250, 25);
     _timeLabel.textColor = [UIColor colorWithRed:157/255.0 green:157/255.0 blue:157/255.0 alpha:1.0];
     _timeLabel.font = [UIFont systemFontOfSize:12.0];
 //    _timeLabel.backgroundColor = [UIColor cyanColor];

@@ -294,6 +294,7 @@
 - (void)_setView {
     
     _tableView = [[UITableView alloc]init];
+    _tableView.backgroundColor = [UIColor clearColor];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
@@ -317,7 +318,8 @@
     [self.view addSubview:_noOrderImageView];
     [self.view bringSubviewToFront:_noOrderImageView];
     
-    _noOrderlabel = [[UILabel alloc]initWithFrame:CGRectMake(100, _noOrderImageView.frame.origin.y + 60, self.view.frame.size.width-200, 30)];
+    _noOrderlabel = [[UILabel alloc] init];
+    _noOrderlabel.frame = CGRectMake(100, _noOrderImageView.frame.origin.y + 60, self.view.frame.size.width-200, 30);
     _noOrderlabel.text = @"暂无订单";
     _noOrderlabel.textColor = [UIColor colorWithRed:196/255.0 green:196/255.0 blue:196/255.0 alpha:1.0];
     _noOrderlabel.font = [UIFont systemFontOfSize:15];
@@ -341,12 +343,14 @@
     
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 38)];
     headerView.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 8, 200, 20)];
+    UILabel *timeLabel = [[UILabel alloc] init];
+    timeLabel.frame = CGRectMake(10, 8, 200, 20);
     timeLabel.text = [self weekdayString];
     timeLabel.font = [UIFont systemFontOfSize:14];
     [headerView addSubview:timeLabel];
     
-    UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width-100, 8, 80, 20)];
+    UILabel *stateLabel = [[UILabel alloc] init];
+    stateLabel.frame = CGRectMake(self.view.frame.size.width-100, 8, 80, 20);
     stateLabel.text = @"接单模式";
     stateLabel.textAlignment = NSTextAlignmentRight;
     stateLabel.font = [UIFont systemFontOfSize:14];

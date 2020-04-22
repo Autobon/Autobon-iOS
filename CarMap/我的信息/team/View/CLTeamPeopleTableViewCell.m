@@ -30,7 +30,7 @@
             make.right.equalTo(self).offset(2);
         }];
         
-        _nameLabel = [[UILabel alloc]init];
+        _nameLabel = [[UILabel alloc] init];
         _nameLabel.font = [UIFont systemFontOfSize:14];
         [baseView addSubview:_nameLabel];
         [_nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -40,7 +40,7 @@
             make.width.mas_offset(80);
         }];
         
-        _phoneLabel = [[UILabel alloc]init];
+        _phoneLabel = [[UILabel alloc] init];
         _phoneLabel.font = [UIFont systemFontOfSize:14];
         [baseView addSubview:_phoneLabel];
         [_phoneLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -50,7 +50,7 @@
             make.width.mas_offset(120);
         }];
         
-        _statusLabel = [[UILabel alloc]init];
+        _statusLabel = [[UILabel alloc] init];
         _statusLabel.font = [UIFont systemFontOfSize:15];
         _statusLabel.textAlignment = NSTextAlignmentRight;
         _statusLabel.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
@@ -64,7 +64,7 @@
         
         
         //隔热膜
-        _filmLevelLabel = [[UILabel alloc]init];
+        _filmLevelLabel = [[UILabel alloc] init];
         _filmLevelLabel.font = [UIFont systemFontOfSize:14];
         [baseView addSubview:_filmLevelLabel];
         [_filmLevelLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -75,7 +75,7 @@
         }];
         
         //隐形车衣
-        _carCoverLevelLabel = [[UILabel alloc]init];
+        _carCoverLevelLabel = [[UILabel alloc] init];
         _carCoverLevelLabel.font = [UIFont systemFontOfSize:14];
         _carCoverLevelLabel.textAlignment = NSTextAlignmentRight;
         [baseView addSubview:_carCoverLevelLabel];
@@ -87,7 +87,7 @@
         }];
         
         //车身改色
-        _colorModifyLevelLabel = [[UILabel alloc]init];
+        _colorModifyLevelLabel = [[UILabel alloc] init];
         _colorModifyLevelLabel.font = [UIFont systemFontOfSize:14];
         [baseView addSubview:_colorModifyLevelLabel];
         [_colorModifyLevelLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -98,7 +98,7 @@
         }];
         
         //美容清洁
-        _beautyLevelLabel = [[UILabel alloc]init];
+        _beautyLevelLabel = [[UILabel alloc] init];
         _beautyLevelLabel.font = [UIFont systemFontOfSize:14];
         _beautyLevelLabel.textAlignment = NSTextAlignmentRight;
         [baseView addSubview:_beautyLevelLabel];

@@ -35,7 +35,7 @@
         make.height.mas_equalTo(200);
     }];
     
-    UILabel *titleLabel = [[UILabel alloc]init];
+    UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.text = @"选择时间";
     titleLabel.font = [UIFont systemFontOfSize:15];
     [baseView addSubview:titleLabel];

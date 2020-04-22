@@ -15,8 +15,8 @@
             timestampString = "600657562.524488"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "304"
-            endingLineNumber = "304"
+            startingLineNumber = "306"
+            endingLineNumber = "306"
             landmarkName = "-didUpdateBMKUserLocation:"
             landmarkType = "7">
          </BreakpointContent>

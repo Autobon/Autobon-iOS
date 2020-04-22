@@ -77,6 +77,7 @@
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(100, 100, 120, 200)];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.backgroundColor = [UIColor clearColor];
     [_scrollView addSubview:_tableView];
     _tableView.hidden = YES;
     
@@ -308,7 +309,8 @@
     [_submitButton addTarget:self action:@selector(submitBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:_submitButton];
     
-    UILabel *submitLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-156+18, lineView.frame.origin.y+2+50, 180, 30)];
+    UILabel *submitLabel = [[UILabel alloc] init];
+    submitLabel.frame = CGRectMake(self.view.frame.size.width/2-156+18, lineView.frame.origin.y+2+50, 180, 30);
     submitLabel.text = @"点击按钮代表本人已阅读并同意";
 //    submitLabel.backgroundColor = [UIColor cyanColor];
     submitLabel.font = [UIFont systemFontOfSize:12];
@@ -505,7 +507,7 @@
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2+5, button.frame.origin.y + 40, button.frame.size.width , 100) style:UITableViewStylePlain];
     tableView.delegate = self;
     tableView.dataSource = self;
-    tableView.backgroundColor = [UIColor cyanColor];
+    tableView.backgroundColor = [UIColor clearColor];
     [_scrollView addSubview:tableView];
 }
 

@@ -55,7 +55,8 @@
         CGFloat monthLabH = baseViewH - 4;
         CGFloat monthLabX = jianjv;
         CGFloat monthLabY = 4;
-        self.monthLab = [[UILabel alloc] initWithFrame:CGRectMake(monthLabX, monthLabY, monthLabW, monthLabH)];
+        self.monthLab = [[UILabel alloc] init];
+        self.monthLab.frame = CGRectMake(monthLabX, monthLabY, monthLabW, monthLabH);
         self.monthLab.text = @"一月";
         [baseView addSubview:self.monthLab];
         self.monthLab.font = [UIFont systemFontOfSize:16 / 320.0 * kWidth];
@@ -66,7 +67,8 @@
 //        CGFloat sumMoneyLabX = CGRectGetMaxX(self.monthLab.frame);
         CGFloat sumMoneyLabX = kWidth * 0.046;
         CGFloat sumMoneyLabY = 0;
-        self.sumMoneyLab = [[UILabel alloc] initWithFrame:CGRectMake(sumMoneyLabX, sumMoneyLabY, sumMoneyLabW, sumMoneyLabH)];
+        self.sumMoneyLab = [[UILabel alloc] init];
+        self.sumMoneyLab.frame = CGRectMake(sumMoneyLabX, sumMoneyLabY, sumMoneyLabW, sumMoneyLabH);
         self.sumMoneyLab.textAlignment = NSTextAlignmentRight;
         self.sumMoneyLab.text = @"￥ 888888.88";
         self.sumMoneyLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];

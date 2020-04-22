@@ -54,7 +54,7 @@
     }];
     
     _searchTextField = [[UITextField alloc]init];
-    _searchTextField.placeholder = @"商户名称";
+    [_searchTextField setTextFieldPlaceholderString:@"商户名称"];
     _searchTextField.borderStyle = UITextBorderStyleRoundedRect;
     _searchTextField.backgroundColor = [UIColor whiteColor];
     [searchBaseView addSubview:_searchTextField];

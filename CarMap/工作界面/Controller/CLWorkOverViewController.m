@@ -171,12 +171,14 @@
     UIView *headerView = [[UIView alloc]init];
    headerView.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 8, 200, 20)];
+    UILabel *timeLabel = [[UILabel alloc] init];
+    timeLabel.frame = CGRectMake(10, 8, 200, 20);
     timeLabel.text = [self weekdayString];
     timeLabel.font = [UIFont systemFontOfSize:14];
     [headerView addSubview:timeLabel];
     
-    UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width-120, 8, 100, 20)];
+    UILabel *stateLabel = [[UILabel alloc] init];
+    stateLabel.frame = CGRectMake(self.view.frame.size.width-120, 8, 100, 20);
     stateLabel.text = @"即将完成模式";
     stateLabel.textAlignment = NSTextAlignmentRight;
     stateLabel.font = [UIFont systemFontOfSize:14];
@@ -356,6 +358,7 @@
     [vv addSubview:baseView];
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 84, baseView.frame.size.width, baseView.frame.size.height - 40) style:UITableViewStylePlain];
+    _tableView.backgroundColor = [UIColor clearColor];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -372,7 +375,11 @@
     self.seatchBar.layer.borderColor = [[UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0]CGColor];
     [baseView addSubview:self.seatchBar];
     self.seatchBar.clipsToBounds = YES;
-    self.seatchBar.placeholder = @"请输入";
+    if (@available(iOS 13.0, *)) {
+        [self.seatchBar.searchTextField setTextFieldPlaceholderString:@"请输入"];
+    } else {
+        self.seatchBar.placeholder = @"请输入";
+    }
     
     UIButton *searchBut = [UIButton buttonWithType:UIButtonTypeCustom];
     searchBut.frame = CGRectMake(baseView.frame.size.width - 60, 30, 50, 40);
@@ -447,7 +454,8 @@
     
 //    NSLog(@"－1457600262000－－已用时－－%@--",_startTime);
     
-    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, self.view.frame.size.width, 20)];
+    _distanceLabel = [[UILabel alloc] init];
+    _distanceLabel.frame = CGRectMake(0, 10, self.view.frame.size.width, 20);
 //    _distanceLabel.text = @"已用时：15分28秒";
     _distanceLabel.backgroundColor = [UIColor whiteColor];
     _distanceLabel.font = [UIFont systemFontOfSize:15];
@@ -455,7 +463,7 @@
     [_scrollView addSubview:_distanceLabel];
     
     CLTitleView *photoTitle = [[CLTitleView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_distanceLabel.frame)+10, self.view.frame.size.width, 45) Title:@"上传工作完成车辆照片"];
-    UILabel *photoLabel = [[UILabel alloc]init];
+    UILabel *photoLabel = [[UILabel alloc] init];
     photoLabel.text = @"不少于3张";
     photoLabel.font = [UIFont systemFontOfSize:16];
     photoLabel.textColor = [UIColor colorWithRed:196/255.0 green:196/255.0 blue:196/255.0 alpha:1.0];
@@ -1557,6 +1565,7 @@
 //                }];
                 
                 _textView = [[UITextView alloc]init];
+                _textView.backgroundColor = [UIColor clearColor];
                 _textView.layer.borderWidth = 1;
                 _textView.layer.borderColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0].CGColor;
                 _textView.layer.cornerRadius = 5;

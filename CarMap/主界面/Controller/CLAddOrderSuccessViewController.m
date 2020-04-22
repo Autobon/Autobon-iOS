@@ -94,12 +94,14 @@
     UIView *headerView = [[UIView alloc]init];
     headerView.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1.0];
     
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 8, 200, 20)];
+    UILabel *timeLabel = [[UILabel alloc] init];
+    timeLabel.frame = CGRectMake(10, 8, 200, 20);
     timeLabel.text = [self weekdayString];
     timeLabel.font = [UIFont systemFontOfSize:14];
     [headerView addSubview:timeLabel];
     
-    UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width-100, 8, 80, 20)];
+    UILabel *stateLabel = [[UILabel alloc] init];
+    stateLabel.frame = CGRectMake(self.view.frame.size.width-100, 8, 80, 20);
     stateLabel.text = @"抢单模式";
     stateLabel.textAlignment = NSTextAlignmentRight;
     stateLabel.font = [UIFont systemFontOfSize:14];
@@ -154,13 +156,15 @@
 #pragma mark - 设置界面
 
 - (void)setViewForSuccess{
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(30, 140, self.view.frame.size.width-60, 30)];
+    UILabel *label = [[UILabel alloc] init];
+    label.frame = CGRectMake(30, 140, self.view.frame.size.width-60, 30);
     label.text = @"抢单成功";
     label.textAlignment = NSTextAlignmentCenter;
     label.font = [UIFont systemFontOfSize:20];
     [self.view addSubview:label];
     
-    UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 180, self.view.frame.size.width-20, 30)];
+    UILabel *label2 = [[UILabel alloc] init];
+    label2.frame = CGRectMake(10, 180, self.view.frame.size.width-20, 30);
     label2.text = [NSString stringWithFormat:@"订单编号：%@", _model.orderNumber];
     label2.textColor = [UIColor colorWithRed:155/255.0 green:155/255.0 blue:155/255.0 alpha:1.0];
     label2.textAlignment = NSTextAlignmentCenter;

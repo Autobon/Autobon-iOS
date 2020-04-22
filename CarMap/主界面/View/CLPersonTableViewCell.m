@@ -23,12 +23,14 @@
     [self addSubview:_headImage];
     
     
-    _userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(120, 10, 200, 40)];
+    _userNameLabel = [[UILabel alloc] init];
+    _userNameLabel.frame = CGRectMake(120, 10, 200, 40);
 //    _userNameLabel.text = @"林峰";
     _userNameLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
     [self addSubview:_userNameLabel];
     
-   _identityLabel = [[UILabel alloc]initWithFrame:CGRectMake(120, 50, 120, 40)];
+    _identityLabel = [[UILabel alloc] init];
+    _identityLabel.frame = CGRectMake(120, 50, 120, 40);
 //    _identityLabel.text = @"15836163101";
     _identityLabel.textColor = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0];
     [self addSubview:_identityLabel];

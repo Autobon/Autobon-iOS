@@ -58,7 +58,8 @@
         CGFloat lab1H = kHeight * 0.0261;
         CGFloat lab1X = jianjv1;
         CGFloat lab1Y = CGRectGetMaxY(indentView.frame) + jiange1;
-        self.lab1 = [[UILabel alloc] initWithFrame:CGRectMake(lab1X, lab1Y, lab1W, lab1H)];
+        self.lab1 = [[UILabel alloc] init];
+        self.lab1.frame = CGRectMake(lab1X, lab1Y, lab1W, lab1H);
         self.lab1.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
         self.lab1.text = @"汽车贴膜";
         self.lab1.font = [UIFont systemFontOfSize:11 / 320.0 * kWidth];
@@ -70,7 +71,8 @@
         CGFloat lab2H = lab1H;
         CGFloat lab2X = lab1X;
         CGFloat lab2Y = CGRectGetMaxY(self.lab1.frame) + jiange2 - 3;
-        self.lab2 = [[UILabel alloc] initWithFrame:CGRectMake(lab2X, lab2Y, lab2W, lab2H)];
+        self.lab2 = [[UILabel alloc] init];
+        self.lab2.frame = CGRectMake(lab2X, lab2Y, lab2W, lab2H);
         self.lab2.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
         self.lab2.font = [UIFont systemFontOfSize:11 / 320.0 * kWidth];
         [self.baseView addSubview:self.lab2];
@@ -104,7 +106,8 @@
         CGFloat lab3H = kHeight * 0.03;
         CGFloat lab3X = jianjv1;
         CGFloat lab3Y = CGRectGetMaxY(lineView2.frame) + jiange4;
-        self.lab3 = [[UILabel alloc] initWithFrame:CGRectMake(lab3X, lab3Y, lab3W, lab3H)];
+        self.lab3 = [[UILabel alloc] init];
+        self.lab3.frame = CGRectMake(lab3X, lab3Y, lab3W, lab3H);
         self.lab3.font = [UIFont systemFontOfSize:14 / 320.0 * kWidth];
         self.lab3.numberOfLines = 0;
 //        self.lab3.backgroundColor = [UIColor cyanColor];
@@ -123,7 +126,8 @@
         CGFloat lab4H = kHeight * 0.0573;
         CGFloat lab4X = jianjv1;
         CGFloat lab4Y = 0;
-        self.lab4 = [[UILabel alloc] initWithFrame:CGRectMake(lab4X, lab4Y, lab4W, lab4H)];
+        self.lab4 = [[UILabel alloc] init];
+        self.lab4.frame = CGRectMake(lab4X, lab4Y, lab4W, lab4H);
         self.lab4.font = [UIFont systemFontOfSize:12 / 320.0 * kWidth];
         [self.baseView2 addSubview:self.lab4];
         
