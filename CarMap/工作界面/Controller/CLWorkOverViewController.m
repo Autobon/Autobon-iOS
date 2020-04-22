@@ -1074,9 +1074,10 @@
 - (void)deleteBtnClick:(UIButton *)button{
 //    NSLog(@"删除照片");
     
-    UIImageView *imageView = (UIImageView *)[button superview];
+    GFImageView *imageView = (GFImageView *)[button superview];
     [imageView removeFromSuperview];
     [_imageArray removeObject:[button superview]];
+    [_photoUrlArr removeObject:imageView.resultURL];
     imageView = nil;
     
     [_imageArray enumerateObjectsUsingBlock:^(UIImageView *obj, NSUInteger idx, BOOL *stop) {
@@ -1150,6 +1151,7 @@
     
     
     __block NSString *URLString;
+    
 // 判断图片个数
     if (_imageArray.count > 2) {
         [_imageArray enumerateObjectsUsingBlock:^(GFImageView *obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -1853,7 +1855,6 @@
         }
         mDic[@"remark"] = remarkString;
         ICLog(@"提交的数据%@", mDic);
-
         NSDictionary *dicccc = allArr[0];
         NSArray *projectPositionsArrrr  = dicccc[@"projectPositions"];
         if(projectPositionsArrrr.count > 0) {
@@ -1903,6 +1904,12 @@
 }
 - (void)submitClick {
     
+    ICLog(@"imageArray---%@---", _photoUrlArr);
+    if (_photoUrlArr.count < 3) {
+        [self addAlertView:@"至少上传三张照片"];
+        return;
+    }
+    
     
     ICLog(@"选择项目");
     NSInteger i = 0;
@@ -1913,13 +1920,12 @@
     }
     GFProjectView *proView = _proViewArr[0];
     if (i < proView.prArr.count){
+        [self addAlertView:@"请完成所有的施工项目后再提交"];
         ICLog(@"请选择所有的施工项目");
         return;
     }
     
     
-    
-    return;
     
     UIAlertView *aa = [[UIAlertView alloc] initWithTitle:@"注意" message:@"确定要提交施工单！！" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     [aa show];

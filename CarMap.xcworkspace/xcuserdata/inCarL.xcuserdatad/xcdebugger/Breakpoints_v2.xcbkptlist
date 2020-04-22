@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
+   uuid = "4B2ADF16-610E-467A-90E9-DF84641235DF"
    type = "0"
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "774716CE-74D9-47DF-B3FA-83CA724FF890"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -16,22 +18,6 @@
             startingLineNumber = "304"
             endingLineNumber = "304"
             landmarkName = "-didUpdateBMKUserLocation:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CarMap/&#x5de5;&#x4f5c;&#x754c;&#x9762;/Controller/CLWorkOverViewController.m"
-            timestampString = "604287017.889239"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1928"
-            endingLineNumber = "1928"
-            landmarkName = "-baofeiButClick:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

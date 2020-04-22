@@ -19,7 +19,7 @@
 }
 
 @property (nonatomic, strong) GFNavigationView *navView;
-@property (nonatomic, strong) GFTextField *passWordTxt;
+@property (nonatomic, strong) GFTextField *oldPassWordTxt;
 @property (nonatomic, strong) GFTextField *passwordTxt;
 
 @property (nonatomic, strong) UIView *tipView;
@@ -65,15 +65,16 @@
     CGFloat passWordTxtH = kHeight * 0.0625;
     CGFloat passWordTxtX = (kWidth - passWordTxtW) / 2.0 - 3 / 320.0 * kWidth;
     CGFloat passWordTxtY = kHeight * 0.081 + 64;
-    self.passWordTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"password.png"] withRightButton:passwordBut withFrame:CGRectMake(passWordTxtX, passWordTxtY, passWordTxtW, passWordTxtH)];
-    self.passWordTxt.centerTxt.placeholder = @"请输入旧密码";
-    [self.passWordTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
-    self.passWordTxt.centerTxt.secureTextEntry = YES;
+    self.oldPassWordTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"password.png"] withRightButton:passwordBut withFrame:CGRectMake(passWordTxtX, passWordTxtY, passWordTxtW, passWordTxtH)];
+    self.oldPassWordTxt.centerTxt.font = [UIFont systemFontOfSize:(15 / 320.0 * kWidth)];
+//    [self.passWordTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
+    [self.oldPassWordTxt.centerTxt setTextFieldPlaceholderString:@"请输入旧密码"];
+    self.oldPassWordTxt.centerTxt.secureTextEntry = YES;
     //    self.passWordTxt.centerTxt.clearButtonMode = UITextFieldViewModeAlways;
-    [self.view addSubview:self.passWordTxt];
-    self.passWordTxt.centerTxt.keyboardType = UIKeyboardTypeDefault;
-    self.passWordTxt.centerTxt.delegate = self;
-    self.passWordTxt.centerTxt.tag = 1000;
+    [self.view addSubview:self.oldPassWordTxt];
+    self.oldPassWordTxt.centerTxt.keyboardType = UIKeyboardTypeDefault;
+    self.oldPassWordTxt.centerTxt.delegate = self;
+    self.oldPassWordTxt.centerTxt.tag = 1000;
 
 
     // 重置密码输入框
@@ -87,10 +88,11 @@
     CGFloat passwordTxtW = passWordTxtW;
     CGFloat passwordTxtH = passWordTxtH;
     CGFloat passwordTxtX = passWordTxtX;
-    CGFloat passwordTxtY = CGRectGetMaxY(self.passWordTxt.frame) + kHeight * 0.024 + 10;
+    CGFloat passwordTxtY = CGRectGetMaxY(self.oldPassWordTxt.frame) + kHeight * 0.024 + 10;
     self.passwordTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"passwordAgain.png"] withRightButton:passwordBut1 withFrame:CGRectMake(passwordTxtX, passwordTxtY, passwordTxtW, passwordTxtH)];
-    self.passwordTxt.centerTxt.placeholder = @"请输入新密码";
-    [self.passwordTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
+//    [self.passwordTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
+    [self.passwordTxt.centerTxt setTextFieldPlaceholderString:@"请输入新密码"];
+    self.passwordTxt.centerTxt.font = [UIFont systemFontOfSize:(15 / 320.0 * kWidth)];
     self.passwordTxt.centerTxt.secureTextEntry = YES;
     [self.view addSubview:self.passwordTxt];
     self.passwordTxt.centerTxt.keyboardType = UIKeyboardTypeDefault;
@@ -132,7 +134,7 @@
 //            [textField becomeFirstResponder];
             
             [UIView animateWithDuration:1.5 animations:^{
-                [self tipView:CGRectGetMaxY(self.passWordTxt.frame) withTipmessage:@"密码由“8~18字母、数字组成”"];
+                [self tipView:CGRectGetMaxY(self.oldPassWordTxt.frame) withTipmessage:@"密码由“8~18字母、数字组成”"];
             } completion:^(BOOL finished) {
                 [self.tipView removeFromSuperview];
             }];
@@ -163,7 +165,7 @@
     
     NSString * pwdStr = @"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,18}$";
     NSPredicate *regextestPwdStr = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", pwdStr];
-    BOOL flage1 = [regextestPwdStr evaluateWithObject:self.passWordTxt.centerTxt.text];
+    BOOL flage1 = [regextestPwdStr evaluateWithObject:self.oldPassWordTxt.centerTxt.text];
     
     BOOL flage2 = [regextestPwdStr evaluateWithObject:self.passwordTxt.centerTxt.text];
     
@@ -173,14 +175,14 @@
 //    [self.tipView removeFromSuperview];
     [self.view endEditing:YES];
     
-    if(self.passWordTxt.centerTxt.text.length == 0) {
+    if(self.oldPassWordTxt.centerTxt.text.length == 0) {
         
         [self tipShow:@"请输入旧密码"];
     
     }else if(!flage1) {
         
         [UIView animateWithDuration:1.5 animations:^{
-            [self tipView:CGRectGetMaxY(self.passWordTxt.frame) withTipmessage:@"密码由“8~18字母、数字组成”"];
+            [self tipView:CGRectGetMaxY(self.oldPassWordTxt.frame) withTipmessage:@"密码由“8~18字母、数字组成”"];
         } completion:^(BOOL finished) {
             [self.tipView removeFromSuperview];
         }];
@@ -202,7 +204,7 @@
 //        NSString *url = @"http://121.40.157.200:12345/api/mobile/technician/changePassword";
         NSMutableDictionary *parDic = [[NSMutableDictionary alloc] init];
         parDic[@"autoken"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"autoken"];
-        parDic[@"oldPassword"] = self.passWordTxt.centerTxt.text;
+        parDic[@"oldPassword"] = self.oldPassWordTxt.centerTxt.text;
         parDic[@"newPassword"] = self.passwordTxt.centerTxt.text;
         
 //        NSLog(@"\n%@", parDic);
@@ -253,7 +255,7 @@
     
     sender.selected = !sender.selected;
     
-    self.passWordTxt.centerTxt.secureTextEntry = !self.passWordTxt.centerTxt.secureTextEntry;
+    self.oldPassWordTxt.centerTxt.secureTextEntry = !self.oldPassWordTxt.centerTxt.secureTextEntry;
     
     
     

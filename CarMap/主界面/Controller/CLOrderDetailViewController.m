@@ -365,7 +365,7 @@
             UILabel *menusNameLab = [[UILabel alloc] initWithFrame:CGRectMake(40, 5, [UIScreen mainScreen].bounds.size.width - 60, 30)];
             menusNameLab.textColor = [UIColor darkGrayColor];
             menusNameLab.font = [UIFont systemFontOfSize:14];
-            menusNameLab.text = [NSString stringWithFormat:@"%@/%@", productDict[@"model"], productDict[@"constructionPositionName"]];
+            menusNameLab.text = [NSString stringWithFormat:@"%@--%@", productDict[@"model"], productDict[@"constructionPositionName"]];
             [titleBaseView addSubview:menusNameLab];
             
             UIView *lineView = [[UIView alloc]init];

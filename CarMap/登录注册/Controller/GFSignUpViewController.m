@@ -98,8 +98,9 @@
     CGFloat userNameTxtX = (kWidth - userNameTxtW) / 2.0 - 3 / 320.0 * kWidth;
     CGFloat userNameTxtY = jiange1 + 64;
     self.userNameTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"phone.png"] withFrame:CGRectMake(userNameTxtX, userNameTxtY, userNameTxtW, userNameTxtH)];
-    self.userNameTxt.centerTxt.placeholder = @"请输入手机号";
-    [self.userNameTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
+//    [self.userNameTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
+    [self.userNameTxt.centerTxt setTextFieldPlaceholderString:@"请输入手机号"];
+    self.userNameTxt.centerTxt.font = [UIFont systemFontOfSize:(15 / 320.0 * kWidth)];
     [self.view addSubview:self.userNameTxt];
     self.userNameTxt.centerTxt.keyboardType = UIKeyboardTypePhonePad;
     self.userNameTxt.centerTxt.delegate = self;
@@ -130,8 +131,9 @@
     CGFloat verifyTxtX = userNameTxtX;
     CGFloat verifyTxtY = CGRectGetMaxY(self.userNameTxt.frame) + jiange2;
     self.verifyTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"code.png"] withRightButton:self.verifyBut withFrame:CGRectMake(verifyTxtX, verifyTxtY, verifyTxtW, verifyTxtH)];
-    self.verifyTxt.centerTxt.placeholder = @"请输入验证码";
-    [self.verifyTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
+//    [self.verifyTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
+    [self.verifyTxt.centerTxt setTextFieldPlaceholderString:@"请输入验证码"];
+    self.verifyTxt.centerTxt.font = [UIFont systemFontOfSize:(15 / 320.0 * kWidth)];
     [self.view addSubview:self.verifyTxt];
     self.verifyTxt.centerTxt.keyboardType = UIKeyboardTypePhonePad;
     
@@ -151,8 +153,9 @@
     CGFloat passWordTxtY = CGRectGetMaxY(self.verifyTxt.frame) + jiange2;
     self.passWordTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"passwordAgain.png"] withRightButton:self.passwordBut withFrame:CGRectMake(passWordTxtX, passWordTxtY, passWordTxtW, passWordTxtH)];
     self.passWordTxt.centerTxt.keyboardType = UIKeyboardTypeNamePhonePad;
-    self.passWordTxt.centerTxt.placeholder = @"字母 数字8~18位";
-    [self.passWordTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
+//    [self.passWordTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
+    [self.passWordTxt.centerTxt setTextFieldPlaceholderString:@"字母 数字8~18位"];
+    self.passWordTxt.centerTxt.font = [UIFont systemFontOfSize:(15 / 320.0 * kWidth)];
     self.passWordTxt.centerTxt.secureTextEntry = YES;
     [self.view addSubview:self.passWordTxt];
     self.passWordTxt.centerTxt.delegate = self;

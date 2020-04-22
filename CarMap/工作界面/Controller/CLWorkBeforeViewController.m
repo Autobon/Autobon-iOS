@@ -208,6 +208,14 @@
     }];
     
     
+    UILabel *photoLabel = [[UILabel alloc]init];
+    photoLabel.text = @"不少于3张";
+    photoLabel.font = [UIFont systemFontOfSize:16];
+    photoLabel.textColor = [UIColor colorWithRed:196/255.0 green:196/255.0 blue:196/255.0 alpha:1.0];
+    photoLabel.frame = CGRectMake(210, 8, 120, 35);
+    [titleView addSubview:photoLabel];
+    
+    
 //    _distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 101, self.view.frame.size.width, 40)];
 //    _distanceLabel.text = @"已用时：15分28秒";
 //    _distanceLabel.backgroundColor = [UIColor whiteColor];
@@ -640,7 +648,7 @@
 // 继续按钮的响应方法
 - (void)nextBtnClick{
     
-    if (_imageArray.count > 0) {
+    if (_imageArray.count > 2) {
         
         __block NSString *URLString;
         [_imageArray enumerateObjectsUsingBlock:^(GFImageView *obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -690,13 +698,16 @@
                 workOver.model = _model;
                 [self.navigationController pushViewController:workOver animated:YES];
 //                }
+            }else{
+//                responseObject[@"message"]
+                [self addAlertView:responseObject[@"message"]];
             }
         } failure:^(NSError *error) {
             
         }];
         
         }else{
-        [self addAlertView:@"至少上传一张照片照片"];
+        [self addAlertView:@"至少上传三张照片"];
     }
 }
 

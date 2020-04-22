@@ -142,8 +142,10 @@
     CGFloat userNameX = (kWidth - userNameW) / 2.0 - 3 / 320.0 * kWidth;
     CGFloat userNameY = CGRectGetMaxY(logoImgView.frame) + kHeight * 0.167 * 2 / 3.0;
     self.userNameTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"user.png"] withFrame:CGRectMake(userNameX, userNameY, userNameW, userNameH)];
-    self.userNameTxt.centerTxt.placeholder = @"请输入账号";
-    [self.userNameTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
+//    [self.userNameTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
+    [self.userNameTxt.centerTxt setTextFieldPlaceholderString:@"请输入账号"];
+    
+    self.userNameTxt.centerTxt.font = [UIFont systemFontOfSize:(15 / 320.0 * kWidth)];
     self.userNameTxt.centerTxt.clearButtonMode = UITextFieldViewModeAlways;
     [self.view addSubview:self.userNameTxt];
     self.userNameTxt.centerTxt.delegate = self;
@@ -164,9 +166,11 @@
     CGFloat passWordTxtX = userNameX;
     CGFloat passWordTxtY = CGRectGetMaxY(self.userNameTxt.frame) + jianjv2;
     self.passWordTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"password.png"] withRightButton:passwordBut withFrame:CGRectMake(passWordTxtX, passWordTxtY, passWordTxtW, passWordTxtH)];
-    self.passWordTxt.centerTxt.placeholder = @"请输入密码";
-    [self.passWordTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
+    self.passWordTxt.centerTxt.font = [UIFont systemFontOfSize:15];
+//    [self.passWordTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
+    [self.passWordTxt.centerTxt setTextFieldPlaceholderString:@"请输入密码"];
     self.passWordTxt.centerTxt.secureTextEntry = YES;
+    self.passWordTxt.centerTxt.font = [UIFont systemFontOfSize:(15 / 320.0 * kWidth)];
 //    self.passWordTxt.centerTxt.clearButtonMode = UITextFieldViewModeAlways;
     [self.view addSubview:self.passWordTxt];
     self.passWordTxt.centerTxt.delegate = self;

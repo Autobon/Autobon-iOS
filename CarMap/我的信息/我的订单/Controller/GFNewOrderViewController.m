@@ -325,7 +325,18 @@
     
     
     //    return kHeight * 0.464  - kHeight * 0.2344 + kHeight * 0.0183;
-    return 170;
+    
+    if(self.modelArr.count > indexPath.row) {
+        GFNewOrderModel *model = (GFNewOrderModel *)self.modelArr[indexPath.row];
+        if([model.payStatus integerValue] == 1) {
+            return 200;
+        }else if(([model.payment integerValue] == 0)){
+            return 160;
+        }else {
+            return 200;
+        }
+    }
+    return 200;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

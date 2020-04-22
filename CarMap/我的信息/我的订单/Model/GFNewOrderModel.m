@@ -273,6 +273,17 @@
             self.setMenusArray = [[NSArray  alloc]init];
         }
         
+        if(dic[@"royalty"] == nil) {
+            self.royalty = @"0";
+        }else {
+            self.royalty = dic[@"royalty"];
+        }
+        
+        if(dic[@"totalCost"] == nil) {
+            self.totalCost = @"0";
+        }else {
+            self.totalCost = dic[@"totalCost"];
+        }
     }
     
     return self;

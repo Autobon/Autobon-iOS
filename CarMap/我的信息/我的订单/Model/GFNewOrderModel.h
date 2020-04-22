@@ -40,7 +40,8 @@
 @property (nonatomic, copy) NSString *techPhone;        // 技师电话
 @property (nonatomic, copy) NSString *type;             // 订单类型
 @property (nonatomic, copy) NSString *typeName;         // 订单类型名字
-
+@property (nonatomic, copy) NSString *royalty;          // 提成
+@property (nonatomic, copy) NSString *totalCost;          // 报废扣除
 
 @property (nonatomic, strong) NSArray *orderConstructionShow;
 @property (nonatomic, copy) NSString *jishiAllName;

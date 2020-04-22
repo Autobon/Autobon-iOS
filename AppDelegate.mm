@@ -90,21 +90,20 @@
     
 //    [UMSocialData setAppKey:@"564572b9e0f55a38dd001e6c"];
     
-    /* 设置友盟appkey */
     [[UMSocialManager defaultManager] setUmSocialAppkey:@"564572b9e0f55a38dd001e6c"];
     
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wx55cc20e910a128e5" appSecret:@"7ca03043095011790e0b9a6b9f498457" redirectURL:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];
     
 //    [UMSocialWechatHandler setWXAppId:@"wx55cc20e910a128e5" appSecret:@"7ca03043095011790e0b9a6b9f498457" url:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];
     
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"1105263986"/*设置QQ平台的appID*/  appSecret:nil redirectURL:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"1105263986"  appSecret:nil redirectURL:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];
     
 //    [UMSocialQQHandler setQQWithAppId:@"1105263986" appKey:@"sjj2sjhLIqtjmcfL" url:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];
     
 //    [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
 //
     
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@"3285914881"/*设置QQ平台的appID*/  appSecret:@"25a0f37f0b56dbc93cae8271d65e895d" redirectURL:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@"3285914881" appSecret:@"25a0f37f0b56dbc93cae8271d65e895d" redirectURL:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];
     
     
 //    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:@"3285914881" RedirectURL:[NSString stringWithFormat:@"%@/shareA.html",BaseHttp]];
@@ -857,3 +856,4 @@
 }
 
 @end
+

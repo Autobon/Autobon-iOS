@@ -21,7 +21,9 @@
 @property (nonatomic, strong) UILabel *timeLab;
 @property (nonatomic, strong) UILabel *placeLab;
 
-
+@property (nonatomic, strong) UILabel *royaltyLabel;
+@property (nonatomic, strong) UILabel *totalCostLabel;
+@property (nonatomic, strong) UIView *payBaseView;
 
 //@property (nonatomic, strong) GFIndentModel *model;
 @property (nonatomic, strong) GFNewOrderModel *model;

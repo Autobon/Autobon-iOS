@@ -915,10 +915,10 @@
     CLLocation *location2 = [[CLLocation alloc] initWithLatitude:[self.stationModel.latitude floatValue] longitude:[self.stationModel.longitude floatValue]];
     double distance = [location1 distanceFromLocation:location2];
     ICLog(@"distance---%f---", distance);
-    if (distance > 500){
-        [self addAlertView:@"请在常驻地五百米范围之内签到"];
-        return;
-    }
+//    if (distance > 500){
+//        [self addAlertView:@"请在常驻地五百米范围之内签到"];
+//        return;
+//    }
     
     [GFHttpTool postStationSignWithDictionary:@{} Success:^(id responseObject) {
         ICLog(@"--常驻地签到成功--%@---", responseObject);

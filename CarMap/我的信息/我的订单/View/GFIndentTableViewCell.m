@@ -46,16 +46,22 @@
         self.statusLab.text = @"未结算";
         self.statusLab.textColor = [UIColor lightGrayColor];
         self.mLab.text = [NSString stringWithFormat:@"合计：¥%0.1f", [model.payment floatValue]];
+        self.royaltyLabel.text = [NSString stringWithFormat:@"施工提成:¥%@", model.royalty];
+        self.totalCostLabel.text = [NSString stringWithFormat:@"报废扣除:¥%@", model.totalCost];
+        self.payBaseView.hidden = NO;
     }else if(([model.payment integerValue] == 0)){
     
         self.statusLab.text = @"待计算";
         self.statusLab.textColor = [UIColor lightGrayColor];
-        self.mLab.hidden = YES;
+        self.payBaseView.hidden = YES;
     }else {
         
         self.statusLab.text = @"已结算";
         self.statusLab.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-        self.mLab.text = [NSString stringWithFormat:@"合计：%@", model.payment];
+        self.mLab.text = [NSString stringWithFormat:@"合计:¥%@", model.payment];
+        self.royaltyLabel.text = [NSString stringWithFormat:@"施工提成:¥%@", model.royalty];
+        self.totalCostLabel.text = [NSString stringWithFormat:@"报废扣除:¥%@", model.totalCost];
+        self.payBaseView.hidden = NO;
     }
     
     self.orderLab.text = [NSString stringWithFormat:@"车牌号：%@", model.license];
@@ -119,40 +125,86 @@
     
     
     if(self != nil) {
-        
+        self.clipsToBounds = YES;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         self.backgroundColor = [UIColor colorWithRed:252 / 255.0 green:252 / 255.0 blue:252 / 255.0 alpha:1];
         
-        UIView *vv = [[UIView alloc] init];
-        vv.backgroundColor = [UIColor whiteColor];
-        vv.frame = CGRectMake(-1, 10, [UIScreen mainScreen].bounds.size.width + 2, 160);
-        vv.layer.borderColor = [[UIColor colorWithRed:217 / 255.0 green:217 / 255.0 blue:217 / 255.0 alpha:1] CGColor];
-        vv.layer.borderWidth = 1;
-        [self.contentView addSubview:vv];
+        UIView *baseView = [[UIView alloc] init];
+        baseView.backgroundColor = [UIColor whiteColor];
+        baseView.frame = CGRectMake(-1, 10, [UIScreen mainScreen].bounds.size.width + 2, 160);
+        baseView.layer.borderColor = [[UIColor colorWithRed:217 / 255.0 green:217 / 255.0 blue:217 / 255.0 alpha:1] CGColor];
+        baseView.layer.borderWidth = 1;
+        [self.contentView addSubview:baseView];
+        [baseView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.equalTo(self);
+            make.top.equalTo(self).offset(10);
+            make.bottom.equalTo(self);
+        }];
         
-        self.orderLab = [[UILabel alloc] initWithFrame:CGRectMake(11, 7, 250, 25)];
+        self.workTimeLab = [[UILabel alloc] init];
+        self.workTimeLab.textAlignment = NSTextAlignmentRight;
+        self.workTimeLab.text = @"施工时间：2016-12-02 17:31";
+        self.workTimeLab.textColor = [UIColor lightGrayColor];
+        self.workTimeLab.font = [UIFont systemFontOfSize:13.5];
+        [baseView addSubview:self.workTimeLab];
+        [self.workTimeLab mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(baseView).offset(-10);
+            make.top.equalTo(baseView).offset(5);
+            make.height.mas_offset(30);
+        }];
+        
+        UIView *timeLineView = [[UIView alloc] init];
+        timeLineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
+        [baseView addSubview:timeLineView];
+        [timeLineView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(baseView).offset(10);
+            make.right.equalTo(baseView).offset(-10);
+            make.top.equalTo(self.workTimeLab.mas_bottom).offset(5);
+            make.height.mas_offset(1);
+        }];
+        
+        
+        self.orderLab = [[UILabel alloc] init];
         self.orderLab.text = @"订单编号：999999999999999";
         self.orderLab.textColor = [UIColor darkGrayColor];
         self.orderLab.font = [UIFont systemFontOfSize:14];
-        [vv addSubview:self.orderLab];
+        [baseView addSubview:self.orderLab];
+        [self.orderLab mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(baseView).offset(10);
+            make.top.equalTo(timeLineView.mas_bottom).offset(5);
+            make.height.mas_offset(25);
+        }];
         
-        
-        self.vinLab = [[UILabel alloc] initWithFrame:CGRectMake(11, 37, 250, 25)];
+        self.vinLab = [[UILabel alloc] init];
         self.vinLab.text = @"车架号：999999999999999";
         self.vinLab.textColor = [UIColor darkGrayColor];
         self.vinLab.font = [UIFont systemFontOfSize:14];
-        [vv addSubview:self.vinLab];
+        [baseView addSubview:self.vinLab];
+        [self.vinLab mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(baseView).offset(10);
+            make.top.equalTo(self.orderLab.mas_bottom).offset(5);
+            make.height.mas_offset(25);
+        }];
         
         
-        
+        self.statusLab = [[UILabel alloc] init];
+        self.statusLab.text = @"已结算";
+        self.statusLab.textAlignment = NSTextAlignmentRight;
+        self.statusLab.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+        self.statusLab.font = [UIFont systemFontOfSize:14];
+        [baseView addSubview:self.statusLab];
+        [self.statusLab mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(baseView).offset(-10);
+            make.centerY.equalTo(self.orderLab);
+        }];
         
 //        self.orderLab.backgroundColor = [UIColor redColor];
         
         for(int i=0; i<4; i++) {
         
             UILabel *lab = [[UILabel alloc] init];
-            lab.frame = CGRectMake(11 + 72 * i, 70, 65, 30);
+//            lab.frame = CGRectMake(11 + 72 * i, 70, 65, 30);
 //            lab.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:0.9];
             lab.backgroundColor = [UIColor colorWithRed:230 / 255.0 green:230 / 255.0 blue:230 / 255.0 alpha:1];
             lab.font = [UIFont systemFontOfSize:13];
@@ -162,7 +214,7 @@
             lab.clipsToBounds = YES;
             lab.textAlignment = NSTextAlignmentCenter;
             lab.text = @"美容清洁";
-            [vv addSubview:lab];
+            [baseView addSubview:lab];
 //            lab.hidden = YES;
 //            [self.labArr addObject:lab];
             if(i == 0) {
@@ -177,17 +229,24 @@
             if(i == 3) {
                 self.lab4 = lab;
             }
+            [lab mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(baseView).offset(10 + 72 * i);
+                make.top.equalTo(self.vinLab.mas_bottom).offset(10);
+                make.width.mas_offset(65);
+                make.height.mas_offset(30);
+            }];
         }
         
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(11, 115, [UIScreen mainScreen].bounds.size.width - 22, 1)];
         lineView.backgroundColor = [[UIColor alloc]initWithRed:227/255.0 green:227/255.0 blue:227/255.0 alpha:1.0];
-        [vv addSubview:lineView];
+        [baseView addSubview:lineView];
+        [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(baseView).offset(10);
+            make.right.equalTo(baseView).offset(-10);
+            make.height.mas_offset(1);
+            make.top.equalTo(self.vinLab.mas_bottom).offset(50);
+        }];
         
-        self.workTimeLab = [[UILabel alloc] initWithFrame:CGRectMake(11, CGRectGetMaxY(lineView.frame) + 10, 300, 25)];
-        self.workTimeLab.text = @"施工时间：2016-12-02 17:31";
-        self.workTimeLab.textColor = [UIColor lightGrayColor];
-        self.workTimeLab.font = [UIFont systemFontOfSize:13.5];
-        [vv addSubview:self.workTimeLab];
         
         
 //        self.proLab = [[UILabel alloc] initWithFrame:CGRectMake(11, CGRectGetMaxY(self.workTimeLab.frame), 300, 25)];
@@ -196,19 +255,55 @@
 //        self.proLab.font = [UIFont systemFontOfSize:15];
 //        [vv addSubview:self.proLab];
         
-        self.statusLab = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 10 - 120, self.orderLab.frame.origin.y, 120, 25)];
-        self.statusLab.text = @"已结算";
-        self.statusLab.textAlignment = NSTextAlignmentRight;
-        self.statusLab.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-        self.statusLab.font = [UIFont systemFontOfSize:14];
-        [vv addSubview:self.statusLab];
+        
+        
+        
+        _payBaseView = [[UIView alloc]init];
+//        _payBaseView.backgroundColor = [UIColor cyanColor];
+        [baseView addSubview:_payBaseView];
+        [_payBaseView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.bottom.right.equalTo(baseView);
+            make.top.equalTo(lineView.mas_bottom).offset(0);
+        }];
+        
+        
         
         self.mLab = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 10 - 120, self.workTimeLab.frame.origin.y, 120, 25)];
-        self.mLab.text = @"合计:¥ 2000";
+        self.mLab.text = @"合计:¥2000";
         self.mLab.textAlignment = NSTextAlignmentRight;
-        self.mLab.textColor = [UIColor lightGrayColor];
-        self.mLab.font = [UIFont systemFontOfSize:14.5];
-        [vv addSubview:self.mLab];
+//        self.mLab.textColor = [UIColor lightGrayColor];
+        self.mLab.font = [UIFont systemFontOfSize:13];
+        [_payBaseView addSubview:self.mLab];
+        [self.mLab mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(self.payBaseView.mas_right).offset(-10);
+            make.centerY.equalTo(self.payBaseView);
+        }];
+        
+        
+        //施工提成
+        self.royaltyLabel = [[UILabel alloc] init];
+        self.royaltyLabel.text = @"施工提成:¥200";
+        self.royaltyLabel.textAlignment = NSTextAlignmentRight;
+        self.royaltyLabel.textColor = [UIColor lightGrayColor];
+        self.royaltyLabel.font = [UIFont systemFontOfSize:13];
+        [_payBaseView addSubview:self.royaltyLabel];
+        [self.royaltyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.payBaseView).offset(10);
+            make.centerY.equalTo(self.payBaseView);
+        }];
+        
+        //报废扣除
+        self.totalCostLabel = [[UILabel alloc] init];
+        self.totalCostLabel.text = @"报废扣除:¥200";
+        self.totalCostLabel.textAlignment = NSTextAlignmentRight;
+        self.totalCostLabel.textColor = [UIColor lightGrayColor];
+        self.totalCostLabel.font = [UIFont systemFontOfSize:13];
+        [_payBaseView addSubview:self.totalCostLabel];
+        [self.totalCostLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.royaltyLabel.mas_right).offset(15);
+            make.centerY.equalTo(self.payBaseView);
+        }];
+        
         
 //        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.orderLab.frame) - 50, 7, 25, 25)];
 //        imgView.image = [UIImage imageNamed:@"jingbao"];

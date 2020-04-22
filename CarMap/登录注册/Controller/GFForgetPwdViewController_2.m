@@ -76,8 +76,9 @@
     CGFloat passWordTxtX = (kWidth - passWordTxtW) / 2.0 - 3 / 320.0 * kWidth;
     CGFloat passWordTxtY = jiange1 + 64;
     self.passWordTxt = [[GFTextField alloc] initWithImage:[UIImage imageNamed:@"passwordAgain.png"] withRightButton:passwordBut withFrame:CGRectMake(passWordTxtX, passWordTxtY, passWordTxtW, passWordTxtH)];
-    self.passWordTxt.centerTxt.placeholder = @"需要数字 字母或符号";
-    [self.passWordTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
+//    [self.passWordTxt.centerTxt setValue:[UIFont systemFontOfSize:(15 / 320.0 * kWidth)] forKeyPath:@"_placeholderLabel.font"];
+    [self.passWordTxt.centerTxt setTextFieldPlaceholderString:@"需要数字 字母或符号"];
+    self.passWordTxt.centerTxt.font = [UIFont systemFontOfSize:(15 / 320.0 * kWidth)];
     self.passWordTxt.centerTxt.secureTextEntry = YES;
     [self.view addSubview:self.passWordTxt];
     

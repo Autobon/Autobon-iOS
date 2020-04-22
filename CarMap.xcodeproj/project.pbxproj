@@ -21,6 +21,7 @@
 		9BBA2BD61CBB72E500543004 /* servicedelegate.html in Resources */ = {isa = PBXBuildFile; fileRef = 9BBA2BD51CBB72E500543004 /* servicedelegate.html */; };
 		9BCFDCA51C85B6CF003A35A8 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9BCFDCA21C85B6CF003A35A8 /* AppDelegate.mm */; };
 		9BD52BE71CC46C6E009FE948 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BD52BE61CC46C6E009FE948 /* GoogleService-Info.plist */; };
+		A6341042244F18C600005CFF /* UITextField+PlaceholderColor.m in Sources */ = {isa = PBXBuildFile; fileRef = A6341041244F18C600005CFF /* UITextField+PlaceholderColor.m */; };
 		A670347223A759930017D10D /* CLStationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A670347123A759930017D10D /* CLStationTableViewCell.m */; };
 		A6A68BBC23A723C000D58D5A /* CLTechStationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A68BBB23A723C000D58D5A /* CLTechStationViewController.m */; };
 		A6A68BBF23A723EC00D58D5A /* CLStationListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A68BBE23A723EC00D58D5A /* CLStationListViewController.m */; };
@@ -246,6 +247,8 @@
 		9BFA80811C5F4744001651C3 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		9BFA80841C5F475B001651C3 /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
 		A08ADB78524ACF43A63B9DF3 /* libPods-CarMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CarMap.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6341040244F18C600005CFF /* UITextField+PlaceholderColor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextField+PlaceholderColor.h"; sourceTree = "<group>"; };
+		A6341041244F18C600005CFF /* UITextField+PlaceholderColor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextField+PlaceholderColor.m"; sourceTree = "<group>"; };
 		A670347023A759930017D10D /* CLStationTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLStationTableViewCell.h; sourceTree = "<group>"; };
 		A670347123A759930017D10D /* CLStationTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLStationTableViewCell.m; sourceTree = "<group>"; };
 		A6A68BBA23A723C000D58D5A /* CLTechStationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLTechStationViewController.h; sourceTree = "<group>"; };
@@ -730,6 +733,8 @@
 				B09341241F9F411B00DC2A94 /* Commom.m */,
 				B02290A51ECD4BB40022D34F /* Reachability.h */,
 				B02290A61ECD4BB40022D34F /* Reachability.m */,
+				A6341040244F18C600005CFF /* UITextField+PlaceholderColor.h */,
+				A6341041244F18C600005CFF /* UITextField+PlaceholderColor.m */,
 				B02290A71ECD4BB40022D34F /* 百度地图 */,
 				B02290B01ECD4BB40022D34F /* 自定义控件 */,
 			);
@@ -1726,6 +1731,7 @@
 				B02291831ECD4D570022D34F /* CLTitleView.m in Sources */,
 				B05EC0E720F3383900EFB588 /* HXFullScreenCameraPlayView.m in Sources */,
 				B02291041ECD4BF70022D34F /* GFNavigationView.m in Sources */,
+				A6341042244F18C600005CFF /* UITextField+PlaceholderColor.m in Sources */,
 				B02291531ECD4CFC0022D34F /* GFIndentModel.m in Sources */,
 				B02291A11ECD4DA80022D34F /* CLAddOrderSuccessViewController.m in Sources */,
 				B05EC0D920F3383900EFB588 /* HXPhotoModel.m in Sources */,
@@ -1939,7 +1945,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-all_load";
@@ -1984,7 +1990,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = CarMap;

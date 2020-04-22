@@ -8,7 +8,7 @@
 
 #import "Commom.h"
 #import "Masonry.h"
-
+#import "UITextField+PlaceholderColor.h"
 
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
@@ -31,12 +31,9 @@
 #endif /* PrefixHeader_pch */
 
 
+//#define BaseHttp @"http://47.93.17.218:12345"
+#define BaseHttp @"http://118.31.41.230:7123"
 
-#define BaseHttp @"http://47.93.17.218:12345"
-//#define BaseHttp @"http://10.0.12.248:12345"
-//#define BaseHttp @"http://10.0.12.111:12345"
-
-//#define BaseHttp @"http://121.40.157.200:12345"
 
 #ifdef DEBUG
 

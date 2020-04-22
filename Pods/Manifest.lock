@@ -39,25 +39,25 @@ PODS:
   - SDWebImage (3.7.6):
     - SDWebImage/Core (= 3.7.6)
   - SDWebImage/Core (3.7.6)
-  - UMengUShare/Core (6.4.5):
+  - UMengUShare/Core (6.4.8.2):
     - UMengUShare/Network
-  - UMengUShare/Network (6.4.5)
-  - UMengUShare/Social/QQ (6.4.5):
+  - UMengUShare/Network (6.4.8.2)
+  - UMengUShare/Social/QQ (6.4.8.2):
     - UMengUShare/Core
     - UMengUShare/Social/ReducedQQ
-  - UMengUShare/Social/ReducedQQ (6.4.5):
+  - UMengUShare/Social/ReducedQQ (6.4.8.2):
     - UMengUShare/Core
-  - UMengUShare/Social/ReducedSina (6.4.5):
+  - UMengUShare/Social/ReducedSina (6.4.8.2):
     - UMengUShare/Core
-  - UMengUShare/Social/ReducedWeChat (6.4.5):
+  - UMengUShare/Social/ReducedWeChat (6.4.8.2):
     - UMengUShare/Core
-  - UMengUShare/Social/Sina (6.4.5):
+  - UMengUShare/Social/Sina (6.4.8.2):
     - UMengUShare/Core
     - UMengUShare/Social/ReducedSina
-  - UMengUShare/Social/WeChat (6.4.5):
+  - UMengUShare/Social/WeChat (6.4.8.2):
     - UMengUShare/Core
     - UMengUShare/Social/ReducedWeChat
-  - UMengUShare/UI (6.4.5):
+  - UMengUShare/UI (6.4.8.2):
     - UMengUShare/Core
 
 DEPENDENCIES:
@@ -116,8 +116,8 @@ SPEC CHECKSUMS:
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MJRefresh: 9af70f5f9327a2cf87f0fb5929f35fcc2fa638ea
   SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
-  UMengUShare: a5711c54e640b04e3048e931d2b88d50f9cfa55c
+  UMengUShare: 370d180101e13ee0227ae657ab119ba97243d2b3
 
-PODFILE CHECKSUM: d9d6290ebf07427e6e6ced773902f25c66aa2504
+PODFILE CHECKSUM: 7854a06e10090827dcc874fa6f03d269f54980c7
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.7.5

@@ -173,16 +173,16 @@
     }];
     
     // 金额
-    self.moneyLab = [[UILabel alloc] init];
-    self.moneyLab.text = [NSString stringWithFormat:@"￥%0.1f", [self.model.payment floatValue]];
-    self.moneyLab.textAlignment = NSTextAlignmentRight;
-    self.moneyLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
-    self.moneyLab.font = [UIFont systemFontOfSize:14];
-    [_contentView addSubview:self.moneyLab];
-    [self.moneyLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.contentView).offset(-10);
-        make.bottom.equalTo(self.numberLab.mas_centerY).offset(-2);
-    }];
+//    self.moneyLab = [[UILabel alloc] init];
+//    self.moneyLab.text = [NSString stringWithFormat:@"￥%0.1f", [self.model.payment floatValue]];
+//    self.moneyLab.textAlignment = NSTextAlignmentRight;
+//    self.moneyLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
+//    self.moneyLab.font = [UIFont systemFontOfSize:14];
+//    [_contentView addSubview:self.moneyLab];
+//    [self.moneyLab mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(self.contentView).offset(-10);
+//        make.bottom.equalTo(self.numberLab.mas_centerY).offset(-2);
+//    }];
     
     // 结算按钮
     self.tipLabel = [[UILabel alloc]init];
@@ -190,29 +190,30 @@
 //    [self.tipBut setTitle:@"已结算" forState:UIControlStateSelected];
 //    [self.tipBut setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 //    [self.tipBut setTitleColor:[UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1] forState:UIControlStateSelected];
-    self.tipLabel.font = [UIFont systemFontOfSize:12];
+    self.tipLabel.font = [UIFont systemFontOfSize:14];
     self.tipLabel.textAlignment = NSTextAlignmentRight;
     [_contentView addSubview:self.tipLabel];
     [self.tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.contentView).offset(-10);
-        make.top.equalTo(self.numberLab.mas_centerY).offset(2);
+//        make.top.equalTo(self.numberLab.mas_centerY).offset(2);
+        make.centerY.equalTo(self.numberLab);
     }];
-    if([_model.payStatus integerValue] == 1) {
-        
-        self.tipLabel.text = @"未结算";
-        self.tipLabel.textColor = [UIColor lightGrayColor];
-        self.moneyLab.text = [NSString stringWithFormat:@"￥ %@", _model.payment];
-    }else if(([_model.payment integerValue] == 0)){
-        
-        self.tipLabel.text = @"待计算";
-        self.tipLabel.textColor = [UIColor lightGrayColor];
-        self.moneyLab.text = @"无";
-    }else {
-        
-        self.tipLabel.text = @"已结算";
-        self.tipLabel.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
-        self.moneyLab.text = [NSString stringWithFormat:@"￥ %@", _model.payment];
-    }
+//    if([_model.payStatus integerValue] == 1) {
+//
+//        self.tipLabel.text = @"未结算";
+//        self.tipLabel.textColor = [UIColor lightGrayColor];
+//        self.moneyLab.text = [NSString stringWithFormat:@"￥ %@", _model.payment];
+//    }else if(([_model.payment integerValue] == 0)){
+//
+//        self.tipLabel.text = @"待计算";
+//        self.tipLabel.textColor = [UIColor lightGrayColor];
+//        self.moneyLab.text = @"无";
+//    }else {
+//
+//        self.tipLabel.text = @"已结算";
+//        self.tipLabel.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+//        self.moneyLab.text = [NSString stringWithFormat:@"￥ %@", _model.payment];
+//    }
     
     
     // 边线
@@ -471,7 +472,7 @@
             UILabel *menusNameLab = [[UILabel alloc] initWithFrame:CGRectMake(40, 5, [UIScreen mainScreen].bounds.size.width - 60, 30)];
             menusNameLab.textColor = [UIColor darkGrayColor];
             menusNameLab.font = [UIFont systemFontOfSize:14];
-            menusNameLab.text = [NSString stringWithFormat:@"%@/%@", productDict[@"model"], productDict[@"constructionPositionName"]];
+            menusNameLab.text = [NSString stringWithFormat:@"%@--%@", productDict[@"model"], productDict[@"constructionPositionName"]];
             [titleBaseView addSubview:menusNameLab];
             
             UIView *lineView = [[UIView alloc]init];
@@ -846,6 +847,79 @@
         make.top.equalTo(workerOverTimeLab.mas_bottom).offset(0);
     }];
     
+    UIView *_payBaseView = [[UIView alloc]init];
+    [self.contentView addSubview:_payBaseView];
+    [_payBaseView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.contentView);
+        make.top.equalTo(lineView12.mas_bottom).offset(0);
+        make.height.mas_offset(45);
+    }];
+    
+    
+    
+    UILabel *mLab = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 10 - 120, self.workTimeLab.frame.origin.y, 120, 25)];
+    mLab.text = [NSString stringWithFormat:@"合计：¥%0.1f", [self.model.payment floatValue]];
+    mLab.textAlignment = NSTextAlignmentRight;
+    //        self.mLab.textColor = [UIColor lightGrayColor];
+    mLab.font = [UIFont systemFontOfSize:13];
+    [_payBaseView addSubview:mLab];
+    [mLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(_payBaseView.mas_right).offset(-10);
+        make.centerY.equalTo(_payBaseView);
+    }];
+    
+    
+    //施工提成
+    UILabel *royaltyLabel = [[UILabel alloc] init];
+    royaltyLabel.text = [NSString stringWithFormat:@"施工提成:¥%@", self.model.royalty];
+    royaltyLabel.textAlignment = NSTextAlignmentRight;
+    royaltyLabel.textColor = [UIColor lightGrayColor];
+    royaltyLabel.font = [UIFont systemFontOfSize:13];
+    [_payBaseView addSubview:royaltyLabel];
+    [royaltyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_payBaseView).offset(10);
+        make.centerY.equalTo(_payBaseView);
+    }];
+    
+    //报废扣除
+    UILabel *totalCostLabel = [[UILabel alloc] init];
+    totalCostLabel.text = [NSString stringWithFormat:@"报废扣除:¥%@", self.model.totalCost];
+    totalCostLabel.textAlignment = NSTextAlignmentRight;
+    totalCostLabel.textColor = [UIColor lightGrayColor];
+    totalCostLabel.font = [UIFont systemFontOfSize:13];
+    [_payBaseView addSubview:totalCostLabel];
+    [totalCostLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(royaltyLabel.mas_right).offset(15);
+        make.centerY.equalTo(_payBaseView);
+    }];
+    
+    
+    if([_model.payStatus integerValue] == 1) {
+        
+        self.tipLabel.text = @"未结算";
+        self.tipLabel.textColor = [UIColor lightGrayColor];
+        mLab.text = [NSString stringWithFormat:@"合计：¥%0.1f", [self.model.payment floatValue]];
+        royaltyLabel.text = [NSString stringWithFormat:@"施工提成:¥%@", self.model.royalty];
+        totalCostLabel.text = [NSString stringWithFormat:@"报废扣除:¥%@", self.model.totalCost];
+        
+    }else if(([_model.payment integerValue] == 0)){
+        
+        self.tipLabel.text = @"待计算";
+        self.tipLabel.textColor = [UIColor lightGrayColor];
+        _payBaseView.hidden = YES;
+        [_payBaseView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_offset(0);
+        }];
+    }else {
+        
+        self.tipLabel.text = @"已结算";
+        self.tipLabel.textColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
+        mLab.text = [NSString stringWithFormat:@"合计：¥%0.1f", [self.model.payment floatValue]];
+        royaltyLabel.text = [NSString stringWithFormat:@"施工提成:¥%@", self.model.royalty];
+        totalCostLabel.text = [NSString stringWithFormat:@"报废扣除:¥%@", self.model.totalCost];
+        
+    }
+    
     
     
 //    // 施工耗时
@@ -874,7 +948,7 @@
         make.left.equalTo(self.contentView).offset(0);
         make.right.equalTo(self.contentView).offset(0);
         make.height.mas_offset(45);
-        make.top.equalTo(lineView12.mas_bottom).offset(0);
+        make.top.equalTo(_payBaseView.mas_bottom).offset(0);
     }];
     
     // 边线

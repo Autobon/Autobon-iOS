@@ -99,7 +99,7 @@
     _carJiaHaoTextFieldView = [[CLLineTextFieldView alloc]initWithTitle:@"车架号" width:100];
     _carJiaHaoTextFieldView.backgroundColor = [UIColor clearColor];
     _carJiaHaoTextFieldView.titleLabel.textColor = [UIColor blackColor];
-    _carJiaHaoTextFieldView.textField.keyboardType = UIKeyboardTypeNumberPad;
+    _carJiaHaoTextFieldView.textField.keyboardType = UIKeyboardTypeEmailAddress;
     _carJiaHaoTextFieldView.textField.delegate = self;
     _carJiaHaoTextFieldView.textField.tag = 4;
     [self.view addSubview:_carJiaHaoTextFieldView];
