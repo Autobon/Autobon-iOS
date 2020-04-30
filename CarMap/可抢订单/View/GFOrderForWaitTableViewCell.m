@@ -87,7 +87,7 @@
     
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if(self != nil) {
-    
+        self.backgroundColor = [UIColor clearColor];
         UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 10)];
         view.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0];
         [self.contentView addSubview:view];

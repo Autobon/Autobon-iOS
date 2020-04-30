@@ -372,6 +372,7 @@
     self.timePickerView.dataSource = self;
     self.timePickerView.delegate = self;
     self.timePickerView.backgroundColor = [UIColor whiteColor];
+    [self.timePickerView setValue:[UIColor blackColor] forKey:@"textColor"];
     [_bbView addSubview:self.timePickerView];
     _bbView.hidden = YES;
     

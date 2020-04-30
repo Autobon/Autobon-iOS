@@ -707,6 +707,7 @@
     self.timePickerView.dataSource = self;
     self.timePickerView.delegate = self;
     self.timePickerView.backgroundColor = [UIColor whiteColor];
+    [self.timePickerView setValue:[UIColor blackColor] forKey:@"textColor"];
     [_bbView addSubview:self.timePickerView];
     _bbView.hidden = YES;
     
@@ -825,6 +826,7 @@
     vc.delegate = self;
     HXCustomNavigationController *nav = [[HXCustomNavigationController alloc] initWithRootViewController:vc];
     nav.supportRotation = self.manager.configuration.supportRotation;
+    nav.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:nav animated:YES completion:nil];
 }
 

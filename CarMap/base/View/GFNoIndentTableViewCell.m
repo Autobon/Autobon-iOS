@@ -33,6 +33,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
 
     if(self != nil) {
+        self.backgroundColor = [UIColor clearColor];
         CGFloat kWidth = [UIScreen mainScreen].bounds.size.width;
         CGFloat kHeight = [UIScreen mainScreen].bounds.size.height;
         

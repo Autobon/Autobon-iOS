@@ -236,7 +236,7 @@
     leftLab.text = @"还没账号？";
     leftLab.font = [UIFont systemFontOfSize:(13 / 320.0 * kWidth)];
     leftLab.textAlignment = NSTextAlignmentRight;
-//    leftLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
+    leftLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];
     
     [backView addSubview:leftLab];
     // 右边按钮

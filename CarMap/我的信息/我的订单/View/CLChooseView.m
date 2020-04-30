@@ -60,6 +60,7 @@
     _datePickerView = [[UIDatePicker alloc]init];
     _datePickerView.datePickerMode = UIDatePickerModeDate;
     [_datePickerView setDate:[NSDate date] animated:YES];
+    [_datePickerView setValue:[UIColor blackColor] forKey:@"textColor"];
     [self addSubview:_datePickerView];
     [_datePickerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self);

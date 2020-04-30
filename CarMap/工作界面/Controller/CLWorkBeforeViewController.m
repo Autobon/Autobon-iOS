@@ -391,6 +391,7 @@
     vc.delegate = self;
     HXCustomNavigationController *nav = [[HXCustomNavigationController alloc] initWithRootViewController:vc];
     nav.supportRotation = self.manager.configuration.supportRotation;
+    nav.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:nav animated:YES completion:nil];
 }
 
