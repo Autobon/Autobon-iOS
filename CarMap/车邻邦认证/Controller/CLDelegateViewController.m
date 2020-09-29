@@ -8,7 +8,7 @@
 
 #import "CLDelegateViewController.h"
 #import "GFNavigationView.h"
-
+#import <WebKit/WebKit.h>
 
 
 @interface CLDelegateViewController ()
@@ -33,7 +33,7 @@
     
     
     
-    UIWebView *webView = [[UIWebView alloc]init];
+    WKWebView *webView = [[WKWebView alloc]init];
 //    webView.scalesPageToFit = YES;
     NSString* path = [[NSBundle mainBundle] pathForResource:_delegateTitle ofType:@"html"];
     NSURL* url = [NSURL fileURLWithPath:path];

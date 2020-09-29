@@ -32,8 +32,8 @@
 #endif /* PrefixHeader_pch */
 
 
-//#define BaseHttp @"http://47.93.17.218:12345"
-#define BaseHttp @"http://118.31.41.230:7123"
+#define BaseHttp @"http://47.93.17.218:12345"
+//#define BaseHttp @"http://118.31.41.230:7123"
 
 
 #ifdef DEBUG

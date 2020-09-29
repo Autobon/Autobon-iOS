@@ -283,7 +283,7 @@
                 }
             }
         } failure:^(NSError *error) {
-            
+            ICLog(@"error---%@--", error);
             
         }];
         

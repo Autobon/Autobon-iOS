@@ -239,8 +239,8 @@
 - (void)dateTrueBtnClick{
 //    ICLog(@"--_dateChooseView.datePickerView.date--%@--",_dateChooseView.datePickerView.date);
 //    _timeTextFieldView.textField.text = [Commom dateToStringWithDate:_dateChooseView.datePickerView.date];
-//    [_dateChooseView removeFromSuperview];
-//    _dateChooseView = nil;
+    [_dateChooseView removeFromSuperview];
+    _dateChooseView = nil;
     
     
 }

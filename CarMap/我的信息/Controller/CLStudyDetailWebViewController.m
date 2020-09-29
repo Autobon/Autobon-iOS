@@ -8,7 +8,7 @@
 
 #import "CLStudyDetailWebViewController.h"
 #import "GFNavigationView.h"
-
+#import <WebKit/WebKit.h>
 
 @interface CLStudyDetailWebViewController ()
 {
@@ -31,7 +31,7 @@
     
     
     
-    UIWebView *webView = [[UIWebView alloc]init];
+    WKWebView *webView = [[WKWebView alloc]init];
     //    webView.scalesPageToFit = YES;
     NSURL* url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@",BaseHttp,_pathString]];
     //    NSURL* url = [[NSURL alloc] initWithString:@"https://dev.markd.cn"];
@@ -43,8 +43,7 @@
     //    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
     //    button.frame = CGRectMake(20, 20, 40, 40);
     [self.view addSubview:webView];
-    webView.scalesPageToFit = YES;
-    
+//    webView.scalesPageToFit = YES;
     
     [webView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.bottom.right.equalTo(self.view);

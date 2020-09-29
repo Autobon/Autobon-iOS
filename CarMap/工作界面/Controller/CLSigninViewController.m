@@ -146,7 +146,7 @@
     _mapVC.distanceBlock = ^(double distance) {
 //        NSLog(@"距离－－%f--",distance);
         signinView.distanceLabel.text = [NSString stringWithFormat:@"距离：%0.2fkm",distance/1000.0];
-        if (distance < 5000) {
+        if (distance < 30000) {
             signinView.signinButton.userInteractionEnabled = YES;
             signinView.signinButton.backgroundColor = [UIColor colorWithRed:235 / 255.0 green:96 / 255.0 blue:1 / 255.0 alpha:1];
 //            [signinView.signinButton setTitle:@"可以签到了" forState:UIControlStateNormal];
@@ -184,7 +184,7 @@
     // 距离提示框
     UILabel *tipLab = [[UILabel alloc] init];
     tipLab.frame = CGRectMake(0, CGRectGetMaxY(_signinButton.frame), [UIScreen mainScreen].bounds.size.width, 35);
-    tipLab.text = @"请距离目标位置5000米内签到！";
+    tipLab.text = @"请距离目标位置30000米内签到！";
     tipLab.font = [UIFont systemFontOfSize:12];
     tipLab.textAlignment = NSTextAlignmentCenter;
     tipLab.textColor = [UIColor colorWithRed:143 / 255.0 green:144 / 255.0 blue:145 / 255.0 alpha:1];

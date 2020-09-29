@@ -227,10 +227,12 @@
     AppDelegate * appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
     _dataDictionary[@"longitude"] = appDelegate.locationDictionary[@"lng"];
     _dataDictionary[@"latitude"] = appDelegate.locationDictionary[@"lat"];
-//    _dataDictionary[@"longitude"] = @"115.147885";
-//    _dataDictionary[@"latitude"] = @"30.489376";
+    
+//    _dataDictionary[@"longitude"] = @"116.563395";
+//    _dataDictionary[@"latitude"] = @"39.932027";
     _dataDictionary[@"page"] = @(_page);
     _dataDictionary[@"pageSize"] = @(5);
+    ICLog(@"--_dataDictionary---%@----",_dataDictionary);
     [GFHttpTool getOrderListNewDictionary:_dataDictionary Success:^(NSDictionary *responseObject) {
         
         ICLog(@"==可抢订单列表==%@", responseObject);
